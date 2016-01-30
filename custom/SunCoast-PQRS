@@ -1,0 +1,82 @@
+/*PQRS - XML file writer to be used to spit out the final XML file for PQRS submittal
+* 
+* currently under development - not yet complete
+* currently uses Node module jsonfile Copyright (c) 2012-2015, JP Richardson <jprichardson@gmail.com> MIT license attached
+* currently uses Node module xml-writer Copyright 2011 Nicolas Thouvenin <nthouvenin@gmail.com> MIT license attached
+*/
+/*variables to write into XML Defined Below*/
+	var ReportCreationDate = 12;
+	var ReportCreationTime =12;
+	var ReportCreationRegistry = "lou";
+	var FileAuditDataVersion = 1;
+	var FileNumber =1;
+	var NumberOfFiles =1 ;
+	var RegistryName = "lou";
+	var RegistryId = 1;
+	var SubmissionType = 1 ; // one or two or A?
+	var SubmissionMethod = 1;
+	var numberOmeasures = 2;// this should really be dynamically read
+	var GproType;
+	
+
+/* variables to write into XML Defined Above*/
+/* currently working file write and console log below - only doing header not yet meaasure groups becasue need to
+* account for varying number of measure groups in report
+*/
+
+//**************************************************************************
+	var XMLWriter = require('xml-writer'),
+               fs = require('fs');
+	var ws = fs.createWriteStream('PQRS.xml');
+	ws.on('close', function() {
+			console.log(fs.readFileSync('PQRS.xml', 'UTF-8'));
+	});
+	xw = new XMLWriter(true, function(string, encoding) {
+			ws.write(string, encoding);
+	});
+   	xw.startDocument('1.0', 'UTF-8').startElement('submission').startElement('file-audit-data')
+   	.writeElement('create-date', ReportCreationDate)
+   	.writeElement('create-time', ReportCreationTime)
+   	.writeElement('create-by',ReportCreationRegistry)
+   	.writeElement('version', FileAuditDataVersion)
+   	.writeElement('file-number',FileNumber)
+   	.writeElement('number-of-files',NumberOfFiles)
+   	.endElement('file-auidt-data')
+   	.startElement('registry')
+   	.writeElement('registry-name',RegistryName)
+   	.writeElement('registry-id',RegistryId)
+   	.writeElement('submission-type',SubmissionType)
+   	.writeElement('submission-method',SubmissionMethod)
+   	.endElement('registry');
+    ws.end();
+ 
+//********************************************************************************
+/*worked but the idea is to use append file not write file to create then append each measure group as it comes along
+   
+    	MeasureWriter = new XMLWriter(true, function(string, encoding) {
+			fs.appendFile('PQRS.xml', 'data to append', 'utf8', callback);
+	});
+ * 
+ Asynchronously append data to a file, creating the file if it does not yet exist. data can be a string or a buffer.
+
+Example:
+
+fs.appendFile('message.txt', 'data to append', (err) => {
+  if (err) throw err;
+  console.log('The "data to append" was appended to file!');
+});
+
+If options is a string, then it specifies the encoding. Example:
+
+fs.appendFile('message.txt', 'data to append', 'utf8', callback);
+
+Any specified file descriptor has to have been opened for appending.
+
+Note: Specified file descriptors will not be closed automatically. 
+
+   	 * There could be multiple measure groups in a single XML file. This element repeats if there are multiple measure groups. So the measure g
+   	 * groups how set up array?
+   	 * ws not end until measure groups ended because it is write stream but XML can start and stop with array
+   	 * to account for number of measure groups
+   	 */
+    
