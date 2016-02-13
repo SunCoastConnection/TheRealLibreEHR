@@ -72,15 +72,42 @@ XMLWriter.prototype = {
         }
     },
     
-    writeLOOPINElement : function(loopcount,MeasureDataArray){
-    			do {
+    writePQRSMeasureLoopElement : function(loopcount,MeasureDataArray){
+    			do {   
     					this.startElement('measure-group');
+    					 	this.startAttribute('ID');
+       					 	this.text(typeof version == "string" ? version : MeasureDataArray[loopcount*20-20]); //access measure group ID at repeated position in Measure Data Array
+       					 	this.endAttribute();
    						this.startElement('provider');
-   					    this.writeElement('gpro-type',MeasureDataArray[0]);
+   					      this.writeElement('gpro-type',MeasureDataArray[loopcount*20-19]);
+   					      this.writeElement('npi',MeasureDataArray[loopcount*20-18])
+   					      this.writeElement('tin',MeasureDataArray[loopcount*20-17])
+   					      this.writeElement('email-address',MeasureDataArray[loopcount*20-16])
+   					      this.writeElement('waiver-signed',MeasureDataArray[loopcount*20-15])
+   					      this.writeElement('encounter-from-date',MeasureDataArray[loopcount*20-14])
+   					      this.writeElement('encounter-to-date',MeasureDataArray[loopcount*20-13])
+   					        this.startElement('measure-group-stat',MeasureDataArray[loopcount*20-12])
+   					          this.writeElement('ffs-patient-count',MeasureDataArray[loopcount*20-11])
+   					          this.writeElement('group-reporting-rate-numerator',MeasureDataArray[loopcount*20-10])
+   					          this.writeElement('group-eligible-instances', MeasureDataArray[loopcount*20-9])
+   					          this.writeElement('group-reporting-rate',MeasureDataArray[loopcount*20-8])
+   					        this.endElement('measure-group-stat')
+   					        this.startElement('pqrs-measure')
+   					          this.writeElement('pqrs-measure-number',MeasureDataArray[loopcount*20-7])
+   					          this.writeElement('collection-method',MeasureDataArray[loopcount*20-6])
+   					            this.startElement('pqrs-measure-details')
+   					              this.writeElement('measure-strat-num',MeasureDataArray[loopcount*20-5])
+   					              this.writeElement('eligible-instances',MeasureDataArray[loopcount*20-4])
+   					              this.writeElement('meets-performance-instances',MeasureDataArray[loopcount*20-3])
+   					              this.writeElement('performance-exclusion-instances',MeasureDataArray[loopcount*20-2])
+   					              this.writeElement('performance-not-met-instances',MeasureDataArray[loopcount*20-1])
+   					              this.writeElement('reporting-rate',MeasureDataArray[loopcount*20])
+   					            this.endElement('pqrs-measure-details')
+   					          this.endElement('pqrs-measure')  
    						this.endElement('provider');
-   						this.endElement('measure-group');
+   					   this.endElement('measure-group');
+   					
     				loopcount -= 1;
-    				console.log(loopcount);	
     				}while (loopcount >0);
     },
     flush : function () {
