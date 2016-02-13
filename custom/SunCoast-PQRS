@@ -1,22 +1,21 @@
 /*PQRS - XML file writer to be used to spit out the final XML file for PQRS submittal
 * 
-* currently under development - not yet complete
-* currently uses Node module jsonfile Copyright (c) 2012-2015, JP Richardson <jprichardson@gmail.com> MIT license attached
+* currently uses/plans to use Node module jsonfile Copyright (c) 2012-2015, JP Richardson <jprichardson@gmail.com> MIT license attached
 * currently uses Node module xml-writer Copyright 2011 Nicolas Thouvenin <nthouvenin@gmail.com> MIT license attached
-*/
-/**
- * @author DPRoberts
- * write to xml for pqrs in NodeJS
- * nvm use 5.0
- * learn to use nvm moron
- 
-	*/
-	/*variables to write into XML Defined Below*/
-	/*my kluuuge is modification of xml-writer.js with a loop variable
+*
+* @author DPRoberts
+* write to xml for pqrs in NodeJS
+* nvm use 5.0
+* learn to use nvm moron (me not you)
+*
+* *variables to write into XML Defined Below
+	/*my kluuuge is modification of xml-writer.js with a PQRS specific loop variable
 	* hopefully that file is included here
 	 * stuffed in which is specific to the PQRS data but takes it from the loop function from the var
 	 * list defined here.
-	 */
+	 * 
+	 * Conceptually this should read in a CSV file and pull all of the var from positions in that file...
+*/
 	
 	var ReportCreationDate = 12;
 	var ReportCreationTime =12;
@@ -29,8 +28,8 @@
 	var SubmissionType = 1 ; // one or two or A?
 	var SubmissionMethod = 1;
 	var numberOmeasures = 2;// this should really be dynamically read
-	var MeasureDataArray = [5,1];
-	var loopcount = 3;
+	var MeasureDataArray = ['A',1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,'B',22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,'C',41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60];
+	var loopcount = 3; // this is number of measures reported
 	var bob;
 	
 
@@ -46,42 +45,16 @@
 			ws.write(string, encoding);
 
 	});
-/*
-			xw.writeLOOPINElement = function(loopcount){
-    			do {
-    					this.startElement('measure-group');
-   						this.startElement('provider');
-   						this.writeElement('gpro-type',GproType);
-   						this.endElement('provider');
-   						this.endElement('measure-group');
-    				loopcount -= 1;
-    				console.log(loopcount);	
-    				}while (loopcount >0);
-    };
-
-worked true in new xmlwriter above was false true gives indenting?
- * 
- Asynchronously append data to a file, creating the file if it does not yet exist. data can be a string or a buffer.
-
-Example:
-
-fs.appendFile('message.txt', 'data to append', (err) => {
-  if (err) throw err;
-  console.log('The "data to append" was appended to file!');
-});
-
-If options is a string, then it specifies the encoding. Example:
-
-fs.appendFile('message.txt', 'data to append', 'utf8', callback);
-
-Any specified file descriptor has to have been opened for appending.
-
-Note: Specified file descriptors will not be closed automatically. 
-    */
+	
+	// ------Below is the document to XML code from REWRITTEN xml-writer.js
    
-   
-   
-   	xw.startDocument('1.0', 'UTF-8').startElement('submission').startElement('file-audit-data')
+   	xw.startDocument('1.0', 'UTF-8')
+   	.startElement('submission')
+    	.writeAttribute('type','PQRS-REGISTRY')
+    	.endAttribute('type')
+    	.writeAttribute('version','7.0')
+    	.endAttribute('version')
+   	.startElement('file-audit-data')
    	.writeElement('create-date', ReportCreationDate)
    	.writeElement('create-time', ReportCreationTime)
    	.writeElement('create-by',ReportCreationRegistry)
@@ -93,18 +66,12 @@ Note: Specified file descriptors will not be closed automatically.
    	.writeElement('registry-name',RegistryName)
    	.writeElement('registry-id',RegistryId)
    	.writeElement('submission-type',SubmissionType)
-   	.writeElement('submission-method',SubmissionMethod)
+  	.writeElement('submission-method',SubmissionMethod)
    	.endElement('registry')
-	.writeLOOPINElement(loopcount,MeasureDataArray);
+	.writePQRSMeasureLoopElement(loopcount,MeasureDataArray);
  	ws.end();
  	
-  	/* 
-  	 * submission tag is orphaned at the moment
-   	 * There could be multiple measure groups in a single XML file. This element repeats if there are multiple measure groups. So the measure g
-   	 * groups how set up array?
-   	 * ws not end until measure groups ended because it is write stream but XML can start and stop with array
-   	 * to account for number of measure groups
-   	 */
-
-
-
+ /* currently no graceful failure
+  * 
+  * 
+  */
