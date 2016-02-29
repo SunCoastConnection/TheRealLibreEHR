@@ -1,4 +1,6 @@
 <?php
+// Copyright (C) 2016 Bryan Lee <leebc11 at acm dot org>
+//	// Added PQRS report
 // Copyright (C) 2011 Ken Chapple <ken@mi-squared.com>
 //
 // This program is free software; you can redistribute it and/or
@@ -23,6 +25,10 @@ class ReportManager
         foreach ( glob( dirname(__FILE__)."/Amc/*.php" ) as $filename ) {
             require_once( $filename );
         }
+
+        foreach ( glob( dirname(__FILE__)."/PQRS/*.php" ) as $filename ) {
+            require_once( $filename );
+        }
     }
 
     public function runReport( $rowRule, $patients, $dateTarget, $options=array() ) 
@@ -38,6 +44,8 @@ class ReportManager
             $reportFactory = new CqmReportFactory(); 
         } else if ( ReportTypes::getType( $ruleId ) == ReportTypes::AMC ) {
             $reportFactory = new AmcReportFactory();
+        } else if ( ReportTypes::getType( $ruleId ) == ReportTypes::PQRS ) {
+            $reportFactory = new PQRSReportFactory();
         } else {
             throw new Exception( "Unknown rule: ".$ruleId );
         }

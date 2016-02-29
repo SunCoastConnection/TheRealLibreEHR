@@ -1,4 +1,7 @@
 <?php
+// Copyright (C) 2016 Bryan lee <leebc11@acm.org>
+//	// PQRS reporting elements
+//
 // Copyright (C) 2011 Ken Chapple <ken@mi-squared.com>
 //
 // This program is free software; you can redistribute it and/or
@@ -13,6 +16,7 @@ class ReportTypes
     
     const AMC = 'amc';
     const CQM = 'cqm';
+    const PQRS = 'pqrs';
     
     public static function getType( $ruleId ) {
         $type = self::$_types[$ruleId][self::TYPE_INDEX];
@@ -82,5 +86,10 @@ class ReportTypes
         "e_prescribe_stage1_amc" => array( ReportTypes::AMC, "AMC_304b_STG1" ),//Stage 1 eRx
         "e_prescribe_1_stage2_amc" => array( ReportTypes::AMC, "AMC_304b_1_STG2" ),//Stage 2 eRx(Controlled Substances)
         "e_prescribe_2_stage2_amc" => array( ReportTypes::AMC, "AMC_304b_2_STG2" ),//Stage 2 eRx(UnControlled Substances)
+
+        "performance_always_met" => array( ReportTypes::PQRS, "PQRS_always_met" ),//This rule always generates performance met
+        "performance_never_met" => array( ReportTypes::PQRS, "PQRS_never_met" ),//This rule always generates performance not met
+        "performance_always_exception" => array( ReportTypes::PQRS, "PQRS_always_exception" ),//This rule always generates an exception
+
     );
 }

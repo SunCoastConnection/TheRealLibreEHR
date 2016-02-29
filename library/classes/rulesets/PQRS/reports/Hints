@@ -1,0 +1,83 @@
+* Change "TEMPLATE" to the Measure number you are working on
+
+--==>>		* PQRS Measure TEMPLATE -- Denominator 
+
+
+* Change to your name
+--==>>		@author  leebc
+ 
+
+* Change "TEMPLATE" to the Measure number you are working on 
+
+--==>>		class PQRS_TEMPLATE_Denominator implements PQRSFilterIF
+
+   
+* The Denominators normally return true, meaning the same as initial population 
+--==>>	public function test( PQRSPatient $patient, $beginDate, $endDate )
+--==>>	{
+--==>>		//Same as initial population
+--==>>		return true;
+--==>>	}
+
+
+* In the test() function, you check for THINGS
+
+--==>>	public function test( PQRSPatient $patient, $beginDate, $endDate )
+--==>>	{
+--==>>		// Check for THINGS
+--==>>		if ( $things ) {
+--==>>			return true;		// We found all the things!
+--==>>		}
+--==>>		// Otherwise: Default return false
+--==>>		return false;
+--==>>	}
+
+
+* Helper classes make it easier to find $THINGS:
+
+--==>>		Helper::check( ClinicalType::DIAGNOSIS, Diagnosis::PREGNANCY, $patient, $beginDate, $endDate ) 
+
+--==>>		if ( Helper::checkMed( Medication::PNEUMOCOCCAL_VAC, $patient, $patient->dob, $endDate ) ) {
+
+
+* MANY Measures need to check patient age
+
+--==>>					// NOTE: This is an incorrect date!!!
+--==>>	$age = $patient->calculateAgeOnDate( $beginDate );
+--==>>	if (  $age >= 2 && $age <= 18  ) {
+--==>>		//Children 2-18 years of age 
+
+
+* Or for specific drugs
+
+--==>>		// BIG complicated query here
+--==>>		if ($check['drug'] != ""){
+--==>>			return true;
+--==>>		}else{
+--==>>			return false;
+--==>>		}
+
+ 
+* Build arrays for ICD9, ICD10, CPT, CPT2, and HCPT codes
+
+--==>> 	 $pharyngitisArr = array('ICD9:034', 'ICD9:462', 'ICD9:463', 'ICD10:J02.0',  'ICD10:J02.8', 'ICD10:J02.9', 'ICD10:J03.80', 'ICD10:J03.81', 'ICD10:J03.90', 'ICD10:J03.91');
+
+   
+* Commonly used code can be added to the common/ directory  
+--==>>	public function createExclusion()
+--==>>	}
+--==>>		return new ExclusionsNone();  // FROM common/ExclusionsNone.php
+--==>>	}
+
+
+* If a Measure has multiple PopulationCriteria, (see PQRS_0128.php original
+files), you can setup multiple classes and put them in an array, like this:
+
+--==>>	public function createPopulationCriteria()
+--==>>	{
+--==>>		$populationCriteria = array();
+--==>>		$populationCriteria[] = new NFQ_0421_PopulationCriteria1();
+--==>>		$populationCriteria[] = new NFQ_0421_PopulationCriteria2();   
+--==>>		return $populationCriteria;    
+--==>>	}
+

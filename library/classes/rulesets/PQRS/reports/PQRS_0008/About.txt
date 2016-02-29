@@ -1,0 +1,11 @@
+Measure PQRS_0008 Has two sets of reporting criteria.  (See README.TXT)
+
+HOWEVER, the Numerator for both criteria is the same.  
+
+THEREFORE, this Measure can be performed  by combining the Patient Populations into one InitialPatientPopulation/Denominator group.
+
+Denominator.php
+Exclusion.php			// None. Included in Performance Met criteria
+InitialPatientPopulation.php
+Numerator.php
+PopulationCriteria.php
