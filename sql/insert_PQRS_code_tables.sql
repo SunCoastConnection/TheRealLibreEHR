@@ -24,42 +24,48 @@ DROP TABLE IF EXISTS pqrs_ccco;
 CREATE TABLE IF NOT EXISTS `pqrs_ccco` (
 id int NOT NULL auto_increment,
 type varchar(15),
-code varchar(15)
+code varchar(15),
+PRIMARY KEY  (`id`)
 );
 
 DROP TABLE IF EXISTS pqrs_poph;
 CREATE TABLE IF NOT EXISTS `pqrs_poph` (
 id int NOT NULL auto_increment,
 type varchar(15),
-code varchar(15)
+code varchar(15),
+PRIMARY KEY  (`id`)
 );
 
 DROP TABLE IF EXISTS pqrs_efcc;
 CREATE TABLE IF NOT EXISTS `pqrs_efcc` (
 id int NOT NULL auto_increment,
 type varchar(15),
-code varchar(15)
+code varchar(15),
+PRIMARY KEY  (`id`)
 );
 
 DROP TABLE IF EXISTS pqrs_ecr;
 CREATE TABLE IF NOT EXISTS `pqrs_ecr` (
 id int NOT NULL auto_increment,
 type varchar(15),
-code varchar(15)
+code varchar(15),
+PRIMARY KEY  (`id`)
 );
 
 DROP TABLE IF EXISTS pqrs_ptsf;
 CREATE TABLE IF NOT EXISTS `pqrs_ptsf` (
 id int NOT NULL auto_increment,
 type varchar(15),
-code varchar(15)
+code varchar(15),
+PRIMARY KEY  (`id`)
 );
 
 DROP TABLE IF EXISTS pqrs_ptct;
 CREATE TABLE IF NOT EXISTS `pqrs_ptct` (
 id int NOT NULL auto_increment,
 type varchar(15),
-code varchar(15)
+code varchar(15),
+PRIMARY KEY  (`id`)
 );
 
 
