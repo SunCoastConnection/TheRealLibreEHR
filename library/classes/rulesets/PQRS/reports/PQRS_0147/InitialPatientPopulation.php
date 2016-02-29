@@ -36,7 +36,7 @@ $query =
 "SELECT COUNT(b1.code)".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" INNER JOIN pqrs_population_health AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_poph AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = '$patient' ".
 " AND YEAR(fe.date) ='2015' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0147_a'); ";

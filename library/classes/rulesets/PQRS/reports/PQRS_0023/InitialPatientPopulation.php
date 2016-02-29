@@ -37,7 +37,7 @@ $query =
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
-" INNER JOIN pqrs_patient_safety AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = '$patient' ".
 " AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
