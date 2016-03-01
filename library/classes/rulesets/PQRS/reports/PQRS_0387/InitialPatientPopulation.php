@@ -39,7 +39,7 @@ $query =
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
 
-" INNER JOIN pqrs_ecc AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 " JOIN pqrs_ecc AS codelist_c ON (b2.code = codelist_c.code)".
 
 " WHERE b1.pid = '$patient' ".
