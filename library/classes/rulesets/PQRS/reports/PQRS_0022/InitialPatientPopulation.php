@@ -32,18 +32,19 @@ class PQRS_0022_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	require_once('PQRS_0022temptable.php');
 	
 $query =
-"SELECT COUNT(b1.code)".  ///just give us a number as a result of all this, counting how many results we get.
-"  FROM billing AS b1".  //b1 is the first billing table alias to get the diagnosis as Dx. denominator
-"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".  //fe is the alias of form_encounter that gets the date of service for the Tx
-"JOIN patient_data AS p ON (b1.pid = p.pid)".  //We join the patient_data table to check the patient's age.
-"INNER JOIN measure22codes AS temp ON (b1.code = temp.code)".  
-"WHERE b1.pid = '$patient' ".  ///only check for current patient, which is matched on the PID
-"AND YEAR(fe.date) ='2015' "
-." AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' "  //age must be between 18 and 75 on the date of treatment
-. "AND b1.code = temp.code;";
+"SELECT COUNT(b1.code)".  
+"  FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (b1.pid = p.pid)".
+" INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
+" WHERE b1.pid = '$patient' ".
+" AND YEAR(fe.date) ='2015' ".
+" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
+" AND b1.code = codelist_a.code".
+" AND codelist_a.type = 'pqrs_0022_a' ;";
+
 
 $result = sqlStatement($query);  ///runs the string $query_just.... as an sql statement.
 //The query just gives you a number, not rows, which is the count of the rows it returned.

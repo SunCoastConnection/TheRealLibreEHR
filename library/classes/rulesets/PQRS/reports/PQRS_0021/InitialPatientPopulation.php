@@ -41,7 +41,6 @@ class PQRS_0021_InitialPatientPopulation implements PQRSFilterIF
 " AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND b1.code = codelist_a.code".
-" AND b1.modifier = '63' ".
 " AND codelist_a.type = 'pqrs_0021_a' ;";
 
 $result = sqlStatement($query);  ///runs the string $query_just.... as an sql statement.
