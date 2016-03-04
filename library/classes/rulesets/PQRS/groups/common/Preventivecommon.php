@@ -1,6 +1,6 @@
 <?php
 /*
- * PQRS Preventative Group 
+ * PQRS Preventive Group 
  *
  * Copyright (C) 2016 Suncoast Connection
  * Suncoastconnection.com
@@ -23,7 +23,7 @@
  * @link    http://www.oemr.org
  */
 
-$Preventative =
+$Preventive =
 "SELECT COUNT(b1.code)".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".

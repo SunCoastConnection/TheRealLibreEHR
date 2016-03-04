@@ -30,8 +30,9 @@ class PQRS_Group_Preventive_0110_InitialPatientPopulation implements PQRSFilterI
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/Preventivecommon.php");
+$result = sqlStatement($Preventive);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
