@@ -30,8 +30,9 @@ class PQRS_Group_Asthma_0130_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/Asthmacommon.php");
+$result = sqlStatement($Asthma);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
