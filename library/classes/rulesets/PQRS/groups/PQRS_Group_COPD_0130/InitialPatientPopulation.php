@@ -30,8 +30,9 @@ class PQRS_Group_COPD_0130_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/COPDcommon.php");
+$result = sqlStatement($COPD);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
