@@ -47,7 +47,7 @@ class PQRS_0402_PopulationCriteria implements PQRSPopulationCrtiteriaFactory
     
     public function createExclusion()
     {
-        return new PQRS_0110_Exclusion();
+        return new PQRS_0402_Exclusion();
     }
 }
 ?>
