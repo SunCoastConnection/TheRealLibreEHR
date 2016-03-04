@@ -30,6 +30,10 @@ class PQRSReportFactory extends RsReportFactoryAbstract
         foreach ( glob( dirname(__FILE__)."/reports/*.php" ) as $filename ) {
             require_once( $filename );
         }
+
+        foreach ( glob( dirname(__FILE__)."/groups/*.php" ) as $filename ) {
+            require_once( $filename );
+        }
     }
     
     public function createReport( $className, $rowRule, $patientData, $dateTarget, $options ) 
