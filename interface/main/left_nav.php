@@ -1528,6 +1528,16 @@ if (!empty($reg)) {
           <?php if ($GLOBALS['enable_cdr'] && $GLOBALS['enable_alert_log'] ) genMiscLink('RTop','rep','0',xl('Alerts Log'),'reports/cdr_log.php'); ?>
         </ul>
       </li>
+ 
+     <?php // 2016-02-02 leebc -- Adding menu section for PQRS ?>
+     <?php if ($GLOBALS['enable_pqrs']) {?>
+     <li><a class="collapsed_lv2"><span><?php xl('PQRS','e') ?></span></a>
+       <ul>
+          <?php genMiscLink('RTop','rep','0',xl('Physician Quality Reporting System -- Measures (Development stub)'),'reports/pqrs.php?type=standard'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('PQRS Measure Groups (Development stub)'),'reports/pqrs.php?type=groups'); ?>
+	</ul>
+  <?php }?>
+
       <li><a class="collapsed_lv2"><span><?php xl('Visits','e') ?></span></a>
         <ul>
           <?php if (!$GLOBALS['disable_calendar']) genMiscLink('RTop','rep','0',xl('Appointments'),'reports/appointments_report.php'); ?>

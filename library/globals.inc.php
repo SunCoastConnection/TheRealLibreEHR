@@ -2618,6 +2618,49 @@ $GLOBALS_METADATA = array(
     ),
 	
    ),
+
+  // PQRS (Physician Quality Reporting System)
+  // 2016-02-02 leebc -- Globals configuration section for PQRS
+	// Some THING is FISHy here... ;-)
+  //
+  'PQRS' => array(
+
+    'enable_pqrs' => array(
+      xl('Enable Physician Quality Reporting System (PQRS)'),
+      'bool',                           // data type
+      '1',                               // default
+      xl('Enable Physician Quality Reporting System (PQRS)')
+    ),
+
+    'pqrs_thing1' => array(
+      xl('Thing 1'),
+      'bool',                           // data type
+      '1',                               // default
+      xl('Enable Physician Quality Reporting System (PQRS)')
+    ),
+
+    'pqrs_thing2' => array(
+      xl('Thing 2'),
+      'bool',                           // data type
+      '1',                               // default
+      xl('Enable Physician Quality Reporting System (PQRS)')
+    ),
+
+    'pqrs_fish_type' => array(
+      xl('Fish Type'),               // descriptive name
+      array(
+        '1' => xl('One Fish'),
+        '2' => xl('Two Fish'),
+        '3' => xl('Red Fishh'),
+        '4' => xl('Blue Fish'),
+        '5' => xl('Oh fishy, fishy, fishy, fish.'),
+      ),
+      '1',                              // default = tree menu
+      xl('Choose your default fish type')
+    ),
+
+  ),
+
    
 
    
