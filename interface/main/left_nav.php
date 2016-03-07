@@ -1533,7 +1533,7 @@ if (!empty($reg)) {
      <?php if ($GLOBALS['enable_pqrs']) {?>
      <li><a class="collapsed_lv2"><span><?php xl('PQRS','e') ?></span></a>
        <ul>
-          <?php genMiscLink('RTop','rep','0',xl('Physician Quality Reporting System -- Measures (Development stub)'),'reports/pqrs.php?type=standard'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('Physician Quality Reporting System -- Individual Measures (Development stub)'),'reports/pqrs.php?type=individual'); ?>
           <?php genMiscLink('RTop','rep','0',xl('PQRS Measure Groups (Development stub)'),'reports/pqrs.php?type=groups'); ?>
 	</ul>
   <?php }?>
