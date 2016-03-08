@@ -420,7 +420,7 @@ class ReportTypes
         "PQRS_Group_TKR_0350" => array( ReportTypes::PQRS, "PQRS_Group_TKR_0350" ),
         "PQRS_Group_TKR_0351" => array( ReportTypes::PQRS, "PQRS_Group_TKR_0351" ),
         "PQRS_Group_TKR_0352" => array( ReportTypes::PQRS, "PQRS_Group_TKR_0352" ),
-        "PQRS_Group_TKR_0353" => array( ReportTypes::PQRS, "PQRS_Group_TKR_0353" ),
+        "PQRS_Group_TKR_0353" => array( ReportTypes::PQRS, "PQRS_Group_TKR_0353" )
 
     );
 }
