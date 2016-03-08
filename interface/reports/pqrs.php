@@ -35,13 +35,16 @@ if (!empty($report_id)) {
   $type_report = (($type_report == "individual") || ($type_report == "groups")) ? $type_report : "individual";
   $rule_filter = $report_view['type'];
   
+ 
+    $begin_date = $report_view['date_begin'];
+   
   $target_date = $report_view['date_target'];
   $plan_filter = $report_view['plan'];
   $organize_method = $report_view['organize_mode'];
   $provider  = $report_view['provider'];
   $pat_prov_rel = $report_view['pat_prov_rel'];
   $dataSheet = json_decode($report_view['data'],TRUE);
-}
+ }
 else {
   // Collect report type parameter (standard, amc, cqm)
   // Note that need to convert amc_2011 and amc_2014 to amc and cqm_2011 and cqm_2014 to cqm
@@ -159,11 +162,11 @@ else {
    $.post("../../library/ajax/status_report.php",
      {status_report_id: report_id},
      function(data){
-       if (data == "PENDING") {
+       if (data === "PENDING") {
          // Place the pending string in the DOM
          $('#status_span').replaceWith("<span id='status_span'><?php echo xlt("Preparing To Run Report"); ?></span>");
        }
-       else if (data == "COMPLETE") {
+       else if (data === "COMPLETE") {
          // Go into the results page
          top.restoreSession();
          link_report = "pqrs.php?report_id="+report_id;
@@ -183,8 +186,8 @@ else {
  function GenXml(sNested) {
 	  top.restoreSession();
 	  //PQRS simple xml export
-	  if(sNested == "PQRS"){
-		var form_rule_filter = theform.form_rule_filter.value
+	  if(sNested === "PQRS"){
+		var form_rule_filter = theform.form_rule_filter.value;
 		var sLoc = '../../custom/export_pqrs_xml.php?target_date=' + theform.form_target_date.value + '&qrda_version=3&rule_filter=cqm_2014&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id);?>";
 	  }else{
 		var sLoc = '../../custom/export_registry_xml.php?&target_date=' + theform.form_target_date.value + '&nested=' + sNested;
@@ -202,7 +205,23 @@ else {
 	dlgopen(sLoc, '_blank', 600, 500);
  }
 
-
+ function validateForm() {
+   <?php if ( (empty($report_id)) && ($type_report == "cqm") ) { ?>
+     // If this is a cqm and plan set not set to ignore, then need to ensure consistent with the rules set
+     if ($("#form_plan_filter").val() != '') {
+       if ($("#form_rule_filter").val() == $("#form_plan_filter").val()) {
+         return true;
+       } else {
+         return false;
+       }
+     }
+     else {
+       return true;
+     }
+   <?php } else { ?>
+     return true;
+   <?php } ?>
+ }
  
  function Form_Validate() {
 	 <?php if ( empty($report_id)  ){ ?>	
@@ -633,7 +652,7 @@ else {
        else {
          echo "<td align='center'>" . $row['excluded'] . "</td>";
        }
-     }
+     
 ////////////////////////////////// _art note: Targets are not implemented in PQRS reports as far as I understand.  May be useful, but direct entry form will do this instead
      if ( isset($row['itemized_test_id']) && ($row['pass_target'] > 0) ) {
        echo "<td align='center'><a href='../main/finder/patient_select.php?from_page=pqrs_report&pass_id=pass&report_id=".attr($report_id)."&itemized_test_id=".attr($row['itemized_test_id'])."&numerator_label=".urlencode(attr($row['numerator_label']))."' onclick='top.restoreSession()'>" . $row['pass_target'] . "</a></td>";
