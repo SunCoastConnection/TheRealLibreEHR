@@ -228,6 +228,34 @@ else if ($from_page == "cdr_report") {
     $result = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass_id,$numerator_label,false,$sqllimit,$fstart);
   }
 }
+else if ($from_page == "pqrs_report") {
+  // Collect setting from pqrs report
+  echo "<input type='hidden' name='from_page' value='$from_page' />\n";
+  $report_id = isset($_REQUEST['report_id']) ? $_REQUEST['report_id'] : 0;
+  echo "<input type='hidden' name='report_id' value='".$report_id."' />\n";
+  $itemized_test_id = isset($_REQUEST['itemized_test_id']) ? $_REQUEST['itemized_test_id'] : 0;
+  echo "<input type='hidden' name='itemized_test_id' value='".$itemized_test_id."' />\n";
+  $numerator_label = isset($_REQUEST['numerator_label']) ? $_REQUEST['numerator_label'] : '';
+  echo "<input type='hidden' name='numerator_label' value='".$numerator_label."' />\n";
+  $pass_id = isset($_REQUEST['pass_id']) ? $_REQUEST['pass_id'] : "all";
+  echo "<input type='hidden' name='pass_id' value='".$pass_id."' />\n";
+  $print_patients = isset($_REQUEST['print_patients'])? $_REQUEST['print_patients'] : 0;
+  echo "<input type='hidden' name='print_patients' value='".$print_patients."' />\n";
+
+  // Collect patient listing from pqrs report
+  if ($print_patients) {
+    // collect entire listing for printing
+    $result = collectItemizedPatientsPqrsReport($report_id,$itemized_test_id,$pass_id,$numerator_label);
+    $GLOBALS['PATIENT_INC_COUNT'] = count($result);
+    $MAXSHOW = $GLOBALS['PATIENT_INC_COUNT'];
+  }
+  else {
+    // collect the total listing count
+    $GLOBALS['PATIENT_INC_COUNT'] = collectItemizedPatientsPqrsReport($report_id,$itemized_test_id,$pass_id,$numerator_label,true);
+    // then just collect applicable list for pagination
+    $result = collectItemizedPatientsPqrsReport($report_id,$itemized_test_id,$pass_id,$numerator_label,false,$sqllimit,$fstart);
+  }
+}
 else {
   $patient = $_REQUEST['patient'];
   $findBy  = $_REQUEST['findBy'];
@@ -262,17 +290,25 @@ else {
   <td class='text'>
   <?php if ($from_page == "cdr_report") { ?>
    <a href='../../reports/cqm.php?report_id=<?php echo attr($report_id) ?>' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt("Return To Report Results"); ?></span></a>
-  <?php } else { ?>
+  <?php } 
+  else if ($from_page == "pqrs_report") { ?>
+   <a href='../../reports/pqrs.php?report_id=<?php echo attr($report_id) ?>' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt("Return To Report Results"); ?></span></a>
+  <?php }  else { ?>
    <a href="./patient_select_help.php" target=_new onclick='top.restoreSession()'>[<?php echo htmlspecialchars( xl('Help'), ENT_NOQUOTES); ?>]&nbsp</a>
   <?php } ?>
   </td>
+  
   <td class='text' align='center'>
 <?php if ($message) echo "<font color='red'><b>".htmlspecialchars( $message, ENT_NOQUOTES)."</b></font>\n"; ?>
   </td>
   <td>
-   <?php if ($from_page == "cdr_report") { ?>
-    <?php echo "<a href='patient_select.php?from_page=cdr_report&pass_id=".attr($pass_id)."&report_id=".attr($report_id)."&itemized_test_id=".attr($itemized_test_id)."&numerator_label=".urlencode(attr($row['numerator_label']))."&print_patients=1' class='css_button' onclick='top.restoreSession()'><span>".xlt("Print Entire Listing")."</span></a>"; ?>
-   <?php } ?> &nbsp;
+   <?php if ($from_page == "cdr_report" ) { 
+     echo "<a href='patient_select.php?from_page=cdr_report&pass_id=".attr($pass_id)."&report_id=".attr($report_id)."&itemized_test_id=".attr($itemized_test_id)."&numerator_label=".urlencode(attr($row['numerator_label']))."&print_patients=1' class='css_button' onclick='top.restoreSession()'><span>".xlt("Print Entire Listing")."</span></a>";
+    }
+    if ($from_page == "pqrs_report") { 
+     echo "<a href='patient_select.php?from_page=pqrs_report&pass_id=".attr($pass_id)."&report_id=".attr($report_id)."&itemized_test_id=".attr($itemized_test_id)."&numerator_label=".urlencode(attr($row['numerator_label']))."&print_patients=1' class='css_button' onclick='top.restoreSession()'><span>".xlt("Print Entire Listing")."</span></a>";
+    }
+     ?> &nbsp;
   </td>
   <td class='text' align='right'>
 <?php
@@ -299,7 +335,7 @@ if ($fend > $count) $fend = $count;
   </td>
  </tr>
  <tr>
-   <?php if ($from_page == "cdr_report") {
+   <?php if ($from_page == "cdr_report" OR $from_page == "pqrs_report") {
      echo "<td colspan='6' class='text'>";
      echo "<b>";
      if ($pass_id == "fail") {
