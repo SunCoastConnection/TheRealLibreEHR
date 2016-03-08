@@ -54,10 +54,10 @@ else {
 
   // Collect form parameters (set defaults if empty)
  // if ($type_report == "amc") {
- $begin_date = (isset($_POST['form_begin_date'])) ? trim($_POST['form_begin_date']) : "";
+ $begin_date = (isset($_POST['form_begin_date'])) ? trim($_POST['form_begin_date']) : "2015-01-01 00:00:00";
  //   $labs_manual = (isset($_POST['labs_manual_entry'])) ? trim($_POST['labs_manual_entry']) : "0";
  // }
-  $target_date = (isset($_POST['form_target_date'])) ? trim($_POST['form_target_date']) : date('Y-m-d H:i:s');
+  $target_date = (isset($_POST['form_target_date'])) ? trim($_POST['form_target_date']) : "2015-12-31 23:59:59" ; //date('Y-m-d H:i:s');
   $rule_filter = (isset($_POST['form_rule_filter'])) ? trim($_POST['form_rule_filter']) : "";
   $plan_filter = (isset($_POST['form_plan_filter'])) ? trim($_POST['form_plan_filter']) : "";
   $organize_method = (empty($plan_filter)) ? "default" : "plans";
