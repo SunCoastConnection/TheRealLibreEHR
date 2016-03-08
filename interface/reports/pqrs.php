@@ -283,7 +283,7 @@ else {
 <!-- Required for the popup date selectors -->
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 
-<span class='title'><?php echo xlt('Report'); ?> - ---leebc
+<span class='title'><?php echo xlt('Report'); ?> 
 
 <?php if ($type_report == "individual") { ?>
   <?php echo xlt('Physician Quality Reporting System -- Measures'); ?>
@@ -386,7 +386,7 @@ else {
 
            
                     <tr>
-                        <td class='label'>b
+                        <td class='label'>
                            <?php echo htmlspecialchars( xl('Measure Group Selection'), ENT_NOQUOTES); ?>:
                         </td>
                         <td>
