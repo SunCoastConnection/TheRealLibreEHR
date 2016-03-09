@@ -30,8 +30,9 @@ class PQRS_Group_Sinusitis_0331_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/Sinusitiscommon.php");
+$result = sqlStatement($Sinusitis);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
