@@ -39,7 +39,7 @@ $query =
 " WHERE b1.pid = '$Patient' ".
 " AND b1.user = '$Provider' ".
 " AND YEAR(fe.date) = '2015' ".
-" AND  b1.code IN ( '3060F','3061F','3062F','3066F','G8505') AND b1.modifier != '8P'; ";
+" AND  b1.code IN ( '3060F','3061F','3062F','3066F','G8506') AND b1.modifier != '8P'; ";
 
 $result = sqlStatement($query); 
 

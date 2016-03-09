@@ -39,7 +39,7 @@ $query =
 "JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
 "WHERE b.pid = '$Patient' ".
 "AND (YEAR(fe.date) =YEAR('.$beginDate.')) "  /// could be hard coded for 2015
-."AND b.code IN ('3044F','3045F');"; //checking for CPT2 code.
+."AND b.code = '3046F';"; //checking for CPT2 code.
 
 $result = sqlStatement($query);  ///runs the string $query_just.... as an sql statement.
 //The query just gives you a number, not rows, which is the count of the rows it returned.

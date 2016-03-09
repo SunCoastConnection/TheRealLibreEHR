@@ -37,7 +37,7 @@ $query =
 " WHERE b1.pid = '$Patient' ".
 " AND b1.user = '$Provider' ".
 " AND YEAR(fe.date) ='2015' ".
-" AND b1.code IN ('G8482','G8482')  ; ";
+" AND b1.code IN ('G8482','G8483')  ; ";
 
 $result = sqlStatement($query); 
 

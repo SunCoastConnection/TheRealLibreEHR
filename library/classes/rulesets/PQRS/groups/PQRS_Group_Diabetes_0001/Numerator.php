@@ -30,9 +30,18 @@ class PQRS_Group_Diabetes_0001_Numerator implements PQRSFilterIF
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+$query =
+"SELECT COUNT(b.code)".  ///just give us a number as a result of all this, counting how many results we get.
+"  FROM billing AS b".
+"JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
+"WHERE b.pid = '$Patient' ".
+"AND (YEAR(fe.date) =YEAR('.$beginDate.')) "  /// could be hard coded for 2015
+."AND b.code = '3046F';"; //checking for CPT2 code.
+
+$result = sqlStatement($query);  
+
+if ($result > 0){ return false;} else {return true;}  
+	
     }
 }
 
