@@ -30,8 +30,9 @@ class PQRS_Group_Sleep_Apnea_0277_InitialPatientPopulation implements PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/Apneacommon.php");
+$result = sqlStatement($Apnea);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
