@@ -30,9 +30,19 @@ class PQRS_Group_HepatitisC_0401_Numerator implements PQRSFilterIF
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+$query =
+" SELECT COUNT(b1.code)".  
+" FROM billing AS b1".
+" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)'.
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = '$Patient' ".
+" AND b1.user = '$Provider' ".
+" AND YEAR(fe.date) ='2015' ".
+" AND b1.code IN('G9455','G9456') ; ";
+
+$result = sqlStatement($query); 
+
+if ($result > 0){ return true;} else {return false;}     		
     }
 }
 
