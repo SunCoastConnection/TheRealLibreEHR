@@ -30,8 +30,9 @@ class PQRS_Group_Oncology_0130_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/Oncologycommon.php");
+$result = sqlStatement($Oncology);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
