@@ -30,8 +30,9 @@ class PQRS_Group_Cataracts_0389_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/Cataractscommon.php");
+$result = sqlStatement($Cataracts);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
