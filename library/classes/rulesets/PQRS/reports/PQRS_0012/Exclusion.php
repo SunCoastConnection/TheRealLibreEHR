@@ -33,3 +33,4 @@ class PQRS_0012_Exclusion implements PQRSFilterIF
         return false;
     }
 }
+?>

@@ -34,3 +34,4 @@ class PQRS_0012_Numerator implements PQRSFilterIF
 		
     }
 }
+?>

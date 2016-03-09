@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package OpenEMR
- * @author  leebc
+ * @author  meggerc
  * @link    http://www.open-emr.org
  */
  
@@ -47,3 +47,4 @@ class PQRS_0012_PopulationCriteria implements PQRSPopulationCrtiteriaFactory
         return new PQRS_0012_Exclusion();
     }
 }
+?>
