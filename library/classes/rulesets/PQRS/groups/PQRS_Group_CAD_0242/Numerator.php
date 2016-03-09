@@ -30,9 +30,20 @@ class PQRS_Group_CAD_0242_Numerator implements PQRSFilterIF
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+$query =
+" SELECT COUNT(b1.code)".  
+" FROM billing AS b1".
+" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
+" INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = '$Patient' ".
+" AND b1.user = '$Provider' ".
+" AND YEAR(fe.date) ='2015' ".
+" AND ((b1.code = '1010F' AND b2.code = '0557F' AND b3.code IN( '1011F', '1012') ) AND b1.modifier != '8P'  AND  b2.modifier != '8P' )); ";
+
+$result = sqlStatement($query); 
+
+if ($result > 0){ return true;} else {return false;}     	
     }
 }
 
