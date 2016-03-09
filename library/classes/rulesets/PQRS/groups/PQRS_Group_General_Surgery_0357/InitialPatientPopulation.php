@@ -30,8 +30,9 @@ class PQRS_Group_General_Surgery_0357_InitialPatientPopulation implements PQRSFi
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/Surgerycommon.php");
+$result = sqlStatement($Surgery);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
