@@ -30,8 +30,9 @@ class PQRS_Group_AOE_0091_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require_once("$srcdir/classes/rulesets/PQRS/groups/common/AOEcommon.php");
+$result = sqlStatement($AOE);
+if ($result > 0){ return true;} else {return false;}  
     }
 }
 
