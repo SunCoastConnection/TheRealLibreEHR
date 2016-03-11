@@ -527,7 +527,7 @@ function test_rules_clinic_batch_method($provider='',$type='',$dateTarget='',$mo
   // Set ability to itemize report if this feature is turned on
   if ( ( ($type == "active_alert" || $type == "passive_alert")          && ($GLOBALS['report_itemizing_standard']) ) ||
        ( ($type == "cqm" || $type == "cqm_2011" || $type == "cqm_2014") && ($GLOBALS['report_itemizing_cqm'])      ) ||
-       ( ($type == "amc" || $type == "amc_2011" || $type == "amc_2014" || $type == "amc_2014_stage1" || $type == "amc_2014_stage2") && ($GLOBALS['report_itemizing_amc'])      ) ) {
+       ( ($type == "amc" || $type == "individual" || $type == "groups" ||$type == "amc_2011" || $type == "amc_2014" || $type == "amc_2014_stage1" || $type == "amc_2014_stage2") && ($GLOBALS['report_itemizing_amc'])      ) ) {
     $GLOBALS['report_itemizing_temp_flag_and_id'] = $report_id;
   }
   else {
@@ -724,7 +724,7 @@ function test_rules_clinic($provider='',$type='',$dateTarget='',$mode='',$patien
 
     // If using cqm or amc type, then use the hard-coded rules set.
     // Note these rules are only used in report mode.
-    if ($rowRule['cqm_flag'] || $rowRule['amc_flag']) {
+      if ($rowRule['cqm_flag'] || $rowRule['amc_flag'] || $rowRule['pqrs_flag'] ) {
 
       require_once( dirname(__FILE__)."/classes/rulesets/ReportManager.php");
       $manager = new ReportManager();
@@ -1416,7 +1416,7 @@ function resolve_rules_sql($type='',$patient_id='0',$configurableOnly=FALSE,$pla
   if ($configurableOnly) {
     // Collect all default, configurable (per patient) rules into an array
     //   (ie. ignore the cqm and amc rules)
-    $sql = sqlStatementCdrEngine("SELECT * FROM `clinical_rules` WHERE `pid`=0 AND `cqm_flag` !=1 AND `amc_flag` !=1 ORDER BY `id`");
+    $sql = sqlStatementCdrEngine("SELECT * FROM `clinical_rules` WHERE `pid`=0 AND `cqm_flag` !=1 AND `amc_flag` !=1 AND `pqrs_2015_flag` !=1 ORDER BY `id`");
   }
   else {
     // Collect all default rules into an array
@@ -1469,7 +1469,7 @@ function resolve_rules_sql($type='',$patient_id='0',$configurableOnly=FALSE,$pla
 
     // Decide if use default vs custom rule (preference given to custom rule)
     if (!empty($customRule)) {
-      if ($type == "cqm" || $type == "amc" ) {
+      if ($type == "cqm" || $type == "amc" || $type == "pqrs" || $type == "individual" || $type == "groups") {
         // For CQM and AMC, do not use custom rules (these are to create standard clinic wide reports)
         $goRule = $rule;
       }
