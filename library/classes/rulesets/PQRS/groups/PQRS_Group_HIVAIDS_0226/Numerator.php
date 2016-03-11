@@ -33,7 +33,6 @@ class PQRS_Group_HIVAIDS_0226_Numerator implements PQRSFilterIF
 $query =
 " SELECT COUNT(b1.code)".  
 " FROM billing AS b1".
-
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = '$Patient' ".
 " AND b1.user = '$Provider' ".
