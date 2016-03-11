@@ -30,9 +30,19 @@ class PQRS_Group_HF_0005_Numerator implements PQRSFilterIF
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+$query =
+" SELECT COUNT(b1.code)".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN billing AS b2 ON (b2.pid = b1.pid)'.
+" WHERE b1.pid = '$Patient' ".
+" AND b1.user = '$Provider' ".
+" AND YEAR(fe.date) ='2015' ".
+" AND (( b1.code = '4010F' AND b2.code = '3021F' AND b1.modifier != '8P') OR (b1.code = '3022F' OR( b1.code = '3021F' AND b1.modifier = '8P'))) ; ";
+
+$result = sqlStatement($query); 
+
+if ($result > 0){ return true;} else {return false;}   	
     }
 }
 
