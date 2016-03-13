@@ -473,86 +473,94 @@ function compare_log_alerts($patient_id,$current_targets,$category='clinical_rem
  * @param  integer      $report_id     id of report in database (if already bookmarked)
  * @return array                       See above for organization structure of the results.
  */
-function test_rules_clinic_batch_method($provider='',$type='',$dateTarget='',$mode='',$plan='',$organize_mode='default',$options=array(),$pat_prov_rel='primary',$batchSize='',$report_id=NULL) {
+function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget = '', $mode = '', $plan = '', $organize_mode = 'default', $options = array(), $pat_prov_rel = 'primary', $batchSize = '', $report_id = NULL) {
 
   // Default to a batchsize, if empty
-  if (empty($batchSize)) {
-    $batchSize=100;
-  }
+
+  $batchSize = (empty($batchSize) ? 100 : $batchSize);
 
   // Collect total number of pertinent patients (to calculate batching parameters)
-  $totalNumPatients = buildPatientArray('',$provider,$pat_prov_rel,NULL,NULL,TRUE);
+  $totalNumPatients = buildPatientArray('', $provider, $pat_prov_rel, null, null, true);
 
   // Cycle through the batches and collect/combine results
-  if (($totalNumPatients%$batchSize) > 0) {
-    // not perfectly divisible
-    $totalNumberBatches = floor($totalNumPatients/$batchSize) + 1;
-  }
-  else {
-    // perfectly divisible
-    $totalNumberBatches = floor($totalNumPatients/$batchSize);
-  }
+
+  $totalNumberBatches = floor($totalNumPatients / $batchSize)
+    + ($totalNumPatients % $batchSize > 0 ?
+      1 : // not perfectly divisible
+      0 // perfectly divisible
+    );
 
   // Fix things in the $options array(). This now stores the number of labs to be used in the denominator in the AMC report.
   // The problem with this variable is that is is added in every batch. So need to fix it by dividing this number by the number
   // of planned batches(note the fixed array will go into the test_rules_clinic function, however the original will be used
   // in the report storing/tracking engine.
-  $options_modified=$options;
-  if (!empty($options_modified['labs_manual'])) {
+  $options_modified = $options;
+
+  if(!empty($options_modified['labs_manual'])) {
     $options_modified['labs_manual'] = $options_modified['labs_manual'] / $totalNumberBatches;
   }
 
   // Prepare the database to track/store results
-  $fields = array('provider'=>$provider,'mode'=>$mode,'plan'=>$plan,'organize_mode'=>$organize_mode,'pat_prov_rel'=>$pat_prov_rel);
-  if (is_array($dateTarget)) {
-    $fields = array_merge($fields,array(date_target=>$dateTarget['dateTarget']));
-    $fields = array_merge($fields,array(date_begin=>$dateTarget['dateBegin']));
+  $fields = array(
+    'provider' => $provider,
+    'mode' => $mode,
+    'plan' => $plan,
+    'organize_mode' => $organize_mode,
+    'pat_prov_rel' => $pat_prov_rel
+  );
+
+  $fields = array_merge(
+    $fields,
+    (is_array($dateTarget) ?
+      array(
+        'date_target' => $dateTarget['dateTarget'],
+        'date_begin' => $dateTarget['dateBegin']
+      ) :
+      array(
+        'date_target' => (
+          empty($dateTarget) ?
+            date('Y-m-d H:i:s') :
+            $dateTarget
+        )
+      )
+    )
+  );
+
+  if(!empty($options)) {
+    $fields = array_merge($fields, $options);
   }
-  else {
-    if (empty($dateTarget)) {
-      $fields = array_merge($fields,array(date_target=>date("Y-m-d H:i:s")));
-    }
-    else {
-      $fields = array_merge($fields,array(date_target=>$dateTarget));
-    }
-  }
-  if (!empty($options)) {
-    foreach ($options as $key => $value) {
-      $fields = array_merge($fields, array($key=>$value));
-    }
-  }
-  $report_id = beginReportDatabase($type,$fields,$report_id);
-  setTotalItemsReportDatabase($report_id,$totalNumPatients);
+
+  $report_id = beginReportDatabase($type, $fields, $report_id);
+  setTotalItemsReportDatabase($report_id, $totalNumPatients);
 
   // Set ability to itemize report if this feature is turned on
-  if ( ( ($type == "active_alert" || $type == "passive_alert")          && ($GLOBALS['report_itemizing_standard']) ) ||
-       ( ($type == "cqm" || $type == "cqm_2011" || $type == "cqm_2014") && ($GLOBALS['report_itemizing_cqm'])      ) ||
-       ( ($type == "amc" || $type == "amc_2011" || $type == "amc_2014" || $type == "amc_2014_stage1" || $type == "amc_2014_stage2") && ($GLOBALS['report_itemizing_amc'])      ) ) {
-    $GLOBALS['report_itemizing_temp_flag_and_id'] = $report_id;
-  }
-  else {
-    $GLOBALS['report_itemizing_temp_flag_and_id'] = 0;
-  }
+  $GLOBALS['report_itemizing_temp_flag_and_id'] = (
+    ($GLOBALS['report_itemizing_standard'] && in_array($type, array('active_alert', 'passive_alert'))) ||
+    ($GLOBALS['report_itemizing_cqm'] && in_array($type, array('cqm', 'cqm_2011', 'cqm_2014'))) ||
+    ($GLOBALS['report_itemizing_amc'] && in_array($type, array('amc', 'amc_2011', 'amc_2014', 'amc_2014_stage1', 'amc_2014_stage2'))) ||
+    ($GLOBALS['report_itemizing_pqrs'] && in_array($type, array('pqrs', 'pqrs_2014', 'pqrs_2015', 'pqrs_2016'))) ?
+      $report_id :
+      0
+  );
 
-  for ($i=0;$i<$totalNumberBatches;$i++) {
-
+  for($i = 0; $i < $totalNumberBatches; $i++) {
     // If itemization is turned on, then reset the rule id iterator
-    if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
+    if($GLOBALS['report_itemizing_temp_flag_and_id']) {
       $GLOBALS['report_itemized_test_id_iterator'] = 1;
     }
 
-    $dataSheet_batch = test_rules_clinic($provider,$type,$dateTarget,$mode,'',$plan,$organize_mode,$options_modified,$pat_prov_rel,(($batchSize*$i)+1),$batchSize);
-    if ($i == 0) {
+    $dataSheet_batch = test_rules_clinic($provider, $type, $dateTarget, $mode, '', $plan, $organize_mode, $options_modified, $pat_prov_rel, ($batchSize * $i) + 1, $batchSize);
+
+    if($i == 0) {
       // For first cycle, simply copy it to dataSheet
       $dataSheet = $dataSheet_batch;
-    }
-    else {
+    } else {
       //debug
       //error_log("CDR: ".print_r($dataSheet,TRUE),0);
       //error_log("CDR: ".($batchSize*$i)." records",0);
 
       // Integrate batch results into main dataSheet
-      foreach ($dataSheet_batch as $key => $row) {
+      foreach($dataSheet_batch as $key => $row) {
         if (!$row['is_sub']) {
           //skip this stuff for the sub entries (and use previous main entry in percentage calculation)
           $total_patients = $dataSheet[$key]['total_patients'] + $row['total_patients'];
@@ -562,17 +570,20 @@ function test_rules_clinic_batch_method($provider='',$type='',$dateTarget='',$mo
           $pass_filter = $dataSheet[$key]['pass_filter'] + $row['pass_filter'];
           $dataSheet[$key]['pass_filter'] = $pass_filter;
         }
+
         $pass_target = $dataSheet[$key]['pass_target'] + $row['pass_target'];
         $dataSheet[$key]['pass_target'] = $pass_target;
-        $dataSheet[$key]['percentage'] = calculate_percentage($pass_filter,$excluded,$pass_target);
+        $dataSheet[$key]['percentage'] = calculate_percentage($pass_filter, $excluded, $pass_target);
       }
     }
+
     //Update database to track results
-    updateReportDatabase($report_id,$total_patients);
+    updateReportDatabase($report_id, $total_patients);
   }
 
   // Record results in database and send to screen, if applicable.
-  finishReportDatabase($report_id,json_encode($dataSheet));
+  finishReportDatabase($report_id, json_encode($dataSheet));
+
   return $dataSheet;
 }
 
@@ -1046,76 +1057,73 @@ function test_rules_clinic($provider='',$type='',$dateTarget='',$mode='',$patien
  * @param  boolean       $onlyCount     If true, then will just return the total number of applicable records (ignores batching parameters)
  * @return array/integer                Array of patient pid values or number total pertinent patients (if $onlyCount is TRUE)
  */
-function buildPatientArray($patient_id='',$provider='',$pat_prov_rel='primary',$start=NULL,$batchSize=NULL,$onlyCount=FALSE) {
+function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'primary', $start = null, $batchSize = null, $onlyCount = false) {
+  if(empty($patient_id)) {
+    if(empty($provider)) {
+      // Look at entire practice
+      $query = 'SELECT `pid` FROM `patient_data` ORDER BY `pid`';
 
-  if (!empty($patient_id)) {
-    // only look at the selected patient
-    if ($onlyCount) {
-      $patientNumber = 1;
+      if($start == null || $batchSize == null || $onlyCount) {
+        $rez = sqlStatementCdrEngine($query);
+
+        if($onlyCount) {
+          $patientNumber = sqlNumRows($rez);
+        }
+      } else {
+        // batching
+        $rez = sqlStatementCdrEngine($query.' LIMIT ?, ?', array($start - 1, $batchSize));
+      }
+    } else {
+      // Look at an individual physician
+      if($pat_prov_rel == 'encounter') {
+        $query = 'SELECT DISTINCT `pid` FROM `form_encounter` WHERE `provider_id` = ? OR `supervisor_id` = ? ORDER BY `pid`';
+
+        // Choose patients that are related to specific physician by an encounter
+        if($start == null || $batchSize == null || $onlyCount) {
+          $rez = sqlStatementCdrEngine($query, array($provider, $provider));
+
+          if($onlyCount) {
+            $patientNumber = sqlNumRows($rez);
+          }
+        } else {
+          //batching
+          $rez = sqlStatementCdrEngine($query.' LIMIT ?, ?;', array($provider, $provider, $start - 1, $batchSize));
+        }
+      } else { // $pat_prov_rel == 'primary'
+        $query = 'SELECT `pid` FROM `patient_data` WHERE `providerID` = ? ORDER BY `pid`';
+
+        // Choose patients that are assigned to the specific physician (primary physician in patient demographics)
+        if($start == null || $batchSize == null || $onlyCount) {
+          $rez = sqlStatementCdrEngine($query, array($provider));
+
+          if ($onlyCount) {
+            $patientNumber = sqlNumRows($rez);
+          }
+        } else {
+          $rez = sqlStatementCdrEngine($query.' LIMIT ?, ?;', array($provider, $start - 1, $batchSize));
+        }
+      }
     }
-    else {
+
+    // convert the sql query results into an array if returning the array
+    if(!$onlyCount) {
+      for($iter = 0; $row = sqlFetchArray($rez); $iter++) {
+        $patientData[$iter] = $row;
+      }
+    }
+  } else {
+    // Only look at the selected patient
+    if($onlyCount) {
+      $patientNumber = 1;
+    } else {
       $patientData[0]['pid'] = $patient_id;
     }
   }
-  else {
-    if (empty($provider)) {
-      // Look at entire practice
-      if ($start == NULL || $batchSize == NULL || $onlyCount) {
-        $rez = sqlStatementCdrEngine("SELECT `pid` FROM `patient_data` ORDER BY `pid`");
-        if ($onlyCount) {
-          $patientNumber = sqlNumRows($rez);
-        }
-      }
-      else {
-        // batching
-        $rez = sqlStatementCdrEngine("SELECT `pid` FROM `patient_data` ORDER BY `pid` LIMIT ?,?", array(($start-1),$batchSize));
-      }
-    }
-    else {
-      // Look at an individual physician
-      if( $pat_prov_rel == 'encounter' ){
-        // Choose patients that are related to specific physician by an encounter
-        if ($start == NULL || $batchSize == NULL || $onlyCount) {
-          $rez = sqlStatementCdrEngine("SELECT DISTINCT `pid` FROM `form_encounter` ".
-                              " WHERE `provider_id`=? OR `supervisor_id`=? ORDER BY `pid`", array($provider,$provider));
-          if ($onlyCount) {
-            $patientNumber = sqlNumRows($rez);
-          }
-        }
-        else {
-          //batching
-          $rez = sqlStatementCdrEngine("SELECT DISTINCT `pid` FROM `form_encounter` ".
-                              " WHERE `provider_id`=? OR `supervisor_id`=?  ORDER BY `pid` LIMIT ?,?", array($provider,$provider,($start-1),$batchSize));
-        }
-      }
-      else {  //$pat_prov_rel == 'primary'
-        // Choose patients that are assigned to the specific physician (primary physician in patient demographics)
-        if ($start == NULL || $batchSize == NULL || $onlyCount) {
-          $rez = sqlStatementCdrEngine("SELECT `pid` FROM `patient_data` " .
-                              "WHERE `providerID`=? ORDER BY `pid`", array($provider) );
-          if ($onlyCount) {
-            $patientNumber = sqlNumRows($rez);
-          }
-        }
-        else {
-          $rez = sqlStatementCdrEngine("SELECT `pid` FROM `patient_data` " .
-                              "WHERE `providerID`=? ORDER BY `pid` LIMIT ?,?", array($provider,($start-1),$batchSize) );
-        }
-      }
-    }
-    // convert the sql query results into an array if returning the array
-    if(!$onlyCount) {
-      for($iter=0; $row=sqlFetchArray($rez); $iter++) {
-       $patientData[$iter]=$row;
-      }
-    }
-  }
 
-  if ($onlyCount) {
+  if($onlyCount) {
     // return the number of applicable patients
     return $patientNumber;
-  }
-  else {
+  } else {
     // return array of patient pids
     return $patientData;
   }

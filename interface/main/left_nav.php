@@ -1531,12 +1531,15 @@ if (!empty($reg)) {
  
      <?php // 2016-02-02 leebc -- Adding menu section for PQRS ?>
      <?php if ($GLOBALS['enable_pqrs']) {?>
-     <li><a class="collapsed_lv2"><span><?php xl('PQRS','e') ?></span></a>
-       <ul>
-          <?php genMiscLink('RTop','rep','0',xl('Physician Quality Reporting System -- Individual Measures (Development stub)'),'reports/clinical_measures.php?type=individual'); ?>
-          <?php genMiscLink('RTop','rep','0',xl('PQRS Measure Groups (Development stub)'),'reports/clinical_measures.php?type=groups'); ?>
-	</ul>
-  <?php }?>
+      <li><a class="collapsed_lv2"><span><?php xl('Physician Quality Reporting System','e') ?></span></a>
+        <ul>
+          <?php genMiscLink('RTop','rep','0',xl('2015 Individual Measures (Dev)'),'reports/clinical_measures.php?type=pqrs_individual_2015'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('2015 Measure Groups (Dev)'),'reports/clinical_measures.php?type=pqrs_groups_2015'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('2016 Individual Measures (Dev)'),'reports/clinical_measures.php?type=pqrs_individual_2016'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('2016 Measure Groups (Dev)'),'reports/clinical_measures.php?type=pqrs_groups_2016'); ?>
+        </ul>
+      </li>
+      <?php }?>
 
       <li><a class="collapsed_lv2"><span><?php xl('Visits','e') ?></span></a>
         <ul>

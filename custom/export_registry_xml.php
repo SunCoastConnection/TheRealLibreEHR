@@ -36,8 +36,8 @@ set_time_limit(0);
 // is increased, these cpu intensive reports will have less affect on the performance
 // of other server activities, albeit it may negatively impact the performance
 // of this report (note this is only applicable for linux).
-if (!empty($GLOBALS['cdr_report_nice'])) {
-  proc_nice($GLOBALS['cdr_report_nice']);
+if (!empty($GLOBALS['clinical_measures_report_nice'])) {
+  proc_nice($GLOBALS['clinical_measures_report_nice']);
 }
 
 function getLabelNumber($label) {
