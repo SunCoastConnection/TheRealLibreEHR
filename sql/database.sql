@@ -4482,11 +4482,11 @@ CREATE TABLE `lists` (
 
 DROP TABLE IF EXISTS `lists_touch`;
 CREATE TABLE `lists_touch` (
-  `pid` bigint(20) default NULL,
-  `type` varchar(255) default NULL,
+  `pid` bigint(20) NOT NULL,
+  `type` varchar(255) NOT NULL,
   `date` datetime default NULL,
   PRIMARY KEY  (`pid`,`type`)
-) ENGINE=MyISAM ;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
