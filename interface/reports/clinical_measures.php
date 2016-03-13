@@ -162,7 +162,7 @@ else {
 
        // Run the report
        top.restoreSession();
-       $.post("../../library/ajax/execute_cdr_report.php",
+       $.post("../../library/ajax/execute_clinical_measures_report.php",
          {provider: $("#form_provider").val(),
           type: $("#form_rule_filter").val(),
           date_target: $("#form_target_date").val(),
@@ -189,10 +189,10 @@ else {
        else if (data == "COMPLETE") {
          // Go into the results page
          top.restoreSession();
-         link_report = "cqm.php?report_id="+report_id;
+         link_report = "clinical_measures.php?report_id="+report_id;
          window.open(link_report,'_self',false);
          //$("#processing").hide();
-         //$('#status_span').replaceWith("<a id='view_button' href='cqm.php?report_id="+report_id+"' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt('View Report'); ?></span></a>");
+         //$('#status_span').replaceWith("<a id='view_button' href='clinical_measures.php?report_id="+report_id+"' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt('View Report'); ?></span></a>");
        }
        else {
          // Place the string in the DOM
@@ -340,7 +340,7 @@ else {
 <?php } ?>
 </span>
 
-<form method='post' name='theform' id='theform' action='cqm.php?type=<?php echo attr($type_report) ;?>' onsubmit='return validateForm()'>
+<form method='post' name='theform' id='theform' action='clinical_measures.php?type=<?php echo attr($type_report) ;?>' onsubmit='return validateForm()'>
 
 <div id="report_parameters">
 <?php

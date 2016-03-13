@@ -1521,9 +1521,9 @@ if (!empty($reg)) {
       <li><a class="collapsed_lv2"><span><?php xl('Clinic','e') ?></span></a>
         <ul>
           <?php if ($GLOBALS['enable_cdr'] || $GLOBALS['enable_cqm']  || $GLOBALS['enable_amc']) genMiscLink('RTop','rep','0',xl('Report Results'),'reports/report_results.php'); ?>
-          <?php if ($GLOBALS['enable_cdr']) genMiscLink('RTop','rep','0',xl('Standard Measures'),'reports/cqm.php?type=standard'); ?>
-          <?php if ($GLOBALS['enable_cqm']) genMiscLink('RTop','rep','0',xl('Quality Measures (CQM)'),'reports/cqm.php?type=cqm'); ?>
-          <?php if ($GLOBALS['enable_amc']) genMiscLink('RTop','rep','0',xl('Automated Measures (AMC)'),'reports/cqm.php?type=amc'); ?>
+          <?php if ($GLOBALS['enable_cdr']) genMiscLink('RTop','rep','0',xl('Standard Measures'),'reports/clinical_measures.php?type=standard'); ?>
+          <?php if ($GLOBALS['enable_cqm']) genMiscLink('RTop','rep','0',xl('Quality Measures (CQM)'),'reports/clinical_measures.php?type=cqm'); ?>
+          <?php if ($GLOBALS['enable_amc']) genMiscLink('RTop','rep','0',xl('Automated Measures (AMC)'),'reports/clinical_measures.php?type=amc'); ?>
           <?php if ($GLOBALS['enable_amc_tracking']) genMiscLink('RTop','rep','0',xl('AMC Tracking'),'reports/amc_tracking.php'); ?>
           <?php if ($GLOBALS['enable_cdr'] && $GLOBALS['enable_alert_log'] ) genMiscLink('RTop','rep','0',xl('Alerts Log'),'reports/cdr_log.php'); ?>
         </ul>
@@ -1533,8 +1533,8 @@ if (!empty($reg)) {
      <?php if ($GLOBALS['enable_pqrs']) {?>
      <li><a class="collapsed_lv2"><span><?php xl('PQRS','e') ?></span></a>
        <ul>
-          <?php genMiscLink('RTop','rep','0',xl('Physician Quality Reporting System -- Individual Measures (Development stub)'),'reports/pqrs.php?type=individual'); ?>
-          <?php genMiscLink('RTop','rep','0',xl('PQRS Measure Groups (Development stub)'),'reports/pqrs.php?type=groups'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('Physician Quality Reporting System -- Individual Measures (Development stub)'),'reports/clinical_measures.php?type=individual'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('PQRS Measure Groups (Development stub)'),'reports/clinical_measures.php?type=groups'); ?>
 	</ul>
   <?php }?>
 
