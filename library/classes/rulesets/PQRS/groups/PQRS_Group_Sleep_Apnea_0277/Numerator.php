@@ -30,9 +30,18 @@ class PQRS_Group_Sleep_Apnea_0277_Numerator implements PQRSFilterIF
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+$query =
+" SELECT COUNT(b1.code)".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = '$Patient' ".
+" AND b1.user = '$Provider' ".
+" AND YEAR(fe.date) ='2015' ".
+" AND b1.code IN ('G8842','G8843') ; ";
+
+$result = sqlStatement($query); 
+
+if ($result > 0){ return true;} else {return false;}   			
     }
 }
 
