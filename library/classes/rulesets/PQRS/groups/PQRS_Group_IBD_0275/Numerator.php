@@ -38,7 +38,7 @@ $query =
 " WHERE b1.pid = '$Patient' ".
 " AND b1.user = '$Provider' ".
 " AND YEAR(fe.date) ='2015' ".
-" AND ((b1.code = '4149F' AND b2.code = '3517F' AND b2.modifier != '8P') OR (b1.code IN ('G8869', 'G8870', 'G8871)) OR (b1.code ='3517F' AND b1.modifier = '2P')) ; ";
+" AND ((b1.code = '4149F' AND b2.code = '3517F' AND b2.modifier != '8P') OR (b1.code IN ('G8869', 'G8870', 'G8871')) OR (b1.code ='3517F' AND b1.modifier = '2P')) ; ";
 
 $result = sqlStatement($query); 
 
