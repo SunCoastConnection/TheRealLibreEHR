@@ -17,8 +17,8 @@
  * @author  Suncoast Connection
  * @author  leebc
  * @author  meggerc
- * @link    http://suncoastconnection.com
  * @link    http://www.oemr.org
+ * @link    http://suncoastconnection.com
 */
 
 INSERT INTO `pqrs_efcc` (`type`, `code`),VALUES

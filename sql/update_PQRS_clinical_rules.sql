@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Suncoast Connection
+ * Copyright (C) 2016      Suncoast Connection
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,8 +15,8 @@
  * @package OpenEMR
  * @author  Suncoast Connection
  * @author  leebc
- * @link    http://suncoastconnection.com
  * @link    http://www.oemr.org
+ * @link    http://suncoastconnection.com
 */
 ALTER TABLE `clinical_rules` ADD `pqrs_2015_flag` tinyint;
 INSERT INTO `clinical_rules` (`id`, `pid`, `active_alert_flag`, `passive_alert_flag`, `cqm_flag`, `cqm_2011_flag`, `cqm_2014_flag`, `cqm_nqf_code`, `cqm_pqri_code`, `amc_flag`, `amc_2011_flag`, `amc_2014_flag`, `amc_code`, `amc_code_2014`, `amc_2014_stage1_flag`, `amc_2014_stage2_flag`, `patient_reminder_flag`, `developer`, `funding_source`, `release_version`, `web_reference`, `access_control`, `pqrs_2015_flag`) VALUES

@@ -1,10 +1,9 @@
 <?php
 /**
- * Run a Measures engine report.
+ * Run a Measures Engine Report.
  *
  * Copyright (C) 2012      Brady Miller <brady@sparmy.com>
- * Copyright (C) 2016      Bryan lee <leebc 11 at acm dot org>
- * Copyright (C) 2016      Sam Likins <sam.likins@wsi-services.com>
+ * Copyright (C) 2016      Suncoast Connection
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,6 +18,7 @@
  *
  * @package OpenEMR
  * @link    http://www.open-emr.org
+ * @link    http://SuncoastConnection.com
  * @author  Brady Miller <brady@sparmy.com>
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Sam Likins <sam.likins@wsi-services.com>
@@ -57,7 +57,7 @@ if(!empty($_POST['execute_report_id'])) {
   $rule_filter = (!empty($_POST['type'])) ? $_POST['type'] : '';
   $plan_filter = (!empty($_POST['plan'])) ? $_POST['plan'] : '';
   $organize_method = (empty($plan_filter)) ? 'default' : 'plans';
-  $provider  = $_POST['provider'];
+  $provider = $_POST['provider'];
   $pat_prov_rel = (empty($_POST['pat_prov_rel'])) ? 'primary' : $_POST['pat_prov_rel'];
 
   // Process a new report and collect results
@@ -82,4 +82,5 @@ if(!empty($_POST['execute_report_id'])) {
 } else {
   echo 'ERROR';
 }
+
 ?>

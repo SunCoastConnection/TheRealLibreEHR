@@ -1,8 +1,9 @@
 <?php
 /**
+ * Display Measures Engine Report Form
+ *
  * Copyright (C) 2010      Brady Miller <brady@sparmy.com>
- * Copyright (C) 2016      Bryan lee <leebc 11 at acm dot org>
- * Copyright (C) 2016      Sam Likins <sam.likins@wsi-services.com>
+ * Copyright (C) 2016      Suncoast Connection
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,10 +17,11 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>.
  *
  * @package OpenEMR
+ * @link    http://www.open-emr.org
+ * @link    http://SuncoastConnection.com
  * @author  Brady Miller <brady@sparmy.com>
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Sam Likins <sam.likins@wsi-services.com>
- * @link    http://www.open-emr.org
  */
 
 // SANITIZE ALL ESCAPES
@@ -171,7 +173,7 @@ function runReport() {
   $("#processing").show();
 
   // hide Submit buttons
-  $("#submit_button").hide();   
+  $("#submit_button").hide();
   $("#xmla_button").hide();
   $("#xmlb_button").hide();
   $("#xmlc_button").hide();
@@ -317,7 +319,7 @@ function Form_Validate() {
   $("a").removeAttr("href");
 
 <?php } ?>
-  $("#form_refresh").attr("value","true"); 
+  $("#form_refresh").attr("value","true");
 
   runReport();
 
@@ -615,7 +617,7 @@ function Form_Validate() {
 
       if($back_link == 'list') {
 ?>
-                      <a href='report_results.php' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt('Return To Report Results'); ?></span></a> 
+                      <a href='report_results.php' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt('Return To Report Results'); ?></span></a>
 <?php   } else { ?>
                       <a href='#' class='css_button' onclick='top.restoreSession(); $("#theform").submit();'><span><?php echo xlt('Start Another Report'); ?></span></a>
 <?php

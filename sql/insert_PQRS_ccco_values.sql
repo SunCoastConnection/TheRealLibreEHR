@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Suncoast Connection
+ * Copyright (C) 2016      Suncoast Connection
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -13,11 +13,11 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package OpenEMR
- * @author  Suncoast Connection
- * @author  leebc
- * @author  meggerc
- * @link    http://suncoastconnection.com
  * @link    http://www.oemr.org
+ * @link    http://suncoastconnection.com
+ * @author  Suncoast Connection
+ * @author  Bryan lee <leebc 11 at acm dot org>
+ * @author  meggerc
 */
 
 INSERT INTO `pqrs_ccco` (`type`, `code`) VALUES
