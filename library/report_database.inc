@@ -297,9 +297,12 @@ function collectItemizedRuleDisplayTitle($report_id, $itemized_test_id, $numerat
         // We have a hit, build on the $dispTitle created above
         if (isset($row['is_main'])) {
           $tempCqmAmcString = "";
-          if (($type_report == "cqm") || ($type_report == "cqm_2011") || ($type_report == "cqm_2014")) {
+          if (($type_report == "cqm") || ($type_report == "cqm_2011") || ($type_report == "cqm_2014")|| ($type_report == "individual")|| ($type_report == "pqrs_individual_2015")) {
             if (!empty($row['cqm_pqri_code'])) {
               $tempCqmAmcString .= " " . xlt('PQRI') . ":" . text($row['cqm_pqri_code']) . " ";
+            }
+                if (!empty($row['pqrs_code'])) {
+              $tempCqmAmcString .= " " . xlt('PQRS') . ":" . text($row['pqrs_code']) . " ";
             }
             if (!empty($row['cqm_nqf_code'])) {
               $tempCqmAmcString .= " " . xlt('NQF') . ":" . text($row['cqm_nqf_code']) . " ";
