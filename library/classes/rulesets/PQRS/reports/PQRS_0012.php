@@ -1,8 +1,8 @@
 <?php
-/*
+/**
  * PQRS Measure 0012 -- Call to createPopulationCriteria()
  *
- * Copyright (C) 2016 Suncoast Connection
+ * Copyright (C) 2016      Suncoast Connection
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,10 +16,10 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package OpenEMR
- * @author  Suncoast Connection
  * @link    http://www.open-emr.org
+ * @link    http://suncoastconnection.com
+ * @author  Suncoast Connection
  */
-
 
 class PQRS_0012 extends AbstractPQRSReport
 {   

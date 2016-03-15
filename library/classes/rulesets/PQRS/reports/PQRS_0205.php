@@ -1,10 +1,9 @@
 <?php
-/*
+/**
  * PQRS Measure 0205 -- Call to createPopulationCriteria()
  *
- * Copyright (C) 2016 Suncoast Connection
- * Suncoastconnection.com
- * 
+ * Copyright (C) 2016      Suncoast Connection
+ *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -17,12 +16,11 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package OpenEMR
- * @author  leebc
- * @author  Art Eaton
- * @link    http://Suncoastconnection.com
  * @link    http://www.oemr.org
+ * @link    http://suncoastconnection.com
+ * @author  Bryan lee <leebc 11 at acm dot org>
+ * @author  Art Eaton <art@starfrontiers.org>
  */
-
 
 class PQRS_0205 extends AbstractPQRSReport
 {   
@@ -31,4 +29,5 @@ class PQRS_0205 extends AbstractPQRSReport
          return new $populationCriteria;    
     }
 }
+
 ?>

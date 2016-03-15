@@ -2,7 +2,7 @@
 /**
  * PQRS Measure 0250 -- Population Criteria
  *
- * Copyright (C) 2016 Suncoast Connection
+ * Copyright (C) 2016      Suncoast Connection
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,11 +16,12 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package OpenEMR
- * @author  leebc
  * @link    http://www.open-emr.org
+ * @link    http://suncoastconnection.com
+ * @author  Bryan lee <leebc 11 at acm dot org>
  */
  
-class PQRS_0250_PopulationCriteria implements PQRSPopulationCrtiteriaFactory
+class PQRS_0250_PopulationCriteria implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {

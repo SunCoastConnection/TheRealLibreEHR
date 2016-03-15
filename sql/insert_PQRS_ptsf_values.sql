@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Suncoast Connection
+ * Copyright (C) 2016      Suncoast Connection
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,8 +16,8 @@
  * @author  Suncoast Connection
  * @author  leebc
  * @author  meggerc
- * @link    http://suncoastconnection.com
  * @link    http://www.oemr.org
+ * @link    http://suncoastconnection.com
 */
 
 INSERT INTO `pqrs_ptsf` (`type`, `code`) VALUES

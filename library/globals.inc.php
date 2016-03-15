@@ -1528,8 +1528,8 @@ $GLOBALS_METADATA = array(
       xl('Enable Reporting of Tracking Date For Automated Measure Calculations (AMC)')
     ),
 
-    'cdr_report_nice' => array(
-      xl('CDR Reports Processing Priority'),
+    'clinical_measures_report_nice' => array(
+      xl('Clinical Measures Reports Processing Priority'),
       array(
         '' => xl('Default Priority'),
         '5' => xl('Moderate Priority'),

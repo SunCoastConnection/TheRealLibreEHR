@@ -1521,9 +1521,9 @@ if (!empty($reg)) {
       <li><a class="collapsed_lv2"><span><?php xl('Clinic','e') ?></span></a>
         <ul>
           <?php if ($GLOBALS['enable_cdr'] || $GLOBALS['enable_cqm']  || $GLOBALS['enable_amc']) genMiscLink('RTop','rep','0',xl('Report Results'),'reports/report_results.php'); ?>
-          <?php if ($GLOBALS['enable_cdr']) genMiscLink('RTop','rep','0',xl('Standard Measures'),'reports/cqm.php?type=standard'); ?>
-          <?php if ($GLOBALS['enable_cqm']) genMiscLink('RTop','rep','0',xl('Quality Measures (CQM)'),'reports/cqm.php?type=cqm'); ?>
-          <?php if ($GLOBALS['enable_amc']) genMiscLink('RTop','rep','0',xl('Automated Measures (AMC)'),'reports/cqm.php?type=amc'); ?>
+          <?php if ($GLOBALS['enable_cdr']) genMiscLink('RTop','rep','0',xl('Standard Measures'),'reports/clinical_measures.php?type=standard'); ?>
+          <?php if ($GLOBALS['enable_cqm']) genMiscLink('RTop','rep','0',xl('Quality Measures (CQM)'),'reports/clinical_measures.php?type=cqm'); ?>
+          <?php if ($GLOBALS['enable_amc']) genMiscLink('RTop','rep','0',xl('Automated Measures (AMC)'),'reports/clinical_measures.php?type=amc'); ?>
           <?php if ($GLOBALS['enable_amc_tracking']) genMiscLink('RTop','rep','0',xl('AMC Tracking'),'reports/amc_tracking.php'); ?>
           <?php if ($GLOBALS['enable_cdr'] && $GLOBALS['enable_alert_log'] ) genMiscLink('RTop','rep','0',xl('Alerts Log'),'reports/cdr_log.php'); ?>
         </ul>
@@ -1531,12 +1531,15 @@ if (!empty($reg)) {
  
      <?php // 2016-02-02 leebc -- Adding menu section for PQRS ?>
      <?php if ($GLOBALS['enable_pqrs']) {?>
-     <li><a class="collapsed_lv2"><span><?php xl('PQRS','e') ?></span></a>
-       <ul>
-          <?php genMiscLink('RTop','rep','0',xl('Physician Quality Reporting System -- Individual Measures (Development stub)'),'reports/pqrs.php?type=individual'); ?>
-          <?php genMiscLink('RTop','rep','0',xl('PQRS Measure Groups (Development stub)'),'reports/pqrs.php?type=groups'); ?>
-	</ul>
-  <?php }?>
+      <li><a class="collapsed_lv2"><span><?php xl('Physician Quality Reporting System','e') ?></span></a>
+        <ul>
+          <?php genMiscLink('RTop','rep','0',xl('2015 Individual Measures (Dev)'),'reports/clinical_measures.php?type=pqrs_individual_2015'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('2015 Measure Groups (Dev)'),'reports/clinical_measures.php?type=pqrs_groups_2015'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('2016 Individual Measures (Dev)'),'reports/clinical_measures.php?type=pqrs_individual_2016'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('2016 Measure Groups (Dev)'),'reports/clinical_measures.php?type=pqrs_groups_2016'); ?>
+        </ul>
+      </li>
+      <?php }?>
 
       <li><a class="collapsed_lv2"><span><?php xl('Visits','e') ?></span></a>
         <ul>
