@@ -48,19 +48,19 @@ function existsDefault(&$array, $key, $default = '') {
 }
 
 $page_titles = array(
-  'standard'        => xlt('Standard Measures'),
-  'cqm'         => xlt('Clinical Quality Measures (CQM)'),
-  'cqm_2011'        => xlt('Clinical Quality Measures (CQM) - 2011'),
-  'cqm_2014'        => xlt('Clinical Quality Measures (CQM) - 2014'),
-  'amc'         => xlt('Automated Measure Calculations (AMC)'),
-  'amc_2011'        => xlt('Automated Measure Calculations (AMC) - 2011'),
-  'amc_2014_stage1'   => xlt('Automated Measure Calculations (AMC) - 2014 Stage I'),
-  'amc_2014_stage2'   => xlt('Automated Measure Calculations (AMC) - 2014 Stage II'),
-  'pqrs'          => xlt('Physician Quality Reporting System'),
+  'standard'              => xlt('Standard Measures'),
+  'cqm'                   => xlt('Clinical Quality Measures (CQM)'),
+  'cqm_2011'              => xlt('Clinical Quality Measures (CQM) - 2011'),
+  'cqm_2014'              => xlt('Clinical Quality Measures (CQM) - 2014'),
+  'amc'                   => xlt('Automated Measure Calculations (AMC)'),
+  'amc_2011'              => xlt('Automated Measure Calculations (AMC) - 2011'),
+  'amc_2014_stage1'       => xlt('Automated Measure Calculations (AMC) - 2014 Stage I'),
+  'amc_2014_stage2'       => xlt('Automated Measure Calculations (AMC) - 2014 Stage II'),
+  'pqrs'                  => xlt('Physician Quality Reporting System'),
   'pqrs_individual_2015'  => xlt('Physician Quality Reporting System -- Measures -- 2015'),
-  'pqrs_groups_2015'    => xlt('Physician Quality Reporting System -- Measure Groups -- 2015'),
+  'pqrs_groups_2015'      => xlt('Physician Quality Reporting System -- Measure Groups -- 2015'),
   'pqrs_individual_2016'  => xlt('Physician Quality Reporting System -- Measures -- 2016'),
-  'pqrs_groups_2016'    => xlt('Physician Quality Reporting System -- Measure Groups -- 2016'),
+  'pqrs_groups_2016'      => xlt('Physician Quality Reporting System -- Measure Groups -- 2016'),
 );
 
 // See if showing an old report or creating a new report
@@ -136,7 +136,7 @@ if(!empty($report_id)) {
   }
   $plan_filter = existsDefault($_POST, 'form_plan_filter', '');
   $organize_method = (empty($plan_filter)) ? 'default' : 'plans';
-  $provider  = trim($_POST['form_provider']);
+  $provider = trim(existsDefault($_POST, 'form_provider', ''));
   $pat_prov_rel = (empty($_POST['form_pat_prov_rel'])) ? 'primary' : trim($_POST['form_pat_prov_rel']);
   $page_subtitle = '';
   $dis_text = '';
@@ -509,10 +509,13 @@ function Form_Validate() {
                         <option value='collate_outer' <?php if($provider == 'collate_outer') echo ' selected'; ?>>-- <?php echo htmlspecialchars(xl('All (Collated Format A)'), ENT_NOQUOTES); ?> --</option>
                         <option value='collate_inner' <?php if($provider == 'collate_inner') echo ' selected'; ?>>-- <?php echo htmlspecialchars(xl('All (Collated Format B)'), ENT_NOQUOTES); ?> --</option>
 <?php
-    // Build a drop-down list of providers.
-    $providers = sqlStatement('SELECT `id`, `lname`, `fname` FROM `users` WHERE `authorized` = 1 '.$provider_facility_filter.' ORDER BY `lname`, `fname`;');
-    // (CHEMED) facility filter
-    while($providerRow = sqlFetchArray($providers)) {
+      // Build a drop-down list of providers.
+      if(!isset($provider_facility_filter)) {
+        $provider_facility_filter = '';
+      }
+      $providers = sqlStatement('SELECT `id`, `lname`, `fname` FROM `users` WHERE `authorized` = 1 '.$provider_facility_filter.' ORDER BY `lname`, `fname`;');
+      // (CHEMED) facility filter
+      while($providerRow = sqlFetchArray($providers)) {
 ?>
                         <option value='<?php echo htmlspecialchars($providerRow['id'], ENT_QUOTES); ?>' <?php if($providerRow['id'] == $provider) echo ' selected'; ?>><?php echo htmlspecialchars($providerRow['lname'].', '.$providerRow['fname'], ENT_NOQUOTES); ?></option>
 <?php } ?>
@@ -827,7 +830,7 @@ function Form_Validate() {
 <?php
         } elseif(isset($row['is_provider'])) {
           // Display the provider information
-          if(!$firstProviderFlag && $_POST['form_provider'] == 'collate_outer') {
+          if(!$firstProviderFlag && $provider == 'collate_outer') {
 ?>
             <tr><td>&nbsp;</td></tr>
 <?php
@@ -851,7 +854,7 @@ function Form_Validate() {
           $firstProviderFlag = false;
           $existProvider = true;
         } else {
-          if(!$firstPlanFlag && $_POST['form_provider'] != 'collate_outer') {
+          if(!$firstPlanFlag && $provider != 'collate_outer') {
 ?>
             <tr><td>&nbsp;</td></tr>
 <?php

@@ -538,7 +538,7 @@ function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget 
     ($GLOBALS['report_itemizing_standard'] && in_array($type, array('active_alert', 'passive_alert'))) ||
     ($GLOBALS['report_itemizing_cqm'] && in_array($type, array('cqm', 'cqm_2011', 'cqm_2014'))) ||
     ($GLOBALS['report_itemizing_amc'] && in_array($type, array('amc', 'amc_2011', 'amc_2014', 'amc_2014_stage1', 'amc_2014_stage2'))) ||
-    ($GLOBALS['report_itemizing_pqrs'] && in_array($type, array('pqrs', 'pqrs_2014', 'pqrs_2015', 'pqrs_2016'))) ?
+    ($GLOBALS['report_itemizing_pqrs'] && in_array($type, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) ?
       $report_id :
       0
   );
@@ -554,6 +554,7 @@ function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget 
     if($i == 0) {
       // For first cycle, simply copy it to dataSheet
       $dataSheet = $dataSheet_batch;
+      $total_patients = 0;
     } else {
       //debug
       //error_log("CDR: ".print_r($dataSheet,TRUE),0);
@@ -1334,17 +1335,16 @@ function resolve_plans_sql($type='',$patient_id='0',$configurableOnly=FALSE) {
     }
 
     // Use the chosen plan if set
-    if (!empty($type)) {
-      if ($goPlan["${type}_flag"] == 1) {
+    if(!empty($type)) {
+      if(array_key_exists($type.'_flag', $goPlan) && $goPlan[$type.'_flag'] == 1) {
         // active, so use the plan
-        array_push($newReturnArray,$goPlan);
+        array_push($newReturnArray, $goPlan);
       }
     }
     else {
-      if ($goPlan['normal_flag'] == 1 ||
-          $goPlan['cqm_flag'] == 1) {
+      if($goPlan['normal_flag'] == 1 || $goPlan['cqm_flag'] == 1) {
         // active, so use the plan
-        array_push($newReturnArray,$goPlan);
+        array_push($newReturnArray, $goPlan);
       }
     }
   }

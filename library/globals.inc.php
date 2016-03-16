@@ -1561,6 +1561,13 @@ $GLOBALS_METADATA = array(
       xl('Enable Itemization of Standard Clinical Rules Reports')
     ),
 
+    'report_itemizing_pqrs' => array(
+      xl('Enable PQRS Report Itemization'),
+      'bool',                           // data type
+      '1',                               // default
+      xl('Enable Itemization of PQRS Reports')
+    ),
+
     'report_itemizing_cqm' => array(
       xl('Enable CQM Report Itemization'),
       'bool',                           // data type
