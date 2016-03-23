@@ -485,25 +485,9 @@ function Form_Validate() {
 <?php
     }
 
-    if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) {
-?>
-                  <tr>
-                    <td class='label'>
-                      <?php echo htmlspecialchars(xl('Measure Group Selection'), ENT_NOQUOTES); ?>:
-                    </td>
-                    <td>
-                      <select <?php echo $dis_text; ?> id='form_plan_filter' name='form_plan_filter'>
-                        <option value=''>-- <?php echo htmlspecialchars(xl('Ignore'), ENT_NOQUOTES); ?> --</option>
-                        <option value='pqrs_individual_2015' <?php if($plan_filter == 'pqrs_individual_2015') { echo 'selected'; } ?>><?php echo htmlspecialchars( xl('All 2015 Individual Measures'), ENT_NOQUOTES); ?></option>
-                        <option value='pqrs_groups_2015' <?php if($plan_filter == 'pqrs_groups_2015') { echo 'selected'; } ?>><?php echo htmlspecialchars( xl('All 2015 Measure Group Measures'), ENT_NOQUOTES); ?></option>
-                        <option value='pqrs_individual_2016' <?php if($plan_filter == 'pqrs_individual_2016') { echo 'selected'; } ?>><?php echo htmlspecialchars( xl('All 2016 Individual Measures'), ENT_NOQUOTES); ?></option>
-                        <option value='pqrs_groups_2016' <?php if($plan_filter == 'pqrs_groups_2016') { echo 'selected'; } ?>><?php echo htmlspecialchars( xl('All 2016 Measure Group Measures'), ENT_NOQUOTES); ?></option>
-                      </select>
-                    </td>
-                  </tr>
-<?php } elseif(in_array($type_report, array('amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
+    if(in_array($type_report, array('amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
                   <input type='hidden' id='form_plan_filter' name='form_plan_filter' value=''>
-<?php } else { ?>
+<?php } elseif(!in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
                   <tr>
                     <td class='label'>
                       <?php echo htmlspecialchars(xl('Plan Set'), ENT_NOQUOTES); ?>:
