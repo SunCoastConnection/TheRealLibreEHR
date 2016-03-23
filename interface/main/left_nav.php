@@ -1539,6 +1539,7 @@ if (!empty($reg)) {
           <?php genMiscLink('RTop','rep','0',xl('2015 Measure Groups (Dev)'),'reports/clinical_measures.php?type=pqrs_groups_2015'); ?>
           <?php genMiscLink('RTop','rep','0',xl('2016 Individual Measures (Dev)'),'reports/clinical_measures.php?type=pqrs_individual_2016'); ?>
           <?php genMiscLink('RTop','rep','0',xl('2016 Measure Groups (Dev)'),'reports/clinical_measures.php?type=pqrs_groups_2016'); ?>
+          <?php genMiscLink('RTop','rep','0',xl('Measure_Selector (Dev)'),'reports/PQRS/measure_activate.php'); ?>
         </ul>
       </li>
       <?php }?>
