@@ -1,15 +1,25 @@
 
 <?php
 require_once("../../globals.php");
-include_once("$srcdir/sql.inc");
+include_once("$srcdir/api.inc");
+
 ?>	
-	
-	<html>
+<form action="measure_activate.php" method="post">	
+<?php
+if($_POST['formSubmit'] == "Submit") 
+{
+require_once('measure_activate_save.php');
+} ?>
+<!DOCTYPE html>
+<html>
+<html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
+
 	</head>
   
   <style>
+ 
+ <style>
  
 #ros {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -78,24 +88,11 @@ label {
   -ms-user-select: none;
   user-select: none;
 } 
+.groups {
+    text-align: center;
+	
+}
   </style>
-<body>
-
-<span class='title'><?php xl('Measure Toggles','e'); ?> - <?php xl('PQRS Measure Toggles','e'); ?></span>
-<form method='post' action='measure_activate.php' id='theform'>
-<input type='hidden' name='form_refresh' id='form_refresh' value=''/>
-
-				<div style='margin-left:15px'>
-					<a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
-					<span>
-						<?php xl('Submit','e'); ?>
-					</span>
-					</a>
-<?php
- if ($_POST['form_refresh']) {
-	 require_once("measure_activate_save.php");}
-?>
-				</div>
 
 <table style="width:100%">
  <TR>
@@ -1883,4 +1880,7 @@ label {
  </TR>
 </table>
 </body
+
 </html>
+<input type="submit" name="formSubmit" value="Submit" />
+</form>

@@ -30,9 +30,9 @@ class PQRS_Group_TKR_0353_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-require_once("$srcdir/classes/rulesets/PQRS/groups/common/TKRcommon.php");
-$result = sqlStatement($TKR);
-if ($result > 0){ return true;} else {return false;}  
+require(__DIR__."/../common/TKRcommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 

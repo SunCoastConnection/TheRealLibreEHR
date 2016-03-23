@@ -478,6 +478,16 @@ function HelpfulDie ($statement, $sqlerr='')
       $info=$backtrace[$level];
       echo "<br>".text($info["file"]." at ".$info["line"].":".$info["function"]);
       if($level>1){
+          foreach($info['args'] as $argn => $argv) {
+            switch (gettype($argv)) {
+              case 'object':
+                $info['args'][$argn] = get_class($argv);
+                break;
+              case 'array':
+                $info['args'][$argn] = 'array('.count($argv).')';
+                break;
+            }
+          }
           echo "(".text(implode(",",$info["args"])).")";
       }
   }

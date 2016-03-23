@@ -25,7 +25,7 @@ class PQRS_Group_Asthma_0402 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_Asthma_0402_PopulationCriteria();    
     }
 }
 

@@ -25,7 +25,7 @@ class PQRS_Group_CKD_0121 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_CKD_0121_PopulationCriteria();    
     }
 }
 

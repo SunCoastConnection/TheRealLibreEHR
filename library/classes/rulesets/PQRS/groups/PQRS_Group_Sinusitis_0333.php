@@ -25,7 +25,7 @@ class PQRS_Group_Sinusitis_0333 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_Sinusitis_0333_PopulationCriteria();    
     }
 }
 

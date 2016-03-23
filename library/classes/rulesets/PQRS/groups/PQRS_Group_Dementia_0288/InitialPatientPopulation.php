@@ -30,9 +30,9 @@ class PQRS_Group_Dementia_0288_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-require_once("$srcdir/classes/rulesets/PQRS/groups/common/Dementiacommon.php");
-$result = sqlStatement($Dementia);
-if ($result > 0){ return true;} else {return false;}  
+require(__DIR__."/../common/Dementiacommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 

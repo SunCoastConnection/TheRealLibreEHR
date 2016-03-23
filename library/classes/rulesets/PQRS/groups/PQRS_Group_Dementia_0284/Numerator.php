@@ -31,18 +31,18 @@ class PQRS_Group_Dementia_0284_Numerator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-" SELECT COUNT(b1.code)".  
+" SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN billing as b2 ON (b2.pid = b1.pid)".
-" WHERE b1.pid = '$Patient' ".
-" AND b1.user = '$Provider' ".
+" WHERE b1.pid = ? ".
+
 " AND YEAR(fe.date) ='2015' ".
 " AND ((b1.code = 'G8947' AND b2.code IN ('4525F','4526F') AND b2.modifier !='8P') OR b1.code = 'G8948') ; ";
 
-$result = sqlStatement($query); 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
-if ($result > 0){ return true;} else {return false;}   		
+if ($result['count'] > 0){ return true;} else {return false;}    		
     }
 }
 

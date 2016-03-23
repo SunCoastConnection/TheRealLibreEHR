@@ -31,18 +31,18 @@ class PQRS_Group_Sleep_Apnea_0279_Numerator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-" SELECT COUNT(b1.code)".  
+" SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" WHERE b1.pid = '$Patient' ".
-" AND b1.user = '$Provider' ".
+" WHERE b1.pid = ? ".
+
 " AND YEAR(fe.date) ='2015' ".
 " AND ((b1.code = 'G8851' AND b2.code = 'G8852') OR b1.code = '8853' OR (b1.code = 'G8854' AND b2.code = 'G8852') ); ";
 
-$result = sqlStatement($query); 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
-if ($result > 0){ return true;} else {return false;}    	
+if ($result['count'] > 0){ return true;} else {return false;}     	
     }
 }
 

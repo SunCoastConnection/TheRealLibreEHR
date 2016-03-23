@@ -25,7 +25,7 @@ class PQRS_Group_Preventive_0113 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_Preventive_0113_PopulationCriteria();    
     }
 }
 

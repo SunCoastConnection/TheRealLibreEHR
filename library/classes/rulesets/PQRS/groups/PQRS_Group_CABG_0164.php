@@ -25,7 +25,7 @@ class PQRS_Group_CABG_0164 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_CABG_0164_PopulationCriteria();    
     }
 }
 

@@ -22,13 +22,13 @@
  * @author  Art Eaton <art@starfrontiers.org>
  */
 
-$Preventive =
-"SELECT COUNT(b1.code)".  
+$query =
+"SELECT COUNT(b1.code) as count".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
-" WHERE b1.pid = '$patient' ".
+" WHERE b1.pid = ? ".
 " AND YEAR(fe.date) ='2015' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0033_a') ";
 

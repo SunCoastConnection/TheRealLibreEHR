@@ -25,7 +25,7 @@ class PQRS_Group_OPEIR_0363 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_OPEIR_0363_PopulationCriteria();    
     }
 }
 

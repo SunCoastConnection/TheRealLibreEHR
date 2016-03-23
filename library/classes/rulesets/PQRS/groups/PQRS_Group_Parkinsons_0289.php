@@ -25,7 +25,7 @@ class PQRS_Group_Parkinsons_0289 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_Parkinsons_0289_PopulationCriteria();    
     }
 }
 

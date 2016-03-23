@@ -25,7 +25,7 @@ class PQRS_Group_HepatitisC_0390 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_HepatitisC_0390_PopulationCriteria();    
     }
 }
 

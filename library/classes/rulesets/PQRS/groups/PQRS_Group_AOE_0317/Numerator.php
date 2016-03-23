@@ -31,17 +31,17 @@ class PQRS_Group_AOE_0317_Numerator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-" SELECT COUNT(b1.code)".  
+" SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" WHERE b1.pid = '$Patient' ".
-" AND b1.user = '$Provider' ".
+" WHERE b1.pid = ? ".
+
 " AND YEAR(fe.date) ='2015' ".
 " AND b1.code IN ('G8783', 'G8950', 'G8784', 'G8951') ; ";
 
-$result = sqlStatement($query); 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
-if ($result > 0){ return true;} else {return false;}   	
+if ($result['count'] > 0){ return true;} else {return false;}    	
     }
 }
 

@@ -25,7 +25,7 @@ class PQRS_Group_CAD_0006 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_CAD_0006_PopulationCriteria();    
     }
 }
 

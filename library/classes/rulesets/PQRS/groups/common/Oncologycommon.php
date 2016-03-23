@@ -22,8 +22,8 @@
  * @author  Art Eaton <art@starfrontiers.org>
  */
 
-$Oncology =
-"SELECT COUNT(b1.code)".  
+$query =
+"SELECT COUNT(b1.code) as count".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
@@ -34,7 +34,7 @@ $Oncology =
 " JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_b.code)".
 " JOIN pqrs_efcc AS codelist_c ON (b3.code = codelist_c.code)".
 " JOIN pqrs_efcc AS codelist_d ON (b4.code = codelist_d.code)".
-" WHERE b1.pid = '$patient' ".
+" WHERE b1.pid = ? ".
 " AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0143_a')".

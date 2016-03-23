@@ -34,10 +34,13 @@
 }
 .checkbox-button label {
 	text-size: 16pt;
-	color: white;
-	background-color: red;
+	color: black;
+	background-color: white;
 }
 .checkbox-button input[type=checkbox]:checked + label {
-	background-color: green;
+	background-color: #b2fde3;
+}
+#head_clicky {
+    background-color: red;
 }
 

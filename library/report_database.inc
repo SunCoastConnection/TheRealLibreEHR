@@ -398,6 +398,7 @@ function collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass='al
   else if ($pass == "fail") {
     $exlPidArr = array();
     $exludeResult = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,'exclude',$numerator_label,false,$sqllimit,$fstart);
+ //if(!is_array($excludeResult)) { var_dump(debug_backtrace()); }
     foreach($exludeResult as $exlResArr){
       $exlPidArr[] = $exlResArr['pid'];
     }

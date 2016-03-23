@@ -25,7 +25,7 @@ class PQRS_Group_General_Surgery_0355 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_General_Surgery_0355_PopulationCriteria();    
     }
 }
 

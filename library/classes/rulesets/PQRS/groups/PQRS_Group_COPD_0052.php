@@ -25,7 +25,7 @@ class PQRS_Group_COPD_0052 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_COPD_0052_PopulationCriteria();    
     }
 }
 

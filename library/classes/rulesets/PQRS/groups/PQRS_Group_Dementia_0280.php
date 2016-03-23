@@ -25,7 +25,7 @@ class PQRS_Group_Dementia_0280 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_Dementia_0280_PopulationCriteria();    
     }
 }
 

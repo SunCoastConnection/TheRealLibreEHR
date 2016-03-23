@@ -25,6 +25,6 @@ class PQRS_0337 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+        return new PQRS_0337_PopulationCriteria();
     }
 }

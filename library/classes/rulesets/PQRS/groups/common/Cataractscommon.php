@@ -22,16 +22,16 @@
  * @author  Art Eaton <art@starfrontiers.org>
  */
 
-$Cataracts =
-"SELECT COUNT(b1.code)". 
+$query =
+"SELECT COUNT(b1.code) as count". 
 "  FROM billing AS b1".  
-"JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".
-"JOIN patient_data AS p ON (b1.pid = p.pid)". 
-"WHERE b1.pid = '$patient' ".  
-"AND b1.code IN".  
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (b1.pid = p.pid)". 
+" WHERE b1.pid = ? ".  
+" AND b1.code IN".  
 "('66840', ' 66850', ' 66852', ' 66920', ' 66930', ' 66940', ' 66983', ' 66984')".
-"AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18'  ".  
-"AND b1.modifier NOT IN ('55', '56') ;";
+" AND b1.modifier NOT IN ('55', '56') ;";
 ?>
 

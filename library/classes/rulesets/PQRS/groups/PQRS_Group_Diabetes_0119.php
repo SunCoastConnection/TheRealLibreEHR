@@ -25,7 +25,7 @@ class PQRS_Group_Diabetes_0119 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_Diabetes_0119_PopulationCriteria();    
     }
 }
 

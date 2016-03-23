@@ -30,9 +30,9 @@ class PQRS_Group_IBD_0110_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-require_once("$srcdir/classes/rulesets/PQRS/groups/common/IBDcommon.php");
-$result = sqlStatement($IBD);
-if ($result > 0){ return true;} else {return false;}  
+require(__DIR__."/../common/IBDcommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 

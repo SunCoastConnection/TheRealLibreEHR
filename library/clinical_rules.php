@@ -1428,7 +1428,7 @@ function resolve_rules_sql($type='',$patient_id='0',$configurableOnly=FALSE,$pla
   }
   else {
     // Collect all default rules into an array
-    $sql = sqlStatementCdrEngine("SELECT * FROM `clinical_rules` WHERE `pid`=0 ORDER BY `id`");
+    $sql = sqlStatementCdrEngine("SELECT * FROM `clinical_rules` WHERE `pid`=0 AND `active` = 1 ORDER BY `id`");
   }
   $returnArray= array();
   for($iter=0; $row=sqlFetchArray($sql); $iter++) {

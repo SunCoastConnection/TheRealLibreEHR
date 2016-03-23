@@ -20,14 +20,13 @@
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Art Eaton <art@starfrontiers.org>
- *//
-
+ */
 
 class PQRS_0048 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+        return new PQRS_0048_PopulationCriteria();
     }
 }
 

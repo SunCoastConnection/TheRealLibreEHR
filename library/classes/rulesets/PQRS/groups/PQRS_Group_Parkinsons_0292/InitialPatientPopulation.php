@@ -30,9 +30,9 @@ class PQRS_Group_Parkinsons_0292_InitialPatientPopulation implements PQRSFilterI
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-require_once("$srcdir/classes/rulesets/PQRS/groups/common/Parkinsoncommon.php");
-$result = sqlStatement($Parkinson);
-if ($result > 0){ return true;} else {return false;}  
+require(__DIR__."/../common/Parkinsoncommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 

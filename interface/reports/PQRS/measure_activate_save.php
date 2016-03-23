@@ -1,8 +1,8 @@
 <?php
 
 require_once("../../globals.php");
-include_once("$srcdir/sql.inc");
-
+include_once("$srcdir/api.inc");
+//error_log("fired measure save: ".isset($_REQUEST['PQRS_0001']));
 if (isset($_REQUEST['PQRS_0001'])) { $PQRS_0001 = 1; } else { $PQRS_0001 = 0; }
 if (isset($_REQUEST['PQRS_0005'])) { $PQRS_0005 = 1; } else { $PQRS_0005 = 0; } 
 if (isset($_REQUEST['PQRS_0006'])) { $PQRS_0006 = 1; } else { $PQRS_0006 = 0; }

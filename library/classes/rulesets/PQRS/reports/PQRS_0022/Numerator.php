@@ -40,7 +40,7 @@ class PQRS_0022_Numerator implements PQRSFilterIF
 "AND ".
 "((b1.code = '4049F' AND b1.modifier !='8P') AND b2.code= '4046F'); ";
 
-$result = sqlStatement($query); 
+$result = sqlFetchArray(sqlStatementNoLog($query)); 
 
 if ($result > 0){ return true;} else {return false;}     
 	

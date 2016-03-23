@@ -30,9 +30,9 @@ class PQRS_Group_CABG_0164_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-require_once("$srcdir/classes/rulesets/PQRS/groups/common/CABGcommon.php");
-$result = sqlStatement($CABG);
-if ($result > 0){ return true;} else {return false;}  
+require(__DIR__."/../common/CABGcommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 

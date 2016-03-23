@@ -25,7 +25,7 @@ class PQRS_Group_Cataracts_0130 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_Cataracts_0130_PopulationCriteria();    
     }
 }
 

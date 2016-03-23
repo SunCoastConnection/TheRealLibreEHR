@@ -25,7 +25,7 @@ class PQRS_Group_AOE_0154 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_AOE_0154_PopulationCriteria();    
     }
 }
 

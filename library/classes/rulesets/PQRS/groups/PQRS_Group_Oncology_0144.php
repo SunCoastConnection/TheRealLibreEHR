@@ -25,7 +25,7 @@ class PQRS_Group_Oncology_0144 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_Oncology_0144_PopulationCriteria();    
     }
 }
 

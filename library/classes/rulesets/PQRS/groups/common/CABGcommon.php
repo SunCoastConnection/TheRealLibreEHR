@@ -22,14 +22,14 @@
  * @author  Art Eaton <art@starfrontiers.org>
  */
 
-$CABG =
-"SELECT COUNT(b1.code)".  
+$query =
+"SELECT COUNT(b1.code) as count".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
-" WHERE b1.pid = '$patient' ".
+" WHERE b1.pid = ? ".
 " AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
-" AND b2.code IN ('33510', '33511', '33512', '33513', '33514', '33516', '33517', '33518', '33519', '33521', '33522', '33523', '33533', '33534', '33535', '33536' ); ";
+" AND b1.code IN ('33510', '33511', '33512', '33513', '33514', '33516', '33517', '33518', '33519', '33521', '33522', '33523', '33533', '33534', '33535', '33536' ); ";
 
 ?>

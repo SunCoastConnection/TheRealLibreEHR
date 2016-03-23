@@ -25,7 +25,7 @@ class PQRS_Group_HIVAIDS_0338 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-         return new $populationCriteria;    
+         return new PQRS_Group_HIVAIDS_0338_PopulationCriteria();    
     }
 }
 

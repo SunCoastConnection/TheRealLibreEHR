@@ -22,14 +22,14 @@
  * @author  Art Eaton <art@starfrontiers.org>
  */
 
-$TKR =
-"SELECT COUNT(b1.code)". 
+$query =
+"SELECT COUNT(b1.code) as count". 
 "  FROM billing AS b1".  
-"JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".
-"JOIN patient_data AS p ON (b1.pid = p.pid)". 
-"WHERE b1.pid = '$patient' ".  
-"AND b1.code IN".  
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (b1.pid = p.pid)". 
+" WHERE b1.pid = ? ".  
+" AND b1.code IN".  
 "('27438', '27442', '27446', '27447')".
-"AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ;";
 ?>
