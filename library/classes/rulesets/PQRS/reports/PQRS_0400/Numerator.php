@@ -32,7 +32,7 @@ class PQRS_0400_Numerator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-" SELECT COUNT(b1.code)".  
+" SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " WHERE b1.pid = ? ".
 

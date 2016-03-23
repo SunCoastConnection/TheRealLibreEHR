@@ -33,12 +33,12 @@ class PQRS_0001_Numerator implements PQRSFilterIF
     {
 	////////////////Check for numerator fail ( which is good!!!)////////////////////////////////
 $query =
-"SELECT COUNT(b.code) as count ".  
-"FROM billing AS b ".
-"JOIN form_encounter AS fe ON (b.encounter = fe.encounter) ".
-"WHERE b.pid = ? ".
+"SELECT COUNT(b1.code) as count ".  
+"FROM billing AS b1 ".
+"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter) ".
+"WHERE b1.pid = ? ".
 "AND YEAR(`fe`.`date`) = YEAR(?) ".  
-"AND b.code = '3046F';"; 
+"AND b1.code = '3046F';"; 
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id, $beginDate)));
 if ($result['count'] > 0){ return true;} else {return false;}  

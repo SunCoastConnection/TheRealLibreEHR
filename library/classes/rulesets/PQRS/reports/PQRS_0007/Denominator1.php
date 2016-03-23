@@ -32,12 +32,12 @@ class PQRS_0007_Denominator1 implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 		    $query =
-"SELECT COUNT(b.code) as count".  
-"  FROM billing AS b".
-" JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-" WHERE b.pid = ? ".
+"SELECT COUNT(b1.code) as count".  
+"  FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
 " AND (YEAR(fe.date) ='2015' ".
-" AND b.code = 'G8694' ";
+" AND b1.code = 'G8694' ";
 
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

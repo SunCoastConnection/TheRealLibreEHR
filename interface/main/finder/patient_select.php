@@ -143,7 +143,12 @@ $sqllimit = $MAXSHOW;
 $given = "*, DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS";
 $orderby = "lname ASC, fname ASC";
 
-$search_service_code = trim($_POST['search_service_code']);
+if(array_key_exists('search_service_code', $_POST)) {
+  $search_service_code = trim($_POST['search_service_code']);
+} else {
+  $search_service_code = '';
+}
+
 echo "<input type='hidden' name='search_service_code' value='" .
   htmlspecialchars($search_service_code, ENT_QUOTES) . "' />\n";
 
@@ -245,15 +250,15 @@ else if ($from_page == "pqrs_report") {
   // Collect patient listing from pqrs report
   if ($print_patients) {
     // collect entire listing for printing
-    $result = collectItemizedPatientsPqrsReport($report_id,$itemized_test_id,$pass_id,$numerator_label);
+    $result = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass_id,$numerator_label);
     $GLOBALS['PATIENT_INC_COUNT'] = count($result);
     $MAXSHOW = $GLOBALS['PATIENT_INC_COUNT'];
   }
   else {
     // collect the total listing count
-    $GLOBALS['PATIENT_INC_COUNT'] = collectItemizedPatientsPqrsReport($report_id,$itemized_test_id,$pass_id,$numerator_label,true);
+    $GLOBALS['PATIENT_INC_COUNT'] = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass_id,$numerator_label,true);
     // then just collect applicable list for pagination
-    $result = collectItemizedPatientsPqrsReport($report_id,$itemized_test_id,$pass_id,$numerator_label,false,$sqllimit,$fstart);
+    $result = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass_id,$numerator_label,false,$sqllimit,$fstart);
   }
 }
 else {
@@ -288,7 +293,7 @@ else {
 <table border='0' cellpadding='5' cellspacing='0' width='100%'>
  <tr>
   <td class='text'>
-  <?php if(in_array($from_page, array('cdr_report', 'pqrs_report')) { ?>
+  <?php if(in_array($from_page, array('cdr_report', 'pqrs_report'))) { ?>
    <a href='../../reports/clinical_measures.php?report_id=<?php echo attr($report_id) ?>' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt("Return To Report Results"); ?></span></a>
   <?php } else { ?>
    <a href="./patient_select_help.php" target=_new onclick='top.restoreSession()'>[<?php echo htmlspecialchars( xl('Help'), ENT_NOQUOTES); ?>]&nbsp</a>

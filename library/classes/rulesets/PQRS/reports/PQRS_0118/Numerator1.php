@@ -32,16 +32,16 @@ class PQRS_0118_Numerator1 implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b.code)".  
-"  FROM billing AS b".
-"JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '".$patient->id."' ".
+"SELECT COUNT(b1.code) AS count".  
+"  FROM billing AS b1".
+"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+"WHERE b1.pid = '".$patient->id."' ".
 "AND YEAR(fe.date) ='2015' ".
-"AND b.code IN ('G8935','G8936');";
+"AND b1.code IN ('G8935','G8936');";
 
 $result = sqlStatement($query); 
 
-if ($result > 0){ return true;} else {return false;}     
+if ($result['count'] > 0){ return true;} else {return false;}     
 
 		
     }

@@ -131,12 +131,12 @@ if ($result > 0){ $denominator=TRUE;} else {$denominator=FALSE;}  //there is a b
 
 ////////////////Check for numerator fail ( which is good!!!)////////////////////////////////
 $query_just_numerator_fail_for_one_patient =
-"SELECT COUNT(b.code)".  ///just give us a number as a result of all this, counting how many results we get.
-"  FROM billing AS b".
-"JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '$Patient' ".
+"SELECT COUNT(b1.code)".  ///just give us a number as a result of all this, counting how many results we get.
+"  FROM billing AS b1".
+"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+"WHERE b1.pid = '$Patient' ".
 "AND (YEAR(fe.date) ='2015' "
-."AND b.code IN ('3044F','3045F');"; //checking for CPT2 code.
+."AND b1.code IN ('3044F','3045F');"; //checking for CPT2 code.
 
 $result = sqlStatement($query_just_numerator_fail_for_one_patient);  ///runs the string $query_just.... as an sql statement.
 //The query just gives you a number, not rows, which is the count of the rows it returned.
@@ -146,11 +146,10 @@ if ($result > 0){ $numeratorfail=TRUE;} else {$numeratorfail=FALSE;}  //there is
 //if the one above fails, you want to see if this result is confirmed by a code
 if ($numeratorfail=FALSE){
 $query_just_numerator_pass_for_one_patient =
-"SELECT COUNT(b.code)".  ///just give us a number as a result of all this, counting how many results we get.
-"  FROM billing AS b".
-"JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '$Patient' ".
-"AND b.user = '$Provider' "
+"SELECT COUNT(b1.code)".  ///just give us a number as a result of all this, counting how many results we get.
+"  FROM billing AS b1".
+"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+"WHERE b1.pid = '$Patient' ".
 "AND (YEAR(fe.date) ='2015' ".
 "AND CONCAT(b3.code,b3.modifier) IN ('3046F','3046F8P');" ;//checking for CPT2 code with modifier.
 
