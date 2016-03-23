@@ -33,21 +33,21 @@ class PQRS_0022_InitialPatientPopulation implements PQRSFilterIF
     {
 	
 $query =
-"SELECT COUNT(b1.code)".  
+"SELECT COUNT(b1.code) as count ".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
-" WHERE b1.pid = '$patient' ".
+" WHERE b1.pid = ? ".
 " AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND b1.code = codelist_a.code".
 " AND codelist_a.type = 'pqrs_0022_a' ;";
 
 
-$result = sqlStatement($query);  ///runs the string $query_just.... as an sql statement.
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));  ///runs the string $query_just.... as an sql statement.
 //The query just gives you a number, not rows, which is the count of the rows it returned.
-if ($result > 0){ return true;} else {return false;}  //there is a better way of stating this, but this is easier to understand for N00bs
+if ($result['count']> 0){ return true;} else {return false;}  //there is a better way of stating this, but this is easier to understand for N00bs
  
     }
 }

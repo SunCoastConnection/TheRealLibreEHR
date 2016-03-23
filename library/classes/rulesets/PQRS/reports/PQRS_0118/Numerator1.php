@@ -35,8 +35,7 @@ $query =
 "SELECT COUNT(b.code)".  
 "  FROM billing AS b".
 "JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '$Patient' ".
-"AND b.user = '$Provider' ".
+"WHERE b.pid = '".$patient->id."' ".
 "AND YEAR(fe.date) ='2015' ".
 "AND b.code IN ('G8935','G8936');";
 

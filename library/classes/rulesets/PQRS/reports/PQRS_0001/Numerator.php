@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * PQRS Measure 0001 -- Numerator
  *
  * Copyright (C) 2016      Suncoast Connection
@@ -33,29 +33,17 @@ class PQRS_0001_Numerator implements PQRSFilterIF
     {
 	////////////////Check for numerator fail ( which is good!!!)////////////////////////////////
 $query =
-"SELECT COUNT(b.code)".  ///just give us a number as a result of all this, counting how many results we get.
-"  FROM billing AS b".
-"JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '$Patient' ".
-"AND (YEAR(fe.date) =YEAR('.$beginDate.')) "  /// could be hard coded for 2015
-."AND b.code = '3046F';"; //checking for CPT2 code.
+"SELECT COUNT(b.code) as count ".  
+"FROM billing AS b ".
+"JOIN form_encounter AS fe ON (b.encounter = fe.encounter) ".
+"WHERE b.pid = ? ".
+"AND YEAR(`fe`.`date`) = YEAR(?) ".  
+"AND b.code = '3046F';"; 
 
-$result = sqlStatement($query);  ///runs the string $query_just.... as an sql statement.
-//The query just gives you a number, not rows, which is the count of the rows it returned.
-if ($result > 0){ return false;} else {return true;}  //there is a better way of stating this, but this is easier to understand for N00bs
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id, $beginDate)));
+if ($result['count'] > 0){ return true;} else {return false;}  
 	
     }
 }
-/*  NOTES FOR DIRECT ENTRY FORM:
-This is an inverted measure.  The code.modifier sets below are verified pass (which is a failure to meet performance),
- and need to be reported in the direct entry form as SET, and not addendable.
-$query_verify_documented_pass =
-"SELECT COUNT(b.code)".  ///just give us a number as a result of all this, counting how many results we get.
-"  FROM billing AS b".
-"JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '$Patient' ".
-"AND b.user = '$Provider' "
-"AND (YEAR(fe.date) ='2015' ".
-"AND CONCAT(b.code,b.modifier) IN ('3046F','3046F8P');" ;//checking for CPT2 code with modifier.
-*/
+
 ?>

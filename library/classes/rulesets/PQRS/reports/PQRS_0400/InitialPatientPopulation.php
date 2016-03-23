@@ -32,7 +32,7 @@ class PQRS_0400_InitialPatientPopulation implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b1.code)".  
+"SELECT COUNT(b1.code) as count ".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
@@ -42,18 +42,18 @@ $query =
 " INNER JOIN pqrs_poph AS codelist_c ON (b3.code = codelist_c.code)".
 " JOIN pqrs_poph AS codelist_d ON (b4.code = codelist_d.code)".
 
-" WHERE b1.pid = '$patient' ".
+" WHERE b1.pid = ? ".
 " AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >=18 ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0400_a')".
 " AND ( (YEAR(p.dob) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
 " AND NOT (b4.code = codelist_d.code AND codelist_d.type = 'pqrs_0400_d' ) ; ";
 
-$result = sqlStatement($query);
-if ($result > 0){ return true;} else { 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else { 
 
 $query =
-"SELECT COUNT(b1.code)".  
+"SELECT COUNT(b1.code) as count ".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
@@ -63,15 +63,15 @@ $query =
 " INNER JOIN pqrs_poph AS codelist_c ON (b3.code = codelist_c.code)".
 " JOIN pqrs_poph AS codelist_d ON (b4.code = codelist_d.code)".
 
-" WHERE b1.pid = '$patient' ".
+" WHERE b1.pid = ? ".
 " AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >=18 ".
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0400_b')".
 " AND ( (YEAR(p.dob) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
 " AND NOT (b4.code = codelist_d.code AND codelist_d.type = 'pqrs_0400_d' ) ; ";
 
-$result = sqlStatement($query);
-if ($result > 1){ return true;} else {return false;}  
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 1){ return true;} else {return false;}  
 }
 
     }

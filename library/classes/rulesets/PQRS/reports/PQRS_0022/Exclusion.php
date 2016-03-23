@@ -34,8 +34,7 @@ $query =
 "SELECT COUNT(b.code)".  ///just give us a number as a result of all this, counting how many results we get.
 "  FROM billing AS b".
 "JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '$Patient' ".
-"AND b.user = '$Provider' ".
+"WHERE b.pid = '".$patient->id."' ".
 "AND YEAR(fe.date) ='2015' ".
 "AND b.code = '4042F' " .
 $result = sqlStatement($query);  ///runs the string $query_just.... as an sql statement.

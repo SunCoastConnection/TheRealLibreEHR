@@ -33,16 +33,14 @@ class PQRS_0005_Numerator1 implements PQRSFilterIF
     {
 	    
 	  $query =
-"SELECT COUNT(b.code)".  ///just give us a number as a result of all this, counting how many results we get.
+"SELECT COUNT(b.code) as count". 
 "  FROM billing AS b".
-"JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '$Patient' ".
-"AND b.user = '$Provider' ".
-"AND YEAR(fe.date) ='2015' ".
-"AND CONCAT(b.code,b.modifier) = ('4010F');" ;//checking for CPT2 code with modifier. 8P modifier is a fail
-$result = sqlStatement($query);  ///runs the string $query_just.... as an sql statement.
-//The query just gives you a number, not rows, which is the count of the rows it returned.
-if ($result > 0){ return true;} else {return false;}  //there is a better way of stating this, but this is easier to understand for N00bs
+" JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
+" WHERE b.pid = ? ".
+" AND YEAR(fe.date) ='2015' ".
+" AND CONCAT(b.code,b.modifier) = ('4010F');" ;
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else {return false;}  
 
     }
 }

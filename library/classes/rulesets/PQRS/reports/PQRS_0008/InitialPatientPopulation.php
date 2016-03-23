@@ -41,47 +41,45 @@ $Tx1=   "( '99201', '99202', '99203', '99204', '99205', '99212', '99213', '99214
 $Tx2 = "( '99238', '99239' )";
 
 $query1 =
-"SELECT COUNT(b1.code)". 
+"SELECT COUNT(b1.code) as count ". 
 "  FROM billing AS b1".  
-"INNER JOIN billing AS b2 ON (b1.pid = b2.pid)". 
-"INNER JOIN billing AS b3 ON (b1.pid = b3.pid)".
-"JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
-"JOIN patient_data AS p ON (b1.pid = p.pid)".  
+" INNER JOIN billing AS b2 ON (b1.pid = b2.pid)". 
+" INNER JOIN billing AS b3 ON (b1.pid = b3.pid)".
+" JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
+" JOIN patient_data AS p ON (b1.pid = p.pid)".  
 
-"WHERE b1.pid = '$patient' ". 
+" WHERE b1.pid = ? ". 
 
-"AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2015' ".
 
-"AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
+" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
 
-"AND b1.code IN $Dx1".
-"AND b2.code IN   $Tx1" .
-"AND b3.code ='G8923' ";  
+" AND b1.code IN $Dx1".
+" AND b2.code IN   $Tx1" .
+" AND b3.code ='G8923' ";  
 
 $query2 =
-"SELECT COUNT(b1.code)". 
+"SELECT COUNT(b1.code) as count ". 
 "  FROM billing AS b1". 
-"INNER JOIN billing AS b2 ON (b1.pid = b2.pid)".  
-"INNER JOIN billing AS b3 ON (b1.pid = b3.pid)".
-"JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
-"JOIN patient_data AS p ON (b1.pid = p.pid)".  
+" INNER JOIN billing AS b2 ON (b1.pid = b2.pid)".  
+" INNER JOIN billing AS b3 ON (b1.pid = b3.pid)".
+" JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
+" JOIN patient_data AS p ON (b1.pid = p.pid)".  
 
-"WHERE b1.pid = '$patient' ".  
+" WHERE b1.pid = ? ".  
 
-"AND (YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2015' ".
 
-"AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
+" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
 
-"AND b1.code IN $Dx1".
-"AND b2.code IN   $Tx2" .
-"AND b3.code ='3021F'; ";  
-
-$result = sqlStatement($query1);  
-if ($result > 1){
-	 return true;} 
+" AND b1.code IN $Dx1".
+" AND b2.code IN $Tx2" .
+" AND b3.code ='3021F'; ";  
+$result = sqlFetchArray(sqlStatementNoLog($query1, array($patient->id)));
+if ($result['count']> 1){ return true;} 
 	 else{
-		 $result = sqlStatement($query2);
-		 if ($result > 0){
+		 $result = sqlFetchArray(sqlStatementNoLog($query2, array($patient->id)));
+		 if ($result['count']> 0){
 			 return true;}else{
 								return false;}  
 			}

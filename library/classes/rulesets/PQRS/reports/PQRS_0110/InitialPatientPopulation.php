@@ -32,18 +32,18 @@ class PQRS_0110_InitialPatientPopulation implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b1.code)".  
+"SELECT COUNT(b1.code) as count ".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " INNER JOIN pqrs_poph AS codelist_a ON (b1.code = codelist_a.code)".
-" WHERE b1.pid = '$patient' ".
+" WHERE b1.pid = ? ".
 " AND (fe.date<'2015-04-01' OR fe.date>='2015-10-01' )".
 " AND TIMESTAMPDIFF(MONTH,p.dob,fe.date) >= '6' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0110_a');";
 
-$result = sqlStatement($query);
-if ($result > 0){ return true;} else {return false;}  
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else {return false;}  
 
     }
 }

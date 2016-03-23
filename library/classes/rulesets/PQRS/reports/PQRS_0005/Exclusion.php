@@ -33,17 +33,15 @@ class PQRS_0005_Exclusion implements PQRSFilterIF
     {
 	    
 	  $query =
-"SELECT COUNT(b.code)".  ///just give us a number as a result of all this, counting how many results we get.
-"  FROM billing AS b".
-"JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
-"WHERE b.pid = '$Patient' ".
-"AND b.user = '$Provider' ".
+"SELECT COUNT(b.code) as count".  ///just give us a number as a result of all this, counting how many results we get.
+" FROM billing AS b ".
+"JOIN form_encounter AS fe ON (b.encounter = fe.encounter) ".
+"WHERE b.pid = ? ".
 "AND (YEAR(fe.date) ='2015' ".
-"AND b.code = ('4010F')" .
+"AND b.code = ('4010F') " .
 "AND b.modifier IN ('1P','2P','3P');";
-$result = sqlStatement($query);  ///runs the string $query_just.... as an sql statement.
-//The query just gives you a number, not rows, which is the count of the rows it returned.
-if ($result > 0){ return true;} else {return false;}  //there is a better way of stating this, but this is easier to understand for N00bs 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else {return false;}  
     
 
     }

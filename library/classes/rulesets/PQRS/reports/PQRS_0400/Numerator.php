@@ -34,13 +34,13 @@ class PQRS_0400_Numerator implements PQRSFilterIF
 $query =
 " SELECT COUNT(b1.code)".  
 " FROM billing AS b1".
-" WHERE b1.pid = '$Patient' ".
-" AND b1.user = '$Provider' ".
+" WHERE b1.pid = ? ".
+
 " AND b1.code IN('G9451','G9452','G9453') ; ";
 
-$result = sqlStatement($query); 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result > 0){ return true;} else {return false;}     
+if ($result['count']> 0){ return true;} else {return false;}     
 		
     }
 }

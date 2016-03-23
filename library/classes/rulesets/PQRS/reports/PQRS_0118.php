@@ -22,12 +22,16 @@
  * @author  Art Eaton <art@starfrontiers.org>
  */
 
-class PQRS_0118 extends AbstractPQRSReport
-{   
-    public function createPopulationCriteria()
-    {
-         return new $populationCriteria;    
+class PQRS_0118 extends AbstractPQRSReport {   
+    public function createPopulationCriteria() {
+		$populationCriteria = array();
+
+		$populationCriteria[] = new PQRS_0118_PopulationCriteria1();
+		$populationCriteria[] = new PQRS_0118_PopulationCriteria2();   
+
+		return $populationCriteria;    
     }
+
 }
 
 ?>
