@@ -12,14 +12,13 @@ require_once('measure_activate_save.php');
 } ?>
 <!DOCTYPE html>
 <html>
-<html>
+
 	<head>
 
 	</head>
   
   <style>
  
- <style>
  
 #ros {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;

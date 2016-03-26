@@ -40,7 +40,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND YEAR(fe.date) ='2015' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '65' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0033_a'); ";
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0039_a'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  

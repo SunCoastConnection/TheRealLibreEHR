@@ -31,7 +31,7 @@ class PQRS_0143_Numerator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 	// Otherwise Default return
-	return false;
+	return true;
 		
     }
 }

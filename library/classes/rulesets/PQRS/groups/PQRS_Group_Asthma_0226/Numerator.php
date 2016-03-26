@@ -40,7 +40,7 @@ $query =
 " AND YEAR(fe.date) ='2015' ".
 " AND b1.code IN ('4004F', '1036F') AND b1.modifier != '8P' ; ";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id, $beginDate)));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
 if ($result['count'] > 0){ return true;} else {return false;}    		
     }

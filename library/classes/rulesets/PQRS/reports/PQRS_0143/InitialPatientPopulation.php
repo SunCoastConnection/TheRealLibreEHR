@@ -28,7 +28,7 @@ class PQRS_0143_InitialPatientPopulation implements PQRSFilterIF
         return "Initial Patient Population";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test(PQRSPatient $patient, $beginDate, $endDate )
     {
 	//Default return 
         return false;

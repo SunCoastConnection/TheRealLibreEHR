@@ -76,7 +76,7 @@ $query_for_whole_measure = "SELECT DISTINCT  b1.code AS Dx, b2.code AS Tx,  CONC
 " '99343','99344','99345','99347','99348','99349','99350','G0270','G0271','G0402','G0438','G0439')"
 
 ." AND (YEAR(fe.date) - YEAR(p.dob)) BETWEEN '18' AND '75' "  //age must be between 18 and 75 on the date of treatment
-."AND (YEAR(fe.date) ='2015' "  //date of the encounter must be in the year 2015.  This should actually check against a form variable.
+."AND YEAR(fe.date) ='2015' "  //date of the encounter must be in the year 2015.  This should actually check against a form variable.
 
 ."AND CONCAT(b3.code,b3.modifier) IN ('3046F','3046F8P','3044F','3045F')" //checking for CPT2 code with modifier. 
 // Note that 3046F8P is a combination of code and modifier without a colon between them.  The query doesn't add that.
@@ -135,7 +135,7 @@ $query_just_numerator_fail_for_one_patient =
 "  FROM billing AS b1".
 "JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 "WHERE b1.pid = '$Patient' ".
-"AND (YEAR(fe.date) ='2015' "
+"AND YEAR(fe.date) ='2015' "
 ."AND b1.code IN ('3044F','3045F');"; //checking for CPT2 code.
 
 $result = sqlStatement($query_just_numerator_fail_for_one_patient);  ///runs the string $query_just.... as an sql statement.
@@ -150,7 +150,7 @@ $query_just_numerator_pass_for_one_patient =
 "  FROM billing AS b1".
 "JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 "WHERE b1.pid = '$Patient' ".
-"AND (YEAR(fe.date) ='2015' ".
+"AND YEAR(fe.date) ='2015' ".
 "AND CONCAT(b3.code,b3.modifier) IN ('3046F','3046F8P');" ;//checking for CPT2 code with modifier.
 
 $result = sqlStatement($query_just_numerator_pass_for_one_patient);  ///runs the string $query_just.... as an sql statement.

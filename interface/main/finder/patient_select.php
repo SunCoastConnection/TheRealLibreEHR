@@ -143,12 +143,7 @@ $sqllimit = $MAXSHOW;
 $given = "*, DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS";
 $orderby = "lname ASC, fname ASC";
 
-if(array_key_exists('search_service_code', $_POST)) {
-  $search_service_code = trim($_POST['search_service_code']);
-} else {
-  $search_service_code = '';
-}
-
+$search_service_code = trim($_POST['search_service_code']);
 echo "<input type='hidden' name='search_service_code' value='" .
   htmlspecialchars($search_service_code, ENT_QUOTES) . "' />\n";
 
@@ -293,13 +288,12 @@ else {
 <table border='0' cellpadding='5' cellspacing='0' width='100%'>
  <tr>
   <td class='text'>
-  <?php if(in_array($from_page, array('cdr_report', 'pqrs_report'))) { ?>
+  <?php if ($from_page == "cdr_report" || $from_page == "pqrs_report") { ?>
    <a href='../../reports/clinical_measures.php?report_id=<?php echo attr($report_id) ?>' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt("Return To Report Results"); ?></span></a>
-  <?php } else { ?>
+  <?php }  else { ?>
    <a href="./patient_select_help.php" target=_new onclick='top.restoreSession()'>[<?php echo htmlspecialchars( xl('Help'), ENT_NOQUOTES); ?>]&nbsp</a>
   <?php } ?>
   </td>
-  
   <td class='text' align='center'>
 <?php if ($message) echo "<font color='red'><b>".htmlspecialchars( $message, ENT_NOQUOTES)."</b></font>\n"; ?>
   </td>

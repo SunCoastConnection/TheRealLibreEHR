@@ -41,6 +41,9 @@ abstract class AbstractPQRSReport implements RsReportIF
         foreach ( glob( dirname(__FILE__)."/../reports/".$className."/*.php" ) as $filename ) {
             require_once( $filename );
         }
+        foreach ( glob( dirname(__FILE__)."/../groups/".$className."/*.php" ) as $filename ) {
+            require_once( $filename );
+        }
         // require common .php files
         foreach ( glob( dirname(__FILE__)."/../reports/common/*.php" ) as $filename ) {
             require_once( $filename );
@@ -53,7 +56,6 @@ abstract class AbstractPQRSReport implements RsReportIF
         $this->_pqrsPopulation = new PQRSPopulation( $patientIdArray );
         $this->_rowRule = $rowRule;
         $this->_ruleId = isset( $rowRule['id'] ) ? $rowRule['id'] : '';
-
         // Calculate measurement period
         if(is_array($dateTarget)) {
             $this->_beginMeasurement = $dateTarget['dateBegin'];
@@ -103,7 +105,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                     throw new Exception( "InitialPatientPopulation must be an instance of PQRSFilterIF" );
                 }
                 $denominator = $populationCriteria->createDenominator();
-                if ( !$denominator instanceof PpqrsFilterIF ) {
+                if ( !$denominator instanceof PQRSFilterIF ) {
                     throw new Exception( "Denominator must be an instance of PQRSFilterIF" );
                 }
                 $numerators = $populationCriteria->createNumerators();

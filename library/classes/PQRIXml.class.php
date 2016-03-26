@@ -18,7 +18,7 @@ class PQRIXml extends XmlWriterOemr {
 	
 	function open_submission() {
 		
-		$this->push('submission', array('type'=>'PQRI-REGISTRY', 'option'=>'payment', 
+		$this->push('submission', array('type'=>'PQRS-REGISTRY', 'option'=>'payment', 
            'xmlns:xsi'=>'http://www.w3.org/2001/XMLSchema-instance', 'xsi:noNamespaceSchemaLocation'=>'Registry_Payment.xsd'));
 	}
 	
@@ -63,7 +63,7 @@ class PQRIXml extends XmlWriterOemr {
 	}
 
 	function add_pqri_measures($arrStats) {
-		$this->push('pqri-measure');
+		$this->push('pqrs-measure');
 
 		foreach ($arrStats as $key => $value)
 		{

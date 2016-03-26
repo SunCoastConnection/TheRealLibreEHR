@@ -736,7 +736,7 @@ function test_rules_clinic($provider='',$type='',$dateTarget='',$mode='',$patien
 
     // If using cqm or amc type, then use the hard-coded rules set.
     // Note these rules are only used in report mode.
-      if ($rowRule['cqm_flag'] || $rowRule['amc_flag'] || $rowRule['pqrs_individual_2015_flag'] || $rowRule['pqrs_groups_2015_flag'] || $rowRule['pqrs_individual_2016_flag'] || $rowRule['pqrs_groups_2016_flag'] ) {
+      if ($rowRule['cqm_flag'] || $rowRule['amc_flag'] || $rowRule['pqrs_individual_2016_flag'] || $rowRule['pqrs_individual_2015_flag'] || $rowRule['pqrs_groups_2016_flag']|| $rowRule['pqrs_groups_2015_flag'] ) {
 
       require_once( dirname(__FILE__)."/classes/rulesets/ReportManager.php");
       $manager = new ReportManager();
@@ -1310,7 +1310,7 @@ function resolve_plans_sql($type='',$patient_id='0',$configurableOnly=FALSE) {
 
     // Decide if use default vs custom plan (preference given to custom plan)
     if (!empty($customPlan)) {
-      if (in_array($type, array('cqm', 'pqrs'))) {
+      if ($type == "cqm" || $type == "pqrs" ) {
         // For CQM , do not use custom plans (these are to create standard clinic wide reports)
         $goPlan = $plan;
       }
@@ -1342,7 +1342,7 @@ function resolve_plans_sql($type='',$patient_id='0',$configurableOnly=FALSE) {
       }
     }
     else {
-      if($goPlan['normal_flag'] == 1 || $goPlan['cqm_flag'] == 1 || $goPlan['pqrs_individual_2015_flag'] == 1 || $goPlan['pqrs_groups_2015_flag'] == 1 || $goPlan['pqrs_individual_2016_flag'] == 1 || $goPlan['pqrs_groups_2016_flag'] == 1) {
+      if($goPlan['normal_flag'] == 1 || $goPlan['cqm_flag'] == 1 || $goPlan['pqrs_individual_2015_flag'] == 1 || $goPlan['pqrs_groups_2015_flag'] == 1 || $goPlan['pqrs_individual_2016_flag'] == 1 || $goPlan['pqrs_groups_2015_flag'] == 1) {
         // active, so use the plan
         array_push($newReturnArray, $goPlan);
       }
@@ -1424,7 +1424,7 @@ function resolve_rules_sql($type='',$patient_id='0',$configurableOnly=FALSE,$pla
   if ($configurableOnly) {
     // Collect all default, configurable (per patient) rules into an array
     //   (ie. ignore the cqm and amc rules)
-    $sql = sqlStatementCdrEngine("SELECT * FROM `clinical_rules` WHERE `pid`=0 AND `amc_flag` !=1 AND `cqm_flag` !=1 AND `pqrs_individual_2015_flag` !=1 AND `pqrs_groups_2015_flag` !=1 AND `pqrs_individual_2016_flag` !=1 AND `pqrs_groups_2016_flag` !=1 ORDER BY `id`");
+    $sql = sqlStatementCdrEngine("SELECT * FROM `clinical_rules` WHERE `pid`=0 AND `pqrs_individual_2015_flag` !=1 AND `pqrs_groups_2015_flag` !=1 AND `pqrs_individual_2016_flag` !=1 AND `pqrs_groups_2016_flag` !=1 AND `cqm_flag` !=1 AND `amc_flag` !=1 ORDER BY `id`");
   }
   else {
     // Collect all default rules into an array
@@ -1477,7 +1477,7 @@ function resolve_rules_sql($type='',$patient_id='0',$configurableOnly=FALSE,$pla
 
     // Decide if use default vs custom rule (preference given to custom rule)
     if (!empty($customRule)) {
-      if(in_array($type, array('cqm', 'amc', 'pqrs', 'pqrs_individual_2015', 'pqrs_group_2015', 'pqrs_individual_2016', 'pqrs_group_2016', 'individual', 'groups'))) {
+      if ($type == "cqm" || $type == "amc" || $type == "pqrs" || $type == "individual" || $type == "groups"|| $type =="pqrs_individual_2015"|| $type =="pqrs_group_2015"|| $type =="pqrs_individual_2016"|| $type =="pqrs_group_2016") {
         // For CQM and AMC, do not use custom rules (these are to create standard clinic wide reports)
         $goRule = $rule;
       }

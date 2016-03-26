@@ -17,8 +17,9 @@
  * @author  leebc
  * @link    http://suncoastconnection.com
  * @link    http://www.oemr.org
- * @version	1.3 - Updated to include Group Measure in addition to Individual
+ * @version	1.5 - Updated to include Group Measures
 */
+ALTER TABLE `insurance_data` CHANGE `date` `date` datetime;
 ALTER TABLE `report_results` CHANGE `field_value` `field_value` longtext;
 ALTER TABLE `clinical_rules` CHANGE `id` `id` varchar(35);
 ALTER TABLE `clinical_rules` ADD `pqrs_code` varchar(35);
@@ -26,6 +27,7 @@ ALTER TABLE `clinical_rules` ADD `pqrs_individual_2015_flag` tinyint;
 ALTER TABLE `clinical_rules` ADD `pqrs_groups_2015_flag` tinyint;
 ALTER TABLE `clinical_rules` ADD `pqrs_individual_2016_flag` tinyint;
 ALTER TABLE `clinical_rules` ADD `pqrs_groups_2016_flag` tinyint;
+ALTER TABLE `clinical_rules` ADD `pqrs_group_type` varchar(2) default 'X';
 ALTER TABLE `clinical_rules` ADD `active` tinyint;
 INSERT INTO `clinical_rules` (`id`, `pid`, `active_alert_flag`, `passive_alert_flag`, `cqm_flag`, `cqm_2011_flag`, `cqm_2014_flag`, `cqm_nqf_code`, `cqm_pqri_code`, `amc_flag`, `amc_2011_flag`, `amc_2014_flag`, `amc_code`, `amc_code_2014`, `amc_2014_stage1_flag`, `amc_2014_stage2_flag`, `patient_reminder_flag`, `developer`, `funding_source`, `release_version`, `web_reference`, `access_control`, `pqrs_code`, `pqrs_individual_2015_flag`, `pqrs_groups_2015_flag`, `pqrs_individual_2016_flag`, `pqrs_groups_2016_flag`, `active`) VALUES
 ('PQRS_0001', '0', '0', '0', '0', NULL, NULL, '', '', '0', '0', '0', '', '', '0', NULL, '0', '', '', '2015', '', 'patients:med', 'PQRS_0001', '1', '0', '1', '0', '0'),

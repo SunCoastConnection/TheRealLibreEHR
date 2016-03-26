@@ -226,6 +226,27 @@ require_once "$srcdir/report_database.inc";
     $type_title = xl('2014 Automated Measure Calculations (AMC) Stage II');
     $link="clinical_measures.php?report_id=" . attr($row["report_id"]) . "&back=list";
   }
+  else if ($row['type'] == "pqrs_individual_2015") {
+    if (!$GLOBALS['enable_pqrs']) continue;
+    $type_title = xl('2015 PQRS Individual Measures');
+    $link="clinical_measures.php?report_id=" . attr($row["report_id"]) . "&back=list";
+  }
+  else if ($row['type'] == "pqrs_groups_2015") {
+    if (!$GLOBALS['enable_pqrs']) continue;
+    $type_title = xl('2015 PQRS Group Measures');
+    $link="clinical_measures.php?report_id=" . attr($row["report_id"]) . "&back=list";
+  }
+  else if ($row['type'] == "pqrs_individual_2016") {
+    if (!$GLOBALS['enable_pqrs']) continue;
+    $type_title = xl('2016 PQRS Individual Measures');
+    $link="clinical_measures.php?report_id=" . attr($row["report_id"]) . "&back=list";
+  }
+  else if ($row['type'] == "pqrs_groups_2016") {
+    if (!$GLOBALS['enable_pqrs']) continue;
+    $type_title = xl('2016 PQRS Group Measures');
+    $link="clinical_measures.php?report_id=" . attr($row["report_id"]) . "&back=list";
+  }
+
   else if ($row['type'] == "process_reminders") {
     if (!$GLOBALS['enable_cdr']) continue;
     $type_title = xl('Processing Patient Reminders');

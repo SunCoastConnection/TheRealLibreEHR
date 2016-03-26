@@ -68,7 +68,9 @@ class ReportManager {
         break;
 
       default:
-        throw new Exception('Unknown rule: '.$ruleId);
+      error_log("ReportManager:  (now with less fatality) Unknown rule: $ruleId");
+
+        //throw new Exception('Unknown rule: '.$ruleId);
         break;
     }
 

@@ -60,13 +60,10 @@ function getLabelNumber($label) {
 }
 
 function getMeasureNumber($row) {
-       if (!empty($row['cqm_pqri_code']) || !empty($row['cqm_nqf_code']) ) {
-         if (!empty($row['cqm_pqri_code'])) {
-         	return $row['cqm_pqri_code'];
-         }
-         if (!empty($row['cqm_nqf_code'])) {
-         	return $row['cqm_nqf_code'];
-         }
+       if (!empty($row['pqrs_code']) ) {
+         
+         	return $row['pqrs_code'];
+     
        }
        else 
        {
@@ -98,11 +95,11 @@ else {
 // Add the measure groups.
 if ( $nested == 'false' ) {
         // Collect results (note using the batch method to decrease memory overhead and improve performance)
-	$dataSheet = test_rules_clinic_batch_method('collate_outer','cqm_2011',$target_date,'report','','');
+	$dataSheet = test_rules_clinic_batch_method('collate_outer','pqrs_individual_2015',$target_date,'report','','');
 }
 else {
         // Collect results (note using the batch method to decrease memory overhead and improve performance)
-	$dataSheet = test_rules_clinic_batch_method('collate_inner','cqm_2011',$target_date,'report','cqm','plans');
+	$dataSheet = test_rules_clinic_batch_method('collate_inner','pqrs_groups_2015',$target_date,'report','cqm','plans');
 }
 
 $firstProviderFlag = TRUE;
@@ -119,7 +116,7 @@ foreach ($dataSheet as $row) {
 		if (isset($row['is_main'])) {
 			// Add PQRI measures
  			$pqri_measures = array();
-			$pqri_measures['pqri-measure-number'] =  getMeasureNumber($row);
+			$pqri_measures['pqrs-measure-number'] =  getMeasureNumber($row);
 			$pqri_measures['patient-population'] = getLabelNumber($row['population_label']);
 			$pqri_measures['numerator'] = getLabelNumber($row['numerator_label']);
 			$pqri_measures['eligible-instances'] = $row['pass_filter'];
@@ -169,7 +166,8 @@ foreach ($dataSheet as $row) {
     	}
    	
     	 if ( $nested == 'true' ){
-    	 	$xml->open_measure_group($row['cqm_measure_group']);
+    	 	$xml->open_measure_group($row['pqrs_group_measure']);
+    	 //	$xml->open_measure_group($row['cqm_measure_group']);
     	 }
 	     $firstPlanFlag = FALSE;
        	 $firstProviderFlag = TRUE; // Reset the provider flag
