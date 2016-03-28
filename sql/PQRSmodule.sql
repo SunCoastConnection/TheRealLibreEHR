@@ -364,7 +364,7 @@ INSERT INTO `clinical_rules` (`id`, `pid`, `active_alert_flag`, `passive_alert_f
 ('PQRS_Group_TKR_0353', '0', '0', '0', '0', NULL, NULL, '', '', '0', '0', '0', '', '', '0', NULL, '0', '', '', '2015', '', 'patients:med', 'PQRS_Group_TKR_0353', '0', '1', '0', '1', '0'); 
 
 
-INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`, '0') VALUES
+INSERT INTO `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`, `codes`, `toggle_setting_1`, `toggle_setting_2`, `activity`) VALUES
 ('clinical_rules', 'PQRS_0001', 'Measure PQRS_0001', '5000', '0', '0', '', '', '', '0', '0', '1'),
 ('clinical_rules', 'PQRS_0005', 'Measure PQRS_0005', '5010', '0', '0', '', '', '', '0', '0', '1'),
 ('clinical_rules', 'PQRS_0006', 'Measure PQRS_0006', '5020', '0', '0', '', '', '', '0', '0', '1'),
