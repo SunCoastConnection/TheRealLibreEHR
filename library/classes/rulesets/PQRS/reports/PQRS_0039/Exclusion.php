@@ -32,13 +32,13 @@ class PQRS_0039_Exclusion implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-" SELECT COUNT(b1.code) AS count".  
-" FROM billing AS b1".
-" JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
+" SELECT COUNT(b1.code) AS count ".  
+" FROM billing AS b1 ".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter) ".
 " WHERE b1.pid = ? ".
 
 " AND YEAR(fe.date) ='2015' ".
-" AND b1.code = 'G8401' ; ";
+" AND b1.code = 'G8401' ;";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
