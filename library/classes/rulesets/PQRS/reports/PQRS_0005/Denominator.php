@@ -33,12 +33,12 @@ class PQRS_0005_Denominator implements PQRSFilterIF
     {
 	 $query =	    
 		"SELECT COUNT(b1.code) as count ".  ///just give us a number as a result of all this, counting how many results we get.
-"  FROM billing AS b1".  //b1 is the first billing table alias to get the diagnosis as Dx. denominator
-"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".  //fe is the alias of form_encounter that gets the date of service for the Tx
-"JOIN patient_data AS p ON (b1.pid = p.pid)".  //We join the patient_data table to check the patient's age.
-"WHERE b1.pid = ? ".  ///only check for current patient, which is matched on the PID
-"AND YEAR(fe.date) ='2015' ".
-"AND b1.code = '3021F';";  //CPT2 must match 
+"  FROM billing AS b1 ".  //b1 is the first billing table alias to get the diagnosis as Dx. denominator
+"  JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".  //fe is the alias of form_encounter that gets the date of service for the Tx
+"  JOIN patient_data AS p ON (b1.pid = p.pid)".  //We join the patient_data table to check the patient's age.
+"  WHERE b1.pid = ? ".  ///only check for current patient, which is matched on the PID
+"  AND YEAR(fe.date) ='2015' ".
+"  AND b1.code = '3021F';";  //CPT2 must match 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
 

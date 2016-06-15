@@ -35,10 +35,9 @@ $query =
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" WHERE b1.pid = '$Patient' ".
-" AND b1.user = '$Provider' ".
+" WHERE b1.pid = ?".
 " AND YEAR(fe.date) ='2015' ".
-" AND (b1.code = 'G9207' AND b2.code = 'G9206') OR b1.code = 'G8458'); ";
+" AND ((b1.code = 'G9207' AND b2.code = 'G9206') OR b1.code = 'G8458'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 if ($result['count']> 0){ return true;} else {return false;}  	
