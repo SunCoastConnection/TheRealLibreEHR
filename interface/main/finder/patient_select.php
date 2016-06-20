@@ -86,6 +86,11 @@ form {
 .srDateLast { width: 11%; }
 .srDateNext { width: 11%; }
 .srMisc { width: 10%; }
+.srAnswer { 
+    text-align: center;}
+.srUpdate { 
+    width: 4%; 
+    text-align: center;}
 
 #searchResults table {
     width: 100%;
@@ -354,39 +359,75 @@ if ($fend > $count) $fend = $count;
  </tr>
 </table>
 
+
+<?php if ($from_page == "pqrs_report") {
+//  Start here.
+	// echo "report_id:", $report_id, ", itemized_test_id:", $itemized_test_id , ", Patients in the ", $numerator_label, "<br>";
+	// echo "That thing:  ", collectItemizedRuleDisplayTitle($report_id,$itemized_test_id,$numerator_label), "<br>";
+	$report_view = collectReportDatabase($report_id);
+	$type_report = $report_view['type'];
+	$dataSheet = json_decode($report_view['data'],TRUE);
+	foreach ($dataSheet as $row) {
+      		if ( ($row['itemized_test_id'] == $itemized_test_id) && ($row['numerator_label'] == $numerator_label) ) {
+			$measure_number = text($row['pqrs_code']) ;
+		}
+	}
+
+// Query or search the measure specific information to find number of answers
+	$number_answers_of_measure = 4;
+
+
+	// echo "type_report:  ", $type_report, ",  tempCqmAmcString:  ", $tempCqmAmcString, "<br>" ;
+	echo "<b>Measure Number:</b>  ", $measure_number, "  (Pretend this says Measure 317) <br>";
+
+	echo "DESCRIPTION: Percentage of patients aged 18 years and older seen during the reporting period who were screened for high blood pressure AND a recommended follow-up plan is documented based on the current blood pressure (BP) reading as indicated. <br>";
+
+	echo "<p>";
+        echo "<b>Measure Question:</b>  ";
+
+		echo "Was patient screened for high blood pressure AND was a recommended follow-up plan documented if the blood pressure is pre-hypertensive or hypertensive";
+
+	echo "<br>  26   <br>";
+
+} ?>
+
 <div id="searchResultsHeader">
-<table>
-<tr>
-<th class="srName"><?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES);?></th>
-<th class="srGender"><?php echo htmlspecialchars( xl('Sex'), ENT_NOQUOTES);?></th>
-<th class="srPhone"><?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES);?></th>
-<th class="srSS"><?php echo htmlspecialchars( xl('SS'), ENT_NOQUOTES);?></th>
-<th class="srDOB"><?php echo htmlspecialchars( xl('DOB'), ENT_NOQUOTES);?></th>
-<th class="srID"><?php echo htmlspecialchars( xl('ID'), ENT_NOQUOTES);?></th>
+<?php if ($from_page != "pqrs_report") { ?>
+	<table>
+	<tr>
+	<th class="srName"><?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES);?></th>
+	<th class="srGender"><?php echo htmlspecialchars( xl('Sex'), ENT_NOQUOTES);?></th>
 
-<?php if (empty($GLOBALS['patient_search_results_style'])) { ?>
-<th class="srPID"><?php echo htmlspecialchars( xl('PID'), ENT_NOQUOTES);?></th>
-<th class="srNumEnc"><?php echo htmlspecialchars( xl('[Number Of Encounters]'), ENT_NOQUOTES);?></th>
-<th class="srNumDays"><?php echo htmlspecialchars( xl('[Days Since Last Encounter]'), ENT_NOQUOTES);?></th>
-<th class="srDateLast"><?php echo htmlspecialchars( xl('[Date of Last Encounter]'), ENT_NOQUOTES);?></th>
-<th class="srDateNext">
-<?php
-$add_days = 90;
-if (!$popup && preg_match('/^(\d+)\s*(.*)/',$patient,$matches) > 0) {
-  $add_days = $matches[1];
-  $patient = $matches[2];
-}
-?>
-[<?php echo htmlspecialchars( $add_days, ENT_NOQUOTES);?> <?php echo htmlspecialchars( xl('Days From Last Encounter'), ENT_NOQUOTES); ?>]
-</th>
+	<th class="srPhone"><?php echo htmlspecialchars( xl('Phone'), ENT_NOQUOTES);?></th>
+	<th class="srSS"><?php echo htmlspecialchars( xl('SS'), ENT_NOQUOTES);?></th>
 
-<?php
-}
-else {
+
+	<th class="srDOB"><?php echo htmlspecialchars( xl('DOB'), ENT_NOQUOTES);?></th>
+	<th class="srID"><?php echo htmlspecialchars( xl('ID'), ENT_NOQUOTES);?></th>
+
+	<?php if (empty($GLOBALS['patient_search_results_style'])) { ?>
+	<th class="srPID"><?php echo htmlspecialchars( xl('PID'), ENT_NOQUOTES);?></th>
+	<th class="srNumEnc"><?php echo htmlspecialchars( xl('[Number Of Encounters]'), ENT_NOQUOTES);?></th>
+	<th class="srNumDays"><?php echo htmlspecialchars( xl('[Days Since Last Encounter]'), ENT_NOQUOTES);?></th>
+	<th class="srDateLast"><?php echo htmlspecialchars( xl('[Date of Last Encounter]'), ENT_NOQUOTES);?></th>
+	<th class="srDateNext">
+	<?php
+	$add_days = 90;
+	if (!$popup && preg_match('/^(\d+)\s*(.*)/',$patient,$matches) > 0) {
+  		$add_days = $matches[1];
+  		$patient = $matches[2];
+	}
+	?>
+	[<?php echo htmlspecialchars( $add_days, ENT_NOQUOTES);?> <?php echo htmlspecialchars( xl('Days From Last Encounter'), ENT_NOQUOTES); ?>]
+	</th>
+
+	<?php
+	}
+	else {
   // Alternate patient search results style; this gets address plus other
   // fields that are mandatory, up to a limit of 5.
-  $extracols = array();
-  $tres = sqlStatement("SELECT * FROM layout_options " .
+  	$extracols = array();
+ $tres = sqlStatement("SELECT * FROM layout_options " .
     "WHERE form_id = 'DEM' AND ( uor > 1 AND field_id != '' " .
     "OR uor > 0 AND field_id = 'street' ) AND " .
     "field_id NOT LIKE '_name' AND " .
@@ -396,15 +437,64 @@ else {
     "field_id NOT LIKE 'DOB' AND " .
     "field_id NOT LIKE 'pubpid' " .
     "ORDER BY group_name, seq LIMIT 5");
-  while ($trow = sqlFetchArray($tres)) {
-    $extracols[$trow['field_id']] = $trow;
-    echo "<th class='srMisc'>" . htmlspecialchars(xl($trow['title']), ENT_NOQUOTES) . "</th>\n";
-  }
-}
-?>
+  	while ($trow = sqlFetchArray($tres)) {
+    		$extracols[$trow['field_id']] = $trow;
+    		echo "<th class='srMisc'>" . htmlspecialchars(xl($trow['title']), ENT_NOQUOTES) . "</th>\n";
+  		}
+	}
+	?>
 
-</tr>
-</table>
+	</tr>
+	</table>
+<?php
+}
+else {	//  $from_page DOES == "pqrs_report"  ?>
+	<table>
+	<tr>
+	<th class="srName"><?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES);?></th>
+	<th class="srGender"><?php echo htmlspecialchars( xl('Sex'), ENT_NOQUOTES);?></th>
+	<th class="srDOB"><?php echo htmlspecialchars( xl('DOB'), ENT_NOQUOTES);?></th>
+
+	<?php if (empty($GLOBALS['patient_search_results_style'])) { ?>
+	<?php
+		$add_days = 90;
+		if (!$popup && preg_match('/^(\d+)\s*(.*)/',$patient,$matches) > 0) {
+  			$add_days = $matches[1];
+  			$patient = $matches[2];
+			}
+		}
+		else {
+  // Alternate patient search results style; this gets address plus other
+  // fields that are mandatory, up to a limit of 5.
+// -- leebc doesn't know if we need this, but errors if I removed it 2016-06-16
+  		$extracols = array();
+ $tres = sqlStatement("SELECT * FROM layout_options " .
+    "WHERE form_id = 'DEM' AND ( uor > 1 AND field_id != '' " .
+    "OR uor > 0 AND field_id = 'street' ) AND " .
+    "field_id NOT LIKE '_name' AND " .
+    "field_id NOT LIKE 'phone%' AND " .
+    "field_id NOT LIKE 'title' AND " .
+    "field_id NOT LIKE 'ss' AND " .
+    "field_id NOT LIKE 'DOB' AND " .
+    "field_id NOT LIKE 'pubpid' " .
+    "ORDER BY group_name, seq LIMIT 5");
+  		while ($trow = sqlFetchArray($tres)) {
+    			$extracols[$trow['field_id']] = $trow;
+    			echo "<th class='srMisc'>" . htmlspecialchars(xl($trow['title']), ENT_NOQUOTES) . "</th>\n";
+  			}
+		}
+
+	// Need to loop and write "short answer" for each answer here
+	for ($i = 1; $i <= $number_answers_of_measure; $i++) { ?>
+		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer Text'), ENT_NOQUOTES), " ", $i ;?></th>
+	<?php } ?>
+
+	<th class="srUpdate"><?php echo htmlspecialchars( xl('Click To Update'), ENT_NOQUOTES);?></th>
+	</tr>
+	</table>
+<?php 
+}  ?>
+
 </div>
 
 <div id="searchResults">
@@ -414,6 +504,32 @@ else {
 <?php
 if ($result) {
     foreach ($result as $iter) {
+	$row_pid=$iter['pid'];
+	if ($from_page == "pqrs_report") {
+        	echo "		<tr>
+	<td width=25%>
+		<table class='oneresult' id='".htmlspecialchars( $iter['pid'], ENT_QUOTES)."'>\n		<tr>\n";
+        	echo  "			<td class='srName'>" . htmlspecialchars($iter['lname'] . ", " . $iter['fname']) . "</td>\n";
+        	echo  "			<td class='srGender'>" . text(getListItemTitle("sex",$iter['sex'])) . "</td>\n";
+        	if ($iter{"DOB"} != "0000-00-00 00:00:00") {
+            	echo "			<td class='srDOB'>" . htmlspecialchars( $iter['DOB_TS'], ENT_NOQUOTES) . "</td>\n";
+		echo "		</table>\n";
+        	} else {
+            		echo "			<td class='srDOB'>&nbsp;</td>";
+        	}
+		echo "	<td>  
+		<table>
+		<tr>\n"
+		// Build this list from a DB query ?>
+        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3044F">Most recent hemoglobin A1c (HbA1c) level &lt; 7.0%</td>
+        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3045F">A1c (HbA1c) level 7.0 to 9.0%</td>
+        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F">Most recent hemoglobin A1c level &gt; 9.0%</td>
+        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F:8P">Hemoglobin A1c level was not performed during the measurement period (12 months)</td>
+        	<td class='srAnswer'><button type="button" onclick="alert('Hello world!')">Update</button></td>
+		</table>
+        <?php
+	} else {  // This is a normal report, not PQRS
+
         echo "<tr class='oneresult' id='".htmlspecialchars( $iter['pid'], ENT_QUOTES)."'>";
         echo  "<td class='srName'>" . htmlspecialchars($iter['lname'] . ", " . $iter['fname']) . "</td>\n";
         echo  "<td class='srGender'>" . text(getListItemTitle("sex",$iter['sex'])) . "</td>\n";
@@ -522,8 +638,9 @@ if ($result) {
             echo"</td>\n";
           }
         }
-    }
-}
+      } // End if != pqrs_report, it's a normal report
+    }  // End foreach
+}  // end if $result
 ?>
 </table>
 </div>  <!-- end searchResults DIV -->
