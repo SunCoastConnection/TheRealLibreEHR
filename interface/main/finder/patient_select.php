@@ -378,7 +378,7 @@ if ($fend > $count) $fend = $count;
 
 
 	// echo "type_report:  ", $type_report, ",  tempCqmAmcString:  ", $tempCqmAmcString, "<br>" ;
-	echo "<b>Measure Number:</b>  ", $measure_number, "  (Pretend this says Measure 317) <br>";
+	echo "<b>Measure Number:</b>  " . $measure_number . "  (Pretend this says Measure 317) <br>";
 
 	echo "DESCRIPTION: Percentage of patients aged 18 years and older seen during the reporting period who were screened for high blood pressure AND a recommended follow-up plan is documented based on the current blood pressure (BP) reading as indicated. <br>";
 
@@ -486,7 +486,7 @@ else {	//  $from_page DOES == "pqrs_report"  ?>
 
 	// Need to loop and write "short answer" for each answer here
 	for ($i = 1; $i <= $number_answers_of_measure; $i++) { ?>
-		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer Text'), ENT_NOQUOTES), " ", $i ;?></th>
+		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer Text'), ENT_NOQUOTES) . " " . $i ;?></th>
 	<?php } ?>
 
 	<th class="srUpdate"><?php echo htmlspecialchars( xl('Click To Update'), ENT_NOQUOTES);?></th>
@@ -519,13 +519,13 @@ if ($result) {
         	}
 		echo "	<td>  
 		<table>
-		<tr>\n"
+		<tr id='[" . $iter['pid'] . "]'>\n"
 		// Build this list from a DB query ?>
-        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3044F">Most recent hemoglobin A1c (HbA1c) level &lt; 7.0%</td>
+        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" id="[<?php echo htmlspecialchars( $iter['pid'] ) ?>][1]" value="3044F">Most recent hemoglobin A1c (HbA1c) level &lt; 7.0%</td>
         	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3045F">A1c (HbA1c) level 7.0 to 9.0%</td>
         	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F">Most recent hemoglobin A1c level &gt; 9.0%</td>
         	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F:8P">Hemoglobin A1c level was not performed during the measurement period (12 months)</td>
-        	<td class='srAnswer'><button type="button" onclick="alert('Hello world!')">Update</button></td>
+        	<td class='srAnswer'><button type="button" onclick="UpdatePatient(<?php echo htmlspecialchars( $iter['pid'] ) ?>, 2, 'radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>')">Update</button></td>
 		</table>
         <?php
 	} else {  // This is a normal report, not PQRS
@@ -681,6 +681,33 @@ else {
     <?php if ($popup) echo "opener."; echo $target; ?>.location.href = '<?php echo $newPage; ?>' + parts[0];
     <?php if ($popup) echo "window.close();\n"; ?>
     return true;
+}
+
+<?php if ($from_page == "pqrs_report") {
+	echo "var UpdatePatient = function (pid,date,radioname) {\n";
+	echo "alert(pid + ', ' + date + ', ' + radioname);\n"; 
+// The new layout loads just the demographics frame here, which in turn
+// will set the pid and load all the other frames.
+if ($GLOBALS['concurrent_layout']) {
+    $newPage = "../../../library/classes/rulesets/PQRS/PQRSEncounter.php";
+    $target = "document";
+}
+else {
+    $newPage = "../../../library/classes/rulesets/PQRS/PQRSEncounter.php";
+    $target = "top";
+}
+
+//	echo "   objID = eObj.id;\n";
+//	echo "   var parts = objID.split(\"~\");\n";
+	echo "   myRadioValue = document.getElementById(radioname).value;\n";
+	if (!$popup) echo "	top.restoreSession();\n"; 
+	if ($popup) echo "opener.";
+	echo "	$target.location.href = '$newPage?pid=' + '&date=' + '20160620' + '&CPT2codevalue=' ;\n";
+	//echo "	$target.location.href = '$newPage?pid=' + pid + '&date=' + '20160620' + '&CPT2codevalue=' + value + parts[0];\n";
+	if ($popup) echo "window.close();\n"; 
+   	echo "		return true;\n";
+}
+?>
 }
 
 </script>
