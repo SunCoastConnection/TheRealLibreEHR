@@ -507,26 +507,22 @@ if ($result) {
 	$row_pid=$iter['pid'];
 	if ($from_page == "pqrs_report") {
         	echo "		<tr>
-	<td width=25%>
-		<table class='oneresult' id='".htmlspecialchars( $iter['pid'], ENT_QUOTES)."'>\n		<tr>\n";
-        	echo  "			<td class='srName'>" . htmlspecialchars($iter['lname'] . ", " . $iter['fname']) . "</td>\n";
-        	echo  "			<td class='srGender'>" . text(getListItemTitle("sex",$iter['sex'])) . "</td>\n";
+	<td>
+		<table id='".htmlspecialchars( $iter['pid'], ENT_QUOTES)."'>\n		<tr>\n";
+        	echo  "			<td class='oneresult srName'>" . htmlspecialchars($iter['lname'] . ", " . $iter['fname']) . "</td>\n";
+        	echo  "			<td class='oneresult srGender'>" . text(getListItemTitle("sex",$iter['sex'])) . "</td>\n";
         	if ($iter{"DOB"} != "0000-00-00 00:00:00") {
-            	echo "			<td class='srDOB'>" . htmlspecialchars( $iter['DOB_TS'], ENT_NOQUOTES) . "</td>\n";
-		echo "		</table>\n";
+            	echo "			<td class='oneresult srDOB'>" . htmlspecialchars( $iter['DOB_TS'], ENT_NOQUOTES) . "</td>\n";
         	} else {
             		echo "			<td class='srDOB'>&nbsp;</td>";
         	}
-		echo "	<td>  
-		<table>
-		<tr id='[" . $iter['pid'] . "]'>\n"
-		// Build this list from a DB query ?>
-        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" id="[<?php echo htmlspecialchars( $iter['pid'] ) ?>][1]" value="3044F">Most recent hemoglobin A1c (HbA1c) level &lt; 7.0%</td>
-        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3045F">A1c (HbA1c) level 7.0 to 9.0%</td>
-        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F">Most recent hemoglobin A1c level &gt; 9.0%</td>
-        	<td class='srAnswer'><input type="radio" name="radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F:8P">Hemoglobin A1c level was not performed during the measurement period (12 months)</td>
-        	<td class='srAnswer'><button type="button" onclick="UpdatePatient(<?php echo htmlspecialchars( $iter['pid'] ) ?>, 2, 'radioValue<?php echo htmlspecialchars( $iter['pid'] ) ?>')">Update</button></td>
-		</table>
+	// Build this list from a DB query ?>
+        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>"  value="3044F">Most recent hemoglobin A1c (HbA1c) level &lt; 7.0%</label></td>
+        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3045F">A1c (HbA1c) level 7.0 to 9.0%</label></td>
+        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F">Most recent hemoglobin A1c level &gt; 9.0%</label></td>
+        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F:8P">Hemoglobin A1c level was not performed during the measurement period (12 months)</label></td>
+        	<td class='srAnswer'><button type="button" onclick="updatePatient(<?php echo htmlspecialchars( $iter['pid'] ) ?>)">Update</button></td>
+	</table>
         <?php
 	} else {  // This is a normal report, not PQRS
 
@@ -684,33 +680,40 @@ else {
 }
 
 <?php if ($from_page == "pqrs_report") {
-	echo "var UpdatePatient = function (pid,date,radioname) {\n";
-	echo "alert(pid + ', ' + date + ', ' + radioname);\n"; 
-// The new layout loads just the demographics frame here, which in turn
-// will set the pid and load all the other frames.
-if ($GLOBALS['concurrent_layout']) {
-    $newPage = "../../../library/classes/rulesets/PQRS/PQRSEncounter.php";
-    $target = "document";
-}
-else {
-    $newPage = "../../../library/classes/rulesets/PQRS/PQRSEncounter.php";
-    $target = "top";
-}
-
-//	echo "   objID = eObj.id;\n";
-//	echo "   var parts = objID.split(\"~\");\n";
-	echo "   myRadioValue = document.getElementById(radioname).value;\n";
-	if (!$popup) echo "	top.restoreSession();\n"; 
-	if ($popup) echo "opener.";
-	echo "	$target.location.href = '$newPage?pid=' + '&date=' + '20160620' + '&CPT2codevalue=' ;\n";
-	//echo "	$target.location.href = '$newPage?pid=' + pid + '&date=' + '20160620' + '&CPT2codevalue=' + value + parts[0];\n";
-	if ($popup) echo "window.close();\n"; 
-   	echo "		return true;\n";
+	echo "function updatePatient(pid) {\n";
+	echo "	selected = $('table[id=' + pid + '] input[type=\'radio\']:checked');\n";
+	echo "	if(selected.length > 0) {\n";
+	echo "		var date = '20160620';\n";
+	echo "		var code = selected.val();\n\n";
+	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
+	echo "		$.ajax({\n";
+	echo "			type: 'POST',\n";
+	echo "			url: '/PQRS_Gateway/library/classes/rulesets/PQRS/PQRSEncounter.php',\n";
+	echo "			dataType: 'text',\n";
+	echo "			data: {\n";
+	echo "				pid: pid,\n";
+	echo "				date: date,\n";
+	echo "				CPT2codevalue: code\n";
+	echo "			},\n";
+	echo "			success: function(data, status, xHR) {\n";
+	echo "				if(data == 'SUCCESS') {\n";
+	echo "					$('table[id=' + pid + ']').parent().parent().slideUp();\n";
+	echo "					console.log('Update succeeded.  Hiding patient row.');\n";
+	echo "				} else {\n";
+	echo "					console.log('Update failed.');\n";
+	echo "				}\n";
+	echo "			},\n";
+	echo "			error: function(xHR, status, error) {\n";
+	echo "				console.log('Status: ' + status + ', Error: ' + error);\n";
+	echo "			},\n";
+	echo "		});\n";
+	echo "	} else {\n";
+	echo "		alert('Answer not selected.  Please select an answer before attempting to \'Update\'.')\n";
+	echo "	}\n";
+	echo "}  // end updatePatient()\n";
 }
 ?>
-}
 
-</script>
-
-</body>
+		</script>
+	</body>
 </html>
