@@ -18,23 +18,74 @@
 
 //pid=' + '&date=' + '20160620' + '&CPT2codevalue=
 
-$pid = $_POST['pid'];
-$date = $_POST['date'];
-$code = $_POST['CPT2codevalue'];
+function AddCPT2CodeEncounter($postVars)
+{
+    $pid = $postVars[0];
+    $date = $postVars[1];
+    $code = $postVars[2];
+
+// SAMPLE
+// $query =
+//	"SELECT COUNT(b1.code) AS count ". 
+//	" FROM billing AS b1 ". 
+//	" INNER JOIN billing AS b2 ON (b1.pid = b2.pid) ". 
+//	" JOIN form_encounter AS fe ON (b2.encounter = fe.encounter) ".  
+//	" JOIN patient_data AS p ON (b1.pid = p.pid) ". 
+//	" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
+//	" INNER JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_b.code)".
+//	" WHERE b1.pid = ? ".  
+//	" AND YEAR(fe.date) ='2015' ".
+//	" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date)  BETWEEN '18' AND '75' ".  //age must be between 18 and 75 on the date of treatment
+//	" AND b1.code = codelist_a.code ".
+//	" AND codelist_a.type = 'pqrs_0001_a' ".
+//	" AND b2.code = codelist_b.code".
+//	" AND codelist_b.type = 'pqrs_0001_b' ;";
+
+//	$query=
+//		"INSERT INTO `form_encounter` ".
+//		" ( `date`, `reason`, `facility`, `facility_id`, ".
+//		" `pid`, `encounter`, `onset_date`, `sensitivity`, ".
+//		" `billing_note`, `pc_catid`, `provider_id`, ".
+//		" `supervisor_id`, `billing_facility`) ".
+//		" VALUES ".
+//		" ('XXXXXXXXXXXXXX', ".
+//		" 'PQRS Direct Entry Input:  See Fee Sheet', ".
+//		" 'Query Facility Name Here','1', ".
+//		" 'XXXXX','18134139','0000-00-00 00:00:00','normal', ".
+//		" 'PQRS CPT2 Entries','1','XXXXXXXXXX', ".
+//		" '0','1');";
 
 
-// echo 'Hello !' . htmlspecialchars($_GET["name"]) . '!';
-// echo '<p>';
-// echo 'pid !' . htmlspecialchars($pid) . '!';
-// echo '<p>';
-// echo 'date !' . htmlspecialchars($date) . '!';
-// echo '<p>';
-// echo 'CPT2codevalue !' . htmlspecialchars($code) . '!';
-// echo '<p>';
+//INSERT INTO `forms` ( `date`, `encounter`, `form_name`, `form_id`, `pid`, `user`, `groupname`, `authorized`, `deleted`, `formdir`) VALUES
+//('20160114115142','18134139','New Patient Encounter','1','1','1154453975','Default', '1', '0', 'newpatient');
 
-if(rand(1, 15) > 10) {
-        echo 'SUCCESS';
-} else {
-        echo 'FAILED';
+//INSERT INTO `billing` ( `date`, `code_type`, `code`, `pid`,
+//                 `provider_id`, `user`, `groupname`, `authorized`, `encounter`, `billed`, `activity`,
+//                  `payer_id`, `bill_process`, `modifier`) VALUES
+//('20160114115142','CPT2','G8080','1','1154453975','1154453975','Default','1','18134139','0','1','1','0','HR');
+
+
+// SAMPLE
+//	$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+//	if ($result['count'] > 0){
+//		 return true;} else {return false;} 
+
+    return true; //$result;
 }
+
+//  Begin Main
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	$pid = $_POST['pid'];
+	$date = $_POST['date'];
+	$code = $_POST['CPT2codevalue'];
+
+//	AddCPT2CodeEncounter($pid,$date,$code);
+
+	if(rand(1, 15) > 10) {
+        	echo 'SUCCESS';
+	} else {
+        	echo 'FAILED';
+	}
+}
+
 ?>
