@@ -18,21 +18,21 @@
 
 //pid=' + '&date=' + '20160620' + '&CPT2codevalue=
 
-function AddCPT2CodeEncounter($postVars)
+function AddCPT2CodeEncounter($pid,$date,$code)
 {
-    $pid = $postVars[0];
-    $date = $postVars[1];
-    $code = $postVars[2];
 
 //	*	Get the userID
 //	* 	Is this user authorized?
 //	*	check the date
+//	*	Format the date for database entry
 //	*	check the PID
 //	* 	check the CODE
+//	*	Break the code part into $codeBase and $codeModifier
 //	*	Query the facility Name
 //	*	Query the facility ID
 //	*	Find the next encounter number
 //	*	Find Provider ID
+
 
 //		Art's encounter creation query guide.  (PQRS Gateway Issue #3)
 	$query=
@@ -61,7 +61,7 @@ function AddCPT2CodeEncounter($postVars)
 		" VALUES ".
 		" ('".$date."','".$encounterNumber."', ".
 		" 'New Patient Encounter', '".$formID."', ".
-		" '".$pid."', '".$userID".','Default', '1', ".
+		" '".$pid."', '".$userID."','Default', '1', ".
 		" '0', 'newpatient');";
 
 	$query=
@@ -71,10 +71,10 @@ function AddCPT2CodeEncounter($postVars)
 		" `encounter`, `billed`, `activity`, ".
 		" `payer_id`, `bill_process`, `modifier`) ".
 		" VALUES ".
-		" ('".$date."','CPT2','".$code."','".$pid."', ".
+		" ('".$date."','CPT2','".$codeBase."','".$pid."', ".
 		" '".$providerID."','".$userID."','Default','1', ".
 		" '".$encounterNumber."','0','1', ".
-		" '1','0','HR');";
+		" '1','0','".$codeModifier."');";
 
 
 // SAMPLE:  Passing values into a query
@@ -99,8 +99,9 @@ function AddCPT2CodeEncounter($postVars)
 //	if ($result['count'] > 0){
 //		 return true;} else {return false;} 
 
-    return true; //$result;
+    return "'".$pid."/".$date."/".$code."'"; //$result;
 }	// End function AddCPT2CodeEncounter()
+
 
 //  Begin Main
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -109,11 +110,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$code = $_POST['CPT2codevalue'];
 
 //	AddCPT2CodeEncounter($pid,$date,$code);
+	$result=AddCPT2CodeEncounter($pid,$date,$code);
 
 	if(rand(1, 15) > 10) {
         	echo 'SUCCESS';
 	} else {
-        	echo 'FAILED';
+        	echo 'FAILED:'.$result."+++".$pid.$date.$code;
 	}
 }
 
