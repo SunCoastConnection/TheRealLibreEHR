@@ -49,6 +49,9 @@ function AddCPT2CodeEncounter($postVars)
 		" 'normal', 'PQRS CPT2 Entries','1','".$providerID."', ".
 		" '0','1');";
 
+//	* Now query and find out the form_id we just created
+		// There are good code examples of how this is done
+
 	$query=
 		"INSERT INTO `forms` ".
 		" ( `date`, `encounter`, ".
@@ -57,7 +60,7 @@ function AddCPT2CodeEncounter($postVars)
 		"  `deleted`, `formdir`) ".
 		" VALUES ".
 		" ('".$date."','".$encounterNumber."', ".
-		" 'New Patient Encounter', '1', ".
+		" 'New Patient Encounter', '".$formID."', ".
 		" '".$pid."', '".$userID".','Default', '1', ".
 		" '0', 'newpatient');";
 
@@ -97,7 +100,7 @@ function AddCPT2CodeEncounter($postVars)
 //		 return true;} else {return false;} 
 
     return true; //$result;
-}
+}	// End function AddCPT2CodeEncounter()
 
 //  Begin Main
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
