@@ -24,7 +24,57 @@ function AddCPT2CodeEncounter($postVars)
     $date = $postVars[1];
     $code = $postVars[2];
 
-// SAMPLE
+//	*	Get the userID
+//	* 	Is this user authorized?
+//	*	check the date
+//	*	check the PID
+//	* 	check the CODE
+//	*	Query the facility Name
+//	*	Query the facility ID
+//	*	Find the next encounter number
+//	*	Find Provider ID
+
+//		Art's encounter creation query guide.  (PQRS Gateway Issue #3)
+	$query=
+		"INSERT INTO `form_encounter` ".
+		" ( `date`, `reason`, ".
+		" `facility`, `facility_id`, ".
+		" `pid`, `encounter`, `onset_date`, ".
+		" `sensitivity`, `billing_note`, `pc_catid`, `provider_id`, ".
+		" `supervisor_id`, `billing_facility`) ".
+		" VALUES ".
+		" ('".$date."', 'PQRS Direct Entry Input:  See Fee Sheet', ".
+		" 'Query Facility Name Here','1', ".
+		" '".$pid."','".$encounterNumber."','0000-00-00 00:00:00', ".
+		" 'normal', 'PQRS CPT2 Entries','1','".$providerID."', ".
+		" '0','1');";
+
+	$query=
+		"INSERT INTO `forms` ".
+		" ( `date`, `encounter`, ".
+		" `form_name`, `form_id`, ".
+		" `pid`, `user`, `groupname`, `authorized`, ".
+		"  `deleted`, `formdir`) ".
+		" VALUES ".
+		" ('".$date."','".$encounterNumber."', ".
+		" 'New Patient Encounter', '1', ".
+		" '".$pid."', '".$userID".','Default', '1', ".
+		" '0', 'newpatient');";
+
+	$query=
+		"INSERT INTO `billing` ".
+		" ( `date`, `code_type`, `code`, `pid`, ".
+		" `provider_id`, `user`, `groupname`, `authorized`, ".
+		" `encounter`, `billed`, `activity`, ".
+		" `payer_id`, `bill_process`, `modifier`) ".
+		" VALUES ".
+		" ('".$date."','CPT2','".$code."','".$pid."', ".
+		" '".$providerID."','".$userID."','Default','1', ".
+		" '".$encounterNumber."','0','1', ".
+		" '1','0','HR');";
+
+
+// SAMPLE:  Passing values into a query
 // $query =
 //	"SELECT COUNT(b1.code) AS count ". 
 //	" FROM billing AS b1 ". 
@@ -40,30 +90,6 @@ function AddCPT2CodeEncounter($postVars)
 //	" AND codelist_a.type = 'pqrs_0001_a' ".
 //	" AND b2.code = codelist_b.code".
 //	" AND codelist_b.type = 'pqrs_0001_b' ;";
-
-//	$query=
-//		"INSERT INTO `form_encounter` ".
-//		" ( `date`, `reason`, `facility`, `facility_id`, ".
-//		" `pid`, `encounter`, `onset_date`, `sensitivity`, ".
-//		" `billing_note`, `pc_catid`, `provider_id`, ".
-//		" `supervisor_id`, `billing_facility`) ".
-//		" VALUES ".
-//		" ('XXXXXXXXXXXXXX', ".
-//		" 'PQRS Direct Entry Input:  See Fee Sheet', ".
-//		" 'Query Facility Name Here','1', ".
-//		" 'XXXXX','18134139','0000-00-00 00:00:00','normal', ".
-//		" 'PQRS CPT2 Entries','1','XXXXXXXXXX', ".
-//		" '0','1');";
-
-
-//INSERT INTO `forms` ( `date`, `encounter`, `form_name`, `form_id`, `pid`, `user`, `groupname`, `authorized`, `deleted`, `formdir`) VALUES
-//('20160114115142','18134139','New Patient Encounter','1','1','1154453975','Default', '1', '0', 'newpatient');
-
-//INSERT INTO `billing` ( `date`, `code_type`, `code`, `pid`,
-//                 `provider_id`, `user`, `groupname`, `authorized`, `encounter`, `billed`, `activity`,
-//                  `payer_id`, `bill_process`, `modifier`) VALUES
-//('20160114115142','CPT2','G8080','1','1154453975','1154453975','Default','1','18134139','0','1','1','0','HR');
-
 
 // SAMPLE
 //	$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
