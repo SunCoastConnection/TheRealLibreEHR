@@ -366,6 +366,7 @@ if ($fend > $count) $fend = $count;
 	// echo "That thing:  ", collectItemizedRuleDisplayTitle($report_id,$itemized_test_id,$numerator_label), "<br>";
 	$report_view = collectReportDatabase($report_id);
 	$type_report = $report_view['type'];
+echo "Report Type: ".$type_report;
 	$dataSheet = json_decode($report_view['data'],TRUE);
 	foreach ($dataSheet as $row) {
       		if ( ($row['itemized_test_id'] == $itemized_test_id) && ($row['numerator_label'] == $numerator_label) ) {
@@ -489,7 +490,7 @@ else {	//  $from_page DOES == "pqrs_report"  ?>
 		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer Text'), ENT_NOQUOTES) . " " . $i ;?></th>
 	<?php } ?>
 
-	<th class="srUpdate"><?php echo htmlspecialchars( xl('Click To Update'), ENT_NOQUOTES);?></th>
+	
 	</tr>
 	</table>
 <?php 
@@ -683,7 +684,7 @@ else {
 	echo "function updatePatient(pid) {\n";
 	echo "	selected = $('table[id=' + pid + '] input[type=\'radio\']:checked');\n";
 	echo "	if(selected.length > 0) {\n";
-	echo "		var date = '20160620';\n";
+	echo "		var date = '20161231';\n";
 	echo "		var code = selected.val();\n\n";
 	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
 	echo "		$.ajax({\n";
@@ -700,7 +701,7 @@ else {
 	echo "					$('table[id=' + pid + ']').parent().parent().slideUp();\n";
 	echo "					console.log('Update succeeded.  Hiding patient row.');\n";
 	echo "				} else {\n";
-	echo "					console.log('Update failed.');\n";
+	echo "					console.log('Update failed: '+ data);\n";
 	echo "				}\n";
 	echo "			},\n";
 	echo "			error: function(xHR, status, error) {\n";
