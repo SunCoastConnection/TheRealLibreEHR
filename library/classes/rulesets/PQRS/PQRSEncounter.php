@@ -22,14 +22,15 @@ include_once("$srcdir/sql.inc");
 
 function AddCPT2CodeBilling($pid,$date,$ourCode,$encounter,$userID)
 {
-	error_log("DEBUG: ACPT2CBilling -- Passed us:  pid=".$pid."  date=".$date."  code=".$code."  encounter=".$encounter."  user/provider=".$userID);
+	error_log("DEBUG: ACPT2CBilling -- Passed us:  pid=".$pid."  date=".$date."  code=".$ourCode."  encounter=".$encounter."  user/provider=".$userID);
 
 	if ( $ourCode != "" ) {
 		$codesplit=explode(":",$ourCode);
                 $codeBase=$codesplit[0];
                 $codeModifier=$codesplit[1];
+// TODO: Only set $codeModifier if there is a second field
 
-	error_log("DEBUG: ACPT2CBilling -- codeBase=".$codeBase." codeModifier=".$codeModifier);
+	//error_log("DEBUG: ACPT2CBilling -- codeBase=".$codeBase." codeModifier=".$codeModifier);
 
 //sqlInsert("update pqrs_form_acute_otitis_externa set pid = {$_SESSION["pid"]},groupname='".$_SESSION["authProvider"]."',user='".$_SESSION["authUser"]."',authorized=$userauthorized,activity=1, date = NOW(), purpose ='".$_POST["purpose"]."'
 
@@ -55,12 +56,14 @@ function AddCPT2CodeEncounter($pid,$date,$passedCodes)
 {
 	 
 	//This is a DEBUG block:
+/*
 	$var="";
 	$session_string="";
 	foreach ($_SESSION as $k => $var) {
 		$session_string=$session_string." // ".$k." = ".$var;
 	}
 	error_log("DEBUG AddCPT2CodeEncounter() -- _SESSION:".$session_string);
+*/
 //$_SESSION contains:
 // language_choice = 1 
 // authUser = admin 
@@ -94,7 +97,7 @@ function AddCPT2CodeEncounter($pid,$date,$passedCodes)
 //	*	Query the facility Name
 //	*	Query the facility ID
 // site_id = default 
-//	$myfacility=$_SESSION["facilityID"].RRRRR;
+	$myfacility=$_SESSION["facilityID"];
 	$myfacility=$facility;
 //	*	Find Provider ID
 	$myprovider_id = findProvider( $pid );
@@ -105,7 +108,7 @@ function AddCPT2CodeEncounter($pid,$date,$passedCodes)
 	$result = sqlStatement($query);
 	$tmpEncounterNumber = SqlFetchArray($result);
 	$myencounterNumber = 1 + $tmpEncounterNumber['enc'];
-error_log("DEBUG AddCPT2CodeEncounter() -- queried encounter with: \"".$query."\" and got \"".$result."\"  and next encounterNumber as:  ".$myencounterNumber);
+// error_log("DEBUG AddCPT2CodeEncounter() -- queried encounter with: \"".$query."\" and got \"".$result."\"  and next encounterNumber as:  ".$myencounterNumber);
 
 
 	$query= "INSERT INTO `form_encounter` ".
@@ -118,7 +121,7 @@ error_log("DEBUG AddCPT2CodeEncounter() -- queried encounter with: \"".$query."\
 		" ('".$date."', 'PQRS Direct Entry Input:  See Fee Sheet', ".
 		" '".$myfacility."','1', ".
 		" '".$pid."','".$myencounterNumber."','0000-00-00 00:00:00', ".
-		" 'normal', 'PQRS CPT2 Entries','1','".$myprovider_id."', ".
+		" 'normal', 'PQRS CPT2 Entries','9','".$myprovider_id."', ".
 		" '0','1');";
 	$result = sqlStatement($query);
 error_log("DEBUG AddCPT2CodeEncounter() -- Built form_encounter query: \"".$query." with result \"".SqlFetchArray($result)."\"");
@@ -191,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$mypid = $_POST['pid'];
 	$mydate = $_POST['date'];
 	$mycode = $_POST['CPT2codevalue'];
-error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code=".$mycode."  encounter=".$encounter."  user/provider=".$userID);
+error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code=".$mycode.);  //"  encounter=".$encounter."  user/provider=".$userID);
 
 	if ( $mypid !='' and $mydate!='' and $mycode!='') {
 
