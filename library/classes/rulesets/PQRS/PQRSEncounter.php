@@ -32,9 +32,7 @@ function AddCPT2CodeBilling($pid,$date,$ourCode,$encounter,$userID)
 		} else {
 			$codeModifier="";
 		}
-
 //error_log("DEBUG: ACPT2CBilling -- codeBase=".$codeBase." codeModifier=".$codeModifier);
-
 		$query=
 		"INSERT INTO `billing` ".
 		" ( `date`, `code_type`, `code`, `pid`, ".
@@ -49,7 +47,7 @@ function AddCPT2CodeBilling($pid,$date,$ourCode,$encounter,$userID)
 		$result = sqlQuery($query);
 // error_log("DEBUG: ACPT2CBilling -- Generated my query:  ".$query."  Executed with result:  ".$result);
 	}
-
+// TODO:  Return something specific if we were successful
 	return $result;
 }
 
@@ -163,6 +161,7 @@ function AddCPT2CodeEncounter($pid,$date,$passedCodes)
 		AddCPT2CodeBilling($pid,$date,$ourCode,$myencounterNumber,$myuserID);
 	}
 
+// TODO:  Return something specific if we were successful
     return "'pid=".$pid." / date=".$date." / codes=".$passedCodes." / provider_id=".$myprovider_id." / user=".$_SESSION["authUserID"]."'" ; //$result;
 
 }	// End function AddCPT2CodeEncounter()
