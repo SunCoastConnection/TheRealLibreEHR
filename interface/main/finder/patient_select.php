@@ -14,6 +14,7 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package OpenEMR
+ * @author  Beyan Lee <leebc11@acm.org>  (PQRS additions)
  * @author  Brady Miller <brady@sparmy.com>
  * @link    http://www.open-emr.org
  */
@@ -366,7 +367,7 @@ if ($fend > $count) $fend = $count;
 	// echo "That thing:  ", collectItemizedRuleDisplayTitle($report_id,$itemized_test_id,$numerator_label), "<br>";
 	$report_view = collectReportDatabase($report_id);
 	$type_report = $report_view['type'];
-echo "Report Type: ".$type_report;
+	$report_year = end(explode('_', $type_report));
 	$dataSheet = json_decode($report_view['data'],TRUE);
 	foreach ($dataSheet as $row) {
       		if ( ($row['itemized_test_id'] == $itemized_test_id) && ($row['numerator_label'] == $numerator_label) ) {
@@ -375,20 +376,31 @@ echo "Report Type: ".$type_report;
 	}
 
 // Query or search the measure specific information to find number of answers
-	$number_answers_of_measure = 4;
+        $query = "SELECT value AS value FROM pqrs_direct_entry_lookup WHERE ".
+                "measure_number = '$measure_number' AND type = 'description'";
+        $result = SqlFetchArray(sqlStatement($query));
+	$measure_description=implode(" ",$result);
+
+        $query = "SELECT value AS value FROM pqrs_direct_entry_lookup WHERE ".
+                "measure_number = '$measure_number' AND type = 'question'";
+        $result = SqlFetchArray(sqlStatement($query));
+	$measure_question=implode(" ",$result);
+
+        $query = "SELECT COUNT(*) AS count FROM pqrs_direct_entry_lookup WHERE ".
+                "measure_number = '$measure_number' AND type LIKE 'answe%code'";
+        $result = SqlFetchArray(sqlStatement($query));
+
+//error_log("***** DEBUG *****  patient_select() -- Queried p_d_e_l with \"".$query."\" and got result \"".implode(" ",$result)."\"" );
 
 
-	// echo "type_report:  ", $type_report, ",  tempCqmAmcString:  ", $tempCqmAmcString, "<br>" ;
-	echo "<b>Measure Number:</b>  " . $measure_number . "  (Pretend this says Measure 317) <br>";
+	$number_answers_of_measure = implode(" ",$result);
+//error_log("***** DEBUG *****  patient_select() -- number_answers_of_measure=\"".$number_answers_of_measure."\"  $from_page=\"".$from_page);
 
-	echo "DESCRIPTION: Percentage of patients aged 18 years and older seen during the reporting period who were screened for high blood pressure AND a recommended follow-up plan is documented based on the current blood pressure (BP) reading as indicated. <br>";
-
+	echo "Report Year: ".$report_year."<br>";
+	echo "<b>Measure Number:</b>".$measure_number ."<br>";
+	echo "<b>DESCRIPTION:</b>  ".$measure_description."<br>";
 	echo "<p>";
-        echo "<b>Measure Question:</b>  ";
-
-		echo "Was patient screened for high blood pressure AND was a recommended follow-up plan documented if the blood pressure is pre-hypertensive or hypertensive";
-
-	echo "<br>  26   <br>";
+        echo "<b>Measure Question:</b> ".$measure_question."</b>  ";
 
 } ?>
 
@@ -485,12 +497,25 @@ else {	//  $from_page DOES == "pqrs_report"  ?>
   			}
 		}
 
+
+        $query = "SELECT value AS value FROM pqrs_direct_entry_lookup WHERE ".
+                "measure_number = '$measure_number' ".
+		"AND type LIKE 'answer % description'";
+		//"AND type LIKE 'answer % code'";
+        //$result = SqlFetchArray(sqlStatement($query));
+        $result = sqlStatement($query);
+error_log("***** DEBUG *****  patient_select() -- Queried p_d_e_l with \"".$query."\" and got result \"".implode(" ",$result)."\"" );
 	// Need to loop and write "short answer" for each answer here
-	for ($i = 1; $i <= $number_answers_of_measure; $i++) { ?>
-		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer Text'), ENT_NOQUOTES) . " " . $i ;?></th>
+//	for ($i = 1; $i <= $number_answers_of_measure; $i++) { 
+        foreach ( $result as $thisAnswer ) {
+
+error_log("***** DEBUG *****  patient_select() -- thisAnswer=\"".implode(" ",$thisAnswer));
+	 ?>
+
+		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer'), ENT_NOQUOTES) . " " . implode(" ",$thisAnswer) ;?></th>
 	<?php } ?>
 
-	
+	<th class="srAnswer" align=right>Update</th>	
 	</tr>
 	</table>
 <?php 
@@ -520,7 +545,7 @@ if ($result) {
 	// Build this list from a DB query ?>
         	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>"  value="3044F">Most recent hemoglobin A1c (HbA1c) level &lt; 7.0%</label></td>
         	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3045F">A1c (HbA1c) level 7.0 to 9.0%</label></td>
-        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F">Most recent hemoglobin A1c level &gt; 9.0%</label></td>
+        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F 3035F">Most recent hemoglobin A1c level &gt; 9.0%</label></td>
         	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F:8P">Hemoglobin A1c level was not performed during the measurement period (12 months)</label></td>
         	<td class='srAnswer'><button type="button" onclick="updatePatient(<?php echo htmlspecialchars( $iter['pid'] ) ?>)">Update</button></td>
 	</table>
@@ -684,7 +709,7 @@ else {
 	echo "function updatePatient(pid) {\n";
 	echo "	selected = $('table[id=' + pid + '] input[type=\'radio\']:checked');\n";
 	echo "	if(selected.length > 0) {\n";
-	echo "		var date = '20161231';\n";
+	echo "		var date = '".$report_year."1231235959';\n";
 	echo "		var code = selected.val();\n\n";
 	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
 	echo "		$.ajax({\n";
