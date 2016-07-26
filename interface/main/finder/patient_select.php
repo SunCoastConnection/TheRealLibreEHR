@@ -90,8 +90,8 @@ form {
 .srAnswer { 
     text-align: center;}
 .srUpdate { 
-    width: 4%; 
-    text-align: center;}
+    width: 1%; 
+    text-align: right;}
 
 #searchResults table {
     width: 100%;
@@ -378,30 +378,31 @@ if ($fend > $count) $fend = $count;
 // Query or search the measure specific information to find number of answers
         $query = "SELECT value AS value FROM pqrs_direct_entry_lookup WHERE ".
                 "measure_number = '$measure_number' AND type = 'description'";
-        $result = SqlFetchArray(sqlStatement($query));
-	$measure_description=implode(" ",$result);
+        $pqrs_result = SqlFetchArray(sqlStatement($query));
+	$measure_description=implode(" ",$pqrs_result);
 
         $query = "SELECT value AS value FROM pqrs_direct_entry_lookup WHERE ".
                 "measure_number = '$measure_number' AND type = 'question'";
-        $result = SqlFetchArray(sqlStatement($query));
-	$measure_question=implode(" ",$result);
+        $pqrs_result = SqlFetchArray(sqlStatement($query));
+	$measure_question=implode(" ",$pqrs_result);
 
-        $query = "SELECT COUNT(*) AS count FROM pqrs_direct_entry_lookup WHERE ".
-                "measure_number = '$measure_number' AND type LIKE 'answe%code'";
-        $result = SqlFetchArray(sqlStatement($query));
+        $query = "SELECT COUNT(*) AS count FROM pqrs_direct_entry_lookup WHERE".
+                " measure_number = '$measure_number' AND type = 'answer'";
+        $pqrs_result = SqlFetchArray(sqlStatement($query));
 
-//error_log("***** DEBUG *****  patient_select() -- Queried p_d_e_l with \"".$query."\" and got result \"".implode(" ",$result)."\"" );
+//error_log("***** DEBUG *****  patient_select() -- Queried p_d_e_l with \"".$query."\" and got pqrs_result \"".implode(" ",$pqrs_result)."\"" );
 
 
-	$number_answers_of_measure = implode(" ",$result);
+	$number_answers_of_measure = implode(" ",$pqrs_result);
 //error_log("***** DEBUG *****  patient_select() -- number_answers_of_measure=\"".$number_answers_of_measure."\"  $from_page=\"".$from_page);
 
 	echo "Report Year: ".$report_year."<br>";
 	echo "<b>Measure Number:</b>".$measure_number ."<br>";
+	echo "<p>";
 	echo "<b>DESCRIPTION:</b>  ".$measure_description."<br>";
 	echo "<p>";
         echo "<b>Measure Question:</b> ".$measure_question."</b>  ";
-
+	echo "<p>";
 } ?>
 
 <div id="searchResultsHeader">
@@ -497,25 +498,28 @@ else {	//  $from_page DOES == "pqrs_report"  ?>
   			}
 		}
 
+// Sam's query
+//      $query = "SELECT value, ".
+//                "if(`type` LIKE '% description', 'desc', 'code') AS `type` ".
+//                "FROM pqrs_direct_entry_lookup WHERE ".
+//               "measure_number = '$measure_number' ".
+//                "AND `type` LIKE 'answer %' ";
 
-        $query = "SELECT value AS value FROM pqrs_direct_entry_lookup WHERE ".
-                "measure_number = '$measure_number' ".
-		"AND type LIKE 'answer % description'";
+
+	$query = "SELECT value FROM pqrs_direct_entry_lookup WHERE ".
+		"measure_number = '$measure_number' ".
+		"AND type = 'answer'";
+		//"AND type LIKE 'answer % description'";
 		//"AND type LIKE 'answer % code'";
-        //$result = SqlFetchArray(sqlStatement($query));
-        $result = sqlStatement($query);
-error_log("***** DEBUG *****  patient_select() -- Queried p_d_e_l with \"".$query."\" and got result \"".implode(" ",$result)."\"" );
+        $pqrs_result = sqlStatement($query);
+//error_log("***** DEBUG *****  patient_select() -- Queried p_d_e_l with \"".$query."\" and got pqrs_result \"".$pqrs_result."\"" );
 	// Need to loop and write "short answer" for each answer here
-//	for ($i = 1; $i <= $number_answers_of_measure; $i++) { 
-        foreach ( $result as $thisAnswer ) {
-
-error_log("***** DEBUG *****  patient_select() -- thisAnswer=\"".implode(" ",$thisAnswer));
+	for ($i = 1; $i <= $number_answers_of_measure; $i++) { 
 	 ?>
-
-		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer'), ENT_NOQUOTES) . " " . implode(" ",$thisAnswer) ;?></th>
+		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer'), ENT_NOQUOTES) . " $i" ;?></th>
 	<?php } ?>
 
-	<th class="srAnswer" align=right>Update</th>	
+	<th class="srUpdate">Update</th>	
 	</tr>
 	</table>
 <?php 
@@ -542,11 +546,16 @@ if ($result) {
         	} else {
             		echo "			<td class='srDOB'>&nbsp;</td>";
         	}
-	// Build this list from a DB query ?>
-        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>"  value="3044F">Most recent hemoglobin A1c (HbA1c) level &lt; 7.0%</label></td>
-        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3045F">A1c (HbA1c) level 7.0 to 9.0%</label></td>
-        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F 3035F">Most recent hemoglobin A1c level &gt; 9.0%</label></td>
-        	<td class='srAnswer'><label><input type="radio" name="pid<?php echo htmlspecialchars( $iter['pid'] ) ?>" value="3046F:8P">Hemoglobin A1c level was not performed during the measurement period (12 months)</label></td>
+        foreach ( $pqrs_result as $thisAnswer ) {
+//error_log("***** DEBUG *****  foreach1--thisAnswer=\"".$thisAnswer['value']."\"");
+		$explodedAnswer=explode("|", $thisAnswer['value']);
+		$myOrder=$explodedAnswer[0];
+		$myDesc=$explodedAnswer[1];
+		$myCode=$explodedAnswer[2];
+// error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode" );
+        	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\">$myDesc</label></td>";
+	}
+		?>
         	<td class='srAnswer'><button type="button" onclick="updatePatient(<?php echo htmlspecialchars( $iter['pid'] ) ?>)">Update</button></td>
 	</table>
         <?php
