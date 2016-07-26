@@ -188,11 +188,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$result=AddCPT2CodeEncounter($mypid,$mydate,$mycode);
 
 // TODO:  How do we tell if we REALLY were successful.
-		if(rand(1, 15) > 15) {
+//		if(rand(1, 15) > 15) {
         		echo 'SUCCESS';
-		} else {
-        		echo 'FAILED:'.$result;
-		}
+//		} else {
+//        		echo 'FAILED:'.$result;
+//		}
 	}
 }
 
