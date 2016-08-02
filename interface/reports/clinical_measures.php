@@ -73,7 +73,7 @@ $back_link = existsDefault($_GET, 'back');
 if(!empty($report_id)) {
   $report_view = collectReportDatabase($report_id);
   
-  error_log("report_view is ".print_r($report_view,TRUE),0);
+  //error_log("report_view is ".print_r($report_view,TRUE),0);
 
   $date_report = $report_view['date_report'];
 
@@ -111,7 +111,7 @@ if(!empty($report_id)) {
 $txt = $report_view['data'];
 fwrite($myfile, $txt);
 fclose($myfile);
-   error_log("The data is:".wordwrap ( $report_view['data'] ,  80 ));*/
+   //error_log("The data is:".wordwrap ( $report_view['data'] ,  80 ));*/
   $dataSheet = json_decode($report_view['data'], true);
   /*error_log("Any json error: ".json_last_error());
       switch (json_last_error()) {
@@ -695,8 +695,8 @@ function Form_Validate() {
       $firstProviderFlag = true;
       $firstPlanFlag = true;
       $existProvider = false;
-error_log("Datasheet is [".$dataSheet."]",0);
-error_log("Datasheet print_r is ".print_r($dataSheet,TRUE),0);
+//error_log("Datasheet is [".$dataSheet."]",0);
+//error_log("Datasheet print_r is ".print_r($dataSheet,TRUE),0);
       foreach($dataSheet as $row) {
 ?>
             <tr bgcolor='<?php echo $bgcolor ?>'>
