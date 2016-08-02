@@ -42,7 +42,7 @@ $query =
 " JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
 
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0387_a')".
 " AND NOT (codelist_c.type = 'pqrs_0387_c' AND b2.code = codelist_c.code) ; ";
@@ -61,7 +61,7 @@ if ($result['count']> 0){ return true;}
 " JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
 
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0387_b')".
 " AND NOT (b2.code = codelist_c.code AND codelist_b.type = 'pqrs_0387_c') ; ";

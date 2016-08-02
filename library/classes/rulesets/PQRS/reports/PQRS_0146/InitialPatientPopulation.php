@@ -40,7 +40,7 @@ $query =
 " INNER JOIN pqrs_ecr AS codelist_a ON (b1.code = codelist_a.code)".
 " INNER JOIN pqrs_ecr AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0146_a')".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0146_b'); ";
 

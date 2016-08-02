@@ -36,7 +36,7 @@ class PQRS_0022_Numerator implements PQRSFilterIF
 "JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 "INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".  
 "WHERE b1.pid = '".$patient->id."' ".
-"AND YEAR(fe.date) ='2015' ".
+"AND YEAR(fe.date) ='2016' ".
 "AND ".
 "((b1.code = '4049F' AND b1.modifier !='8P') AND b2.code= '4046F'); ";
 

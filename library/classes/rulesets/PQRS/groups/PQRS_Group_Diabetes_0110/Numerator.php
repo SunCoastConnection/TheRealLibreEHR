@@ -35,7 +35,7 @@ $query =
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND b1.code IN ('G8482','G8483')  ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

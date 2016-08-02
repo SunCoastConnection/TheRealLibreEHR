@@ -36,7 +36,7 @@ class PQRS_0005_Numerator2 implements PQRSFilterIF
 "  FROM billing AS b1".
 "JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 "WHERE b1.pid = ? ".
-"AND YEAR(fe.date) ='2015' ".
+"AND YEAR(fe.date) ='2016' ".
 "AND CONCAT(b1.code,b1.modifier) = ('4010F');" ;
 $result = sqlStatement($query);  
 

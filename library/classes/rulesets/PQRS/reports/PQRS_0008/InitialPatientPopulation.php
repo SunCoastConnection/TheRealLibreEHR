@@ -50,7 +50,7 @@ $query1 =
 
 " WHERE b1.pid = ? ". 
 
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
 
@@ -68,7 +68,7 @@ $query2 =
 
 " WHERE b1.pid = ? ".  
 
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
 

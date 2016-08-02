@@ -32,7 +32,7 @@ $query =
 " JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
 " WHERE b1.pid = ? ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND  (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0387_c')".  ///looks strange, but is correct
 " AND (b2.code = codelist_c.code AND codelist_c.type = 'pqrs_0387_b') ; ";
 
