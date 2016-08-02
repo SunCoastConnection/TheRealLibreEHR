@@ -30,6 +30,6 @@ $query =
 " WHERE b1.pid = ? ".  
 " AND b1.code IN".  
 "('27438', '27442', '27446', '27447')".
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ;";
 ?>

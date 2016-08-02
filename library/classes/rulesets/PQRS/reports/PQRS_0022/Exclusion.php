@@ -35,7 +35,7 @@ $query =
 "  FROM billing AS b1".
 "JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 "WHERE b1.pid = '".$patient->id."' ".
-"AND YEAR(fe.date) ='2015' ".
+"AND YEAR(fe.date) ='2016' ".
 "AND b1.code = '4042F' " .
 $result = sqlFetchArray(sqlStatementNoLog($query));  ///runs the string $query_just.... as an sql statement.
 //The query just gives you a number, not rows, which is the count of the rows it returned.

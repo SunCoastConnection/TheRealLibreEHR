@@ -41,7 +41,7 @@ $query =
 
 " WHERE b1.pid = ? ".
 
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0226_a'); ";
 

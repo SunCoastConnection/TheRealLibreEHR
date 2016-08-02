@@ -39,7 +39,7 @@ $query =
 " JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)". 
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " WHERE b1.pid = ? ".  
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
 " AND b1.code IN". 
 " ('411.0','411.1','411.81','411.89','413.0','413.1','413.9','414.00','414.01','414.02','414.03','414.04','414.05','414.06','414.07',".

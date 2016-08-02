@@ -39,7 +39,7 @@ class PQRS_0007_InitialPatientPopulation1 implements PQRSFilterIF
 " JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " WHERE b1.pid = ? ". 
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ". 
 " AND".
 " ( b1.code IN".  

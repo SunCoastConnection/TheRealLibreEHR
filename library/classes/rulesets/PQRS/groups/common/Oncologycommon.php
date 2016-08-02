@@ -33,7 +33,7 @@ $query =
 " JOIN pqrs_ptct AS codelist_b ON (b2.code = codelist_b.code)".
 
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0143_a')".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0143_b' ) ; ";
@@ -51,7 +51,7 @@ $query =
 " JOIN pqrs_ptct AS codelist_c ON (b3.code = codelist_c.code)".
 " JOIN pqrs_ptct AS codelist_d ON (b4.code = codelist_d.code)".
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0143_a')".
 " AND ((b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0143_b' ) OR  ((b3.code = codelist_c.code AND codelist_c.type = 'pqrs_0143_c' ) AND (b4.code = codelist_d.code AND codelist_d.type = 'pqrs_0143_d' ))) ; ";*/

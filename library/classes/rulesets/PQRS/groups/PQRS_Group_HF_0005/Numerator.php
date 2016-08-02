@@ -37,7 +37,7 @@ $query =
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " WHERE b1.pid = ? ".
 
-" AND YEAR(fe.date) ='2015' ".
+" AND YEAR(fe.date) ='2016' ".
 " AND (( b1.code = '4010F' AND b2.code = '3021F' AND b1.modifier != '8P') OR (b1.code = '3022F' OR( b1.code = '3021F' AND b1.modifier = '8P'))) ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
