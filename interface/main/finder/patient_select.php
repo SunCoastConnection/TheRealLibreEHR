@@ -396,12 +396,12 @@ if ($fend > $count) $fend = $count;
 	$number_answers_of_measure = implode(" ",$pqrs_result);
 //error_log("***** DEBUG *****  patient_select() -- number_answers_of_measure=\"".$number_answers_of_measure."\"  $from_page=\"".$from_page);
 
-	echo "Report Year: ".$report_year."<br>";
+	echo "<b>Report Year:</b> ".$report_year."<br>";
 	echo "<b>Measure Number:</b>".$measure_number ."<br>";
 	echo "<p>";
-	echo "<b>DESCRIPTION:</b>  ".$measure_description."<br>";
+	echo "<b>Description:</b>  ".$measure_description."<br>";
 	echo "<p>";
-        echo "<b>Measure Question:</b> ".$measure_question."</b>  ";
+        echo "<b>Measure Criteria:</b> ".$measure_question."</b><br>";
 	echo "<p>";
 } ?>
 
