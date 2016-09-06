@@ -37,9 +37,9 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2016' ".
+" AND YEAR(fe.date) =? ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0076_a'); ";
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));
 if ($result['count']> 0){ return true;} else {return false;}  
 
     }

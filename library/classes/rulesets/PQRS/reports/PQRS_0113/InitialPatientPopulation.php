@@ -38,12 +38,12 @@ $query =
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) = '2016' ".
+" AND YEAR(fe.date) =? ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '50' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) <= '75' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0113_a'); ";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));
 if ($result['count']> 0){ return true;} else {return false;}  
 
     }

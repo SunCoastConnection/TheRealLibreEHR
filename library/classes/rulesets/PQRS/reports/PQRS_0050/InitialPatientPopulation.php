@@ -40,13 +40,13 @@ $query =
 " INNER JOIN pqrs_ptct AS codelist_a ON (b1.code = codelist_a.code)".
 " INNER JOIN pqrs_ptct AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2016' ".
+" AND YEAR(fe.date) =? ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '65' ".
 " AND p.sex = 'Female' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0050_a') ".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0050_b');";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));
 if ($result['count']> 0){ return true;} else {return false;}  
 
     }
