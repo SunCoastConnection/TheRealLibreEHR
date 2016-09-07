@@ -37,10 +37,11 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 
-" AND YEAR(fe.date) ='2016' ".
+" AND fe.date >=? ".
+" AND fe.date <=? ".
 " AND (b1.code = '8482F' OR b1.code = '8483F'  ) ; ";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
 
 if ($result['count'] > 0){ return true;} else {return false;}    		
     }
