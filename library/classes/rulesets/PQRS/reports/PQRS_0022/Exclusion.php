@@ -35,9 +35,10 @@ $query =
 "  FROM billing AS b1".
 "JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 "WHERE b1.pid = ? ".
-"AND YEAR(fe.date) =? ".
+" AND fe.date >=? ".
+" AND fe.date <=? ".
 "AND b1.code = '4042F' " .
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));  ///runs the string $query_just.... as an sql statement.
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));  ///runs the string $query_just.... as an sql statement.
 //The query just gives you a number, not rows, which is the count of the rows it returned.
 if ($result['count'] > 0){ return true;} else {return false;}  //there is a better way of stating this, but this is easier to understand for N00bs 
      

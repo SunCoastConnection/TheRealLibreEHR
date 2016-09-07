@@ -42,12 +42,13 @@ $query =
 " JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
 
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) =? ".
+" AND fe.date >=? ".
+" AND fe.date <=? ".
 
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0387_a')".
 " AND NOT (codelist_c.type = 'pqrs_0387_c' AND b2.code = codelist_c.code) ; ";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
 if ($result['count']> 0){ return true;}
  else {
 	$query =
@@ -61,12 +62,13 @@ if ($result['count']> 0){ return true;}
 " JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
 
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) =? ".
+" AND fe.date >=? ".
+" AND fe.date <=? ".
 
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0387_b')".
 " AND NOT (b2.code = codelist_c.code AND codelist_b.type = 'pqrs_0387_c') ; ";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate)); 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate)); 
 if ($result['count']> 1){ return true;}
  		else {return false;}  
 	 }  

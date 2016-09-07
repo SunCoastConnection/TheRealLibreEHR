@@ -39,7 +39,8 @@ $query =
 " JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)". 
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " WHERE b1.pid = ? ".  
-" AND YEAR(fe.date) =? ".
+" AND YEAR(fe.date) >=? ".
+" AND YEAR(fe.date) <=? ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
 " AND b1.code IN". 
 " ('I20.0','I20.1','I20.8','I20.9','I24.0','I24.1','I24.8','I24.9','I25.10','I25.110','I25.111',".
@@ -58,7 +59,7 @@ $query =
 " ('99201','99202','99203','99204','99205','99212','99213','99214','99215','99304','99305','99306','99307','99308','99309','99310','99324','99325','99326','99327','99328','99334','99335','99336','99337','99341','99342','99343','99344','99345','99347','99348','99349','99350');";
 
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
 if ($result['count']> 1){ return true;} else {return false;}  
  
     }

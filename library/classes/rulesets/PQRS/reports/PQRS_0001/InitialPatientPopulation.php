@@ -41,7 +41,8 @@ class PQRS_0001_InitialPatientPopulation implements PQRSFilterIF
 	" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 	" INNER JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_b.code)".
 	" WHERE b1.pid = ? ".  
-	" AND YEAR(fe.date) =? ".
+	" AND YEAR(fe.date) >=? ".
+" AND YEAR(fe.date) <=? ".
 	" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date)  BETWEEN '18' AND '75' ".  //age must be between 18 and 75 on the date of treatment
 	" AND b1.code = codelist_a.code ".
 	" AND codelist_a.type = 'pqrs_0001_a' ".
@@ -49,7 +50,7 @@ class PQRS_0001_InitialPatientPopulation implements PQRSFilterIF
 	" AND codelist_b.type = 'pqrs_0001_b' ;";
 	
 
-		$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));
+		$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
 	if ($result['count'] > 0)
 		 return true;} else {return false;} 
 	

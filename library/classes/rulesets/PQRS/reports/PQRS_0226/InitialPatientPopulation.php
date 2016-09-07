@@ -41,11 +41,12 @@ $query =
 
 " WHERE b1.pid = ? ".
 
-" AND YEAR(fe.date) =? ".
+" AND fe.date >=? ".
+" AND fe.date <=? ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0226_a'); ";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
 if ($result['count']> 0){ return true;} else {return false;}  
 
     }

@@ -39,7 +39,8 @@ class PQRS_0007_InitialPatientPopulation1 implements PQRSFilterIF
 " JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " WHERE b1.pid = ? ". 
-" AND YEAR(fe.date) =? ".
+" AND YEAR(fe.date) >=? ".
+" AND YEAR(fe.date) <=? ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ". 
 " AND".
 " ( b1.code IN".  
@@ -54,7 +55,7 @@ class PQRS_0007_InitialPatientPopulation1 implements PQRSFilterIF
 "('33140','33510','33511','33512','33513','33514','33516','33517','33518','33519','33521','33522','33523','33533','33534','33535','33536','92920','92924','92928','92933','92937','92941','92943')".
 "));";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
 if ($result['count']> 0){ return true;} else {return false;}  
  
     }
