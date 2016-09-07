@@ -37,8 +37,8 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 
-" AND YEAR(fe.date) >=? ".
-" AND YEAR(fe.date) <=? ".
+" AND fe.date >=? ".
+" AND fe.date <=? ".
 " AND b1.code = '5015F' ".
 "AND b1.modifier != '8P' ;";
 
