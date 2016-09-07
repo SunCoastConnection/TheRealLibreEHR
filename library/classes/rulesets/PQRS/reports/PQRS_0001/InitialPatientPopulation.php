@@ -51,7 +51,7 @@ class PQRS_0001_InitialPatientPopulation implements PQRSFilterIF
 	
 
 		$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
-	if ($result['count'] > 0)
+	if ($result['count'] > 0){
 		 return true;} else {return false;} 
 	
 
