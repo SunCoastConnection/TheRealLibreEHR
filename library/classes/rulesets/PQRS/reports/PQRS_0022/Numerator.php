@@ -36,11 +36,12 @@ class PQRS_0022_Numerator implements PQRSFilterIF
 "JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 "INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".  
 "WHERE b1.pid = ?  ".
-"AND YEAR(fe.date) =? ".
+" AND fe.date >=? ".
+" AND fe.date <=? ".
 "AND ".
 "((b1.code = '4049F' AND b1.modifier !='8P') AND b2.code= '4046F'); ";
 
-$result = sqlFetchArray(sqlStatementNoLog($query),array($patient->id), $beginDate); 
+$result = sqlFetchArray(sqlStatementNoLog($query,array($patient->id), $beginDate, $endDate)); 
 
 if ($result > 0){ return true;} else {return false;}     
 	
