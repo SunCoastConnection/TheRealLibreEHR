@@ -162,14 +162,14 @@ fclose($myfile);
 
   // Collect form parameters (set defaults if empty)
   if($type_report == 'pqrs') {
-    $begin_date = existsDefault($_POST, 'form_begin_date', '2015-01-01 00:00:00');  //change defaults in 2016
+    $begin_date = existsDefault($_POST, 'form_begin_date', '2016-01-01 00:00:00');  //change defaults in 2016
   } elseif($type_report == 'amc') {
     $begin_date = existsDefault($_POST, 'form_begin_date');
     $labs_manual = existsDefault($_POST, 'labs_manual_entry', '0');
   }
 
   if($type_report == 'pqrs') {
-    $target_date = existsDefault($_POST, 'form_target_date', '2015-12-31 23:59:59');  //change defaults in 2016
+    $target_date = existsDefault($_POST, 'form_target_date', '2016-12-31 23:59:59');  //change defaults in 2016
   } else {
     $target_date = existsDefault($_POST, 'form_target_date', date('Y-m-d H:i:s'));
   }
