@@ -37,11 +37,11 @@ $query =
 " JOIN billing as b2 ON (b2.pid = b1.pid)".
 " WHERE b1.pid = ? ".
 
-" AND fe.date >=? ".
-" AND fe.date <=? ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND ((b1.code = 'G8947' AND b2.code IN ('4525F','4526F') AND b2.modifier !='8P') OR b1.code = 'G8948') ; ";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
 if ($result['count'] > 0){ return true;} else {return false;}    		
     }

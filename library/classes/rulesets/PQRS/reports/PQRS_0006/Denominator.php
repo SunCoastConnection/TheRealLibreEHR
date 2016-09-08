@@ -50,15 +50,15 @@ class PQRS_0006_Denominator implements PQRSFilterIF
 " 'I25.720','I25.721','I25.728','I25.729','I25.730','I25.731','I25.738','I25.739','I25.750','I25.751','I25.758',".
 " 'I25.759','I25.760','I25.761','I25.768','I25.769','I25.790','I25.791','I25.798','I25.799','I25.810','I25.811',".
 " 'I25.812','I25.82','I25.83','I25.89','I25.9','Z95.1','Z95.5','Z98.61')".
-" AND fe.date >=? ".
-" AND fe.date <=? ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND b2.code IN". 
 "('99201','99202','99203','99204','99205','99212','99213','99214','99215','99304','99305','99306','99307',".
 " '99308','99309','99310','99324','99325','99326','99327','99328','99334','99335','99336','99337','99341',".
 " '99342','99343','99344','99345','99347','99348','99349','99350');";
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
  
     }

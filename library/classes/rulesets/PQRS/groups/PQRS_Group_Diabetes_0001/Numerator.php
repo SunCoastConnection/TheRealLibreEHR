@@ -35,11 +35,11 @@ $query =
 "  FROM billing AS b".
 " JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
 " WHERE b.pid = ? ".
-" AND fe.date >=? ".
-" AND fe.date <=? ". 
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ". 
 " AND b.code = '3046F';"; //checking for CPT2 code.
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
 if ($result['count'] > 0){ return true;} else {return false;}    
 

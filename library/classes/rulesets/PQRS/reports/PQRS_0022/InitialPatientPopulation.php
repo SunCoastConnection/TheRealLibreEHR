@@ -39,14 +39,14 @@ $query =
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
-" AND fe.date >=? ".
-" AND fe.date <=? ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
 " AND b1.code = codelist_a.code".
 " AND codelist_a.type = 'pqrs_0022_a' ;";
 
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));  ///runs the string $query_just.... as an sql statement.
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));  ///runs the string $query_just.... as an sql statement.
 //The query just gives you a number, not rows, which is the count of the rows it returned.
 if ($result['count']> 0){ return true;} else {return false;}  //there is a better way of stating this, but this is easier to understand for N00bs
  

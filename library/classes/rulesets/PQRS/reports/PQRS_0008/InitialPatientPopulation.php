@@ -48,8 +48,8 @@ $query1 =
 " JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
 " JOIN patient_data AS p ON (b1.pid = p.pid)".  
 " WHERE b1.pid = ? ". 
-" AND fe.date >=? ".
-" AND fe.date <=? ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
 " AND b1.code IN $Dx1".
 " AND b2.code IN   $Tx1" .
@@ -63,13 +63,13 @@ $query2 =
 " JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
 " JOIN patient_data AS p ON (b1.pid = p.pid)".  
 " WHERE b1.pid = ? ".  
-" AND fe.date >=? ".
-" AND fe.date <=? ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".  
 " AND b1.code IN $Dx1".
 " AND b2.code IN $Tx2" .
 " AND b3.code ='3021F'; ";  
-$result = sqlFetchArray(sqlStatementNoLog($query1, array($patient->id), $beginDate, $endDate));
+$result = sqlFetchArray(sqlStatementNoLog($query1, array($patient->id)));
 if ($result['count']> 1){ return true;} 
 	 else{
 		 $result = sqlFetchArray(sqlStatementNoLog($query2, array($patient->id), $beginDate, $endDate));
