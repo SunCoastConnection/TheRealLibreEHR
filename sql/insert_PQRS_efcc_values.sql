@@ -21,7 +21,7 @@
  * @link    http://suncoastconnection.com
 */
 
-INSERT INTO `pqrs_efcc` (`type`, `code`),VALUES
+INSERT INTO `pqrs_efcc` (`type`, `code`) VALUES
 ('pqrs_0001_a', 'E10.10'),
 ('pqrs_0001_a', 'E10.11'),
 ('pqrs_0001_a', 'E10.21'),
@@ -3058,7 +3058,7 @@ INSERT INTO `pqrs_efcc` (`type`, `code`),VALUES
 ('pqrs_0187_a', 'I63.02'),
 ('pqrs_0187_a', 'I63.031'),
 ('pqrs_0187_a', 'I63.032'),
-('pqrs_0187_a', 'I63.039')
+('pqrs_0187_a', 'I63.039'),
 ('pqrs_0187_a', 'I63.09'),
 ('pqrs_0187_a', 'I63.10'),
 ('pqrs_0187_a', 'I63.111'), 
