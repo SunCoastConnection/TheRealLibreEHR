@@ -41,7 +41,8 @@ $query =
 " INNER JOIN pqrs_ptct AS codelist_a ON (b1.code = codelist_a.code)".
 
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2016' ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '50' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0358_a') ; ";
 

@@ -42,7 +42,8 @@ $query =
 " INNER JOIN pqrs_ecr AS codelist_a ON (b1.code = codelist_a.code)".
 " INNER JOIN pqrs_ecr AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2016' ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '2' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) <= '18' ".
 " AND fac.pos_code IN( '23','11','22','12') ".

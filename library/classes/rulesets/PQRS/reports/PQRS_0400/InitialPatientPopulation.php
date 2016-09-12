@@ -43,7 +43,8 @@ $query =
 " JOIN pqrs_poph AS codelist_d ON (b4.code = codelist_d.code)".
 
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2016' ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >=18 ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0400_a')".
 " AND ( (YEAR(p.dob) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
@@ -64,7 +65,8 @@ $query =
 " JOIN pqrs_poph AS codelist_d ON (b4.code = codelist_d.code)".
 
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) ='2016' ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >=18 ".
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0400_b')".
 " AND ( (YEAR(p.dob) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".

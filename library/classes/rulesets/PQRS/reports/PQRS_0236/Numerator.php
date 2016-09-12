@@ -38,7 +38,8 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 
-" AND YEAR(fe.date) ='2016' ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND b1.code IN ( 'G8752','G8753') AND b2.code = 'G8754' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 

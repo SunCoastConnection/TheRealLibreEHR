@@ -37,10 +37,11 @@ $query =
 "FROM billing AS b1 ".
 "JOIN form_encounter AS fe ON (b1.encounter = fe.encounter) ".
 "WHERE b1.pid = ? ".
-"AND YEAR(`fe`.`date`) = YEAR(?) ".  
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".  
 "AND b1.code = '3046F';"; 
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id, $beginDate)));
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count'] > 0){ return true;} else {return false;}  
 	
     }
