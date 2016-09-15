@@ -684,7 +684,7 @@ $(document).ready(function(){
     // $("#searchparm").focus();
     $(".oneresult").mouseover(function() { $(this).addClass("highlight"); });
     $(".oneresult").mouseout(function() { $(this).removeClass("highlight"); });
-    $(".oneresult").click(function() { SelectPatient(this); });
+    $(".oneresult").click(function() { SelectPatient(this.parentNode.parentNode.parentNode); });
     // $(".event").dblclick(function() { EditEvent(this); });
     <?php if($print_patients) { ?>
       var win = top.printLogPrint ? top : opener.top;
@@ -706,10 +706,9 @@ else {
     $target = "top";
 }
 ?>
-    objID = eObj.id;
-    var parts = objID.split("~");
+    var tableId = eObj.id;
     <?php if (!$popup) echo "top.restoreSession();\n"; ?>
-    <?php if ($popup) echo "opener."; echo $target; ?>.location.href = '<?php echo $newPage; ?>' + parts[0];
+    <?php if ($popup) echo "opener."; echo $target; ?>.location.href = '<?php echo $newPage; ?>' + tableId;
     <?php if ($popup) echo "window.close();\n"; ?>
     return true;
 }
