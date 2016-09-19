@@ -69,11 +69,19 @@ form {
 #searchResultsHeader th {
     font-size: 0.7em;
 }
+<?php if ($from_page == "pqrs_report") {
+	echo "
+#searchResults {
+    width: 100%;
+    height: 60%;
+    overflow: auto;
+}";}
+	else {echo "
 #searchResults {
     width: 100%;
     height: 80%;
     overflow: auto;
-}
+}";} ?>
 
 .srName { width: 12%; }
 .srGender { width: 5%; }
@@ -689,15 +697,6 @@ if ($result) {
   <td class='text' align='center'>
 <?php if ($message) echo "<font color='red'><b>".htmlspecialchars( $message, ENT_NOQUOTES)."</b></font>\n"; ?>
   </td>
-  <td>
-   <?php if ($from_page == "cdr_report" ) { 
-     echo "<a href='patient_select.php?from_page=cdr_report&pass_id=".attr($pass_id)."&report_id=".attr($report_id)."&itemized_test_id=".attr($itemized_test_id)."&numerator_label=".urlencode(attr($row['numerator_label']))."&print_patients=1' class='css_button' onclick='top.restoreSession()'><span>".xlt("Print Entire Listing")."</span></a>";
-    }
-    if ($from_page == "pqrs_report") { 
-     echo "<a href='patient_select.php?from_page=pqrs_report&pass_id=".attr($pass_id)."&report_id=".attr($report_id)."&itemized_test_id=".attr($itemized_test_id)."&numerator_label=".urlencode(attr($row['numerator_label']))."&print_patients=1' class='css_button' onclick='top.restoreSession()'><span>".xlt("Print Entire Listing")."</span></a>";
-    }
-     ?> &nbsp;
-  </td>
   <td class='text' align='right'>
 <?php
 // Show start and end row number, and number of rows, with paging links.
@@ -721,28 +720,6 @@ if ($fend > $count) $fend = $count;
    </a>
 <?php } ?>
   </td>
- </tr>
- <tr>
-   <?php if ($from_page == "cdr_report" OR $from_page == "pqrs_report") {
-     echo "<td colspan='6' class='text'>";
-     echo "<b>";
-     if ($pass_id == "fail") {
-       echo xlt("Failed Patients");
-     }
-     else if ($pass_id == "pass") {
-       echo xlt("Passed Patients");
-     }
-     else if ($pass_id == "exclude") {
-       echo xlt("Excluded Patients");
-     }
-     else { // $pass_id == "all"
-       echo xlt("All Patients");
-     }
-     echo "</b>";
-     echo " - ";
-     echo collectItemizedRuleDisplayTitle($report_id,$itemized_test_id,$numerator_label);
-     echo "</td>";
-   } ?>
  </tr>
 </table>
 
