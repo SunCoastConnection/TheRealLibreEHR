@@ -448,8 +448,6 @@ function Form_Validate() {
                     </td>
                     <td>
                       <select <?php echo $dis_text; ?> id='form_rule_filter' name='form_rule_filter'>
-                        <option value='pqrs_individual_2015' <?php if ($rule_filter == "pqrs_individual_2015") {echo "selected";} ?>><?php echo xlt('All 2015 PQRS Individual Measures'); ?></option>
-                        <option value='pqrs_groups_2015' <?php if ($rule_filter == "pqrs_groups_2015") {echo "selected";} ?>><?php echo xlt('All 2015 PQRS Group Measures'); ?></option>
                         <option value='pqrs_individual_2016' <?php if ($rule_filter == "pqrs_individual_2016") {echo "selected";} ?>><?php echo xlt('All 2016 PQRS Individual Measures'); ?></option>
                         <option value='pqrs_groups_2016' <?php if ($rule_filter == "pqrs_groups_2016") {echo "selected";} ?>><?php echo xlt('All 2016 PQRS Group Measures'); ?></option>
                       </select>
