@@ -14,7 +14,7 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package OpenEMR
- * @author  Beyan Lee <leebc11@acm.org>  (PQRS additions)
+ * @author  Bryan Lee <leebc11@acm.org>  (PQRS additions)
  * @author  Brady Miller <brady@sparmy.com>
  * @link    http://www.open-emr.org
  */
