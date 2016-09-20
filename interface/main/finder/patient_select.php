@@ -69,11 +69,19 @@ form {
 #searchResultsHeader th {
     font-size: 0.7em;
 }
+<?php if ($from_page == "pqrs_report") {
+	echo "
+#searchResults {
+    width: 100%;
+    height: 60%;
+    overflow: auto;
+}";}
+	else {echo "
 #searchResults {
     width: 100%;
     height: 80%;
     overflow: auto;
-}
+}";} ?>
 
 .srName { width: 12%; }
 .srGender { width: 5%; }
@@ -675,6 +683,46 @@ if ($result) {
 ?>
 </table>
 </div>  <!-- end searchResults DIV -->
+
+
+<table border='0' cellpadding='5' cellspacing='0' width='100%'>
+ <tr>
+  <td class='text'>
+  <?php if ($from_page == "cdr_report" || $from_page == "pqrs_report") { ?>
+   <a href='../../reports/clinical_measures.php?report_id=<?php echo attr($report_id) ?>' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt("Return To Report Results"); ?></span></a>
+  <?php }  else { ?>
+   <a href="./patient_select_help.php" target=_new onclick='top.restoreSession()'>[<?php echo htmlspecialchars( xl('Help'), ENT_NOQUOTES); ?>]&nbsp</a>
+  <?php } ?>
+  </td>
+  <td class='text' align='center'>
+<?php if ($message) echo "<font color='red'><b>".htmlspecialchars( $message, ENT_NOQUOTES)."</b></font>\n"; ?>
+  </td>
+  <td class='text' align='right'>
+<?php
+// Show start and end row number, and number of rows, with paging links.
+//
+// $count = $fstart + $GLOBALS['PATIENT_INC_COUNT']; // Why did I do that???
+$count = $GLOBALS['PATIENT_INC_COUNT'];
+$fend = $fstart + $MAXSHOW;
+if ($fend > $count) $fend = $count;
+?>
+<?php if ($fstart) { ?>
+   <a href="javascript:submitList(-<?php echo $MAXSHOW ?>)">
+    &lt;&lt;
+   </a>
+   &nbsp;&nbsp;
+<?php } ?>
+   <?php echo ($fstart + 1) . htmlspecialchars( " - $fend of $count", ENT_NOQUOTES); ?>
+<?php if ($count > $fend) { ?>
+   &nbsp;&nbsp;
+   <a href="javascript:submitList(<?php echo $MAXSHOW ?>)">
+    &gt;&gt;
+   </a>
+<?php } ?>
+  </td>
+ </tr>
+</table>
+
 
 <script language="javascript">
 
