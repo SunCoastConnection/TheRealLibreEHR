@@ -55,6 +55,7 @@ sqlStatement($query);
 sqlStatement("TRUNCATE TABLE `insurance_data`;");
 $query = file_get_contents("./SQL/insurance_data.sql", true);
 sqlStatement($query);
+
 sqlStatement("TRUNCATE TABLE `patient_data`;");
 $query = file_get_contents("./SQL/patient_data.sql", true);
 sqlStatement($query);
@@ -67,9 +68,11 @@ sqlStatement("TRUNCATE TABLE `x12_partners`;");
 $query = file_get_contents("./SQL/x12_partners.sql", true);
 sqlStatement($query);
 
+sqlStatement("DELETE FROM `users` WHERE `users`.`id` > '20';");
 $query = file_get_contents("./SQL/users.sql", true);
 sqlStatement($query);
 
+sqlStatement("DELETE FROM `groups` WHERE `groups`.`id` > '20';");
 $query = file_get_contents("./SQL/groups.sql", true);
 sqlStatement($query);
 echo "Database updated!";
