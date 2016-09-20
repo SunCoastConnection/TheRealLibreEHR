@@ -1309,15 +1309,16 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 	}
 
 	if($GLOBALS['enable_pqrs']) {
-		genTreeLink('RTop', 'pqr', xl('Measures'));
 
 ?>
 				<li><a class="collapsed" id="pqrs"><span><?php xl('PQRS', 'e'); ?></span></a>
 					<ul>
 <?php
+		genTreeLink('RTop', 'pqr', xl('Run Measures Report'));
 
 		genMiscLink('RTop', 'rep', '0', xl('Report Results'), 'reports/report_results.php');
 		genMiscLink('RTop', 'rep', '0', xl('Measure Selector'), 'reports/PQRS/measure_activate.php');
+		genTreeLink('RTop', 'pwd', xl('Change Your Password'));
 
 		if(acl_check('admin', 'super')) {
 			genMiscLink('RTop', 'rep', '0', xl('Client Database Import'), 'main/PQRS/import_data.php');
