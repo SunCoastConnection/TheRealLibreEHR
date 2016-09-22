@@ -19,8 +19,10 @@ class PQRS_Group_Diabetes_0126_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require(__DIR__."/../common/Diabetescommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
+
     }
 }
 

@@ -19,9 +19,18 @@ class PQRS_Group_Diabetes_0126_Numerator implements PQRSFilterIF
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+$query =
+" SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
+" AND b1.code = 'G8404'; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+
+if ($result['count'] > 0){ return true;} else {return false;}  	
     }
 }
 
