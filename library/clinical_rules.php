@@ -702,8 +702,17 @@ function test_rules_clinic($provider='',$type='',$dateTarget='',$mode='',$patien
   }
 
   // Collect applicable patient pids
+error_log("DEBUG: In test_rules_clinic, about to buildPatientArray, I know that type is $type",0);
+//DEBUG: In test_rules_clinic, about to buildPatientArray, I know that type is pqrs_individual_2016
+
+if (strpos($type, 'pqrs_individual') !== false ) {
+	$onlyMedicarePatients=true;	
+} else {
+	$onlyMedicarePatients=false;
+}
+
   $patientData = array();
-  $patientData = buildPatientArray($patient_id,$provider,$pat_prov_rel,$start,$batchSize);
+  $patientData = buildPatientArray($patient_id,$provider,$pat_prov_rel,$start,$batchSize, $onlyMedicarePatients);
 
   // Go through each patient(s)
   //
@@ -1058,7 +1067,7 @@ function test_rules_clinic($provider='',$type='',$dateTarget='',$mode='',$patien
  * @param  boolean       $onlyCount     If true, then will just return the total number of applicable records (ignores batching parameters)
  * @return array/integer                Array of patient pid values or number total pertinent patients (if $onlyCount is TRUE)
  */
-function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'primary', $start = null, $batchSize = null, $onlyCount = false) {
+function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'primary', $start = null, $batchSize = null, $onlyCount = false, $onlyMedicarePatients = false ) {
   if(empty($patient_id)) {
     if(empty($provider)) {
       // Look at entire practice
