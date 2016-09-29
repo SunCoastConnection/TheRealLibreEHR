@@ -712,7 +712,7 @@ if (strpos($type, 'pqrs_individual') !== false ) {
 }
 
   $patientData = array();
-  $patientData = buildPatientArray($patient_id,$provider,$pat_prov_rel,$start,$batchSize, $onlyMedicarePatients);
+  $patientData = buildPatientArray($patient_id,$provider,$pat_prov_rel,$start,$batchSize, false, $onlyMedicarePatients);
 
   // Go through each patient(s)
   //
@@ -1071,7 +1071,16 @@ function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'pr
   if(empty($patient_id)) {
     if(empty($provider)) {
       // Look at entire practice
-      $query = 'SELECT `pid` FROM `patient_data` ORDER BY `pid`';
+//  TODO:  ADD check for $onlyMedicarePatients here
+	if(empty($onlyMedicarePatients)){
+		$query = 'SELECT `pid` FROM `patient_data` ORDER BY `pid`';
+	} else {
+$query = "SELECT distinct p.pid FROM patient_data p ".
+" JOIN insurance_data i on (i.pid=p.pid) ".
+" join insurance_companies c on (c.id = i.provider) ".
+" WHERE c.freeb_type = 2 ".
+" ORDER BY p.pid;";
+	}
 
       if($start == null || $batchSize == null || $onlyCount) {
         $rez = sqlStatementCdrEngine($query);
@@ -1086,6 +1095,7 @@ function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'pr
     } else {
       // Look at an individual physician
       if($pat_prov_rel == 'encounter') {
+//  TODO:  ADD check for $onlyMedicarePatients here
         $query = 'SELECT DISTINCT `pid` FROM `form_encounter` WHERE `provider_id` = ? OR `supervisor_id` = ? ORDER BY `pid`';
 
         // Choose patients that are related to specific physician by an encounter
@@ -1100,6 +1110,7 @@ function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'pr
           $rez = sqlStatementCdrEngine($query.' LIMIT ?, ?;', array($provider, $provider, $start - 1, $batchSize));
         }
       } else { // $pat_prov_rel == 'primary'
+//  TODO:  ADD check for $onlyMedicarePatients here
         $query = 'SELECT `pid` FROM `patient_data` WHERE `providerID` = ? ORDER BY `pid`';
 
         // Choose patients that are assigned to the specific physician (primary physician in patient demographics)
