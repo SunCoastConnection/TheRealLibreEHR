@@ -1322,6 +1322,7 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 
 		if(acl_check('admin', 'super')) {
 			genMiscLink('RTop', 'rep', '0', xl('Client Database Import'), 'main/PQRS/import_data.php');
+			genMiscLink('RTop', 'rep', '0', xl('Delete Old Reports'), 'main/PQRS/truncate_reports.php');
 		}
 
 ?>
