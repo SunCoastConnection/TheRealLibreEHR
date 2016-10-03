@@ -28,7 +28,7 @@ include_once("$srcdir/api.inc");
 <?php
 if($_POST['formSubmit'] == "Submit") 
 {
-sqlStatement("TRUNCATE TABLE `addresses`;");
+sqlStatement("TRUNCATE TABLE `report_results`;");
 echo "Table 'reports_results' truncated.   Old reports deleted.";
 }
 ?>
