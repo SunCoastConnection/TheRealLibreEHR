@@ -19,9 +19,22 @@ class PQRS_0439_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
-    }
+$query =
+"SELECT COUNT(b1.code) as count ".  
+"  FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (b1.pid = p.pid)".
+" INNER JOIN pqrs_efc AS codelist_a ON (b1.code = codelist_a.code)".
+" WHERE b1.pid = ? ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
+" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '85' ".
+" AND (b1.code = codelist_a.code AND b1.modifier NOT IN('52','53','73','74')AND codelist_a.type = 'pqrs_0439_a');";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else {return false;}  
+
+}
 }
 
 ?>
