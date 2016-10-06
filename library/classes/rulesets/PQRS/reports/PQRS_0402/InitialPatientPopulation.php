@@ -38,7 +38,9 @@ $query =
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " INNER JOIN pqrs_poph AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
-" AND (fe.date<'2015-04-01' OR fe.date>='2015-10-01' )".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
+" AND MONTH(fe.date)<'4' AND MONTH(fe.date)>'9' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) BETWEEN '12' and '20' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0402_a');";
 
