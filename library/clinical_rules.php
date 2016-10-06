@@ -702,8 +702,14 @@ function test_rules_clinic($provider='',$type='',$dateTarget='',$mode='',$patien
   }
 
   // Collect applicable patient pids
+if (strpos($type, 'pqrs_individual') !== false ) {
+	$onlyMedicarePatients=true;	
+} else {
+	$onlyMedicarePatients=false;
+}
+
   $patientData = array();
-  $patientData = buildPatientArray($patient_id,$provider,$pat_prov_rel,$start,$batchSize);
+  $patientData = buildPatientArray($patient_id,$provider,$pat_prov_rel,$start,$batchSize, false, $onlyMedicarePatients);
 
   // Go through each patient(s)
   //
@@ -741,6 +747,7 @@ function test_rules_clinic($provider='',$type='',$dateTarget='',$mode='',$patien
       require_once( dirname(__FILE__)."/classes/rulesets/ReportManager.php");
       $manager = new ReportManager();
       if ($rowRule['amc_flag']|| $rowRule['pqrs_individual_2016_flag'] || $rowRule['pqrs_individual_2015_flag'] || $rowRule['pqrs_groups_2016_flag']|| $rowRule['pqrs_groups_2015_flag']) {
+	error_log("*DEBUG*: clinical_rules: About to runReport for ".$rowRule['id']);
         // Send array of dates ('dateBegin' and 'dateTarget')
         $tempResults = $manager->runReport( $rowRule, $patientData, $dateArray, $options );
       }
@@ -1058,11 +1065,20 @@ function test_rules_clinic($provider='',$type='',$dateTarget='',$mode='',$patien
  * @param  boolean       $onlyCount     If true, then will just return the total number of applicable records (ignores batching parameters)
  * @return array/integer                Array of patient pid values or number total pertinent patients (if $onlyCount is TRUE)
  */
-function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'primary', $start = null, $batchSize = null, $onlyCount = false) {
+function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'primary', $start = null, $batchSize = null, $onlyCount = false, $onlyMedicarePatients = false ) {
   if(empty($patient_id)) {
     if(empty($provider)) {
       // Look at entire practice
-      $query = 'SELECT `pid` FROM `patient_data` ORDER BY `pid`';
+	if(empty($onlyMedicarePatients)){
+		$query = 'SELECT `pid` FROM `patient_data` ORDER BY `pid`';
+	} else {
+// Insurance companies with freeb_type = 2 are MediCare
+$query = "SELECT DISTINCT p.pid FROM patient_data p ".
+" JOIN insurance_data i on (i.pid=p.pid) ".
+" JOIN insurance_companies c on (c.id = i.provider) ".
+" WHERE c.freeb_type = 2 ".
+" ORDER BY p.pid;";
+	}
 
       if($start == null || $batchSize == null || $onlyCount) {
         $rez = sqlStatementCdrEngine($query);
@@ -1077,7 +1093,17 @@ function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'pr
     } else {
       // Look at an individual physician
       if($pat_prov_rel == 'encounter') {
-        $query = 'SELECT DISTINCT `pid` FROM `form_encounter` WHERE `provider_id` = ? OR `supervisor_id` = ? ORDER BY `pid`';
+        if(empty($onlyMedicarePatients)){
+        	$query = 'SELECT DISTINCT `pid` FROM `form_encounter` WHERE `provider_id` = ? OR `supervisor_id` = ? ORDER BY `pid`';
+	} else {
+// Insurance companies with freeb_type = 2 are MediCare
+$query = "SELECT DISTINCT fe.pid FROM form_encounter fe ".
+" INNER JOIN insurance_data i on (i.pid=fe.pid) ".
+" INNER JOIN insurance_companies c on (c.id = i.provider) ".
+" WHERE c.freeb_type = 2 ".
+" AND (fe.provider_id = ? OR fe.supervisor_id = ?)".
+" ORDER BY fe.pid;".
+	}
 
         // Choose patients that are related to specific physician by an encounter
         if($start == null || $batchSize == null || $onlyCount) {
@@ -1091,8 +1117,17 @@ function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'pr
           $rez = sqlStatementCdrEngine($query.' LIMIT ?, ?;', array($provider, $provider, $start - 1, $batchSize));
         }
       } else { // $pat_prov_rel == 'primary'
-        $query = 'SELECT `pid` FROM `patient_data` WHERE `providerID` = ? ORDER BY `pid`';
-
+        if(empty($onlyMedicarePatients)){
+		$query = 'SELECT `pid` FROM `patient_data` WHERE `providerID` = ? ORDER BY `pid`';
+	} else {
+// Insurance companies with freeb_type = 2 are MediCare
+$query = "SELECT DISTINCT p.pid FROM patient_data p ".
+" JOIN insurance_data i on (i.pid=p.pid) ".
+" JOIN insurance_companies c on (c.id = i.provider) ".
+" WHERE `providerID` = ? ".
+" AND c.freeb_type = 2 ".
+" ORDER BY p.pid;";
+	}
         // Choose patients that are assigned to the specific physician (primary physician in patient demographics)
         if($start == null || $batchSize == null || $onlyCount) {
           $rez = sqlStatementCdrEngine($query, array($provider));
