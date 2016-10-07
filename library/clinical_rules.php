@@ -1102,7 +1102,7 @@ $query = "SELECT DISTINCT fe.pid FROM form_encounter fe ".
 " INNER JOIN insurance_companies c on (c.id = i.provider) ".
 " WHERE c.freeb_type = 2 ".
 " AND (fe.provider_id = ? OR fe.supervisor_id = ?)".
-" ORDER BY fe.pid;".
+" ORDER BY fe.pid;";
 	}
 
         // Choose patients that are related to specific physician by an encounter
