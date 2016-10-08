@@ -34,6 +34,6 @@ echo "Table 'reports_results' truncated.   Old reports deleted.";
 ?>
 <html>
 <b>This will delete all old reports!</b>
-<input type="submit" name="formSubmit" value="Delete ALL old reports" />
+<input type="submit" name="formSubmit" value="Submit" />
 </html>
 </form>
