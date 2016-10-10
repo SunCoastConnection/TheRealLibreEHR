@@ -12,7 +12,12 @@
  
 class PQRS_0438_InitialPatientPopulation implements PQRSFilterIF
 {
-    public function getTitle() 
+    public function getTitle()
+    {
+        return "Initial Patient Population";
+    }
+
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
 "SELECT COUNT(b1.code) as count ".  
@@ -40,12 +45,7 @@ $query =
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
 
-    }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
-    {
-	//Default return 
-        return false;
     }
 }
 

@@ -19,7 +19,7 @@ class PQRS_0428_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-"SELECT COUNT(b1.code) as count ".  
+$query="SELECT COUNT(b1.code) as count ".  
 "  FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".

@@ -1077,7 +1077,7 @@ $query = "SELECT DISTINCT p.pid FROM patient_data p ".
 " JOIN insurance_data i on (i.pid=p.pid) ".
 " JOIN insurance_companies c on (c.id = i.provider) ".
 " WHERE c.freeb_type = 2 ".
-" ORDER BY p.pid;";
+" ORDER BY p.pid";
 	}
 
       if($start == null || $batchSize == null || $onlyCount) {

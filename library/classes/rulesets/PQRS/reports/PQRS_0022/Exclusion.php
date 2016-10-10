@@ -32,12 +32,12 @@ class PQRS_0022_Exclusion implements PQRSFilterIF
     {
 $query =
 "SELECT COUNT(b1.code) AS count".  ///just give us a number as a result of all this, counting how many results we get.
-"  FROM billing AS b1".
-"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-"WHERE b1.pid = ? ".
+" FROM billing AS b1 ".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-"AND b1.code = '4042F' " .
+" AND b1.code = '4042F' " ;
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));  ///runs the string $query_just.... as an sql statement.
 //The query just gives you a number, not rows, which is the count of the rows it returned.
 if ($result['count'] > 0){ return true;} else {return false;}  //there is a better way of stating this, but this is easier to understand for N00bs 
