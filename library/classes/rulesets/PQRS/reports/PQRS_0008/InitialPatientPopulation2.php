@@ -31,8 +31,9 @@ class PQRS_0008_InitialPatientPopulation2 implements PQRSFilterIF
 		" WHERE b1.pid = ? ". 
 		" AND fe.date >= '".$beginDate."' ".
 		" AND fe.date <= '".$endDate."' ".
+		" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18'  ". 
 		" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0008_a') ".
-		" AND (b2.code = codelist_c.code AND codelist_c.type = 'pqrs_0008_c') "
+		" AND (b2.code = codelist_c.code AND codelist_c.type = 'pqrs_0008_c') ".
 		" AND b3.code = 'G8923';";  
 		
 		$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

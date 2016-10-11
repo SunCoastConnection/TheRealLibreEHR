@@ -42,7 +42,7 @@ if ($result['count']> 1){
 		" WHERE b1.pid = ? ". 
 		" AND fe.date >= '".$beginDate."' ".
 		" AND fe.date <= '".$endDate."' ".
-		" AND b2.code = 'G8923';
+		" AND b2.code = 'G8923' ".
 		" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0008_a') ";   
 		
 		$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

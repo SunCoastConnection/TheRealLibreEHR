@@ -29,8 +29,6 @@ class PQRS_0005_Exclusion implements PQRSFilterIF
 " AND (b1.code = '4010F' AND b1.modifier IN('1P','2P','3P');" ;
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
-}  
-    
 
     }
 }
