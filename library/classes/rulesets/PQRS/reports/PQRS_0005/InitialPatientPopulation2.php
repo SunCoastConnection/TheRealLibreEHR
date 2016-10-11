@@ -21,7 +21,7 @@ class PQRS_0005_InitialPatientPopulation2 implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 	    
-	 $query =
+
 $query =
 "SELECT COUNT(b1.code) as count ". 
 " FROM billing AS b1 ".  
@@ -29,7 +29,7 @@ $query =
 " JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  
 " JOIN patient_data AS p ON (b1.pid = p.pid)".  
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
-" INNER JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_c.code)".
+" INNER JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
 " WHERE b1.pid = ? ". 
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
