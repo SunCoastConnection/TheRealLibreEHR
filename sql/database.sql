@@ -185,7 +185,7 @@ CREATE TABLE `billing` (
   `user` int(11) default NULL,
   `groupname` varchar(255) default NULL,
   `authorized` tinyint(1) default NULL,
-  `encounter` int(11) default NULL,
+  `encounter` bigint(20) default NULL,
   `code_text` longtext,
   `billed` tinyint(1) default NULL,
   `activity` tinyint(1) default NULL,
