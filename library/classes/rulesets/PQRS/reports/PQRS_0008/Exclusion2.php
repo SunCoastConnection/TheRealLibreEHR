@@ -18,8 +18,7 @@ class PQRS_0008_Exclusion2 implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-       	// Default return 
-        return false;
+
     }
 }
 
