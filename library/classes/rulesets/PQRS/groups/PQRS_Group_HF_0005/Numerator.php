@@ -39,7 +39,7 @@ $query =
 
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND (( b1.code = '4010F' AND b2.code = '3021F' AND b1.modifier != '8P') OR (b1.code = '3022F' OR( b1.code = '3021F' AND b1.modifier = '8P'))) ; ";
+" AND (( b1.code = '4010F' AND b2.code = '3021F' AND b1.modifier ='') OR (b1.code = '3022F' OR( b1.code = '3021F' AND b1.modifier = '8P'))) ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 

@@ -25,7 +25,7 @@ $query =
 " WHERE b1.pid = ? ".
 
 " AND YEAR(fe.date) > '2013' ".
-" AND  b1.code IN ( '2022F','2024F','2026F','3072F') AND b1.modifier != '8P'; ";
+" AND  b1.code IN ( '2022F','2024F','2026F','3072F') AND b1.modifier =''; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
