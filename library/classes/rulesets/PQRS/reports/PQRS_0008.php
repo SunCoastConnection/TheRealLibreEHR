@@ -13,7 +13,11 @@ class PQRS_0008 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-        return new PQRS_0008_PopulationCriteria();
+		$populationCriteria = array();
+                $populationCriteria[] = new PQRS_0008_PopulationCriteria1();
+                $populationCriteria[] = new PQRS_0008_PopulationCriteria2();
+                return $populationCriteria;
+
     }
 }
 
