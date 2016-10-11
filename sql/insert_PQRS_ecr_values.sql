@@ -69,7 +69,6 @@ INSERT INTO `pqrs_ecr` (`type`, `code`) VALUES
 ('pqrs_0066_b', '99284'),
 ('pqrs_0066_b', '99285'),
 ('pqrs_0066_b', 'G0402'),
-('pqrs_0066_c', 'G8711'),
 ('pqrs_0093_a', 'H60.00'),
 ('pqrs_0093_a', 'H60.01'),
 ('pqrs_0093_a', 'H60.02'),
