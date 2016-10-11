@@ -27,7 +27,7 @@ class PQRS_0019_Numerator implements PQRSFilterIF
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
 " AND b1.code = 'G8397' ". 
-" AND b2.code = '5010F' AND b2.modifier != '8P' ;";
+" AND b2.code = '5010F' AND b2.modifier ='' ;";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}    
 		

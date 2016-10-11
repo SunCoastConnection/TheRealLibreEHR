@@ -38,7 +38,7 @@ $query =
 
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND b1.code IN ('1036F','4004F') AND b1.modifier !='8P' ; ";
+" AND b1.code IN ('1036F','4004F') AND b1.modifier ='' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 

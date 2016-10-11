@@ -33,7 +33,7 @@ class PQRS_0008_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
     
     public function createExclusion()
     {
-        return new PQRS_0008_Exclusion();
+        return new PQRS_0008_Exclusion2();
     }
 }
 
