@@ -22,6 +22,7 @@ $query =
 "SELECT COUNT(b1.code) as count ".  
 "  FROM billing AS b1". 
 "  INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
+"  INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN pqrs_ccco AS codelist_a ON (b1.code = codelist_a.code)".
@@ -30,6 +31,7 @@ $query =
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '65' ".
+" AND b3.code = 1100F AND b3.modifier = '' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0155_a')".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0155_b'); ";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

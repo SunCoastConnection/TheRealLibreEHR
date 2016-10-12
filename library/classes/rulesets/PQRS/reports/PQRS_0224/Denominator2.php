@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0224 -- Numerator
+ * PQRS Measure 0224 -- Denominator 2
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,17 +9,17 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0224_Numerator implements PQRSFilterIF
+class PQRS_0224_Denominator2 implements PQRSFilterIF
 {
-    public function getTitle()
+    public function getTitle() 
     {
-        return "Numerator";
+        return "Denominator";
     }
-
+    
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+return true;
     }
 }
+
+?>
