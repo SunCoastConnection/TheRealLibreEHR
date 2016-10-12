@@ -2841,7 +2841,6 @@ INSERT INTO `pqrs_ptsf` (`type`, `code`) VALUES
 ('pqrs_0156_a', 'C50.921'),
 ('pqrs_0156_a', 'C50.922'),
 ('pqrs_0156_a', 'C50.929'),
-('pqrs_0156_c', '77295'),
 ('pqrs_0156_b', 'C77.0'),
 ('pqrs_0156_b', 'C77.1'),
 ('pqrs_0156_b', 'C77.2'),
