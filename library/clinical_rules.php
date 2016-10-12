@@ -1102,7 +1102,7 @@ $query = "SELECT DISTINCT fe.pid FROM form_encounter fe ".
 " INNER JOIN insurance_companies c on (c.id = i.provider) ".
 " WHERE c.freeb_type = 2 ".
 " AND (fe.provider_id = ? OR fe.supervisor_id = ?)".
-" ORDER BY fe.pid;";
+" ORDER BY fe.pid";
 	}
 
         // Choose patients that are related to specific physician by an encounter
@@ -1126,7 +1126,7 @@ $query = "SELECT DISTINCT p.pid FROM patient_data p ".
 " JOIN insurance_companies c on (c.id = i.provider) ".
 " WHERE `providerID` = ? ".
 " AND c.freeb_type = 2 ".
-" ORDER BY p.pid;";
+" ORDER BY p.pid";
 	}
         // Choose patients that are assigned to the specific physician (primary physician in patient demographics)
         if($start == null || $batchSize == null || $onlyCount) {
