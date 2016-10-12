@@ -28,13 +28,13 @@ class PQRS_0005_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
     
     public function createDenominator()
     {
-        return new PQRS_0005_Denominator();
+        return new PQRS_0005_Denominator2();
     	// Both varients use same Denominator
     }
     
     public function createExclusion()
     {
-        return new PQRS_0005_Exclusion();
+        return new PQRS_0005_Exclusion2();
         // Both varients use same Exclusion
     }
 }
