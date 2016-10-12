@@ -9,12 +9,17 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
 
-class PQRS_0238 extends AbstractPQRSReport
-{   
-    public function createPopulationCriteria()
-    {
-        return new PQRS_0238_PopulationCriteria();
+class PQRS_0238 extends AbstractPQRSReport {   
+    public function createPopulationCriteria() {
+		$populationCriteria = array();
+
+		$populationCriteria[] = new PQRS_0238_PopulationCriteria1();
+		$populationCriteria[] = new PQRS_0238_PopulationCriteria2();   
+
+		return $populationCriteria;    
     }
+
 }
 
 ?>
+

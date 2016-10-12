@@ -26,7 +26,7 @@ $query =
 " AND b1.user = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND (b1.code = '6045F' and b1.modifier =''); ";
+" AND (b1.code = 'G9500'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
