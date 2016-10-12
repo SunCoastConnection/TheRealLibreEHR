@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0138_PopulationCriteria implements PQRSPopulationCriteriaFactory
+class PQRS_0138_PopulationCriteria1 implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {
@@ -18,21 +18,21 @@ class PQRS_0138_PopulationCriteria implements PQRSPopulationCriteriaFactory
     
     public function createInitialPatientPopulation()
     {
-        return new PQRS_0138_InitialPatientPopulation();
+        return new PQRS_0138_InitialPatientPopulation1();
     }
     
     public function createNumerators()
     {
-        return new PQRS_0138_Numerator();
+        return new PQRS_0138_Numerator1();
     }
     
     public function createDenominator()
     {
-        return new PQRS_0138_Denominator();
+        return new PQRS_0138_Denominator1();
     }
     
     public function createExclusion()
     {
-        return new PQRS_0138_Exclusion();
+        return new PQRS_0138_Exclusion1();
     }
 }

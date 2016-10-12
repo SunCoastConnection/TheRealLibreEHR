@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0138 -- Initial Patient Population
+ * PQRS Measure 0138 -- Denominator 
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,16 +9,16 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0138_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_0138_Denominator2 implements PQRSFilterIF
 {
     public function getTitle() 
     {
-        return "Initial Patient Population";
+        return "Denominator";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+		//Same as initial population
+		return true;
     }
 }

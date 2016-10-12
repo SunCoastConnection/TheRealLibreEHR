@@ -26,7 +26,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND  (b1.code = 'G8476' OR (b1.code = 'G8477' AND (b2.code = 'G8478' AND b2.modifier =''))); ";
+" AND  (b1.code = 'G8476' OR (b1.code = 'G8477' AND (b2.code = '0513F' AND b2.modifier =''))); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 

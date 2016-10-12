@@ -8,7 +8,7 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
- /////////////////////////////This measure will need a LOT of oversight until it is massively refined///////////////////
+
 class PQRS_0117_InitialPatientPopulation implements PQRSFilterIF
 {
     public function getTitle() 
