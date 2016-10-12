@@ -25,7 +25,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND b1.code IN ('G8473','G8474');";
+" AND b1.code = 'G8473';";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 

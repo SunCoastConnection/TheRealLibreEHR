@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0118 -- Population Criteria 2
+ * PQRS Measure 0138 -- Population Criteria
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0118_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
+class PQRS_0138_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {
@@ -18,23 +18,21 @@ class PQRS_0118_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
     
     public function createInitialPatientPopulation()
     {
-        return new PQRS_0118_InitialPatientPopulation2();
+        return new PQRS_0138_InitialPatientPopulation2();
     }
     
     public function createNumerators()
     {
-        return new PQRS_0118_Numerator2();
+        return new PQRS_0138_Numerator2();
     }
     
     public function createDenominator()
     {
-        return new PQRS_0118_Denominator2();
+        return new PQRS_0138_Denominator2();
     }
     
     public function createExclusion()
     {
-        return new PQRS_0118_Exclusion2();
+        return new PQRS_0138_Exclusion2();
     }
 }
-
-?>

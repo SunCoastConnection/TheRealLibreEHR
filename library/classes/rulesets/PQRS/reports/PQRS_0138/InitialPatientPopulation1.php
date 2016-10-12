@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0110 -- Initial Patient Population
+ * PQRS Measure 0138 -- Initial Patient Population1
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0110_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_0138_InitialPatientPopulation1 implements PQRSFilterIF
 {
     public function getTitle() 
     {
@@ -22,17 +22,16 @@ $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" JOIN patient_data AS p ON (b1.pid = p.pid)".
-" INNER JOIN pqrs_poph AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
+" INNER JOIN pqrs_ccco AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_ccco AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
-" AND (fe.date<'2016-04-01' OR fe.date>='2016-10-01' )".
-" AND TIMESTAMPDIFF(MONTH,p.dob,fe.date) >= '6' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0110_a');";
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0138_a') ".
+" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0138_b'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;} else {return false;}  
-
+if ($result['count']> 2){ return true;} else {return false;} 
     }
 }
-
-?>
