@@ -31,7 +31,7 @@ $query =
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
 " AND p.sex = 'Male' ".
-" AND b1.code IN ('77427', '77425') ".
+" AND (b1.code IN ('77427', '77425')) ".
 " AND (b2.code = 'C61')".
 " AND (b3.code = 'G8465') ".
 " AND NOT (b4.code = codelist_a.code AND codelist_a.type = 'pqrs_0104_a'); ";
