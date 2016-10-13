@@ -31,9 +31,9 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >=18 ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0400_a')".
-" AND ( (YEAR(p.dob) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
+" AND ( (YEAR(p.DOB) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
 " AND NOT (b4.code = 'B18.2' ) ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
@@ -52,9 +52,9 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >=18 ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0400_b')".
-" AND ( (YEAR(p.dob) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
+" AND ( (YEAR(p.DOB) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
 " AND NOT (b4.code = 'B18.2' ) ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

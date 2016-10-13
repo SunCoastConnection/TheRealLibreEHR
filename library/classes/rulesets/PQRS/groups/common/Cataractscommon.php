@@ -18,7 +18,7 @@ $query =
 " AND b1.code IN".  
 "('66840', ' 66850', ' 66852', ' 66920', ' 66930', ' 66940', ' 66983', ' 66984')".
 " AND YEAR(fe.date) ='2016' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18'  ".  
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18'  ".  
 " AND b1.modifier NOT IN ('55', '56') ;";
 ?>
 

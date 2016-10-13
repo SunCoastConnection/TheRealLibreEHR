@@ -30,7 +30,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '5' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '5' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0053_a') ".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0053_b') ".
 " AND b3.code = '1038F';";

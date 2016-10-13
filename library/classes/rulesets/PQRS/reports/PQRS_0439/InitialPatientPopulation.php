@@ -28,7 +28,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '85' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '85' ".
 " AND (b1.code = codelist_a.code AND b1.modifier NOT IN('52','53','73','74')AND codelist_a.type = 'pqrs_0439_a');";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

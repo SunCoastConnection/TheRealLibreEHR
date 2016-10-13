@@ -28,7 +28,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND b1.code ='97001'".
 " AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0217_a'); ";
 
@@ -44,7 +44,7 @@ if ($result['count']> 0){ return true;} else {
 		" WHERE b1.pid = ? ".
 		" AND fe.date >= '".$beginDate."' ".
 		" AND fe.date <= '".$endDate."' ".
-		" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
+		" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 		" AND b1.code ='97003'".
 		" AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0217_b'); ";
 		
