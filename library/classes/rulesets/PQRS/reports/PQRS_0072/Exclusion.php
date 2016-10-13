@@ -28,7 +28,7 @@ class PQRS_0072_Exclusion implements PQRSFilterIF
 " AND fe.date <= '".$endDate."' ".
 " AND (((b1.code = '3388F' AND b1.modifier ='')".
 " AND (b2.code = 'G8928'))".
-" OR (b1.code IN ('3382F', '3384F', '3386F', '3390F'))
+" OR (b1.code IN ('3382F', '3384F', '3386F', '3390F'))".
 " OR (b1.code = '3382F' AND b1.modifier ='8P')); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
