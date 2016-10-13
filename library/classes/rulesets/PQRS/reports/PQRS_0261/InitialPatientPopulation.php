@@ -28,11 +28,8 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-
-//" AND YEAR(fe.date) >= ? ".
-//" AND YEAR(fe.date) <= ? ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0261_a')".
-" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0261_b' ) ";
+" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0261_b' ); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id), $beginDate, $endDate));
 if ($result['count']> 0){ return true;} else {return false;}  
