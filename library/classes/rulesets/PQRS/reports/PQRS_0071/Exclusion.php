@@ -30,7 +30,7 @@ $query =
 " AND (((b1.code = '4179F' AND b1.modifier IN('1P', '2P', '3P'))".
 " AND b2.code IN('3374F', '3376F', '3378F')".
 " AND b3.code = '3315F')".
-" OR (b1.code IN ('3370F','3316F') AND b1.modifier IN('', '8P'))
+" OR (b1.code IN ('3370F','3316F') AND b1.modifier IN('', '8P'))".
 " OR (b1.code IN ('3372F', '3380F')  )); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
