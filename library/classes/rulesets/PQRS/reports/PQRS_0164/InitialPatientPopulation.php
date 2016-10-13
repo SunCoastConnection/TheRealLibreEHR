@@ -21,6 +21,7 @@ class PQRS_0164_InitialPatientPopulation implements PQRSFilterIF
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
+" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
