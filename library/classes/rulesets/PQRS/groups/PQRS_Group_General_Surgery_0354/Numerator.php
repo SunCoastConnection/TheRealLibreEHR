@@ -35,7 +35,6 @@ $query =
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = '$Patient' ".
-" AND b1.user = '$Provider' ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
 " AND b1.code = 'G9306'; ";
