@@ -26,7 +26,7 @@ $query =
 " INNER JOIN pqrs_poph AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
 " AND (fe.date<'2016-04-01' OR fe.date>='2016-10-01' )".
-" AND TIMESTAMPDIFF(MONTH,p.dob,fe.date) >= '6' ".
+" AND TIMESTAMPDIFF(MONTH,p.DOB,fe.date) >= '6' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0110_a');";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

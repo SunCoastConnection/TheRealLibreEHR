@@ -27,8 +27,8 @@ $query =
 " WHERE b1.pid = ? ".
 " AND p.sex = 'Female' ".
 " AND YEAR(fe.date) >'2014' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '50' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) < '75' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '50' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) < '75' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0112_a'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

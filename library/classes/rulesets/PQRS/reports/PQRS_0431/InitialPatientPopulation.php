@@ -28,7 +28,7 @@ class PQRS_0431_InitialPatientPopulation implements PQRSFilterIF
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0402_a'); "; //using 402 as 431
 
 

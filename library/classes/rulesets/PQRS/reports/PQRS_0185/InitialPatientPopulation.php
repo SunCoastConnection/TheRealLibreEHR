@@ -28,7 +28,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) >= '18' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0185_a' AND b1.modifier NOT IN ('52','53','73','74'))".
 " AND b2.code = 'Z86.010'; ";
 

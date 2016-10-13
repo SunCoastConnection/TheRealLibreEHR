@@ -44,7 +44,7 @@ OR
    THIS IS AN INVERTED MEASURE
    This query looks for all patient
   */
-$query_for_whole_measure = "SELECT DISTINCT  b1.code AS Dx, b2.code AS Tx,  CONCAT(b3.code, b3.modifier) AS CPT2, fe.date AS DOS, fe.user AS PROVIDER, p.pid AS PID, p.dob AS DOB".
+$query_for_whole_measure = "SELECT DISTINCT  b1.code AS Dx, b2.code AS Tx,  CONCAT(b3.code, b3.modifier) AS CPT2, fe.date AS DOS, fe.user AS PROVIDER, p.pid AS PID, p.DOB AS DOB".
 "  FROM billing AS b1".  //b1 is the first billing table alias to get the diagnosis as Dx. denominator
 "INNER JOIN billing AS b2 ON (b1.pid = b2.pid)".  //b2 is the second billing table alias to get the procedure code (CPT4 or G code) as Tx. We are matching the Patient ID (PID).  denominator
 "INNER JOIN billing AS b3 ON (b1.pid = b3.pid)".  //b3 is the third billing table alias to get the reporting code (CPT II) as CPT2 which is our [numerator].  We would not want this if the provider does not report CPT2
@@ -75,7 +75,7 @@ $query_for_whole_measure = "SELECT DISTINCT  b1.code AS Dx, b2.code AS Tx,  CONC
 " '99316','99318','99324','99325','99326','99327','99328','99334','99335','99336','99337','99341','99342',".
 " '99343','99344','99345','99347','99348','99349','99350','G0270','G0271','G0402','G0438','G0439')"
 
-." AND (YEAR(fe.date) - YEAR(p.dob)) BETWEEN '18' AND '75' "  //age must be between 18 and 75 on the date of treatment
+." AND (YEAR(fe.date) - YEAR(p.DOB)) BETWEEN '18' AND '75' "  //age must be between 18 and 75 on the date of treatment
 ."AND YEAR(fe.date) ='2015' "  //date of the encounter must be in the year 2015.  This should actually check against a form variable.
 
 ."AND CONCAT(b3.code,b3.modifier) IN ('3046F','3046F8P','3044F','3045F')" //checking for CPT2 code with modifier. 
@@ -90,7 +90,7 @@ REAL QUERIES START HERE******************************************************
 */
 /////////////////////////////////////Example to just check denominator/initial pop //////////////////////////////////////
 $query_just_denominator_for_one_patient =
-//"SELECT   b1.code AS Dx, b2.code AS Tx, fe.date AS DOS, p.pid AS PID, p.dob AS DOB".  //We don't need all these fields as rows.  Really we just want a true/false comparison
+//"SELECT   b1.code AS Dx, b2.code AS Tx, fe.date AS DOS, p.pid AS PID, p.DOB AS DOB".  //We don't need all these fields as rows.  Really we just want a true/false comparison
 "SELECT COUNT(b1.code)".  ///just give us a number as a result of all this, counting how many results we get.
 "  FROM billing AS b1".  //b1 is the first billing table alias to get the diagnosis as Dx. denominator
 "INNER JOIN billing AS b2 ON (b1.pid = b2.pid)".  //b2 is the second billing table alias to get the procedure code (CPT4 or G code) as Tx. We are matching the Patient ID (PID).  denominator
