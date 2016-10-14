@@ -25,7 +25,7 @@ class PQRS_0395_Exclusion implements PQRSFilterIF
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND b1.code IN ('G9419', ;G9420') ; ";
+" AND b1.code IN ('G9419', 'G9420') ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
