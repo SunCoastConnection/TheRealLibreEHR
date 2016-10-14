@@ -30,7 +30,7 @@ $query =
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
 " AND p.sex = 'Female'".
-" AND TIMESTAMPDIFF(YEAR,p.dob,fe.date) BETWEEN('12' AND '44') ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN('12' AND '44') ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0268_a') ".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0268_b'); ";
 

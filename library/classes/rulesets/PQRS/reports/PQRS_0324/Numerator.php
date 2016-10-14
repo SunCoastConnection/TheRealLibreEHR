@@ -23,8 +23,8 @@ $query =
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-
-" AND YEAR(fe.date) >'2012' ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
 " AND b1.code ='G8965' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
