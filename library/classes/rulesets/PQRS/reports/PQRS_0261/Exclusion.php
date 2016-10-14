@@ -17,14 +17,6 @@ class PQRS_0261_Exclusion implements PQRSFilterIF
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
-class PQRS_0261_Numerator implements PQRSFilterIF
-{
-    public function getTitle()
-    {
-        return "Numerator";
-    }
-
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
 " SELECT COUNT(b1.code) AS count".  
