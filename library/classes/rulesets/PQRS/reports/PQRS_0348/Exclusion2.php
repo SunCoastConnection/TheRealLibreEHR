@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0391 -- Numerator
+ * PQRS Measure 0348 -- Exclusion 2
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -8,18 +8,19 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
- 
-class PQRS_0391_Numerator implements PQRSFilterIF
-{
-    public function getTitle()
-    {
-        return "Numerator";
-    }
 
+class PQRS_0348_Exclusion2 implements PQRSFilterIF
+{
+    public function getTitle() 
+    {
+        return "Exclusion";
+    }
+    
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+return false;     
+
     }
 }
+
+?>

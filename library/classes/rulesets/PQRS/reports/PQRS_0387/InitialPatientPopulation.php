@@ -20,44 +20,41 @@ class PQRS_0387_InitialPatientPopulation implements PQRSFilterIF
     {
 $query =
 "SELECT COUNT(b1.code) as count ".  
-"  FROM billing AS b1". 
+" FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" JOIN patient_data AS p ON (p.pid = b1.pid)".
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
-
-" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
-" JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
-
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0387_a')".
-" AND NOT (codelist_c.type = 'pqrs_0387_c' AND b2.code = codelist_c.code) ; ";
+" AND b1.code = 'G9518'".
+" AND NOT  b2.code = 'B18.2' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;}
- else {
-	$query =
-"SELECT COUNT(b1.code) as count ".  
-"  FROM billing AS b1". 
-" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" JOIN patient_data AS p ON (p.pid = b1.pid)".
-" JOIN billing AS b2 ON (b2.pid = b1.pid)".
-
-" INNER JOIN pqrs_efcc AS codelist_b ON (b1.code = codelist_b.code)".
-" JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
-
-" WHERE b1.pid = ? ".
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
-
-" AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0387_b')".
-" AND NOT (b2.code = codelist_c.code AND codelist_b.type = 'pqrs_0387_c') ; ";
-
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-if ($result['count']> 1){ return true;}
- 		else {return false;}  
+if ($result['count']> 0){ 
+			$query =
+			"SELECT COUNT(b1.code) as count ".  
+			"  FROM billing AS b1". 
+			" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+			" WHERE b1.pid = ? ".
+			" AND fe.date >= '".$beginDate."' ".
+			" AND fe.date <= '".$endDate."' ".
+			" AND b1.code IN('G0438','G0439') ; ";
+			
+			$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+			if ($result['count']> 0){ return true;}}
+			 else {
+	 				$query =
+					"SELECT COUNT(b1.code) as count ".  
+					" FROM billing AS b1". 
+					" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+					" WHERE b1.pid = ? ".
+					" AND fe.date >= '".$beginDate."' ".
+					" AND fe.date <= '".$endDate."' ".
+					" AND b1.code IN( '99201', '99202', '99203', '99204', '99205', '99212','99213', '99214', '99215', '99304', '99305', '99306', '99307', '99308', '99309', '99310', '99324', '99325', '99326', '99327','99328', '99334', '99335', '99336', '99337', '99341', '99342', '99343', '99344', '99345', '99347', '99348', '99349', '99350') ; ";
+					
+					$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+					if ($result['count']> 2){ return true;}	
+	 		} else{return false; 
 	 }  
 
     }
