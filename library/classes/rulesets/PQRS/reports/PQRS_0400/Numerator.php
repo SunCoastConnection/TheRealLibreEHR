@@ -23,7 +23,7 @@ $query =
 " FROM billing AS b1".
 " WHERE b1.pid = ? ".
 
-" AND b1.code IN('G9451','G9452','G9453') ; ";
+" AND b1.code ='G9451' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 

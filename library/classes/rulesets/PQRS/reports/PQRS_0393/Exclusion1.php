@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0348 -- Initial Patient Population
+ * PQRS Measure 0393 -- Exclusion 1
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -8,17 +8,19 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
- 
-class PQRS_0348_InitialPatientPopulation implements PQRSFilterIF
+
+class PQRS_0393_Exclusion1 implements PQRSFilterIF
 {
     public function getTitle() 
     {
-        return "Initial Patient Population";
+        return "Exclusion";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+return false;    
+
     }
 }
+
+?>

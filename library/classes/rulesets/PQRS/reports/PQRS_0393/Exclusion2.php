@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0393 -- Exclusion 
+ * PQRS Measure 0393 -- Exclusion 2
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
 
-class PQRS_0393_Exclusion implements PQRSFilterIF
+class PQRS_0393_Exclusion2 implements PQRSFilterIF
 {
     public function getTitle() 
     {
@@ -18,7 +18,9 @@ class PQRS_0393_Exclusion implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-       	// Default return 
-        return false;
+return false;    
+
     }
 }
+
+?>

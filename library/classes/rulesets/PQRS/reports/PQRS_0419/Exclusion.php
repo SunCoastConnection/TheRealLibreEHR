@@ -19,8 +19,19 @@ class PQRS_0419_Exclusion implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-       	// Default return 
-        return false;
+
+ $query =
+" SELECT COUNT(b1.code) AS count".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
+" AND fe.date >= '".$beginDate."' ".
+" AND fe.date <= '".$endDate."' ".
+" AND b1.code IN ('G9536','G9537') ; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+
+if ($result['count']> 0){ return true;} else {return false;} 
     }
 }
 

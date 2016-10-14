@@ -21,13 +21,11 @@ class PQRS_0390_Numerator implements PQRSFilterIF
 $query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
-" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND b1.code IN('G9399','G9400') ; ";
+" AND b1.code ='G9399' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 

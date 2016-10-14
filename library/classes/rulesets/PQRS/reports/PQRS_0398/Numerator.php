@@ -27,7 +27,7 @@ $query =
 
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND b1.code IN('G9432','G9433') ; ";
+" AND b1.code IN('G9432','G9521') ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
