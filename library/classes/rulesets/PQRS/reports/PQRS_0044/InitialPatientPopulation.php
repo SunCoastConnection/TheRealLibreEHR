@@ -26,8 +26,7 @@ $query =
 " INNER JOIN billing AS b2 ON (b1.pid = b2.pid)".
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND b2.code IN('00562', '33530') ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0044_a'); ";

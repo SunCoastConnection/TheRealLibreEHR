@@ -23,8 +23,7 @@ class PQRS_0328_Exclusion implements PQRSFilterIF
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND b1.code IN('G8974', 'G8975'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
