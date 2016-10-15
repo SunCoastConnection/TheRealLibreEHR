@@ -15,12 +15,12 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" INNER JOIN pqrs_efcc AS codelist_b ON (b1.code = codelist_b.code)".
-" JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
+" INNER JOIN pqrs_group AS codelist_a ON (b1.code = codelist_a.code)".
+" JOIN pqrs_group AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
-" AND YEAR(fe.date) ='2016' ".
-" AND  (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0387_c')".  ///looks strange, but is correct
-" AND (b2.code = codelist_c.code AND codelist_c.type = 'pqrs_0387_b') ; ";
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_hepatitis_a') ".
+" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_hepatitis_b');";
 
 ?>
