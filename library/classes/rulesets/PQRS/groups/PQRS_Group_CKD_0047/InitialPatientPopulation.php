@@ -22,7 +22,21 @@ class PQRS_Group_CKD_0047_InitialPatientPopulation implements PQRSFilterIF
     {
 require(__DIR__."/../common/CKDcommon.php");
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){
+	$query =
+"SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (p.pid = b1.pid)".
+" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
+" WHERE b1.pid = ? ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '65' ".
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0121_a'); ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
+	}  
 
     }
 }
