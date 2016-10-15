@@ -3,22 +3,12 @@
  * PQRS Measure Group_Diabetes_0117 -- Numerator
  *
  * Copyright (C) 2016      Suncoast Connection
- *
- * LICENSE: This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
- *
- * @package OpenEMR
- * @link    http://www.oemr.org
+
+ * @package PQRS_Gateway 
  * @link    http://suncoastconnection.com
- * @author  Suncoast Connection
+ * @author  Bryan lee <bryan@suncoastconnection.com>
+ * @author  Art Eaton <art@suncoastconnection.com>
+ 
 */
 
 class PQRS_Group_Diabetes_0117_Numerator implements PQRSFilterIF
@@ -35,9 +25,10 @@ $query =
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-
-" AND YEAR(fe.date) > '2013' ".
-" AND  b1.code IN ( '2022F','2024F','2026F','3072F') AND b1.modifier =''; ";
+" AND ((fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND  b1.code ='3072F' AND b1.modifier ='') ".
+" OR( fe.date <= '".$endDate."'  AND fe.date >= DATE_SUB('".$beginDate."', INTERVAL 1 YEAR)".
+" AND  b1.code IN ( '2022F','2024F','2026F') AND b1.modifier ='')); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 

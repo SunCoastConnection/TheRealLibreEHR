@@ -25,8 +25,7 @@ $query =
 " JOIN billing AS b3 ON (b3.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND (((b1.code = '4179F' AND b1.modifier IN('1P', '2P', '3P'))".
 " AND b2.code IN('3374F', '3376F', '3378F')".
 " AND b3.code = '3315F')".

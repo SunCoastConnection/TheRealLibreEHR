@@ -28,8 +28,7 @@ $query =
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b2.code = codelist_a.code)".
 " INNER JOIN pqrs_ptsf AS codelist_b ON (b3.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND b1.code ='G9240'".
 " AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0330_a') ".

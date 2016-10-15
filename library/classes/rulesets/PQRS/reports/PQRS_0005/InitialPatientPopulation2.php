@@ -31,8 +31,7 @@ $query =
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 " INNER JOIN pqrs_efcc AS codelist_c ON (b2.code = codelist_c.code)".
 " WHERE b1.pid = ? ". 
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18'  ". 
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0005_a') ".
 " AND (b2.code = codelist_c.code AND codelist_c.type = 'pqrs_0005_c') ;";

@@ -29,8 +29,7 @@ $query =
 " INNER JOIN pqrs_efcc AS codelist_c ON (b3.code = codelist_c.code)".
 
 " WHERE b1.pid = ? ".
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0400_a')".
 " AND ( (YEAR(p.DOB) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
@@ -50,8 +49,7 @@ $query =
 " INNER JOIN pqrs_efcc AS codelist_c ON (b3.code = codelist_c.code)".
 
 " WHERE b1.pid = ? ".
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0400_b')".
 " AND ( (YEAR(p.DOB) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
@@ -65,7 +63,7 @@ if ($result['count']> 1){ return true;} else {return false;}
 }
 /*This measure is to be reported a minimum of once per reporting period for all patients with one or more of the
 following: a history of injection drug use, receipt of a blood transfusion prior to 1992, receiving maintenance
-hemodialysis OR birthdate in the years 1945–1965 seen during the reporting period AND who were seen twice for
+hemodialysis OR birthdate in the years 1945â€“1965 seen during the reporting period AND who were seen twice for
 any visits or who had at least one preventive care visit within the 12 month reporting period. This measure may be
 reported by clinicians who perform the quality actions described in the measure based on the services provided and
 the measure-specific denominator coding*/

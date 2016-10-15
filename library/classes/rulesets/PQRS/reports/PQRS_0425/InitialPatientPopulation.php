@@ -27,8 +27,7 @@ class PQRS_0425_InitialPatientPopulation implements PQRSFilterIF
 
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
-" AND fe.date >= '".$beginDate."' ".
-" AND fe.date <= '".$endDate."' ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0425_a') ".
 " AND b1.modifier NOT IN('74','75'); "; 
 
