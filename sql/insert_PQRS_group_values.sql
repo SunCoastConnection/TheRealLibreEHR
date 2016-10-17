@@ -2644,5 +2644,6 @@ INSERT INTO `pqrs_group` (`type`, `code`) VALUES
 ('pqrs_DR_b', 'E13.349'),
 ('pqrs_DR_b', 'E13.351'),
 ('pqrs_DR_b', 'E13.359'),
-
+('pqrs_MCC_a', '99487'),
+('pqrs_MCC_a', '99490');
 
