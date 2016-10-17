@@ -992,6 +992,15 @@ INSERT INTO `pqrs_group` (`type`, `code`) VALUES
 ('pqrs_parkinson_a', '99349'),
 ('pqrs_parkinson_a', '99350'),
 ('pqrs_parkinson_b', 'G20'),
+('pqrs_cataracts_a', '66840'),
+('pqrs_cataracts_a', '66850'),
+('pqrs_cataracts_a', '66852'),
+('pqrs_cataracts_a', '66920'),
+('pqrs_cataracts_a', '66930'),
+('pqrs_cataracts_a', '66940'),
+('pqrs_cataracts_a', '66983'),
+('pqrs_cataracts_a', '66984'),
+
 
 
 
