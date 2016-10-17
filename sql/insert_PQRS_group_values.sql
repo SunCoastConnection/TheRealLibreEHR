@@ -2529,6 +2529,20 @@ INSERT INTO `pqrs_group` (`type`, `code`) VALUES
 ('pqrs_AOE_a', '99350'),
 ('pqrs_AOE_b', 'H60.00'),
 ('pqrs_AOE_b', 'H60.01'),
+('pqrs_CP_a', '99201'),
+('pqrs_CP_a', '99202'),
+('pqrs_CP_a', '99203'),
+('pqrs_CP_a', '99204'),
+('pqrs_CP_a', '99205'),
+('pqrs_CP_a', '99212'),
+('pqrs_CP_a', '99213'),
+('pqrs_CP_a', '99214'),
+('pqrs_CP_a', '99215'),
+('pqrs_CP_a', 'G0438'),
+('pqrs_CP_a', 'G0439'),
+
+
+
 ('pqrs_AOE_b', 'H60.02'),
 ('pqrs_AOE_b', 'H60.03'),
 ('pqrs_AOE_b', 'H60.10'),
