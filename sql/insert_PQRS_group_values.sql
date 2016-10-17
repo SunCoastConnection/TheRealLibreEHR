@@ -698,8 +698,18 @@ INSERT INTO `pqrs_group` (`type`, `code`) VALUES
 ('pqrs_CAD_b', 'Z95.1'),
 ('pqrs_CAD_b', 'Z95.5'),
 ('pqrs_CAD_b', 'Z98.61'),
-
-
+('pqrs_HIV_a', '99201'),
+('pqrs_HIV_a', '99202'),
+('pqrs_HIV_a', '99203'),
+('pqrs_HIV_a', '99204'),
+('pqrs_HIV_a', '99205'),
+('pqrs_HIV_a', '99212'),
+('pqrs_HIV_a', '99213'),
+('pqrs_HIV_a', '99214'),
+('pqrs_HIV_a', '99215'),
+('pqrs_HIV_a', 'G0402'),
+('pqrs_HIV_b', 'B20'),
+('pqrs_HIV_b', 'Z21'),
 
 
 
