@@ -10,7 +10,10 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  
 */
-
+//NOTE:  This measure requires two visits in each 6 month period separated by a
+//60 day period, but the test calls for a G code that indicates this status, not a calculation.
+//If desired, a different calculation can be done with  fe.date >= DATE_SUB('".$endDate."', INTERVAL 6 MONTH) etc..
+//and looking for the result as any encounter set.
 class PQRS_Group_HIVAIDS_0340_Numerator implements PQRSFilterIF
 {
     public function getTitle()
@@ -25,7 +28,6 @@ $query =
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-
 " AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND b1.code = 'G9247' ; ";
 
