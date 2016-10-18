@@ -21,12 +21,12 @@ class PQRS_Group_Diabetes_0001_Numerator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b.code) as count".  ///just give us a number as a result of all this, counting how many results we get.
+"SELECT COUNT(b.code) as count".
 "  FROM billing AS b".
 " JOIN form_encounter AS fe ON (b.encounter = fe.encounter)".
 " WHERE b.pid = ? ".
 " AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ". 
-" AND b.code = '3046F';"; //checking for CPT2 code.
+" AND b.code = '3046F';";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
