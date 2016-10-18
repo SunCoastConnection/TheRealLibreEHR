@@ -23,10 +23,8 @@ class PQRS_Group_HepatitisC_0226_Numerator implements PQRSFilterIF
 $query =
 " SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
-
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-
 " AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND b1.code IN ('4004F', '1036F') AND b1.modifier ='' ; ";
 
