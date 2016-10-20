@@ -26,7 +26,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
-" AND b1.code IN ('G8731','G8730'); ";
+" AND b1.code IN ('G8730','G8731'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
