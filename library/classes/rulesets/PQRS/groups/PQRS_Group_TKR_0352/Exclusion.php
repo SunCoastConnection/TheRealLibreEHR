@@ -20,8 +20,17 @@ class PQRS_Group_TKR_0352_Exclusion implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-       	// Default return 
-        return false;
+$query =
+" SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
+" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND b1.code = 'G9300' ; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+
+if ($result['count'] > 0){ return true;} else {return false;}  
     }
 }
 
