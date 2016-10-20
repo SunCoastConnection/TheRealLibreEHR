@@ -20,8 +20,17 @@ class PQRS_Group_CKD_0110_Denominator implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
-		return true;
+$query =
+"SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (b1.pid = p.pid)".
+" WHERE b1.pid = ? ".
+" AND ((fe.date BETWEEN ('".$beginDate."' AND DATE_SUB('".$beginDate."', INTERVAL 9 MONTH)))".
+" OR (fe.date BETWEEN (DATE_SUB('".$beginDate."', INTERVAL 9 MONTH) AND '".$endDate."')));";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else {return false;} 
     }
 }
 
