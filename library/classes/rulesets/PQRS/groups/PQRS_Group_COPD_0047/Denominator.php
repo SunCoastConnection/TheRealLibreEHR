@@ -26,7 +26,7 @@ $query =
 " WHERE TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') >='65'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;} else {return false;} 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 
