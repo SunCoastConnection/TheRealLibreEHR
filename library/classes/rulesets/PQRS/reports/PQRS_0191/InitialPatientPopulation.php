@@ -23,9 +23,9 @@ $query =
 " FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
-" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
+" JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
-" INNER JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_b.code)".
+" JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
