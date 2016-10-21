@@ -17,6 +17,5 @@ $query =
 " JOIN patient_data AS p ON (b1.pid = p.pid)". 
 " WHERE b1.pid = ? ". 
 " AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ". 
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_OPEIR_a') ".
-" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_OPEIR_b');";
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_OPEIR_a');";
 ?>
