@@ -71,8 +71,8 @@ PRIMARY KEY  (`id`)
 DROP TABLE IF EXISTS pqrs_group;
 CREATE TABLE IF NOT EXISTS `pqrs_group` (
 id int NOT NULL auto_increment,
-type varchar(15),
-code varchar(30),
+type varchar(30),
+code varchar(15),
 PRIMARY KEY  (`id`)
 );
 
