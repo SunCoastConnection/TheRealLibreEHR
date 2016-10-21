@@ -23,6 +23,7 @@ class PQRS_Group_AOE_0155_Denominator implements PQRSFilterIF
  $query =
 " SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
+" JOIN patient_data AS p ON (p.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') >='65'; ";
