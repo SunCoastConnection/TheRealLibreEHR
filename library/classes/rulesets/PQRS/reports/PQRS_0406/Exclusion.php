@@ -26,7 +26,7 @@ $query =
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = 'G9552' AND b2.code IN('G9557','G9555'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

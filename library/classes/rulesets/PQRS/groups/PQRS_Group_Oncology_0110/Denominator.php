@@ -26,8 +26,8 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " WHERE b1.pid = ? ".
-" AND ((fe.date BETWEEN ('".$beginDate."' AND DATE_SUB('".$beginDate."', INTERVAL 9 MONTH)))".
-" OR (fe.date BETWEEN (DATE_SUB('".$beginDate."', INTERVAL 9 MONTH) AND '".$endDate."')));";
+" AND ((fe.date BETWEEN '".$beginDate."' AND DATE_SUB('".$beginDate."', INTERVAL 9 MONTH))".
+" OR (fe.date BETWEEN DATE_SUB('".$beginDate."', INTERVAL 9 MONTH) AND '".$endDate."'));";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  

@@ -24,7 +24,7 @@ class PQRS_0005_Denominator1 implements PQRSFilterIF
 "  JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".  //fe is the alias of form_encounter that gets the date of service for the Tx
 "  JOIN patient_data AS p ON (b1.pid = p.pid)".  //We join the patient_data table to check the patient's age.
 "  WHERE b1.pid = ? ".  ///only check for current patient, which is matched on the PID
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 "  AND b1.code = '3021F';";  //CPT2 must match 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  

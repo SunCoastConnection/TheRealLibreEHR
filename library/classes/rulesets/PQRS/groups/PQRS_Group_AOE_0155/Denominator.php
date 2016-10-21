@@ -26,7 +26,7 @@ class PQRS_Group_AOE_0155_Denominator implements PQRSFilterIF
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') >='65'; ";
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code ='1100F' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

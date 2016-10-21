@@ -32,7 +32,7 @@ $query =
 " JOIN pqrs_efcc AS codelist_c ON (b3.code = codelist_c.code)".
 " JOIN pqrs_efcc AS codelist_d ON (b4.code = codelist_d.code)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND ((TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '21' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_a')".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0438_b' ))".

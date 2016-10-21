@@ -25,7 +25,7 @@ $query =
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code ='G9435'".
 " AND b2.code ='G9438'  ".
 " AND b3.code ='G9441' ; ";

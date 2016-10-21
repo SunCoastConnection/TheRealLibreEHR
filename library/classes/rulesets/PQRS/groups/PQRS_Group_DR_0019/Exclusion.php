@@ -26,7 +26,7 @@ $query =
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND ((b1.code = '5010F' AND b1.modifier='1P')".
 " OR (b1.code = '5010F' AND b1.modifier='2P'".

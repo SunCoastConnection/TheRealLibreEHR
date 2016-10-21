@@ -17,6 +17,6 @@ $query =
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " WHERE b1.pid = ? ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '50' ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_preventive_a');";
 ?>

@@ -25,7 +25,7 @@ class PQRS_Group_Dementia_0281_Denominator implements PQRSFilterIF
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code IN('90791', '90792',".
 " '90832', '90834', '90837', '96116', '96118', '96119', '96120', '97003', '97004', '99201', '99202', '99203', '99204', '99205',".
 " '99212', '99213', '99214', '99215', '99304', '99305', '99306', '99307', '99308', '99309', '99310', '99324', '99325', '99326',".

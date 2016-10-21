@@ -28,7 +28,7 @@ $query =
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
 
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0410_a')". //using other table
 " AND (b2.code = 'L40.0'); ";
 

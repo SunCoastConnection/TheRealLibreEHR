@@ -26,7 +26,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0191_b'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

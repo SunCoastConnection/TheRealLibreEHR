@@ -28,7 +28,7 @@ $query =
 " JOIN billing AS b4 ON (b4.pid = b1.pid)".
 " INNER JOIN pqrs_ecr AS codelist_a ON (b4.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND p.sex = 'Male' ".
 " AND b1.code IN ('77427', '77425') ".
 " AND (b2.code = 'C61')".
