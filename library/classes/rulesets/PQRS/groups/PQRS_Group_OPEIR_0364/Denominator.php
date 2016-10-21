@@ -27,7 +27,7 @@ class PQRS_Group_OPEIR_0364_Denominator implements PQRSFilterIF
 " WHERE b1.pid = ? ".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
-" AND b1.code IN('71250', '71260', '71270', '71275', '78814', '78815', '78816''); ";
+" AND b1.code IN('71250', '71260', '71270', '71275', '78814', '78815', '78816'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
