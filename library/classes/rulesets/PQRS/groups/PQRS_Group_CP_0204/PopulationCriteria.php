@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_Group_CP_204_PopulationCriteria implements PQRSPopulationCriteriaFactory
+class PQRS_Group_CP_0204_PopulationCriteria implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {
@@ -19,22 +19,22 @@ class PQRS_Group_CP_204_PopulationCriteria implements PQRSPopulationCriteriaFact
     
     public function createInitialPatientPopulation()
     {
-        return new PQRS_Group_CP_204_InitialPatientPopulation();
+        return new PQRS_Group_CP_0204_InitialPatientPopulation();
     }
     
     public function createNumerators()
     {
-        return new PQRS_Group_CP_204_Numerator();
+        return new PQRS_Group_CP_0204_Numerator();
     }
     
     public function createDenominator()
     {
-        return new PQRS_Group_CP_204_Denominator();
+        return new PQRS_Group_CP_0204_Denominator();
     }
     
     public function createExclusion()
     {
-        return new PQRS_Group_CP_204_Exclusion();
+        return new PQRS_Group_CP_0204_Exclusion();
     }
 }
 
