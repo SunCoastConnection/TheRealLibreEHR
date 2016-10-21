@@ -27,7 +27,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND MONTH(fe.date)<'4' AND MONTH(fe.date)>'9' ".
-" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '12' and '20' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '12' AND '20' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0402_a');";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
