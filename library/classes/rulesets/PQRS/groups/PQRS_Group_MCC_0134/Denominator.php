@@ -20,9 +20,9 @@ class PQRS_Group_MCC_0134_Denominator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b1.pid) as count ".  
-" FROM  patient_data AS p ON (p.pid = ?)".
-" WHERE TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') >='12'; ";
+"SELECT COUNT(p.pid) as count ".  
+" FROM  patient_data AS p WHERE (p.pid = ?)".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') >='12'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  

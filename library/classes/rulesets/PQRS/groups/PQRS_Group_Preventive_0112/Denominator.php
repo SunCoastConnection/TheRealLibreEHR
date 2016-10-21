@@ -21,8 +21,8 @@ class PQRS_Group_Preventive_0112_Denominator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b1.pid) as count ".  
-" FROM  patient_data AS p ON (p.pid = ?)".
+"SELECT COUNT(p.pid) as count ".  
+" FROM  patient_data AS p WHERE (p.pid = ?)".
 " WHERE p.sex = 'Female'".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') BETWEEN ('50' AND '74'); ";
 
