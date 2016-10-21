@@ -23,7 +23,7 @@ class PQRS_Group_Preventive_0048_Denominator implements PQRSFilterIF
 $query =
 "SELECT COUNT(p.pid) as count ".  
 " FROM  patient_data AS p WHERE (p.pid = ?)".
-" WHERE p.sex = 'Female'".
+" AND p.sex = 'Female'".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') >='65'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
