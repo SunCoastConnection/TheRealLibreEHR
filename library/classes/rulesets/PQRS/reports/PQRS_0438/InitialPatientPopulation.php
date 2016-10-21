@@ -36,7 +36,7 @@ $query =
 " AND ((TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '21' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_a')".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0438_b' ))".
-" OR (TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN('45' AND '75') ".
+" OR (TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '45' AND '75' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_a')".
 " AND (b3.code = codelist_c.code AND codelist_c.type = 'pqrs_0438_c' ) ".
 " AND (b4.code = codelist_b.code AND codelist_d.type = 'pqrs_0438_d' ))); ";
