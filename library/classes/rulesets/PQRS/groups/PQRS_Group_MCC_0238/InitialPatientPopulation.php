@@ -19,8 +19,9 @@ class PQRS_Group_MCC_0238_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require(__DIR__."/../common/MCCcommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 
