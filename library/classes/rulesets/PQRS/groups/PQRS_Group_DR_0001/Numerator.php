@@ -25,7 +25,7 @@ class PQRS_Group_DR_0001_Numerator implements PQRSFilterIF
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code ='3046F and b1.modifier IN('','8P')' ; ";
+" AND b1.code ='3046F' and b1.modifier IN('','8P')' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
