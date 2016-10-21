@@ -27,7 +27,7 @@ $query =
 " INNER JOIN pqrs_ccco AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN ('50' AND '75') ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '50' AND '75' ".
 " AND b1.code = 'Z12.11'".
 " AND (b2.code = codelist_b.code AND b2.modifier NOT IN ('52','53','73','74') AND codelist_b.type = 'pqrs_0320_a' ); ";
 

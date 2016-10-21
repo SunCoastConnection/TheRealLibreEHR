@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_Group_CP_236_Denominator implements PQRSFilterIF
+class PQRS_Group_CP_0236_Denominator implements PQRSFilterIF
 {
     public function getTitle() 
     {
@@ -26,7 +26,7 @@ $query =
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " WHERE b1.pid = ? ".
 " AND fe.date <= DATE_SUB('".$endDate."', INTERVAL 6 MONTH) ".
-" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN ('21' AND '85') ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '21' AND '85' ".
 " AND b1.code = 'I10'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

@@ -26,7 +26,7 @@ $query =
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN ('65' AND '85') ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '65' AND '85' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0039_a'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

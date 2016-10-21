@@ -23,7 +23,7 @@ class PQRS_Group_Preventive_0111_Denominator implements PQRSFilterIF
 $query =
 "SELECT COUNT(p.pid) as count ".  
 " FROM  patient_data AS p WHERE (p.pid = ?)".
-" AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') BETWEEN ('65' AND '85'); ";
+" AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') BETWEEN '65' AND '85'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
