@@ -8,7 +8,6 @@
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
- 
 */
 
 class PQRS_Group_AOE_0317_Numerator implements PQRSFilterIF

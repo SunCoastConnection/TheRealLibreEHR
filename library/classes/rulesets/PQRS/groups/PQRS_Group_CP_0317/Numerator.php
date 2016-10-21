@@ -1,14 +1,14 @@
 <?php
 /**
- * PQRS Measure Group_CP_317 -- Numerator
+ * PQRS Measure Group_CP_0317 -- Numerator
  *
  * Copyright (C) 2016      Suncoast Connection
- *
- * @package OpenEMR
+
+ * @package PQRS_Gateway 
  * @link    http://suncoastconnection.com
- * @author  Bryan lee <leebc 11 at acm dot org>
- * @author  Suncoast Connection
- */
+ * @author  Bryan lee <bryan@suncoastconnection.com>
+ * @author  Art Eaton <art@suncoastconnection.com>
+*/
  
 class PQRS_Group_CP_317_Numerator implements PQRSFilterIF
 {
