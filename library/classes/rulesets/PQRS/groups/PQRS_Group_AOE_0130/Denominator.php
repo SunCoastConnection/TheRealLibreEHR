@@ -21,7 +21,7 @@ class PQRS_Group_AOE_0130_Denominator implements PQRSFilterIF
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b1.pid) as count ".  
+"SELECT COUNT(p.pid) as count ".  
 " FROM  patient_data AS p WHERE p.pid = ?".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') >='18'; ";
 
