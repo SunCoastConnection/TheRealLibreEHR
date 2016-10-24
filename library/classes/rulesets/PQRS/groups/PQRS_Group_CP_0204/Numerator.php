@@ -19,6 +19,7 @@ class PQRS_Group_CP_0204_Numerator implements PQRSFilterIF
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
+	    $query =
 " SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
