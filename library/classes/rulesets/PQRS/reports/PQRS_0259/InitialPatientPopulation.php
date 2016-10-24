@@ -34,7 +34,7 @@ if ($result['count']> 0){
 	$query = 
 	"SELECT sex AS count".
 	" FROM patient_data".
-	" WHERE b1.pid = ? ;";
+	" WHERE pid = ? ;";
 	$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 	
 	if ($result['count']='Male'){ 
