@@ -24,7 +24,7 @@ $query =
 " SELECT COUNT(b1.code) as count".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" WHERE b1.pid = '$Patient' ".
+" WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = 'G9306'; ";
 
