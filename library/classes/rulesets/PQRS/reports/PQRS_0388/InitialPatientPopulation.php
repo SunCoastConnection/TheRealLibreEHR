@@ -27,7 +27,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0388_a' and b1.modifier NOT IN('55','56'); ";
+" AND b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0388_a' and b1.modifier NOT IN('55','56'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  

@@ -26,7 +26,7 @@ $query =
 " JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".  
-" AND b1.code IN('G9596') OR (b2.code IN('G9594','G9595');"; 
+" AND (b1.code ='G9596' OR b2.code IN('G9594','G9595'));"; 
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count'] > 0){ return true;} else {return false;} 
