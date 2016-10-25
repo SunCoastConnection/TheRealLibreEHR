@@ -55,7 +55,7 @@ class PQRS_0118_InitialPatientPopulation2 implements PQRSFilterIF
 							$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 							if ($result['count']> 1){ return true;} else {return false;}  
 						}			
-			 }   
+			 }  else {return false;} 
     }
 }
 
