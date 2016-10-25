@@ -27,7 +27,7 @@ $query =
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " WHERE b1.pid = ? ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date)>='18' ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".  
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".  
 " AND b1.code IN ('35081','35102') AND (b2.code NOT IN ('9004F','G9600') OR (b1.code = '9003F' AND p.sex = 'Female'));"; 
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

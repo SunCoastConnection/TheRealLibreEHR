@@ -27,7 +27,7 @@ class PQRS_0012_InitialPatientPopulation implements PQRSFilterIF
 " INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 " INNER JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0012_a') ".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0012_b');";

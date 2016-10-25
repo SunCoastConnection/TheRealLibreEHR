@@ -3,12 +3,12 @@
  * PQRS Measure Group_DR_0317 -- Numerator
  *
  * Copyright (C) 2016      Suncoast Connection
- *
- * @package OpenEMR
+
+ * @package PQRS_Gateway 
  * @link    http://suncoastconnection.com
- * @author  Bryan lee <leebc 11 at acm dot org>
- * @author  Suncoast Connection
- */
+ * @author  Bryan lee <bryan@suncoastconnection.com>
+ * @author  Art Eaton <art@suncoastconnection.com>
+*/
  
 class PQRS_Group_DR_0317_Numerator implements PQRSFilterIF
 {
@@ -19,9 +19,17 @@ class PQRS_Group_DR_0317_Numerator implements PQRSFilterIF
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	// Otherwise Default return
-	return false;
-		
+$query =
+" SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND b1.code IN ('G8783', 'G8950') ; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+
+if ($result['count'] > 0){ return true;} else {return false;} 
     }
 }
 

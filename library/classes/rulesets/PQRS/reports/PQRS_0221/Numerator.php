@@ -23,7 +23,7 @@ class PQRS_0221_Numerator implements PQRSFilterIF
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code IN ('G8663', 'G8664'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 

@@ -23,12 +23,10 @@ class PQRS_Group_HepatitisC_0401_Numerator implements PQRSFilterIF
 $query =
 " SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
-" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
-" AND b1.code IN('G9455','G9456') ; ";
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND b1.code = 'G9455' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 

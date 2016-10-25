@@ -11,14 +11,14 @@
 
 $query =
 "SELECT COUNT(b1.code) as count". 
-"  FROM billing AS b1".  
+"  FROM billing AS b1". 
+" INNER JOIN pqrs_group AS codelist_a ON (b1.code = codelist_a.code)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (b1.pid = p.pid)". 
 " WHERE b1.pid = ? ".  
-" AND b1.code IN".  
-"('66840', ' 66850', ' 66852', ' 66920', ' 66930', ' 66940', ' 66983', ' 66984')".
-" AND YEAR(fe.date) ='2016' ".
-" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18'  ".  
+" AND fe.date BETWEEN '".$beginDate."' AND DATE_SUB('".$endDate."', INTERVAL 3 MONTH) ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18'  ". 
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_cataracts_a') ".
 " AND b1.modifier NOT IN ('55', '56') ;";
 ?>
 

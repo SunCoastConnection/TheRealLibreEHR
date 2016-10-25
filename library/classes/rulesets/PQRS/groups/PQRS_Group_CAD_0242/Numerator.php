@@ -24,12 +24,13 @@ $query =
 " SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
+" JOIN billing AS b3 ON (b3.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
-" AND ((b1.code = '1010F' AND b2.code = '0557F' AND b3.code IN( '1011F', '1012') ) AND b1.modifier =''  AND  b2.modifier ='' ); ";
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND b1.code = '1010F' AND b1.modifier =''".
+" AND ((b2.code = '0557F' AND b2.modifier='' AND b3.code = '1011F')".
+" OR (b2.code = '1012F' )) ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 

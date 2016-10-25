@@ -20,8 +20,13 @@ class PQRS_Group_Asthma_0402_Denominator implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
-		return true;
+$query =
+"SELECT COUNT(p.pid) as count ".  
+" FROM  patient_data AS p WHERE (p.pid = ?)".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,'".$endDate."') BETWEEN '12' AND '22'; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else {return false;} 
     }
 }
 

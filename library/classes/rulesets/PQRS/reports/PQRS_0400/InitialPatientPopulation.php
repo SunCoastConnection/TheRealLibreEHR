@@ -29,7 +29,7 @@ $query =
 " INNER JOIN pqrs_efcc AS codelist_c ON (b3.code = codelist_c.code)".
 
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0400_a')".
 " AND ( (YEAR(p.DOB) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".
@@ -49,7 +49,7 @@ $query =
 " INNER JOIN pqrs_efcc AS codelist_c ON (b3.code = codelist_c.code)".
 
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0400_b')".
 " AND ( (YEAR(p.DOB) BETWEEN 1945 AND 1965 ) OR b3.code  = codelist_c.code AND codelist_c.type = 'pqrs_0400_c')".

@@ -20,8 +20,17 @@ class PQRS_Group_Sleep_Apnea_0226_Exclusion implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-       	// Default return 
-        return false;
+$query =
+" SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
+" AND fe.date BETWEEN DATE_SUB('".$beginDate."', INTERVAL 1 YEAR) AND '".$endDate."' ".
+" AND b1.code = '4004F' AND b1.modifier ='1P'  ; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+
+if ($result['count'] > 0){ return true;} else {return false;} 
     }
 }
 

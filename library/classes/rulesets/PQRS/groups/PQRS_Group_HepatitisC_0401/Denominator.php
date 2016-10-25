@@ -20,8 +20,15 @@ class PQRS_Group_HepatitisC_0401_Denominator implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
-		return true;
+ $query =
+" SELECT COUNT(b1.code) AS count".  
+" FROM billing AS b1".
+" WHERE b1.pid = ? ".
+" AND b1.code IN('K70.30', 'K70.31', 'K74.60', 'K74.69') ; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+
+if ($result['count']> 0){ return true;} else {return false;} 
     }
 }
 

@@ -9,11 +9,11 @@
  * @author  Suncoast Connection
  */
 
-class PQRS_Group_CP_317 extends AbstractPQRSReport
+class PQRS_Group_CP_0317 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
-        return new PQRS_Group_CP_317_PopulationCriteria();
+        return new PQRS_Group_CP_0317_PopulationCriteria();
     }
 }
 

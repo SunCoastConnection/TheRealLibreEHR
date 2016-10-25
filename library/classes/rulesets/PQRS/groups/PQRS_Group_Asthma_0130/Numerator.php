@@ -23,12 +23,10 @@ class PQRS_Group_Asthma_0130_Numerator implements PQRSFilterIF
 $query =
 " SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
-
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-
-" AND fe.date BETWEEN ('".$beginDate."' AND '".$endDate."') ".
-" AND b1.code IN ('G8427', 'G8430' ) ; ";
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND b1.code = 'G8427'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 

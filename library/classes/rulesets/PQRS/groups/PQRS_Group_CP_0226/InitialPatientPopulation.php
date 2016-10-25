@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_Group_CP_226_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_CP_0226_InitialPatientPopulation implements PQRSFilterIF
 {
     public function getTitle() 
     {
@@ -19,8 +19,9 @@ class PQRS_Group_CP_226_InitialPatientPopulation implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	//Default return 
-        return false;
+require(__DIR__."/../common/CPcommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 
