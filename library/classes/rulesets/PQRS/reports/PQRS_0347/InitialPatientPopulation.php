@@ -34,7 +34,7 @@ if ($result['count']> 0){
 	$query = 
 	"SELECT sex AS count".
 	" FROM patient_data".
-	" WHERE pid = '".$patient."' ;";
+	" WHERE pid = ".$patient." ;";
 	$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 	
 	if ($result['count']='Male'){ 
@@ -42,7 +42,7 @@ if ($result['count']> 0){
 								" SELECT COUNT(b1.code) AS count".  
 								" FROM billing AS b1".
 								" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-								" WHERE b1.pid = '".$patient."' ".
+								" WHERE b1.pid = ".$patient." ".
 								" AND fe.date >= '".$beginDate."' ".
 								" AND fe.date <= '".$endDate."' ".
 								" AND NOT b1.code = '9004F'; ";
@@ -57,7 +57,7 @@ if ($result['count']> 0){
 								" SELECT COUNT(b1.code) AS count".  
 								" FROM billing AS b1".
 								" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-								" WHERE b1.pid = '".$patient."' ".
+								" WHERE b1.pid = ".$patient." ".
 								" AND fe.date >= '".$beginDate."' ".
 								" AND fe.date <= '".$endDate."' ".
 								" AND NOT b1.code IN ('9003F','9004F'); ";
