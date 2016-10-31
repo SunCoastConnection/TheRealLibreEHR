@@ -2639,18 +2639,11 @@ $GLOBALS_METADATA = array(
       xl('Enable Physician Quality Reporting System (PQRS)')
     ),
 
-    'pqrs_thing1' => array(
-      xl('Thing 1'),
+    'pqrs_demosystem' => array(
+      xl('This is a PQRS demo system'),
       'bool',                           // data type
-      '1',                               // default
-      xl('Enable Physician Quality Reporting System (PQRS)')
-    ),
-
-    'pqrs_thing2' => array(
-      xl('Thing 2'),
-      'bool',                           // data type
-      '1',                               // default
-      xl('Enable Physician Quality Reporting System (PQRS)')
+      '0',                               // default
+      xl('Show demo system "reset database to a known state" button in the PQRS menu')
     ),
 
     'pqrs_fish_type' => array(
