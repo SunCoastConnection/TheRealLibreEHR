@@ -544,10 +544,24 @@ if ($result) {
     foreach ($result as $iter) {
 	$row_pid=$iter['pid'];
 	if ($from_page == "pqrs_report") {
+		// Check whether this is a Medicare Patient
+		$mc_query="SELECT COUNT(p.pid) AS count ".
+			" FROM patient_data p ".
+			" JOIN insurance_data i on (i.pid=p.pid) ".
+			" JOIN insurance_companies c on (c.id = i.provider) ".
+			" WHERE c.freeb_type = 2 ".
+			" AND p.pid = ? ;";
+		$mc_result=sqlFetchArray(sqlStatement($mc_query, array($iter{"pid"}) ));
+		if ($mc_result['count'] > 0){
+			$medicare_flag="<font color='red'><b> M </b></font>;";}
+		else {
+			$medicare_flag="";}
+
+
         	echo "		<tr>
 	<td>
 		<table id='".htmlspecialchars( $iter['pid'], ENT_QUOTES)."'>\n		<tr>\n";
-        	echo  "			<td class='oneresult srName'>" . htmlspecialchars($iter['lname'] . ", " . $iter['fname']) . "</td>\n";
+        	echo  "			<td class='oneresult srName'>" $medicare_flag . htmlspecialchars($iter['lname'] . ", " . $iter['fname']) . "</td>\n";
         	echo  "			<td class='oneresult srGender'>" . text(getListItemTitle("sex",$iter['sex'])) . "</td>\n";
         	if ($iter{"DOB"} != "0000-00-00 00:00:00") {
             	echo "			<td class='oneresult srDOB'>" . htmlspecialchars( $iter['DOB_TS'], ENT_NOQUOTES) . "</td>\n";
