@@ -553,7 +553,7 @@ if ($result) {
 			" AND p.pid = ? ;";
 		$mc_result=sqlFetchArray(sqlStatement($mc_query, array($iter{"pid"}) ));
 		if ($mc_result['count'] > 0){
-			$medicare_flag="/Testing_PQRS_Gateway/images/CMS_logo0.png";}
+			$medicare_flag="/PQRS_Gateway/images/CMS_logo0.png";}
 		else {
 			$medicare_flag="";}
 
