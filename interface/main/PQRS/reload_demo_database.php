@@ -29,6 +29,9 @@ include_once("$srcdir/api.inc");
 if($_POST['formSubmit'] == "Submit") 
 {
 
+$i=$_POST['preset'];
+
+echo "before switch, i= $i";
 
 switch ($i) {
     case 0:
