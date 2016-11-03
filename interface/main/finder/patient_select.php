@@ -553,7 +553,7 @@ if ($result) {
 			" AND p.pid = ? ;";
 		$mc_result=sqlFetchArray(sqlStatement($mc_query, array($iter{"pid"}) ));
 		if ($mc_result['count'] > 0){
-			$medicare_flag="/PQRS_Gateway/images/CMS_logo0.png";}
+			$medicare_flag=$GLOBALS['webroot']."/images/CMS_logo0.png";}
 		else {
 			$medicare_flag="";}
 
@@ -783,7 +783,7 @@ else {
 	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
 	echo "		$.ajax({\n";
 	echo "			type: 'POST',\n";
-	echo "			url: '/PQRS_Gateway/library/classes/rulesets/PQRS/PQRSEncounter.php',\n";
+	echo "			url: '".$GLOBALS['webroot']."/library/classes/rulesets/PQRS/PQRSEncounter.php',\n";
 	echo "			dataType: 'text',\n";
 	echo "			data: {\n";
 	echo "				pid: pid,\n";
