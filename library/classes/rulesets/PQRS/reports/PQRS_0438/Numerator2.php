@@ -1,20 +1,19 @@
 <?php
 /**
- * PQRS Measure 0438 -- Numerator
+ * PQRS Measure 0438 -- Numerator 2
  *
  * Copyright (C) 2016      Suncoast Connection
- *
- * @package OpenEMR
+ * @package PQRS_Gateway 
  * @link    http://suncoastconnection.com
- * @author  Bryan lee <leebc 11 at acm dot org>
- * @author  Suncoast Connection
+ * @author  Bryan lee <bryan@suncoastconnection.com>
+ * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0438_Numerator implements PQRSFilterIF
+class PQRS_0438_Numerator2 implements PQRSFilterIF
 {
     public function getTitle()
     {
-        return "Numerator";
+        return "Numerator 2";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
@@ -23,11 +22,9 @@ $query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" INNER JOIN pqrs_efcc AS codelist_e ON (b1.code = codelist_e.code)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND (b1.code = codelist_e.code AND codelist_e.type = 'pqrs_0438_e'); ";
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+" AND b1.code ='G9664' ; ";
 
 if ($result['count']> 0){ return true;} else {return false;}     
 		

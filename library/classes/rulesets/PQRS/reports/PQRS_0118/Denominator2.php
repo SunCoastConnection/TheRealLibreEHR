@@ -13,7 +13,7 @@ class PQRS_0118_Denominator2 implements PQRSFilterIF
 {
     public function getTitle() 
     {
-        return "Denominator";
+        return "Denominator 2";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )

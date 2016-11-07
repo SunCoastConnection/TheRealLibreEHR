@@ -13,7 +13,7 @@ class PQRS_0118_Numerator1 implements PQRSFilterIF
 {
     public function getTitle()
     {
-        return "Numerator";
+        return "Numerator 1";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )

@@ -13,7 +13,7 @@ class PQRS_0118_Exclusion2 implements PQRSFilterIF
 {
     public function getTitle() 
     {
-        return "Exclusion";
+        return "Exclusion 2";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
