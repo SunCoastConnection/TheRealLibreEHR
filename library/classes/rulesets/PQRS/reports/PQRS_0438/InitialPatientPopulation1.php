@@ -1,6 +1,7 @@
 <?php
 /**
- * PQRS Measure 0400 -- Initial Patient Population
+ * PQRS Measure 0438 -- Initial Patient Population 1
+ *
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,42 +10,43 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0400_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_0438_InitialPatientPopulation1 implements PQRSFilterIF
 {
-    public function getTitle() 
+    public function getTitle()
     {
-        return "Initial Patient Population";
+        return "Initial Patient Population 1";
     }
-    
+
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (p.pid = b1.pid)".
 " WHERE b1.pid = ? ".
-" AND  b1.code = 'B18.2' ; ";
+" AND ((TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '21' ".
+" AND b1.code = 'G9662'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']== 0){  
-
+if ($result['count']> 0){
 	$query =
 	"SELECT COUNT(b1.code) as count ".  
-	" FROM billing AS b1".
-	" JOIN patient_data AS p ON (p.pid = b1.pid)". 
+	" FROM billing AS b1". 
 	" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+	" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
 	" WHERE b1.pid = ? ".
 	" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-	" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
-	" AND b1.code IN('90951', '90952', '90953', '90954', '90955',".
-	" '90956', '90957','90958', '90959', '90960', '90961', '90962',".
-	" '90963', '90964', '90965', '90966', '90967', '90968', '90969',".
-	" '90970','G9448','G9449') ; ";
-	$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;}else{return false;}
+	" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_a'); ";
 	
-  
-}else{return false;}
+	$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+	if ($result['count']> 0){ return true;}	
+	
+	
+	
+	} else {return false;}  
 
+    
     }
 }
 

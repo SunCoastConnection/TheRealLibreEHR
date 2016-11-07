@@ -22,7 +22,6 @@ $query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " WHERE b1.pid = ? ".
-
 " AND b1.code ='G9451' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 

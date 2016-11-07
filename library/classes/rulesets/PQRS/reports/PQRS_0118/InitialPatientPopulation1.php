@@ -13,7 +13,7 @@ class PQRS_0118_InitialPatientPopulation1 implements PQRSFilterIF
 {
     public function getTitle() 
     {
-        return "Initial Patient Population";
+        return "Initial Patient Population 1";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )

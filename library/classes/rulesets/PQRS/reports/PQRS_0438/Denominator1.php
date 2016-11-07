@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0118 -- Denominator 1
+ * PQRS Measure 0438 -- Denominator 1
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0118_Denominator1 implements PQRSFilterIF
+class PQRS_0438_Denominator1 implements PQRSFilterIF
 {
     public function getTitle() 
     {
@@ -18,7 +18,8 @@ class PQRS_0118_Denominator1 implements PQRSFilterIF
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-return true;
+		//Same as initial population
+		return true;
     }
 }
 
