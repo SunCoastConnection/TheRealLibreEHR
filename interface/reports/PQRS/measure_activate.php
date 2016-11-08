@@ -300,7 +300,7 @@ $(document).ready(function() {
 		for (var mymeasure of mymeasurelist) {
 			//console.log('For ' + mymeasure);
 			mymeasurestring="#PQRS_0"+mymeasure;
-			$(mymeasurestring).click();
+			$(mymeasurestring).prop('checked', true);
 		}
 	};
 
