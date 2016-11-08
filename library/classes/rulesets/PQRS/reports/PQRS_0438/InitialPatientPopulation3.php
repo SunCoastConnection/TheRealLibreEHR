@@ -25,7 +25,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " WHERE b1.pid = ? ".
-" OR (TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '45' AND '75' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '45' AND '75' ".
 " AND b1.code = 'G9666'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
