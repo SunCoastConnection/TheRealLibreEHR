@@ -299,7 +299,7 @@ $(document).ready(function() {
 		console.log('mymeasurelist = '+mymeasurelist);
 		for (var mymeasure of mymeasurelist) {
 			//console.log('For ' + mymeasure);
-			mymeasurestring="#PQRS_0"+mymeasure;
+			mymeasurestring="#PQRS_"+("000" + mymeasure).slice(-4);
 			$(mymeasurestring).prop('checked', true);
 		}
 	};
@@ -344,9 +344,11 @@ if(count($updateStatus['off']) || count($updateStatus['on'])) {
 							<button type="button" class="quickselect" onclick="quickSelect('OncologyHematology')">Oncology-Hematology</button>
 							<button type="button" class="quickselect" onclick="quickSelect('Ophthalmology')">Ophthalmology</button>
 							<button type="button" class="quickselect" onclick="quickSelect('Orthopedics')">Orthopedics</button>
+							<button type="button" class="quickselect" onclick="quickSelect('PainSpecialist')">Pain Specialist</button>
 							<button type="button" class="quickselect" onclick="quickSelect('Pathology')">Pathology</button>
 							<button type="button" class="quickselect" onclick="quickSelect('Pediatrics')">Pediatrics</button>
 							<button type="button" class="quickselect" onclick="quickSelect('PhysicalOccupationalTherapy')">Physical Therapy/Occupational Therapy</button>
+							<button type="button" class="quickselect" onclick="quickSelect('Podiatry')">Podiatry</button>
 							<button type="button" class="quickselect" onclick="quickSelect('Radiology')">Radiology</button>
 							<button type="button" class="quickselect" onclick="quickSelect('SurgeryGeneral')">Surgery (General)</button>
 							<button type="button" class="quickselect" onclick="quickSelect('Urology')">Urology</button>
