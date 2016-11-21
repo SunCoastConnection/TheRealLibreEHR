@@ -1,0 +1,14 @@
+{
+    "name": "suncoast-connection/pqrs-gateway",
+    "description": "Gateway for Physician Quality Reporting System (PQRS)",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Sam Likins",
+            "email": "sam.likins@wsi-services.com",
+            "homepage": "http://wsi-services.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {}
+}
