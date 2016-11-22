@@ -20,65 +20,70 @@
  * @link    http://suncoastconnection.com
  * @author  Suncoast Connection
 */
-require_once("../../globals.php");
-include_once("$srcdir/api.inc");
+
+use \SunCoastConnection\ClaimsToOEMR\Document\Options;
+
+require_once('../../globals.php');
+include_once($srcdir.'/api.inc');
+
+$options = Options::getInstance(require_once(__DIR__.'/claimsToOEMRConfig.php'));
+
+
+if(array_key_exists('formSubmit', $POST) && $_POST['formSubmit'] == 'Submit')  {
+	sqlStatement('TRUNCATE TABLE `addresses`;');
+	$query = file_get_contents('./SQL/addresses.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `billing`;');
+	$query = file_get_contents('./SQL/billing.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `facility`;');
+	$query = file_get_contents('./SQL/facilities.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `form_encounter`;');
+	$query = file_get_contents('./SQL/form_encounter.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `forms`;');
+	$query = file_get_contents('./SQL/forms.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `insurance_companies`;');
+	$query = file_get_contents('./SQL/insurance_companies.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `insurance_data`;');
+	$query = file_get_contents('./SQL/insurance_data.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `patient_data`;');
+	$query = file_get_contents('./SQL/patient_data.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `phone_numbers`;');
+	$query = file_get_contents('./SQL/phone_numbers.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('TRUNCATE TABLE `x12_partners`;');
+	$query = file_get_contents('./SQL/x12_partners.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('DELETE FROM `users` WHERE `users`.`id` > 20;');
+	$query = file_get_contents('./SQL/users.sql', true);
+	sqlStatement($query);
+
+	sqlStatement('DELETE FROM `groups` WHERE `groups`.`id` > 20;');
+	$query = file_get_contents('./SQL/groups.sql', true);
+	sqlStatement($query);
+	echo 'Database updated!';
+}
 
 ?>	
-<form action="import_data.php" method="post">	
-<?php
-if($_POST['formSubmit'] == "Submit") 
-{
-sqlStatement("TRUNCATE TABLE `addresses`;");
-$query = file_get_contents("./SQL/addresses.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `billing`;");
-$query = file_get_contents("./SQL/billing.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `facility`;");
-$query = file_get_contents("./SQL/facilities.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `form_encounter`;");
-$query = file_get_contents("./SQL/form_encounter.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `forms`;");
-$query = file_get_contents("./SQL/forms.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `insurance_companies`;");
-$query = file_get_contents("./SQL/insurance_companies.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `insurance_data`;");
-$query = file_get_contents("./SQL/insurance_data.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `patient_data`;");
-$query = file_get_contents("./SQL/patient_data.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `phone_numbers`;");
-$query = file_get_contents("./SQL/phone_numbers.sql", true);
-sqlStatement($query);
-
-sqlStatement("TRUNCATE TABLE `x12_partners`;");
-$query = file_get_contents("./SQL/x12_partners.sql", true);
-sqlStatement($query);
-
-sqlStatement("DELETE FROM `users` WHERE `users`.`id` > '20';");
-$query = file_get_contents("./SQL/users.sql", true);
-sqlStatement($query);
-
-sqlStatement("DELETE FROM `groups` WHERE `groups`.`id` > '20';");
-$query = file_get_contents("./SQL/groups.sql", true);
-sqlStatement($query);
-echo "Database updated!";
-}
-?>
 <html>
-<input type="submit" name="formSubmit" value="Submit" />
+	<form action="import_data.php" method="post">	
+		<input type="submit" name="formSubmit" value="Submit" />
+		<pre><?php echo 'Options:'.var_export($options, true); ?></pre>
+	</form>
 </html>
-</form>
