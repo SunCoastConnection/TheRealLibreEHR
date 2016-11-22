@@ -10,5 +10,13 @@
             "role": "Developer"
         }
     ],
-    "require": {}
+    "require": {
+        "suncoast-connection/claims-to-oemr": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com:SunCoastConnection/ClaimsToOEMR.git"
+        }
+    ]
 }
