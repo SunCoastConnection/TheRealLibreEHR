@@ -3,9 +3,9 @@
 return [
 
 	'Inbox' => [
-		'path' => $GLOBALS['OE_SITE_DIR'].'/X12N837/INBOX',
-		'pattern' => '*',
-		'recursive' => true,
+		'path' => $GLOBALS['OE_SITE_DIR'].'/PQRS/X12N837',
+		'pattern' => $GLOBALS['pqrs_importer_pattern'],
+		'recursive' => $GLOBALS['pqrs_importer_recursive'],
 	],
 
 	'Store' => [
@@ -13,19 +13,19 @@ return [
 		'connections' => [
 			'mysql' => [
 				'driver'	=> 'mysql',
-				'host'		=> $sqlconf['host'],
-				'port'		=> $sqlconf['port'],
-				'database'	=> $sqlconf['dbase'],
-				'username'	=> $sqlconf['login'],
-				'password'	=> $sqlconf['pass'],
-				'charset'	=> $HTML_CHARSET,
+				'host'		=> $GLOBALS['sqlconf']['host'],
+				'port'		=> $GLOBALS['sqlconf']['port'],
+				'database'	=> $GLOBALS['sqlconf']['dbase'],
+				'username'	=> $GLOBALS['sqlconf']['login'],
+				'password'	=> $GLOBALS['sqlconf']['pass'],
+				'charset'	=> 'utf8',
 				'collation'	=> 'utf8_unicode_ci',
 				'prefix'	=> '',
 				'strict'	=> false,
 				'engine'	=> null,
 			],
 		],
-		'queryLog' => $GLOBALS['OE_SITE_DIR'].'/X12N837/import.log',
+		'queryLog' => $GLOBALS['OE_SITE_DIR'].'/PQRS/x12n837_import.log',
 	],
 
 	'Document' => [
