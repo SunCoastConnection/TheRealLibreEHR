@@ -24,6 +24,7 @@ require_once("../../globals.php");
 include_once("$srcdir/api.inc");
 
 ?>	
+<html>
 <form action="reload_demo_database.php" method="post">	
 <?php
 if($_POST['formSubmit'] == "Submit") 
@@ -31,11 +32,11 @@ if($_POST['formSubmit'] == "Submit")
 	$action=$_POST['action'];
 	if($action == "none"){
 		echo "<p><b>Please chose a valid preset and an action.</b><p>";
-		}else{
+	}else{
 		$preset=$_POST['preset'];
 		if( ( 0 < $preset ) && ( $preset < 10 ) ){
 			// Doing something with a valid preset
-			$demopath="/var/www/".$GLOBALS['webroot']."/sql/demopresets/".$preset;
+			$demopath=$GLOBALS['fileroot']."/sql/demopresets/".$preset;
 			//echo "<p>demopath= $demopath<p>";
 			//$files1 = scandir($demopath);
 			//echo "File listing:  ";
@@ -45,44 +46,69 @@ if($_POST['formSubmit'] == "Submit")
 			$ourtables = array( "addresses", "billing", "facility", "form_encounter", "forms", "insurance_companies", "insurance_data", "patient_data", "phone_numbers", "x12_partners");
 
 			if($action == "load"){
-				echo "Loading from Preset $preset...<p>";
+				/// Check if directory exists.
+				if (!file_exists($demopath)) {
+                                        echo "Directory $demopath does not exist; this preset does not exist...<p>";
+				} else {
+				// Track whether we actuauly updated anything
+					$updated=false;
+					echo "Loading from Preset $preset...<p>";
+					foreach ($ourtables as $tableName) {
+				   	$fileName="$demopath/$tableName.sql";
+				   	if (file_exists($fileName)) {
+				   		sqlStatement("TRUNCATE TABLE `$tableName`;");
+				   		$execCommand='mysql --user='.$GLOBALS['sqlconf']['login'].' --password='.$GLOBALS['sqlconf']['pass'].' --host='.$GLOBALS['sqlconf']['host'].' '.$GLOBALS['sqlconf']['dbase'].' < "'.$fileName.'"';
 
-				foreach ($ourtables as $tableName) {
-				   sqlStatement("TRUNCATE TABLE `$tableName`;");
+				   		echo "Loading from $fileName ...";
+				   		//echo "Executing command:  $execCommand ";
+				   		exec($execCommand, $output, $returnint);
+				   		echo (" (Return:  $returnint  |  Output:  ".implode(" ",$output).")<br>");
+						if ( $returnint == 0) {
+							$updated=true;
+						} else {
+							echo (" <b> Problem loading file!  (Permissions?) </b><p>");
+						}  
+				   	} else {
+						echo ("$fileName <b>not found.</b> <br>");
+				   	} //else
+					}
+					if ($updated) {
+						echo "<p>Database updated!<p>";
+					} else {
+						echo "<p>Database <b>not</b> updated!<p>";
+					}
 				}
-
-				foreach ($ourtables as $tableName) {
-				   $fileName="$demopath/$tableName.sql";
-				   $execCommand='mysql --user='.$GLOBALS['sqlconf']['login'].' --password='.$GLOBALS['sqlconf']['pass'].' --host='.$GLOBALS['sqlconf']['host'].' '.$GLOBALS['sqlconf']['dbase'].'  < "'.$fileName.'"';
-
-				   echo "Loading from $fileName ...";
-				   //echo "Executing command:  $execCommand ";
-				   exec($execCommand , $output, $returnint);
-				   echo (" | Return:  $returnint  |  Output:  ".implode(" ",$output)."<br>");
-				}
-				echo "<p>Database updated!<p>";
 			} else if ($action == "save"){
 				echo "Saving to Preset $preset...<p>";
-				foreach ($ourtables as $tableName) {
-					$fileName="$demopath/$tableName.sql";
-					echo "Saving $tableName to $fileName ...";
-					//$skipComments="  --skip-add-locks --skip-disable-keys --skip-set-charset --skip-comments --compact  ";
-					$execCommand='mysqldump --user='.$GLOBALS['sqlconf']['login'].' --password='.$GLOBALS['sqlconf']['pass'].' --host='.$GLOBALS['sqlconf']['host'].' '.$GLOBALS['sqlconf']['dbase'].' '.$tableName.' > '.$fileName;
-					//echo ($execCommand.PHP_EOL);
-					exec($execCommand, $output, $returnint);
-					echo (" | Return:  $returnint  |  Output:  ".implode(" ",$output)."  <br>");
+				if (!file_exists($demopath)) {
+					echo "Directory $demopath does not exist; attempting to create...<p>";
+					mkdir($demopath, 0755, true );
 				}
-				echo "<p>Database updated!<p>";
+				if (!file_exists($demopath)) {
+					echo "<b>Failed to create Directory $demopath!</b><p>";
+				} else {
+					foreach ($ourtables as $tableName) {
+						$fileName="$demopath/$tableName.sql";
+						echo "Saving $tableName to $fileName ...";
+						// save this line  $skipComments=" --skip-add-locks --skip-disable-keys --skip-set-charset --skip-comments --compact ";
+						$execCommand='mysqldump --user='.$GLOBALS['sqlconf']['login'].' --password='.$GLOBALS['sqlconf']['pass'].' --host='.$GLOBALS['sqlconf']['host'].' '.$GLOBALS['sqlconf']['dbase'].' '.$tableName.' > '.$fileName;
+						//echo ($execCommand.PHP_EOL);
+						exec($execCommand, $output, $returnint);
+						echo (" (Return:  $returnint  |  Output:  ".implode(" ",$output)." )  <br>");
+						if ( $returnint != 0) {
+							echo (" <b> Problem saving file!  (Permissions?) </b><p>");
+						}
+					}
+					echo "<p>Database saved!<p>";
+				}
 			}
 		}
 	}
-
-
+echo "<hr>";
 }
 ?>
-<html>
-Choose a preset to Load from or Save the database to, then click "Submit".
-<p>
+<p>Choose a preset to Load from or Save the database to, then click "Submit".</p>
+<div>
 <select name="preset">
 	<option value="1">Preset 1</option>
 	<option value="2">Preset 2</option>
@@ -94,10 +120,10 @@ Choose a preset to Load from or Save the database to, then click "Submit".
 	<option value="8">Preset 8</option>
 	<option value="9">Preset 9</option>
 </select>
-<input type="radio" name="action" value="none" checked="checked">Do nothing
-<input type="radio" name="action" value="load">Load
-<input type="radio" name="action" value="save">Save
-<p>
+<label><input type="radio" name="action" value="none" checked="checked">Do nothing</label>
+<label><input type="radio" name="action" value="load">Load</label>
+<label><input type="radio" name="action" value="save">Save</label>
+</div>
 <input type="submit" name="formSubmit" value="Submit" />
 </form>
 </html>
