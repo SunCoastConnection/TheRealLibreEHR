@@ -2643,7 +2643,7 @@ $GLOBALS_METADATA = array(
       xl('This is a PQRS demo system'),
       'bool',                           // data type
       '0',                               // default
-      xl('Show demo system "reset database to a known state" button in the PQRS menu')
+      xl('Show demo system "Save/Load database presets" menu')
     ),
 
     'pqrs_fish_type' => array(
