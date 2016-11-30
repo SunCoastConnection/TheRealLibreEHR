@@ -748,8 +748,7 @@ $(document).ready(function(){
     $(".oneresult").click(function() { SelectPatient(this.parentNode.parentNode.parentNode); });
     // $(".event").dblclick(function() { EditEvent(this); });
     <?php if($print_patients) { ?>
-      window.parent.RTop.focus();
-      window.print();
+    window.top.frames['RTop'].print();
     <?php } ?>
 });
 
