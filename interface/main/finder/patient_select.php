@@ -748,8 +748,8 @@ $(document).ready(function(){
     $(".oneresult").click(function() { SelectPatient(this.parentNode.parentNode.parentNode); });
     // $(".event").dblclick(function() { EditEvent(this); });
     <?php if($print_patients) { ?>
-      var win = top.printLogPrint ? top : opener.top;
-      win.printLogPrint(window);
+      window.parent.top.focus();
+      window.print();
     <?php } ?>
 });
 
