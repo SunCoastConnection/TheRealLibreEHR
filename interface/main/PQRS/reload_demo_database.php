@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
- * @link    http://www.oemr.org
+ * @package LibreEHR
  * @link    http://suncoastconnection.com
  * @author  Suncoast Connection
+ * @author  Bryan Lee  leebc11 at acm dot org
 */
 require_once("../../globals.php");
 include_once("$srcdir/api.inc");
@@ -34,79 +34,48 @@ if($_POST['formSubmit'] == "Submit")
 		}else{
 		$preset=$_POST['preset'];
 		if( ( 0 < $preset ) && ( $preset < 10 ) ){
-			echo "<p>Doing something with a valid preset<p>";
+			// Doing something with a valid preset
 			$demopath="/var/www/".$GLOBALS['webroot']."/sql/demopresets/".$preset;
-			//$demopath="";
-			echo "<p>demopath= $demopath<p>";
-			$files1 = scandir($demopath);
-			echo "File listing:  ";
-			print_r($files1);
-			echo "<hr>";
+			//echo "<p>demopath= $demopath<p>";
+			//$files1 = scandir($demopath);
+			//echo "File listing:  ";
+			//print_r($files1);
+			//echo "<hr>";
 
 			$ourtables = array( "addresses", "billing", "facility", "form_encounter", "forms", "insurance_companies", "insurance_data", "patient_data", "phone_numbers", "x12_partners");
 
 			if($action == "load"){
-				echo "<p>Loading from Preset $preset...<p>";
+				echo "Loading from Preset $preset...<p>";
 
-				foreach ($ourtables as $value) {
-				   sqlStatement("TRUNCATE TABLE `$value`;");
+				foreach ($ourtables as $tableName) {
+				   sqlStatement("TRUNCATE TABLE `$tableName`;");
 				}
 
-				foreach ($ourtables as $value) {
-				   $ourpath="$demopath/$value";
-				   $query = file_get_contents("$ourpath", true);
-				   sqlStatement($query);
+				foreach ($ourtables as $tableName) {
+				   $fileName="$demopath/$tableName.sql";
+				   $execCommand='mysql --user='.$GLOBALS['sqlconf']['login'].' --password='.$GLOBALS['sqlconf']['pass'].' --host='.$GLOBALS['sqlconf']['host'].' '.$GLOBALS['sqlconf']['dbase'].'  < "'.$fileName.'"';
+
+				   echo "Loading from $fileName ...";
+				   //echo "Executing command:  $execCommand ";
+				   exec($execCommand , $output, $returnint);
+				   echo (" | Return:  $returnint  |  Output:  ".implode(" ",$output)."<br>");
 				}
-
-				//  Do we even want to do users/groups?
-//				sqlStatement("DELETE FROM `users` WHERE `users`.`id` > '20';");
-//				$query = file_get_contents("$demopath/users.sql", true);
-//				sqlStatement($query);
-//
-//				sqlStatement("DELETE FROM `groups` WHERE `groups`.`id` > '20';");
-//				$query = file_get_contents("$demopath/groups.sql", true);
-//				sqlStatement($query);
-
 				echo "<p>Database updated!<p>";
 			} else if ($action == "save"){
-					// Art's suggestion
-					// exec('mysqldump --root=... --rootpass=... --localhost=... openemrtest > /path/to/output/file.sql');
-
-				echo "Saving to Preset $preset...<br>";
-
-				$ourpath="$demopath/$value.sql";
-				//$query = "SHOW TABLES;";
-				echo "Path: $ourpath<br>";
-
-				$towrite='';
-				foreach ($ourtables as $value) {
-					echo "Table: $value  <br>";
-
-				   	$query = "SHOW CREATE TABLE $value";
-					$createresult=sqlStatement($query);
-					echo "<p>Query: $query  <br>  result:  $createresult <p>";
-				   	$towrite.= "\n\n".$createresult[1].";\n\n";
-
-					$query = "SELECT * FROM $value ;";
-					$result=sqlStatement($query);
-					echo "<p>Query: $query <br>  result:  $result <p>";
-					$num_rows = mysqli_num_rows($result);	
-					if ( $num_rows !== 0) {
-                				$row3 = mysqli_fetch_fields($result);
-                				$towrite.= 'INSERT INTO '.$table.'( '.$createresult.' ) VALUES '.$result.');';
-
-					}
-					//$return.= ' ) VALUES';
-					//$return.="\n(";
+				echo "Saving to Preset $preset...<p>";
+				foreach ($ourtables as $tableName) {
+					$fileName="$demopath/$tableName.sql";
+					echo "Saving $tableName to $fileName ...";
+					//$skipComments="  --skip-add-locks --skip-disable-keys --skip-set-charset --skip-comments --compact  ";
+					$execCommand='mysqldump --user='.$GLOBALS['sqlconf']['login'].' --password='.$GLOBALS['sqlconf']['pass'].' --host='.$GLOBALS['sqlconf']['host'].' '.$GLOBALS['sqlconf']['dbase'].' '.$tableName.' > '.$fileName;
+					//echo ($execCommand.PHP_EOL);
+					exec($execCommand, $output, $returnint);
+					echo (" | Return:  $returnint  |  Output:  ".implode(" ",$output)."  <br>");
 				}
-
-				echo "towrite:<br> $towrite";
-
 				echo "<p>Database updated!<p>";
 			}
 		}
 	}
-	
 
 
 }
