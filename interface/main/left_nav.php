@@ -1324,6 +1324,9 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 			genMiscLink('RTop', 'rep', '0', xl('Client Database Import'), 'main/PQRS/import_data.php');
 			genMiscLink('RTop', 'rep', '0', xl('Delete Old Reports'), 'main/PQRS/truncate_reports.php');
 		}
+		if( $GLOBALS['pqrs_demosystem'] ) {
+			genMiscLink('RTop', 'rep', '0', xl('Save/Load Demo Database'), 'main/PQRS/reload_demo_database.php');
+		}
 
 ?>
 					</ul>
