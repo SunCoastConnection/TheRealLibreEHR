@@ -10,7 +10,7 @@
 
 DROP TABLE IF EXISTS `addresses`;
 CREATE TABLE `addresses` (
-  `id` int(11) NOT NULL default '0',
+  `id` int(11) NOT NULL auto_increment,
   `line1` varchar(255) default NULL,
   `line2` varchar(255) default NULL,
   `city` varchar(255) default NULL,
@@ -2461,7 +2461,7 @@ CREATE TABLE `immunizations` (
 
 DROP TABLE IF EXISTS `insurance_companies`;
 CREATE TABLE `insurance_companies` (
-  `id` int(11) NOT NULL default '0',
+  `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) default NULL,
   `attn` varchar(255) default NULL,
   `cms_id` varchar(15) default NULL,
@@ -5152,7 +5152,7 @@ CREATE TABLE `pharmacies` (
 
 DROP TABLE IF EXISTS `phone_numbers`;
 CREATE TABLE `phone_numbers` (
-  `id` int(11) NOT NULL default '0',
+  `id` int(11) NOT NULL auto_increment,
   `country_code` varchar(5) default NULL,
   `area_code` char(3) default NULL,
   `prefix` char(3) default NULL,
@@ -6356,7 +6356,7 @@ INSERT INTO user_settings ( setting_user, setting_label, setting_value ) VALUES 
 
 DROP TABLE IF EXISTS `x12_partners`;
 CREATE TABLE `x12_partners` (
-  `id` int(11) NOT NULL default '0',
+  `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) default NULL,
   `id_number` varchar(255) default NULL,
   `x12_sender_id` varchar(255) default NULL,
