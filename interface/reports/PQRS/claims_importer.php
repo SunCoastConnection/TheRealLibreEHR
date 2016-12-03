@@ -1,6 +1,6 @@
 <?php
 /*
- *Claims2OEMR import script
+ * Claims Importer
  *
  * Copyright (C) 2016      Suncoast Connection
  *
@@ -19,7 +19,7 @@
  * @link    http://www.oemr.org
  * @link    http://suncoastconnection.com
  * @author  Suncoast Connection
-*/
+ */
 
 use \SunCoastConnection\ClaimsToOEMR\Document\Options;
 use \SunCoastConnection\ClaimsToOEMR\Document\Raw;
@@ -51,7 +51,7 @@ function humanFilesize($bytes, $precision = 2) {
 
 	$precision = ($pow > 0 ? $precision : 0);
 
-	return sprintf("%.{$precision}f", ($bytes / pow(1024, $pow))).@$unit[$pow];
+	return sprintf("%.{$precision}f", ($bytes / pow(1024, $pow))).$unit[$pow];
 }
 
 /**
@@ -77,6 +77,31 @@ function getFiles() {
 	}
 
 	return $files;
+}
+
+/**
+ * Upload files to the PQRS inbox and update the database information
+ * @param  array   $filenameIds Array of file ids
+ * @param  Options $options     Configuration options object
+ */
+function actionUpload(Options $options, $filenameIds = []) {
+	$uploadCount = 0;
+
+	foreach($_FILES['files']['error'] as $key => $error) {
+		if(
+			$error == UPLOAD_ERR_OK &&
+			$_FILES['files']['type'][$key] == 'text/plain'
+		) {
+			move_uploaded_file(
+				$_FILES['files']['tmp_name'][$key],
+				$options->get('Inbox.path').'/'.basename($_FILES['files']['name'][$key])
+			) && ++$uploadCount;
+		}
+	}
+
+	if($uploadCount > 0) {
+		actionRescan($options);
+	}
 }
 
 /**
@@ -255,7 +280,7 @@ function actionDelete(Options $options, $filenameIds = []) {
 
 if(
 	array_key_exists('action', $_POST) &&
-	in_array($_POST['action'], ['Delete', 'Process', 'Rescan', 'Stage'])
+	in_array($_POST['action'], ['Delete', 'Process', 'Rescan', 'Stage', 'Upload'])
 ) {
 	$options = Options::getInstance(require_once(__DIR__.'/claimsToOEMRConfig.php'));
 
@@ -373,6 +398,9 @@ $files = getFiles();
 				-o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
 				-webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
 			}
+			.datagrid th.controls input[type=file] {
+				padding: 1px 8px;
+			}
 			.datagrid th.controls input:hover {
 				box-shadow: 3px 3px 4px 1px rgba(255,255,255,0.6);
 				-webkit-box-shadow: 3px 3px 4px 1px rgba(255,255,255,0.6);
@@ -391,7 +419,22 @@ $files = getFiles();
 	</head>
 	<body class="body_top">
 		<h1>Claims Files: <?php echo count($files['Staged']) + count($files['Queued']) + count($files['Processing']) + count($files['Failed']) + count($files['Completed']); ?></h1>
-		<form id="stagedGrid" action="import_data.php" method="post">
+		<form id="updateFiles" action="claims_importer.php" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+			<div class="datagrid">
+				<table>
+					<thead>
+						<tr>
+							<th class="controls">
+								<input type="submit" name="action" value="Rescan" />&nbsp;&mdash;OR&mdash;&nbsp;
+								<input type="file" name="files[]" multiple="multiple" />&nbsp;
+								<input type="submit" name="action" value="Upload" />
+							</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</form>
+		<form id="stagedGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
 			<h2>Staged Files: <?php echo count($files['Staged']); ?></h2>
 			<div class="datagrid">
 				<table>
@@ -400,7 +443,6 @@ $files = getFiles();
 							<th class="controls" colspan="3">
 								<input type="button" value="Select All" onClick="selectAll('stagedGrid');">&nbsp;
 								<input type="button" value="Deselect All" onClick="selectAll('stagedGrid', false);">&nbsp;|&nbsp;
-								<input type="submit" name="action" value="Rescan" />&nbsp;
 								<input type="submit" name="action" value="Process" />&nbsp;
 								<input type="submit" name="action" value="Delete" />&nbsp;
 							</th>
@@ -441,7 +483,7 @@ if(count($files['Staged'])) {
 				</table>
 			</div>
 		</form>
-		<form id="queuedGrid" action="import_data.php" method="post">
+		<form id="queuedGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
 			<h2>Queued Files: <?php echo count($files['Queued']); ?></h2>
 			<div class="datagrid">
 				<table>
@@ -490,7 +532,7 @@ if(count($files['Queued'])) {
 				</table>
 			</div>
 		</form>
-		<form id="processingGrid" action="import_data.php" method="post">
+		<form id="processingGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
 			<h2>Processing Files: <?php echo count($files['Processing']); ?></h2>
 			<div class="datagrid">
 				<table>
@@ -539,7 +581,7 @@ if(count($files['Processing'])) {
 				</table>
 			</div>
 		</form>
-		<form id="failedGrid" action="import_data.php" method="post">
+		<form id="failedGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
 			<h2>Failed Files: <?php echo count($files['Failed']); ?></h2>
 			<div class="datagrid">
 				<table>
@@ -588,7 +630,7 @@ if(count($files['Failed'])) {
 				</table>
 			</div>
 		</form>
-		<form id="completedGrid" action="import_data.php" method="post">
+		<form id="completedGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
 			<h2>Completed Files: <?php echo count($files['Completed']); ?></h2>
 			<div class="datagrid">
 				<table>
