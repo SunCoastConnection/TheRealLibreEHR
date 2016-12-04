@@ -297,6 +297,14 @@ if(
 
 $files = getFiles();
 
+$sections = [
+	'Staged' => [ 'Process', 'Delete' ],
+	'Queued' => [ 'Stage', 'Delete' ],
+	'Processing' => [ 'Stage', 'Delete' ],
+	'Failed' => [ 'Stage', 'Delete' ],
+	'Completed' => [ 'Stage', 'Delete' ],
+];
+
 ?>
 <html>
 	<head>
@@ -316,11 +324,11 @@ $files = getFiles();
 				font: normal 12px/150% Arial, Helvetica, sans-serif;
 				background: #fff;
 				overflow: hidden;
-				border: 1px solid #006699;
-				-webkit-border-radius: 3px;
-				-moz-border-radius: 3px;
-				border-radius: 3px;
-				margin: 1ex 0;
+				border: 3px solid #006699;
+				-webkit-border-radius: 12px;
+				-moz-border-radius: 12px;
+				border-radius: 12px;
+				margin: 0;
 			}
 			.datagrid table {
 				border-collapse: collapse;
@@ -328,7 +336,7 @@ $files = getFiles();
 				width: 100%;
 			}
 			.datagrid table td, .datagrid table th {
-				padding: 3px 10px;
+				padding: 2px 6px;
 			}
 			.datagrid table thead th {
 				background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F));
@@ -374,7 +382,8 @@ $files = getFiles();
 			.datagrid table tbody tr:last-child td {
 				border-bottom: none;
 			}
-			.datagrid th.controls input {
+			.datagrid th.controls input,
+			.datagrid th.controls input[type=file] + label {
 				background: #0199d9;
 				border-radius: 8px;
 				-webkit-border-radius: 8px;
@@ -387,7 +396,7 @@ $files = getFiles();
 				color: rgba(255,255,255,0.8);
 				display: inline-block;
 				font-weight: bold;
-				margin: 0 5px 5px 0;
+				margin: 1px 2px 3px -1px;
 				opacity: 1;
 				padding: 4px 8px;
 				text-shadow: -1px -1px 0 rgba(15,73,168,0.66);
@@ -399,14 +408,28 @@ $files = getFiles();
 				-webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
 			}
 			.datagrid th.controls input[type=file] {
-				padding: 1px 8px;
+				width: 0.1px;
+				height: 0.1px;
+				opacity: 0;
+				overflow: hidden;
+				position: absolute;
+				z-index: -1;
 			}
-			.datagrid th.controls input:hover {
+			.datagrid th.controls input[type=file] + label {
+				cursor: pointer;
+				padding: 3px 8px;
+			}
+			.datagrid th.controls input[type=file] + label * {
+				pointer-events: none;
+			}
+			.datagrid th.controls input:hover,
+			.datagrid th.controls input[type=file]:hover + label {
 				box-shadow: 3px 3px 4px 1px rgba(255,255,255,0.6);
 				-webkit-box-shadow: 3px 3px 4px 1px rgba(255,255,255,0.6);
 				color: rgba(255,255,255,1);
 			}
-			.datagrid th.controls input:active {
+			.datagrid th.controls input:active,
+			.datagrid th.controls input[type=file]:active + label {
 				box-shadow: 0px 0px 8px 3px rgba(255,255,255,1);
 				-webkit-box-shadow: 0px 0px 8px 3px rgba(255,255,255,1);
  			}
@@ -415,6 +438,30 @@ $files = getFiles();
 			function selectAll(grid, changeTo = 'checked') {
 				$('#' + grid + ' .datagrid input[type=checkbox]').prop({checked: changeTo});
 			}
+
+			$(document).ready(function() {
+				$('input[type=file]').each(function() {
+					var $input	 = $(this),
+						$label	 = $input.next('label'),
+						labelVal = $label.html();
+
+					$input.on('change', function(e) {
+						var fileName = '';
+
+						if(this.files && this.files.length > 1) {
+							fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+						} else if(e.target.value) {
+							fileName = e.target.value.split('\\').pop();
+						}
+
+						if(fileName) {
+							$label.find('span').html(fileName);
+						} else {
+							$label.html(labelVal);
+						}
+					});
+				});
+			});
 		</script>
 	</head>
 	<body class="body_top">
@@ -425,8 +472,9 @@ $files = getFiles();
 					<thead>
 						<tr>
 							<th class="controls">
-								<input type="submit" name="action" value="Rescan" />&nbsp;&mdash;OR&mdash;&nbsp;
-								<input type="file" name="files[]" multiple="multiple" />&nbsp;
+								<input type="submit" name="action" value="Rescan" />&nbsp;&mdash;&nbsp;OR&nbsp;&mdash;&nbsp;
+								<input type="file" id="files" name="files[]" data-multiple-caption="{count} files selected" multiple="multiple" />
+								<label for="files"><span>Choose a file</span></label>&nbsp;
 								<input type="submit" name="action" value="Upload" />
 							</th>
 						</tr>
@@ -434,21 +482,35 @@ $files = getFiles();
 				</table>
 			</div>
 		</form>
-		<form id="stagedGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
-			<h2>Staged Files: <?php echo count($files['Staged']); ?></h2>
+<?php
+
+foreach($sections as $sectionName => $actions) {
+
+?>
+		<form id="<?php echo strtolower($sectionName); ?>Grid" action="claims_importer.php" method="post" accept-charset="utf-8">
+			<h2><?php echo $sectionName; ?> Files: <?php echo count($files[$sectionName]); ?></h2>
 			<div class="datagrid">
 				<table>
 					<thead>
 						<tr>
 							<th class="controls" colspan="3">
-								<input type="button" value="Select All" onClick="selectAll('stagedGrid');">&nbsp;
-								<input type="button" value="Deselect All" onClick="selectAll('stagedGrid', false);">&nbsp;|&nbsp;
-								<input type="submit" name="action" value="Process" />&nbsp;
-								<input type="submit" name="action" value="Delete" />&nbsp;
+								<input type="button" value="Select All" onClick="selectAll('<?php echo strtolower($sectionName); ?>Grid');">&nbsp;
+								<input type="button" value="Deselect All" onClick="selectAll('<?php echo strtolower($sectionName); ?>Grid', false);">&nbsp;|&nbsp;
+<?php
+
+	foreach($actions as $action) {
+
+?>
+								<input type="submit" name="action" value="<?php echo $action; ?>" />&nbsp;
+<?php
+
+	}
+
+?>
 							</th>
 						</tr>
 						<tr>
-							<th>Include</th>
+							<th>&check;</th>
 							<th>Filename</th>
 							<th>Size</th>
 						</tr>
@@ -456,8 +518,8 @@ $files = getFiles();
 					<tbody>
 <?php
 
-if(count($files['Staged'])) {
-	foreach($files['Staged'] as $file) {
+	if(count($files[$sectionName])) {
+		foreach($files[$sectionName] as $file) {
 
 ?>
 						<tr>
@@ -467,217 +529,26 @@ if(count($files['Staged'])) {
 						</tr>
 <?php
 
-	}
-} else {
+		}
+	} else {
 
 ?>
 						<tr>
-							<td colspan="4">No staged files in import directory.</td>
+							<td colspan="4">No <?php echo strtolower($sectionName); ?> files in import directory.</td>
 						</tr>
 <?php
 
-}
+	}
 
 ?>
 					</tbody>
 				</table>
 			</div>
 		</form>
-		<form id="queuedGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
-			<h2>Queued Files: <?php echo count($files['Queued']); ?></h2>
-			<div class="datagrid">
-				<table>
-					<thead>
-						<tr>
-							<th class="controls" colspan="3">
-								<input type="button" value="Select All" onClick="selectAll('queuedGrid');">&nbsp;
-								<input type="button" value="Deselect All" onClick="selectAll('queuedGrid', false);">&nbsp;|&nbsp;
-								<input type="submit" name="action" value="Stage" />&nbsp;
-								<input type="submit" name="action" value="Delete" />&nbsp;
-							</th>
-						</tr>
-						<tr>
-							<th>Include</th>
-							<th>Filename</th>
-							<th>Size</th>
-						</tr>
-					</thead>
-					<tbody>
-<?php
-
-if(count($files['Queued'])) {
-	foreach($files['Queued'] as $file) {
-
-?>
-						<tr>
-							<td><input type="checkbox" name="filename[]" value="<?php echo $file['id']; ?>"></td>
-							<td><?php echo $file['relative_path']; ?></td>
-							<td><?php echo $file['size']; ?></td>
-						</tr>
-<?php
-
-	}
-} else {
-
-?>
-						<tr>
-							<td colspan="4">No queued files in import directory.</td>
-						</tr>
 <?php
 
 }
 
 ?>
-					</tbody>
-				</table>
-			</div>
-		</form>
-		<form id="processingGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
-			<h2>Processing Files: <?php echo count($files['Processing']); ?></h2>
-			<div class="datagrid">
-				<table>
-					<thead>
-						<tr>
-							<th class="controls" colspan="3">
-								<input type="button" value="Select All" onClick="selectAll('processingGrid');">&nbsp;
-								<input type="button" value="Deselect All" onClick="selectAll('processingGrid', false);">&nbsp;|&nbsp;
-								<input type="submit" name="action" value="Stage" />&nbsp;
-								<input type="submit" name="action" value="Delete" />&nbsp;
-							</th>
-						</tr>
-						<tr>
-							<th>Include</th>
-							<th>Filename</th>
-							<th>Size</th>
-						</tr>
-					</thead>
-					<tbody>
-<?php
-
-if(count($files['Processing'])) {
-	foreach($files['Processing'] as $file) {
-
-?>
-						<tr>
-							<td><input type="checkbox" name="filename[]" value="<?php echo $file['id']; ?>"></td>
-							<td><?php echo $file['relative_path']; ?></td>
-							<td><?php echo $file['size']; ?></td>
-						</tr>
-<?php
-
-	}
-} else {
-
-?>
-						<tr>
-							<td colspan="4">No processing files in import directory.</td>
-						</tr>
-<?php
-
-}
-
-?>
-					</tbody>
-				</table>
-			</div>
-		</form>
-		<form id="failedGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
-			<h2>Failed Files: <?php echo count($files['Failed']); ?></h2>
-			<div class="datagrid">
-				<table>
-					<thead>
-						<tr>
-							<th class="controls" colspan="3">
-								<input type="button" value="Select All" onClick="selectAll('failedGrid');">&nbsp;
-								<input type="button" value="Deselect All" onClick="selectAll('failedGrid', false);">&nbsp;|&nbsp;
-								<input type="submit" name="action" value="Stage" />&nbsp;
-								<input type="submit" name="action" value="Delete" />&nbsp;
-							</th>
-						</tr>
-						<tr>
-							<th>Include</th>
-							<th>Filename</th>
-							<th>Size</th>
-						</tr>
-					</thead>
-					<tbody>
-<?php
-
-if(count($files['Failed'])) {
-	foreach($files['Failed'] as $file) {
-
-?>
-						<tr>
-							<td><input type="checkbox" name="filename[]" value="<?php echo $file['id']; ?>"></td>
-							<td><?php echo $file['relative_path']; ?></td>
-							<td><?php echo $file['size']; ?></td>
-						</tr>
-<?php
-
-	}
-} else {
-
-?>
-						<tr>
-							<td colspan="4">No failed files in import directory.</td>
-						</tr>
-<?php
-
-}
-
-?>
-					</tbody>
-				</table>
-			</div>
-		</form>
-		<form id="completedGrid" action="claims_importer.php" method="post" accept-charset="utf-8">
-			<h2>Completed Files: <?php echo count($files['Completed']); ?></h2>
-			<div class="datagrid">
-				<table>
-					<thead>
-						<tr>
-							<th class="controls" colspan="3">
-								<input type="button" value="Select All" onClick="selectAll('completedGrid');">&nbsp;
-								<input type="button" value="Deselect All" onClick="selectAll('completedGrid', false);">&nbsp;|&nbsp;
-								<input type="submit" name="action" value="Stage" />&nbsp;
-								<input type="submit" name="action" value="Delete" />&nbsp;
-							</th>
-						</tr>
-						<tr>
-							<th>Include</th>
-							<th>Filename</th>
-							<th>Size</th>
-						</tr>
-					</thead>
-					<tbody>
-<?php
-
-if(count($files['Completed'])) {
-	foreach($files['Completed'] as $file) {
-
-?>
-						<tr>
-							<td><input type="checkbox" name="filename[]" value="<?php echo $file['id']; ?>"></td>
-							<td><?php echo $file['relative_path']; ?></td>
-							<td><?php echo $file['size']; ?></td>
-						</tr>
-<?php
-
-	}
-} else {
-
-?>
-						<tr>
-							<td colspan="4">No completed files in import directory.</td>
-						</tr>
-<?php
-
-}
-
-?>
-					</tbody>
-				</table>
-			</div>
-		</form>
 	</body>
 </html>
