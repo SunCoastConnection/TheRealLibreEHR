@@ -1318,12 +1318,14 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 
 		genMiscLink('RTop', 'rep', '0', xl('Report Results'), 'reports/report_results.php');
 		genMiscLink('RTop', 'pqr', '0', xl('Measure Selector'), 'reports/PQRS/measure_activate.php');
+		genMiscLink('RTop', 'pqr', '0', xl('Upload Claim Files'), 'reports/PQRS/dropzone/index.php');
 		genTreeLink('RTop', 'pwd', xl('Change Your Password'));
 
 		if(acl_check('admin', 'super')) {
 			genMiscLink('RTop', 'pqr', '0', xl('Claims Importer'), 'reports/PQRS/claims_importer.php');
 			genMiscLink('RTop', 'pqr', '0', xl('Delete Old Reports'), 'reports/PQRS/truncate_reports.php');
 		}
+
 		if( $GLOBALS['pqrs_demosystem'] ) {
 			genMiscLink('RTop', 'rep', '0', xl('Save/Load Demo Database'), 'main/PQRS/reload_demo_database.php');
 		}
