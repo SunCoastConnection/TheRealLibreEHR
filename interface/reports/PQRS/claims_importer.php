@@ -432,7 +432,7 @@ $sections = [
 			.datagrid th.controls input[type=file]:active + label {
 				box-shadow: 0px 0px 8px 3px rgba(255,255,255,1);
 				-webkit-box-shadow: 0px 0px 8px 3px rgba(255,255,255,1);
- 			}
+			}
 		</style>
 		<script>
 			function selectAll(grid, changeTo = 'checked') {
