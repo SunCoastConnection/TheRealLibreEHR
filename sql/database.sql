@@ -10,7 +10,7 @@
 
 DROP TABLE IF EXISTS `addresses`;
 CREATE TABLE `addresses` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL default '0',
   `line1` varchar(255) default NULL,
   `line2` varchar(255) default NULL,
   `city` varchar(255) default NULL,
@@ -2461,7 +2461,7 @@ CREATE TABLE `immunizations` (
 
 DROP TABLE IF EXISTS `insurance_companies`;
 CREATE TABLE `insurance_companies` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL default '0',
   `name` varchar(255) default NULL,
   `attn` varchar(255) default NULL,
   `cms_id` varchar(15) default NULL,
@@ -5152,7 +5152,7 @@ CREATE TABLE `pharmacies` (
 
 DROP TABLE IF EXISTS `phone_numbers`;
 CREATE TABLE `phone_numbers` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL default '0',
   `country_code` varchar(5) default NULL,
   `area_code` char(3) default NULL,
   `prefix` char(3) default NULL,
@@ -6356,7 +6356,7 @@ INSERT INTO user_settings ( setting_user, setting_label, setting_value ) VALUES 
 
 DROP TABLE IF EXISTS `x12_partners`;
 CREATE TABLE `x12_partners` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL default '0',
   `name` varchar(255) default NULL,
   `id_number` varchar(255) default NULL,
   `x12_sender_id` varchar(255) default NULL,
@@ -34889,27 +34889,3 @@ INSERT INTO `pqrs_ptsf` (`type`, `code`) VALUES
 ('pqrs_0393_b', '33263'),
 ('pqrs_0393_b', '33264'),
 ('pqrs_0393_b', '33282');
-
--- --------------------------------------------------------
---
--- Table structure for table `pqrs_import_files`
---
-CREATE TABLE `pqrs_import_files` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `status` enum('Staged', 'Queued', 'Processing', 'Failed', 'Completed') DEFAULT 'Staged',
-  `relative_path` varchar(255) NOT NULL,
-  `size` int(11) NOT NULL,
-  `md5` varchar(32) NOT NULL,
-  `staged_datetime` datetime NOT NULL,
-  `queued_datetime` datetime DEFAULT NULL,
-  `processing_datetime` datetime DEFAULT NULL,
-  `processing_id` int(11) DEFAULT NULL,
-  `failed_datetime` datetime DEFAULT NULL,
-  `failed_reason` text DEFAULT NULL,
-  `completed_datetime` datetime DEFAULT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `relative_path` (`relative_path`),
-  KEY `processing_id` (`processing_id`),
-  KEY `md5` (`md5`)
-) ENGINE=InnoDB;
--- --------------------------------------------------------
