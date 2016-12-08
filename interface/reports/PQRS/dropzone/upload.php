@@ -1,4 +1,10 @@
 <?php
+$sanitize_all_escapes = true;
+$fake_register_globals = false;
+
+require_once '../../../globals.php';
+require_once($GLOBALS['srcdir'].'/acl.inc');
+
 $ds          = DIRECTORY_SEPARATOR;  //1
  
 $storeFolder = '837s';   //2
