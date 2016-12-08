@@ -8,7 +8,7 @@ require_once($GLOBALS['srcdir'].'/acl.inc');
 $ds          = DIRECTORY_SEPARATOR;  //1
  
 $storeFolder = '837s';   //2
-if !is_dir($OE_SITE_DIR . $ds. $storeFolder){
+if (!is_dir($OE_SITE_DIR . $ds. $storeFolder)){
 	mkdir($OE_SITE_DIR . $ds. $storeFolder,0775,true)
 }
 if (!empty($_FILES)) {
