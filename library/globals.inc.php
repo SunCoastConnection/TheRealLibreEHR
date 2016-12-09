@@ -2646,18 +2646,17 @@ $GLOBALS_METADATA = array(
       xl('Show demo system "Save/Load database presets" menu')
     ),
 
-    'pqrs_importer_pattern' => array(
-      xl('Import Pattern'),
-      'text',
-      '*',
-      xl('Pattern of files to import from import directory.')
-    ),
-
-    'pqrs_importer_recursive' => array(
-      xl('Import Recursive'),
-      'bool',
-      '1',
-      xl('Recursive import from import directory')
+    'pqrs_fish_type' => array(
+      xl('Fish Type'),               // descriptive name
+      array(
+        '1' => xl('One Fish'),
+        '2' => xl('Two Fish'),
+        '3' => xl('Red Fishh'),
+        '4' => xl('Blue Fish'),
+        '5' => xl('Oh fishy, fishy, fishy, fish.'),
+      ),
+      '1',                              // default = tree menu
+      xl('Choose your default fish type')
     ),
 
   ),
