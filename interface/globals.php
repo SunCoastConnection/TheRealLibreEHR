@@ -1,7 +1,7 @@
 <?php
 
 // Include Composer Autoload
-require_once(__DIR__.'/../vendor/autoload.php');
+// require_once(__DIR__.'/../vendor/autoload.php');
 
 // Is this windows or non-windows? Create a boolean definition.
 if (!defined('IS_WINDOWS'))
