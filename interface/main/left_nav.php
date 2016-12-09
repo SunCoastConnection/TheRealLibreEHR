@@ -1311,25 +1311,21 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 	if($GLOBALS['enable_pqrs']) {
 
 ?>
-				<li><a class="collapsed" id="pqrs"><span><?php xl('PQRS', 'e'); ?></span></a>
+				<li><a class="expanded" id="pqrs"><span><?php xl('PQRS', 'e'); ?></span></a>
 					<ul>
 <?php
+		genMiscLink('RTop', 'rep', '0', xl('View Report Results'), 'reports/report_results.php');
 		genTreeLink('RTop', 'pqr', xl('Run Measures Report'));
-
-		genMiscLink('RTop', 'rep', '0', xl('Report Results'), 'reports/report_results.php');
-		genMiscLink('RTop', 'pqr', '0', xl('Measure Selector'), 'reports/PQRS/measure_activate.php');
+		genMiscLink('RTop', 'pqr', '0', xl('Select Measures'), 'reports/PQRS/measure_activate.php');
 		genMiscLink('RTop', 'pqr', '0', xl('Upload Claim Files'), 'reports/PQRS/dropzone/index.php');
-		genTreeLink('RTop', 'pwd', xl('Change Your Password'));
-
 		if(acl_check('admin', 'super')) {
-			genMiscLink('RTop', 'rep', '0', xl('Client Database Import'), 'main/PQRS/import_data.php');
 			genMiscLink('RTop', 'rep', '0', xl('Delete Old Reports'), 'main/PQRS/truncate_reports.php');
+			genMiscLink('RTop', 'rep', '0', xl('Client Database Import'), 'main/PQRS/import_data.php');
 		}
-
+		genTreeLink('RTop', 'pwd', xl('Change Your Password'));
 		if( $GLOBALS['pqrs_demosystem'] ) {
 			genMiscLink('RTop', 'rep', '0', xl('Save/Load Demo Database'), 'main/PQRS/reload_demo_database.php');
 		}
-
 ?>
 					</ul>
 				</li>
