@@ -260,8 +260,8 @@ $(document).ready(function() {
                                 //console.log('Orthopedics');
                                 mymeasurelist = [21, 22, 23, 24, 32, 39, 41, 46, 47, 109, 110, 111, 128, 130, 131, 154, 155, 182, 226, 238, 317, 358, 402, 431];
                                 break;
-                        case "PainSpecialists":
-                                //console.log('Pain Specialists');
+                        case "PainSpecialist":
+                                //console.log('Pain Specialist');
                                 mymeasurelist = [1, 41, 47, 109, 110, 111, 128, 130, 131, 134, 154, 155, 204, 226, 238, 317, 402, 408, 412, 414];
                                 break;
                         case "Pathology":
