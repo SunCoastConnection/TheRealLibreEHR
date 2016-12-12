@@ -21,6 +21,15 @@
  * @link    http://suncoastconnection.com
 */
 
+DROP TABLE IF EXISTS pqrs_efcc;
+CREATE TABLE IF NOT EXISTS `pqrs_efcc` (
+id int NOT NULL auto_increment,
+type varchar(15),
+code varchar(15),
+PRIMARY KEY  (`id`)
+);
+
+
 INSERT INTO `pqrs_efcc` (`type`, `code`) VALUES
 ('pqrs_0001_a', 'E10.10'),
 ('pqrs_0001_a', 'E10.11'),

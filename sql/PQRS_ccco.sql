@@ -20,6 +20,15 @@
  * @author  meggerc
 */
 
+DROP TABLE IF EXISTS pqrs_ccco;
+CREATE TABLE IF NOT EXISTS `pqrs_ccco` (
+id int NOT NULL auto_increment,
+type varchar(15),
+code varchar(15),
+PRIMARY KEY  (`id`)
+);
+
+
 INSERT INTO `pqrs_ccco` (`type`, `code`) VALUES
 ('pqrs_0019_a', 'E08.311'), 
 ('pqrs_0019_a', 'E08.319'), 
