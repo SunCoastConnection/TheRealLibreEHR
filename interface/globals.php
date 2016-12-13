@@ -79,7 +79,7 @@ $GLOBALS['OE_SITES_BASE'] = "$webserver_root/sites";
 // Now that restore_session() is implemented in javaScript, session IDs are
 // effectively saved in the top level browser window and there is no longer
 // any need to change the session name for different OpenEMR instances.
-session_name("OpenEMR");
+session_name("PQRS_Pilot");
 
 session_start();
 
@@ -256,8 +256,8 @@ else {
   $GLOBALS['translate_appt_categories'] = true;
   $GLOBALS['concurrent_layout'] = 2;
   $timeout = 7200;
-  $openemr_name = 'OpenEMR';
-  $css_header = "$rootdir/themes/style_default.css";
+  $openemr_name = 'PQRS Pilot';
+  $css_header = "$rootdir/themes/style_purple.css";
   $GLOBALS['css_header'] = $css_header;
   $GLOBALS['schedule_start'] = 8;
   $GLOBALS['schedule_end'] = 17;
@@ -298,7 +298,7 @@ $GLOBALS['style']['TEXTCOLOR11'] = "#222222";
 $GLOBALS['style']['HIGHLIGHTCOLOR'] = "#dddddd";
 $GLOBALS['style']['BOTTOM_BG_LINE'] = $bottom_bg_line;
 // The height in pixels of the Logo bar at the top of the login page:
-$GLOBALS['logoBarHeight'] = 242;
+$GLOBALS['logoBarHeight'] = 105;
 // The height in pixels of the Navigation bar:
 $GLOBALS['navBarHeight'] = 22;
 // The height in pixels of the Title bar:
