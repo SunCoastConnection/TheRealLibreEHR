@@ -7,6 +7,15 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
 
+DROP TABLE IF EXISTS pqrs_group;
+CREATE TABLE IF NOT EXISTS `pqrs_group` (
+id int NOT NULL auto_increment,
+type varchar(30),
+code varchar(15),
+PRIMARY KEY  (`id`)
+);
+
+
 INSERT INTO `pqrs_group` (`type`, `code`) VALUES
 ('pqrs_diabetes_a', '99201'),
 ('pqrs_diabetes_a', '99202'),

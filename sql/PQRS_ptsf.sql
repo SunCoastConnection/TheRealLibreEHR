@@ -20,6 +20,15 @@
  * @link    http://suncoastconnection.com
 */
 
+DROP TABLE IF EXISTS pqrs_ptsf;
+CREATE TABLE IF NOT EXISTS `pqrs_ptsf` (
+id int NOT NULL auto_increment,
+type varchar(15),
+code varchar(15),
+PRIMARY KEY  (`id`)
+);
+
+
 INSERT INTO `pqrs_ptsf` (`type`, `code`) VALUES
 ('pqrs_0021_a', '15732'),
 ('pqrs_0021_a', '15734'),
