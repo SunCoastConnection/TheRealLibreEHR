@@ -12,7 +12,7 @@ include_once("./globals.php");
 <a href='<?php echo "$rootdir/login/login_frame.php?site=".$_SESSION['site_id']; ?>'><?php xl('Follow manually','e'); ?></a>
 
 <p>
-<?php xl('OpenEMR requires Javascript to perform user authentication.','e'); ?>
+<?php xl('PQRS Pilot requires Javascript to perform user authentication.','e'); ?>
 
 </body>
 </html>
