@@ -1,5 +1,5 @@
 <?php
-//  OpenEMR
+//  PQRS_Gateway
 //  MySQL Config
 //  Referenced from /library/sqlconf.php.
 
@@ -8,9 +8,10 @@ $disable_utf8_flag = false;
 
 $host	= 'localhost';
 $port	= '3306';
-$login	= 'openemr';
-$pass	= 'openemr';
-$dbase	= 'openemr';
+$login	= 'pqrsgateway';
+$pass	= 'pqrsgateway';
+$dbase	= 'pqrsgateway';
+
 
 $sqlconf = array();
 global $sqlconf;

@@ -164,11 +164,11 @@ else {
 <tr>
 <td><span class="text"><?php echo xlt('User Name:'); ?></span></td>
 <td>
-<input class="entryfield" type="text" size="35" name="authUser">
+<input class="entryfield" type="text" size="25" name="authUser">
 </td></tr><tr>
 <td><span class="text"><?php echo xlt('Pass Phrase:'); ?></span></td>
 <td>
-<input class="entryfield" type="password" size="35" name="clearPass">
+<input class="entryfield" type="password" size="25" name="clearPass">
 </td></tr>
 
 <?php
