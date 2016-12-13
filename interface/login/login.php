@@ -149,26 +149,26 @@ else {
 
 <?php if (isset($_SESSION['loginfailure']) && ($_SESSION['loginfailure'] == 1)): ?>
 <tr><td colspan='2' class='text' style='color:red'>
-<?php echo xlt('Invalid username or password'); ?>
+<?php echo xlt('Invalid username or pass phrase'); ?>
 </td></tr>
 <?php endif; ?>
 
 <?php if (isset($_SESSION['relogin']) && ($_SESSION['relogin'] == 1)): ?>
 <tr><td colspan='2' class='text' style='color:red;background-color:#dfdfdf;border:solid 1px #bfbfbf;text-align:center'>
-<b><?php echo xlt('Password security has recently been upgraded.'); ?><br>
+<b><?php echo xlt('Pass phrase security has recently been upgraded.'); ?><br>
 <?php echo xlt('Please login again.'); ?></b>
 <?php unset($_SESSION['relogin']); ?>
 </td></tr>
 <?php endif; ?>
 
 <tr>
-<td><span class="text"><?php echo xlt('Username:'); ?></span></td>
+<td><span class="text"><?php echo xlt('User Name:'); ?></span></td>
 <td>
-<input class="entryfield" type="text" size="25" name="authUser">
+<input class="entryfield" type="text" size="35" name="authUser">
 </td></tr><tr>
-<td><span class="text"><?php echo xlt('Passphrase:'); ?></span></td>
+<td><span class="text"><?php echo xlt('Pass Phrase:'); ?></span></td>
 <td>
-<input class="entryfield" type="password" size="25" name="clearPass">
+<input class="entryfield" type="password" size="35" name="clearPass">
 </td></tr>
 
 <?php
