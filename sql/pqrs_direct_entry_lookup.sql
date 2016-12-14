@@ -1,6 +1,6 @@
 
 
-/*!Copyright 2016 SunCoast Connection Inc.  */;
+--Copyright 2016 SunCoast Connection Inc.
 
 
 
