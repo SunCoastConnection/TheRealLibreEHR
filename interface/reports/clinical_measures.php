@@ -444,12 +444,12 @@ function Form_Validate() {
 <?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
                   <tr>
                     <td class='label'>
-                      <?php echo xlt('Measure Set'); ?>:
+                      <?php echo xlt('Report Type'); ?>:
                     </td>
                     <td>
                       <select <?php echo $dis_text; ?> id='form_rule_filter' name='form_rule_filter'>
-                        <option value='pqrs_individual_2016' <?php if ($rule_filter == "pqrs_individual_2016") {echo "selected";} ?>><?php echo xlt('All 2016 PQRS Individual Measures'); ?></option>
-                        <option value='pqrs_groups_2016' <?php if ($rule_filter == "pqrs_groups_2016") {echo "selected";} ?>><?php echo xlt('All 2016 PQRS Group Measures'); ?></option>
+                        <option value='pqrs_individual_2016' <?php if ($rule_filter == "pqrs_individual_2016") {echo "selected";} ?>><?php echo xlt('Individual Measures'); ?></option>
+                        <option value='pqrs_groups_2016' <?php if ($rule_filter == "pqrs_groups_2016") {echo "selected";} ?>><?php echo xlt('Measure Groups'); ?></option>
                       </select>
                     </td>
                   </tr>
@@ -499,22 +499,10 @@ function Form_Validate() {
     }
 
     if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) {
-?>
-                  <tr>
-                    <td class='label'>
-                      <?php echo htmlspecialchars(xl('Measure Group Selection'), ENT_NOQUOTES); ?>:
-                    </td>
-                    <td>
-                      <select <?php echo $dis_text; ?> id='form_plan_filter' name='form_plan_filter'>
-                        <option value=''>-- <?php echo htmlspecialchars(xl('Ignore'), ENT_NOQUOTES); ?> --</option>
-                        <option value='pqrs_individual_2015' <?php if($plan_filter == "pqrs_individual_2015") {echo "selected";} ?>><?php echo htmlspecialchars( xl('All 2015 Individual Measures'), ENT_NOQUOTES); ?></option>
-                        <option value='pqrs_groups_2015' <?php if($plan_filter == "pqrs_groups_2015") {echo "selected";} ?>><?php echo htmlspecialchars( xl('All 2015 Measure Group Measures'), ENT_NOQUOTES); ?></option>
-                        <option value='pqrs_individual_2016' <?php if($plan_filter == "pqrs_individual_2016") {echo "selected";} ?>><?php echo htmlspecialchars( xl('All 2016 Individual Measures'), ENT_NOQUOTES); ?></option>
-                        <option value='pqrs_groups_2016' <?php if($plan_filter == "pqrs_groups_2016") {echo "selected";} ?>><?php echo htmlspecialchars( xl('All 2016 Measure Group Measures'), ENT_NOQUOTES); ?></option>
-                      </select>
-                    </td>
-                  </tr>
-<?php } elseif(in_array($type_report, array('amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
+
+//  Nothing.  Do NOTHING!  --leebc
+
+ } elseif(in_array($type_report, array('amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
                   <input type='hidden' id='form_plan_filter' name='form_plan_filter' value=''>
 <?php } else { ?>
                   <tr>
@@ -597,7 +585,10 @@ function Form_Validate() {
                       </a>
                       <span id='status_span'></span>
                       <div id='processing' style='margin:10px;display:none;'><img src='../pic/ajax-loader.gif'/></div>
-<?php   if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
+<?php   if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) { 
+/*?>
+//  XML Report Buttons may go here.  -- leebc 2016-12-14
+//  This block commented out because we don't know where they go
                       <a id='xmla_button' href='#' class='css_button' onclick='return GenXml("PQRS")'>
                         <span>
                           <?php echo htmlspecialchars(xl('Generate PQRS report (SimpleXML) 2015'), ENT_NOQUOTES); ?>
@@ -608,7 +599,7 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('Stub for additional xml format submissions'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-<?php   } elseif($type_report == 'cqm') { ?>
+<?php */   } elseif($type_report == 'cqm') { ?>
                       <a id='xmla_button' href='#' class='css_button' onclick='return GenXml("false")'>
                         <span>
                           <?php echo htmlspecialchars(xl('Generate PQRI report (Method A) - 2011'), ENT_NOQUOTES); ?>
