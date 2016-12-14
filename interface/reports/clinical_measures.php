@@ -501,6 +501,9 @@ function Form_Validate() {
     if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) {
 
 //  Nothing.  Do NOTHING!  --leebc
+?>
+		<input type='hidden' id='form_plan_filter' name='form_plan_filter' value=''>
+<?php
 
  } elseif(in_array($type_report, array('amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
                   <input type='hidden' id='form_plan_filter' name='form_plan_filter' value=''>
