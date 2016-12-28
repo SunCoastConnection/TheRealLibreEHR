@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Cataracts_0191_Exclusion implements PQRSFilterIF
+class PQRS_Group_Cataracts_0191_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

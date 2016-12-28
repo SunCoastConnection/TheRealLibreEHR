@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Cataracts_0192_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Cataracts_0192_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_AOE_0154_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_AOE_0154_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

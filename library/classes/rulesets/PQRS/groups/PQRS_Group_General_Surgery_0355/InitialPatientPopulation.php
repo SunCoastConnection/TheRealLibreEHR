@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_General_Surgery_0355_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_General_Surgery_0355_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

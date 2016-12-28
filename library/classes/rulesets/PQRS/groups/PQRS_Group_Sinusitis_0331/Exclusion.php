@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Sinusitis_0331_Exclusion implements PQRSFilterIF
+class PQRS_Group_Sinusitis_0331_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

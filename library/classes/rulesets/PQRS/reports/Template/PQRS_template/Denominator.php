@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_TEMPLATE_Denominator implements PQRSFilterIF
+class PQRS_TEMPLATE_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

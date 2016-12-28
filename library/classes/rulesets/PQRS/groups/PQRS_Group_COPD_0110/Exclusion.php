@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_COPD_0110_Exclusion implements PQRSFilterIF
+class PQRS_Group_COPD_0110_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

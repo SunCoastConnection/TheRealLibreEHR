@@ -21,7 +21,7 @@
  * @author  Suncoast Connection
  */
 
-class PQRS_always_met_Denominator implements PQRSFilterIF
+class PQRS_always_met_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Asthma_0053_Numerator implements PQRSFilterIF
+class PQRS_Group_Asthma_0053_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

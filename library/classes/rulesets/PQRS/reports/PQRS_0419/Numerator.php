@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_0419_Numerator implements PQRSFilterIF
+class PQRS_0419_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

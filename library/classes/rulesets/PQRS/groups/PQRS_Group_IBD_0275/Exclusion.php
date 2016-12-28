@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_IBD_0275_Exclusion implements PQRSFilterIF
+class PQRS_Group_IBD_0275_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

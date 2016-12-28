@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_RA_0179_Numerator implements PQRSFilterIF
+class PQRS_Group_RA_0179_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

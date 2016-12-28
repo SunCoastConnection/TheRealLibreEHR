@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Diabetes_0226_Exclusion implements PQRSFilterIF
+class PQRS_Group_Diabetes_0226_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

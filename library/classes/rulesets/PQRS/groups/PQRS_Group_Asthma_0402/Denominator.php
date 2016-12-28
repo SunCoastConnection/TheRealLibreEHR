@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Asthma_0402_Denominator implements PQRSFilterIF
+class PQRS_Group_Asthma_0402_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

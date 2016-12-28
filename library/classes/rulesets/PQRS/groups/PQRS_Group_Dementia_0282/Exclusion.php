@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Dementia_0282_Exclusion implements PQRSFilterIF
+class PQRS_Group_Dementia_0282_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

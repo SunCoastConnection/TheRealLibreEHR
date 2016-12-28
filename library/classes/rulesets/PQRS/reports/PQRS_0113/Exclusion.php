@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
 
-class PQRS_0113_Exclusion implements PQRSFilterIF
+class PQRS_0113_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_HIVAIDS_0205_Exclusion implements PQRSFilterIF
+class PQRS_Group_HIVAIDS_0205_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

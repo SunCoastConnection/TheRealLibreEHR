@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_Group_Diabetes_0126_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Diabetes_0126_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

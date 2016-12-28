@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Oncology_0072_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Oncology_0072_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

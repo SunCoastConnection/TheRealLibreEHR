@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Parkinsons_0290_Numerator implements PQRSFilterIF
+class PQRS_Group_Parkinsons_0290_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

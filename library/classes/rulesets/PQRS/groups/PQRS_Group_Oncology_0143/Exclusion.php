@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Oncology_0143_Exclusion implements PQRSFilterIF
+class PQRS_Group_Oncology_0143_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

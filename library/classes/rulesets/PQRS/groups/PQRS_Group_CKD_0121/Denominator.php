@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CKD_0121_Denominator implements PQRSFilterIF
+class PQRS_Group_CKD_0121_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

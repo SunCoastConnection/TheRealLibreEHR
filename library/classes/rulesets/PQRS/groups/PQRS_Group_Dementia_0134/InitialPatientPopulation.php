@@ -10,7 +10,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_Group_Dementia_0134_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Dementia_0134_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

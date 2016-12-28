@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Preventive_0039_Denominator implements PQRSFilterIF
+class PQRS_Group_Preventive_0039_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

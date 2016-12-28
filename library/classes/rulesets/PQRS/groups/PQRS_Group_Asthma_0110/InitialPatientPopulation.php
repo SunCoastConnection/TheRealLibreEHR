@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Asthma_0110_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Asthma_0110_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

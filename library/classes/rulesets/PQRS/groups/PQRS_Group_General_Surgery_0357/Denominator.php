@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_General_Surgery_0357_Denominator implements PQRSFilterIF
+class PQRS_Group_General_Surgery_0357_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

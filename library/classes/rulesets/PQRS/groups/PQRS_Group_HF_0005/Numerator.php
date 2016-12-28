@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_HF_0005_Numerator implements PQRSFilterIF
+class PQRS_Group_HF_0005_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

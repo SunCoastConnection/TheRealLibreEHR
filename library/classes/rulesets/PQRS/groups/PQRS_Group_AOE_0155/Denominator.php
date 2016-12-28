@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_AOE_0155_Denominator implements PQRSFilterIF
+class PQRS_Group_AOE_0155_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

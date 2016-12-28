@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CKD_0047_Exclusion implements PQRSFilterIF
+class PQRS_Group_CKD_0047_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

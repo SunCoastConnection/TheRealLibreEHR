@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Sinusitis_0333_Denominator implements PQRSFilterIF
+class PQRS_Group_Sinusitis_0333_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

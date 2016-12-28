@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CAD_0006_Exclusion implements PQRSFilterIF
+class PQRS_Group_CAD_0006_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

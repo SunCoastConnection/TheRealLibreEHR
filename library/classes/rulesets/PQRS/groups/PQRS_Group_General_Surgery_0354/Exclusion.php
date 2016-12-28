@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_General_Surgery_0354_Exclusion implements PQRSFilterIF
+class PQRS_Group_General_Surgery_0354_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

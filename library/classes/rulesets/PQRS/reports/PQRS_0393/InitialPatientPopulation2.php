@@ -10,7 +10,7 @@
  */
  ///This measure is for a revised CIED/ICD (replaced, lead reconfigure etc)
  /// but the code does not make that distinction.
-class PQRS_0393_InitialPatientPopulation2 implements PQRSFilterIF
+class PQRS_0393_InitialPatientPopulation2 extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_TKR_0351_Exclusion implements PQRSFilterIF
+class PQRS_Group_TKR_0351_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

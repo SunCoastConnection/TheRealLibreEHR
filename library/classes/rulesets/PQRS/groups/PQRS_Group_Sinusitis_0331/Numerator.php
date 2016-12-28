@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Sinusitis_0331_Numerator implements PQRSFilterIF
+class PQRS_Group_Sinusitis_0331_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

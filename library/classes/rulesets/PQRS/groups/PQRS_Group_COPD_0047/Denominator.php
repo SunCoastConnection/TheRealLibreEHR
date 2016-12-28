@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_COPD_0047_Denominator implements PQRSFilterIF
+class PQRS_Group_COPD_0047_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

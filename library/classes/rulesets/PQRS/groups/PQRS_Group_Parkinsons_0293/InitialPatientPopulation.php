@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Parkinsons_0293_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Parkinsons_0293_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {
