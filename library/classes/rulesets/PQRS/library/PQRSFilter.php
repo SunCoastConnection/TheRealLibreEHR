@@ -21,6 +21,8 @@
  * @author  Suncoast Connection
  */
 
+require_once(__DIR__.'/PQRSFilterIF.php');
+
 class PQRSFilter implements PQRSFilterIF {
     protected $_reportOptions;
 
