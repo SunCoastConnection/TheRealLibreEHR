@@ -23,7 +23,7 @@
 
 require_once(__DIR__.'/PQRSFilterIF.php');
 
-class PQRSFilter implements PQRSFilterIF {
+abstract class PQRSFilter implements PQRSFilterIF {
     protected $_reportOptions;
 
     public function setReportOptions($options) {
