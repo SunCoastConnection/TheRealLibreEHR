@@ -261,7 +261,7 @@ else {
   $GLOBALS['css_header'] = $css_header;
   $GLOBALS['schedule_start'] = 8;
   $GLOBALS['schedule_end'] = 17;
-  $GLOBALS['calendar_interval'] = 15;
+  $GLOBALS['calendar_interval'] = 60;
   $GLOBALS['phone_country_code'] = '1';
   $GLOBALS['disable_non_default_groups'] = true;
   $GLOBALS['ippf_specific'] = false;
