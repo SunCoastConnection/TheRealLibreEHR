@@ -185,9 +185,9 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`) VALUE
 ('PQRS_0065', 'answer', '3|Patient prescribed or dispensed antibiotic (G8710)|G8710'),
 
 ('PQRS_0066', 'description', 'Appropriate Testing for Children with Pharyngitis'),
-('PQRS_0065', 'question', 'Children with a group A streptococcus test in the 7-day period from 3 days prior through 3 days after the pharyngitis episode date<br>Numerator Instructions: For performance, the measure will be calculated as the number of patient encounters where diagnosed with pharyngitis, dispensed an antibiotic and received a group A streptococcus (strep) test for the episode over the total number of encounters in the denominator (patients aged 3 through 18 years with an outpatient or ED visit and an antibiotic ordered on or three days after the visit). A higher score indicates appropriate treatment of children with pharyngitis (e.g., the proportion for whom antibiotics were prescribed with an accompanying step test).'),
-('PQRS_0065', 'answer', '1|Group A Strep Test Performed (3210F)|3210F'),
-('PQRS_0065', 'answer', '2|Group A Strep Test not Performed, reason not otherwise specified (3210F with 8P)|3210F:8P'),
+('PQRS_0066', 'question', 'Children with a group A streptococcus test in the 7-day period from 3 days prior through 3 days after the pharyngitis episode date<br>Numerator Instructions: For performance, the measure will be calculated as the number of patient encounters where diagnosed with pharyngitis, dispensed an antibiotic and received a group A streptococcus (strep) test for the episode over the total number of encounters in the denominator (patients aged 3 through 18 years with an outpatient or ED visit and an antibiotic ordered on or three days after the visit). A higher score indicates appropriate treatment of children with pharyngitis (e.g., the proportion for whom antibiotics were prescribed with an accompanying step test).'),
+('PQRS_0066', 'answer', '1|Group A Strep Test Performed (3210F)|3210F'),
+('PQRS_0066', 'answer', '2|Group A Strep Test not Performed, reason not otherwise specified (3210F with 8P)|3210F:8P'),
 
 ('PQRS_0067', 'description', 'Hematology: Myelodysplastic Syndrome (MDS) and Acute Leukemias: Baseline Cytogenetic Testing Performed on Bone Marrow'),
 ('PQRS_0067', 'question', 'Did patient have baseline cytogenetic testing performed on bone marrow?<br>Definition:<br>Baseline Cytogenetic Testing – Testing that is performed at time of diagnosis or prior to initiating treatment (transfusion, growth factors, or antineoplastic therapy) for that diagnosis'),
@@ -267,10 +267,10 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`) VALUE
 ('PQRS_0091', 'answer', '4|Topical preparations (including OTC) for acute otitis externa (AOE) not prescribed, reason not otherwise specified (4130F:8P)|4130F:8P'),
 
 ('PQRS_0093', 'description', 'Acute Otitis Externa (AOE): Systemic Antimicrobial Therapy – Avoidance of Inappropriate Use'),
-('PQRS_0001', 'question', 'Patients who were not prescribed systemic antimicrobial therapy'),
-('PQRS_0001', 'answer', '1|Systemic Antimicrobial Therapy not Prescribed (4132F)|4132F'),
-('PQRS_0001', 'answer', '2|Systemic Antimicrobial Therapy Prescribed for Medical Reasons (4131F:1P)|4131F:1P'),
-('PQRS_0001', 'answer', '3|Systemic Antimicrobial Therapy Prescribed (4131F)|4131F'),
+('PQRS_0093', 'question', 'Patients who were not prescribed systemic antimicrobial therapy'),
+('PQRS_0093', 'answer', '1|Systemic Antimicrobial Therapy not Prescribed (4132F)|4132F'),
+('PQRS_0093', 'answer', '2|Systemic Antimicrobial Therapy Prescribed for Medical Reasons (4131F:1P)|4131F:1P'),
+('PQRS_0093', 'answer', '3|Systemic Antimicrobial Therapy Prescribed (4131F)|4131F'),
 
 ('PQRS_0099', 'description', 'Breast Cancer Resection Pathology Reporting: pT Category (Primary Tumor) and pN Category (Regional Lymph Nodes) with Histologic Grade'),
 ('PQRS_0099', 'question', 'Does pathology Report include the pT category, the pN category and the histologic grade?'),
@@ -1564,7 +1564,7 @@ or higher than low CHD risk patient or for any reason other than initial detecti
 ('PQRS_Group_CKD_0121', 'question', 'Did patients have a fasting lipid profile performed at least once within a 12-month period?'),
 ('PQRS_Group_CKD_0121', 'answer', '1|Fasting lipid profile performed (Triglycerides, LDL-C, HDL-C, and Total Cholesterol) (G8725)|G8725'),
 ('PQRS_Group_CKD_0121', 'answer', '2|Clinician has documented reason for not performing fasting lipid profile (e.g., patient declined, other patient reasons) (G8726)|G8726'),
-('PQRS_Group_CKD_0121PQRS_012e', 'answer', '3|Fasting lipid profile not performed, reason not given(G8728)|G8728'),
+('PQRS_Group_CKD_0121', 'answer', '3|Fasting lipid profile not performed, reason not given(G8728)|G8728'),
 
 ('PQRS_Group_CKD_0122', 'description', 'Adult Kidney Disease: Blood Pressure Management<br>Percentage of patient visits for those patients aged 18 years and older with a diagnosis of chronic kidney disease (CKD) (stage 3, 4, or 5, not receiving Renal Replacement Therapy [RRT]) with a blood pressure < 140/90 mmHg OR ≥ 140/90 mmHg with a documented plan of care'),
 ('PQRS_Group_CKD_0122', 'question', 'Patient visits with blood pressure < 140/90 mmHg OR ≥ 140/90 mmHg with a documented plan of care <br>Numerator Instructions: If multiple blood pressure measurements are taken at a single visit, use the most recent measurement taken at that visit. <br>Definition: Plan of Care – A documented plan of care should include one or more of the following: recheck blood pressure within 90 days; initiate or alter pharmacologic therapy for blood pressure control; initiate or alter non-pharmacologic therapy (lifestyle changes) for blood pressure control; documented review of patient’s home blood pressure log which indicates that patient’s blood pressure is or is not well controlled.'),
@@ -1751,7 +1751,7 @@ or higher than low CHD risk patient or for any reason other than initial detecti
 ('PQRS_Group_Diabetes_0001', 'answer', '3|A1c level > 9.0% (3046F)|3046F'),
 ('PQRS_Group_Diabetes_0001', 'answer', '4|A1c check not performed during period (3046F:8P)|3046F:8P'),
 
-('PQRS_Group_Diabetes__0110', 'description', 'Preventive Care and Screening: Influenza Immunization'),
+('PQRS_Group_Diabetes_0110', 'description', 'Preventive Care and Screening: Influenza Immunization'),
 ('PQRS_Group_Diabetes_0110', 'question', 'Did patients received an influenza immunization OR who reported previous receipt of an influenza immunization<p>Numerator Instructions:<br> The numerator for this measure can be met by reporting either administration of an influenza vaccination or that the patient reported previous receipt of the <b>current season’s</b> influenza immunization. If the performance of the numerator is not met, a clinician can report a valid performance exclusion for having not administered an influenza vaccination. For clinicians reporting a performance exclusion for this measure, there should be a clear rationale and documented reason for not administering an influenza immunization if the patient did not indicate previous receipt, which could include a medical reason (e.g., patient allergy), patient reason (e.g., patient declined), or system reason (e.g., vaccination not available). The system reason should be indicated only for cases of disruption or shortage of influenza vaccination supply.<br>Definition:  Previous Receipt – Receipt of the <b>current season’s</b> influenza immunization from another provider OR from same provider prior to the visit to which the measure is applied (typically, prior vaccination would include influenza vaccine given since August 1st).'),
 ('PQRS_Group_Diabetes_0110', 'answer', '1|Influenza Immunization Administered (G8482)|G8482'),
 ('PQRS_Group_Diabetes_0110', 'answer', '2|Influenza Immunization previously received (G8482)|G8482'),
