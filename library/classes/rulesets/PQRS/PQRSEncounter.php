@@ -9,8 +9,8 @@
 */
 
 //require_once(dirname(__FILE__) . "/jsonwrapper/jsonwrapper.php");
-include_once("../../../../interface/globals.php");
-include_once("$srcdir/sql.inc");
+include_once(__DIR__.'/../../../../interface/globals.php');
+include_once($srcdir.'/sql.inc');
 //
 //function listingCDRReminderLog($begin_date='',$end_date='') {
   //if (empty($end_date)) {
