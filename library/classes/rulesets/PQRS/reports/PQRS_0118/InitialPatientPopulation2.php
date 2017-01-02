@@ -23,7 +23,7 @@ class PQRS_0118_InitialPatientPopulation2 implements PQRSFilterIF
 		$query =
 		"SELECT COUNT(b1.code) as count ".  
 		" FROM billing AS b1".
-		" INNER JOIN pqrs_efcc AS codelist_b ON (b1.code = codelist_b.code)". 
+		" INNER JOIN pqrs_efcc2 AS codelist_b ON (b1.code = codelist_b.code)". 
 		" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 		" JOIN patient_data AS p ON (p.pid = b1.pid)".
 		" WHERE b1.pid = ? ".
@@ -38,7 +38,7 @@ class PQRS_0118_InitialPatientPopulation2 implements PQRSFilterIF
 				$query =
 				"SELECT COUNT(b1.code) as count ".  
 				" FROM billing AS b1". 
-				" INNER JOIN pqrs_efcc AS codelist_c ON (b1.code = codelist_c.code)".
+				" INNER JOIN pqrs_efcc2 AS codelist_c ON (b1.code = codelist_c.code)".
 				" WHERE b1.pid = ? ".
 				" AND (b1.code = codelist_c.code AND codelist_c.type = 'pqrs_0118_c');";
 				
@@ -48,7 +48,7 @@ class PQRS_0118_InitialPatientPopulation2 implements PQRSFilterIF
 							$query =
 							"SELECT COUNT(b1.code) as count ".  
 							" FROM billing AS b1". 
-							" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
+							" INNER JOIN pqrs_efcc2 AS codelist_a ON (b1.code = codelist_a.code)".
 							" WHERE b1.pid = ? ".
 							" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0118_a');";
 							

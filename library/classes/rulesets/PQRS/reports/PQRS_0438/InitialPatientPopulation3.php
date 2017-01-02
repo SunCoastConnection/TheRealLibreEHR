@@ -34,7 +34,7 @@ if ($result['count']> 0){
 	"SELECT COUNT(b1.code) as count ".  
 	" FROM billing AS b1". 
 	" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-	" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
+	" INNER JOIN pqrs_efcc5 AS codelist_a ON (b1.code = codelist_a.code)".
 	" WHERE b1.pid = ? ".
 	" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 	" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_a'); ";
@@ -45,7 +45,7 @@ if ($result['count']> 0){
 			"SELECT COUNT(b1.code) as count ".  
 			" FROM billing AS b1". 
 			" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-			" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
+			" INNER JOIN pqrs_efcc5 AS codelist_a ON (b1.code = codelist_a.code)".
 			" WHERE b1.pid = ? ".
 			" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_b'); ";
 			

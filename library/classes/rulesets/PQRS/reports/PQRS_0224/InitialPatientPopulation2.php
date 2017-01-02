@@ -24,7 +24,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
-" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0224_b') ".

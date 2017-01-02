@@ -25,8 +25,8 @@ class PQRS_0001_InitialPatientPopulation implements PQRSFilterIF
 	" INNER JOIN billing AS b2 ON (b1.pid = b2.pid) ". 
 	" JOIN form_encounter AS fe ON (b2.encounter = fe.encounter) ".  
 	" JOIN patient_data AS p ON (b1.pid = p.pid) ". 
-	" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
-	" INNER JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_b.code)".
+	" INNER JOIN pqrs_efcc1 AS codelist_a ON (b1.code = codelist_a.code)".
+	" INNER JOIN pqrs_efcc1 AS codelist_b ON (b2.code = codelist_b.code)".
 	" WHERE b1.pid = ? ".  
 	" AND fe.date >= '".$beginDate."' ".
 	" AND fe.date <= '".$endDate."' ".
