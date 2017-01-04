@@ -23,7 +23,7 @@ $query =
 " FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
-" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_efcc2 AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
@@ -34,7 +34,7 @@ if ($result['count']> 0){
 				    $query =
 					"SELECT COUNT(b1.code) as count ".  
 					" FROM billing AS b1". 
-					" INNER JOIN pqrs_efcc AS codelist_b ON (b1.code = codelist_b.code)".
+					" INNER JOIN pqrs_efcc2 AS codelist_b ON (b1.code = codelist_b.code)".
 					" WHERE b1.pid = ? ".
 					" AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0191_b'); ";
 					

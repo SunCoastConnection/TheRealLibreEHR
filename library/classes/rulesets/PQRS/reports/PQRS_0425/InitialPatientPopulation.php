@@ -25,7 +25,7 @@ class PQRS_0425_InitialPatientPopulation extends PQRSFilter
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 
-" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_efcc5 AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0425_a') ".

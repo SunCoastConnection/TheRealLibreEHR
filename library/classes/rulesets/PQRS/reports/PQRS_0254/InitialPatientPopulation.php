@@ -26,9 +26,9 @@ $query =
 " INNER JOIN facility AS fac ON (fe.facility = fac.id)".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
-" INNER JOIN pqrs_efcc AS codelist_a ON (b1.code = codelist_a.code)".
-" INNER JOIN pqrs_efcc AS codelist_b ON (b2.code = codelist_b.code)".
-" INNER JOIN pqrs_efcc AS codelist_c ON (b3.code = codelist_c.code)".
+" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_efcc3 AS codelist_b ON (b2.code = codelist_b.code)".
+" INNER JOIN pqrs_efcc3 AS codelist_c ON (b3.code = codelist_c.code)".
 " WHERE b1.pid = ? ".
 " AND fac.pos_code = '23' ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
