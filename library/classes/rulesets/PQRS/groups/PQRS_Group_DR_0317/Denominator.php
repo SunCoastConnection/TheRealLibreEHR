@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_Group_DR_0317_Denominator implements PQRSFilterIF
+class PQRS_Group_DR_0317_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Sleep_Apnea_0277_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Sleep_Apnea_0277_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

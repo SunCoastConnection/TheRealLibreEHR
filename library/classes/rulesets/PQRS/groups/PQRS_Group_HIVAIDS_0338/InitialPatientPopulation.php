@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_HIVAIDS_0338_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_HIVAIDS_0338_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CABG_0165_Denominator implements PQRSFilterIF
+class PQRS_Group_CABG_0165_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

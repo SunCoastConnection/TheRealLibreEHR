@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Preventive_0048_Numerator implements PQRSFilterIF
+class PQRS_Group_Preventive_0048_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

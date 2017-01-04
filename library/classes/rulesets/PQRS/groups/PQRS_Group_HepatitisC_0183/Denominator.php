@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_HepatitisC_0183_Denominator implements PQRSFilterIF
+class PQRS_Group_HepatitisC_0183_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

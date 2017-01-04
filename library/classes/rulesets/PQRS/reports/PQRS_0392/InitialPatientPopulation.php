@@ -11,7 +11,7 @@
  ///////This measue has multiple reporting criteria, and might need to be 
  ///////run as multiple measures or multiple denominators.  Check, otherwise 
  ///////you must run this report and manually separate the age populations.
-class PQRS_0392_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_0392_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

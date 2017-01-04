@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_OPEIR_0364_Numerator implements PQRSFilterIF
+class PQRS_Group_OPEIR_0364_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

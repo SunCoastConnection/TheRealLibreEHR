@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_IBD_0270_Denominator implements PQRSFilterIF
+class PQRS_Group_IBD_0270_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

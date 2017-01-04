@@ -14,7 +14,7 @@
 //60 day period, but the test calls for a G code that indicates this status, not a calculation.
 //If desired, a different calculation can be done with  fe.date >= DATE_SUB('".$endDate."', INTERVAL 6 MONTH) etc..
 //and looking for the result as any encounter set.
-class PQRS_Group_HIVAIDS_0340_Numerator implements PQRSFilterIF
+class PQRS_Group_HIVAIDS_0340_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

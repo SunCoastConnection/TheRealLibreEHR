@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_HepatitisC_0390_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_HepatitisC_0390_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

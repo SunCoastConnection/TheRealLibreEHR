@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Parkinsons_0291_Exclusion implements PQRSFilterIF
+class PQRS_Group_Parkinsons_0291_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

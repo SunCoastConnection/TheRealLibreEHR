@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CAD_0242_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_CAD_0242_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

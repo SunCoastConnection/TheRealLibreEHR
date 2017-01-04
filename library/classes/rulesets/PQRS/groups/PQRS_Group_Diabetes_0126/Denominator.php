@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_Group_Diabetes_0126_Denominator implements PQRSFilterIF
+class PQRS_Group_Diabetes_0126_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

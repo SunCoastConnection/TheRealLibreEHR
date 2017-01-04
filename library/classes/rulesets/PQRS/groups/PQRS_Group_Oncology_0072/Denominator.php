@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Oncology_0072_Denominator implements PQRSFilterIF
+class PQRS_Group_Oncology_0072_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

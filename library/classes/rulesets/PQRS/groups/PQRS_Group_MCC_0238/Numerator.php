@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_Group_MCC_0238_Numerator implements PQRSFilterIF
+class PQRS_Group_MCC_0238_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

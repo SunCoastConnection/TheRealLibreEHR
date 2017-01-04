@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_HepatitisC_0401_Numerator implements PQRSFilterIF
+class PQRS_Group_HepatitisC_0401_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

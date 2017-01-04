@@ -33,8 +33,9 @@ abstract class AbstractPQRSReport implements RsReportIF
     protected $_ruleId;
     protected $_beginMeasurement;
     protected $_endMeasurement;
+    protected $_reportOptions;
 
-    public function __construct( array $rowRule, array $patientIdArray, $dateTarget )
+    public function __construct( array $rowRule, array $patientIdArray, $dateTarget, $options )
     {
         // require all .php files in the report's sub-folder
         $className = get_class( $this );
@@ -65,6 +66,7 @@ abstract class AbstractPQRSReport implements RsReportIF
             $this->_beginMeasurement = $tempDateArray[0] . '-01-01 00:00:00';
             $this->_endMeasurement = $tempDateArray[0] . '-12-31 23:59:59';
         }
+        $this->_reportOptions = $options;
     }
 
     public abstract function createPopulationCriteria();
@@ -76,7 +78,7 @@ abstract class AbstractPQRSReport implements RsReportIF
     public function getEndMeasurement() {
         return $this->_endMeasurement;
     }
-    
+
     public function getResults() {
         return $this->_resultsArray;
     }
@@ -85,9 +87,7 @@ abstract class AbstractPQRSReport implements RsReportIF
     {
         $populationCriterias = $this->createPopulationCriteria();
         if ( !is_array( $populationCriterias ) ) {
-            $tmpPopulationCriterias = array();
-            $tmpPopulationCriterias[]= $populationCriterias;
-            $populationCriterias = $tmpPopulationCriterias;
+            $populationCriterias = array( $populationCriterias );
         }
 
         foreach ( $populationCriterias as $populationCriteria )
@@ -104,20 +104,27 @@ abstract class AbstractPQRSReport implements RsReportIF
                 if ( !$initialPatientPopulationFilter instanceof PQRSFilterIF ) {
                     throw new Exception( "InitialPatientPopulation must be an instance of PQRSFilterIF" );
                 }
+                $initialPatientPopulationFilter->setReportOptions($this->_reportOptions);
+
                 $denominator = $populationCriteria->createDenominator();
                 if ( !$denominator instanceof PQRSFilterIF ) {
                     throw new Exception( "Denominator must be an instance of PQRSFilterIF" );
                 }
+                $denominator->setReportOptions($this->_reportOptions);
+
                 $numerators = $populationCriteria->createNumerators();
                 if ( !is_array( $numerators ) ) {
-                    $tmpNumerators = array();
-                    $tmpNumerators[]= $numerators;
-                    $numerators = $tmpNumerators;
-                } 
+                    $numerators = array( $numerators );
+                }
+                foreach ( $numerators as $numerator ) {
+                    $numerator->setReportOptions($this->_reportOptions);
+                }
+
                 $exclusion = $populationCriteria->createExclusion();
                 if ( !$exclusion instanceof PQRSFilterIF ) {
                     throw new Exception( "Exclusion must be an instance of PQRSFilterIF" );
                 }
+                $exclusion->setReportOptions($this->_reportOptions);
 
                 //Denominator Exception added
                 $denomExept = false;
@@ -133,25 +140,25 @@ abstract class AbstractPQRSReport implements RsReportIF
                 $patExclArr = array();
                 $patExceptArr = array();
                 $numeratorPatientPopulations = $this->initNumeratorPopulations( $numerators );
-                foreach ( $this->_pqrsPopulation as $patient ) 
-                { 
-                    if ( !$initialPatientPopulationFilter->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) ) 
+                foreach ( $this->_pqrsPopulation as $patient )
+                {
+                    if ( !$initialPatientPopulationFilter->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) )
                     {
                         continue;
                     }
-                        
+
                     $initialPatientPopulation++;
 
                     // If itemization is turned on, then record the "Initial Patient population" item
                     if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
                         insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 3, $patient->id);
                     }
-                    
-                    if ( !$denominator->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) ) 
-                    { 
+
+                    if ( !$denominator->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) )
+                    {
                         continue;
                     }
-                            
+
                     $denominatorPatientPopulation++;
 
                     if ( $exclusion->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) )
@@ -169,12 +176,12 @@ abstract class AbstractPQRSReport implements RsReportIF
                             $patExceptArr[] = $patient->id;
                         }
                     }
-                     
+
                     foreach ( $numerators as $numerator ) {
                         $this->testNumerator( $patient, $numerator, $numeratorPatientPopulations );
                     }
                 }
-                
+
                 // tally results, run exclusion on each numerator
                 $pass_filt = $denominatorPatientPopulation;
                 $exclude_filt = $exclusionsPatientPopulation;
@@ -206,7 +213,7 @@ abstract class AbstractPQRSReport implements RsReportIF
 
         return $this->_resultsArray;
     }
-    
+
     private function initNumeratorPopulations( array $numerators )
     {
         $numeratorPatientPopulations = array();
@@ -218,7 +225,7 @@ abstract class AbstractPQRSReport implements RsReportIF
 
     private function testNumerator( $patient, $numerator, &$numeratorPatientPopulations )
     {
-        if ( $numerator instanceof PQRSFilterIF  ) 
+        if ( $numerator instanceof PQRSFilterIF  )
         {
             if ( $numerator->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) ) {
 
@@ -226,19 +233,18 @@ abstract class AbstractPQRSReport implements RsReportIF
 
                 // If itemization is turned on, then record the "passed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
-                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $numerator->getTitle()); 
+                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $numerator->getTitle());
                 }
- 
             }
             else {
                 // If itemization is turned on, then record the "failed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
-                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $numerator->getTitle());   
+                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $numerator->getTitle());
                 }
 
             }
-        } 
-        else 
+        }
+        else
         {
             throw new Exception( "Numerator must be an instance of PQRSFilterIF" );
         }

@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0392_Denominator implements PQRSFilterIF
+class PQRS_0392_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

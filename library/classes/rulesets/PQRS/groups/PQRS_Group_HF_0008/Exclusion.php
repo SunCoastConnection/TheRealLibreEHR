@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_HF_0008_Exclusion implements PQRSFilterIF
+class PQRS_Group_HF_0008_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

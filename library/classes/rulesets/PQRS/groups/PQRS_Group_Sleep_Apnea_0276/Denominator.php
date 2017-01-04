@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Sleep_Apnea_0276_Denominator implements PQRSFilterIF
+class PQRS_Group_Sleep_Apnea_0276_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

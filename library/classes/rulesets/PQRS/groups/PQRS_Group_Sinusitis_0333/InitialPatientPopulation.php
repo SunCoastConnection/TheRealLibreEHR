@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Sinusitis_0333_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Sinusitis_0333_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

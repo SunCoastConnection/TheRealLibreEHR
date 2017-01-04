@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Cataracts_0191_Denominator implements PQRSFilterIF
+class PQRS_Group_Cataracts_0191_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

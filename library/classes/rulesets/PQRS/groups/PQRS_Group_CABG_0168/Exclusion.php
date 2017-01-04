@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CABG_0168_Exclusion implements PQRSFilterIF
+class PQRS_Group_CABG_0168_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Diabetes_0001_Denominator implements PQRSFilterIF
+class PQRS_Group_Diabetes_0001_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

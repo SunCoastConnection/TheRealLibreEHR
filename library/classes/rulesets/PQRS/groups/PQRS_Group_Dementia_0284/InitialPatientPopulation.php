@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Dementia_0284_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Dementia_0284_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

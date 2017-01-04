@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0342_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_0342_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

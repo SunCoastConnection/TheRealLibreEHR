@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CABG_0164_Numerator implements PQRSFilterIF
+class PQRS_Group_CABG_0164_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

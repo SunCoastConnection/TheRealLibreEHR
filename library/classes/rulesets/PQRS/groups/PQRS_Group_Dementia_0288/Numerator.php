@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Dementia_0288_Numerator implements PQRSFilterIF
+class PQRS_Group_Dementia_0288_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

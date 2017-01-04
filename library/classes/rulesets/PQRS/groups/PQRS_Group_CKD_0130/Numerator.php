@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CKD_0130_Numerator implements PQRSFilterIF
+class PQRS_Group_CKD_0130_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Oncology_0143_Numerator implements PQRSFilterIF
+class PQRS_Group_Oncology_0143_Numerator extends PQRSFilter
 {
     public function getTitle()
     {

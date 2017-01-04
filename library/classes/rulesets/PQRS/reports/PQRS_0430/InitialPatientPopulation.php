@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class PQRS_0430_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_0430_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Asthma_0402_Exclusion implements PQRSFilterIF
+class PQRS_Group_Asthma_0402_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Diabetes_0117_InitialPatientPopulation implements PQRSFilterIF
+class PQRS_Group_Diabetes_0117_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {

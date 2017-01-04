@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_HIVAIDS_0134_Denominator implements PQRSFilterIF
+class PQRS_Group_HIVAIDS_0134_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_Parkinsons_0291_Denominator implements PQRSFilterIF
+class PQRS_Group_Parkinsons_0291_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

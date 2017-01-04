@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  ///this measure has a wierd AND/OR that makes clinical sense, but is not shown on diagram.
-class PQRS_0348_InitialPatientPopulation1 implements PQRSFilterIF
+class PQRS_0348_InitialPatientPopulation1 extends PQRSFilter
 {
     public function getTitle() 
     {

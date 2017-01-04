@@ -11,7 +11,7 @@
  
 */
 
-class PQRS_Group_CAD_0007_Denominator implements PQRSFilterIF
+class PQRS_Group_CAD_0007_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {
