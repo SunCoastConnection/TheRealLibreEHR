@@ -243,7 +243,7 @@ class ReportTypes
         "PQRS_0347" => array( ReportTypes::PQRS, "PQRS_0347" ),
         "PQRS_0348" => array( ReportTypes::PQRS, "PQRS_0348" ),
         "PQRS_0358" => array( ReportTypes::PQRS, "PQRS_0358" ),
-        "PQRS_0370" => array( ReportTypes::PQRS, "PQRS_0383" ),
+        "PQRS_0370" => array( ReportTypes::PQRS, "PQRS_0370" ),
         "PQRS_0383" => array( ReportTypes::PQRS, "PQRS_0383" ),
         "PQRS_0384" => array( ReportTypes::PQRS, "PQRS_0384" ),
         "PQRS_0385" => array( ReportTypes::PQRS, "PQRS_0385" ),
