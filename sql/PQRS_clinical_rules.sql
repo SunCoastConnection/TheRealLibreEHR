@@ -275,6 +275,7 @@ INSERT INTO `clinical_rules` (`id`, `pid`, `active_alert_flag`, `passive_alert_f
 ('PQRS_0347', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0347', 1, 0, 1, 0, 'X', 0),
 ('PQRS_0348', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0348', 1, 0, 1, 0, 'X', 0),
 ('PQRS_0358', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0358', 1, 0, 1, 0, 'X', 0),
+('PQRS_0370', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0370', 1, 0, 1, 0, 'X', 0),
 ('PQRS_0383', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0383', 1, 0, 1, 0, 'X', 0),
 ('PQRS_0384', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0384', 1, 0, 1, 0, 'X', 0),
 ('PQRS_0385', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0385', 1, 0, 1, 0, 'X', 0),
