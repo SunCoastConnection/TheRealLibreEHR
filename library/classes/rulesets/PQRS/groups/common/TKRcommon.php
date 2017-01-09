@@ -15,7 +15,8 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " INNER JOIN pqrs_group AS codelist_a ON (b1.code = codelist_a.code)".
 " JOIN patient_data AS p ON (b1.pid = p.pid)". 
-" WHERE b1.pid = ? ".  
+" WHERE b1.pid = ? ".
+" AND p.provider_id = '".$this->_reportOptions['provider']."'".  
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_TKR_a') ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ;";
