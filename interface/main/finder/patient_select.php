@@ -120,6 +120,17 @@ form {
     background-color: #336699;
     color: white;
 }
+.blink {
+	animation-duration: 1s;
+	animation-name: blink;
+	animation-iteration-count: infinite;
+	animation-timing-function: steps(2,start);
+}
+@keyframes blink {
+	80% {
+		visibility: hidden;
+	}
+}
 </style>
 
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-1.2.2.min.js"></script>
@@ -471,6 +482,9 @@ if ($fend > $count) $fend = $count;
 <?php
 }
 else {	//  $from_page DOES == "pqrs_report"  ?>
+
+	☺ <span class="billing">You <span class="blink"> MUST</span> run a new report to see your changes<span class="blink">!</span></span>  ☺ 
+
 	<table>
 	<tr>
 	<th class="srName"><?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES);?></th>
