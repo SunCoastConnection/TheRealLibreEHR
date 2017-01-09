@@ -747,7 +747,7 @@ if (strpos($type, 'pqrs_individual') !== false ) {
       require_once( dirname(__FILE__)."/classes/rulesets/ReportManager.php");
       $manager = new ReportManager();
       if ($rowRule['amc_flag']|| $rowRule['pqrs_individual_2016_flag'] || $rowRule['pqrs_individual_2015_flag'] || $rowRule['pqrs_groups_2016_flag']|| $rowRule['pqrs_groups_2015_flag']) {
-	error_log("*DEBUG*: clinical_rules: About to runReport for ".$rowRule['id']);
+	error_log("*DEBUG*: clinical_rules: Site: ".$_SESSION['site_id']."  About to runReport for ".$rowRule['id']);
         // Send array of dates ('dateBegin' and 'dateTarget')
         $tempResults = $manager->runReport( $rowRule, $patientData, $dateArray, $options );
       }
