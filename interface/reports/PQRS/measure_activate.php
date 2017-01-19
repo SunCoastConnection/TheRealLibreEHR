@@ -394,6 +394,39 @@ foreach($rules as $rule) {
 								</ul>
 							</li>
 							<li>
+								<ul>
+<?php
+
+$rules = sqlStatementNoLog(
+	'SELECT `id`, `active`
+	FROM `clinical_rules`
+	WHERE `id` LIKE "pre_%"
+		AND `id` NOT LIKE "%_Group_%"
+	ORDER BY `id` ASC;'
+);
+
+foreach($rules as $rule) {
+	$id = $rule['id'];
+	$active = $rule['active'];
+
+	$idParts = explode('_', $id);
+	array_shift($idParts);
+	$label = implode(' ', $idParts);
+
+?>
+									<li class="checkbox-button">
+										<input type="hidden" name="pqrsRulesInitial[<?php echo $id; ?>]" value="<?php echo $active ?>">
+										<input type="checkbox" class="measure" id="<?php echo $id; ?>" name="pqrsRules[<?php echo $id; ?>]" value="1"<?php if($active == 1) { echo ' checked="checked"'; } ?>>
+										<label for="<?php echo $id; ?>"><?php echo "pre-select ".$label; ?></label>
+									</li>
+<?php
+
+}
+
+?>
+
+
+							<li>
 								<input type="checkbox" id="group-toggle">
 								<label for="group-toggle">Group Measures</label>
 								<ul>
