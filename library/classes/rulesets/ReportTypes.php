@@ -300,6 +300,7 @@ class ReportTypes
         "PQRS_0436" => array( ReportTypes::PQRS, "PQRS_0436" ),
         "PQRS_0437" => array( ReportTypes::PQRS, "PQRS_0437" ),
         "PQRS_0438" => array( ReportTypes::PQRS, "PQRS_0438" ),
+        "pre_0438" => array( ReportTypes::PQRS, "pre_0438" ),
         "PQRS_0439" => array( ReportTypes::PQRS, "PQRS_0439" ),
         "PQRS_always_met" => array( ReportTypes::PQRS, "PQRS_always_met" ),
         "PQRS_Group_AOE_0091" => array( ReportTypes::PQRS, "PQRS_Group_AOE_0091" ),

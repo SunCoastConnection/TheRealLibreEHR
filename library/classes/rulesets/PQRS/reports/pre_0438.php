@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
 
-class pre extends AbstractPQRSReport {   
+class pre_0438 extends AbstractPQRSReport {   
     public function createPopulationCriteria() {
 		$populationCriteria = array();
 
