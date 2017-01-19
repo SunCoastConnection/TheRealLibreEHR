@@ -1318,11 +1318,11 @@ or higher than low CHD risk patient or for any reason other than initial detecti
 ('PQRS_0439', 'answer', '2|Documentation of medical reason(s) for a colonoscopy performed on a patient greater than 85 years of age (e.g., last colonoscopy incomplete, last colonoscopy had inadequate prep, iron deficiency anemia, lower gastrointestinal bleeding, Crohn’s Disease (i.e., regional enteritis), familial history of adenomatous polyposis, Lynch Syndrome (i.e., hereditary non-polyposis colorectal cancer), inflammatory bowel disease, ulcerative colitis, abnormal finding of gastrointestinal tract, or changes in bowel habits) (G9660)|G9660'),
 ('PQRS_0439', 'answer', '3|Patients greater than 85 years of age who received a routine colonoscopy for a reason other than the following: an assessment of signs/symptoms of GI tract illness, and/or the patient is considered high risk, and/or to follow-up on previously diagnoses advance lesions (G9661)|G9661'),
 
-('pre_438', 'description', 'Pre-selection of patients for Measure 438 -- "Statin Therapy for the Prevention and Treatment of Cardiovascular Disease" <br>*** Please see Measure Documentation for Definitions and Instructions *** '),
-('pre_438', 'question', 'Patients who may qualify for Measure 438.<br>Select one ONLY if it applies to the patient:<br><ul><li>Previously diagnosed or have an active diagnosis of Clinical ASCVD<li>Any fasting or direct LDL-C laboratory test result >= 190 mg/dL<li>Type 1 or Type 2 diabetes diagnosis AND The highest fasting or direct LDL-C laboratory test result of 70--189 mg/dL in or two years prior to the beginning of the measurement period</ul>*** Please see Measure Documentation for Definitions and Instructions ***'),
-('pre_438', 'answer', '1|Previous or active diagnosis of Clinical ASCVD (G9662)|G9662'),
-('pre_438', 'answer', '2|Fasting or direct LDL-C laboratory test result >= 190 mg/dL (G9663)|G9663'),
-('pre_438', 'answer', '3|Type 1 or Type 2 diabetes diagnosis AND Fasting or direct LDL-C laboratory test result (as required) (G9666)|G9666'),
+('pre_0438', 'description', 'Pre-selection of patients for Measure 438 -- "Statin Therapy for the Prevention and Treatment of Cardiovascular Disease" <br>*** Please see Measure Documentation for Definitions and Instructions *** '),
+('pre_0438', 'question', 'Patients who may qualify for Measure 438.<br>Select one ONLY if it applies to the patient:<br><ul><li>Previously diagnosed or have an active diagnosis of Clinical ASCVD<li>Any fasting or direct LDL-C laboratory test result >= 190 mg/dL<li>Type 1 or Type 2 diabetes diagnosis AND The highest fasting or direct LDL-C laboratory test result of 70--189 mg/dL in or two years prior to the beginning of the measurement period</ul>*** Please see Measure Documentation for Definitions and Instructions ***'),
+('pre_0438', 'answer', '1|Previous or active diagnosis of Clinical ASCVD (G9662)|G9662'),
+('pre_0438', 'answer', '2|Fasting or direct LDL-C laboratory test result >= 190 mg/dL (G9663)|G9663'),
+('pre_0438', 'answer', '3|Type 1 or Type 2 diabetes diagnosis AND Fasting or direct LDL-C laboratory test result (as required) (G9666)|G9666'),
 
 ('PQRS_0XXX', 'question', 'Please see measure documentation for specifics.'),
 
