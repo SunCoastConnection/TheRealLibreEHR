@@ -45,7 +45,7 @@ class PQRS_Group_CP_0438_Denominator extends PQRSFilter
 							" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 							" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '40' AND '75'  ".
 							" AND b1.code = 'G9666' ".
-							" AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_b');
+							" AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_b');";
 							
 							$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 							if ($result['count']> 0){ $counted=1;} else {$counted=0;} }	    
