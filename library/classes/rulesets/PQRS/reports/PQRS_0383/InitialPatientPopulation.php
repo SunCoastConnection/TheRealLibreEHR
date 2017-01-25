@@ -24,7 +24,8 @@ class PQRS_0383_InitialPatientPopulation extends PQRSFilter
 		" JOIN patient_data AS p ON (p.pid = b1.pid)".
 		" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 		" INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
-		" WHERE b1.pid = ? ".
+			" WHERE b1.pid = ? ".
+    " AND p.providerID = '".$this->_reportOptions['provider']."'".
 		" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 		" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0383_a');";
 		
@@ -36,7 +37,8 @@ class PQRS_0383_InitialPatientPopulation extends PQRSFilter
 				"SELECT COUNT(b1.code) as count ".  
 				" FROM billing AS b1". 
 				" INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
-				" WHERE b1.pid = ? ".
+					" WHERE b1.pid = ? ".
+    " AND p.providerID = '".$this->_reportOptions['provider']."'".
 				" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0383_b');";
 				
 				$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

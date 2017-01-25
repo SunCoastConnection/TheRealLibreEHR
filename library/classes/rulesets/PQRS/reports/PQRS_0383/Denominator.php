@@ -32,7 +32,8 @@ $query =
 " JOIN pqrs_ptsf AS codelist_e ON (b5.code = codelist_e.code)".
 " JOIN pqrs_ptsf AS codelist_f ON (b6.code = codelist_f.code)".
 " JOIN pqrs_ptsf AS codelist_g ON (b7.code = codelist_g.code)".
-" WHERE b1.pid = ? ".
+	" WHERE b1.pid = ? ".
+    " AND p.providerID = '".$this->_reportOptions['provider']."'".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= '".$endDate."' ".
 " AND ((b3.code = codelist_c.code AND codelist_c.type = 'pqrs_0383_c') ".
