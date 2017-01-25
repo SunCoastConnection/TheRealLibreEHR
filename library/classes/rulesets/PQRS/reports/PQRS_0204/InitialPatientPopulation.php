@@ -37,8 +37,7 @@ $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
 " INNER JOIN pqrs_efcc3 AS codelist_b ON (b1.code = codelist_b.code)".
-	" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" WHERE b1.pid = ? ".
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0204_b' ); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));	

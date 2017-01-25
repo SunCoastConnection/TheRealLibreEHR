@@ -24,8 +24,8 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
-	" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" WHERE b1.pid = ? ".
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0259_a') ";
@@ -43,8 +43,8 @@ if ($result['count']> 0){
 								" SELECT COUNT(b1.code) AS count".  
 								" FROM billing AS b1".
 								" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-									" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+								" WHERE b1.pid = ? ".
+    							" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 								" AND fe.date >= '".$beginDate."' ".
 								" AND fe.date <= '".$endDate."' ".
 								" AND NOT b1.code = '9004F'; ";
@@ -59,8 +59,8 @@ if ($result['count']> 0){
 								" SELECT COUNT(b1.code) AS count".  
 								" FROM billing AS b1".
 								" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-									" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+								" WHERE b1.pid = ? ".
+    							" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 								" AND fe.date >= '".$beginDate."' ".
 								" AND fe.date <= '".$endDate."' ".
 								" AND NOT b1.code IN ('9003F','9004F'); ";

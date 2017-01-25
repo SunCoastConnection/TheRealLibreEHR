@@ -40,7 +40,6 @@ class PQRS_0118_InitialPatientPopulation1 extends PQRSFilter
 				" FROM billing AS b1". 
 				" INNER JOIN pqrs_efcc2 AS codelist_b ON (b1.code = codelist_b.code)".
 					" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 				" AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0118_b');";
 				
 				$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
