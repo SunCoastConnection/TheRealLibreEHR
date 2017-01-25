@@ -25,7 +25,7 @@ class PQRS_0008_InitialPatientPopulation1 extends PQRSFilter
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " INNER JOIN pqrs_efcc1 AS codelist_b ON (b1.code = codelist_b.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'". 
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'". 
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18'  ". 
 " AND (b1.code = codelist_b.code AND codelist_b.type = 'pqrs_0008_b') ";
@@ -40,7 +40,7 @@ if ($result['count']> 1){
 		" JOIN patient_data AS p ON (b1.pid = p.pid)".
 		" INNER JOIN pqrs_efcc1 AS codelist_a ON (b1.code = codelist_a.code)".		
 			" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'". 
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'". 
 		" AND fe.date >= '".$beginDate."' ".
 		" AND fe.date <= '".$endDate."' ".
 		" AND b2.code = 'G8923' ".

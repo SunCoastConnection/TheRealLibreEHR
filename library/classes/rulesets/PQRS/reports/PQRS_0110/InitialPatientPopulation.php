@@ -25,7 +25,7 @@ $query =
 " JOIN patient_data AS p ON (b1.pid = p.pid)".
 " INNER JOIN pqrs_poph AS codelist_a ON (b1.code = codelist_a.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND ((fe.date BETWEEN '".$beginDate."' AND DATE_SUB('".$beginDate."', INTERVAL 9 MONTH))".
 " OR (fe.date BETWEEN DATE_SUB('".$beginDate."', INTERVAL 9 MONTH) AND '".$endDate."'));";
 " AND TIMESTAMPDIFF(MONTH,p.DOB,fe.date) >= '6' ".

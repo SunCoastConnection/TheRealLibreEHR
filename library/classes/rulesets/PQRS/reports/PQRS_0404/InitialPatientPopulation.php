@@ -29,7 +29,7 @@ $query =
 " INNER JOIN billing AS b4 ON (b4.pid = b1.pid)".
 " INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date)>='18' ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0404_a')". //using other table

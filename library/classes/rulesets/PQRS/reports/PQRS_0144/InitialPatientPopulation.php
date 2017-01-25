@@ -27,7 +27,7 @@ $query =
 " INNER JOIN pqrs_ptct AS codelist_a ON (b1.code = codelist_a.code)".
 " INNER JOIN pqrs_ptct AS codelist_b ON (b2.code = codelist_b.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b3.code = '1125F' AND b1.modifier ='')".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0144_a') ".
@@ -44,7 +44,7 @@ if ($result['count']> 0){ return true;} else {
 " INNER JOIN pqrs_ptct AS codelist_a ON (b1.code = codelist_a.code)".
 " INNER JOIN pqrs_ptct AS codelist_b ON (b2.code = codelist_b.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b3.code = '1125F' AND b1.modifier ='')".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0144_c') ".

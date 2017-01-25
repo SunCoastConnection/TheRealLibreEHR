@@ -25,7 +25,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '21' ".
 " AND b1.code = 'G9663'; ";
 
@@ -37,7 +37,7 @@ if ($result['count']> 0){
 	" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 	" INNER JOIN pqrs_efcc5 AS codelist_a ON (b1.code = codelist_a.code)".
 		" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 	" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 	" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0438_a'); ";
 	

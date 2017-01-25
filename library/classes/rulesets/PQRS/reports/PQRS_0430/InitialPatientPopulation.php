@@ -28,7 +28,7 @@ class PQRS_0430_InitialPatientPopulation extends PQRSFilter
 "  JOIN billing AS b3 ON (b3.pid = b1.pid)".
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0430_a') ".

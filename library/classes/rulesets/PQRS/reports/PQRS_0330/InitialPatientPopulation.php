@@ -28,7 +28,7 @@ $query =
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b2.code = codelist_a.code)".
 " INNER JOIN pqrs_ptsf AS codelist_b ON (b3.code = codelist_b.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND b1.code ='G9240'".

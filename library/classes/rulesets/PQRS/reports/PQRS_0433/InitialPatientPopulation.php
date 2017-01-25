@@ -25,7 +25,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0433_a'); ";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 

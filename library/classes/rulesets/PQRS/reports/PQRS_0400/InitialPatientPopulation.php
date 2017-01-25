@@ -22,7 +22,7 @@ $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND  b1.code = 'B18.2' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
@@ -34,7 +34,7 @@ if ($result['count']== 0){
 	" JOIN patient_data AS p ON (p.pid = b1.pid)". 
 	" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 		" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 	" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 	" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
 	" AND b1.code IN('90951', '90952', '90953', '90954', '90955',".

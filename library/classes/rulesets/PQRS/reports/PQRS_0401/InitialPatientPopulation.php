@@ -25,7 +25,7 @@ class PQRS_0401_InitialPatientPopulation extends PQRSFilter
 		" JOIN patient_data AS p ON (p.pid = b1.pid)".
 		" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
 			" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 		" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 		" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 		" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0401_a');";
@@ -39,7 +39,7 @@ class PQRS_0401_InitialPatientPopulation extends PQRSFilter
 				" FROM billing AS b1". 
 				" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
 					" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 				" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0401_b');";
 				
 				$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
@@ -50,7 +50,7 @@ class PQRS_0401_InitialPatientPopulation extends PQRSFilter
 							" FROM billing AS b1". 
 							" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
 								" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 							" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0401_c');";
 							
 							$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

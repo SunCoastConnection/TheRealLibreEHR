@@ -24,7 +24,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code IN('77057','G0202')".
 " AND b2.code = 'Z12.31'; ";

@@ -27,7 +27,7 @@ $query =
 " INNER JOIN pqrs_efcc3 AS codelist_a ON (b2.code = codelist_a.code)".
 " INNER JOIN pqrs_efcc3 AS codelist_b ON (b3.code = codelist_b.code)".
 	" WHERE b1.pid = ? ".
-    " AND p.providerID = '".$this->_reportOptions['provider']."'".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code ='G9506'".
 " AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0337_a') ".
