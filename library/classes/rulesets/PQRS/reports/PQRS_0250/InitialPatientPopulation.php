@@ -23,7 +23,8 @@ class PQRS_0250_InitialPatientPopulation extends PQRSFilter
 " FROM billing AS b1".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" WHERE b1.pid = ? ".
+	" WHERE b1.pid = ? ".
+    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = '88309' ".
 " AND b1.code = 'C61'; ";
