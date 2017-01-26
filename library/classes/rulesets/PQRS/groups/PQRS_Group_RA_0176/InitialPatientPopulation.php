@@ -21,8 +21,10 @@ class PQRS_Group_RA_0176_InitialPatientPopulation extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 require(__DIR__."/../common/RAcommon.php");
+if ($counted == 1){
+	$counted=0;
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-if ($result['count']> 0){ return true;} else {return false;}  
+if ($result['count']> 0){ return true;} else {return false;} }else{return false;}  
     }
 }
 
