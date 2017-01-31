@@ -1321,7 +1321,7 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 		if(acl_check('admin', 'super')) {
 			genMiscLink('RTop', 'rep', '0', xl('Delete Old Reports'), 'main/PQRS/truncate_reports.php');
 			genMiscLink('RTop', 'rep', '0', xl('Remove Provider Assignments'), 'main/PQRS/reset_provider_to_unassigned.php');
-
+			genMiscLink('RTop', 'rep', '0', xl('Provider Encounter Counts'), 'main/PQRS/provider_encounter_counts.php');
 			genMiscLink('RTop', 'rep', '0', xl('Client Database Import'), 'main/PQRS/import_data.php');
 		}
 		genTreeLink('RTop', 'pwd', xl('Change Your Password'));
