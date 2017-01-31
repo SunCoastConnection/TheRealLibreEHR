@@ -108,7 +108,7 @@ foreach($myProviderList as $row) {
 
 // Total Medicare Encounters
 	$query1=
-	"SELECT COUNT(*) as count ".
+	"SELECT COUNT(  DISTINCT fe.encounter ) as count ".
 	" FROM form_encounter AS fe ".
 	" LEFT OUTER JOIN insurance_data i on (i.pid=fe.pid) ".
 	" INNER JOIN insurance_companies c on (c.id = i.provider) ".
