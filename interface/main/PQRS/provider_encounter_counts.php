@@ -102,31 +102,35 @@ foreach($myProviderList as $row) {
 	"SELECT `id` as id, `fname` as fname, `lname` as lname FROM users ".
 	" WHERE id = ".$myProvider.";";
 	$result = sqlFetchArray(sqlStatement($query));
-	echo "   <td>".htmlspecialchars($result['id'])."</td>\n";
-	echo "   <td>".htmlspecialchars($result['fname'])."</td>\n";
-	echo "   <td>".htmlspecialchars($result['lname'])."</td>\n"; 
+	echo "   <td>".htmlspecialchars($myProvider)."</td>\n";
+	echo "   <td>".htmlspecialchars($result['lname'])."</td>\n";
+	echo "   <td>".htmlspecialchars($result['fname'])."</td>\n"; 
 
 // Total Medicare Encounters
-	$query=
-	"SELECT COUNT(fe.provider_id) as count ".
+	$query1=
+	"SELECT COUNT(*) as count ".
 	" FROM form_encounter AS fe ".
-	" INNER JOIN insurance_data i on (i.pid=fe.pid) ".
-	" JOIN insurance_companies c on (c.id = i.provider) ".
+	" LEFT OUTER JOIN insurance_data i on (i.pid=fe.pid) ".
+	" INNER JOIN insurance_companies c on (c.id = i.provider) ".
 	" WHERE c.freeb_type = 2 ".
+	" AND i.type='primary' ".
 	" AND fe.provider_id = ".$myProvider.";";
-	$result=sqlFetchArray(sqlStatement($query));
-	echo "   <td>".$result['count']."</td>\n"; 
-	$totalMedicare=$totalMedicare+$result['count'];
+	$result=sqlFetchArray(sqlStatement($query1));
+	$myCount1=$result['count'];
+	echo "   <td>".$myCount1."</td>\n"; 
+	$totalMedicare+=$result['count'];
 
 // Total Encounters
-	$query=
-	"SELECT COUNT(fe.provider_id) as count ".
+	$query2=
+	"SELECT COUNT(*) as count ".
 	" FROM form_encounter AS fe ".
 	" WHERE fe.provider_id = ".$myProvider.";";
-	$result=sqlFetchArray(sqlStatement($query));
-        echo "   <td>".$result['count']."</td>\n";
+	$result=sqlFetchArray(sqlStatement($query2));
+	$myCount2=$result['count'];
+	echo "   <td>".$myCount2."</td>\n";
+
 	echo "  </tr>\n";
-	$totalEncounters=$totalEncounters+$result['count'];
+	$totalEncounters+=$result['count'];
 }
 echo " <tr class=\"report_totals\">\n";
 echo "  <td colspan='3'>\n";
@@ -141,6 +145,3 @@ echo "\n  <td colspan='1'>\n   ".$totalEncounters."\n  </td>
 </table>
 
 </html>
-
-
-
