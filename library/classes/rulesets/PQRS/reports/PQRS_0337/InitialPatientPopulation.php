@@ -22,18 +22,32 @@ $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
-" INNER JOIN pqrs_efcc3 AS codelist_a ON (b2.code = codelist_a.code)".
-" INNER JOIN pqrs_efcc3 AS codelist_b ON (b3.code = codelist_b.code)".
-	" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code ='G9506'".
-" AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0337_a') ".
-" AND (b3.code = codelist_b.code AND codelist_b.type = 'pqrs_0337_b'); ";
+" AND b1.code ='G9506'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;} else {return false;} 
+if ($result['count']> 0){ return true;} else {
+    
+            $query =
+            "SELECT COUNT(b1.code) as count ".  
+            " FROM billing AS b1". 
+            " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+            " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
+            " INNER JOIN pqrs_efcc3 AS codelist_b ON (b1.code = codelist_b.code)".
+            " INNER JOIN pqrs_efcc3 AS codelist_a ON (b2.code = codelist_a.code)".
+            " WHERE b1.pid = ? ".
+            " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+            " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+            " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0337_b') ".
+            " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0337_a'); ";
+            
+            $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+            if ($result['count']> 0){ return true;} else {return false;}
+    
+    
+    
+    
+        } 
     }
 }
