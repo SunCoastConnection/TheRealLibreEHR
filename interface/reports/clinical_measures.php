@@ -624,7 +624,7 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('Print'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-<?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_group_2016'))) { ?>
+<?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
                       <a href="#" id="genPQRS" class='css_button' onclick='return downloadQRDA()'>
                         <span>
                           <?php echo htmlspecialchars(xl('Generate PQRS 2015 STUB'), ENT_NOQUOTES); ?>
@@ -635,7 +635,7 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('Generate PQRS 2016 STUB (GenXml reference)'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-                      <a href="interface//reports/generate_pqrs_xml.php" id="xmlc_button" class='css_button' >
+                      <a href="generate_pqrs_xml.php" id="xmlc_button" class='css_button' >
                         <span>
                           <?php echo htmlspecialchars(xl('Generate PQRS 2016 (Bryan test)'), ENT_NOQUOTES); ?>
                         </span>
