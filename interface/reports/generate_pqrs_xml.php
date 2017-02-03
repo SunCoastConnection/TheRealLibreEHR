@@ -186,7 +186,7 @@ if [ $WAIVER_SIGNED != "Y" ] ; then
 fi
 */
 $ENCOUNTER_FROM_DATE="01-01-2016";
-$ENCOUNTER_TO_DATE="12-31-2016"
+$ENCOUNTER_TO_DATE="12-31-2016";
 
 /*
 echo "Which Measure Group are you reporting on?"
@@ -211,11 +211,10 @@ FILE_OF=`ask "How many total Measures are you reporting on?
 "`	# Total number of XML files
 */
 # LOOP!!!!!!!!!!!!!!!!!!!!!!!!!!!
-$FILE_NUMBER=1;							# Number 1 of 5
+$FILE_NUMBER="1";							# Number 1 of 5
 
 //while ( [ $FILE_NUMBER -le $FILE_OF ] ) ; do
 
-	echo;
 	echo "For ".$FILE_NUMBER."st measure:";
 //	PQRS_MEASURE_NUMBER=`ask "What is PQRS Measure Number of measure "$FILE_NUMBER"?
 //"`
@@ -237,45 +236,45 @@ $FILE_NUMBER=1;							# Number 1 of 5
 //	if [ $MEASURE_GROUP_ID = "X" ] ; then
 //		REPORTING_RATE=$(printf %.2f $( echo "scale=4;(($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100" |bc ))
 #<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
-		echo "* Your Reporting Rate is  $REPORTING_RATE %";
+		echo "* Your Reporting Rate is  ".$REPORTING_RATE." %\n";
 //	fi
 
 	#PERFORMANCE_RATE=`ask "What is Performance Rate? (i.e. 100.00)"`
 //	PERFORMANCE_RATE=$(printf %.2f $( echo "scale=4;($MEETS_PERFORMANCE_INSTANCES/($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES) ) * 100" | bc ))
 #<meets-performance-instances> / [(<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>) - <performance-exclusion-instances>]
-	echo "* Your Performance Rate is $PERFORMANCE_RATE %";
+	echo "* Your Performance Rate is ".$PERFORMANCE_RATE." %\n";
 
 
 # ==============================================================
 #  Generate XML
 //	OUTFILE_NAME=$OUTFILE_BASENAME-$FILE_NUMBER.xml
-	echo "Generating File number $FILE_NUMBER: $OUTFILE_NAME ";
+	echo "Generating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n";
 
-	echo '<?xml version="1.0" encoding="utf-8"?>'; // > $OUTFILE_NAME
-	echo '<submission type="PQRS-REGISTRY" version="7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Registry_Payment.xsd">';
-	echo "  <file-audit-data>";
-	echo "    <create-date>$CREATE_DATE</create-date>";
-	echo "    <create-time>$CREATE_TIME</create-time>";
-	echo "    <create-by>$CREATOR</create-by>";
-	echo "    <version>$VERSION</version>";
-	echo "    <file-number>$FILE_NUMBER</file-number>";
-	echo "    <number-of-files>$FILE_OF</number-of-files>";
-	echo "  </file-audit-data>";
-	echo "  <registry>";
-	echo "    <registry-name>$REGISTRY_NAME</registry-name>";
-	echo "    <registry-id>$REGISTRY_ID</registry-id>";
-	echo "    <submission-type>$SUBMISSION_TYPE</submission-type>";
-	echo "    <submission-method>$SUBMISSION_METHOD</submission-method>";
-	echo "  </registry>";
-	echo "  <measure-group ID="$MEASURE_GROUP_ID">";
-	echo "    <provider>";
+	echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"; // > $OUTFILE_NAME
+	echo "<submission type=\"PQRS-REGISTRY\" version=\"7.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n";
+	echo "  <file-audit-data>\n";
+	echo "    <create-date>".$CREATE_DATE."</create-date>\n";
+	echo "    <create-time>".$CREATE_TIME."</create-time>\n";
+	echo "    <create-by>".$CREATOR."</create-by>\n";
+	echo "    <version>".$VERSION."</version>\n";
+	echo "    <file-number>".$FILE_NUMBER."</file-number>\n";
+	echo "    <number-of-files>".$FILE_OF."</number-of-files>\n";
+	echo "  </file-audit-data>\n";
+	echo "  <registry>\n";
+	echo "    <registry-name>".$REGISTRY_NAME."</registry-name>\n";
+	echo "    <registry-id>".$REGISTRY_ID."</registry-id>\n";
+	echo "    <submission-type>".$SUBMISSION_TYPE."</submission-type>\n";
+	echo "    <submission-method>".$SUBMISSION_METHOD."</submission-method>\n";
+	echo "  </registry>\n";
+	echo "  <measure-group ID=\"$MEASURE_GROUP_ID\">\n";
+	echo "    <provider>\n";
 	echo '      <gpro-type xsi:nil="true" />';
-	echo "      <npi>$PROVIDER_NPI</npi>";
-	echo "      <tin>$PROVIDER_TIN</tin>";
-	echo "      <email-address>$PROVIDER_EMAIL</email-address>";
-	echo "      <waiver-signed>$WAIVER_SIGNED</waiver-signed>";
-	echo "      <encounter-from-date>$ENCOUNTER_FROM_DATE</encounter-from-date>";
-	echo "      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date>";
+	echo "      <npi>$PROVIDER_NPI</npi>\n";
+	echo "      <tin>$PROVIDER_TIN</tin>\n";
+	echo "      <email-address>$PROVIDER_EMAIL</email-address>\n";
+	echo "      <waiver-signed>$WAIVER_SIGNED</waiver-signed>\n";
+	echo "      <encounter-from-date>$ENCOUNTER_FROM_DATE</encounter-from-date>\n";
+	echo "      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date>\n";
 /*	if [ $MEASURE_GROUP_ID != "X" ] ; then
 		echo "      <measure-group-stat>"
 		echo "        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count>"
@@ -285,26 +284,26 @@ $FILE_NUMBER=1;							# Number 1 of 5
 		echo "      </measure-group-stat>"
 	fi
 */
-	echo "      <pqrs-measure>";
-	echo "        <pqrs-measure-number>$PQRS_MEASURE_NUMBER</pqrs-measure-number>";
-	echo "        <collection-method>$COLLECTION_METHOD</collection-method>";
-	echo "        <pqrs-measure-details>";
-	echo "          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num>";
-	echo "          <eligible-instances>$ELIGIBLE_INSTANCES</eligible-instances>";
-	echo "          <meets-performance-instances>$MEETS_PERFORMANCE_INSTANCES</meets-performance-instances>";
-	echo "          <performance-exclusion-instances>$PERFORMANCE_EXCLUSION_INSTANCES</performance-exclusion-instances>";
-	echo "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>";
+	echo "      <pqrs-measure>\n";
+	echo "        <pqrs-measure-number>$PQRS_MEASURE_NUMBER</pqrs-measure-number>\n";
+	echo "        <collection-method>$COLLECTION_METHOD</collection-method>\n";
+	echo "        <pqrs-measure-details>\n";
+	echo "          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num>\n";
+	echo "          <eligible-instances>$ELIGIBLE_INSTANCES</eligible-instances>\n";
+	echo "          <meets-performance-instances>$MEETS_PERFORMANCE_INSTANCES</meets-performance-instances>\n";
+	echo "          <performance-exclusion-instances>$PERFORMANCE_EXCLUSION_INSTANCES</performance-exclusion-instances>\n";
+	echo "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>\n";
 /*
 	if [ $MEASURE_GROUP_ID = "X" ] ; then
 		echo "          <reporting-rate>$REPORTING_RATE</reporting-rate>"
 	fi
 */
-	echo "          <performance-rate>$PERFORMANCE_RATE</performance-rate>";
-	echo "        </pqrs-measure-details>";
-	echo "      </pqrs-measure>";
-	echo "    </provider>";
-	echo "  </measure-group>";
-	echo "</submission>";
+	echo "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n";
+	echo "        </pqrs-measure-details>\n";
+	echo "      </pqrs-measure>\n";
+	echo "    </provider>\n";
+	echo "  </measure-group>\n";
+	echo "</submission>\n";
 	
 /*
 	FILE_NUMBER=`expr $FILE_NUMBER + 1`
