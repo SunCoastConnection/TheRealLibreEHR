@@ -188,6 +188,7 @@ fi
 $ENCOUNTER_FROM_DATE="01-01-2016";
 $ENCOUNTER_TO_DATE="12-31-2016";
 
+$MEASURE_GROUP_ID="A";
 /*
 echo "Which Measure Group are you reporting on?"
 MEASURE_GROUP_ID=`ask_mgid`
@@ -249,7 +250,7 @@ $FILE_NUMBER="1";							# Number 1 of 5
 #  Generate XML
 //	OUTFILE_NAME=$OUTFILE_BASENAME-$FILE_NUMBER.xml
 	echo "Generating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n";
-
+	echo "\n<hr>\n\n";
 	echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"; // > $OUTFILE_NAME
 	echo "<submission type=\"PQRS-REGISTRY\" version=\"7.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n";
 	echo "  <file-audit-data>\n";
@@ -266,7 +267,7 @@ $FILE_NUMBER="1";							# Number 1 of 5
 	echo "    <submission-type>".$SUBMISSION_TYPE."</submission-type>\n";
 	echo "    <submission-method>".$SUBMISSION_METHOD."</submission-method>\n";
 	echo "  </registry>\n";
-	echo "  <measure-group ID=\"$MEASURE_GROUP_ID\">\n";
+	echo "  <measure-group ID=\"".$MEASURE_GROUP_ID."\" >\n";
 	echo "    <provider>\n";
 	echo '      <gpro-type xsi:nil="true" />';
 	echo "      <npi>$PROVIDER_NPI</npi>\n";
@@ -275,15 +276,16 @@ $FILE_NUMBER="1";							# Number 1 of 5
 	echo "      <waiver-signed>$WAIVER_SIGNED</waiver-signed>\n";
 	echo "      <encounter-from-date>$ENCOUNTER_FROM_DATE</encounter-from-date>\n";
 	echo "      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date>\n";
-/*	if [ $MEASURE_GROUP_ID != "X" ] ; then
-		echo "      <measure-group-stat>"
-		echo "        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count>"
-		echo "        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator>"
-		echo "        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances>"
-		echo "        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate>"
-		echo "      </measure-group-stat>"
-	fi
-*/
+
+	if ( $MEASURE_GROUP_ID != "X" ) {
+		echo "      <measure-group-stat>\n";
+		echo "        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count>\n";
+		echo "        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator>\n";
+		echo "        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances>\n";
+		echo "        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate>\n";
+		echo "      </measure-group-stat>\n";
+	}
+
 	echo "      <pqrs-measure>\n";
 	echo "        <pqrs-measure-number>$PQRS_MEASURE_NUMBER</pqrs-measure-number>\n";
 	echo "        <collection-method>$COLLECTION_METHOD</collection-method>\n";
@@ -293,11 +295,13 @@ $FILE_NUMBER="1";							# Number 1 of 5
 	echo "          <meets-performance-instances>$MEETS_PERFORMANCE_INSTANCES</meets-performance-instances>\n";
 	echo "          <performance-exclusion-instances>$PERFORMANCE_EXCLUSION_INSTANCES</performance-exclusion-instances>\n";
 	echo "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>\n";
-/*
-	if [ $MEASURE_GROUP_ID = "X" ] ; then
-		echo "          <reporting-rate>$REPORTING_RATE</reporting-rate>"
-	fi
-*/
+
+
+	if ( $MEASURE_GROUP_ID = "X" ) {
+		echo "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n";
+	}
+
+
 	echo "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n";
 	echo "        </pqrs-measure-details>\n";
 	echo "      </pqrs-measure>\n";
@@ -307,6 +311,6 @@ $FILE_NUMBER="1";							# Number 1 of 5
 	
 /*
 	FILE_NUMBER=`expr $FILE_NUMBER + 1`
-done
+done	#Main while loop that generated multiple files
 */
 ?>
