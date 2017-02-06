@@ -48,7 +48,7 @@ $query_for_whole_measure = "SELECT DISTINCT  b1.code AS Dx, b2.code AS Tx,  CONC
 "  FROM billing AS b1".  //b1 is the first billing table alias to get the diagnosis as Dx. denominator
 "INNER JOIN billing AS b2 ON (b1.pid = b2.pid)".  //b2 is the second billing table alias to get the procedure code (CPT4 or G code) as Tx. We are matching the Patient ID (PID).  denominator
 "INNER JOIN billing AS b3 ON (b1.pid = b3.pid)".  //b3 is the third billing table alias to get the reporting code (CPT II) as CPT2 which is our [numerator].  We would not want this if the provider does not report CPT2
-"JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  //fe is the alias of form_encounter that gets the date of service for the Tx
+"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".  //fe is the alias of form_encounter that gets the date of service for the Tx
 "JOIN patient_data AS p ON (b1.pid = p.pid)".  //We join the patient_data table to check the patient's age.
 
 "WHERE b1.code IN".  //Diagnosis must match one of the following
@@ -94,7 +94,7 @@ $query_just_denominator_for_one_patient =
 "SELECT COUNT(b1.code)".  ///just give us a number as a result of all this, counting how many results we get.
 "  FROM billing AS b1".  //b1 is the first billing table alias to get the diagnosis as Dx. denominator
 "INNER JOIN billing AS b2 ON (b1.pid = b2.pid)".  //b2 is the second billing table alias to get the procedure code (CPT4 or G code) as Tx. We are matching the Patient ID (PID).  denominator
-"JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".  //fe is the alias of form_encounter that gets the date of service for the Tx
+"JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".  //fe is the alias of form_encounter that gets the date of service for the Tx
 "JOIN patient_data AS p ON (b1.pid = p.pid)".  //We join the patient_data table to check the patient's age.
 
 "WHERE b1.pid = '$Patient' ".  ///only check for current patient, which is matched on the PID
