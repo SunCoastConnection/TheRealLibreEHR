@@ -10,7 +10,7 @@
  */
 
 $query =
-"SELECT COUNT(b1.code) as count". 
+"SELECT COUNT(b2.code) as count". 
 "  FROM billing AS b2".  
 " INNER JOIN pqrs_group AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b2.pid = ? ".  
