@@ -21,6 +21,7 @@ class PQRS_Group_HF_0008_InitialPatientPopulation extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 require(__DIR__."/../common/HFcommon.php"); 
+if ($good==1) {return true;}else{return false;}
     }
 }
 

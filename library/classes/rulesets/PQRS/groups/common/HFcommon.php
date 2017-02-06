@@ -8,7 +8,7 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
-
+$good = 0;
 $query =
 "SELECT COUNT(b2.code) as count". 
 "  FROM billing AS b2".  
@@ -30,6 +30,6 @@ if ($result['count']> 0){
     " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_HF_a');";
     
     $result2 = sqlFetchArray(sqlStatementNoLog($query2, array($patient->id))); 
-    if ($result2['count']> 0){ return true;} else {return false;}
-}else {return false;} 
+    if ($result2['count']> 0){ $good=1;} else {$good=0;}
+}else {$good=0;} 
 ?>
