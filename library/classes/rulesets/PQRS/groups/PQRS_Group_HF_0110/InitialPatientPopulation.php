@@ -21,8 +21,6 @@ class PQRS_Group_HF_0110_InitialPatientPopulation extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 require(__DIR__."/../common/HFcommon.php");
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 
