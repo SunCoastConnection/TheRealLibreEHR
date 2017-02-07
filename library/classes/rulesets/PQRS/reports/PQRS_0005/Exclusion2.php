@@ -25,7 +25,7 @@ class PQRS_0005_Exclusion2 extends PQRSFilter
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND (b1.code = '4010F' AND b1.modifier IN('1P','2P','3P');" ;
+" AND (b1.code = '4010F' AND b1.modifier IN('1P','2P','3P'));" ;
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
 
