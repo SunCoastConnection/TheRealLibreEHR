@@ -37,7 +37,7 @@ $query =
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0005_b') ;";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;} else {return false;}  
+if ($result['count']> 1){ return true;} else {return false;}  
 
     
 	}
