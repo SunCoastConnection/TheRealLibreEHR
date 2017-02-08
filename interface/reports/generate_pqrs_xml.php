@@ -161,7 +161,9 @@ OUTFILE_BASENAME=`ask "Base name of output file? (ex. kurth_sinusitis_group, smi
 $CREATOR="Suncoast Connection";
 $VERSION="1.0";
 $REGISTRY_NAME="suncoastrhio";
-$REGISTRY_ID="263971780";
+$REGISTRY_ID="263971780";    // Their tax payer number  EIN
+
+//Our Vendor Unique ID is: 5249237	#TODO:  This goes somewhere
 
 $SUBMISSION_TYPE="1";	# 1=Individual Registry Submission 2=GPRO Registry Submi
 //SUBMISSION_METHOD=`ask "Is this a Group or individuAl measure submission? (Group = G, Individual = A)"`
