@@ -1092,7 +1092,7 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`,`statu
 
 ('PQRS_0403', 'description', 'Adult Kidney Disease: Referral to Hospice',''),
 ('PQRS_0403', 'question', 'Patients who are referred to hospice care',''),
-('PQRS_0403', 'answer', '1|Patient was referred to hospice care (G9524)',''),|1
+('PQRS_0403', 'answer', '1|Patient was referred to hospice care (G9524)',1),
 ('PQRS_0403', 'answer', '2|Documentation of patient reason(s) for not referring to hospice care (e.g., patient declined, other patient reasons) (G9525)|G9525',2),
 ('PQRS_0403', 'answer', '3|Patient was not referred to hospice care, reason not given (G9526)|G9526',0),
 
@@ -1318,9 +1318,9 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`,`statu
 
 ('pre_0438', 'description', 'Pre-selection of patients for Measure 438 -- "Statin Therapy for the Prevention and Treatment of Cardiovascular Disease" <br>*** Please see Measure Documentation for Definitions and Instructions *** ',''),
 ('pre_0438', 'question', 'Patients who may qualify for Measure 438.<br>Select one ONLY if it applies to the patient:<br><ul><li>Previously diagnosed or have an active diagnosis of Clinical ASCVD<li>Any fasting or direct LDL-C laboratory test result >= 190 mg/dL<li>Type 1 or Type 2 diabetes diagnosis AND The highest fasting or direct LDL-C laboratory test result of 70--189 mg/dL in or two years prior to the beginning of the measurement period</ul>*** Please see Measure Documentation for Definitions and Instructions ***',''),
-('pre_0438', 'answer', '1|Previous or active diagnosis of Clinical ASCVD (G9662)|G9662',''),9
-('pre_0438', 'answer', '2|Fasting or direct LDL-C laboratory test result >= 190 mg/dL (G9663)|G9663',''),9
-('pre_0438', 'answer', '3|Type 1 or Type 2 diabetes diagnosis AND Fasting or direct LDL-C laboratory test result (as required) (G9666)|G9666',''),9
+('pre_0438', 'answer', '1|Previous or active diagnosis of Clinical ASCVD (G9662)|G9662',9),
+('pre_0438', 'answer', '2|Fasting or direct LDL-C laboratory test result >= 190 mg/dL (G9663)|G9663',9),
+('pre_0438', 'answer', '3|Type 1 or Type 2 diabetes diagnosis AND Fasting or direct LDL-C laboratory test result (as required) (G9666)|G9666',9),
 
 ('PQRS_0XXX', 'question', 'Please see measure documentation for specifics.',''),
 
@@ -1898,7 +1898,7 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`,`statu
 
 ('PQRS_Group_HF_0005', 'description', 'Heart Failure (HF): Angiotensin-Converting Enzyme (ACE) Inhibitor or Angiotensin Receptor Blocker (ARB) Therapy for Left Ventricular Systolic Dysfunction (LVSD)<br>Percentage of patients aged 18 years and older with a diagnosis of heart failure (HF) with a current or prior left ventricular ejection fraction (LVEF) < 40% who were prescribed ACE inhibitor or ARB therapy either within a 12 month period when seen in the outpatient setting OR at each hospital discharge',''),
 ('PQRS_Group_HF_0005', 'question', 'Was patient prescribed ACE inhibitor or ARB therapy within a 12 month period when seen in the outpatient setting OR at hospital discharge?<br>*** Please see Measure Documentation for Definitions and Instructions ***',''),
-('PQRS_Group_HF_0005', 'answer', '1|ACE Inhibitor or ARB therapy prescribed or currently being taken AND Left ventricular ejection fraction (LVEF) less than 40% or documentation of moderately or severely depressed left ventricular systolic function (4010F 3021F)|4010F 3021F',''), |1
+('PQRS_Group_HF_0005', 'answer', '1|ACE Inhibitor or ARB therapy prescribed or currently being taken AND Left ventricular ejection fraction (LVEF) less than 40% or documentation of moderately or severely depressed left ventricular systolic function (4010F 3021F)|4010F 3021F',1),
 ('PQRS_Group_HF_0005', 'answer', '2|Documentation of medical reason(s) for not prescribing ACE inhibitor or ARB therapy (eg, hypotensive patients who are at immediate risk of cardiogenic shock, hospitalized patients who have experienced marked azotemia, allergy, intolerance, other medical reasons) (4010F:1P)|4010F:1P',2),
 ('PQRS_Group_HF_0005', 'answer', '3|Documentation of patient reason(s) for not prescribing ACE inhibitor or ARB therapy (eg, patient declined, other patient reasons) (4010F:2P)|4010F:2P',2),
 ('PQRS_Group_HF_0005', 'answer', '4|Documentation of system reason(s) for not prescribing ACE inhibitor or ARB therapy (eg, other system reasons) AND Left ventricular ejection fraction (LVEF) less than 40% or documentation of moderately or severely depressed left ventricular systolic function (4010F:3P 3021F)|4010F:3P 3021F',2),
@@ -2383,7 +2383,7 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`,`statu
 ('PQRS_Group_Sinusitis_0332', 'question', 'Was Patient prescribed amoxicillin, with or without clavulanate, as a first line antibiotic at the time of diagnosis?<br>*** Please see Measure Documentation for Definitions and Instructions ***',''),
 ('PQRS_Group_Sinusitis_0332', 'answer', '1|Amoxicillin, with or without clavulanate, prescribed as a first line antibiotic at the time of diagnosis (G9315)|G9315',1),
 ('PQRS_Group_Sinusitis_0332', 'answer', '2|Amoxicillin, with or without clavulanate, not prescribed as first line antibiotic at the time of diagnosis for documented reason (e.g., cystic fibrosis, immotile cilia disorders, ciliary dyskinesia, immune deficiency, prior history of sinus surgery within the past 12 months, anatomic abnormalities, such as deviated nasal septum, resistant organisms, allergy to medication, recurrent sinusitis, chronic sinusitis, or other reasons) (G9313)|G9313',2),
-('PQRS_Group_Sinusitis_0332', 'answer', '3|Amoxicillin, with or without clavulanate, not prescribed as first line antibiotic at the time of diagnosis, reason not given (G9314)|G9314',''),3
+('PQRS_Group_Sinusitis_0332', 'answer', '3|Amoxicillin, with or without clavulanate, not prescribed as first line antibiotic at the time of diagnosis, reason not given (G9314)|G9314',3),
 
 ('PQRS_Group_Sinusitis_0333', 'description', 'Adult Sinusitis: Computerized Tomography (CT) for Acute Sinusitis (Overuse)',''),
 ('PQRS_Group_Sinusitis_0333', 'question', 'Patients who had a computerized tomography (CT) scan of the paranasal sinuses ordered at the time of diagnosis or received within 28 days after date of diagnosis<br>Numerator Instructions:<br>INVERSE MEASURE- A lower calculated performance rate for this measure indicates better clinical care or control. The ?Performance Not Met? numerator option for this measure is the representation of the better clinical quality or control. Reporting that numerator option will produce a performance rate that trends closer to 0%, as quality increases. For inverse measures a rate of 100% means all of the denominator eligible patients did not receive the appropriate care or were not in proper control, and therefore an inverse measure at 100% does not qualify for reporting purposes, however any reporting rate less than 100% does qualify.',''),
