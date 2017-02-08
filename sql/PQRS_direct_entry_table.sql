@@ -499,7 +499,7 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`,`statu
 ('PQRS_0164', 'description', 'Coronary Artery Bypass Graft (CABG): Prolonged Intubation',''),
 ('PQRS_0164', 'question', 'Patients undergoing isolated CABG who require intubation > 24 hours following exit from the operating room <br>INVERSE MEASURE: A lower calculated performance rate for this measure indicates better clinical care or control. The ?Performance Not Met? numerator option for this measure is the representation of the better clinical quality or control. Reporting that numerator option will produce a performance rate that trends closer to 0%, as quality increases. For inverse measures a rate of 100% means all of the denominator eligible patients did not receive the appropriate care or were not in proper control, and therefore an inverse measure at 100% does not qualify for reporting purposes, however any reporting rate less than 100% does qualify.',''),
 ('PQRS_0164', 'answer', '1|Prolonged postoperative intubation (> 24 hrs) required (G8569)|G8569',1),
-('PQRS_0164', 'answer', '2|Prolonged postoperative intubation (> 24 hrs) not required (G8570)',''),|0
+('PQRS_0164', 'answer', '2|Prolonged postoperative intubation (> 24 hrs) not required (G8570)',''),0
 
 ('PQRS_0178', 'description', 'Rheumatoid Arthritis (RA): Functional Status Assessment',''),
 ('PQRS_0178', 'question', 'Patients for whom a functional status assessment was performed at least once within 12 months<br> ** Please See Measure Description for Definitions **',''),
@@ -812,8 +812,7 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`,`statu
 ('PQRS_0324', 'description', 'Cardiac Stress Imaging Not Meeting Appropriate Use Criteria: Testing in Asymptomatic, Low-Risk Patients<br>Percentage of all stress single-photon emission computed tomography (SPECT) myocardial perfusion imaging (MPI), stress echocardiogram (ECHO), cardiac computed tomography angiography (CCTA), and cardiovascular magnetic resonance (CMR) performed in asymptomatic, low coronary heart disease (CHD) risk patients 18 years and older for initial detection and risk assessmenti<br>**INVERSE MEASURE**',''),
 ('PQRS_0324', 'question', 'Was stress SPECT MPI, stress echo, CCTA, or CMR primarily performed for asymptomatic, low CHD risk patients for initial detection and risk assessment?',''),
 ('PQRS_0324', 'answer', '1|Cardiac Stress Imaging Test primarily performed on low CHD risk patient for initial detection and risk assessment|G8965',1),
-('PQRS_0324', 'answer', '2|Cardiac Stress Imaging Test performed on symptomatic||0
-or higher than low CHD risk patient or for any reason other than initial detection and risk assessment|G8966',''),||
+('PQRS_0324', 'answer', '2|Cardiac Stress Imaging Test performed on symptomatic or higher than low CHD risk patient or for any reason other than initial detection and risk assessment|G8966',0),
 
 ('PQRS_0325', 'description', 'Adult Major Depressive Disorder (MDD): Coordination of Care of Patients with Specific Comorbid Conditions<br>Percentage of medical records of patients aged 18 years and older with a diagnosis of major depressive disorder (MDD) and a specific diagnosed comorbid condition (diabetes, coronary artery disease, ischemic stroke, intracranial hemorrhage, chronic kidney disease [stages 4 or 5], End Stage Renal Disease [ESRD] or congestive heart failure) being treated by another clinician with communication to the clinician treating the comorbid condition',''),
 ('PQRS_0325', 'question', 'Medical records of patients with communication to the clinician treating the comorbid condition<br>Definition:<br>Communication ? Transmission of relevant clinical information which specifies that the patient has MDD',''),
@@ -2264,8 +2263,7 @@ or higher than low CHD risk patient or for any reason other than initial detecti
 ('PQRS_Group_Preventive_0128', 'answer', '1|BMI Documented as Normal, No Follow-Up Plan Required (G8420)|G8420',1),
 ('PQRS_Group_Preventive_0128', 'answer', '2|BMI Documented as Above Normal Parameters, AND Follow-Up Documented (G8417)|G8417',1),
 ('PQRS_Group_Preventive_0128', 'answer', '3|BMI Documented as Below Normal Parameters, AND Follow-Up Documented (G8418)|G8418',1),
-('PQRS_Group_Preventive_0128', 'answer', '4|BMI not documented, documentation the patient is not||
-eligible for BMI calculation (G8422)|G8422',''),||
+('PQRS_Group_Preventive_0128', 'answer', '4|BMI not documented, documentation the patient is not eligible for BMI calculation (G8422)|G8422',0),
 ('PQRS_Group_Preventive_0128', 'answer', '5|BMI Documented Outside of Normal Limits, Follow-up Plan not Documented, documentation the Patient not Eligible (G8938)|G8938',0),
 ('PQRS_Group_Preventive_0128', 'answer', '6|BMI not Documented, Reason not Given (G8421)|G8421',0),
 ('PQRS_Group_Preventive_0128', 'answer', '7|BMI Documented Outside of Normal Parameters, Follow-Up Plan not Documented, Reason not Given (G8419)|G8419',0),
@@ -2514,4 +2512,4 @@ eligible for BMI calculation (G8422)|G8422',''),||
 ('PQRS_Group_TKR_0353', 'answer', '2|Operative report does not identify the prosthetic implant specifications, reason not given (G9303)|G9303',0),
 
 
-('end', 'blank', '', );
+('end', 'blank', '','' );
