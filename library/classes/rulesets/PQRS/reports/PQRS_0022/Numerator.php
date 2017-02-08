@@ -29,7 +29,7 @@ class PQRS_0022_Numerator extends PQRSFilter
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result > 0){ return true;} else {return false;}     
+if ($result['count'] > 0){ return true;} else {return false;}     
 	
     }
 }
