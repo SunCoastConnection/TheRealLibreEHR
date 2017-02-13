@@ -10,6 +10,11 @@ include_once("../globals.php");
 <link rel=stylesheet href="../themes/login.css" type="text/css">
 </head>
 <body class="logobar">
-<img style="position:absolute;top:0;left:20;"src=" <?php echo $GLOBALS['webroot']?>/interface/pic/logo.png" />
+<?php
+if ($openemr_name ="myCatalyst PQRS Pilot"){?>
+<img style="position:absolute;top:0;left:20;"src=" <?php echo $GLOBALS['webroot']?>/interface/pic/mycatalyst.png" />
+<?php } else {?>
+<img style="position:absolute;top:0;left:20;"src=" <?php echo $GLOBALS['webroot']?>/interface/pic/logo.png" /> 
+<?php }?>   
 </body>
 </html>
