@@ -582,7 +582,7 @@ if ($result) {
 		$myOrder=$explodedAnswer[0];
 		$myDesc=$explodedAnswer[1];
 		$myCode=$explodedAnswer[2];
-//		$myPerformance=;
+		$myPerformance= $thisAnswer['status'];
  error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode | $myPerformance");
         	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\" performance=\"$myPerformance\" >$myDesc</label></td>";
 	}
@@ -790,6 +790,7 @@ else {
 	echo "	if(selected.length > 0) {\n";
 	echo "		var date = '".$report_year."1231235959';\n";
 	echo "		var code = selected.val();\n";
+	echo "		var performance = '".$myPerformance."';\n";	
 	echo "		var report_id = '".$report_id."';\n";
 	echo "		var itemized_test_id = '".$itemized_test_id."';\n\n";
 	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
