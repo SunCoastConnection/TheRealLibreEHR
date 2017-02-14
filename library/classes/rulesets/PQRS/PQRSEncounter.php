@@ -180,9 +180,9 @@ function update_itemized_report($report_id, $itemized_test_id, $performance, $pi
         "UPDATE `report_itemized` SET `pass` = ? WHERE `report_id` = ? AND `itemized_test_id` = ? AND `pid` = ?",
         array(
             $performance,
-            $report_id
+            $report_id,
             $itemized_test_id,
-            $pid,
+            $pid
         )
     );
 }
