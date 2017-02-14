@@ -395,10 +395,10 @@ if ($fend > $count) $fend = $count;
         $pqrs_result = SqlFetchArray(sqlStatement($query));
 	$measure_question=implode(" ",$pqrs_result);
 	
-		$query = "SELECT status AS status FROM pqrs_direct_entry_lookup WHERE ".
-                "measure_number = '$measure_number' AND type = 'answer'";
-        $pqrs_result = SqlFetchArray(sqlStatement($query));
-	$myPerformance=$pqrs_result['status'];
+//		$query = "SELECT status AS status FROM pqrs_direct_entry_lookup WHERE ".
+ //               "measure_number = '$measure_number' AND type = 'answer'";
+ //       $pqrs_result = SqlFetchArray(sqlStatement($query));
+//	$myPerformance=$pqrs_result['status'];
 
         $query = "SELECT COUNT(*) AS count FROM pqrs_direct_entry_lookup WHERE".
                 " measure_number = '$measure_number' AND type = 'answer'";
