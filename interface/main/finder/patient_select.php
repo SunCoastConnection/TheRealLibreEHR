@@ -394,6 +394,11 @@ if ($fend > $count) $fend = $count;
                 "measure_number = '$measure_number' AND type = 'question'";
         $pqrs_result = SqlFetchArray(sqlStatement($query));
 	$measure_question=implode(" ",$pqrs_result);
+	
+		$query = "SELECT status AS status FROM pqrs_direct_entry_lookup WHERE ".
+                "measure_number = '$measure_number' AND type = 'answer'";
+        $pqrs_result = SqlFetchArray(sqlStatement($query));
+	$myPerformance=$pqrs_result['status'];
 
         $query = "SELECT COUNT(*) AS count FROM pqrs_direct_entry_lookup WHERE".
                 " measure_number = '$measure_number' AND type = 'answer'";
@@ -577,7 +582,7 @@ if ($result) {
 		$myOrder=$explodedAnswer[0];
 		$myDesc=$explodedAnswer[1];
 		$myCode=$explodedAnswer[2];
-		$myPerformance=$explodedAnswer[3];
+//		$myPerformance=;
  error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode | $myPerformance");
         	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\" performance=\"$myPerformance\" >$myDesc</label></td>";
 	}
