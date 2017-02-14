@@ -175,13 +175,27 @@ function findProvider($pid) {
 	return $providerid;
 }	// End function find_provider()
 
+function update_itemized_report($report_id, $itemized_test_id, $performance, $pid) {
+    return sqlStatementCdrEngine(
+        "UPDATE `report_itemized` SET `pass` = ? WHERE `report_id` = ? AND `itemized_test_id` = ? AND `pid` = ?",
+        array(
+            $performance,
+            $report_id
+            $itemized_test_id,
+            $pid,
+        )
+    );
+}
 
 //  Begin Main
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$mypid = $_POST['pid'];
 	$mydate = $_POST['date'];
 	$mycode = $_POST['CPT2codevalue'];
-//error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code=".$mycode);  //."  encounter=".$encounter."  user/provider=".$userID);
+	$myperformance = $_POST['performance'];
+	$myreport_id = $_POST['report_id'];
+	$myitemized_test_id = $_POST['itemized_test_id'];
+error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code=".$mycode." performance=".$myperformance." report_id=".$myreport_id." itemized_test_id=".$myitemized_test_id);  //."  encounter=".$encounter."  user/provider=".$userID);
 
 	if ( $mypid !='' and $mydate!='' and $mycode!='') {
 
