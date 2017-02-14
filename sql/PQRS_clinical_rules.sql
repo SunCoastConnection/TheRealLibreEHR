@@ -15,11 +15,10 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-lice
 nse.php>;.
  *
- * @package OpenEMR
+ * @package PQRS Gateway
  * @author  Suncoast Connection
  * @author  leebc
  * @link    http://suncoastconnection.com
- * @link    http://www.oemr.org
 */
 
 DROP TABLE IF EXISTS `clinical_rules`;
