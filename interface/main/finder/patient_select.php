@@ -795,9 +795,9 @@ else {
 	echo "			data: {\n";
 	echo "				pid: pid,\n";
 	echo "				date: date,\n";
-	echo "				CPT2codevalue: code\n";
-	echo "				performance: performance\n";
-	echo "				report_id: report_id\n";
+	echo "				CPT2codevalue: code,\n";
+	echo "				performance: performance,\n";
+	echo "				report_id: report_id,\n";
 	echo "				itemized_test_id: itemized_test_id\n";		
 	echo "			},\n";
 	echo "			success: function(data, status, xHR) {\n";
