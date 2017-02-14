@@ -3653,30 +3653,54 @@ CREATE TABLE `prices` (
 -- Table structure for table `registry`
 -- 
 
-DROP TABLE IF EXISTS `registry`;
 CREATE TABLE `registry` (
-  `name` varchar(255) default NULL,
-  `state` tinyint(4) default NULL,
-  `directory` varchar(255) default NULL,
-  `id` bigint(20) NOT NULL auto_increment,
-  `sql_run` tinyint(4) default NULL,
-  `unpackaged` tinyint(4) default NULL,
-  `date` datetime default NULL,
-  `priority` int(11) default '0',
-  `category` varchar(255) default NULL,
-  `nickname` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 ;
+  `name` varchar(255) DEFAULT NULL,
+  `state` tinyint(4) DEFAULT NULL,
+  `directory` varchar(255) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `sql_run` tinyint(4) DEFAULT NULL,
+  `unpackaged` tinyint(4) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `priority` int(11) DEFAULT '0',
+  `category` varchar(255) DEFAULT NULL,
+  `nickname` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- 
+--
 -- Dumping data for table `registry`
--- 
+--
 
-INSERT INTO `registry` VALUES ('New Encounter Form', 1, 'newpatient', 1, 1, 1, '2003-09-14 15:16:45', 0, 'Administrative', '');
-INSERT INTO `registry` VALUES ('Speech Dictation', 1, 'dictation', 10, 1, 1, '2003-09-14 15:16:45', 0, 'Clinical', '');
-INSERT INTO `registry` VALUES ('Vitals', 1, 'vitals', 12, 1, 1, '2005-03-03 00:16:34', 0, 'Clinical', '');
-INSERT INTO `registry` VALUES ('Fee Sheet', 1, 'fee_sheet', 14, 1, 1, '2007-07-28 00:00:00', 0, 'Add Codes', '');
-INSERT INTO `registry` VALUES ('Misc Billing Options HCFA', 1, 'misc_billing_options', 15, 1, 1, '2007-07-28 00:00:00', 0, 'Administrative', '');
+INSERT INTO `registry` (`name`, `state`, `directory`, `id`, `sql_run`, `unpackaged`, `date`, `priority`, `category`, `nickname`) VALUES
+('New Encounter Form', 1, 'newpatient', 1, 1, 1, '2003-09-14 15:16:45', 0, 'Administrative', ''),
+('Speech Dictation', 1, 'dictation', 10, 1, 1, '2003-09-14 15:16:45', 0, 'Clinical', ''),
+('Vitals', 1, 'vitals', 12, 1, 1, '2005-03-03 00:16:34', 0, 'Clinical', ''),
+('Fee Sheet', 1, 'fee_sheet', 14, 1, 1, '2007-07-28 00:00:00', 0, 'Add Codes', ''),
+('Misc Billing Options HCFA', 1, 'misc_billing_options', 15, 1, 1, '2007-07-28 00:00:00', 0, 'Administrative', ''),
+('Oncology Quality Reporting', 0, 'pqrs_form_oncology', 21, 1, 1, '2017-02-13 20:08:04', 0, 'PQRS Groups 2', 'Oncology'),
+('Chronic Kidney Disease Quality Reporting', 0, 'pqrs_form_chronic_kidney_disease', 22, 1, 1, '2017-02-13 20:07:09', 0, 'PQRS Groups 2', 'CKD'),
+('Sinusitis Quality Reporting', 0, 'pqrs_form_sinusitis', 23, 1, 1, '2017-02-13 20:07:36', 0, 'PQRS Groups 2', 'Sinusitis'),
+('Rheumatoid Arthritis Quality Reporting', 0, 'pqrs_form_rheumatoid_arthritis', 24, 1, 1, '2017-02-13 20:08:19', 0, 'PQRS Groups 2', 'Rheum. Arth.'),
+('HIV_AIDS Quality Reporting', 0, 'pqrs_form_hiv_aids', 25, 1, 1, '2017-02-13 20:07:54', 0, 'PQRS Groups 2', 'HIV'),
+('Diabetes Quality Reporting', 0, 'pqrs_form_diabetes', 26, 1, 1, '2017-02-13 20:06:57', 0, 'PQRS Groups 1', 'Diabetes'),
+('Heart Failure Quality Reporting', 0, 'pqrs_form_heart_failure', 27, 1, 1, '2017-02-13 20:07:04', 0, 'PQRS Groups 1', 'HF'),
+('Dementia Quality Reporting', 0, 'pqrs_form_dementia', 28, 1, 1, '2017-02-13 20:06:55', 0, 'PQRS Groups 1', 'Dementia'),
+('Coronary Artery Disease Quality Reporting', 0, 'pqrs_form_coronary_artery_disease', 29, 1, 1, '2017-02-13 20:06:54', 0, 'PQRS Groups 1', 'CAD'),
+('Preventive Care Quality Reporting', 0, 'pqrs_form_preventive_care', 30, 1, 1, '2017-02-13 20:08:22', 0, 'PQRS Groups 2', 'Preventive'),
+('Hepatitis C Quality Reporting', 0, 'pqrs_form_hepatitis_c', 31, 1, 1, '2017-02-13 20:07:44', 0, 'PQRS Groups 2', 'Hep C'),
+('Coronary Artery Bypass Graft Quality Reporting', 0, 'pqrs_form_coronary_artery_bypass_graft', 32, 1, 1, '2017-02-13 20:06:51', 0, 'PQRS Groups 1', 'CAB'),
+('Cardiovascular Prevention Quality Reporting', 0, 'pqrs_form_cardiovascular_prevention', 33, 1, 1, '2017-02-13 20:07:40', 0, 'PQRS Groups 1', 'CP'),
+('Inflammatory Bowel Disease Quality Reporting', 0, 'pqrs_form_inflammatory_bowel_disease', 34, 1, 1, '2017-02-13 20:07:49', 0, 'PQRS Groups 2', 'IBD'),
+('Cataracts Quality Reporting', 0, 'pqrs_form_cataracts', 35, 1, 1, '2017-02-13 20:07:17', 0, 'PQRS Groups 2', 'Cataracts'),
+('General Surgery Quality Reporting', 0, 'pqrs_form_general_surgery', 36, 1, 1, '2017-02-13 20:07:00', 0, 'PQRS Groups 1', 'Surgery'),
+('Multiple Chronic Conditions Quality Reporting', 0, 'pqrs_form_multiple_chronic_conditions', 37, 1, 1, '2017-02-13 20:07:57', 0, 'PQRS Groups 2', 'MCC'),
+('Total Knee Replacement Quality Reporting', 0, 'pqrs_form_total_knee_replacement', 38, 1, 1, '2017-02-13 20:07:23', 0, 'PQRS Groups 2', 'TKR'),
+('Parkinsons Quality Reporting', 0, 'pqrs_form_parkinsons', 39, 1, 1, '2017-02-13 20:08:16', 0, 'PQRS Groups 2', 'Parkinsons'),
+('Acute Otitis Externa Quality Reporting', 0, 'pqrs_form_acute_otitis_externa', 40, 1, 1, '2017-02-13 20:06:44', 0, 'PQRS Groups1', 'AOE'),
+('Chronic Obstructive Pulmonary Disease Quality Reporting', 0, 'pqrs_form_chronic_obstructive_pulmonary_disease', 41, 1, 1, '2017-02-13 20:06:48', 0, 'PQRS Groups 1', 'COPD'),
+('OPEIR Quality Reporting', 0, 'pqrs_form_opeir', 42, 1, 1, '2017-02-13 20:08:08', 0, 'PQRS Groups 2', 'OPEIR'),
+('Asthma Quality Reporting', 0, 'pqrs_form_asthma', 43, 1, 1, '2017-02-13 20:06:46', 0, 'PQRS Groups 1', 'Asthma'),
+('Diabetic Retinopathy Quality Reporting', 0, 'pqrs_form_diabetic_retinopathy', 44, 1, 1, '2017-02-13 20:06:58', 0, 'PQRS Groups 1', 'DR'),
+('Sleep Apnea Quality Reporting', 0, 'pqrs_form_sleep_apnea', 45, 1, 1, '2017-02-13 20:07:31', 0, 'PQRS Groups 2', 'Apnea');
 
 
 
