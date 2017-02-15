@@ -200,7 +200,7 @@ error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code="
 	if ( $mypid !='' and $mydate!='' and $mycode!='') {
 
 		$result=AddCPT2CodeEncounter($mypid,$mydate,$mycode);
-
+        $result2=update_itemized_report($myreport_id, $myitemized_test_id, $myperformance, $mypid);
 // TODO:  How do we tell if we REALLY were successful.
 //		if(rand(1, 15) > 15) {
         		echo 'SUCCESS';
@@ -208,6 +208,11 @@ error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code="
 //        		echo 'FAILED:'.$result;
 //		}
 	}
+
+	
+		
+
+		
 }
 
 ?>
