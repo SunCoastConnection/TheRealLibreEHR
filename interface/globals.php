@@ -217,6 +217,7 @@ if (!empty($glrow)) {
     }
     else if ($gl_name == 'css_header') {
       $GLOBALS[$gl_name] = "$rootdir/themes/" . $gl_value;
+      $GLOBALS[$currenttheme] = $gl_value;
     }
     else if ($gl_name == 'specific_application') {
       if      ($gl_value == '1') $GLOBALS['athletic_team'] = true;
