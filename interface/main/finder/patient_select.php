@@ -394,6 +394,11 @@ if ($fend > $count) $fend = $count;
                 "measure_number = '$measure_number' AND type = 'question'";
         $pqrs_result = SqlFetchArray(sqlStatement($query));
 	$measure_question=implode(" ",$pqrs_result);
+	
+//		$query = "SELECT status AS status FROM pqrs_direct_entry_lookup WHERE ".
+ //               "measure_number = '$measure_number' AND type = 'answer'";
+ //       $pqrs_result = SqlFetchArray(sqlStatement($query));
+//	$myPerformance=$pqrs_result['status'];
 
         $query = "SELECT COUNT(*) AS count FROM pqrs_direct_entry_lookup WHERE".
                 " measure_number = '$measure_number' AND type = 'answer'";
@@ -518,7 +523,7 @@ else {	//  $from_page DOES == "pqrs_report"  ?>
 //                "AND `type` LIKE 'answer %' ";
 
 
-	$query = "SELECT value FROM pqrs_direct_entry_lookup WHERE ".
+	$query = "SELECT value, status FROM pqrs_direct_entry_lookup WHERE ".
 		"measure_number = '$measure_number' ".
 		"AND type = 'answer'";
 		//"AND type LIKE 'answer % description'";
@@ -577,8 +582,9 @@ if ($result) {
 		$myOrder=$explodedAnswer[0];
 		$myDesc=$explodedAnswer[1];
 		$myCode=$explodedAnswer[2];
-// error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode" );
-        	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\">$myDesc</label></td>";
+		$myPerformance= $thisAnswer['status'];
+ error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode | $myPerformance");
+        	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\" performance=\"$myPerformance\" >$myDesc</label></td>";
 	}
 		?>
         	<td class='srAnswer'><button type="button" onclick="updatePatient(<?php echo htmlspecialchars( $iter['pid'] ) ?>)">Update</button></td>
@@ -783,7 +789,10 @@ else {
 	echo "	selected = $('table[id=' + pid + '] input[type=\'radio\']:checked');\n";
 	echo "	if(selected.length > 0) {\n";
 	echo "		var date = '".$report_year."1231235959';\n";
-	echo "		var code = selected.val();\n\n";
+	echo "		var code = selected.val();\n";
+	echo "		var performance = '".$myPerformance."';\n";	
+	echo "		var report_id = '".$report_id."';\n";
+	echo "		var itemized_test_id = '".$itemized_test_id."';\n\n";
 	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
 	echo "		$.ajax({\n";
 	echo "			type: 'POST',\n";
@@ -792,7 +801,10 @@ else {
 	echo "			data: {\n";
 	echo "				pid: pid,\n";
 	echo "				date: date,\n";
-	echo "				CPT2codevalue: code\n";
+	echo "				CPT2codevalue: code,\n";
+	echo "				performance: performance,\n";
+	echo "				report_id: report_id,\n";
+	echo "				itemized_test_id: itemized_test_id\n";		
 	echo "			},\n";
 	echo "			success: function(data, status, xHR) {\n";
 	echo "				if(data == 'SUCCESS') {\n";
