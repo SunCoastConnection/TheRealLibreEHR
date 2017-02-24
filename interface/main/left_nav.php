@@ -1317,7 +1317,7 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 		genMiscLink('RTop', 'rep', '0', xl('View Report Results'), 'reports/report_results.php');
 		genTreeLink('RTop', 'pqr', xl('Run Measures Report'));
 		genMiscLink('RTop', 'pqr', '0', xl('Select Measures'), 'reports/PQRS/measure_activate.php');
-		genMiscLink('RTop', 'pqr', '0', xl('Upload Claim Files'), 'reports/PQRS/dropzone/index.php');
+		genMiscLink('RTop', 'pqr', '0', xl('Upload Claim Files'),echo'/../../sites/'.$_SESSION['site_id'].'/PQRS/dropzone/index.php';);
 		if(acl_check('admin', 'super')) {
 			genMiscLink('RTop', 'rep', '0', xl('Delete Old Reports'), 'main/PQRS/truncate_reports.php');
 			genMiscLink('RTop', 'rep', '0', xl('Remove Provider Assignments'), 'main/PQRS/reset_provider_to_unassigned.php');
