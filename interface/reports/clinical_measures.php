@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>.
  *
- * @package OpenEMR
- * @link    http://www.open-emr.org
+ * @package PQRS_Gateway
+
  * @link    http://SuncoastConnection.com
  * @author  Brady Miller <brady@sparmy.com>
  * @author  Bryan lee <leebc 11 at acm dot org>
@@ -605,12 +605,12 @@ function Form_Validate() {
 <?php */   } elseif($type_report == 'cqm') { ?>
                       <a id='xmla_button' href='#' class='css_button' onclick='return GenXml("false")'>
                         <span>
-                          <?php echo htmlspecialchars(xl('Generate PQRI report (Method A) - 2011'), ENT_NOQUOTES); ?>
+                          <?php echo htmlspecialchars(xl('Generate PQRS report (Method A) - 2011'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
                       <a id='xmlb_button' href='#' class='css_button' onclick='return GenXml("true")'>
                         <span>
-                          <?php echo htmlspecialchars(xl('Generate PQRI report (Method E) - 2011'), ENT_NOQUOTES); ?>
+                          <?php echo htmlspecialchars(xl('Generate PQRS report (Method E) - 2011'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
 <?php
@@ -724,8 +724,8 @@ function Form_Validate() {
               case 'cqm':
               case 'cqm_2011':
               case 'cqm_2014':
-                if(!empty($row['cqm_pqri_code'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('PQRI').':'.$row['cqm_pqri_code'], ENT_NOQUOTES).' ';
+                if(!empty($row['cqm_pqrs_code'])) {
+                  $tempMeasuresString .= ' '.htmlspecialchars(xl('PQRS').':'.$row['cqm_pqrs_code'], ENT_NOQUOTES).' ';
                 }
                 if(!empty($row['cqm_nqf_code'])) {
                   $tempMeasuresString .= ' '.htmlspecialchars(xl('NQF').':'.$row['cqm_nqf_code'], ENT_NOQUOTES).' ';

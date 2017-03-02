@@ -9,7 +9,7 @@
  * Copyright (C) 2010-2012 Brady Miller <brady@sparmy.com>
  * Copyright (C) 2011      Medical Information Integration, LLC
  * Copyright (C) 2011      Ensofttek, LLC
- *
+ * Copyright (C) 2016	   SunCoast Connection INC.
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -21,11 +21,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package PQRS_Gateway
  * @author  Brady Miller <brady@sparmy.com>
  * @author  Medical Information Integration, LLC
  * @author  Ensofttek, LLC
- * @link    http://www.open-emr.org
+ * @link    http://suncoastconnection.com
  */
 
 require_once(dirname(__FILE__) . "/patient.inc");

@@ -5,8 +5,8 @@
  // modify it under the terms of the GNU General Public License
  // as published by the Free Software Foundation; either version 2
  // of the License, or (at your option) any later version.
-
- // This program exports report to PQRI 2009 XML format.
+ // @author SunCoastConnection Inc.
+ // This program exports report to PQRS 2016 XML format.
 
 //SANITIZE ALL ESCAPES
 $sanitize_all_escapes=true;
@@ -21,7 +21,7 @@ require_once("../interface/globals.php");
 require_once("../library/patient.inc");
 require_once "../library/options.inc.php";
 require_once("../library/clinical_rules.php");
-require_once("../library/classes/PQRIXml.class.php");
+require_once("../library/classes/PQRSXml.class.php");
 
 //To improve performance and not freeze the session when running this
 // report, turn off session writing. Note that php session variables
@@ -75,7 +75,7 @@ function getMeasureNumber($row) {
 // Collect parameters (set defaults if empty)
 $target_date = (isset($_GET['target_date'])) ? trim($_GET['target_date']) : date('Y-m-d H:i:s');
 $nested = (isset($_GET['nested'])) ? trim($_GET['nested']) : 'false';
-$xml = new PQRIXml();
+$xml = new PQRSXml();
 
 // Add the XML parent tag.
 $xml->open_submission();
@@ -114,20 +114,20 @@ foreach ($dataSheet as $row) {
 	//print_r($row);
  	if (isset($row['is_main']) || isset($row['is_sub'])) {
 		if (isset($row['is_main'])) {
-			// Add PQRI measures
- 			$pqri_measures = array();
-			$pqri_measures['pqrs-measure-number'] =  getMeasureNumber($row);
-			$pqri_measures['patient-population'] = getLabelNumber($row['population_label']);
-			$pqri_measures['numerator'] = getLabelNumber($row['numerator_label']);
-			$pqri_measures['eligible-instances'] = $row['pass_filter'];
-	       	$pqri_measures['meets-performance-instances'] = $row['pass_target'];
-		    $pqri_measures['performance-exclusion-instances'] =  $row['excluded'];
+			// Add PQRS measures
+ 			$pqrs_measures = array();
+			$pqrs_measures['pqrs-measure-number'] =  getMeasureNumber($row);
+			$pqrs_measures['patient-population'] = getLabelNumber($row['population_label']);
+			$pqrs_measures['numerator'] = getLabelNumber($row['numerator_label']);
+			$pqrs_measures['eligible-instances'] = $row['pass_filter'];
+	       	$pqrs_measures['meets-performance-instances'] = $row['pass_target'];
+		    $pqrs_measures['performance-exclusion-instances'] =  $row['excluded'];
 		    $performance_not_met_instances = (int)$row['pass_filter'] - (int)$row['pass_target'] - (int)$row['excluded'];
-            $pqri_measures['performance-not-met-instances'] = (string)$performance_not_met_instances;
-			$pqri_measures['performance-rate'] = $row['percentage'];
-	        $pqri_measures['reporting-rate'] = (($row['pass_filter']-$row['excluded'])/$row['pass_filter'])*100;
-                $pqri_measures['reporting-rate']=$pqri_measures['reporting-rate'].'%';
-	        $xml->add_pqri_measures($pqri_measures);	
+            $pqrs_measures['performance-not-met-instances'] = (string)$performance_not_met_instances;
+			$pqrs_measures['performance-rate'] = $row['percentage'];
+	        $pqrs_measures['reporting-rate'] = (($row['pass_filter']-$row['excluded'])/$row['pass_filter'])*100;
+                $pqrs_measures['reporting-rate']=$pqrs_measures['reporting-rate'].'%';
+	        $xml->add_pqrs_measures($pqrs_measures);	
 		}
 		else { // $row[0] == "sub"
 				
@@ -188,7 +188,7 @@ $xml->close_submission();
 <head>
 <?php html_header_show();?>
 <link rel=stylesheet href="<?php echo $css_header;?>" type="text/css">
-<title><?php echo htmlspecialchars( xl('Export PQRI Report'), ENT_NOQUOTES); ?></title>
+<title><?php echo htmlspecialchars( xl('Export PQRS Report'), ENT_NOQUOTES); ?></title>
 </head>
 <body>
 
