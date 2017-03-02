@@ -22,7 +22,6 @@ class PQRS_0438_InitialPatientPopulation1 extends PQRSFilter
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
-" JOIN patient_data AS p ON (p.pid = b1.pid)".
 " WHERE b1.pid = ? ".
 " AND b1.code = 'G9662'; ";
 
