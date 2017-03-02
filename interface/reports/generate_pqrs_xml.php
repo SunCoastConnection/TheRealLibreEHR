@@ -162,8 +162,7 @@ $CREATOR="Suncoast Connection";
 $VERSION="1.0";
 $REGISTRY_NAME="suncoastrhio";
 $REGISTRY_ID="263971780";    // Their tax payer number  EIN
-
-//Our Vendor Unique ID is: 5249237	#TODO:  This goes somewhere
+$VENDOR_UNIQUE_ID="5249237";
 
 $SUBMISSION_TYPE="1";	# 1=Individual Registry Submission 2=GPRO Registry Submi
 //SUBMISSION_METHOD=`ask "Is this a Group or individuAl measure submission? (Group = G, Individual = A)"`
@@ -254,7 +253,7 @@ $FILE_NUMBER="1";							# Number 1 of 5
 	echo "Generating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n";
 	echo "\n<hr>\n\n";
 	echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"; // > $OUTFILE_NAME
-	echo "<submission type=\"PQRS-REGISTRY\" version=\"7.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n";
+	echo "<submission type=\"PQRS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n";
 	echo "  <file-audit-data>\n";
 	echo "    <create-date>".$CREATE_DATE."</create-date>\n";
 	echo "    <create-time>".$CREATE_TIME."</create-time>\n";
@@ -266,6 +265,7 @@ $FILE_NUMBER="1";							# Number 1 of 5
 	echo "  <registry>\n";
 	echo "    <registry-name>".$REGISTRY_NAME."</registry-name>\n";
 	echo "    <registry-id>".$REGISTRY_ID."</registry-id>\n";
+	echo "    <vendor-unique-id>".$VENDOR_UNIQUE_ID."</vendor-unique-id>\n";
 	echo "    <submission-type>".$SUBMISSION_TYPE."</submission-type>\n";
 	echo "    <submission-method>".$SUBMISSION_METHOD."</submission-method>\n";
 	echo "  </registry>\n";
@@ -305,6 +305,16 @@ $FILE_NUMBER="1";							# Number 1 of 5
 
 
 	echo "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n";
+// This section is new for 2017?
+<risk-adjusted-measure-detail>
+ <population-ref-rate>8.3000</population-ref-rate>	// Note: When the population-ref-rate is null use <population-ref-rate xsi:nil="true"/> for this tag.`
+ <risk-standardized-rate>7.0000</risk-standardized-rate>	// Note: When the risk-standardized-rate is null use < risk-standardized-rate  xsi:nil="true"/> for this tag.
+ <lower-ci>6.9213</lower-ci>	// Note: When the lower-ci is null use <lower-ci xsi:nil="true"/> for this tag.
+ <upper-ci>10.3910</upper-ci>	// Note: When the upper-ci is null use <upper-ci xsi:nil="true"/> for this tag.
+ <performance-assessment>Average</performance-assessment>	// Note: When the performance-assessment is null use <performance-assessment xsi:nil="true"/> for this tag.
+ <risk-adjustment-description>Remove patients with X</risk-adjustment-description>	// 300 characters	// Note: When the risk-adjustment-description is null use <risk-adjustment-description xsi:nil="true"/> for this tag.
+ <risk-reporting-rate>95.0000</risk-reporting-rate>	// Note: When the risk-reporting-rate is null use <risk-reporting-rate xsi:nil="true"/> for this tag.
+</risk-adjusted-measure-detail>
 	echo "        </pqrs-measure-details>\n";
 	echo "      </pqrs-measure>\n";
 	echo "    </provider>\n";
