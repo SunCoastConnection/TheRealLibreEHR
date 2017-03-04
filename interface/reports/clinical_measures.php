@@ -284,6 +284,7 @@ function collectStatus(report_id) {
 
 function GenXml(sNested) {
 // PQRS TEAM NOTE: !! Important for XML generation !!
+		console.log('DEBUG:  sNested is ' + sNested );
 
   top.restoreSession();
 
@@ -291,14 +292,16 @@ function GenXml(sNested) {
   if(sNested == "PQRS") {
     var form_rule_filter = theform.form_rule_filter.value;
 // TODO: perameters need to be reviewed
-    var sLoc = '../../custom/export_registry_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>";
+//generate_pqrs_xml.php" id="xmlc_button" class='css_button' 
+    var sLoc = 'generate_pqrs_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>";
+    		console.log('DEBUG: sLoc is ' + sLoc );
   } else if(sNested == "QRDA") {
     var form_rule_filter = theform.form_rule_filter.value;
     var sLoc = '../../custom/export_qrda_xml.php?target_date='+theform.form_target_date.value+'&qrda_version=3&rule_filter=cqm_2014&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>";
   } else {
     var sLoc = '../../custom/export_registry_xml.php?&target_date='+theform.form_target_date.value+'&nested='+sNested;
   }
-
+		console.log('DEBUG: abotu to dlgopen with ' + sLoc );
   dlgopen(sLoc, '_blank', 600, 500);
 
   return false;
@@ -630,12 +633,12 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('Generate PQRS 2015 STUB'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-                      <a href="#" id="xmlc_button" class='css_button' onclick='return GenXml("PQRS-3")'>
+                      <a href="#" id="xmlc_button" class='css_button' onclick='return GenXml("PQRS")'>
                         <span>
                           <?php echo htmlspecialchars(xl('Generate PQRS 2016 STUB (GenXml reference)'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-                      <a href="generate_pqrs_xml.php" id="xmlc_button" class='css_button' >
+                      <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXml("PQRS");'>
                         <span>
                           <?php echo htmlspecialchars(xl('Generate PQRS 2016 (Bryan test)'), ENT_NOQUOTES); ?>
                         </span>
