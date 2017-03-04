@@ -1,151 +1,166 @@
 <?php
-//  BROKEN!  BORKEN BROKEN BROKEN!  This is not PHP!  It's BASH.  #!/bin/bash
 
-/*
-askYN() {
-    while true; do
-        if [ "${2:-}" = "Y" ]; then
-            prompt="Y/n"
-            default=Y
-        elif [ "${2:-}" = "N" ]; then
-            prompt="y/N"
-            default=N
-        else
-            prompt="y/n"
-            default=
-        fi
+// SANITIZE ALL ESCAPES
+$sanitize_all_escapes = true;
 
-        # Ask the question - use /dev/tty in case stdin is redirected from somewhere else
-        read -p "$1 [$prompt] " REPLY </dev/tty
+// STOP FAKE REGISTER GLOBALS
+$fake_register_globals = false;
 
-        # Default?
-        if [ -z "$REPLY" ]; then
-            REPLY=$default
-        fi
+require_once '../globals.php';
+require_once $srcdir.'/patient.inc';
+require_once $srcdir.'/formatting.inc.php';
+require_once $srcdir.'/options.inc.php';
+require_once $srcdir.'/formdata.inc.php';
+require_once $srcdir.'/clinical_rules.php';
+require_once $srcdir.'/report_database.inc';
 
-        # Check if the reply is valid
-        case "$REPLY" in
-            Y*|y*) return 0 ;;
-            N*|n*) return 1 ;;
-        esac
+function existsDefault(&$array, $key, $default = '') {
+  if(array_key_exists($key, $array)) {
+    $default = trim($array[$key]);
+  }
 
-    done
+  return $default;
 }
 
 
-ask() {
-    while true; do
-        # Ask the question - use /dev/tty in case stdin is redirected from somewhere else
-        read -p "$1  " REPLY </dev/tty
+$report_id = $_GET['report_id'] ;
+//$report_id = (isset($_REQUEST['report_id'])) ;
+echo "DEBUG report_id is $report_id \n";
 
-	if [[ "$REPLY" ]]; then
-		echo $REPLY
-		return ;
-        fi
-    done
+if(!empty($report_id)) {
+  $report_view = collectReportDatabase($report_id);
+}	//TODO:  This should encompass this whole page
+echo ("DEBUG report_view is:  ".implode($report_view)."\n" );
+
+$dataSheet = json_decode($report_view['data'], true);
+echo ("DEBUG dataSheet is:  ".implode($dataSheet)."\n" );
+echo ("DEBUG the first measure (group type) is ".$dataSheet[0]['id']   ."\n");
+//TODO:  Sanity check that all measures are either individual or of the same group
+$MGID=find_MGID_by_measure_name($dataSheet[0]['id']);
+echo ("DEBUG The MGID is ".$MGID."\n");
+foreach($dataSheet as $row) {
+	echo ("DEBUG row -- ".implode("|", $row) ."\n");
 }
 
-ask_mgid() {
- 	select MGID in "Diabetes Mellitus" "CKD" "Preventive Care" "Rheumatoid Arthritis" "CABG" "Hepatitis C" "HF" "CAD" "HIV/AIDS" "Asthma" "COPD" "IBD" "Sleep Apnea" "Cataracts" "Dementia" "Parkinson’s Disease" "Oncology" "Total Knee Replacement" "General Surgery" "OPEIR" "Sinusitis" "AOE" "Not Applicable (Individual)"
-       	do
-		case $MGID in
- 			"Diabetes Mellitus")
-                		echo "A"
-				break
-				;;
- 			"CKD")
-                		echo "C"
-				break
-				;;
- 			"Preventive Care")
-                		echo "D"
-				break
-				;;
- 			"Rheumatoid Arthritis")
-                		echo "F"
-				break
-				;;
- 			"CABG")
-                		echo "H"
-				break
-				;;
- 			"Hepatitis C")
-                		echo "I"
-				break
-				;;
- 			"HF")
-                		echo "L"
-				break
-				;;
- 			"CAD")
-                		echo "M"
-				break
-				;;
- 			"HIV/AIDS")
-                		echo "N"
-				break
-				;;
- 			"Asthma")
-                		echo "O"
-				break
-				;;
- 			"COPD")
-                		echo "P"
-				break
-				;;
- 			"IBD")
-                		echo "Q"
-				break
-				;;
- 			"Sleep Apnea")
-                		echo "R"
-				break
-				;;
- 			"Cataracts")
-                		echo "S"
-				break
-				;;
- 			"Dementia")
-                		echo "T"
-				break
-				;;
- 			"Parkinson’s Disease")
-                		echo "U"
-				break
-				;;
- 			"Oncology")
-                		echo "Y"
-				break
-				;;
- 			"Total Knee Replacement")
-                		echo "Z"
-				break
-				;;
- 			"General Surgery")
-                		echo "AA"
-				break
-				;;
- 			"OPEIR")
-                		echo "AB"
-				break
-				;;
- 			"Sinusitis")
-				echo "AC"
-				break
-				;;
- 			"AOE")
-				echo "AD"
-				break
-				;;
-			"Not Applicable (Individual)")
-				echo "X"
-				break
-				;;
-		esac
-	done
 
-}
-*/
+
+function find_MGID_by_measure_name ( $measure_name ) {
+	echo ("DEBUG find_group_type_by_measure_name: measure_name is ".$measure_name ."\n");
+	if ( strpos( $measure_name, "PQRS_Group_") === false) {
+		echo ("DEBUG: MGID Not Applicable (Individual Measures) is X\n");
+		return "X";
+	} else {
+	$group_portion_only=substr($measure_name,11,strlen($measure_name)-16  );
+	echo ("DEBUG group_portion_only is $group_portion_only\n");
+	switch ($group_portion_only) {
+    	case "Diabetes":
+        	echo ("DEBUG: Diabetes Mellitus MGID is A\n");
+		return "A";
+        	break;
+    	case "CKD":
+        	echo ("DEBUG: CKD MGID is C\n");
+		return "C";
+        	break;
+    	case "Preventive":
+        	echo ("DEBUG: Preventive Care MGID is D\n");
+		return "D";
+        	break;
+	case "RA":
+		echo ("DEBUG: Rheumatoid Arthritis MGID is F\n");
+		return "F";
+		break;
+	case "CABG":
+		echo ("DEBUG: CABG MGID is H\n");
+		return "H";
+		break;
+	case "HepatitisC":
+		echo ("DEBUG: Hepatitis C MGID is I\n");
+		return "I";
+		break;
+	case "HF":
+		echo ("DEBUG: HF MGID is L\n");
+		return "L";
+		break;
+	case "CAD":
+		echo ("DEBUG: CAD MGID is M\n");
+		return "M";
+		break;
+	case "HIVAIDS":
+		echo ("DEBUG: HIV/AIDS MGID is N\n");
+		return "N";
+		break;
+	case "Asthma":
+		echo ("DEBUG: Asthma MGID is O \n");
+		return "O";
+		break;
+	case "COPD":
+		echo ("DEBUG: COPD MGID is P \n");
+		return "P";
+		break;
+	case "IBD":
+		echo ("DEBUG: IBD MGID is Q \n");
+		return "Q";
+		break;
+	case "Sleep_Apnea":
+		echo ("DEBUG: Sleep Apnea is R \n");
+		return "R";
+		break;
+	case "Cataracts":
+		echo ("DEBUG: Cataracts MGID is S \n");
+		return "S";
+		break;
+	case "Dementia":
+		echo ("DEBUG: Dementia MGID is T \n");
+		return "T";
+		break;
+	case "Parkinsons":
+		echo ("DEBUG: Parkinson’s Disease MGID is U \n");
+		return "U";
+		break;
+	case "Oncology":
+		echo ("DEBUG: Oncology MGID is Y \n");
+		return "Y";
+		break;
+	case "TKR":
+		echo ("DEBUG: Total Knee Replacement MGID is Z \n");
+		return "Z";
+		break;
+	case "Surgery":
+		echo ("DEBUG: General Surgery MGID is AA \n");
+		return "AA";
+		break;
+	case "OPEIR":
+		echo ("DEBUG: OPEIR MGID is AB \n");
+		return "AB";
+		break;
+	case "Sinusitis":
+		echo ("DEBUG: Sinusitis MGID is AC \n");
+		return "AC";
+		break;
+	case "AOE":
+		echo ("DEBUG: AOE MGID is AD \n");
+		return "AD";
+		break;
+	case "CP":
+		echo ("DEBUG: Cardiovascular Prevention MGID is AE \n");
+		return "AE";
+		break;
+	case "DR":
+		echo ("DEBUG: Diabetic Retinopathy MGID is AF \n");
+		return "AF";
+		break;
+	case "MCC":
+		echo ("DEBUG: Multiple Chronic Conditions MGID is AG \n");
+		return "AG";
+		break;
+	default:
+		echo ("DEBUG: Measure type did not match, setting to Not Applicable (Individual) (X) \n");
+		return "X";
+	}
+	}
+
+}  // end find_MGID_by_measure_name	
+
 #  ============================================================
 
 # Begin Main
@@ -156,29 +171,43 @@ ask_mgid() {
 OUTFILE_BASENAME=`ask "Base name of output file? (ex. kurth_sinusitis_group, smith_individual) 
 "`
 */
-//$CREATE_DATE=`date +%m-%d-%Y`
-//$CREATE_TIME=`date +%H:%M`
+	echo("DEBUG:  ========================================" ."\n");
+$CREATE_DATE="DATE DATE DATE DATE FIXME FIXME FIXME!";
+	echo("DEBUG:  CREATE_DATE is ".$CREATE_DATE ."\n");
+$CREATE_TIME="DATE DATE DATE DATE FIXME FIXME FIXME!";
+	echo("DEBUG:  CREATE_TIME is ".$CREATE_TIME ."\n");
 $CREATOR="Suncoast Connection";
+	echo("DEBUG:  CREATOR is ".$CREATOR ."\n");
 $VERSION="1.0";
+	echo("DEBUG:  VERSION is ".$VERSION ."\n");
 $REGISTRY_NAME="suncoastrhio";
+	echo("DEBUG:  REGISTRY_NAME is ".$REGISTRY_NAME ."\n");
 $REGISTRY_ID="263971780";    // Their tax payer number  EIN
+	echo("DEBUG:  REGISTRY_ID is ".$REGISTRY_ID ."\n");
 $VENDOR_UNIQUE_ID="5249237";
+	echo("DEBUG:  VENDOR_UNIQUE_ID is ".$VENDOR_UNIQUE_ID ."\n");
 
 $SUBMISSION_TYPE="1";	# 1=Individual Registry Submission 2=GPRO Registry Submi
-//SUBMISSION_METHOD=`ask "Is this a Group or individuAl measure submission? (Group = G, Individual = A)"`
-//COLLECTION_METHOD=`ask "What is the Collection Method? (A=EHR, B=Claims, C=Practice Mgmt System, D=Web Tool)"`
+	echo("DEBUG:  SUBMISSION_TYPE is ".$SUBMISSION_TYPE ."\n");
+$SUBMISSION_METHOD="ask Is this a Group or individuAl measure submission? (Group = G, Individual = A)";
+	echo("DEBUG:  SUBMISSION_METHOD is ".$SUBMISSION_METHOD ."\n");
+$COLLECTION_METHOD="ask What is the Collecion Method? (A=EHR, B=Claims, C=Practice Mgmt System, D=Web Tool)";
+	echo("DEBUG:  COLLECTION_METHOD is ".$COLLECTION_METHOD ."\n");
 
 
-//PROVIDER_NPI=`ask "What is Provider NPI?"`
-//PROVIDER_TIN=`ask "What is Provider TIN?"`
-//PROVIDER_EMAIL=`ask "What is Provider email? (Enter 'none' for default)"`
+$PROVIDER_NPI="What is Provider NPI?";
+	echo("DEBUG:  PROVIDER_NPI is ".$PROVIDER_NPI ."\n");
+$PROVIDER_TIN="What is Provider TIN?";
+	echo("DEBUG:  PROVIDER_TIN is ".$PROVIDER_TIN ."\n");
+$PROVIDER_EMAIL="What is Provider email? (Enter 'none' for default)";
+	echo("DEBUG:  PROVIDER_EMAIL is ".$PROVIDER_EMAIL ."\n");
 /*	if [ $PROVIDER_EMAIL = "none" ] ; then 
 		PROVIDER_EMAIL="drbowen@bowenmd.com"
 	fi
-echo "DEBUG: PROVIDER_EMAIL=$PROVIDER_EMAIL "
 */
 
 $WAIVER_SIGNED="Y";
+	echo("DEBUG:  WAIVER_SIGNED is (we're always assuming) ".$WAIVER_SIGNED ."\n");
 
 /*if [ $WAIVER_SIGNED = "y" ] ; then WAIVER_SIGNED="Y" ; fi
 if [ $WAIVER_SIGNED != "Y" ] ; then
@@ -186,9 +215,15 @@ if [ $WAIVER_SIGNED != "Y" ] ; then
 	exit;
 fi
 */
-$ENCOUNTER_FROM_DATE="01-01-2016";
-$ENCOUNTER_TO_DATE="12-31-2016";
 
+//TODO:  Generate these in code instead of ahrd coding 2016
+$ENCOUNTER_FROM_DATE="01-01-2016";
+	echo("DEBUG:  ENCOUNTER_FROM_DATE is ".$ENCOUNTER_FROM_DATE ."\n");
+$ENCOUNTER_TO_DATE="12-31-2016";
+	echo("DEBUG:  ENCOUNTER_TO_DATE is ".$ENCOUNTER_TO_DATE ."\n");
+
+
+//TODO:  Start here
 $MEASURE_GROUP_ID="A";
 /*
 echo "Which Measure Group are you reporting on?"
@@ -271,7 +306,7 @@ $FILE_NUMBER="1";							# Number 1 of 5
 	echo "  </registry>\n";
 	echo "  <measure-group ID=\"".$MEASURE_GROUP_ID."\" >\n";
 	echo "    <provider>\n";
-	echo '      <gpro-type xsi:nil="true" />';
+	echo '      <gpro-type xsi:nil="true"></gpro-type>'."\n";
 	echo "      <npi>$PROVIDER_NPI</npi>\n";
 	echo "      <tin>$PROVIDER_TIN</tin>\n";
 	echo "      <email-address>$PROVIDER_EMAIL</email-address>\n";
@@ -306,15 +341,15 @@ $FILE_NUMBER="1";							# Number 1 of 5
 
 	echo "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n";
 // This section is new for 2017?
-<risk-adjusted-measure-detail>
- <population-ref-rate>8.3000</population-ref-rate>	// Note: When the population-ref-rate is null use <population-ref-rate xsi:nil="true"/> for this tag.`
- <risk-standardized-rate>7.0000</risk-standardized-rate>	// Note: When the risk-standardized-rate is null use < risk-standardized-rate  xsi:nil="true"/> for this tag.
- <lower-ci>6.9213</lower-ci>	// Note: When the lower-ci is null use <lower-ci xsi:nil="true"/> for this tag.
- <upper-ci>10.3910</upper-ci>	// Note: When the upper-ci is null use <upper-ci xsi:nil="true"/> for this tag.
- <performance-assessment>Average</performance-assessment>	// Note: When the performance-assessment is null use <performance-assessment xsi:nil="true"/> for this tag.
- <risk-adjustment-description>Remove patients with X</risk-adjustment-description>	// 300 characters	// Note: When the risk-adjustment-description is null use <risk-adjustment-description xsi:nil="true"/> for this tag.
- <risk-reporting-rate>95.0000</risk-reporting-rate>	// Note: When the risk-reporting-rate is null use <risk-reporting-rate xsi:nil="true"/> for this tag.
-</risk-adjusted-measure-detail>
+// <risk-adjusted-measure-detail>
+ // <population-ref-rate>8.3000</population-ref-rate>	// Note: When the population-ref-rate is null use <population-ref-rate xsi:nil="true"/> for this tag.`
+ // <risk-standardized-rate>7.0000</risk-standardized-rate>	// Note: When the risk-standardized-rate is null use < risk-standardized-rate  xsi:nil="true"/> for this tag.
+ // <lower-ci>6.9213</lower-ci>	// Note: When the lower-ci is null use <lower-ci xsi:nil="true"/> for this tag.
+ // <upper-ci>10.3910</upper-ci>	// Note: When the upper-ci is null use <upper-ci xsi:nil="true"/> for this tag.
+ // <performance-assessment>Average</performance-assessment>	// Note: When the performance-assessment is null use <performance-assessment xsi:nil="true"/> for this tag.
+ // <risk-adjustment-description>Remove patients with X</risk-adjustment-description>	// 300 characters	// Note: When the risk-adjustment-description is null use <risk-adjustment-description xsi:nil="true"/> for this tag.
+ // <risk-reporting-rate>95.0000</risk-reporting-rate>	// Note: When the risk-reporting-rate is null use <risk-reporting-rate xsi:nil="true"/> for this tag.
+// </risk-adjusted-measure-detail>
 	echo "        </pqrs-measure-details>\n";
 	echo "      </pqrs-measure>\n";
 	echo "    </provider>\n";
