@@ -14,34 +14,13 @@ require_once $srcdir.'/formdata.inc.php';
 require_once $srcdir.'/clinical_rules.php';
 require_once $srcdir.'/report_database.inc';
 
+
 function existsDefault(&$array, $key, $default = '') {
   if(array_key_exists($key, $array)) {
     $default = trim($array[$key]);
   }
-
   return $default;
 }
-
-
-$report_id = $_GET['report_id'] ;
-//$report_id = (isset($_REQUEST['report_id'])) ;
-echo "DEBUG report_id is $report_id \n";
-
-if(!empty($report_id)) {
-  $report_view = collectReportDatabase($report_id);
-}	//TODO:  This should encompass this whole page
-echo ("DEBUG report_view is:  ".implode($report_view)."\n" );
-
-$dataSheet = json_decode($report_view['data'], true);
-echo ("DEBUG dataSheet is:  ".implode($dataSheet)."\n" );
-echo ("DEBUG the first measure (group type) is ".$dataSheet[0]['id']   ."\n");
-//TODO:  Sanity check that all measures are either individual or of the same group
-$MGID=find_MGID_by_measure_name($dataSheet[0]['id']);
-echo ("DEBUG The MGID is ".$MGID."\n");
-foreach($dataSheet as $row) {
-	echo ("DEBUG row -- ".implode("|", $row) ."\n");
-}
-
 
 
 function find_MGID_by_measure_name ( $measure_name ) {
@@ -156,50 +135,92 @@ function find_MGID_by_measure_name ( $measure_name ) {
 	default:
 		echo ("DEBUG: Measure type did not match, setting to Not Applicable (Individual) (X) \n");
 		return "X";
-	}
-	}
-
+	}	// switch
+	}	// else
 }  // end find_MGID_by_measure_name	
 
-#  ============================================================
 
-# Begin Main
+function get_Provider_email ($user_id) {
+	$query="SELECT email FROM `users` WHERE id=$user_id ; ";
+	$result=sqlFetchArray(sqlStatement($query));
+	$EMAIL=$result['email'];
+	//echo ("DEBUG: |$query| result |$result| ;  email is $EMAIL\n");
+	return $EMAIL;
+}
 
-// Set or collect information needed for the XML
 
-/*
-OUTFILE_BASENAME=`ask "Base name of output file? (ex. kurth_sinusitis_group, smith_individual) 
-"`
-*/
+###	==========	BEGIN MAIN	==========
+
+echo ("Assumption ---  Before you generate this XML, you should do the following: \n");
+echo (" * XML should only be generated for a report with a single provider.  *REQUIRED* \n");
+echo (" * XML should only be generated for an Individual Measurs report, or a report generated with one Measure Group selected.  *REQUIRED* \n");
+echo (" * The eligible professional has signed a waiver giving the registry permission to submit data on their behalf.  *REQUIRED* \n");
+echo (" * Failed Patients is assumed to be = Denominator - Numerator - Exclusions.  *REQUIRED* \n");
+echo (" * 9 Measures were chosen for an Individual Measures report.  *REQUIRED* \n");
+echo (" * Go into Administration --- Facilities --- Mark ONE facility as 'Primary Business Entity'.  Be sure it has the correct TIN.   *REQUIRED* \n");
+echo (" * Go into Administration --- 'Ad dr Book' --- Add an email address for any providers for whom you want to recieve PQRS email notifications *Optional* \n");
+echo (" * You are not reporting on GPROs. \n");
+echo (" * You are not reporting on on Risk Adjusted Measures. \n");
+echo (" * Measures that must be reported on for EVERY Encounter will be manualy dealt with in the XML. \n");
+
+echo ("\n============================================================\n");
+
+
+
+$report_id = $_GET['report_id'] ;
+//$report_id = (isset($_REQUEST['report_id'])) ;
+echo ("DEBUG report_id is $report_id \n");
+
+if(!empty($report_id)) {
+  $report_view = collectReportDatabase($report_id);
+}	//TODO:  This should encompass this whole page
+echo ("DEBUG report_view is:  ".implode($report_view)."\n" );
+
+$dataSheet = json_decode($report_view['data'], true);
+echo ("DEBUG dataSheet is:  ".implode($dataSheet)."\n" );
+echo ("DEBUG the first measure (group type) is ".$dataSheet[0]['id']   ."\n");
+//TODO:  Sanity check that all measures are either individual or of the same group
+
+
+
 	echo("DEBUG:  ========================================" ."\n");
-$CREATE_DATE="DATE DATE DATE DATE FIXME FIXME FIXME!";
+$CREATE_DATE=date("m/d/y");	//In the form:  01-23-2016
 	echo("DEBUG:  CREATE_DATE is ".$CREATE_DATE ."\n");
-$CREATE_TIME="DATE DATE DATE DATE FIXME FIXME FIXME!";
+$CREATE_TIME=date("H:i");	//In the form:  23:01
 	echo("DEBUG:  CREATE_TIME is ".$CREATE_TIME ."\n");
 $CREATOR="Suncoast Connection";
 	echo("DEBUG:  CREATOR is ".$CREATOR ."\n");
-$VERSION="1.0";
+$VERSION="1.0";		// "The version of the file being submitted"
 	echo("DEBUG:  VERSION is ".$VERSION ."\n");
 $REGISTRY_NAME="suncoastrhio";
 	echo("DEBUG:  REGISTRY_NAME is ".$REGISTRY_NAME ."\n");
-$REGISTRY_ID="263971780";    // Their tax payer number  EIN
+$REGISTRY_ID="263971780";    // SCRHIP's tax payer number  EIN
 	echo("DEBUG:  REGISTRY_ID is ".$REGISTRY_ID ."\n");
 $VENDOR_UNIQUE_ID="5249237";
 	echo("DEBUG:  VENDOR_UNIQUE_ID is ".$VENDOR_UNIQUE_ID ."\n");
 
+$MEASURE_GROUP_ID=find_MGID_by_measure_name($dataSheet[0]['id']);
+echo ("DEBUG The MGID is ".$MEASURE_GROUP_ID."\n");
+
 $SUBMISSION_TYPE="1";	# 1=Individual Registry Submission 2=GPRO Registry Submi
 	echo("DEBUG:  SUBMISSION_TYPE is ".$SUBMISSION_TYPE ."\n");
-$SUBMISSION_METHOD="ask Is this a Group or individuAl measure submission? (Group = G, Individual = A)";
+if ($MEASURE_GROUP_ID=="X") {
+	$SUBMISSION_METHOD="A";	// IndividuAl
+} else {
+	$SUBMISSION_METHOD="G";	// Group
+}
 	echo("DEBUG:  SUBMISSION_METHOD is ".$SUBMISSION_METHOD ."\n");
-$COLLECTION_METHOD="ask What is the Collecion Method? (A=EHR, B=Claims, C=Practice Mgmt System, D=Web Tool)";
+$COLLECTION_METHOD="D";
+//ask What is the Collecion Method? (A=EHR, B=Claims, C=Practice Mgmt System, D=Web Tool)";
 	echo("DEBUG:  COLLECTION_METHOD is ".$COLLECTION_METHOD ."\n");
 
 
-$PROVIDER_NPI="What is Provider NPI?";
+$PROVIDER_NPI=$report_view['provider'];
 	echo("DEBUG:  PROVIDER_NPI is ".$PROVIDER_NPI ."\n");
-$PROVIDER_TIN="What is Provider TIN?";
+
+$PROVIDER_TIN="TINTINTINTINTINTINTINTINTINTINTINTINTINTINTINTIN";	#TODO
 	echo("DEBUG:  PROVIDER_TIN is ".$PROVIDER_TIN ."\n");
-$PROVIDER_EMAIL="What is Provider email? (Enter 'none' for default)";
+$PROVIDER_EMAIL=get_Provider_email($PROVIDER_NPI);
 	echo("DEBUG:  PROVIDER_EMAIL is ".$PROVIDER_EMAIL ."\n");
 /*	if [ $PROVIDER_EMAIL = "none" ] ; then 
 		PROVIDER_EMAIL="drbowen@bowenmd.com"
@@ -224,122 +245,191 @@ $ENCOUNTER_TO_DATE="12-31-2016";
 
 
 //TODO:  Start here
-$MEASURE_GROUP_ID="A";
-/*
-echo "Which Measure Group are you reporting on?"
-MEASURE_GROUP_ID=`ask_mgid`
-echo "DEBUG:  MEASURE_GROUP_ID=$MEASURE_GROUP_ID"
+$OUTFILE_BASENAME="PQRS2017-".$PROVIDER_NPI."_".$PROVIDER_TIN;	#TODO
+	echo("DEBUG:  OUTFILE_BASENAME is ".$OUTFILE_BASENAME ."\n");
 
-if [ $MEASURE_GROUP_ID != "X" ] ; then
-	FFS_PATIENT_COUNT=`ask "What is Total number of Medicare Part B FFS patients seen for the PQRS measure group?  (FFS_PATIENT_COUNT)
-"`
-	GROUP_REPORTING_RATE_NUMERATOR=`ask "Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
-"`
-	GROUP_ELIGIBLE_INSTANCES=`ask "What is Eligible instances for the PQRS Measure Group?  (GROUP_ELIGIBLE_INSTANCES (reporting denominator) )
-"`
-	#GROUP_REPORTING_RATE=`ask "What is Reporting Rate for this PQRS Measure Group? (GROUP_REPORTING_RATE i.e. 100.00)"` 
-	GROUP_REPORTING_RATE=$(printf %.2f $( echo "scale=2;($GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES) *100" |bc ))
-	echo
-	echo "* Your Group Reporting Rate is  $GROUP_REPORTING_RATE %"
-fi
 
-echo
-FILE_OF=`ask "How many total Measures are you reporting on?
-"`	# Total number of XML files
-*/
+if ( $MEASURE_GROUP_ID != "X" ) {   // Only for Group Measures
+	#$FFS_PATIENT_COUNT=get_Medicare_Patient_Count($report_id);
+// `ask "What is Total number of Medicare Part B FFS patients seen for the PQRS measure group?  (FFS_PATIENT_COUNT)
+
+	#$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($report_id);
+	$GROUP_REPORTING_RATE_NUMERATOR=198;
+	echo ("DEBUG:  * Your Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR \n");
+//`ask "Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
+
+	#$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($report_id);
+	$GROUP_ELIGIBLE_INSTANCES=200;
+	echo ("DEBUG:  * Your Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES \n");
+//`ask "What is Eligible instances for the PQRS Measure Group?  (GROUP_ELIGIBLE_INSTANCES (reporting denominator) )
+
+	$GROUP_REPORTING_RATE=sprintf("%00.2f",  $GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES*100);
+	echo ("DEBUG:  * Your Group Reporting Rate is $GROUP_REPORTING_RATE %\n");
+}
+
+$TOTAL_MEASURES=count($dataSheet);
+	echo ("DEBUG:  Total number of MEasures being reported on is $TOTAL_MEASURES \n");
+//`ask "How many total Measures are you reporting on?
+	# Total number of XML files
+
 # LOOP!!!!!!!!!!!!!!!!!!!!!!!!!!!
-$FILE_NUMBER="1";							# Number 1 of 5
+$FILE_NUMBER="0";
 
-//while ( [ $FILE_NUMBER -le $FILE_OF ] ) ; do
+foreach($dataSheet as $row) {
+	echo ("DEBUG row -- ".implode("|", $row) ."\n");
 
-	echo "For ".$FILE_NUMBER."st measure:";
-//	PQRS_MEASURE_NUMBER=`ask "What is PQRS Measure Number of measure "$FILE_NUMBER"?
-//"`
+	$FILE_NUMBER++;
+	echo "--------------------------------------------------------------------------------\n";
+	echo "For Measure ".$FILE_NUMBER.":  \n";
+	$PQRS_MEASURE_NUMBER=substr($row['id'],strlen($measure_name)-4  );
+	echo (" PQRS Measure Number is $PQRS_MEASURE_NUMBER \n");
 
 	# Technically, the $COLLECTION_METHOD can be different for each measure
 
 #	MEASURE_STRATA_NUM=`ask "What is Measure Strata Number?  (1?)"`
-	$MEASURE_STRATA_NUM="1";
-//	ELIGIBLE_INSTANCES=`ask "How many eligible instances (Reporting Denominator) for the PQRS measure?
-//"`
-//	MEETS_PERFORMANCE_INSTANCES=`ask "How many Meets Performance Instances? (Performance Numerator)
-//"`
-//	PERFORMANCE_EXCLUSION_INSTANCES=`ask "How many Exclusions?
-//"`
-//	PERFORMANCE_NOT_MET_INSTANCES=`ask "How many Performance Not Met Instances?
-//"`
+	$MEASURE_STRATA_NUM="1";	// TODO
+	echo (" Assuming MEASURE_STRATA_NUM is 1 for now.  \n");
+
+//`ask "How many eligible instances (Reporting Denominator) for the PQRS measure?
+	$ELIGIBLE_INSTANCES=$row['pass_filter'];
+	echo (" Denominator is $ELIGIBLE_INSTANCES \n");
+
+//`ask "How many Meets Performance Instances? (Performance Numerator)
+	$MEETS_PERFORMANCE_INSTANCES=$row['pass_target'];
+	echo (" Numerator is $MEETS_PERFORMANCE_INSTANCES \n");
+
+//`ask "How many Exclusions?
+	$PERFORMANCE_EXCLUSION_INSTANCES=$row['excluded'];
+	echo (" Exclusions is $PERFORMANCE_EXCLUSION_INSTANCES \n");
+
+//`ask "How many Performance Not Met Instances?
+	$PERFORMANCE_NOT_MET_INSTANCES=$ELIGIBLE_INSTANCES-$MEETS_PERFORMANCE_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES;
+	echo (" Failed is $PERFORMANCE_NOT_MET_INSTANCES (calculated) \n");
 
 	#REPORTING_RATE=`ask "Reporting rate? (i.e. 100.00)"`
-//	if [ $MEASURE_GROUP_ID = "X" ] ; then
-//		REPORTING_RATE=$(printf %.2f $( echo "scale=4;(($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100" |bc ))
+	if ( $MEASURE_GROUP_ID = "X" ){
+		$REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
 #<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
-		echo "* Your Reporting Rate is  ".$REPORTING_RATE." %\n";
-//	fi
+		echo (" Reporting Rate for this Measure is  $REPORTING_RATE (calculated)\n");
+	}
 
 	#PERFORMANCE_RATE=`ask "What is Performance Rate? (i.e. 100.00)"`
-//	PERFORMANCE_RATE=$(printf %.2f $( echo "scale=4;($MEETS_PERFORMANCE_INSTANCES/($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES) ) * 100" | bc ))
+	$PERFORMANCE_RATE=sprintf("%00.2f", $MEETS_PERFORMANCE_INSTANCES/($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES) * 100);
 #<meets-performance-instances> / [(<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>) - <performance-exclusion-instances>]
-	echo "* Your Performance Rate is ".$PERFORMANCE_RATE." %\n";
+	echo (" * Your Performance Rate is $PERFORMANCE_RATE (calculated)\n");
+
 
 
 # ==============================================================
 #  Generate XML
-//	OUTFILE_NAME=$OUTFILE_BASENAME-$FILE_NUMBER.xml
-	echo "Generating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n";
-	echo "\n<hr>\n\n";
-	echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"; // > $OUTFILE_NAME
+	$OUTFILE_NAME="$OUTFILE_BASENAME-$FILE_NUMBER.xml";
+	$myFileHandle=fopen($OUTFILE_NAME, "w") or die("Unable to open file!");
+
+	echo "\nGenerating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n";
+	echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+	fwrite($myFileHandle, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 	echo "<submission type=\"PQRS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n";
+	fwrite($myFileHandle, "<submission type=\"PQRS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n");
 	echo "  <file-audit-data>\n";
+	fwrite($myFileHandle,  "  <file-audit-data>\n");
 	echo "    <create-date>".$CREATE_DATE."</create-date>\n";
+	fwrite($myFileHandle,  "    <create-date>".$CREATE_DATE."</create-date>\n");
 	echo "    <create-time>".$CREATE_TIME."</create-time>\n";
+	fwrite($myFileHandle,  "    <create-time>".$CREATE_TIME."</create-time>\n");
 	echo "    <create-by>".$CREATOR."</create-by>\n";
+	fwrite($myFileHandle,  "    <create-by>".$CREATOR."</create-by>\n");
 	echo "    <version>".$VERSION."</version>\n";
+	fwrite($myFileHandle,  "    <version>".$VERSION."</version>\n");
 	echo "    <file-number>".$FILE_NUMBER."</file-number>\n";
-	echo "    <number-of-files>".$FILE_OF."</number-of-files>\n";
+	fwrite($myFileHandle,  "    <file-number>".$FILE_NUMBER."</file-number>\n");
+	echo "    <number-of-files>".$TOTAL_MEASURES."</number-of-files>\n";
+	fwrite($myFileHandle,  "    <number-of-files>".$TOTAL_MEASURES."</number-of-files>\n");
 	echo "  </file-audit-data>\n";
+	fwrite($myFileHandle,  "  </file-audit-data>\n");
 	echo "  <registry>\n";
+	fwrite($myFileHandle,  "  <registry>\n");
 	echo "    <registry-name>".$REGISTRY_NAME."</registry-name>\n";
+	fwrite($myFileHandle,  "    <registry-name>".$REGISTRY_NAME."</registry-name>\n");
 	echo "    <registry-id>".$REGISTRY_ID."</registry-id>\n";
+	fwrite($myFileHandle,  "    <registry-id>".$REGISTRY_ID."</registry-id>\n");
 	echo "    <vendor-unique-id>".$VENDOR_UNIQUE_ID."</vendor-unique-id>\n";
+	fwrite($myFileHandle,  "    <vendor-unique-id>".$VENDOR_UNIQUE_ID."</vendor-unique-id>\n");
 	echo "    <submission-type>".$SUBMISSION_TYPE."</submission-type>\n";
+	fwrite($myFileHandle,  "    <submission-type>".$SUBMISSION_TYPE."</submission-type>\n");
 	echo "    <submission-method>".$SUBMISSION_METHOD."</submission-method>\n";
+	fwrite($myFileHandle,  "    <submission-method>".$SUBMISSION_METHOD."</submission-method>\n");
 	echo "  </registry>\n";
+	fwrite($myFileHandle,  "  </registry>\n");
 	echo "  <measure-group ID=\"".$MEASURE_GROUP_ID."\" >\n";
+	fwrite($myFileHandle,  "  <measure-group ID=\"".$MEASURE_GROUP_ID."\" >\n");
 	echo "    <provider>\n";
+	fwrite($myFileHandle,  "    <provider>\n");
 	echo '      <gpro-type xsi:nil="true"></gpro-type>'."\n";
+	fwrite($myFileHandle,  '      <gpro-type xsi:nil="true"></gpro-type>'."\n");
 	echo "      <npi>$PROVIDER_NPI</npi>\n";
+	fwrite($myFileHandle,  "      <npi>$PROVIDER_NPI</npi>\n");
 	echo "      <tin>$PROVIDER_TIN</tin>\n";
-	echo "      <email-address>$PROVIDER_EMAIL</email-address>\n";
+	fwrite($myFileHandle,  "      <tin>$PROVIDER_TIN</tin>\n");
+
+	if ( empty($PROVIDER_EMAIL) ) {
+		echo ("DEBUG  PROVIDER_EMAIL is empty! \n");
+		echo "      <email-address xsi:nil=\"true\"/>\n";
+		fwrite($myFileHandle,  "      <email-address xsi:nil=\"true\"/>\n");
+	} else {
+		echo "      <email-address>$PROVIDER_EMAIL</email-address>\n";
+		fwrite($myFileHandle,  "      <email-address>$PROVIDER_EMAIL</email-address>\n");
+	}
+
 	echo "      <waiver-signed>$WAIVER_SIGNED</waiver-signed>\n";
+	fwrite($myFileHandle,  "      <waiver-signed>$WAIVER_SIGNED</waiver-signed>\n");
 	echo "      <encounter-from-date>$ENCOUNTER_FROM_DATE</encounter-from-date>\n";
+	fwrite($myFileHandle,  "      <encounter-from-date>$ENCOUNTER_FROM_DATE</encounter-from-date>\n");
 	echo "      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date>\n";
+	fwrite($myFileHandle,  "      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date>\n");
 
 	if ( $MEASURE_GROUP_ID != "X" ) {
 		echo "      <measure-group-stat>\n";
+		fwrite($myFileHandle,  "      <measure-group-stat>\n");
 		echo "        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count>\n";
+		fwrite($myFileHandle,  "        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count>\n");
 		echo "        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator>\n";
+		fwrite($myFileHandle,  "        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator>\n");
 		echo "        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances>\n";
+		fwrite($myFileHandle,  "        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances>\n");
 		echo "        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate>\n";
+		fwrite($myFileHandle,  "        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate>\n");
 		echo "      </measure-group-stat>\n";
+		fwrite($myFileHandle,  "      </measure-group-stat>\n");
 	}
 
 	echo "      <pqrs-measure>\n";
+	fwrite($myFileHandle,  "      <pqrs-measure>\n");
 	echo "        <pqrs-measure-number>$PQRS_MEASURE_NUMBER</pqrs-measure-number>\n";
+	fwrite($myFileHandle,  "        <pqrs-measure-number>$PQRS_MEASURE_NUMBER</pqrs-measure-number>\n");
 	echo "        <collection-method>$COLLECTION_METHOD</collection-method>\n";
+	fwrite($myFileHandle,  "        <collection-method>$COLLECTION_METHOD</collection-method>\n");
 	echo "        <pqrs-measure-details>\n";
+	fwrite($myFileHandle,  "        <pqrs-measure-details>\n");
 	echo "          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num>\n";
+	fwrite($myFileHandle,  "          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num>\n");
 	echo "          <eligible-instances>$ELIGIBLE_INSTANCES</eligible-instances>\n";
+	fwrite($myFileHandle,  "          <eligible-instances>$ELIGIBLE_INSTANCES</eligible-instances>\n");
 	echo "          <meets-performance-instances>$MEETS_PERFORMANCE_INSTANCES</meets-performance-instances>\n";
+	fwrite($myFileHandle,  "          <meets-performance-instances>$MEETS_PERFORMANCE_INSTANCES</meets-performance-instances>\n");
 	echo "          <performance-exclusion-instances>$PERFORMANCE_EXCLUSION_INSTANCES</performance-exclusion-instances>\n";
+	fwrite($myFileHandle,  "          <performance-exclusion-instances>$PERFORMANCE_EXCLUSION_INSTANCES</performance-exclusion-instances>\n");
 	echo "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>\n";
+	fwrite($myFileHandle,  "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>\n");
 
 
 	if ( $MEASURE_GROUP_ID = "X" ) {
 		echo "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n";
+		fwrite($myFileHandle,  "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
 	}
 
 
 	echo "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n";
+	fwrite($myFileHandle,  "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n");
 // This section is new for 2017?
 // <risk-adjusted-measure-detail>
  // <population-ref-rate>8.3000</population-ref-rate>	// Note: When the population-ref-rate is null use <population-ref-rate xsi:nil="true"/> for this tag.`
@@ -351,13 +441,15 @@ $FILE_NUMBER="1";							# Number 1 of 5
  // <risk-reporting-rate>95.0000</risk-reporting-rate>	// Note: When the risk-reporting-rate is null use <risk-reporting-rate xsi:nil="true"/> for this tag.
 // </risk-adjusted-measure-detail>
 	echo "        </pqrs-measure-details>\n";
+	fwrite($myFileHandle,  "        </pqrs-measure-details>\n");
 	echo "      </pqrs-measure>\n";
+	fwrite($myFileHandle,  "      </pqrs-measure>\n");
 	echo "    </provider>\n";
+	fwrite($myFileHandle,  "    </provider>\n");
 	echo "  </measure-group>\n";
+	fwrite($myFileHandle,  "  </measure-group>\n");
 	echo "</submission>\n";
-	
-/*
-	FILE_NUMBER=`expr $FILE_NUMBER + 1`
-done	#Main while loop that generated multiple files
-*/
+	fwrite($myFileHandle,  "</submission>\n");
+fclose($myFileHandle);
+}	// End loop.  LOOP LOOP LOOP LOOP
 ?>
