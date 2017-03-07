@@ -29,51 +29,51 @@ include_once("$srcdir/api.inc");
 if($_POST['formSubmit'] == "Submit") 
 {
 sqlStatement("TRUNCATE TABLE `addresses`;");
-$query = file_get_contents("./SQL/addresses.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/addresses.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `billing`;");
-$query = file_get_contents("./SQL/billing.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/billing.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `facility`;");
-$query = file_get_contents("./SQL/facilities.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/facilities.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `form_encounter`;");
-$query = file_get_contents("./SQL/form_encounter.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/form_encounter.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `forms`;");
-$query = file_get_contents("./SQL/forms.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/forms.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `insurance_companies`;");
-$query = file_get_contents("./SQL/insurance_companies.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/insurance_companies.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `insurance_data`;");
-$query = file_get_contents("./SQL/insurance_data.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/insurance_data.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `patient_data`;");
-$query = file_get_contents("./SQL/patient_data.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/patient_data.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `phone_numbers`;");
-$query = file_get_contents("./SQL/phone_numbers.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/phone_numbers.sql");
 sqlStatement($query);
 
 sqlStatement("TRUNCATE TABLE `x12_partners`;");
-$query = file_get_contents("./SQL/x12_partners.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/x12_partners.sql");
 sqlStatement($query);
 
 sqlStatement("DELETE FROM `users` WHERE `users`.`id` > '20';");
-$query = file_get_contents("./SQL/users.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/users.sql");
 sqlStatement($query);
 
 sqlStatement("DELETE FROM `groups` WHERE `groups`.`id` > '20';");
-$query = file_get_contents("./SQL/groups.sql", true);
+$query = file_get_contents($GLOBALS['OE_SITES_BASE']."/Importer/groups.sql");
 sqlStatement($query);
 echo "Database updated!";
 }
