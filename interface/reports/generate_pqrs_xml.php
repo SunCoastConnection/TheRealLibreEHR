@@ -258,17 +258,17 @@ if(!empty($report_id)) {
 // Total number of Medicare Part B FFS patients seen for the PQRS measure group
 		//$FFS_PATIENT_COUNT=get_Medicare_Patient_Count($report_id);	#TODO
 		$FFS_PATIENT_COUNT="FFS_PATIENT_COUNT-FFS_PATIENT_COUNT-FFS_PATIENT_COUNT-FFS_PATIENT_COUNT";
-		htmlecho("* Total count of Medicare Part B FFS patients is $FFS_PATIENT_COUNT (LIES!!!!) \n");
+		htmlecho("* Total count of Medicare Part B FFS patients is $FFS_PATIENT_COUNT (LIES!!!!) \n");	#TODO
 
 // Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
 		#$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($report_id);	#TODO
 		$GROUP_REPORTING_RATE_NUMERATOR=198;
-		htmlecho("* Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR (LIES!!!!) \n");
+		htmlecho("* Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR (LIES!!!!) \n");	#TODO
 
 // What is Eligible instances for the PQRS Measure Group?(reporting denominator)
 		#$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($report_id);
 		$GROUP_ELIGIBLE_INSTANCES=200;	#TODO
-		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES (LIES!!!!) \n");
+		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES (LIES!!!!) \n");	#TODO
 
 		$GROUP_REPORTING_RATE=sprintf("%00.2f",  $GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES*100);
 		htmlecho("* Group Reporting Rate is $GROUP_REPORTING_RATE % \n");
@@ -289,26 +289,26 @@ if(!empty($report_id)) {
 		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($measure_name)-4 ),'0');
 		htmlecho(" PQRS Measure Number is $PQRS_MEASURE_NUMBER  \n");
 
-		# Technically, the $COLLECTION_METHOD can be different for each measure
+	# Technically, the $COLLECTION_METHOD can be different for each measure
 
 // TODO TODO TODO  TODO  TODO  TODO  TODO  TODO  TODO  TODO  TODO  TODO  TODO
-	#	MEASURE_STRATA_NUM=`ask "What is Measure Strata Number?  (1?)"`
+//  "What is Measure Strata Number?  (1?)"`
 		$MEASURE_STRATA_NUM="1";	// TODO
 		htmlecho(" Assuming MEASURE_STRATA_NUM is 1 for now.   \n");
 
-//`ask "How many eligible instances (Reporting Denominator) for the PQRS measure?
+// "How many eligible instances (Reporting Denominator) for the PQRS measure?
 		$ELIGIBLE_INSTANCES=$row['pass_filter'];
 		htmlecho(" Denominator is $ELIGIBLE_INSTANCES  \n");
 
-//`ask "How many Meets Performance Instances? (Performance Numerator)
+// "How many Meets Performance Instances? (Performance Numerator)
 		$MEETS_PERFORMANCE_INSTANCES=$row['pass_target'];
 		htmlecho(" Numerator is $MEETS_PERFORMANCE_INSTANCES  \n");
 
-//`ask "How many Exclusions?
+// "How many Exclusions?
 		$PERFORMANCE_EXCLUSION_INSTANCES=$row['excluded'];
 		htmlecho(" Exclusions is $PERFORMANCE_EXCLUSION_INSTANCES  \n");
 
-//`ask "How many Performance Not Met Instances?
+// "How many Performance Not Met Instances?
 		$PERFORMANCE_NOT_MET_INSTANCES=$ELIGIBLE_INSTANCES-$MEETS_PERFORMANCE_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES;
 		htmlecho(" Failed is $PERFORMANCE_NOT_MET_INSTANCES (calculated)  \n");
 
@@ -322,7 +322,7 @@ if(!empty($report_id)) {
 		#PERFORMANCE_RATE=`ask "What is Performance Rate? (i.e. 100.00)"`
 		$PERFORMANCE_RATE=sprintf("%00.2f", $MEETS_PERFORMANCE_INSTANCES/($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES) * 100);
 #<meets-performance-instances> / [(<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>) - <performance-exclusion-instances>]
-		htmlecho(" * Your Performance Rate is $PERFORMANCE_RATE (calculated) \n");
+		htmlecho(" Your Performance Rate is $PERFORMANCE_RATE (calculated) \n");
 
 
 # ==============================================================
@@ -330,6 +330,7 @@ if(!empty($report_id)) {
 		$OUTFILE_NAME="$OUTFILE_BASENAME-$FILE_NUMBER.xml";
 		$myFileHandle=fopen($OUTFILE_PATH."/".$OUTFILE_NAME, "w") or die("Unable to open file!");		# TODO  FULL PATH
 
+		
 		htmlecho(" \nGenerating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n\n");
 		htmlecho("<?xml version=\"1.0\" encoding=\"utf-8\"?> \n");
 		fwrite($myFileHandle, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
