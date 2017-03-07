@@ -31,7 +31,7 @@ class PQRS_0426_InitialPatientPopulation extends PQRSFilter
     " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0426_a') ".
-" AND b2.code = 'G9656' AND b3.code = 'G9567'; "; 
+" AND b2.code = 'G9656' AND NOT b3.code = 'G9567'; "; 
 
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
