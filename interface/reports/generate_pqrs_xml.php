@@ -152,15 +152,85 @@ function get_Provider_email ($user_id) {
 }
 
 
+// Returns the last character in the population_label if it is a digit
+// Returns 1 otherwise
+function get_Measure_Strata($population_label) {
+	$lastcharacter=substr($population_label,20,1);
+	if( $lastcharacter == TRUE ) {
+		if(ctype_digit($lastcharacter)) {
+			return $lastcharacter;
+		} 
+	}
+	return 1;
+}
+
+
+function get_Medicare_Patient_Count($report_id) {
+$query = "SELECT count(DISTINCT ri.pid) as count ".
+" FROM report_itemized ri ".
+" INNER JOIN insurance_data i on (i.pid=ri.pid) ".
+" INNER JOIN insurance_companies c on (c.id = i.provider) ".
+" WHERE c.freeb_type = 2 ".
+" AND ri.report_id =".$report_id.
+" ORDER BY ri.pid";
+#TODO:  Validate this query
+	$result=sqlFetchArray(sqlStatement($query))['count'];
+	//$result=sqlStatement($query);
+	//htmlecho(" DEBUG MFFS:  ".$result." \n");
+	return $result;	
+}
+
+
+function get_Reporting_Rate_Numerator($report_id) {
+	return 198;	#TODO
+}
+
+
+function get_Group_Eligable_Instances($report_id) {
+	return 200;	#TODO
+}
+
+
+function get_Registry_Name() {
+	return "suncoastrhio";	#TODO:  Get this from globals
+}
+
+
+function get_Registry_ID() {
+	return "263971780";    
+	// SCRHIO's tax payer number  EIN	
+	#TODO:  Get this from globals
+}
+
+
+function get_Registry_VENDOR_UNIQUE_ID() {
+	return "5249237";	#TODO:  Get this from globals
+}
+
+
+function get_TIN() {
+	// Lookup the primary_business_entity in the facility table
+	$query="SELECT federal_ein FROM `facility` WHERE primary_business_entity=1; ";
+	$result=sqlFetchArray(sqlStatement($query))['federal_ein'];
+	//htmlecho("DEBUG get_TIN result is ".$result." \n");
+	if ( ! empty($result) ) {
+		return $result;
+	} else {
+		htmlecho("ERROR:  No facility is set as the Primary Business Entity.\n   You MUST set one with the correct TIN. \n");
+		return "TINTINTINTINTINTINTIN";
+	}
+}
+
 ###	==========	BEGIN MAIN	==========
 
 echo ("<pre>\n");
 htmlecho("Assumptions ---  Before you generate this XML, you should do the following:  \n");
 htmlecho(" * XML should only be generated for a report with a single provider.  *REQUIRED*  \n");
-htmlecho(" * XML should only be generated for an Individual Measures report, or a report generated with one Measure Group selected.  *REQUIRED*  \n");
+htmlecho(" * XML should only be generated for an Individual Measures report, or a report generated with one Measure Group selected.  *REQUIRED*  \n"); #TODO
 htmlecho(" * The eligible professional has signed a waiver giving the registry permission to submit data on their behalf.  *REQUIRED*  \n");
-htmlecho(" * Failed Patients is assumed to be = Denominator - Numerator - Exclusions.  *REQUIRED*  \n");
+htmlecho(" * \"Failed Patients\" is assumed to be = Denominator - Numerator - Exclusions.  *REQUIRED*  \n");
 htmlecho(" * 9 Measures were chosen for an Individual Measures report.  *REQUIRED*  \n");
+htmlecho(" * This report does not include any \"pre_\" measures. \n");
 htmlecho(" * Go into Administration --- Facilities --- Mark ONE facility as 'Primary Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
 htmlecho(" * Go into Administration --- 'Ad dr Book' --- Add an email address for any providers for whom you want to recieve PQRS email notifications *Optional*  \n");
 htmlecho(" * You are not reporting on GPROs.  \n");
@@ -197,13 +267,13 @@ if(!empty($report_id)) {
 	$VERSION="1.0";		// "The version of the file being submitted"
 	htmlecho("VERSION is ".$VERSION ." \n");
 
-	$REGISTRY_NAME="suncoastrhio";	#TODO:  Get this from globals
+	$REGISTRY_NAME=get_Registry_Name();
 	htmlecho("REGISTRY_NAME is ".$REGISTRY_NAME ." \n");
 
-	$REGISTRY_ID="263971780";    // SCRHIO's tax payer number  EIN	#TODO:  Get this from globals
+	$REGISTRY_ID=get_Registry_ID();
 	htmlecho("REGISTRY_ID is ".$REGISTRY_ID ." \n");
 
-	$VENDOR_UNIQUE_ID="5249237";	#TODO:  Get this from globals
+	$VENDOR_UNIQUE_ID=get_Registry_VENDOR_UNIQUE_ID();
 	htmlecho("VENDOR_UNIQUE_ID is ".$VENDOR_UNIQUE_ID ." \n");
 
 	$MEASURE_GROUP_ID=find_MGID_by_measure_name($dataSheet[0]['id']);
@@ -227,7 +297,7 @@ if(!empty($report_id)) {
 	$PROVIDER_NPI=$report_view['provider'];
 	htmlecho("PROVIDER_NPI is ".$PROVIDER_NPI ." \n");
 
-	$PROVIDER_TIN="TINTINTINTINTINTINTINTINTINTINTINTINTINTINTINTIN";  #TODO
+	$PROVIDER_TIN=get_TIN();
 	htmlecho("PROVIDER_TIN is ".$PROVIDER_TIN ." \n");
 
 	$PROVIDER_EMAIL=get_Provider_email($PROVIDER_NPI);
@@ -245,7 +315,7 @@ if(!empty($report_id)) {
 	htmlecho("ENCOUNTER_TO_DATE is ".$ENCOUNTER_TO_DATE ." \n");
 
 
-	$OUTFILE_PATH=$GLOBALS['OE_SITE_DIR']."/PQRS/dropzone/files/";
+	$OUTFILE_PATH=$GLOBALS['OE_SITE_DIR']."/PQRS/dropzone/files/XML_out/";
 	htmlecho("DEBUG:  OUTFILE_PATH is $OUTFILE_PATH  \n"); #TODO Delete this
 
 	$OUTFILE_BASENAME="PQRS2017-".$PROVIDER_NPI."_".$PROVIDER_TIN;
@@ -254,20 +324,20 @@ if(!empty($report_id)) {
 
 	if ( $MEASURE_GROUP_ID != "X" ) {   // Only for Group Measures
 		htmlecho("-------------------------------------------------------------------------------- \n");
+		htmlecho("Group Statistics:\n");
 
 // Total number of Medicare Part B FFS patients seen for the PQRS measure group
-		//$FFS_PATIENT_COUNT=get_Medicare_Patient_Count($report_id);	#TODO
-		$FFS_PATIENT_COUNT="FFS_PATIENT_COUNT-FFS_PATIENT_COUNT-FFS_PATIENT_COUNT-FFS_PATIENT_COUNT";
-		htmlecho("* Total count of Medicare Part B FFS patients is $FFS_PATIENT_COUNT (LIES!!!!) \n");	#TODO
+		$FFS_PATIENT_COUNT=get_Medicare_Patient_Count($report_id);
+		htmlecho("* Total count of Medicare Part B FFS patients is $FFS_PATIENT_COUNT \n");
 
 // Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
 		#$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($report_id);	#TODO
-		$GROUP_REPORTING_RATE_NUMERATOR=198;
+		$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($report_id);
 		htmlecho("* Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR (LIES!!!!) \n");	#TODO
 
 // What is Eligible instances for the PQRS Measure Group?(reporting denominator)
 		#$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($report_id);
-		$GROUP_ELIGIBLE_INSTANCES=200;	#TODO
+		$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($report_id);
 		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES (LIES!!!!) \n");	#TODO
 
 		$GROUP_REPORTING_RATE=sprintf("%00.2f",  $GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES*100);
@@ -286,15 +356,14 @@ if(!empty($report_id)) {
 		//echo ("DEBUG row -- ".implode("|", $row) ."\n");
 		htmlecho("-------------------------------------------------------------------------------- \n");
 		htmlecho("For Measure ".$FILE_NUMBER.":   \n");
-		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($measure_name)-4 ),'0');
+		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($row['id'])-4 ),'0');
 		htmlecho(" PQRS Measure Number is $PQRS_MEASURE_NUMBER  \n");
 
 	# Technically, the $COLLECTION_METHOD can be different for each measure
 
-// TODO TODO TODO  TODO  TODO  TODO  TODO  TODO  TODO  TODO  TODO  TODO  TODO
-//  "What is Measure Strata Number?  (1?)"`
-		$MEASURE_STRATA_NUM="1";	// TODO
-		htmlecho(" Assuming MEASURE_STRATA_NUM is 1 for now.   \n");
+// "What is Measure Strata Number?)"`
+		$MEASURE_STRATA_NUM=get_Measure_Strata($row['population_label']);
+		htmlecho(" Measure Strata Number is $MEASURE_STRATA_NUM \n");
 
 // "How many eligible instances (Reporting Denominator) for the PQRS measure?
 		$ELIGIBLE_INSTANCES=$row['pass_filter'];
