@@ -185,8 +185,7 @@ $query = "SELECT count(DISTINCT ri.pid) as count ".
 function get_Reporting_Rate_Numerator($dataSheet) {
 	// Add all the pass/fail/exclusions counts together for all measures
 ///  MATH MATH MATH.  I'm calculating the fail as denominator-pass-exclusions, so the sum of these 3 is always goign to return the denominator.
-// SO Let's just return the denominator sums.	#LIES
-	return get_Group_Eligable_Instances($dataSheet);
+// SO Let's just return the denominator sums.	#LIES return get_Group_Eligable_Instances($dataSheet);
 }
 
 
@@ -243,7 +242,7 @@ htmlecho(" * \"Failed Patients\" is assumed to be = Denominator - Numerator - Ex
 htmlecho(" * 9 Measures were chosen for an Individual Measures report.  *REQUIRED*  \n");
 htmlecho(" * This report does not include any \"pre_\" measures. \n");
 htmlecho(" * Go into Administration --- Facilities --- Mark ONE facility as 'Primary\n     Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
-htmlecho(" * Go into Administration --- 'Ad dr Book' --- Add an email address for any\n     providers for whom you want to recieve PQRS email notifications *Optional*  \n");
+htmlecho(" * If you want to recieve PQRS email notifications from CMS for this provider,\n     Go into Administration --- 'Addr Book' --- Add an email address *Optional*  \n");
 htmlecho(" * You are not reporting on GPROs.  \n");
 htmlecho(" * You are not reporting on on Risk Adjusted Measures.  \n");
 htmlecho(" * Measures that must be reported on for EVERY Encounter will be manualy   \n     dealt with in the XML.  \n");
@@ -472,6 +471,7 @@ if(!empty($report_id)) {
 //		htmlecho("      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date> \n");
 		fwrite($myFileHandle,  "      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date>\n");
 
+// This section for Group Measures
 		if ( $MEASURE_GROUP_ID != "X" ) {
 //			htmlecho("      <measure-group-stat> \n");
 			fwrite($myFileHandle,  "      <measure-group-stat>\n");
