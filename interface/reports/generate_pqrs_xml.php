@@ -356,6 +356,7 @@ if(!empty($report_id)) {
 		//echo ("DEBUG row -- ".implode("|", $row) ."\n");
 		htmlecho("-------------------------------------------------------------------------------- \n");
 		htmlecho("For Measure ".$FILE_NUMBER.":   \n");
+
 		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($row['id'])-4 ),'0');
 		htmlecho(" PQRS Measure Number is $PQRS_MEASURE_NUMBER  \n");
 
@@ -399,7 +400,6 @@ if(!empty($report_id)) {
 		$OUTFILE_NAME="$OUTFILE_BASENAME-$FILE_NUMBER.xml";
 		$myFileHandle=fopen($OUTFILE_PATH."/".$OUTFILE_NAME, "w") or die("Unable to open file!");		# TODO  FULL PATH
 
-		
 		htmlecho(" \nGenerating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n\n");
 		htmlecho("<?xml version=\"1.0\" encoding=\"utf-8\"?> \n");
 		fwrite($myFileHandle, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
