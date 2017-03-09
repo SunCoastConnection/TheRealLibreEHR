@@ -284,7 +284,6 @@ function collectStatus(report_id) {
 
 function GenXml(sNested) {
 // PQRS TEAM NOTE: !! Important for XML generation !!
-		console.log('DEBUG:  sNested is ' + sNested );
 
   top.restoreSession();
 
@@ -294,14 +293,12 @@ function GenXml(sNested) {
 // TODO: perameters need to be reviewed
 //generate_pqrs_xml.php" id="xmlc_button" class='css_button' 
     var sLoc = 'generate_pqrs_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>";
-    		console.log('DEBUG: sLoc is ' + sLoc );
   } else if(sNested == "QRDA") {
     var form_rule_filter = theform.form_rule_filter.value;
     var sLoc = '../../custom/export_qrda_xml.php?target_date='+theform.form_target_date.value+'&qrda_version=3&rule_filter=cqm_2014&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>";
   } else {
     var sLoc = '../../custom/export_registry_xml.php?&target_date='+theform.form_target_date.value+'&nested='+sNested;
   }
-		console.log('DEBUG: abotu to dlgopen with ' + sLoc );
   dlgopen(sLoc, '_blank', 600, 500);
 
   return false;
