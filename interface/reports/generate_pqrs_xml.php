@@ -181,11 +181,13 @@ $query = "SELECT count(DISTINCT ri.pid) as count ".
 }
 
 
+// Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
 function get_Reporting_Rate_Numerator($report_id) {
 	return 198;	#TODO
 }
 
 
+// What is Eligible instances for the PQRS Measure Group?(reporting denominator)
 function get_Group_Eligable_Instances($report_id) {
 	return 200;	#TODO
 }
@@ -226,16 +228,16 @@ function get_TIN() {
 echo ("<pre>\n");
 htmlecho("Assumptions ---  Before you generate this XML, you should do the following:  \n");
 htmlecho(" * XML should only be generated for a report with a single provider.  *REQUIRED*  \n");
-htmlecho(" * XML should only be generated for an Individual Measures report, or a report generated with one Measure Group selected.  *REQUIRED*  \n"); #TODO
-htmlecho(" * The eligible professional has signed a waiver giving the registry permission to submit data on their behalf.  *REQUIRED*  \n");
-htmlecho(" * \"Failed Patients\" is assumed to be = Denominator - Numerator - Exclusions.  *REQUIRED*  \n");
+htmlecho(" * XML should only be generated for an Individual Measures report, or a report \n     generated with one Measure Group selected.  *REQUIRED*  \n"); 
+htmlecho(" * The eligible professional has signed a waiver giving the registry permission\n     to submit data on their behalf.  *REQUIRED*  \n");
+htmlecho(" * \"Failed Patients\" is assumed to be = Denominator - Numerator - Exclusions. *REQUIRED*  \n");
 htmlecho(" * 9 Measures were chosen for an Individual Measures report.  *REQUIRED*  \n");
 htmlecho(" * This report does not include any \"pre_\" measures. \n");
-htmlecho(" * Go into Administration --- Facilities --- Mark ONE facility as 'Primary Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
-htmlecho(" * Go into Administration --- 'Ad dr Book' --- Add an email address for any providers for whom you want to recieve PQRS email notifications *Optional*  \n");
+htmlecho(" * Go into Administration --- Facilities --- Mark ONE facility as 'Primary\n     Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
+htmlecho(" * Go into Administration --- 'Ad dr Book' --- Add an email address for any\n     providers for whom you want to recieve PQRS email notifications *Optional*  \n");
 htmlecho(" * You are not reporting on GPROs.  \n");
 htmlecho(" * You are not reporting on on Risk Adjusted Measures.  \n");
-htmlecho(" * Measures that must be reported on for EVERY Encounter will be manualy dealt with in the XML.  \n");
+htmlecho(" * Measures that must be reported on for EVERY Encounter will be manualy   \n     dealt with in the XML.  \n");
 
 htmlecho("\n================================================================================ \n");
 
@@ -252,6 +254,7 @@ if(!empty($report_id)) {
 	$dataSheet = json_decode($report_view['data'], true);
 	//echo ("DEBUG dataSheet is:  ".implode($dataSheet)."\n" );
 	htmlecho("DEBUG The first measure is ".$dataSheet[0]['id']   ." \n");
+
 //TODO:  Sanity check that all measures are either individual or of the same group
 
 
@@ -316,9 +319,9 @@ if(!empty($report_id)) {
 
 
 	$OUTFILE_PATH=$GLOBALS['OE_SITE_DIR']."/PQRS/dropzone/files/XML_out/";
-	htmlecho("DEBUG:  OUTFILE_PATH is $OUTFILE_PATH  \n"); #TODO Delete this
+	//htmlecho("DEBUG:  OUTFILE_PATH is $OUTFILE_PATH  \n");
 
-	$OUTFILE_BASENAME="PQRS2017-".$PROVIDER_NPI."_".$PROVIDER_TIN;
+	$OUTFILE_BASENAME="PQRS_2017-".$PROVIDER_NPI."_".$PROVIDER_TIN;
 	htmlecho("DEBUG:  OUTFILE_BASENAME is ".$OUTFILE_BASENAME ." \n");
 
 
@@ -331,14 +334,12 @@ if(!empty($report_id)) {
 		htmlecho("* Total count of Medicare Part B FFS patients is $FFS_PATIENT_COUNT \n");
 
 // Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
-		#$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($report_id);	#TODO
 		$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($report_id);
-		htmlecho("* Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR (LIES!!!!) \n");	#TODO
+		htmlecho("* Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR (LIES!!!!) \n");	#TODO  Remove "LIES!!!!" in this output
 
 // What is Eligible instances for the PQRS Measure Group?(reporting denominator)
-		#$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($report_id);
 		$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($report_id);
-		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES (LIES!!!!) \n");	#TODO
+		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES (LIES!!!!) \n");	#TODO  Remove "LIES!!!!" in this output
 
 		$GROUP_REPORTING_RATE=sprintf("%00.2f",  $GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES*100);
 		htmlecho("* Group Reporting Rate is $GROUP_REPORTING_RATE % \n");
@@ -398,112 +399,112 @@ if(!empty($report_id)) {
 # ==============================================================
 #  Generate XML
 		$OUTFILE_NAME="$OUTFILE_BASENAME-$FILE_NUMBER.xml";
-		$myFileHandle=fopen($OUTFILE_PATH."/".$OUTFILE_NAME, "w") or die("Unable to open file!");		# TODO  FULL PATH
+		$myFileHandle=fopen($OUTFILE_PATH."/".$OUTFILE_NAME, "w") or die("Unable to open file!");
 
 		htmlecho(" \nGenerating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n\n");
-		htmlecho("<?xml version=\"1.0\" encoding=\"utf-8\"?> \n");
+/*		htmlecho("<?xml version=\"1.0\" encoding=\"utf-8\"?> \n"); */
 		fwrite($myFileHandle, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-		htmlecho("<submission type=\"PQRS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\"> \n");
+//		htmlecho("<submission type=\"PQRS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\"> \n");
 		fwrite($myFileHandle, "<submission type=\"PQRS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n");
-		htmlecho("  <file-audit-data> \n");
+//		htmlecho("  <file-audit-data> \n");
 		fwrite($myFileHandle,  "  <file-audit-data>\n");
-		htmlecho("    <create-date>".$CREATE_DATE."</create-date> \n");
+//		htmlecho("    <create-date>".$CREATE_DATE."</create-date> \n");
 		fwrite($myFileHandle,  "    <create-date>".$CREATE_DATE."</create-date>\n");
-		htmlecho("    <create-time>".$CREATE_TIME."</create-time> \n");
+//		htmlecho("    <create-time>".$CREATE_TIME."</create-time> \n");
 		fwrite($myFileHandle,  "    <create-time>".$CREATE_TIME."</create-time>\n");
-		htmlecho("    <create-by>".$CREATOR."</create-by> \n");
+//		htmlecho("    <create-by>".$CREATOR."</create-by> \n");
 		fwrite($myFileHandle,  "    <create-by>".$CREATOR."</create-by>\n");
-		htmlecho("    <version>".$VERSION."</version> \n");
+//		htmlecho("    <version>".$VERSION."</version> \n");
 		fwrite($myFileHandle,  "    <version>".$VERSION."</version>\n");
-		htmlecho("    <file-number>".$FILE_NUMBER."</file-number> \n");
+//		htmlecho("    <file-number>".$FILE_NUMBER."</file-number> \n");
 		fwrite($myFileHandle,  "    <file-number>".$FILE_NUMBER."</file-number>\n");
-		htmlecho("    <number-of-files>".$TOTAL_MEASURES."</number-of-files> \n");
+//		htmlecho("    <number-of-files>".$TOTAL_MEASURES."</number-of-files> \n");
 		fwrite($myFileHandle,  "    <number-of-files>".$TOTAL_MEASURES."</number-of-files>\n");
-		htmlecho("  </file-audit-data> \n");
+//		htmlecho("  </file-audit-data> \n");
 		fwrite($myFileHandle,  "  </file-audit-data>\n");
-		htmlecho("  <registry> \n");
+//		htmlecho("  <registry> \n");
 		fwrite($myFileHandle,  "  <registry>\n");
-		htmlecho("    <registry-name>".$REGISTRY_NAME."</registry-name> \n");
+//		htmlecho("    <registry-name>".$REGISTRY_NAME."</registry-name> \n");
 		fwrite($myFileHandle,  "    <registry-name>".$REGISTRY_NAME."</registry-name>\n");
-		htmlecho("    <registry-id>".$REGISTRY_ID."</registry-id> \n");
+//		htmlecho("    <registry-id>".$REGISTRY_ID."</registry-id> \n");
 		fwrite($myFileHandle,  "    <registry-id>".$REGISTRY_ID."</registry-id>\n");
-		htmlecho("    <vendor-unique-id>".$VENDOR_UNIQUE_ID."</vendor-unique-id> \n");
+//		htmlecho("    <vendor-unique-id>".$VENDOR_UNIQUE_ID."</vendor-unique-id> \n");
 		fwrite($myFileHandle,  "    <vendor-unique-id>".$VENDOR_UNIQUE_ID."</vendor-unique-id>\n");
-		htmlecho("    <submission-type>".$SUBMISSION_TYPE."</submission-type> \n");
+//		htmlecho("    <submission-type>".$SUBMISSION_TYPE."</submission-type> \n");
 		fwrite($myFileHandle,  "    <submission-type>".$SUBMISSION_TYPE."</submission-type>\n");
-		htmlecho("    <submission-method>".$SUBMISSION_METHOD."</submission-method> \n");
+//		htmlecho("    <submission-method>".$SUBMISSION_METHOD."</submission-method> \n");
 		fwrite($myFileHandle,  "    <submission-method>".$SUBMISSION_METHOD."</submission-method>\n");
-		htmlecho("  </registry> \n");
+//		htmlecho("  </registry> \n");
 		fwrite($myFileHandle,  "  </registry>\n");
-		htmlecho("  <measure-group ID=\"".$MEASURE_GROUP_ID."\" > \n");
+//		htmlecho("  <measure-group ID=\"".$MEASURE_GROUP_ID."\" > \n");
 		fwrite($myFileHandle,  "  <measure-group ID=\"".$MEASURE_GROUP_ID."\" >\n");
-		htmlecho("    <provider> \n");
+//		htmlecho("    <provider> \n");
 		fwrite($myFileHandle,  "    <provider>\n");
-		htmlecho('      <gpro-type xsi:nil="true"></gpro-type>'." \n");
+//		htmlecho('      <gpro-type xsi:nil="true"></gpro-type>'." \n");
 		fwrite($myFileHandle,  '      <gpro-type xsi:nil="true"></gpro-type>'."\n");
-		htmlecho("      <npi>$PROVIDER_NPI</npi> \n");
+//		htmlecho("      <npi>$PROVIDER_NPI</npi> \n");
 		fwrite($myFileHandle,  "      <npi>$PROVIDER_NPI</npi>\n");
-		htmlecho("      <tin>$PROVIDER_TIN</tin> \n");
+//		htmlecho("      <tin>$PROVIDER_TIN</tin> \n");
 		fwrite($myFileHandle,  "      <tin>$PROVIDER_TIN</tin>\n");
 	
 		if ( empty($PROVIDER_EMAIL) ) {
 			//echo ("DEBUG  PROVIDER_EMAIL is empty! \n");
-			htmlecho("      <email-address xsi:nil=\"true\"/> \n");
+//			htmlecho("      <email-address xsi:nil=\"true\"/> \n");
 			fwrite($myFileHandle,  "      <email-address xsi:nil=\"true\"/>\n");
 		} else {
-			htmlecho("      <email-address>$PROVIDER_EMAIL</email-address> \n");
+//			htmlecho("      <email-address>$PROVIDER_EMAIL</email-address> \n");
 			fwrite($myFileHandle,  "      <email-address>$PROVIDER_EMAIL</email-address>\n");
 		}
 
-		htmlecho("      <waiver-signed>$WAIVER_SIGNED</waiver-signed> \n");
+//		htmlecho("      <waiver-signed>$WAIVER_SIGNED</waiver-signed> \n");
 		fwrite($myFileHandle,  "      <waiver-signed>$WAIVER_SIGNED</waiver-signed>\n");
-		htmlecho("      <encounter-from-date>$ENCOUNTER_FROM_DATE</encounter-from-date> \n");
+//		htmlecho("      <encounter-from-date>$ENCOUNTER_FROM_DATE</encounter-from-date> \n");
 		fwrite($myFileHandle,  "      <encounter-from-date>$ENCOUNTER_FROM_DATE</encounter-from-date>\n");
-		htmlecho("      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date> \n");
+//		htmlecho("      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date> \n");
 		fwrite($myFileHandle,  "      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date>\n");
 
 		if ( $MEASURE_GROUP_ID != "X" ) {
-			htmlecho("      <measure-group-stat> \n");
+//			htmlecho("      <measure-group-stat> \n");
 			fwrite($myFileHandle,  "      <measure-group-stat>\n");
-			htmlecho("        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count> \n");
+//			htmlecho("        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count> \n");
 			fwrite($myFileHandle,  "        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count>\n");
-			htmlecho("        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator> \n");
+//			htmlecho("        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator> \n");
 			fwrite($myFileHandle,  "        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator>\n");
-			htmlecho("        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances> \n");
+//			htmlecho("        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances> \n");
 			fwrite($myFileHandle,  "        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances>\n");
-			htmlecho("        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate> \n");
+//			htmlecho("        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate> \n");
 			fwrite($myFileHandle,  "        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate>\n");
-			htmlecho("      </measure-group-stat> \n");
+//			htmlecho("      </measure-group-stat> \n");
 			fwrite($myFileHandle,  "      </measure-group-stat>\n");
 		}
 
-		htmlecho("      <pqrs-measure> \n");
+//		htmlecho("      <pqrs-measure> \n");
 		fwrite($myFileHandle,  "      <pqrs-measure>\n");
-		htmlecho("        <pqrs-measure-number>$PQRS_MEASURE_NUMBER</pqrs-measure-number> \n");
+//		htmlecho("        <pqrs-measure-number>$PQRS_MEASURE_NUMBER</pqrs-measure-number> \n");
 		fwrite($myFileHandle,  "        <pqrs-measure-number>$PQRS_MEASURE_NUMBER</pqrs-measure-number>\n");
-		htmlecho("        <collection-method>$COLLECTION_METHOD</collection-method> \n");
+//		htmlecho("        <collection-method>$COLLECTION_METHOD</collection-method> \n");
 		fwrite($myFileHandle,  "        <collection-method>$COLLECTION_METHOD</collection-method>\n");
-		htmlecho("        <pqrs-measure-details> \n");
+//		htmlecho("        <pqrs-measure-details> \n");
 		fwrite($myFileHandle,  "        <pqrs-measure-details>\n");
-		htmlecho("          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num> \n");
+//		htmlecho("          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num> \n");
 		fwrite($myFileHandle,  "          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num>\n");
-		htmlecho("          <eligible-instances>$ELIGIBLE_INSTANCES</eligible-instances> \n");
+//		htmlecho("          <eligible-instances>$ELIGIBLE_INSTANCES</eligible-instances> \n");
 		fwrite($myFileHandle,  "          <eligible-instances>$ELIGIBLE_INSTANCES</eligible-instances>\n");
-		htmlecho("          <meets-performance-instances>$MEETS_PERFORMANCE_INSTANCES</meets-performance-instances> \n");
+//		htmlecho("          <meets-performance-instances>$MEETS_PERFORMANCE_INSTANCES</meets-performance-instances> \n");
 		fwrite($myFileHandle,  "          <meets-performance-instances>$MEETS_PERFORMANCE_INSTANCES</meets-performance-instances>\n");
-		htmlecho("          <performance-exclusion-instances>$PERFORMANCE_EXCLUSION_INSTANCES</performance-exclusion-instances> \n");
+//		htmlecho("          <performance-exclusion-instances>$PERFORMANCE_EXCLUSION_INSTANCES</performance-exclusion-instances> \n");
 		fwrite($myFileHandle,  "          <performance-exclusion-instances>$PERFORMANCE_EXCLUSION_INSTANCES</performance-exclusion-instances>\n");
-		htmlecho("          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances> \n");
+//		htmlecho("          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances> \n");
 		fwrite($myFileHandle,  "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>\n");
 
 
 		if ( $MEASURE_GROUP_ID = "X" ) {
-			htmlecho("          <reporting-rate>$REPORTING_RATE</reporting-rate> \n");
+//			htmlecho("          <reporting-rate>$REPORTING_RATE</reporting-rate> \n");
 			fwrite($myFileHandle,  "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
 		}
 
 
-		htmlecho("          <performance-rate>$PERFORMANCE_RATE</performance-rate> \n");
+//		htmlecho("          <performance-rate>$PERFORMANCE_RATE</performance-rate> \n");
 		fwrite($myFileHandle,  "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n");
 
 // We are not doing RISK-ADJUSTED-MEASURES
@@ -516,15 +517,15 @@ if(!empty($report_id)) {
  // <risk-adjustment-description>Remove patients with X</risk-adjustment-description>	// 300 characters	// Note: When the risk-adjustment-description is null use <risk-adjustment-description xsi:nil="true"/> for this tag.
  // <risk-reporting-rate>95.0000</risk-reporting-rate>	// Note: When the risk-reporting-rate is null use <risk-reporting-rate xsi:nil="true"/> for this tag.
 // </risk-adjusted-measure-detail>
-		htmlecho("        </pqrs-measure-details> \n");
+//		htmlecho("        </pqrs-measure-details> \n");
 		fwrite($myFileHandle,  "        </pqrs-measure-details>\n");
-		htmlecho("      </pqrs-measure> \n");
+//		htmlecho("      </pqrs-measure> \n");
 		fwrite($myFileHandle,  "      </pqrs-measure>\n");
-		htmlecho("    </provider> \n");
+//		htmlecho("    </provider> \n");
 		fwrite($myFileHandle,  "    </provider>\n");
-		htmlecho("  </measure-group> \n");
+//		htmlecho("  </measure-group> \n");
 		fwrite($myFileHandle,  "  </measure-group>\n");
-		htmlecho("</submission> \n");
+//		htmlecho("</submission> \n");
 		fwrite($myFileHandle,  "</submission>\n");
 		fclose($myFileHandle);
 	}	// End loop.  LOOP LOOP LOOP LOOP
