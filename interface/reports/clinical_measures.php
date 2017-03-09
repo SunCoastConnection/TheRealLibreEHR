@@ -627,7 +627,7 @@ function Form_Validate() {
 <?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
                       <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXml("PQRS");'>
                         <span>
-                          <?php echo htmlspecialchars(xl('Generate XML for PQRS 2016'), ENT_NOQUOTES); ?>
+                          <?php echo htmlspecialchars(xl('Generate XML for PQRS'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
 <?php   } elseif($type_report == 'cqm_2014') { ?>
