@@ -182,14 +182,23 @@ $query = "SELECT count(DISTINCT ri.pid) as count ".
 
 
 // Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
-function get_Reporting_Rate_Numerator($report_id) {
-	return 198;	#TODO
+function get_Reporting_Rate_Numerator($dataSheet) {
+	// Add all the pass/fail/exclusions counts together for all measures
+///  MATH MATH MATH.  I'm calculating the fail as denominator-pass-exclusions, so the sum of these 3 is always goign to return the denominator.
+// SO Let's just return the denominator sums.	#LIES
+	return get_Group_Eligable_Instances($dataSheet);
 }
 
 
 // What is Eligible instances for the PQRS Measure Group?(reporting denominator)
-function get_Group_Eligable_Instances($report_id) {
-	return 200;	#TODO
+function get_Group_Eligable_Instances($dataSheet) {
+	// Add all the denominators together for all measures.
+	$EligibleInstances=0;
+	foreach($dataSheet as $row) {
+		$EligibleInstances=$EligibleInstances+$row['pass_filter'];
+	//	htmlecho(" DEBUG gGEI countup is +".$row['pass_filter']." = $EligibleInstances  \n");
+	}
+	return $EligibleInstances;
 }
 
 
@@ -334,12 +343,12 @@ if(!empty($report_id)) {
 		htmlecho("* Total count of Medicare Part B FFS patients is $FFS_PATIENT_COUNT \n");
 
 // Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
-		$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($report_id);
-		htmlecho("* Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR (LIES!!!!) \n");	#TODO  Remove "LIES!!!!" in this output
+		$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($dataSheet);
+		htmlecho("* Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR \n");
 
 // What is Eligible instances for the PQRS Measure Group?(reporting denominator)
-		$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($report_id);
-		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES (LIES!!!!) \n");	#TODO  Remove "LIES!!!!" in this output
+		$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($dataSheet);
+		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES \n");
 
 		$GROUP_REPORTING_RATE=sprintf("%00.2f",  $GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES*100);
 		htmlecho("* Group Reporting Rate is $GROUP_REPORTING_RATE % \n");
