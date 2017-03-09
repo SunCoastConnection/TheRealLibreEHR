@@ -4799,6 +4799,29 @@ CREATE TABLE `external_encounters` (
 --
 ALTER TABLE `report_results` CHANGE `field_value` `field_value` longtext;
 
+/* PATCH FILE to include 2016 measures and changes
+*  If you try to create another patch file, update the SEQ in the options_list
+
+ * Copyright (C) 2016 Suncoast Connection
+ *
+ * LICENSE: This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://opensource.org/licenses/gpl-lice
+nse.php>;.
+ *
+ * @package PQRS Gateway
+ * @author  Suncoast Connection
+ * @author  leebc
+ * @link    http://suncoastconnection.com
+*/
+
 DROP TABLE IF EXISTS `clinical_rules`;
 
 CREATE TABLE `clinical_rules` (
@@ -5033,7 +5056,6 @@ INSERT INTO `clinical_rules` (`id`, `pid`, `active_alert_flag`, `passive_alert_f
 ('PQRS_0436', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0436', 1, 0, 1, 0, 'X', 0),
 ('PQRS_0437', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0437', 1, 0, 1, 0, 'X', 0),
 ('PQRS_0438', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0438', 1, 0, 1, 0, 'X', 0),
-('pre_0438', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0438', 1, 0, 1, 0, 'X', 0),
 ('PQRS_0439', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_0439', 1, 0, 1, 0, 'X', 0),
 ('PQRS_always_met', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_always_met', 0, 0, 0, 0, 'X', 0),
 ('PQRS_Group_AOE_0091', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_Group_AOE_0091', 0, 1, 0, 1, 'X', 0),
@@ -5217,10 +5239,41 @@ INSERT INTO `clinical_rules` (`id`, `pid`, `active_alert_flag`, `passive_alert_f
 ('PQRS_Group_TKR_0350', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_Group_TKR_0350', 0, 1, 0, 1, 'X', 0),
 ('PQRS_Group_TKR_0351', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_Group_TKR_0351', 0, 1, 0, 1, 'X', 0),
 ('PQRS_Group_TKR_0352', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_Group_TKR_0352', 0, 1, 0, 1, 'X', 0),
-('PQRS_Group_TKR_0353', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_Group_TKR_0353', 0, 1, 0, 1, 'X', 0);
+('PQRS_Group_TKR_0353', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'PQRS_Group_TKR_0353', 0, 1, 0, 1, 'X', 0),
+('pre_0007', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0007', 1, 0, 1, 0, 'X', 0),
+('pre_0008', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0008', 1, 0, 1, 0, 'X', 0),
+('pre_0053', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0053', 1, 0, 1, 0, 'X', 0),
+('pre_0066', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0066', 1, 0, 1, 0, 'X', 0),
+('pre_0068', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0068', 1, 0, 1, 0, 'X', 0),
+('pre_0102', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0102', 1, 0, 1, 0, 'X', 0),
+('pre_0104', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0104', 1, 0, 1, 0, 'X', 0),
+('pre_0118', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0118', 1, 0, 1, 0, 'X', 0),
+('pre_0144', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0144', 1, 0, 1, 0, 'X', 0),
+('pre_0155', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0155', 1, 0, 1, 0, 'X', 0),
+('pre_0224', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0224', 1, 0, 1, 0, 'X', 0),
+('pre_0264', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0264', 1, 0, 1, 0, 'X', 0),
+('pre_0270', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0270', 1, 0, 1, 0, 'X', 0),
+('pre_0271', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0271', 1, 0, 1, 0, 'X', 0),
+('pre_0274', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0274', 1, 0, 1, 0, 'X', 0),
+('pre_0327', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0327', 1, 0, 1, 0, 'X', 0),
+('pre_0330', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0330', 1, 0, 1, 0, 'X', 0),
+('pre_0332', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0332', 1, 0, 1, 0, 'X', 0),
+('pre_0403', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0403', 1, 0, 1, 0, 'X', 0),
+('pre_0404', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0404', 1, 0, 1, 0, 'X', 0),
+('pre_0408', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0408', 1, 0, 1, 0, 'X', 0),
+('pre_0411', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0411', 1, 0, 1, 0, 'X', 0),
+('pre_0412', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0412', 1, 0, 1, 0, 'X', 0),
+('pre_0414', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0414', 1, 0, 1, 0, 'X', 0),
+('pre_0421', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0421', 1, 0, 1, 0, 'X', 0),
+('pre_0424', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0424', 1, 0, 1, 0, 'X', 0),
+('pre_0426', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0426', 1, 0, 1, 0, 'X', 0),
+('pre_0427', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0427', 1, 0, 1, 0, 'X', 0),
+('pre_0430', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0430', 1, 0, 1, 0, 'X', 0),
+('pre_0438', 0, 0, 0, 0, NULL, NULL, '', '', 0, 0, 0, '', '', 0, NULL, 0, '', '', '2016', '', 'patients:med', 'pre_0438', 1, 0, 1, 0, 'X', 0);
 
 ALTER TABLE `clinical_rules`
   ADD PRIMARY KEY (`id`,`pid`);
+
 
 DROP TABLE IF EXISTS pqrs_direct_entry_lookup;
 CREATE TABLE IF NOT EXISTS `pqrs_direct_entry_lookup` (
