@@ -22,7 +22,7 @@ class pre_0327_InitialPatientPopulation extends PQRSFilter
  $query ="SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
 " WHERE b1.pid = ? ".
-" AND b1.code ='G8956'".
+" AND b1.code ='G8956';";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return false;}     
         

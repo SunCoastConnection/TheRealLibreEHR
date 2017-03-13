@@ -47,6 +47,7 @@ if ($result['count']> 0){ return false;}
 							"SELECT COUNT(b1.code) as count ".  
 							" FROM billing AS b1". 
 							" INNER JOIN pqrs_efcc2 AS codelist_a ON (b1.code = codelist_a.code)".
+							" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 							" WHERE b1.pid = ? ".
                             " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 							" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0118_a');";

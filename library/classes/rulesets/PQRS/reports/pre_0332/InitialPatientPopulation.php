@@ -24,7 +24,7 @@ class pre_0332_InitialPatientPopulation extends PQRSFilter
 " INNER JOIN billing AS b2 ON (b2.pid=b1.pid)".
 " WHERE b1.pid = ? ".
 " AND b2.code = 'G9364'".
-" AND b1.code ='G9498'".
+" AND b1.code ='G9498';";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return false;}             
