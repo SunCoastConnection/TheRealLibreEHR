@@ -22,7 +22,7 @@ class pre_0155_InitialPatientPopulation extends preFilter
  $query ="SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1".
 " WHERE b1.pid = ? ".
-" AND b1.code = '1125F' and b1.modifier ='';";
+" AND b1.code = '1100F' and b1.modifier ='';";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return false;}         
         
