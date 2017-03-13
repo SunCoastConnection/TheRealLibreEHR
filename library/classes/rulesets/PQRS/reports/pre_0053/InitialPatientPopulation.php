@@ -18,6 +18,14 @@ class pre_0053_InitialPatientPopulation extends preFilter
     
     public function test( prePatient $patient, $beginDate, $endDate )
     {
+        
+ $query ="SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1".
+" WHERE b1.pid = ? ".
+" AND b1.code = '1038F';";
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return false;}          
+        
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
@@ -33,7 +41,7 @@ $query =
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0053_a') ".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0053_b');";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;} else {return false;}  
+if ($result['count']> 0){ return true;} else {return false;}
 
     }
 }

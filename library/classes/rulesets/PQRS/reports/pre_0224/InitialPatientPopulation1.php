@@ -18,6 +18,16 @@ class pre_0224_InitialPatientPopulation1 extends preFilter
     
     public function test( prePatient $patient, $beginDate, $endDate )
     {
+        
+ $query ="SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1".
+" JOIN billing AS b2 ON (b2.pid = b1.pid)".
+" WHERE b1.pid = ? ".
+" AND b1.code = 'G8944'".
+" AND b2.code = 'G8749';";
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return false;}         
+        
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
