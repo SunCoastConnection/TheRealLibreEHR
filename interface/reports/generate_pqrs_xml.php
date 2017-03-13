@@ -161,6 +161,7 @@ function get_Measure_Strata($population_label) {
 			return $lastcharacter;
 		} 
 	}
+	// else
 	return 1;
 }
 
@@ -171,8 +172,7 @@ $query = "SELECT count(DISTINCT ri.pid) as count ".
 " INNER JOIN insurance_data i on (i.pid=ri.pid) ".
 " INNER JOIN insurance_companies c on (c.id = i.provider) ".
 " WHERE c.freeb_type = 2 ".
-" AND ri.report_id =".$report_id.
-" ORDER BY ri.pid";
+" AND ri.report_id =".$report_id;
 #TODO:  Validate this query
 	$result=sqlFetchArray(sqlStatement($query))['count'];
 	//$result=sqlStatement($query);
@@ -186,6 +186,7 @@ function get_Reporting_Rate_Numerator($dataSheet) {
 	// Add all the pass/fail/exclusions counts together for all measures
 ///  MATH MATH MATH.  I'm calculating the fail as denominator-pass-exclusions, so the sum of these 3 is always goign to return the denominator.
 // SO Let's just return the denominator sums.	#LIES return get_Group_Eligable_Instances($dataSheet);
+	return get_Group_Eligable_Instances($dataSheet);
 }
 
 
@@ -234,7 +235,7 @@ function get_TIN() {
 ###	==========	BEGIN MAIN	==========
 
 echo ("<pre>\n");
-htmlecho("Assumptions ---  Before you generate this XML, you should do the following:  \n");
+htmlecho("Assumptions -- Things that should have been done before generating this XML:  \n");
 htmlecho(" * XML should only be generated for a report with a single provider.  *REQUIRED*  \n");
 htmlecho(" * XML should only be generated for an Individual Measures report, or a report \n     generated with one Measure Group selected.  *REQUIRED*  \n"); 
 htmlecho(" * The eligible professional has signed a waiver giving the registry permission\n     to submit data on their behalf.  *REQUIRED*  \n");
@@ -246,6 +247,10 @@ htmlecho(" * If you want to recieve PQRS email notifications from CMS for this p
 htmlecho(" * You are not reporting on GPROs.  \n");
 htmlecho(" * You are not reporting on on Risk Adjusted Measures.  \n");
 htmlecho(" * Measures that must be reported on for EVERY Encounter will be manualy   \n     dealt with in the XML.  \n");
+
+htmlecho("\nThis feature has generated XML files related to this report.\n");
+htmlecho("The naming convention is ProviderNPI-ProviderTIN.xml \n");
+echo("<br>You can download these files by going to \"<b>Left Nav</b>\" --> \"<b>Upload Claim Files</b>\"\n and clicking on the \"<b>XML_out</b>\" directory, then the appropriate <b>.zip</b> file.\n");
 
 htmlecho("\n================================================================================ \n");
 
@@ -288,7 +293,7 @@ if(!empty($report_id)) {
 	htmlecho("VENDOR_UNIQUE_ID is ".$VENDOR_UNIQUE_ID ." \n");
 
 	$MEASURE_GROUP_ID=find_MGID_by_measure_name($dataSheet[0]['id']);
-	htmlecho("The MGID is ".$MEASURE_GROUP_ID." \n");
+	//htmlecho("The MGID is ".$MEASURE_GROUP_ID." \n");
 
 	//  1=Individual Registry Submission 2=GPRO Registry Submi
 	$SUBMISSION_TYPE="1";	
@@ -329,12 +334,15 @@ if(!empty($report_id)) {
 	$OUTFILE_PATH=$GLOBALS['OE_SITE_DIR']."/PQRS/dropzone/files/XML_out/";
 	//htmlecho("DEBUG:  OUTFILE_PATH is $OUTFILE_PATH  \n");
 
-	$OUTFILE_BASENAME="PQRS_2017-".$PROVIDER_NPI."_".$PROVIDER_TIN;
+	$OUTFILE_BASENAME=$PROVIDER_NPI."_".$PROVIDER_TIN;
 	htmlecho("DEBUG:  OUTFILE_BASENAME is ".$OUTFILE_BASENAME ." \n");
+
+	$ZIPFILE_NAME=$OUTFILE_BASENAME.".zip";
+	echo("<b>ZIPFILE_NAME is ".$ZIPFILE_NAME ."</b> \n");
 
 
 	if ( $MEASURE_GROUP_ID != "X" ) {   // Only for Group Measures
-		htmlecho("-------------------------------------------------------------------------------- \n");
+		htmlecho("\n-------------------------------------------------------------------------------- \n");
 		htmlecho("Group Statistics:\n");
 
 // Total number of Medicare Part B FFS patients seen for the PQRS measure group
@@ -349,6 +357,9 @@ if(!empty($report_id)) {
 		$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($dataSheet);
 		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES \n");
 
+		if ($GROUP_ELIGIBLE_INSTANCES == 0) {
+			echo("<b>Notice:  group-eligible-instances is 0.  iThis will affect group-reporting-rate.  You may need to inform CMS.  In fact, you probably shouldn't be reporting on this group!</b>\n");
+		}
 		$GROUP_REPORTING_RATE=sprintf("%00.2f",  $GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES*100);
 		htmlecho("* Group Reporting Rate is $GROUP_REPORTING_RATE % \n");
 	}	// End if($MEASURE_GROUP_ID != "X")
@@ -363,7 +374,7 @@ if(!empty($report_id)) {
 	foreach($dataSheet as $row) {
 		$FILE_NUMBER++;
 		//echo ("DEBUG row -- ".implode("|", $row) ."\n");
-		htmlecho("-------------------------------------------------------------------------------- \n");
+		htmlecho("\n-------------------------------------------------------------------------------- \n");
 		htmlecho("For Measure ".$FILE_NUMBER.":   \n");
 
 		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($row['id'])-4 ),'0');
@@ -393,14 +404,25 @@ if(!empty($report_id)) {
 
 		#REPORTING_RATE=`ask "Reporting rate? (i.e. 100.00)"`
 		if ( $MEASURE_GROUP_ID = "X" ){
-			$REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
+			if ($ELIGIBLE_INSTANCES == 0) {
+				$REPORTING_RATE="null";
+				echo("<b>Notice:  reporting-rate is null.  You may need to inform CMS.</b>\n");
+			} else {
+				$REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
 #<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
+			}
 			htmlecho(" Reporting Rate for this Measure is  $REPORTING_RATE (calculated) \n");
 		}
 
-		#PERFORMANCE_RATE=`ask "What is Performance Rate? (i.e. 100.00)"`
-		$PERFORMANCE_RATE=sprintf("%00.2f", $MEETS_PERFORMANCE_INSTANCES/($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES) * 100);
+		$PERFORMANCE_DENOMINATOR=$MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES;
+		if ($PERFORMANCE_DENOMINATOR == 0 ) {
+			$PERFORMANCE_RATE = "null";
+			echo("<b>Notice:  performance-rate is null.  You may need to inform CMS.</b>\n");
+		} else {
+		#PERFORMANCE_RATE=`ask "What is Performance Rate? (i.e. 100.00)"
+			$PERFORMANCE_RATE=sprintf("%00.2f", $MEETS_PERFORMANCE_INSTANCES/$PERFORMANCE_DENOMINATOR * 100);
 #<meets-performance-instances> / [(<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>) - <performance-exclusion-instances>]
+		}
 		htmlecho(" Your Performance Rate is $PERFORMANCE_RATE (calculated) \n");
 
 
@@ -508,13 +530,22 @@ if(!empty($report_id)) {
 
 
 		if ( $MEASURE_GROUP_ID = "X" ) {
-//			htmlecho("          <reporting-rate>$REPORTING_RATE</reporting-rate> \n");
-			fwrite($myFileHandle,  "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
+			if ($REPORTING_RATE == "null") {
+//				htmlecho("           <reporting-rate xsi:nil=”true”/> \n");
+				fwrite($myFileHandle,  "           <reporting-rate xsi:nil=”true”/>\n");
+			} else {
+//				htmlecho("          <reporting-rate>$REPORTING_RATE</reporting-rate> \n");
+				fwrite($myFileHandle,  "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
+			}
 		}
 
-
-//		htmlecho("          <performance-rate>$PERFORMANCE_RATE</performance-rate> \n");
-		fwrite($myFileHandle,  "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n");
+		if ( $PERFORMANCE_RATE == "null" ) {
+//			htmlecho("          <performance-rate xsi:nil=”true”/>\n");
+			fwrite($myFileHandle,  "          <performance-rate xsi:nil=”true”/>\n");
+		} else {
+//			htmlecho("          <performance-rate>$PERFORMANCE_RATE</performance-rate> \n");
+			fwrite($myFileHandle,  "          <performance-rate>$PERFORMANCE_RATE</performance-rate>\n");
+		}
 
 // We are not doing RISK-ADJUSTED-MEASURES
 // <risk-adjusted-measure-detail>
@@ -537,8 +568,16 @@ if(!empty($report_id)) {
 //		htmlecho("</submission> \n");
 		fwrite($myFileHandle,  "</submission>\n");
 		fclose($myFileHandle);
+
+
 	}	// End loop.  LOOP LOOP LOOP LOOP
 } else {	// End if(!empty($report_id))
 	echo ("ERROR!  No report_id specified!\n");
 }
+htmlecho("-------------------------------------------------------------------------------- \n");
+echo("\nZipping XML files...  <b>$ZIPFILE_NAME</b>\n");
+$output = shell_exec(" rm $OUTFILE_PATH/$ZIPFILE_NAME ");
+echo "<pre>$output</pre>";
+$output = shell_exec(" zip --junk-paths --move  $OUTFILE_PATH/$ZIPFILE_NAME $OUTFILE_PATH/$OUTFILE_BASENAME*.xml ");
+echo "<pre>$output</pre>";
 ?>
