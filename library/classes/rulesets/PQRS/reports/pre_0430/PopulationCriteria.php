@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class pre_0430_PopulationCriteria implements prePopulationCriteriaFactory
+class pre_0430_PopulationCriteria implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {

@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class pre_0144_PopulationCriteria implements prePopulationCriteriaFactory
+class pre_0144_PopulationCriteria implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {
