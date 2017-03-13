@@ -29,114 +29,114 @@ function htmlecho( $myString ){
 function find_MGID_by_measure_name ( $measure_name ) {
 	// echo ("DEBUG find_group_type_by_measure_name: measure_name is ".$measure_name ."\n");
 	if ( strpos( $measure_name, "PQRS_Group_") === false) {
-		htmlecho ("DEBUG: MGID Not Applicable (Individual Measures) is X\n");
+		htmlecho (" MGID Not Applicable (Individual Measures) is X\n");
 		return "X";
 	} else {
 	$group_portion_only=substr($measure_name,11,strlen($measure_name)-16  );
 	// echo ("DEBUG group_portion_only is $group_portion_only\n");
 	switch ($group_portion_only) {
 	case "Diabetes":
-		htmlecho ("DEBUG: Diabetes Mellitus MGID is A\n");
+		htmlecho ("Diabetes Mellitus MGID is A\n");
 		return "A";
 		break;
 	case "CKD":
-		htmlecho ("DEBUG: CKD MGID is C \n");
+		htmlecho ("CKD MGID is C \n");
 		return "C";
 		break;
 	case "Preventive":
-		htmlecho ("DEBUG: Preventive Care MGID is D \n");
+		htmlecho ("Preventive Care MGID is D \n");
 		return "D";
 		break;
 	case "RA":
-		htmlecho ("DEBUG: Rheumatoid Arthritis MGID is F \n");
+		htmlecho ("Rheumatoid Arthritis MGID is F \n");
 		return "F";
 		break;
 	case "CABG":
-		htmlecho ("DEBUG: CABG MGID is H \n");
+		htmlecho ("CABG MGID is H \n");
 		return "H";
 		break;
 	case "HepatitisC":
-		htmlecho ("DEBUG: Hepatitis C MGID is I \n");
+		htmlecho ("Hepatitis C MGID is I \n");
 		return "I";
 		break;
 	case "HF":
-		htmlecho ("DEBUG: HF MGID is L \n");
+		htmlecho ("HF MGID is L \n");
 		return "L";
 		break;
 	case "CAD":
-		htmlecho ("DEBUG: CAD MGID is M \n");
+		htmlecho ("CAD MGID is M \n");
 		return "M";
 		break;
 	case "HIVAIDS":
-		htmlecho ("DEBUG: HIV/AIDS MGID is N \n");
+		htmlecho ("HIV/AIDS MGID is N \n");
 		return "N";
 		break;
 	case "Asthma":
-		htmlecho ("DEBUG: Asthma MGID is O  \n");
+		htmlecho ("Asthma MGID is O  \n");
 		return "O";
 		break;
 	case "COPD":
-		htmlecho ("DEBUG: COPD MGID is P  \n");
+		htmlecho ("COPD MGID is P  \n");
 		return "P";
 		break;
 	case "IBD":
-		htmlecho ("DEBUG: IBD MGID is Q  \n");
+		htmlecho ("IBD MGID is Q  \n");
 		return "Q";
 		break;
 	case "Sleep_Apnea":
-		htmlecho ("DEBUG: Sleep Apnea is R  \n");
+		htmlecho ("Sleep Apnea is R  \n");
 		return "R";
 		break;
 	case "Cataracts":
-		htmlecho ("DEBUG: Cataracts MGID is S  \n");
+		htmlecho ("Cataracts MGID is S  \n");
 		return "S";
 		break;
 	case "Dementia":
-		htmlecho ("DEBUG: Dementia MGID is T  \n");
+		htmlecho ("Dementia MGID is T  \n");
 		return "T";
 		break;
 	case "Parkinsons":
-		htmlecho ("DEBUG: Parkinson’s Disease MGID is U  \n");
+		htmlecho ("Parkinson’s Disease MGID is U  \n");
 		return "U";
 		break;
 	case "Oncology":
-		htmlecho ("DEBUG: Oncology MGID is Y  \n");
+		htmlecho ("Oncology MGID is Y  \n");
 		return "Y";
 		break;
 	case "TKR":
-		htmlecho ("DEBUG: Total Knee Replacement MGID is Z  \n");
+		htmlecho ("Total Knee Replacement MGID is Z  \n");
 		return "Z";
 		break;
 	case "Surgery":
-		htmlecho ("DEBUG: General Surgery MGID is AA  \n");
+		htmlecho ("General Surgery MGID is AA  \n");
 		return "AA";
 		break;
 	case "OPEIR":
-		htmlecho ("DEBUG: OPEIR MGID is AB  \n");
+		htmlecho ("OPEIR MGID is AB  \n");
 		return "AB";
 		break;
 	case "Sinusitis":
-		htmlecho ("DEBUG: Sinusitis MGID is AC  \n");
+		htmlecho ("Sinusitis MGID is AC  \n");
 		return "AC";
 		break;
 	case "AOE":
-		htmlecho ("DEBUG: AOE MGID is AD  \n");
+		htmlecho ("AOE MGID is AD  \n");
 		return "AD";
 		break;
 	case "CP":
-		htmlecho ("DEBUG: Cardiovascular Prevention MGID is AE  \n");
+		htmlecho ("Cardiovascular Prevention MGID is AE  \n");
 		return "AE";
 		break;
 	case "DR":
-		htmlecho ("DEBUG: Diabetic Retinopathy MGID is AF  \n");
+		htmlecho ("Diabetic Retinopathy MGID is AF  \n");
 		return "AF";
 		break;
 	case "MCC":
-		htmlecho ("DEBUG: Multiple Chronic Conditions MGID is AG  \n");
+		htmlecho ("Multiple Chronic Conditions MGID is AG  \n");
 		return "AG";
 		break;
 	default:
-		htmlecho ("DEBUG: Measure type did not match, setting to Not Applicable (Individual) (X)  \n");
+		htmlecho ("Measure type did not match, setting to Not Applicable (Individual) (X)  \n");
 		return "X";
 	}	// switch
 	}	// else
@@ -203,11 +203,15 @@ function get_Group_Eligable_Instances($dataSheet) {
 
 
 function get_Registry_Name() {
+	$myGOT=$GLOBALS['pqri_registry_name'];
+	//htmlecho("DEBUG:  Registry_ID -- Got $myGOT, should be suncoastrhio\n");
 	return "suncoastrhio";	#TODO:  Get this from globals
 }
 
 
 function get_Registry_ID() {
+	$myGOT=$GLOBALS['pqri_registry_id'];
+	//htmlecho("DEBUG:  Registry_ID -- Got $myGOT, should be 263971780\n");
 	return "263971780";    
 	// SCRHIO's tax payer number  EIN	
 	#TODO:  Get this from globals
@@ -335,7 +339,8 @@ if(!empty($report_id)) {
 	//htmlecho("DEBUG:  OUTFILE_PATH is $OUTFILE_PATH  \n");
 
 	$OUTFILE_BASENAME=$PROVIDER_NPI."_".$PROVIDER_TIN;
-	htmlecho("DEBUG:  OUTFILE_BASENAME is ".$OUTFILE_BASENAME ." \n");
+	//htmlecho("DEBUG:  OUTFILE_BASENAME is ".$OUTFILE_BASENAME ." \n");
+	htmlecho("XML filenames are ".$OUTFILE_BASENAME ."-#.xml \n");
 
 	$ZIPFILE_NAME=$OUTFILE_BASENAME.".zip";
 	echo("<b>ZIPFILE_NAME is ".$ZIPFILE_NAME ."</b> \n");
