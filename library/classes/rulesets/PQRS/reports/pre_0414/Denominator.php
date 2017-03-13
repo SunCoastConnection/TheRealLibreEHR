@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class pre_0414_Denominator extends preFilter
+class pre_0414_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {

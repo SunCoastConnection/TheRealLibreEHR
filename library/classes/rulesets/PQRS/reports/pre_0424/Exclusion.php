@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
 
-class pre_0424_Exclusion extends preFilter
+class pre_0424_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {

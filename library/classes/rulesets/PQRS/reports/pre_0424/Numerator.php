@@ -10,7 +10,7 @@
  * @author  Suncoast Connection
  */
  
-class pre_0424_Numerator extends preFilter
+class pre_0424_Numerator extends PQRSFilter
 {
     public function getTitle()
     {
