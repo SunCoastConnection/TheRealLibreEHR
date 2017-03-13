@@ -27,7 +27,7 @@ $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return false;}             
         
 $query =
-"SELECT COUNT(b1.code) as count ".  
+"SELECT COUNT(b2.code) as count ".  
 " FROM billing AS b2". 
 " JOIN form_encounter AS fe ON (b2.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b2.pid)".
