@@ -247,10 +247,10 @@ htmlecho(" * \"Failed Patients\" is assumed to be = Denominator - Numerator - Ex
 htmlecho(" * 9 Measures were chosen for an Individual Measures report.  *REQUIRED*  \n");
 htmlecho(" * This report does not include any \"pre_\" measures. \n");
 htmlecho(" * Go into Administration --- Facilities --- Mark ONE facility as 'Primary\n     Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
-htmlecho(" * If you want to recieve PQRS email notifications from CMS for this provider,\n     Go into Administration --- 'Addr Book' --- Add an email address *Optional*  \n");
+htmlecho(" * If you want to receive PQRS email notifications from CMS for this provider,\n     Go into Administration --- 'Addr Book' --- Add an email address *Optional*  \n");
 htmlecho(" * You are not reporting on GPROs.  \n");
 htmlecho(" * You are not reporting on on Risk Adjusted Measures.  \n");
-htmlecho(" * Measures that must be reported on for EVERY Encounter will be manualy   \n     dealt with in the XML.  \n");
+htmlecho(" * Measures that must be reported on for EVERY Encounter will be manually   \n     dealt with in the XML.  \n");
 
 htmlecho("\nThis feature has generated XML files related to this report.\n");
 htmlecho("The naming convention is ProviderNPI-ProviderTIN.xml \n");

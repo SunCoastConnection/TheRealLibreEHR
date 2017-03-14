@@ -13,7 +13,7 @@ class PQRS_0005_Exclusion2 extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Exclusion";
+        return "Exclusion 2";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
