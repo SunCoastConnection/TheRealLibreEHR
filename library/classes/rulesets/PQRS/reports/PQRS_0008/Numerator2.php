@@ -13,7 +13,7 @@ class PQRS_0008_Numerator2 extends PQRSFilter
 {
     public function getTitle()
     {
-        return "Numerator";
+        return "Numerator 2";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )

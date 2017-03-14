@@ -14,7 +14,7 @@ class PQRS_0393_InitialPatientPopulation2 extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Initial Patient Population";
+        return "Initial Patient Population 2";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
