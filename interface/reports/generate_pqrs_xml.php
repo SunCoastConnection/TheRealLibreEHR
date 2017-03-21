@@ -195,7 +195,9 @@ function get_Group_Eligable_Instances($dataSheet) {
 	// Add all the denominators together for all measures.
 	$EligibleInstances=0;
 	foreach($dataSheet as $row) {
-		$EligibleInstances=$EligibleInstances+$row['pass_filter'];
+		if ( $row['pass_filter'] > $EligibleInstances ) {
+			$EligibleInstances=$row['pass_filter'];
+		}
 	//	htmlecho(" DEBUG gGEI countup is +".$row['pass_filter']." = $EligibleInstances  \n");
 	}
 	return $EligibleInstances;
@@ -281,7 +283,7 @@ if(!empty($report_id)) {
 	$CREATE_TIME=date("H:i");	//In the form:  23:01
 	htmlecho("CREATE_TIME is ".$CREATE_TIME ." \n");
 
-	$CREATOR="Suncoast Connection";
+	$CREATOR="Suncoast RHIO";
 	htmlecho("CREATOR is ".$CREATOR ." \n");
 
 	$VERSION="1.0";		// "The version of the file being submitted"
@@ -311,7 +313,7 @@ if(!empty($report_id)) {
 	htmlecho("SUBMISSION_METHOD is ".$SUBMISSION_METHOD ." \n");
 
 	// (A=EHR, B=Claims, C=Practice Mgmt System, D=Web Tool)";
-	$COLLECTION_METHOD="D";
+	$COLLECTION_METHOD="BCD";
 	htmlecho("COLLECTION_METHOD is ".$COLLECTION_METHOD ." \n");
 
 	$PROVIDER_NPI=$report_view['provider'];
