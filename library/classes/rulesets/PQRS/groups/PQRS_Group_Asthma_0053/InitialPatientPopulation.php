@@ -21,6 +21,8 @@ class PQRS_Group_Asthma_0053_InitialPatientPopulation extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 require(__DIR__."/../common/Asthmacommon.php");
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 
