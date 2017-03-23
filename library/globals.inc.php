@@ -2628,6 +2628,7 @@ $GLOBALS_METADATA = array(
 
   // PQRS (Physician Quality Reporting System)
   // 2016-02-02 leebc -- Globals configuration section for PQRS
+  // 2016-03-23 leebc -- Added configuration values for registry for XML
 	// Some THING is FISHy here... ;-)
   //
   'PQRS' => array(
@@ -2647,7 +2648,7 @@ $GLOBALS_METADATA = array(
     ),
 
     'pqrs_fish_type' => array(
-      xl('Fish Type'),               // descriptive name
+      xl('Fish Type Selection'),               // descriptive name
       array(
         '1' => xl('One Fish'),
         '2' => xl('Two Fish'),
@@ -2657,6 +2658,34 @@ $GLOBALS_METADATA = array(
       ),
       '1',                              // default = tree menu
       xl('Choose your default fish type')
+    ),
+
+    'pqrs_creator' => array(
+      xl('PQRS Creator'),		// for XML generation
+      'text',                           // data type
+      'FIXME creator FIXME!!!',                     // default
+      xl('PQRS Creator Name')
+    ),
+
+    'pqrs_registry_name' => array(
+      xl('PQRS Registry Name'),		// for XML generation
+      'text',                           // data type
+      'FIXME registry name FIXME!!!',               // default
+      xl('PQRS Registry Name')
+    ),
+
+    'pqrs_registry_id' => array(
+      xl('PQRS Registry ID'),		// for XML generation
+      'text',                           // data type
+      'FIXME registry id FIXME!!!',                 // default
+      xl('PQRS Registry ID')
+    ),
+
+    'pqrs_vendor_unique_id' => array(
+      xl('PQRS VENDOR UNIQUE ID'),	// for XML generation
+      'text',                           // data type
+      'FIXME vendor unique id FIXME!!!',            // default
+      xl('PQRS Registry Name')
     ),
 
   ),
