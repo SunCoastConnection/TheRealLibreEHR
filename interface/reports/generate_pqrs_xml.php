@@ -204,24 +204,28 @@ function get_Group_Eligable_Instances($dataSheet) {
 }
 
 
-function get_Registry_Name() {
-	$myGOT=$GLOBALS['pqri_registry_name'];
-	//htmlecho("DEBUG:  Registry_ID -- Got $myGOT, should be suncoastrhio\n");
-	return "suncoastrhio";	#TODO:  Get this from globals
+function get_Creator() {
+	$myGOT=$GLOBALS['pqrs_creator'];
+	//htmlecho("DEBUG:  Creator -- Got $myGOT \n");
+	return $myGOT;
 }
 
+function get_Registry_Name() {
+	$myGOT=$GLOBALS['pqrs_registry_name'];
+	//htmlecho("DEBUG:  Registry_Name -- Got $myGOT \n");
+	return $myGOT;
+}
 
 function get_Registry_ID() {
-	$myGOT=$GLOBALS['pqri_registry_id'];
-	//htmlecho("DEBUG:  Registry_ID -- Got $myGOT, should be 263971780\n");
-	return "263971780";    
-	// SCRHIO's tax payer number  EIN	
-	#TODO:  Get this from globals
+	$myGOT=$GLOBALS['pqrs_registry_id']; 	// tax payer number  EIN	
+	//htmlecho("DEBUG:  Registry_ID -- Got $myGOT \n");
+	return $myGOT;
 }
 
-
 function get_Registry_VENDOR_UNIQUE_ID() {
-	return "5249237";	#TODO:  Get this from globals
+	$myGOT=$GLOBALS['pqrs_vendor_unique_id'];
+	//htmlecho("DEBUG:  VENDOR_UNIQUE_ID -- Got $myGOT \n");
+	return $myGOT;
 }
 
 
@@ -283,7 +287,7 @@ if(!empty($report_id)) {
 	$CREATE_TIME=date("H:i");	//In the form:  23:01
 	htmlecho("CREATE_TIME is ".$CREATE_TIME ." \n");
 
-	$CREATOR="Suncoast RHIO";
+	$CREATOR=get_Creator();
 	htmlecho("CREATOR is ".$CREATOR ." \n");
 
 	$VERSION="1.0";		// "The version of the file being submitted"
