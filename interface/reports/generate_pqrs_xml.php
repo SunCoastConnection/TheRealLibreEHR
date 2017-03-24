@@ -414,7 +414,7 @@ if(!empty($report_id)) {
 		htmlecho(" Failed is $PERFORMANCE_NOT_MET_INSTANCES (calculated)  \n");
 
 		#REPORTING_RATE=`ask "Reporting rate? (i.e. 100.00)"`
-		if ( $MEASURE_GROUP_ID = "X" ){
+		if ( $MEASURE_GROUP_ID == "X" ){
 			if ($ELIGIBLE_INSTANCES == 0) {
 				$REPORTING_RATE="null";
 				echo("<b>Notice:  reporting-rate is null.  You may need to inform CMS.</b>\n");
@@ -540,7 +540,7 @@ if(!empty($report_id)) {
 		fwrite($myFileHandle,  "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>\n");
 
 
-		if ( $MEASURE_GROUP_ID = "X" ) {
+		if ( $MEASURE_GROUP_ID == "X" ) {
 			if ($REPORTING_RATE == "null") {
 //				htmlecho("           <reporting-rate xsi:nil=”true”/> \n");
 				fwrite($myFileHandle,  "           <reporting-rate xsi:nil=”true”/>\n");
