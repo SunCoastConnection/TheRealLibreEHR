@@ -291,8 +291,8 @@ function GenXml(sNested) {
 
   if(sNested == "PQRS") {
     var form_rule_filter = theform.form_rule_filter.value;
-
-    var sLoc = 'generate_pqrs_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>&xmloptimize=<?php existsDefault($_POST, 'xmloptimize', '0');?>";
+<?php $xmloptimize=$_POST['formWheelchair'];?>
+    var sLoc = 'generate_pqrs_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>&xmloptimize=<?php echo $xmloptimize; ?>";
   } else {
     var sLoc = '../../custom/export_registry_xml.php?&target_date='+theform.form_target_date.value+'&nested='+sNested;
   }
