@@ -163,10 +163,11 @@ fclose($myfile);
   // Collect form parameters (set defaults if empty)
   if($type_report == 'pqrs') {
     $begin_date = existsDefault($_POST, 'form_begin_date', '2016-01-01 00:00:00');  //change defaults in 2016
+    $xmloptimize = existsDefault($_POST, 'xmloptimize', '0');
   } elseif($type_report == 'amc') {
     $begin_date = existsDefault($_POST, 'form_begin_date');
     $labs_manual = existsDefault($_POST, 'labs_manual_entry', '0');
-    $xmloptimize = existsDefault($_POST, 'xmloptimize', '0');
+
     
   }
 
@@ -291,8 +292,8 @@ function GenXml(sNested) {
 
   if(sNested == "PQRS") {
     var form_rule_filter = theform.form_rule_filter.value;
-<?php $xmloptimize=$_POST['formWheelchair'];?>
-    var sLoc = 'generate_pqrs_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>"+"&xmloptimize=<?php $xmloptimize; ?>";
+<?php $xmloptimize=$_POST['xmloptimize'];?>
+    var sLoc = 'generate_pqrs_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>&xmloptimize=<?php echo $xmloptimize; ?>";
   } else {
     var sLoc = '../../custom/export_registry_xml.php?&target_date='+theform.form_target_date.value+'&nested='+sNested;
   }
