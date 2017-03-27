@@ -618,7 +618,6 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('Print'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-                      <BR>
 <?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
                        <span>
                         Optimize XML report?
