@@ -620,16 +620,18 @@ function Form_Validate() {
                       </a>
                       <BR>
 <?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
-                       <span>
-                        Optimize XML report?
-                        <input id="xmloptimize" type="checkbox" name="xmloptimize" value="1" />
-                        </span>
-                        <BR>
+
                       <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXml("PQRS");'>
                         <span>
                           <?php echo htmlspecialchars(xl('Generate XML for PQRS'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
+                      <br>
+                        <span>
+                        Optimize XML report?
+                        <input id="xmloptimize" type="checkbox" name="xmloptimize" value="1" />
+                        </span>
+                        <BR>
 <?php   } elseif($type_report == 'cqm_2014') { ?>
                       <a href="#" id="genQRDA" class='css_button' onclick='return downloadQRDA()'>
                         <span>
