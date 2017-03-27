@@ -166,8 +166,6 @@ fclose($myfile);
   } elseif($type_report == 'amc') {
     $begin_date = existsDefault($_POST, 'form_begin_date');
     $labs_manual = existsDefault($_POST, 'labs_manual_entry', '0');
-
-    
   }
 
   if($type_report == 'pqrs') {
