@@ -281,7 +281,7 @@ if(!empty($report_id)) {
 //TODO:  Sanity check that all measures are either individual or of the same group
 
 
-	$CREATE_DATE=date("m/d/y");	//In the form:  01-23-2016
+	$CREATE_DATE=date("m/d/Y");	//In the form:  01-23-2016
 	htmlecho("CREATE_DATE is ".$CREATE_DATE ." \n");
 
 	$CREATE_TIME=date("H:i");	//In the form:  23:01
@@ -414,16 +414,17 @@ if(!empty($report_id)) {
 		htmlecho(" Failed is $PERFORMANCE_NOT_MET_INSTANCES (calculated)  \n");
 
 		#REPORTING_RATE=`ask "Reporting rate? (i.e. 100.00)"`
-		if ( $MEASURE_GROUP_ID == "X" ){
-			if ($ELIGIBLE_INSTANCES == 0) {
-				$REPORTING_RATE="null";
-				echo("<b>Notice:  reporting-rate is null.  You may need to inform CMS.</b>\n");
-			} else {
-				$REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
+// If MEASURE_GROUP_ID is X, technically the <reporting-rate> tag is optional, but we're going to include it because CMS is dumb and throws error on validation.
+		//if ( $MEASURE_GROUP_ID == "X" ){
+		if ($ELIGIBLE_INSTANCES == 0) {
+			$REPORTING_RATE="null";
+			echo("<b>Notice:  reporting-rate is null.  You may need to inform CMS.</b>\n");
+		} else {
+			$REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
 #<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
-			}
-			htmlecho(" Reporting Rate for this Measure is  $REPORTING_RATE (calculated) \n");
 		}
+		htmlecho(" Reporting Rate for this Measure is  $REPORTING_RATE (calculated) \n");
+		//}
 
 		$PERFORMANCE_DENOMINATOR=$MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES;
 		if ($PERFORMANCE_DENOMINATOR == 0 ) {
@@ -540,15 +541,15 @@ if(!empty($report_id)) {
 		fwrite($myFileHandle,  "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>\n");
 
 
-		if ( $MEASURE_GROUP_ID == "X" ) {
-			if ($REPORTING_RATE == "null") {
-//				htmlecho("           <reporting-rate xsi:nil=”true”/> \n");
-				fwrite($myFileHandle,  "           <reporting-rate xsi:nil=”true”/>\n");
-			} else {
-//				htmlecho("          <reporting-rate>$REPORTING_RATE</reporting-rate> \n");
-				fwrite($myFileHandle,  "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
-			}
+		//if ( $MEASURE_GROUP_ID == "X" ) {
+		if ($REPORTING_RATE == "null") {
+//			htmlecho("           <reporting-rate xsi:nil=”true”/> \n");
+			fwrite($myFileHandle,  "           <reporting-rate xsi:nil=”true”/>\n");
+		} else {
+//			htmlecho("          <reporting-rate>$REPORTING_RATE</reporting-rate> \n");
+			fwrite($myFileHandle,  "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
 		}
+		//}
 
 		if ( $PERFORMANCE_RATE == "null" ) {
 //			htmlecho("          <performance-rate xsi:nil=”true”/>\n");
