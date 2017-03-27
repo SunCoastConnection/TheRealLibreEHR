@@ -163,7 +163,6 @@ fclose($myfile);
   // Collect form parameters (set defaults if empty)
   if($type_report == 'pqrs') {
     $begin_date = existsDefault($_POST, 'form_begin_date', '2016-01-01 00:00:00');  //change defaults in 2016
-    $xmloptimize = existsDefault($_POST, 'xmloptimize', '0');
   } elseif($type_report == 'amc') {
     $begin_date = existsDefault($_POST, 'form_begin_date');
     $labs_manual = existsDefault($_POST, 'labs_manual_entry', '0');
@@ -622,10 +621,8 @@ function Form_Validate() {
                         </span>
                       </a>
 <?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
-                        <form action="checkbox-form.php" method="post">
                         Optimize XML report?
                         <input id="xmloptimize" type="checkbox" name="xmloptimize" value="1" />
-                        </form>
                       <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXml("PQRS");'>
                         <span>
                           <?php echo htmlspecialchars(xl('Generate XML for PQRS'), ENT_NOQUOTES); ?>
