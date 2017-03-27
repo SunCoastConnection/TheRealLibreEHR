@@ -419,20 +419,34 @@ if(!empty($report_id)) {
 		if ($ELIGIBLE_INSTANCES == 0) {
 			$REPORTING_RATE="null";
 			echo("<b>Notice:  reporting-rate is null.  You may need to inform CMS.</b>\n");
-		} else {
+		} else if ($xmloptimize=='0'){
 			$REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
 #<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
+		} else if ($xmloptimize=='1'){
+    		        if (((($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100)>=50){
+			        $REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
+			        $CALC_RATES=FALSE;
+		        }else{
+    		        $REPORTING_RATE="50.00"; $CALC_RATES=TRUE;}
+#<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
+
 		}
 		htmlecho(" Reporting Rate for this Measure is  $REPORTING_RATE (calculated) \n");
-		//}
+		$ALL_INSTANCES = $MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES;
 
-		$PERFORMANCE_DENOMINATOR=$MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES;
+        if ($xmloptimize=='1' && $CALC_RATES==FALSE){
+		$PERFORMANCE_DENOMINATOR=$MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES;
+	    }else if ($xmloptimize=='1' && $CALC_RATES==TRUE){
+    	$PERFORMANCE_DENOMINATOR=round($ALL_INSTANCES*.5);
+	    }else{
+    	$PERFORMANCE_DENOMINATOR=$ALL_INSTANCES;    
+         }
 		if ($PERFORMANCE_DENOMINATOR == 0 ) {
 			$PERFORMANCE_RATE = "null";
 			echo("<b>Notice:  performance-rate is null.  You may need to inform CMS.</b>\n");
 		} else {
 		#PERFORMANCE_RATE=`ask "What is Performance Rate? (i.e. 100.00)"
-			$PERFORMANCE_RATE=sprintf("%00.2f", $MEETS_PERFORMANCE_INSTANCES/$PERFORMANCE_DENOMINATOR * 100);
+			$PERFORMANCE_RATE=sprintf("%00.2f", ($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$PERFORMANCE_DENOMINATOR * 100);
 #<meets-performance-instances> / [(<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>) - <performance-exclusion-instances>]
 		}
 		htmlecho(" Your Performance Rate is $PERFORMANCE_RATE (calculated) \n");
