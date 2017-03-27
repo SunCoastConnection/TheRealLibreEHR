@@ -619,11 +619,8 @@ function Form_Validate() {
                         </span>
                       </a>
 <?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
-                       <span>
                         Optimize XML report?
                         <input id="xmloptimize" type="checkbox" name="xmloptimize" value="1" />
-                        </span>
-                        <BR>
                       <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXml("PQRS");'>
                         <span>
                           <?php echo htmlspecialchars(xl('Generate XML for PQRS'), ENT_NOQUOTES); ?>
