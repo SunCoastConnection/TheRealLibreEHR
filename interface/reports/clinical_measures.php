@@ -292,8 +292,7 @@ function GenXml(sNested) {
 
   if(sNested == "PQRS") {
     var form_rule_filter = theform.form_rule_filter.value;
-<?php $xmloptimize=$_POST['xmloptimize'];?>
-    var sLoc = 'generate_pqrs_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>&xmloptimize=<?php echo $xmloptimize; ?>";
+    var sLoc = 'generate_pqrs_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>&xmloptimize="+document.getElementById("xmloptimize").checked;
   } else {
     var sLoc = '../../custom/export_registry_xml.php?&target_date='+theform.form_target_date.value+'&nested='+sNested;
   }
@@ -625,7 +624,7 @@ function Form_Validate() {
 <?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
                         <form action="checkbox-form.php" method="post">
                         Optimize XML report?
-                        <input type="checkbox" name="xmloptimize" value="1" />
+                        <input id="xmloptimize" type="checkbox" name="xmloptimize" value="1" />
                         </form>
                       <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXml("PQRS");'>
                         <span>
