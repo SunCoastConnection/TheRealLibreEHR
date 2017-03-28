@@ -284,7 +284,7 @@ if(!empty($report_id)) {
 //TODO:  Sanity check that all measures are either individual or of the same group
 
 
-	$CREATE_DATE=date("m/d/Y");	//In the form:  01-23-2016
+	$CREATE_DATE=date("m-d-Y");	//In the form:  01-23-2016
 //	htmlecho("CREATE_DATE is ".$CREATE_DATE ." \n");
 
 	$CREATE_TIME=date("H:i");	//In the form:  23:01
@@ -351,7 +351,7 @@ if(!empty($report_id)) {
 
 	$OUTFILE_BASENAME=$PROVIDER_NPI."_".$PROVIDER_TIN;
 	//htmlecho("DEBUG:  OUTFILE_BASENAME is ".$OUTFILE_BASENAME ." \n");
-	htmlecho("XML filenames are formatted: ".$OUTFILE_BASENAME ."-#.xml\n");
+	htmlecho("XML filenames are formatted: ".$OUTFILE_BASENAME ."_#.xml\n");
 
 	$ZIPFILE_NAME=$OUTFILE_BASENAME.".zip";
 	echo("<b>ZIPFILE_NAME is: ".$ZIPFILE_NAME ."</b> \n");
@@ -469,7 +469,7 @@ if(!empty($report_id)) {
 
 # ==============================================================
 #  Generate XML
-		$OUTFILE_NAME="$OUTFILE_BASENAME-$FILE_NUMBER.xml";
+		$OUTFILE_NAME="$OUTFILE_BASENAME"."_".$FILE_NUMBER.".xml";
 		$myFileHandle=fopen($OUTFILE_PATH."/".$OUTFILE_NAME, "w") or die("Unable to open file!");
 
 		htmlecho(" \nGenerating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n\n");
