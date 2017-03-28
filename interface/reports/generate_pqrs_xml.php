@@ -400,7 +400,7 @@ if(!empty($report_id)) {
 
 // "How many eligible instances (Reporting Denominator) for the PQRS measure?
 		$ELIGIBLE_INSTANCES=$row['pass_filter'];
-		htmlecho(" Denominator is $ELIGIBLE_INSTANCES  \n");
+		htmlecho(" Eligible Instances (Reporting Denominator) is $ELIGIBLE_INSTANCES  \n");
 
 // "How many Meets Performance Instances? (Performance Numerator)
 		$MEETS_PERFORMANCE_INSTANCES=$row['pass_target'];
