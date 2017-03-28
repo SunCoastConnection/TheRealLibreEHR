@@ -29,110 +29,110 @@ function htmlecho( $myString ){
 function find_MGID_by_measure_name ( $measure_name ) {
 	// echo ("DEBUG find_group_type_by_measure_name: measure_name is ".$measure_name ."\n");
 	if ( strpos( $measure_name, "PQRS_Group_") === false) {
-		htmlecho (" MGID Not Applicable (Individual Measures) is X\n");
+		htmlecho (" MGID Not Applicable (Individual Measures) is: X\n");
 		return "X";
 	} else {
 	$group_portion_only=substr($measure_name,11,strlen($measure_name)-16  );
 	// echo ("DEBUG group_portion_only is $group_portion_only\n");
 	switch ($group_portion_only) {
 	case "Diabetes":
-		htmlecho ("Diabetes Mellitus MGID is A\n");
+		htmlecho ("Diabetes Mellitus MGID is: A\n");
 		return "A";
 		break;
 	case "CKD":
-		htmlecho ("CKD MGID is C \n");
+		htmlecho ("CKD MGID is: C \n");
 		return "C";
 		break;
 	case "Preventive":
-		htmlecho ("Preventive Care MGID is D \n");
+		htmlecho ("Preventive Care MGID is: D \n");
 		return "D";
 		break;
 	case "RA":
-		htmlecho ("Rheumatoid Arthritis MGID is F \n");
+		htmlecho ("Rheumatoid Arthritis MGID is: F \n");
 		return "F";
 		break;
 	case "CABG":
-		htmlecho ("CABG MGID is H \n");
+		htmlecho ("CABG MGID is: H \n");
 		return "H";
 		break;
 	case "HepatitisC":
-		htmlecho ("Hepatitis C MGID is I \n");
+		htmlecho ("Hepatitis C MGID is: I \n");
 		return "I";
 		break;
 	case "HF":
-		htmlecho ("HF MGID is L \n");
+		htmlecho ("HF MGID is: L \n");
 		return "L";
 		break;
 	case "CAD":
-		htmlecho ("CAD MGID is M \n");
+		htmlecho ("CAD MGID is: M \n");
 		return "M";
 		break;
 	case "HIVAIDS":
-		htmlecho ("HIV/AIDS MGID is N \n");
+		htmlecho ("HIV/AIDS MGID is: N \n");
 		return "N";
 		break;
 	case "Asthma":
-		htmlecho ("Asthma MGID is O  \n");
+		htmlecho ("Asthma MGID is: O  \n");
 		return "O";
 		break;
 	case "COPD":
-		htmlecho ("COPD MGID is P  \n");
+		htmlecho ("COPD MGID is: P  \n");
 		return "P";
 		break;
 	case "IBD":
-		htmlecho ("IBD MGID is Q  \n");
+		htmlecho ("IBD MGID is: Q  \n");
 		return "Q";
 		break;
 	case "Sleep_Apnea":
-		htmlecho ("Sleep Apnea is R  \n");
+		htmlecho ("Sleep Apnea is: R  \n");
 		return "R";
 		break;
 	case "Cataracts":
-		htmlecho ("Cataracts MGID is S  \n");
+		htmlecho ("Cataracts MGID is: S  \n");
 		return "S";
 		break;
 	case "Dementia":
-		htmlecho ("Dementia MGID is T  \n");
+		htmlecho ("Dementia MGID is: T  \n");
 		return "T";
 		break;
 	case "Parkinsons":
-		htmlecho ("Parkinson’s Disease MGID is U  \n");
+		htmlecho ("Parkinson’s Disease MGID is: U  \n");
 		return "U";
 		break;
 	case "Oncology":
-		htmlecho ("Oncology MGID is Y  \n");
+		htmlecho ("Oncology MGID is: Y  \n");
 		return "Y";
 		break;
 	case "TKR":
-		htmlecho ("Total Knee Replacement MGID is Z  \n");
+		htmlecho ("Total Knee Replacement MGID is: Z  \n");
 		return "Z";
 		break;
 	case "Surgery":
-		htmlecho ("General Surgery MGID is AA  \n");
+		htmlecho ("General Surgery MGID is: AA  \n");
 		return "AA";
 		break;
 	case "OPEIR":
-		htmlecho ("OPEIR MGID is AB  \n");
+		htmlecho ("OPEIR MGID is: AB  \n");
 		return "AB";
 		break;
 	case "Sinusitis":
-		htmlecho ("Sinusitis MGID is AC  \n");
+		htmlecho ("Sinusitis MGID is: AC  \n");
 		return "AC";
 		break;
 	case "AOE":
-		htmlecho ("AOE MGID is AD  \n");
+		htmlecho ("AOE MGID is: AD  \n");
 		return "AD";
 		break;
 	case "CP":
-		htmlecho ("Cardiovascular Prevention MGID is AE  \n");
+		htmlecho ("Cardiovascular Prevention MGID is: AE  \n");
 		return "AE";
 		break;
 	case "DR":
-		htmlecho ("Diabetic Retinopathy MGID is AF  \n");
+		htmlecho ("Diabetic Retinopathy MGID is: AF  \n");
 		return "AF";
 		break;
 	case "MCC":
-		htmlecho ("Multiple Chronic Conditions MGID is AG  \n");
+		htmlecho ("Multiple Chronic Conditions MGID is: AG  \n");
 		return "AG";
 		break;
 	default:
@@ -268,77 +268,80 @@ htmlecho("\n====================================================================
 
 $report_id = $_GET['report_id'] ;
 //$report_id = (isset($_REQUEST['report_id'])) ;
-htmlecho("DEBUG report_id is $report_id  \n");
+htmlecho("Report_ID: $report_id  \n");
+$xmloptimize = $_GET['xmloptimize'];
+htmlecho ("Run with reporting-rate optimization: ".$xmloptimize."\n");
 
 if(!empty($report_id)) {
 	$report_view = collectReportDatabase($report_id);
 	//echo ("DEBUG report_view is:  ".implode($report_view)."\n" );
-
 	$dataSheet = json_decode($report_view['data'], true);
 	//echo ("DEBUG dataSheet is:  ".implode($dataSheet)."\n" );
-	htmlecho("DEBUG The first measure is ".$dataSheet[0]['id']   ." \n");
+	htmlecho("The first measure is: ".$dataSheet[0]['id']   ." \n");
 
 //TODO:  Sanity check that all measures are either individual or of the same group
 
 
 	$CREATE_DATE=date("m/d/Y");	//In the form:  01-23-2016
-	htmlecho("CREATE_DATE is ".$CREATE_DATE ." \n");
+//	htmlecho("CREATE_DATE is ".$CREATE_DATE ." \n");
 
 	$CREATE_TIME=date("H:i");	//In the form:  23:01
-	htmlecho("CREATE_TIME is ".$CREATE_TIME ." \n");
+//	htmlecho("CREATE_TIME is ".$CREATE_TIME ." \n");
+
+	htmlecho("DATE/TIME CREATED is: ".$CREATE_DATE ." ". $CREATE_TIME ." \n");
 
 	$CREATOR=get_Creator();
-	htmlecho("CREATOR is ".$CREATOR ." \n");
+	htmlecho("CREATOR is: ".$CREATOR ." \n");
 
 	$VERSION="1.0";		// "The version of the file being submitted"
-	htmlecho("VERSION is ".$VERSION ." \n");
+	htmlecho("VERSION is: ".$VERSION ." \n");
 
 	$REGISTRY_NAME=get_Registry_Name();
-	htmlecho("REGISTRY_NAME is ".$REGISTRY_NAME ." \n");
+	htmlecho("REGISTRY_NAME is: ".$REGISTRY_NAME ." \n");
 
 	$REGISTRY_ID=get_Registry_ID();
-	htmlecho("REGISTRY_ID is ".$REGISTRY_ID ." \n");
+	htmlecho("REGISTRY_ID is: ".$REGISTRY_ID ." \n");
 
 	$VENDOR_UNIQUE_ID=get_Registry_VENDOR_UNIQUE_ID();
-	htmlecho("VENDOR_UNIQUE_ID is ".$VENDOR_UNIQUE_ID ." \n");
+	htmlecho("VENDOR_UNIQUE_ID is: ".$VENDOR_UNIQUE_ID ." \n");
 
 	$MEASURE_GROUP_ID=find_MGID_by_measure_name($dataSheet[0]['id']);
 	//htmlecho("The MGID is ".$MEASURE_GROUP_ID." \n");
 
 	//  1=Individual Registry Submission 2=GPRO Registry Submi
 	$SUBMISSION_TYPE="1";	
-	htmlecho("SUBMISSION_TYPE is ".$SUBMISSION_TYPE ." \n");
+	htmlecho("SUBMISSION_TYPE is: ".$SUBMISSION_TYPE ." \n");
 
 	if ($MEASURE_GROUP_ID=="X") {
 		$SUBMISSION_METHOD="A";	// IndividuAl
 	} else {
 		$SUBMISSION_METHOD="G";	// Group
 	}
-	htmlecho("SUBMISSION_METHOD is ".$SUBMISSION_METHOD ." \n");
+	htmlecho("SUBMISSION_METHOD is: ".$SUBMISSION_METHOD ." \n");
 
 	// (A=EHR, B=Claims, C=Practice Mgmt System, D=Web Tool)";
 	$COLLECTION_METHOD="BCD";
-	htmlecho("COLLECTION_METHOD is ".$COLLECTION_METHOD ." \n");
+	htmlecho("COLLECTION_METHOD is: ".$COLLECTION_METHOD ." \n");
 
 	$PROVIDER_NPI=$report_view['provider'];
-	htmlecho("PROVIDER_NPI is ".$PROVIDER_NPI ." \n");
+	htmlecho("PROVIDER_NPI is: ".$PROVIDER_NPI ." \n");
 
 	$PROVIDER_TIN=get_TIN();
-	htmlecho("PROVIDER_TIN is ".$PROVIDER_TIN ." \n");
+	htmlecho("PROVIDER_TIN is: ".$PROVIDER_TIN ." \n");
 
 	$PROVIDER_EMAIL=get_Provider_email($PROVIDER_NPI);
-	htmlecho("PROVIDER_EMAIL is ".$PROVIDER_EMAIL ." \n");
+	htmlecho("PROVIDER_EMAIL is: ".$PROVIDER_EMAIL ." \n");
 
 	// We are assuming and require that the waiver have been signed
 	$WAIVER_SIGNED="Y";
-	htmlecho("WAIVER_SIGNED is (we're always assuming) ".$WAIVER_SIGNED ." \n");
+	htmlecho("WAIVER_SIGNED is: (we're always assuming) ".$WAIVER_SIGNED ." \n");
 
 //TODO:  Generate these in code instead of hard coding 2016
 	$ENCOUNTER_FROM_DATE="01-01-2016";
-	htmlecho("ENCOUNTER_FROM_DATE is ".$ENCOUNTER_FROM_DATE ." \n");
+	htmlecho("ENCOUNTER_FROM_DATE is: ".$ENCOUNTER_FROM_DATE ." \n");
 
 	$ENCOUNTER_TO_DATE="12-31-2016";
-	htmlecho("ENCOUNTER_TO_DATE is ".$ENCOUNTER_TO_DATE ." \n");
+	htmlecho("ENCOUNTER_TO_DATE is: ".$ENCOUNTER_TO_DATE ." \n");
 
 
 	$OUTFILE_PATH=$GLOBALS['OE_SITE_DIR']."/PQRS/dropzone/files/XML_out/";
@@ -346,10 +349,10 @@ if(!empty($report_id)) {
 
 	$OUTFILE_BASENAME=$PROVIDER_NPI."_".$PROVIDER_TIN;
 	//htmlecho("DEBUG:  OUTFILE_BASENAME is ".$OUTFILE_BASENAME ." \n");
-	htmlecho("XML filenames are ".$OUTFILE_BASENAME ."-#.xml \n");
+	htmlecho("XML filenames are formatted: ".$OUTFILE_BASENAME ."-#.xml\n");
 
 	$ZIPFILE_NAME=$OUTFILE_BASENAME.".zip";
-	echo("<b>ZIPFILE_NAME is ".$ZIPFILE_NAME ."</b> \n");
+	echo("<b>ZIPFILE_NAME is: ".$ZIPFILE_NAME ."</b> \n");
 
 
 	if ( $MEASURE_GROUP_ID != "X" ) {   // Only for Group Measures
@@ -358,26 +361,26 @@ if(!empty($report_id)) {
 
 // Total number of Medicare Part B FFS patients seen for the PQRS measure group
 		$FFS_PATIENT_COUNT=get_Medicare_Patient_Count($report_id);
-		htmlecho("* Total count of Medicare Part B FFS patients is $FFS_PATIENT_COUNT \n");
+		htmlecho("* Total count of Medicare Part B FFS patients is: $FFS_PATIENT_COUNT \n");
 
 // Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
 		$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($dataSheet);
-		htmlecho("* Group Reporting Rate Numerator is $GROUP_REPORTING_RATE_NUMERATOR \n");
+		htmlecho("* Group Reporting Rate Numerator is: $GROUP_REPORTING_RATE_NUMERATOR \n");
 
 // What is Eligible instances for the PQRS Measure Group?(reporting denominator)
 		$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($dataSheet);
-		htmlecho("* Group Eligible Instances is $GROUP_ELIGIBLE_INSTANCES \n");
+		htmlecho("* Group Eligible Instances is: $GROUP_ELIGIBLE_INSTANCES \n");
 
 		if ($GROUP_ELIGIBLE_INSTANCES == 0) {
-			echo("<b>Notice:  group-eligible-instances is 0.  iThis will affect group-reporting-rate.  You may need to inform CMS.  In fact, you probably shouldn't be reporting on this group!</b>\n");
+			echo("<b>Notice:  group-eligible-instances is 0.  This will affect group-reporting-rate.  You may need to inform CMS.  In fact, you probably shouldn't be reporting on this group!</b>\n");
 		}
 		$GROUP_REPORTING_RATE=sprintf("%00.2f",  $GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES*100);
-		htmlecho("* Group Reporting Rate is $GROUP_REPORTING_RATE % \n");
+		htmlecho("* Group Reporting Rate is: $GROUP_REPORTING_RATE % \n");
 	}	// End if($MEASURE_GROUP_ID != "X")
 
 	# This is the Total number of XML files to be generated
 	$TOTAL_MEASURES=count($dataSheet);
-	htmlecho(" Total number of Measures being reported on is $TOTAL_MEASURES  \n");
+	htmlecho(" Total number of Measures being reported on is: $TOTAL_MEASURES  \n");
 
 # LOOP!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	$FILE_NUMBER="0";
@@ -389,29 +392,29 @@ if(!empty($report_id)) {
 		htmlecho("For Measure ".$FILE_NUMBER.":   \n");
 
 		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($row['id'])-4 ),'0');
-		htmlecho(" PQRS Measure Number is $PQRS_MEASURE_NUMBER  \n");
+		htmlecho(" PQRS Measure Number is: $PQRS_MEASURE_NUMBER  \n");
 
 	# Technically, the $COLLECTION_METHOD can be different for each measure
 
 // "What is Measure Strata Number?)"`
 		$MEASURE_STRATA_NUM=get_Measure_Strata($row['population_label']);
-		htmlecho(" Measure Strata Number is $MEASURE_STRATA_NUM \n");
+		htmlecho(" Measure Strata Number is: $MEASURE_STRATA_NUM \n");
 
 // "How many eligible instances (Reporting Denominator) for the PQRS measure?
 		$ELIGIBLE_INSTANCES=$row['pass_filter'];
-		htmlecho(" Denominator is $ELIGIBLE_INSTANCES  \n");
+		htmlecho(" Eligible Instances (Reporting Denominator) is: $ELIGIBLE_INSTANCES  \n");
 
 // "How many Meets Performance Instances? (Performance Numerator)
 		$MEETS_PERFORMANCE_INSTANCES=$row['pass_target'];
-		htmlecho(" Numerator is $MEETS_PERFORMANCE_INSTANCES  \n");
+		htmlecho(" Numerator is: $MEETS_PERFORMANCE_INSTANCES  \n");
 
 // "How many Exclusions?
 		$PERFORMANCE_EXCLUSION_INSTANCES=$row['excluded'];
-		htmlecho(" Exclusions is $PERFORMANCE_EXCLUSION_INSTANCES  \n");
+		htmlecho(" Exclusions is: $PERFORMANCE_EXCLUSION_INSTANCES  \n");
 
 // "How many Performance Not Met Instances?
 		$PERFORMANCE_NOT_MET_INSTANCES=$ELIGIBLE_INSTANCES-$MEETS_PERFORMANCE_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES;
-		htmlecho(" Failed is $PERFORMANCE_NOT_MET_INSTANCES (calculated)  \n");
+		htmlecho(" Failed (including Not Reported) is: $PERFORMANCE_NOT_MET_INSTANCES (calculated)  \n");
 
 		#REPORTING_RATE=`ask "Reporting rate? (i.e. 100.00)"`
 // If MEASURE_GROUP_ID is X, technically the <reporting-rate> tag is optional, but we're going to include it because CMS is dumb and throws error on validation.
@@ -419,23 +422,41 @@ if(!empty($report_id)) {
 		if ($ELIGIBLE_INSTANCES == 0) {
 			$REPORTING_RATE="null";
 			echo("<b>Notice:  reporting-rate is null.  You may need to inform CMS.</b>\n");
-		} else {
+		} else if ($xmloptimize=='false'){
 			$REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
 #<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
+		} else if ($xmloptimize=='true'){
+    		        if (((($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100)>=50){
+			        $REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
+			        $CALC_RATES=FALSE;
+		        }else{
+    		        $REPORTING_RATE="50.00"; $CALC_RATES=TRUE;}
+#<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
 		}
-		htmlecho(" Reporting Rate for this Measure is  $REPORTING_RATE (calculated) \n");
-		//}
+		$ALL_INSTANCES = $MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES;
 
-		$PERFORMANCE_DENOMINATOR=$MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES-$PERFORMANCE_EXCLUSION_INSTANCES;
+        if ($xmloptimize=='true' && $CALC_RATES==FALSE){
+		$PERFORMANCE_DENOMINATOR=$MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES;
+		$PERFORMANCE_NOT_MET_INSTANCES = 0;
+	    }else if ($xmloptimize=='true' && $CALC_RATES==TRUE){
+    	$PERFORMANCE_DENOMINATOR=round($ALL_INSTANCES*.5);
+    	$PERFORMANCE_NOT_MET_INSTANCES = $PERFORMANCE_DENOMINATOR-($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES);
+	    }else{
+    	$PERFORMANCE_DENOMINATOR=$ALL_INSTANCES;    
+         }
 		if ($PERFORMANCE_DENOMINATOR == 0 ) {
 			$PERFORMANCE_RATE = "null";
 			echo("<b>Notice:  performance-rate is null.  You may need to inform CMS.</b>\n");
 		} else {
 		#PERFORMANCE_RATE=`ask "What is Performance Rate? (i.e. 100.00)"
-			$PERFORMANCE_RATE=sprintf("%00.2f", $MEETS_PERFORMANCE_INSTANCES/$PERFORMANCE_DENOMINATOR * 100);
+			$PERFORMANCE_RATE=sprintf("%00.2f", ($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$PERFORMANCE_DENOMINATOR * 100);
 #<meets-performance-instances> / [(<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>) - <performance-exclusion-instances>]
 		}
-		htmlecho(" Your Performance Rate is $PERFORMANCE_RATE (calculated) \n");
+        	if ($xmloptimize=='true' ){
+			htmlecho(" Optimized Failed is: $PERFORMANCE_NOT_MET_INSTANCES (calculated)  \n");
+		}
+		htmlecho(" Reporting Rate for this Measure is:  $REPORTING_RATE (calculated) \n");
+		htmlecho(" Your Performance Rate is: $PERFORMANCE_RATE (calculated) \n");
 
 
 # ==============================================================
