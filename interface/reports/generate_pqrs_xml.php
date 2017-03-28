@@ -14,6 +14,8 @@ require_once $srcdir.'/formdata.inc.php';
 require_once $srcdir.'/clinical_rules.php';
 require_once $srcdir.'/report_database.inc';
 
+$BLACKLIST = array('0001','0146','0164','0192','0238','0322','0323','0324','0328','0329','0330','0331','0333','0334',
+'0345','0346','0347','0348','0388','0392','0393','0405','0406','0416','0432','0433','0434','0437','0439');
 
 function existsDefault(&$array, $key, $default = '') {
   if(array_key_exists($key, $array)) {
@@ -386,6 +388,10 @@ if(!empty($report_id)) {
 	$FILE_NUMBER="0";
 
 	foreach($dataSheet as $row) {
+
+// Set this AGAIN because we may change it when processing Inverse Measures
+	    	$xmloptimize = $_GET['xmloptimize'];  
+
 		$FILE_NUMBER++;
 		//echo ("DEBUG row -- ".implode("|", $row) ."\n");
 		htmlecho("\n-------------------------------------------------------------------------------- \n");
@@ -393,7 +399,9 @@ if(!empty($report_id)) {
 
 		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($row['id'])-4 ),'0');
 		htmlecho(" PQRS Measure Number is: $PQRS_MEASURE_NUMBER  \n");
-
+        if (in_array($PQRS_MEASURE_NUMBER,$BLACKLIST)){
+          echo(" Optimization OFF for this <i><b>INVERSE MEASURE!</b></i>  \n");  
+            $xmloptimize ='false';}
 	# Technically, the $COLLECTION_METHOD can be different for each measure
 
 // "What is Measure Strata Number?)"`
