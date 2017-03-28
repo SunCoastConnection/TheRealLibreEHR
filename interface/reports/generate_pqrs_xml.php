@@ -420,10 +420,10 @@ if(!empty($report_id)) {
 		if ($ELIGIBLE_INSTANCES == 0) {
 			$REPORTING_RATE="null";
 			echo("<b>Notice:  reporting-rate is null.  You may need to inform CMS.</b>\n");
-		} else if ($xmloptimize=='0'){
+		} else if ($xmloptimize=='false'){
 			$REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
 #<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>/<eligible-instances>
-		} else if ($xmloptimize=='1'){
+		} else if ($xmloptimize=='true'){
     		        if (((($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100)>=50){
 			        $REPORTING_RATE=sprintf ( "%00.2f", (($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$ELIGIBLE_INSTANCES ) * 100);
 			        $CALC_RATES=FALSE;
@@ -435,9 +435,9 @@ if(!empty($report_id)) {
 		htmlecho(" Reporting Rate for this Measure is  $REPORTING_RATE (calculated) \n");
 		$ALL_INSTANCES = $MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES+$PERFORMANCE_NOT_MET_INSTANCES;
 
-        if ($xmloptimize=='1' && $CALC_RATES==FALSE){
+        if ($xmloptimize=='true' && $CALC_RATES==FALSE){
 		$PERFORMANCE_DENOMINATOR=$MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES;
-	    }else if ($xmloptimize=='1' && $CALC_RATES==TRUE){
+	    }else if ($xmloptimize=='true' && $CALC_RATES==TRUE){
     	$PERFORMANCE_DENOMINATOR=round($ALL_INSTANCES*.5);
     	$PERFORMANCE_NOT_MET_INSTANCES = $PERFORMANCE_DENOMINATOR-($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES);
 	    }else{
