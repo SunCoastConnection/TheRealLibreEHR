@@ -269,11 +269,12 @@ htmlecho("\n====================================================================
 $report_id = $_GET['report_id'] ;
 //$report_id = (isset($_REQUEST['report_id'])) ;
 htmlecho("DEBUG report_id is $report_id  \n");
+$xmloptimize = $_GET['xmloptimize'];
+htmlecho ("DEBUG optimize is \"".$xmloptimize."\"\n");
 
 if(!empty($report_id)) {
 	$report_view = collectReportDatabase($report_id);
 	//echo ("DEBUG report_view is:  ".implode($report_view)."\n" );
-
 	$dataSheet = json_decode($report_view['data'], true);
 	//echo ("DEBUG dataSheet is:  ".implode($dataSheet)."\n" );
 	htmlecho("DEBUG The first measure is ".$dataSheet[0]['id']   ." \n");
@@ -438,6 +439,7 @@ if(!empty($report_id)) {
 		$PERFORMANCE_DENOMINATOR=$MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES;
 	    }else if ($xmloptimize=='1' && $CALC_RATES==TRUE){
     	$PERFORMANCE_DENOMINATOR=round($ALL_INSTANCES*.5);
+    	$PERFORMANCE_NOT_MET_INSTANCES = $PERFORMANCE_DENOMINATOR-($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES);
 	    }else{
     	$PERFORMANCE_DENOMINATOR=$ALL_INSTANCES;    
          }
