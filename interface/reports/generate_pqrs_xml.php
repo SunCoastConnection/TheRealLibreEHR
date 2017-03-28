@@ -388,7 +388,10 @@ if(!empty($report_id)) {
 	$FILE_NUMBER="0";
 
 	foreach($dataSheet as $row) {
-    	$xmloptimize = $_GET['xmloptimize'];
+
+// Set this AGAIN because we may change it when processing Inverse Measures
+	    	$xmloptimize = $_GET['xmloptimize'];  
+
 		$FILE_NUMBER++;
 		//echo ("DEBUG row -- ".implode("|", $row) ."\n");
 		htmlecho("\n-------------------------------------------------------------------------------- \n");
@@ -397,7 +400,7 @@ if(!empty($report_id)) {
 		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($row['id'])-4 ),'0');
 		htmlecho(" PQRS Measure Number is: $PQRS_MEASURE_NUMBER  \n");
         if (in_array($PQRS_MEASURE_NUMBER,$BLACKLIST)){
-          htmlecho(" Optimization OFF for this <i><b>INVERSE MEASURE!</b></i>  \n");  
+          echo(" Optimization OFF for this <i><b>INVERSE MEASURE!</b></i>  \n");  
             $xmloptimize ='false';}
 	# Technically, the $COLLECTION_METHOD can be different for each measure
 
