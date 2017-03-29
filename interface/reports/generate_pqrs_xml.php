@@ -457,7 +457,7 @@ if(!empty($report_id)) {
 			echo("<b>Notice:  performance-rate is null.  You may need to inform CMS.</b>\n");
 		} else {
 		#PERFORMANCE_RATE=`ask "What is Performance Rate? (i.e. 100.00)"
-			$PERFORMANCE_RATE=sprintf("%00.2f", ($MEETS_PERFORMANCE_INSTANCES+$PERFORMANCE_EXCLUSION_INSTANCES)/$PERFORMANCE_DENOMINATOR * 100);
+			$PERFORMANCE_RATE=sprintf("%00.2f", ($MEETS_PERFORMANCE_INSTANCES/($PERFORMANCE_DENOMINATOR - $PERFORMANCE_EXCLUSION_INSTANCES)) * 100);
 #<meets-performance-instances> / [(<meets-performance-instances>+<performance-exclusion-instances>+<performance-not-met-instances>) - <performance-exclusion-instances>]
 		}
         	if ($xmloptimize=='true' ){
