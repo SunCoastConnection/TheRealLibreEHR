@@ -1323,6 +1323,7 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 			genMiscLink('RTop', 'rep', '0', xl('Provider Encounter Counts'), 'main/PQRS/provider_encounter_counts.php');
 			genMiscLink('RTop', 'rep', '0', xl('Client Database Import'), 'main/PQRS/import_data.php');
 			genMiscLink('RTop', 'rep', '0', xl('Remove Provider Assignments'), 'main/PQRS/reset_provider_to_unassigned.php');
+			genMiscLink('RBot', 'pqr', '0', xl('XML Editor'), 'reports/PQRS/xmleditor/');
 		}
 		genTreeLink('RTop', 'pwd', xl('Change Your Password'));
 		if( $GLOBALS['pqrs_demosystem'] ) {
