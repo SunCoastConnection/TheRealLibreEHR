@@ -233,47 +233,7 @@ function genPopupsList($style = '') {
 	echo '</select>'.PHP_EOL;
 }
 
-function genFindBlock() {
 
-?>
-	<table cellpadding='0' cellspacing='0' border='0'>
-		<tr>
-			<td class='smalltext'><?php xl('Find', 'e'); ?>:&nbsp;</td>
-			<td class='smalltext' colspan='2'>
-				<input type="entry" size="7" name="patient" class='inputtext' style='width:65px;' />
-			</td>
-		</tr>
-		<tr>
-			<td class='smalltext'><?php xl('by', 'e'); ?>:</td>
-			<td class='smalltext'>
-				<a href="javascript:findPatient('Last');" class="navitem"><?php xl('Name', 'e'); ?></a>
-			</td>
-			<td class='smalltext' align='right'>
-				<a href="javascript:findPatient('ID');" class="navitem"><?php xl('ID', 'e'); ?></a>
-			</td>
-		</tr>
-		<tr>
-			<td class='smalltext'>&nbsp;</td>
-			<td class='smalltext'>
-				<a href="javascript:findPatient('SSN');" class="navitem"><?php xl('SSN', 'e'); ?></a>
-			</td>
-			<td class='smalltext' align='right'>
-				<a href="javascript:findPatient('DOB');" class="navitem"><?php xl('DOB', 'e'); ?></a>
-			</td>
-		</tr>
-		<tr>
-			<td class='smalltext'>&nbsp;</td>
-			<td class='smalltext'>
-				<a href="javascript:findPatient('Any');" class="navitem"><?php xl('Any', 'e'); ?></a>
-			</td>
-			<td class='smalltext' align='right'>
-				<a href="javascript:initFilter();" class="navitem"><?php xl('Filter', 'e'); ?></a>
-			</td>
-		</tr>
-	</table>
-<?php
-
-}
 
 
 // This array defines the list of primary documents that may be
