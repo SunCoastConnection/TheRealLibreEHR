@@ -1490,52 +1490,7 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 
 		}
 
-		if(acl_check('menus', 'modle')) {
 
-?>
-				<li><a class="collapsed" id="modimg"><span><?php echo xlt('Modules'); ?></span></a>
-					<ul>
-<?php
-
-			genMiscLink('RTop', 'adm', '0', xl('Manage Modules'), 'modules/zend_modules/public/Installer');
-			// genTreeLink('RTop', 'ort', xl('Settings'));
-
-			$module_query = sqlStatement('SELECT mod_directory, mod_name, mod_nick_name, mod_relative_link, type
-				FROM modules
-				WHERE mod_active = 1
-					AND sql_run = 1
-				ORDER BY mod_ui_order
-				ASC');
-
-			if(sqlNumRows($module_query)) {
-				while($modulerow = sqlFetchArray($module_query)) {
-					$acl_section = strtolower($modulerow['mod_directory']);
-					$disallowed[$acl_section] = zh_acl_check($_SESSION['authUserID'], $acl_section) ? '' : '1';
-
-					$modulePath = '';
-					$added 		= '';
-
-					if($modulerow['type'] == 0) {
-						$modulePath = $GLOBALS['customModDir'];
-						$added		= '';
-					} else {
-						$added		= 'index';
-						$modulePath = $GLOBALS['zendModDir'];
-					}
-
-					$relative_link = 'modules/'.$modulePath.'/'.$modulerow['mod_relative_link'].$added;
-					$mod_nick_name = $modulerow['mod_nick_name'] ? $modulerow['mod_nick_name'] : $modulerow['mod_name'];
-
-					genMiscLink2('RTop', $acl_section, '0', xlt($mod_nick_name), $relative_link);
-				}
-			}
-
-?>
-					</ul>
-				</li>
-<?php
-
-		}
 
 		// if($GLOBALS['inhouse_pharmacy'] && acl_check('admin', 'drugs')) {
 		// 	genMiscLink('RTop', 'adm', '0', xl('Inventory'), 'drugs/drug_inventory.php');
@@ -1558,25 +1513,6 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 
 		}
 
-?>
-				<li><a class="collapsed" id="proimg" ><span><?php xl('Procedures', 'e'); ?></span></a>
-					<ul>
-<?php
-
-		genTreeLink('RTop', 'orl', xl('Providers'));
-		genTreeLink('RTop', 'ort', xl('Configuration'));
-		genTreeLink('RTop', 'orc', xl('Load Compendium'));
-		genTreeLink('RTop', 'orp', xl('Pending Review'));
-		genTreeLink('RTop', 'orr', xl('Patient Results'));
-		genTreeLink('RTop', 'lda', xl('Lab Overview'));
-		genTreeLink('RTop', 'orb', xl('Batch Results'));
-		genTreeLink('RTop', 'ore', xl('Electronic Reports'));
-		genTreeLink('RTop', 'dld', xl('Lab Documents'));
-
-?>
-					</ul>
-				</li>
-<?php
 
 		if($GLOBALS['erx_enable']) {
 			$newcrop_user_role = sqlQuery('SELECT newcrop_user_role FROM users WHERE username = "'.$_SESSION['authUser'].'"');
