@@ -15,8 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
- * @link    http://www.oemr.org
  * @link    http://suncoastconnection.com
  * @author  Suncoast Connection
 */
@@ -48,7 +46,7 @@ sqlStatement("TRUNCATE TABLE `forms`;");
 $query = file_get_contents("./SQL/forms.sql", true);
 sqlStatement($query);
 
-INSERT INTO `forms` (`id`, `date`, `encounter`, `form_name`, `form_id`, `pid`, `user`, `groupname`, `authorized`, `deleted`, `formdir`) VALUES
+/*INSERT INTO `forms` (`id`, `date`, `encounter`, `form_name`, `form_id`, `pid`, `user`, `groupname`, `authorized`, `deleted`, `formdir`) VALUES
 ('1','20151201123739','158940559170','New Patient Encounter','1','1','1356326920','Default', '1', '0', 'newpatient'),
 INSERT INTO `form_encounter` (`id`, `date`, `reason`, `facility`, `facility_id`, `pid`, `encounter`,
                  `onset_date`, `sensitivity`, `billing_note`, `pc_catid`, `last_level_billed`, `last_level_closed`, `last_stmt_date`, `stmt_count`,
@@ -67,11 +65,11 @@ $result = SqlFetchArray($res);
 <b><u>Participants:  </u></b><br>
 <textarea cols=80 rows=1 wrap=virtual name="data3" ></textarea>
 <br><br>
-<b>Next Appointment Date (USE FORMAT YYYY-MM-DD ONLY!):</b>&nbsp;<input type="date" name='data35' autocomplete="on"><br>
+<b>Next Appointment Date (USE FORMAT YYYY-MM-DD ONLY!):</b>&nbsp;<input type="date" name='data35' autocomplete="on"><br>*/
 }
 ?>
-<html>
+//<html>
 <input type="submit" name="formSubmit" value="Submit" />
-<b>Next Appointment Date (USE FORMAT YYYY-MM-DD ONLY!):</b>&nbsp;<input type="date" name='data35' autocomplete="on"><br>
+//<b>Next Appointment Date (USE FORMAT YYYY-MM-DD ONLY!):</b>&nbsp;<input type="date" name='data35' autocomplete="on"><br>
 </html>
 </form>
