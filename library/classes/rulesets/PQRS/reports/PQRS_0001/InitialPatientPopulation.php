@@ -27,7 +27,7 @@ class PQRS_0001_InitialPatientPopulation extends PQRSFilter
 	" JOIN patient_data AS p ON (b1.pid = p.pid) ". 
 	" INNER JOIN pqrs_efcc1 AS codelist_b ON (b1.code = codelist_b.code)".
 	" INNER JOIN pqrs_efcc1 AS codelist_a ON (b2.code = codelist_a.code)".
-		" WHERE b1.pid = ? ".
+	" WHERE b1.pid = ? ".
     " AND fe.provider_id = '".$this->_reportOptions['provider']."'".  
 	" AND fe.date >= '".$beginDate."' ".
 	" AND fe.date <= '".$endDate."' ".
