@@ -28,7 +28,7 @@ class PQRS_0006_Numerator extends PQRSFilter
 " AND b1.modifier ='' ;";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}    
-
+//8P is a hard fail
     }
 }
 
