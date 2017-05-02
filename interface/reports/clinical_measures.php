@@ -1,25 +1,9 @@
 <?php
 /**
  * Display Measures Engine Report Form
- *
- * Copyright (C) 2010      Brady Miller <brady@sparmy.com>
  * Copyright (C) 2016      Suncoast Connection
  *
- * LICENSE: This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>.
- *
- * @package OpenEMR
- * @link    http://www.open-emr.org
  * @link    http://SuncoastConnection.com
- * @author  Brady Miller <brady@sparmy.com>
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Sam Likins <sam.likins@wsi-services.com>
  */
@@ -37,7 +21,6 @@ require_once $srcdir.'/options.inc.php';
 require_once $srcdir.'/formdata.inc.php';
 require_once $srcdir.'/clinical_rules.php';
 require_once $srcdir.'/report_database.inc';
-//require_once $srcdir.'/jsonwrapper/jsonwrapper.php';  // This is a JSON wedge for PHP versions less than 5.2
 
 function existsDefault(&$array, $key, $default = '') {
   if(array_key_exists($key, $array)) {
@@ -48,19 +31,8 @@ function existsDefault(&$array, $key, $default = '') {
 }
 
 $page_titles = array(
-  'standard'              => xlt('Standard Measures'),
-  'cqm'                   => xlt('Clinical Quality Measures (CQM)'),
-  'cqm_2011'              => xlt('Clinical Quality Measures (CQM) - 2011'),
-  'cqm_2014'              => xlt('Clinical Quality Measures (CQM) - 2014'),
-  'amc'                   => xlt('Automated Measure Calculations (AMC)'),
-  'amc_2011'              => xlt('Automated Measure Calculations (AMC) - 2011'),
-  'amc_2014_stage1'       => xlt('Automated Measure Calculations (AMC) - 2014 Stage I'),
-  'amc_2014_stage2'       => xlt('Automated Measure Calculations (AMC) - 2014 Stage II'),
   'pqrs'                  => xlt('Physician Quality Reporting System'),
-  'pqrs_individual_2015'  => xlt('Physician Quality Reporting System -- Measures -- 2015'),
-  'pqrs_groups_2015'      => xlt('Physician Quality Reporting System -- Measure Groups -- 2015'),
   'pqrs_individual_2016'  => xlt('Physician Quality Reporting System -- Measures -- 2016'),
-  'pqrs_groups_2016'      => xlt('Physician Quality Reporting System -- Measure Groups -- 2016'),
 );
 
 // See if showing an old report or creating a new report
@@ -83,9 +55,8 @@ if(!empty($report_id)) {
     in_array(
       $report_view['type'],
       array(
-        'pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016',
-        'amc', 'amc_2011', 'amc_2014', 'amc_2014_stage1', 'amc_2014_stage2',
-        'cqm', 'cqm_2011', 'cqm_2014',
+        'pqrs', 'pqrs_individual_2016',
+        
       )
     ) ?
     $report_view['type'] :
@@ -94,12 +65,9 @@ if(!empty($report_id)) {
 
   $rule_filter = $report_view['type'];
 
-  if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) {
+  if(in_array($type_report, array('pqrs', 'pqrs_individual_2016'))) {
     $begin_date = $report_view['date_begin'];
-  } elseif(in_array($type_report, array('amc', 'amc_2011', 'amc_2014', 'amc_2014_stage1', 'amc_2014_stage2'))) {
-    $begin_date = $report_view['date_begin'];
-    $labs_manual = $report_view['labs_manual'];
-  }
+  } 
 
   $target_date = $report_view['date_target'];
   $plan_filter = $report_view['plan'];
@@ -107,72 +75,29 @@ if(!empty($report_id)) {
   $provider  = $report_view['provider'];
   $pat_prov_rel = $report_view['pat_prov_rel'];
   
- /*$myfile = fopen("Fuckingpqrsshit.txt", "w") or die("Unable to open file!");
-$txt = $report_view['data'];
-fwrite($myfile, $txt);
-fclose($myfile);
-   //error_log("The data is:".wordwrap ( $report_view['data'] ,  80 ));*/
+
   $dataSheet = json_decode($report_view['data'], true);
-  /*error_log("Any json error: ".json_last_error());
-      switch (json_last_error()) {
-        case JSON_ERROR_NONE:
-            error_log("json error:  - No errors");
-        break;
-        case JSON_ERROR_DEPTH:
-            error_log("json error:  - Maximum stack depth exceeded");
-        break;
-        case JSON_ERROR_STATE_MISMATCH:
-            error_log("json error:  - Underflow or the modes mismatch");
-        break;
-        case JSON_ERROR_CTRL_CHAR:
-            error_log("json error:  - Unexpected control character found");
-        break;
-        case JSON_ERROR_SYNTAX:
-            error_log("json error: ' - Syntax error, malformed JSON");
-        break;
-        case JSON_ERROR_UTF8:
-            error_log("json error:  - Malformed UTF-8 characters, possibly incorrectly encoded");
-        break;
-        default:
-            error_log("json error: ' - Unknown error");
-        break;
-    }
-    */
-  
-  
-  
-  
+ 
   $page_subtitle = ' - '.xlt('Date of Report').': '.text($date_report);
   $dis_text = ' disabled="disabled" ';
 
 } else {
-  // Collect report type parameter (standard, amc, cqm)
-  // Note that need to convert amc_2011 and amc_2014 to amc and cqm_2011 and cqm_2014 to cqm
-  // to simplify for when submitting for a new report.
+  // Collect report type parameter 
   $type_report = existsDefault($_GET, 'type', 'standard');
   $rule_filter = existsDefault($_POST, 'form_rule_filter', $type_report);
 
-  if(in_array($type_report, array('pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) {
+  if(in_array($type_report, array( 'pqrs_individual_2016'))) {
     $type_report = 'pqrs';
-  } elseif(in_array($type_report, array('cqm_2011', 'cqm_2014'))) {
-    $type_report = 'cqm';
-  } elseif(in_array($type_report, array('amc_2011', 'amc_2014', 'amc_2014_stage1', 'amc_2014_stage2'))) {
-    $type_report = 'amc';
-  }
+  } 
 
   // Collect form parameters (set defaults if empty)
   if($type_report == 'pqrs') {
     $begin_date = existsDefault($_POST, 'form_begin_date', '2016-01-01 00:00:00');  //change defaults in 2016
-  } elseif($type_report == 'amc') {
-    $begin_date = existsDefault($_POST, 'form_begin_date');
-    $labs_manual = existsDefault($_POST, 'labs_manual_entry', '0');
   }
 
   if($type_report == 'pqrs') {
     $target_date = existsDefault($_POST, 'form_target_date', '2016-12-31 23:59:59');  //change defaults in 2016
-  } else {
-    $target_date = existsDefault($_POST, 'form_target_date', date('Y-m-d H:i:s'));
-  }
+  } 
   $plan_filter = existsDefault($_POST, 'form_plan_filter', '');
   $organize_method = (empty($plan_filter)) ? 'default' : 'plans';
   $provider = trim(existsDefault($_POST, 'form_provider', ''));
@@ -181,7 +106,7 @@ fclose($myfile);
   $dis_text = '';
 }
 
-$widthDyn = (in_array($type_report, array('cqm', 'cqm_2011', 'cqm_2014')) ? '410px' : '470px');  //determine what is needed for pqrs
+$widthDyn = '470px';  //determine what is needed for pqrs
 
 ?>
 <html>
@@ -311,24 +236,11 @@ function downloadQRDA() {
 }
 
 function validateForm() {
-<?php if(empty($report_id) && $type_report == 'cqm') { ?>
-  // If this is a cqm and plan set not set to ignore, then need to ensure consistent with the rules set
-  if($("#form_plan_filter").val() != '') {
-    if($("#form_rule_filter").val() == $("#form_plan_filter").val()) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return true;
-  }
-<?php } else { ?>
   return true;
-<?php } ?>
 }
 
 function Form_Validate() {
-<?php if(empty($report_id) && in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016', 'amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
+<?php if(empty($report_id) && in_array($type_report, array('pqrs', 'pqrs_individual_2016',))) { ?>
   var d = document.forms[0];
 
   FromDate = d.form_begin_date.value;
@@ -388,7 +300,7 @@ function Form_Validate() {
     <!-- Required for the popup date selectors -->
     <div id="overDiv" style="position: absolute; visibility: hidden; z-index: 1000;"></div>
 
-    <span class='title'><?php echo xlt('Report').' '.$page_titles[$rule_filter].$page_subtitle; ?></span>
+    <span class='title'><?php echo xlt('MIPS: ').' '.$page_titles[$rule_filter].$page_subtitle; ?></span>
 
     <form method='post' name='theform' id='theform' action='clinical_measures.php?type=<?php echo attr($type_report) ;?>' onsubmit='return validateForm()'>
       <div id="report_parameters">
@@ -397,7 +309,7 @@ function Form_Validate() {
             <td scope="row" width='<?php echo $widthDyn; ?>'>
               <div style='float:left'>
                 <table class='text'>
-<?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016', 'amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
+<?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2016'))) { ?>
                   <tr>
                     <td class='label'>
                       <?php echo htmlspecialchars(xl('Begin Date'), ENT_NOQUOTES); ?>:
@@ -417,7 +329,7 @@ function Form_Validate() {
 <?php } ?>
                   <tr>
                     <td class='label'>
-<?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016', 'amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
+<?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2016'))) { ?>
                       <?php echo htmlspecialchars(xl('End Date'), ENT_NOQUOTES); ?>:
 <?php } else { ?>
                       <?php echo htmlspecialchars(xl('Target Date'), ENT_NOQUOTES); ?>:
@@ -435,7 +347,7 @@ function Form_Validate() {
 <?php } ?>
                     </td>
                   </tr>
-<?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
+<?php if(in_array($type_report, array('pqrs','pqrs_individual_2016'))) { ?>
                   <tr>
                     <td class='label'>
                       <?php echo xlt('Report Type'); ?>:
@@ -443,83 +355,19 @@ function Form_Validate() {
                     <td>
                       <select <?php echo $dis_text; ?> id='form_rule_filter' name='form_rule_filter'>
                         <option value='pqrs_individual_2016' <?php if ($rule_filter == "pqrs_individual_2016") {echo "selected";} ?>><?php echo xlt('Individual Measures'); ?></option>
-                        <option value='pqrs_groups_2016' <?php if ($rule_filter == "pqrs_groups_2016") {echo "selected";} ?>><?php echo xlt('Measure Groups'); ?></option>
                       </select>
                     </td>
                   </tr>
-<?php } elseif(in_array($type_report, array('cqm', 'cqm_2011', 'cqm_2014'))) { ?>
-                  <tr>
-                    <td class='label'>
-                      <?php echo xlt('Rule Set'); ?>:
-                    </td>
-                    <td>
-                      <select <?php echo $dis_text; ?> id='form_rule_filter' name='form_rule_filter'>
-                        <option value='cqm' <?php if($rule_filter == 'cqm') {echo 'selected';} ?>><?php echo xlt('All Clinical Quality Measures (CQM)'); ?></option>
-                        <option value='cqm_2011' <?php if($rule_filter == 'cqm_2011') {echo 'selected';} ?>><?php echo xlt('2011 Clinical Quality Measures (CQM)'); ?></option>
-                        <option value='cqm_2014' <?php if($rule_filter == 'cqm_2014') {echo 'selected';} ?>><?php echo xlt('2014 Clinical Quality Measures (CQM)'); ?></option>
-                      </select>
-                    </td>
-                  </tr>
-<?php } elseif(in_array($type_report, array('amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
-                  <tr>
-                    <td class='label'>
-                      <?php echo xlt('Rule Set'); ?>:
-                    </td>
-                    <td>
-                      <select <?php echo $dis_text; ?> id='form_rule_filter' name='form_rule_filter'>
-<?php   if($rule_filter == 'amc') { //only show this when displaying old reports. Not available option for new reports ?>
-                        <option value='amc' selected><?php echo xlt('All Automated Measure Calculations (AMC)'); ?></option>
-<?php   } ?>
-                        <option value='amc_2011' <?php if($rule_filter == "amc_2011") echo 'selected'; ?>><?php echo xlt('2011 Automated Measure Calculations (AMC)'); ?></option>
-                        <option value='amc_2014_stage1' <?php if($rule_filter == "amc_2014_stage1") echo 'selected'; ?>><?php echo xlt('2014 Automated Measure Calculations (AMC) - Stage I'); ?></option>
-                        <option value='amc_2014_stage2' <?php if($rule_filter == "amc_2014_stage2") echo 'selected'; ?>><?php echo xlt('2014 Automated Measure Calculations (AMC) - Stage II'); ?></option>
-                      </select>
-                    </td>
-                  </tr>
-<?php } elseif($type_report == 'standard') { ?>
-                  <tr>
-                    <td class='label'>
-                      <?php echo xlt('Rule Set'); ?>:
-                    </td>
-                    <td>
-                      <select <?php echo $dis_text; ?> id='form_rule_filter' name='form_rule_filter'>
-                        <option value='passive_alert' <?php if($rule_filter == 'passive_alert') {echo 'selected';} ?>><?php echo xlt('Passive Alert Rules'); ?></option>
-                        <option value='active_alert' <?php if($rule_filter == 'active_alert') {echo 'selected';} ?>><?php echo xlt('Active Alert Rules'); ?></option>
-                        <option value='patient_reminder' <?php if($rule_filter == 'patient_reminder') {echo 'selected';} ?>><?php echo xlt('Patient Reminder Rules'); ?></option>
-                      </select>
-                    </td>
-                  </tr>
-<?php
-    }
+<?php }
 
-    if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) {
+    if(in_array($type_report, array('pqrs', 'pqrs_individual_2016'))) {
 
 //  Nothing.  Do NOTHING!  --leebc
 ?>
 		<input type='hidden' id='form_plan_filter' name='form_plan_filter' value=''>
 <?php
 
- } elseif(in_array($type_report, array('amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
-                  <input type='hidden' id='form_plan_filter' name='form_plan_filter' value=''>
-<?php } else { ?>
-                  <tr>
-                    <td class='label'>
-                      <?php echo htmlspecialchars(xl('Plan Set'), ENT_NOQUOTES); ?>:
-                    </td>
-                    <td>
-                      <select <?php echo $dis_text; ?> id='form_plan_filter' name='form_plan_filter'>
-                        <option value=''>-- <?php echo htmlspecialchars(xl('Ignore'), ENT_NOQUOTES); ?> --</option>
-<?php   if(in_array($type_report, array('cqm', 'cqm_2011', 'cqm_2014'))) { ?>
-                        <option value='cqm' <?php if($plan_filter == 'cqm') {echo 'selected';} ?>><?php echo htmlspecialchars(xl('All Official Clinical Quality Measures (CQM) Measure Groups'), ENT_NOQUOTES); ?></option>
-                        <option value='cqm_2011' <?php if($plan_filter == 'cqm_2011') {echo 'selected';} ?>><?php echo htmlspecialchars(xl('2011 Official Clinical Quality Measures (CQM) Measure Groups'), ENT_NOQUOTES); ?></option>
-                        <option value='cqm_2014' <?php if($plan_filter == 'cqm_2014') {echo 'selected';} ?>><?php echo htmlspecialchars(xl('2014 Official Clinical Quality Measures (CQM) Measure Groups'), ENT_NOQUOTES); ?></option>
-<?php   } elseif($type_report == 'standard') { ?>
-                        <option value='normal' <?php if($plan_filter == 'normal') {echo 'selected';} ?>><?php echo htmlspecialchars(xl('Active Plans'), ENT_NOQUOTES); ?></option>
-<?php   } ?>
-                      </select>
-                    </td>
-                  </tr>
-<?php } ?>
+ }  ?>
                   <tr>
                     <td class='label'>
                       <?php echo htmlspecialchars(xl('Provider'), ENT_NOQUOTES); ?>:
@@ -555,17 +403,7 @@ function Form_Validate() {
                       </select>
                     </td>
                   </tr>
-<?php if(in_array($type_report, array('amc', 'amc_2011', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
-                  <tr>
-                    <td>
-                      <?php echo htmlspecialchars(xl('Number labs'), ENT_NOQUOTES); ?>:<br>
-                      (<?php echo htmlspecialchars(xl('Non-electronic'), ENT_NOQUOTES); ?>)
-                    </td>
-                    <td>
-                      <input <?php echo $dis_text; ?> type="text" id="labs_manual_entry" name="labs_manual_entry" value="<?php echo htmlspecialchars($labs_manual, ENT_QUOTES); ?>">
-                    </td>
-                  </tr>
-<?php } ?>
+
                 </table>
               </div>
             </td>
@@ -582,34 +420,7 @@ function Form_Validate() {
                       </a>
                       <span id='status_span'></span>
                       <div id='processing' style='margin:10px;display:none;'><img src='../pic/ajax-loader.gif'/></div>
-<?php   if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) { 
-/*?>
-//  XML Report Buttons may go here.  -- leebc 2016-12-14
-//  This block commented out because we don't know where they go
-                      <a id='xmla_button' href='#' class='css_button' onclick='return GenXml("PQRS")'>
-                        <span>
-                          <?php echo htmlspecialchars(xl('Generate PQRS report (SimpleXML) 2015'), ENT_NOQUOTES); ?>
-                        </span>
-                      </a>
-                      <a id='xmlb_button' href='#' class='css_button' onclick='return GenXml("PQRS-2")'>
-                        <span>
-                          <?php echo htmlspecialchars(xl('Stub for additional xml format submissions'), ENT_NOQUOTES); ?>
-                        </span>
-                      </a>
-<?php */   } elseif($type_report == 'cqm') { ?>
-                      <a id='xmla_button' href='#' class='css_button' onclick='return GenXml("false")'>
-                        <span>
-                          <?php echo htmlspecialchars(xl('Generate PQRI report (Method A) - 2011'), ENT_NOQUOTES); ?>
-                        </span>
-                      </a>
-                      <a id='xmlb_button' href='#' class='css_button' onclick='return GenXml("true")'>
-                        <span>
-                          <?php echo htmlspecialchars(xl('Generate PQRI report (Method E) - 2011'), ENT_NOQUOTES); ?>
-                        </span>
-                      </a>
-<?php
-      }
-    }
+
 
     if(!empty($report_id)) {
 ?>
@@ -618,7 +429,7 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('Print'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-<?php   if(in_array($type_report, array('pqrs_individual_2016', 'pqrs_groups_2016'))) { ?>
+<?php   if(in_array($type_report, array('pqrs_individual_2016'))) { ?>
                         Optimize XML report?
                         <input id="xmloptimize" type="checkbox" name="xmloptimize" value="1" />
                       <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXml("PQRS");'>
@@ -626,19 +437,7 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('Generate XML for PQRS'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-<?php   } elseif($type_report == 'cqm_2014') { ?>
-                      <a href="#" id="genQRDA" class='css_button' onclick='return downloadQRDA()'>
-                        <span>
-                          <?php echo htmlspecialchars(xl('Generate QRDA I – 2014'), ENT_NOQUOTES); ?>
-                        </span>
-                      </a>
-                      <a href="#" id="xmlc_button" class='css_button' onclick='return GenXml("QRDA")'>
-                        <span>
-                          <?php echo htmlspecialchars(xl('Generate QRDA III - 2014'), ENT_NOQUOTES); ?>
-                        </span>
-                      </a>
-<?php
-      }
+<?php   } 
 
       if($back_link == 'list') {
 ?>
@@ -664,12 +463,12 @@ function Form_Validate() {
           <thead>
             <th><?php echo htmlspecialchars(xl('Title'), ENT_NOQUOTES); ?></th>
             <th><?php echo htmlspecialchars(xl('Total Patients'), ENT_NOQUOTES); ?></th>
-            <th><?php if(in_array($type_report, array('amc', 'pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016'))) { echo htmlspecialchars(xl('Denominator'), ENT_NOQUOTES); } else { echo htmlspecialchars(xl('Applicable Patients').' ('.xl('Denominator').')', ENT_NOQUOTES); } ?></th>
-<?php   if($type_report != 'amc') { ?>
+            <th><?php if(in_array($type_report, array( 'pqrs', 'pqrs_individual_2016'))) { echo htmlspecialchars(xl('Denominator'), ENT_NOQUOTES); } else { echo htmlspecialchars(xl('something else'), ENT_NOQUOTES); } } ?></th>
+
             <th><?php echo htmlspecialchars(xl('Excluded Patients'), ENT_NOQUOTES); ?></th>
-<?php   } ?>
-            <th><?php if($type_report == 'amc') { echo htmlspecialchars(xl('Numerator'), ENT_NOQUOTES); } else { echo htmlspecialchars(xl('Passed Patients').' ('.xl('Numerator').')', ENT_NOQUOTES); } ?></th>
-            <th><?php if($type_report == 'amc') { echo htmlspecialchars(xl('Failed'), ENT_NOQUOTES); } else { echo htmlspecialchars(xl('Failed Patients'), ENT_NOQUOTES); } ?></th>
+
+            <th><?php echo htmlspecialchars(xl('Passed Patients').' ('.xl('Numerator').')', ENT_NOQUOTES);  ?></th>
+            <th><?php echo htmlspecialchars(xl('Failed Patients'), ENT_NOQUOTES);  ?></th>
             <th><?php echo htmlspecialchars(xl('Performance Percentage'), ENT_NOQUOTES); ?></th>
           </thead>
           <tbody>  <!-- added for better print-ability -->
@@ -703,47 +502,12 @@ function Form_Validate() {
 
             switch($type_report) {
 	            case 'pqrs':
-              case 'pqrs_individual_2015':
-              case 'pqrs_groups_2015':
               case 'pqrs_individual_2016':
-              case 'pqrs_groups_2016':
                 if(!empty($row['pqrs_code'])) {
                   $tempMeasuresString .= ' '.htmlspecialchars(xl('PQRS').':'.$row['pqrs_code'], ENT_NOQUOTES).' ';
                 }
                 break;
 
-              case 'cqm':
-              case 'cqm_2011':
-              case 'cqm_2014':
-                if(!empty($row['cqm_pqri_code'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('PQRI').':'.$row['cqm_pqri_code'], ENT_NOQUOTES).' ';
-                }
-                if(!empty($row['cqm_nqf_code'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('NQF').':'.$row['cqm_nqf_code'], ENT_NOQUOTES).' ';
-                }
-                break;
-
-              case 'amc':
-                if(!empty($row['amc_code'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('AMC-2011').':'.$row['amc_code'], ENT_NOQUOTES).' ';
-                }
-                if(!empty($row['amc_code_2014'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('AMC-2014').':'.$row['amc_code_2014'], ENT_NOQUOTES).' ';
-                }
-                break;
-
-              case 'amc_2011':
-                if(!empty($row['amc_code'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('AMC-2011').':'.$row['amc_code'], ENT_NOQUOTES).' ';
-                }
-                break;
-
-              case 'amc_2014_stage1':
-              case 'amc_2014_stage2':
-                if(!empty($row['amc_code_2014'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('AMC-2014').':'.$row['amc_code_2014'], ENT_NOQUOTES).' ';
-                }
-                break;
             }
 
             if(!empty($tempMeasuresString)) {
@@ -778,10 +542,10 @@ function Form_Validate() {
 <?php
           }
 
-          if($type_report != 'amc') {
-            // Note that amc will likely support in excluded items in the future for MU2
-            if($type_report != 'standard' && isset($row['itemized_test_id']) && $row['excluded'] > 0) {
-              // Note standard reporting exluded is different than cqm/amc and will not support itemization
+
+
+            if(isset($row['itemized_test_id']) && $row['excluded'] > 0) {
+
               $query = http_build_query(array(
                 'from_page' => 'pqrs_report',
                 'pass_id' => 'exclude',
@@ -797,7 +561,7 @@ function Form_Validate() {
               <td align='center'><?php echo $row['excluded']; ?></td>
 <?php
             }
-          }
+
 
 // TODO: Art note: Targets are not implemented in PQRS reports as far as I understand.  May be useful, but direct entry form will do this instead
           if(isset($row['itemized_test_id']) && $row['pass_target'] > 0) {
@@ -820,17 +584,9 @@ function Form_Validate() {
           $failed_items = 0;
 
           if(isset($row['is_main'])) {
-            if($type_report == 'standard') {
-              // Excluded is not part of denominator in standard rules so do not use in calculation
-              $failed_items = $row['pass_filter'] - $row['pass_target'];
-            } else {
-// TODO: This is assuming excluded is needed in pqrs
               $failed_items = $row['pass_filter'] - $row['pass_target'] - $row['excluded'];
-            }
-          } else {
-            // Excluded is not part of denominator in standard rules so do not use in calculation
-            $failed_items = $main_pass_filter - $row['pass_target'];
-          }
+  
+          } 
 
           if(isset($row['itemized_test_id']) && ($failed_items > 0) ) {
             $query = http_build_query(array(
@@ -886,9 +642,6 @@ function Form_Validate() {
 
           $contents = htmlspecialchars(xl('Plan'), ENT_NOQUOTES).': '.generate_display_field(array('data_type' => '1', 'list_id' => 'clinical_plans'), $row['id']);
 
-          if(!empty($row['cqm_measure_group'])) {
-            $contents .= ' ('. htmlspecialchars(xl('Measure Group Code').': '.$row['cqm_measure_group'], ENT_NOQUOTES).')';
-          }
 ?>
               <td class='detail' align='center'><b><?php echo $contents; ?></b></td>
 <?php
@@ -912,7 +665,7 @@ function Form_Validate() {
 <?php   include_once $GLOBALS['srcdir'].'/dynarch_calendar_en.inc.php'; ?>
   <script type="text/javascript" src="../../library/dynarch_calendar_setup.js"></script>
   <script language="Javascript">
-<?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2015', 'pqrs_groups_2015', 'pqrs_individual_2016', 'pqrs_groups_2016', 'amc', 'amc_2014_stage1', 'amc_2014_stage2'))) { ?>
+<?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2016'))) { ?>
     Calendar.setup({inputField:"form_begin_date", ifFormat:"%Y-%m-%d %H:%M:%S", button:"img_begin_date", showsTime:'true'});
 <?php } ?>
     Calendar.setup({inputField:"form_target_date", ifFormat:"%Y-%m-%d %H:%M:%S", button:"img_target_date", showsTime:'true'});

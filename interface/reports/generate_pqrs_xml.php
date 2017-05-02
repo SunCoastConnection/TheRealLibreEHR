@@ -33,115 +33,7 @@ function find_MGID_by_measure_name ( $measure_name ) {
 	if ( strpos( $measure_name, "PQRS_Group_") === false) {
 		htmlecho (" MGID Not Applicable (Individual Measures) is: X\n");
 		return "X";
-	} else {
-	$group_portion_only=substr($measure_name,11,strlen($measure_name)-16  );
-	// echo ("DEBUG group_portion_only is $group_portion_only\n");
-	switch ($group_portion_only) {
-	case "Diabetes":
-		htmlecho ("Diabetes Mellitus MGID is: A\n");
-		return "A";
-		break;
-	case "CKD":
-		htmlecho ("CKD MGID is: C \n");
-		return "C";
-		break;
-	case "Preventive":
-		htmlecho ("Preventive Care MGID is: D \n");
-		return "D";
-		break;
-	case "RA":
-		htmlecho ("Rheumatoid Arthritis MGID is: F \n");
-		return "F";
-		break;
-	case "CABG":
-		htmlecho ("CABG MGID is: H \n");
-		return "H";
-		break;
-	case "HepatitisC":
-		htmlecho ("Hepatitis C MGID is: I \n");
-		return "I";
-		break;
-	case "HF":
-		htmlecho ("HF MGID is: L \n");
-		return "L";
-		break;
-	case "CAD":
-		htmlecho ("CAD MGID is: M \n");
-		return "M";
-		break;
-	case "HIVAIDS":
-		htmlecho ("HIV/AIDS MGID is: N \n");
-		return "N";
-		break;
-	case "Asthma":
-		htmlecho ("Asthma MGID is: O  \n");
-		return "O";
-		break;
-	case "COPD":
-		htmlecho ("COPD MGID is: P  \n");
-		return "P";
-		break;
-	case "IBD":
-		htmlecho ("IBD MGID is: Q  \n");
-		return "Q";
-		break;
-	case "Sleep_Apnea":
-		htmlecho ("Sleep Apnea is: R  \n");
-		return "R";
-		break;
-	case "Cataracts":
-		htmlecho ("Cataracts MGID is: S  \n");
-		return "S";
-		break;
-	case "Dementia":
-		htmlecho ("Dementia MGID is: T  \n");
-		return "T";
-		break;
-	case "Parkinsons":
-		htmlecho ("Parkinson’s Disease MGID is: U  \n");
-		return "U";
-		break;
-	case "Oncology":
-		htmlecho ("Oncology MGID is: Y  \n");
-		return "Y";
-		break;
-	case "TKR":
-		htmlecho ("Total Knee Replacement MGID is: Z  \n");
-		return "Z";
-		break;
-	case "Surgery":
-		htmlecho ("General Surgery MGID is: AA  \n");
-		return "AA";
-		break;
-	case "OPEIR":
-		htmlecho ("OPEIR MGID is: AB  \n");
-		return "AB";
-		break;
-	case "Sinusitis":
-		htmlecho ("Sinusitis MGID is: AC  \n");
-		return "AC";
-		break;
-	case "AOE":
-		htmlecho ("AOE MGID is: AD  \n");
-		return "AD";
-		break;
-	case "CP":
-		htmlecho ("Cardiovascular Prevention MGID is: AE  \n");
-		return "AE";
-		break;
-	case "DR":
-		htmlecho ("Diabetic Retinopathy MGID is: AF  \n");
-		return "AF";
-		break;
-	case "MCC":
-		htmlecho ("Multiple Chronic Conditions MGID is: AG  \n");
-		return "AG";
-		break;
-	default:
-		htmlecho ("Measure type did not match, setting to Not Applicable (Individual) (X)  \n");
-		return "X";
-	}	// switch
-	}	// else
+	}
 }  // end find_MGID_by_measure_name	
 
 
@@ -249,7 +141,6 @@ function get_TIN() {
 echo ("<pre>\n");
 htmlecho("Assumptions -- Things that should have been done before generating this XML:  \n");
 htmlecho(" * XML should only be generated for a report with a single provider.  *REQUIRED*  \n");
-htmlecho(" * XML should only be generated for an Individual Measures report, or a report \n     generated with one Measure Group selected.  *REQUIRED*  \n"); 
 htmlecho(" * The eligible professional has signed a waiver giving the registry permission\n     to submit data on their behalf.  *REQUIRED*  \n");
 htmlecho(" * \"Failed Patients\" is assumed to be = Denominator - Numerator - Exclusions. *REQUIRED*  \n");
 htmlecho(" * 9 Measures were chosen for an Individual Measures report.  *REQUIRED*  \n");
@@ -317,7 +208,7 @@ if(!empty($report_id)) {
 	if ($MEASURE_GROUP_ID=="X") {
 		$SUBMISSION_METHOD="A";	// IndividuAl
 	} else {
-		$SUBMISSION_METHOD="G";	// Group
+		$SUBMISSION_METHOD="G";	// Group no longer used.  Preserve for other use.
 	}
 	htmlecho("SUBMISSION_METHOD is: ".$SUBMISSION_METHOD ." \n");
 
@@ -356,29 +247,6 @@ if(!empty($report_id)) {
 	$ZIPFILE_NAME=$OUTFILE_BASENAME.".zip";
 	echo("<b>ZIPFILE_NAME is: ".$ZIPFILE_NAME ."</b> \n");
 
-
-	if ( $MEASURE_GROUP_ID != "X" ) {   // Only for Group Measures
-		htmlecho("\n-------------------------------------------------------------------------------- \n");
-		htmlecho("Group Statistics:\n");
-
-// Total number of Medicare Part B FFS patients seen for the PQRS measure group
-		$FFS_PATIENT_COUNT=get_Medicare_Patient_Count($report_id);
-		htmlecho("* Total count of Medicare Part B FFS patients is: $FFS_PATIENT_COUNT \n");
-
-// Number of instances of reporting for all applicable measures within the measure group, for each eligible instance (reporting numerator)
-		$GROUP_REPORTING_RATE_NUMERATOR=get_Reporting_Rate_Numerator($dataSheet);
-		htmlecho("* Group Reporting Rate Numerator is: $GROUP_REPORTING_RATE_NUMERATOR \n");
-
-// What is Eligible instances for the PQRS Measure Group?(reporting denominator)
-		$GROUP_ELIGIBLE_INSTANCES=get_Group_Eligable_Instances($dataSheet);
-		htmlecho("* Group Eligible Instances is: $GROUP_ELIGIBLE_INSTANCES \n");
-
-		if ($GROUP_ELIGIBLE_INSTANCES == 0) {
-			echo("<b>Notice:  group-eligible-instances is 0.  This will affect group-reporting-rate.  You may need to inform CMS.  In fact, you probably shouldn't be reporting on this group!</b>\n");
-		}
-		$GROUP_REPORTING_RATE=sprintf("%00.2f",  $GROUP_REPORTING_RATE_NUMERATOR/$GROUP_ELIGIBLE_INSTANCES*100);
-		htmlecho("* Group Reporting Rate is: $GROUP_REPORTING_RATE % \n");
-	}	// End if($MEASURE_GROUP_ID != "X")
 
 	# This is the Total number of XML files to be generated
 	$TOTAL_MEASURES=count($dataSheet);
@@ -534,21 +402,6 @@ if(!empty($report_id)) {
 //		htmlecho("      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date> \n");
 		fwrite($myFileHandle,  "      <encounter-to-date>$ENCOUNTER_TO_DATE</encounter-to-date>\n");
 
-// This section for Group Measures
-		if ( $MEASURE_GROUP_ID != "X" ) {
-//			htmlecho("      <measure-group-stat> \n");
-			fwrite($myFileHandle,  "      <measure-group-stat>\n");
-//			htmlecho("        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count> \n");
-			fwrite($myFileHandle,  "        <ffs-patient-count>$FFS_PATIENT_COUNT</ffs-patient-count>\n");
-//			htmlecho("        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator> \n");
-			fwrite($myFileHandle,  "        <group-reporting-rate-numerator>$GROUP_REPORTING_RATE_NUMERATOR</group-reporting-rate-numerator>\n");
-//			htmlecho("        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances> \n");
-			fwrite($myFileHandle,  "        <group-eligible-instances>$GROUP_ELIGIBLE_INSTANCES</group-eligible-instances>\n");
-//			htmlecho("        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate> \n");
-			fwrite($myFileHandle,  "        <group-reporting-rate>$GROUP_REPORTING_RATE</group-reporting-rate>\n");
-//			htmlecho("      </measure-group-stat> \n");
-			fwrite($myFileHandle,  "      </measure-group-stat>\n");
-		}
 
 //		htmlecho("      <pqrs-measure> \n");
 		fwrite($myFileHandle,  "      <pqrs-measure>\n");
@@ -570,7 +423,7 @@ if(!empty($report_id)) {
 		fwrite($myFileHandle,  "          <performance-not-met-instances>$PERFORMANCE_NOT_MET_INSTANCES</performance-not-met-instances>\n");
 
 
-		//if ( $MEASURE_GROUP_ID == "X" ) {
+
 		if ($REPORTING_RATE == "null") {
 //			htmlecho("           <reporting-rate xsi:nil=”true”/> \n");
 			fwrite($myFileHandle,  "           <reporting-rate xsi:nil=”true”/>\n");
@@ -578,7 +431,7 @@ if(!empty($report_id)) {
 //			htmlecho("          <reporting-rate>$REPORTING_RATE</reporting-rate> \n");
 			fwrite($myFileHandle,  "          <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
 		}
-		//}
+
 
 		if ( $PERFORMANCE_RATE == "null" ) {
 //			htmlecho("          <performance-rate xsi:nil=”true”/>\n");
