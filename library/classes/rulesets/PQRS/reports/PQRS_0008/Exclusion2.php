@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0008 -- Exclusion 
+ * PQRS Measure 0008 -- Exclusion 2
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -18,9 +18,9 @@ class PQRS_0008_Exclusion2 extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		    $query =
+$query =
 "SELECT COUNT(b1.code) as count".  
-"  FROM billing AS b1".
+" FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".

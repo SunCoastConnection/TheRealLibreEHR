@@ -19,7 +19,6 @@ class PQRS_0008_Denominator1 extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
  return true;      
-
     }
 }
 
