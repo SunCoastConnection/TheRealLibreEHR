@@ -25,8 +25,8 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = '4044F' ".
-"AND b1.modifier ='' ;";
-
+" AND b1.modifier ='' ;";
+//4044F-8P is hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count']> 0){ return true;} else {return false;}     
