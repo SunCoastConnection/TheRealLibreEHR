@@ -31,7 +31,7 @@ $query =
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND b2.code IN ('99238','99239') ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0046_a');";
-
+//Jackwagon measure
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
 

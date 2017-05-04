@@ -19,6 +19,7 @@ class PQRS_0046_Denominator extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 		//Same as initial population
+		//Jackwagon measure
 		return true;
     }
 }
