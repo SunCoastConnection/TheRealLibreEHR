@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0181 -- Exclusion 
+ * PQRS Measure 0168 -- Numerator
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -8,28 +8,26 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
-
-class PQRS_0181_Exclusion extends PQRSFilter
+ 
+class PQRS_0168_Numerator extends PQRSFilter
 {
-    public function getTitle() 
+    public function getTitle()
     {
-        return "Exclusion";
+        return "Numerator";
     }
-    
+
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-$query =
+ $query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code IN ('G8535','G8941') ; ";
-
+" AND b1.code = 'G8577'; ";
+//G8578 hard fail...which is what you actually want.
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result['count']> 0){ return true;} else {return false;} 
+if ($result['count']> 0){ return true;} else {return false;} 	
     }
 }
-
-?>

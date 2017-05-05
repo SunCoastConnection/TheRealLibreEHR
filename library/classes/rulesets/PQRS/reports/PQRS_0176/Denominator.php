@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0181 -- Exclusion 
+ * PQRS Measure 0176 -- Denominator 
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -8,12 +8,12 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
-
-class PQRS_0181_Exclusion extends PQRSFilter
+ 
+class PQRS_0176_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Exclusion";
+        return "Denominator";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
@@ -24,11 +24,11 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code IN ('G8535','G8941') ; ";
-
+" AND b1.code = '4195F' ; ";
+//Requires Pre-Measure
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result['count']> 0){ return true;} else {return false;} 
+if ($result['count']> 0){ return true;} else {return false;}
     }
 }
 

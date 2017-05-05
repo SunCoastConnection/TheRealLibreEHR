@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0187 -- Denominator 
+ * PQRS Measure 0177 -- Exclusion 
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -8,18 +8,17 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
- 
-class PQRS_0187_Denominator extends PQRSFilter
+
+class PQRS_0177_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Denominator";
+        return "Exclusion";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Needs attestation premeasure for "Was OK <=2 hours before arriving at hospital"
-		return true;
+return false;
     }
 }
 
