@@ -28,7 +28,7 @@ class PQRS_0141_Numerator extends PQRSFilter
 " AND ((b1.code = '3284F' AND b1.modifier ='')".
 " OR (b1.code = '0517F' AND b1.modifier ='' AND b2.code = '3285F' AND b1.modifier ='')); ";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-
+//hard fail identical to above but with modifier 8P for each of the above 2 conditions
 if ($result['count']> 0){ return true;} else {return false;}  	
     }
 }

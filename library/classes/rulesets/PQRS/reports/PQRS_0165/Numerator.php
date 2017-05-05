@@ -1,17 +1,16 @@
 <?php
+
 /**
- * PQRS Measure Group_CABG_0166 -- Numerator
+ * PQRS Measure 0165 -- Numerator
  *
  * Copyright (C) 2016      Suncoast Connection
-
  * @package PQRS_Gateway 
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
+ */
  
-*/
-
-class PQRS_Group_CABG_0166_Numerator extends PQRSFilter
+class PQRS_0165_Numerator extends PQRSFilter
 {
     public function getTitle()
     {
@@ -26,8 +25,8 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G8573'; ";
-
+" AND b1.code = 'G8571'; ";
+//inverse measure
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 
 if ($result['count'] > 0){ return true;} else {return false;}    	

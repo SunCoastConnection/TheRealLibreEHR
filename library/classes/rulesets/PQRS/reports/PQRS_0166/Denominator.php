@@ -1,29 +1,26 @@
 <?php
 /**
- * PQRS Measure Group_CABG_0166 -- Exclusion 
+ * PQRS Measure 0166 -- Denominator 
  *
  * Copyright (C) 2016      Suncoast Connection
-
  * @package PQRS_Gateway 
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
+ */
  
-*/
-
-class PQRS_Group_CABG_0166_Exclusion extends PQRSFilter
+class PQRS_0166_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Exclusion";
+        return "Denominator";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-       	// Default return 
-        return false;
+		//Same as initial population
+		return true;
     }
 }
-
 ?>
 

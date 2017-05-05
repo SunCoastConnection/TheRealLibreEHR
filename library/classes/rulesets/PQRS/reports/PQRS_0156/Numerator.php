@@ -26,7 +26,7 @@ class PQRS_0156_Numerator extends PQRSFilter
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = '0520F' AND b1.modifier =''); ";
-
+//8P hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count']> 0){ return true;} else {return false;} 
