@@ -18,7 +18,19 @@ class PQRS_0118_Denominator1 extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-return true;
+$query =
+"SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (p.pid = b1.pid)".
+" WHERE b1.pid = ? ".
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
+" AND b1.code = 'G8934' ;";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){return true;}else{return false;}
     }
 }
 

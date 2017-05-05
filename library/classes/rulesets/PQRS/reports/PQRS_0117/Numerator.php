@@ -25,7 +25,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date >= DATE_SUB('".$beginDate."', INTERVAL 1 YEAR)".
 " AND b1.code IN ( '2022F','2024F','2026F','3072F') AND b1.modifier =''; ";
-
+//Hard fail  (2022F or 2024F or 2026F with 8P
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count']> 0){ return true;} else {return false;}     
