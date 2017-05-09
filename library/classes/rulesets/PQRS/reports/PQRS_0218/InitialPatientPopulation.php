@@ -24,33 +24,34 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" INNER JOIN pqrs_ccco AS codelist_a ON (b2.code = codelist_a.code)".
+" INNER JOIN pqrs_ccco AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_ccco AS codelist_b ON (b2.code = codelist_b.code)".
 " WHERE b1.pid = ? ".
 " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
-" AND b1.code ='97001'".
-" AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0218_a'); ";
-
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '14' ".
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0217_a')".
+" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0217_b'); ";
+//use 217 codes lists
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {
 			$query =
-		"SELECT COUNT(b1.code) as count ".  
-		" FROM billing AS b1". 
-		" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-		" JOIN patient_data AS p ON (p.pid = b1.pid)".
-		" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
-		" INNER JOIN pqrs_ccco AS codelist_a ON (b2.code = codelist_a.code)".
-		" WHERE b1.pid = ? ".
-    	" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
-		" AND fe.date >= '".$beginDate."' ".
-		" AND fe.date <= '".$endDate."' ".
-		" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
-		" AND b1.code ='97003'".
-		" AND (b2.code = codelist_a.code AND codelist_a.type = 'pqrs_0218_b'); ";
+"SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (p.pid = b1.pid)".
+" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
+" INNER JOIN pqrs_ccco AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_ccco AS codelist_b ON (b2.code = codelist_b.code)".
+" WHERE b1.pid = ? ".
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '14' ".
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0217_c')".
+" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0217_d'); ";
 		
 		$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 		if ($result['count']> 0){ return true;} else {return false;} 
-		} 
+		}
     }
 }
