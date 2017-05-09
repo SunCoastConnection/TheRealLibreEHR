@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0303 -- Numerator
+ * PQRS Measure 0279 -- Numerator
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0303_Numerator extends PQRSFilter
+class PQRS_0279_Numerator extends PQRSFilter
 {
     public function getTitle()
     {
@@ -24,11 +24,12 @@ class PQRS_0303_Numerator extends PQRSFilter
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G0913' ; ";
-//G0915 hard fail
+" AND  b1.code = 'G8851' ; ";
+//G8855 hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result['count']> 0){ return true;} else {return false;}  
+if ($result['count']> 0){ return true;} else {return false;}    
 		
     }
 }
+

@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0303 -- Numerator
+ * PQRS Measure 0278 -- Denominator 
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,26 +9,26 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0303_Numerator extends PQRSFilter
+class PQRS_0278_Denominator extends PQRSFilter
 {
-    public function getTitle()
+    public function getTitle() 
     {
-        return "Numerator";
+        return "Denominator";
     }
-
+    
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
- $query =
+$query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G0913' ; ";
-//G0915 hard fail
+" AND b1.code = 'G8846' ; ";
+//Requires Pre-Measure
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-
-if ($result['count']> 0){ return true;} else {return false;}  
-		
+if ($result['count']> 0){ return true;} else {return false;}
     }
 }
+
+
