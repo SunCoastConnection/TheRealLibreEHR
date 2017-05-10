@@ -18,7 +18,7 @@ class PQRS_0342_Denominator extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
+		// Communication and pain report has no codes.  Jackwagon!
 		return true;
     }
 }

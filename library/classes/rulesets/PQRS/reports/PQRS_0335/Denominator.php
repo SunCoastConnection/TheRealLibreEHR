@@ -18,7 +18,7 @@ class PQRS_0335_Denominator extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
+		//Same as initial population.  This measure asks same thing in numerator
 		return true;
     }
 }

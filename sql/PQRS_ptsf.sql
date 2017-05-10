@@ -2304,6 +2304,9 @@ INSERT INTO `pqrs_ptsf` (`type`, `code`) VALUES
 ('pqrs_0335_a', '59622'),
 ('pqrs_0347_a', '34800'),
 ('pqrs_0347_a', '34802'),
+('pqrs_0347_a', '34803'),
+('pqrs_0347_a', '34804'),
+('pqrs_0347_a', '34805'),
 ('pqrs_0348_a', '02H40JZ'),
 ('pqrs_0348_a', '02H43JZ'),
 ('pqrs_0348_a', '02H43KZ'),
@@ -2566,7 +2569,6 @@ INSERT INTO `pqrs_ptsf` (`type`, `code`) VALUES
 ('pqrs_0392_b', '02584ZZ'),
 ('pqrs_0392_b', '025S4ZZ'),
 ('pqrs_0392_b', '025T4ZZ'),
-
 ('pqrs_0393_a', '02H40JZ'), 
 ('pqrs_0393_a', '02H40KZ'),
 ('pqrs_0393_a', '02H40MZ'),

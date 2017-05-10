@@ -1,17 +1,15 @@
 <?php
 /**
- * PQRS Measure Group_HIVAIDS_0338 -- Exclusion 
+ * PQRS Measure 0338 -- Exclusion 
  *
  * Copyright (C) 2016      Suncoast Connection
-
  * @package PQRS_Gateway 
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
- 
-*/
+ */
 
-class PQRS_Group_HIVAIDS_0338_Exclusion extends PQRSFilter
+class PQRS_0338_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {
@@ -20,10 +18,6 @@ class PQRS_Group_HIVAIDS_0338_Exclusion extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-       	// Default return 
-        return false;
+return false; 
     }
 }
-
-?>
-
