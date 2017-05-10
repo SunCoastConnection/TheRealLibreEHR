@@ -1,17 +1,15 @@
 <?php
 /**
- * PQRS Measure Group_General_Surgery_0357 -- Numerator
+ * PQRS Measure 0350 -- Numerator
  *
  * Copyright (C) 2016      Suncoast Connection
-
  * @package PQRS_Gateway 
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
+ */
  
-*/
-
-class PQRS_Group_General_Surgery_0357_Numerator extends PQRSFilter
+class PQRS_0350_Numerator extends PQRSFilter
 {
     public function getTitle()
     {
@@ -20,19 +18,17 @@ class PQRS_Group_General_Surgery_0357_Numerator extends PQRSFilter
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-$query =
-" SELECT COUNT(b1.code) as count ".  
+ $query =
+" SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
+" INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G9312'; ";
+" AND b1.code = 'G9296'; ";
+//G9297 hard fail
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-
-if ($result['count'] > 0){ return true;} else {return false;}    		
+if ($result['count']> 0){ return true;} else {return false;}  	
     }
 }
-
-?>
-
