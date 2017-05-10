@@ -22,7 +22,7 @@ $query =
 "SELECT COUNT(b1.code) as count". 
 " FROM billing AS b1".  
 " INNER JOIN billing AS b2 ON (b1.pid = b2.pid)".  
-" INNER JOIN efcc1 AS codelist_a ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_efcc1 AS codelist_a ON (b1.code = codelist_a.code)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (b1.pid = p.pid)". 
 " WHERE b1.pid = ? ".
