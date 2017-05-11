@@ -15,7 +15,7 @@ class PQRS_0383_InitialPatientPopulation extends PQRSFilter
     {
         return "Initial Patient Population";
     }
-    
+    //Jack Wagon!!!! NOT ATTEMPTING!!!!
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 		$query =
