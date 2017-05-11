@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0350 -- Initial Patient Population
+ * PQRS Measure 0357 -- Initial Patient Population
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0350_InitialPatientPopulation extends PQRSFilter
+class PQRS_0357_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
     {
@@ -19,15 +19,18 @@ class PQRS_0350_InitialPatientPopulation extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b1.code) as count ".  
-" FROM billing AS b1". 
+"SELECT COUNT(b1.code) as count". 
+" FROM billing AS b1".    
+" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (b1.pid = p.pid)". 
 " WHERE b1.pid = ? ".
-" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code IN('27438', '27442', '27445', '27446', '27447') ";
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18'  ".  
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0357_a' ;";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;} else {return false;}  
+
+if ($result['count'] > 0){ return true;} else {return false;}  
     }
 }

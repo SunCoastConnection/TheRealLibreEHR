@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0350 -- Exclusion 
+ * PQRS Measure 0356 -- Denominator 
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -8,16 +8,16 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
-
-class PQRS_0350_Exclusion extends PQRSFilter
+ 
+class PQRS_0356_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Exclusion";
+        return "Denominator";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-return false; 
+return true;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0350 -- Denominator 
+ * PQRS Measure 0357 -- Denominator 
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0350_Denominator extends PQRSFilter
+class PQRS_0357_Denominator extends PQRSFilter
 {
     public function getTitle() 
     {
