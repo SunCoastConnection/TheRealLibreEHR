@@ -3941,6 +3941,7 @@ INSERT INTO `pqrs_ptct` (`type`, `code`) VALUES
 ('pqrs_0390_b', 'B18.2'),
 ('pqrs_0390_b', 'B19.20'),
 ('pqrs_0390_b', 'B19.21'),
+
 ('pqrs_0403_a', '99201'),
 ('pqrs_0403_a', '99202'),
 ('pqrs_0403_a', '99203'),
@@ -3980,6 +3981,7 @@ INSERT INTO `pqrs_ptct` (`type`, `code`) VALUES
 ('pqrs_0403_a', '99308'),
 ('pqrs_0403_a', '99309'),
 ('pqrs_0403_a', '99310'),
+
 ('pqrs_0410_a', '99201'),
 ('pqrs_0410_a', '99202'),
 ('pqrs_0410_a', '99203'),

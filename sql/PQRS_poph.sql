@@ -348,4 +348,4 @@ INSERT INTO `pqrs_poph` (`type`, `code`) VALUES
 ('pqrs_0402_a', '99406'),
 ('pqrs_0402_a', '99407'),
 ('pqrs_0402_a', 'G0438'),
-( 'pqrs_0402_a', 'G0439');
+('pqrs_0402_a', 'G0439');
