@@ -23,7 +23,7 @@ $query =
 " FROM billing AS b1".
 " WHERE b1.pid = ? ".
 " AND b1.code ='G9451' ; ";
-
+//G9454 hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count']> 0){ return true;} else {return false;}     

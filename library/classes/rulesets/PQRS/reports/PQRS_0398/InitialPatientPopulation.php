@@ -8,7 +8,7 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
- 
+ ///TOTAL JACK WAGON CRAP  Needs re-write...but not until it can be reported.
 class PQRS_0398_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 

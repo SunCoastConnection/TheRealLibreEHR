@@ -8,7 +8,7 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
- ///////This measue has multiple reporting criteria, and might need to be 
+ ///////This measure has multiple reporting criteria, and might need to be 
  ///////run as multiple measures or multiple denominators.  Check, otherwise 
  ///////you must run this report and manually separate the age populations.
 class PQRS_0392_InitialPatientPopulation extends PQRSFilter
@@ -28,11 +28,14 @@ $query =
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
 " INNER JOIN pqrs_ptsf AS codelist_a ON (b1.code = codelist_a.code)".
 " INNER JOIN pqrs_ptsf AS codelist_b ON (b2.code = codelist_b.code)".
-	" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" WHERE b1.pid = ? ".
+//" AND p.sex = 'Female'". //reporting rate 1 and 3
+//" AND p.sex = 'Male'".  //reporting rate 2 and 4
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date >= '".$beginDate."' ".
 " AND fe.date <= DATE_SUB('".$endDate."', INTERVAL 1 MONTH)".
-" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '18' AND '65' ".
+//" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '18' AND '65' ". //reporting rate 1 and 2
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >='18'".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0392_a') ".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0392_b'); ";
 

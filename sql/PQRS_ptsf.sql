@@ -12,11 +12,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
  * @author  Suncoast Connection
  * @author  leebc
  * @author  meggerc
- * @link    http://www.oemr.org
  * @link    http://suncoastconnection.com
 */
 
@@ -3068,23 +3066,24 @@ INSERT INTO `pqrs_ptsf` (`type`, `code`) VALUES
 ('pqrs_0388_a', '66982'),
 ('pqrs_0388_a', '66983'),
 ('pqrs_0388_a', '66984'),
-('pqrs_0392_a', 'I48.0'),
-('pqrs_0392_a', 'I48.1'),
-('pqrs_0392_a', 'I48.2'),
-('pqrs_0392_a', 'I48.91'),
-('pqrs_0392_b', '02563ZZ'),
-('pqrs_0392_b', '02573ZZ'),
-('pqrs_0392_b', '02583ZZ'),
-('pqrs_0392_b', '025S3ZZ'),
-('pqrs_0392_b', '025T3ZZ'),
-('pqrs_0392_b', '02560ZZ'),
-('pqrs_0392_b', '02564ZZ'),
-('pqrs_0392_b', '02570ZZ'),
-('pqrs_0392_b', '02574ZZ'),
-('pqrs_0392_b', '02580ZZ'),
-('pqrs_0392_b', '02584ZZ'),
-('pqrs_0392_b', '025S4ZZ'),
-('pqrs_0392_b', '025T4ZZ'),
+
+('pqrs_0392_a', '02563ZZ'),
+('pqrs_0392_a', '02573ZZ'),
+('pqrs_0392_a', '02583ZZ'),
+('pqrs_0392_a', '025S3ZZ'),
+('pqrs_0392_a', '025T3ZZ'),
+('pqrs_0392_a', '02560ZZ'),
+('pqrs_0392_a', '02564ZZ'),
+('pqrs_0392_a', '02570ZZ'),
+('pqrs_0392_a', '02574ZZ'),
+('pqrs_0392_a', '02580ZZ'),
+('pqrs_0392_a', '02584ZZ'),
+('pqrs_0392_a', '025S4ZZ'),
+('pqrs_0392_a', '025T4ZZ'),
+('pqrs_0392_b', 'I48.0'),
+('pqrs_0392_b', 'I48.1'),
+('pqrs_0392_b', 'I48.2'),
+('pqrs_0392_b', 'I48.91'),
 ('pqrs_0393_a', '02H40JZ'), 
 ('pqrs_0393_a', '02H40KZ'),
 ('pqrs_0393_a', '02H40MZ'),
