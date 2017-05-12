@@ -50,6 +50,7 @@ INSERT INTO `pqrs_efcc5` (`type`, `code`) VALUES
 ('pqrs_0425_a', '45385'),
 ('pqrs_0425_a', 'G0105'),
 ('pqrs_0425_a', 'G0121'),
+
 ('pqrs_0428_a', '57260'),
 ('pqrs_0428_a', '57265'),
 ('pqrs_0428_a', '57268'),
@@ -68,6 +69,7 @@ INSERT INTO `pqrs_efcc5` (`type`, `code`) VALUES
 ('pqrs_0428_a', '58292'),
 ('pqrs_0428_a', '58294'),
 ('pqrs_0428_a', '58400'),
+
 ('pqrs_0435_b', 'G43.001'),
 ('pqrs_0435_b', 'G43.009'),
 ('pqrs_0435_b', 'G43.011'),
