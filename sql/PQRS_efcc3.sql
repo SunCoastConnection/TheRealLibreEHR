@@ -2,22 +2,9 @@
 /*
  * Copyright (C),2016 Suncoast Connection
  *
- * LICENSE: This program is free software; you c
- * modify it under the terms of the GNU General 
- * as published by the Free Software Foundation;
- * of the License, or (at your option),any later
- * This program is distributed in the hope that 
- * but WITHOUT ANY WARRANTY; without even the im
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR P
- * GNU General Public License for more details.
- * You should have received a copy of the GNU Ge
- * along with this program. If not, see <http://
- *
- * @package OpenEMR
  * @author  Suncoast Connection
  * @author  leebc
  * @author  meggerc
- * @link    http://www.oemr.org
  * @link    http://suncoastconnection.com
 */
 

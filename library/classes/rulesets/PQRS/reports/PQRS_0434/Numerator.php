@@ -4,7 +4,6 @@
  *
  * Copyright (C) 2016      Suncoast Connection
  *
- * @package OpenEMR
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Suncoast Connection
@@ -27,7 +26,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = 'G9631'; ";
-
+//G9633 hard fail INVERSE MEASURE
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count']> 0){ return true;} else {return false;}     
