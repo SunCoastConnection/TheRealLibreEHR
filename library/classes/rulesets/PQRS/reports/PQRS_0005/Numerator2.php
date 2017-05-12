@@ -27,7 +27,7 @@ class PQRS_0005_Numerator2 extends PQRSFilter
 " AND (b1.code = '4010F' AND b1.modifier ='');" ;
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
-	    
+//8P modifier is a hard fail	    
 		
     }
 }

@@ -18,7 +18,10 @@ class PQRS_0126_Denominator extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
+/*  Rule out needed...manual...fake code or something.  Clinician documented that patient was not an eligible candidate for lower extremity neurological 
+exam measure, for example patient bilateral amputee, patient has condition that would not allow 
+them to accurately respond to a neurological exam (dementia, Alzheimer’s, etc.), patient has 
+previously documented diabetic peripheral neuropathy with loss of protective sensation*/
 		return true;
     }
 }

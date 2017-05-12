@@ -19,6 +19,7 @@ class PQRS_0118_Denominator2 extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 return true;
+//No pre-measure or rule outs
     }
 }
 

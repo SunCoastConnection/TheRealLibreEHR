@@ -25,7 +25,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = 'G9367';";
-
+//G9368 hard fail INVERSE MEASURE
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count'] > 0){ return true;} else {return false;}     

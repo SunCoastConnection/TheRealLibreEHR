@@ -25,7 +25,7 @@ class PQRS_0346_Numerator extends PQRSFilter
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code IN ('G9258','G9260'); ";
-
+//G9261 Hard Fail INVERSE MEASURE
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count']> 0){ return true;} else {return false;}  

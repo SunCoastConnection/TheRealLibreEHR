@@ -26,7 +26,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".  
 " AND b1.code ='G9573';"; 
-
+//G9574 hard fail  This measure has a lot of uncoded denom rule-outs
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count'] > 0){ return true;} else {return false;} 
 		

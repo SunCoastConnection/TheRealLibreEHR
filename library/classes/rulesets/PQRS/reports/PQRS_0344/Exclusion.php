@@ -18,7 +18,6 @@ class PQRS_0344_Exclusion extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-       	// Default return 
-        return false;
+return false; 
     }
 }

@@ -20,12 +20,11 @@ class PQRS_0428_InitialPatientPopulation extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query="SELECT COUNT(b1.code) as count ".  
-"  FROM billing AS b1". 
+" FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN pqrs_efcc5 AS codelist_a ON (b1.code = codelist_a.code)".
-	" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" WHERE b1.pid = ? ".
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0428_a'); ";
 

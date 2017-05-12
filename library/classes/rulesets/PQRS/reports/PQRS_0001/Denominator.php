@@ -18,8 +18,20 @@ class PQRS_0001_Denominator extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
-		return true;
+	$query =
+	"SELECT COUNT(b1.code) AS count ". 
+	" FROM billing AS b1 ". 
+	" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter) ".  
+	" JOIN patient_data AS p ON (b1.pid = p.pid) ". 
+	" WHERE b1.pid = ? ".
+	" AND fe.date >= '".$beginDate."' ".
+	" AND fe.date <= '".$endDate."' ".
+	" AND b1.code = 'G9687') ;";
+
+		$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+	if ($result['count'] > 0){
+		 return false;} else {return true;} 
+		 //inverse count.  If find code, it is a denom exclude.
     }
 }
 

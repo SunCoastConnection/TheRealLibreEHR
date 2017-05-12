@@ -24,15 +24,13 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
 " INNER JOIN pqrs_ecr AS codelist_a ON (b1.code = codelist_a.code)".
-	" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" WHERE b1.pid = ? ".
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND p.sex = 'Male' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0102_a') ".
-" AND (b2.code = 'C61')".
-" AND (b3.code = '3271F'); ";
+" AND (b2.code = 'C61')"; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  

@@ -18,7 +18,7 @@ class PQRS_0007_Exclusion2 extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-	  $query =
+$query =
 "SELECT COUNT(b1.code) as count". 
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".

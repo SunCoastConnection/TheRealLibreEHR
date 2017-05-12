@@ -18,8 +18,16 @@ class PQRS_0052_Denominator extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
-		return true;
+$query =
+" SELECT COUNT(b1.code) AS count".  
+" FROM billing AS b1".
+" WHERE b1.pid = ? ".
+" AND b1.code = 'G8924' ; ";
+//Spirometry test results demonstrate FEV1/FVC < 70%, FEV1 < 60% predicted and patient has COPD
+//symptoms (e.g., dyspnea, cough/sputum, wheezing): G8924
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 

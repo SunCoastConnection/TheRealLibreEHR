@@ -26,7 +26,7 @@ $query =
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code ='G9664' ; ";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-
+//G9665 hard fail
 if ($result['count']> 0){ return true;} else {return false;}     
 		
     }

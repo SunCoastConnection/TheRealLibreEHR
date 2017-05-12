@@ -30,45 +30,6 @@ $query =
 " AND b1.code IN('35081', '35102'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){
-	$query = 
-	"SELECT sex AS count".
-	" FROM patient_data".
-	" WHERE b1.pid = ? ;";
-	$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-	
-	if ($result['count']='Male'){ 
-								$query =
-								" SELECT COUNT(b1.code) AS count".  
-								" FROM billing AS b1".
-								" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-								" WHERE b1.pid = ? ".
-    							" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
-								" AND fe.date >= '".$beginDate."' ".
-								" AND fe.date <= '".$endDate."' ".
-								" AND NOT b1.code = '9004F'; ";
-								
-								$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-								
-								if ($result['count']> 0){ return true;} else {return false;}  
-								
-								} else {
-									
-								$query =
-								" SELECT COUNT(b1.code) AS count".  
-								" FROM billing AS b1".
-								" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-								" WHERE b1.pid = ? ".
-    							" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
-								" AND fe.date >= '".$beginDate."' ".
-								" AND fe.date <= '".$endDate."' ".
-								" AND NOT b1.code IN ('9003F','9004F'); ";
-								
-								$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-								
-								if ($result['count']> 0){ return true;} else {return false;}  
-		
-								}
-					  } else {return false;}  
+if ($result['count']> 0){return true; } else {return false;}  
     }
 }

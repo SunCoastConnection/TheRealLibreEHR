@@ -18,7 +18,7 @@ class PQRS_0187_Denominator extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
+		//Needs attestation premeasure for "Was OK <=2 hours before arriving at hospital"
 		return true;
     }
 }

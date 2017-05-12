@@ -27,23 +27,36 @@ $query =
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']== 0){  
 
-	$query =
-	"SELECT COUNT(b1.code) as count ".  
-	" FROM billing AS b1".
-	" JOIN patient_data AS p ON (p.pid = b1.pid)". 
-	" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-	" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
-	" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-	" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >=18 ".
-	" AND b1.code IN('90951', '90952', '90953', '90954', '90955',".
-	" '90956', '90957','90958', '90959', '90960', '90961', '90962',".
-	" '90963', '90964', '90965', '90966', '90967', '90968', '90969',".
-	" '90970','G9448','G9449') ; ";
-	$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;}else{return false;}
-	
-  
+$query =
+"SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (p.pid = b1.pid)".
+" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
+" WHERE b1.pid = ? ".
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0400_a') ; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else{ 
+
+$query =
+"SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1". 
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" JOIN patient_data AS p ON (p.pid = b1.pid)".
+" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
+" WHERE b1.pid = ? ".
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0400_b') ; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 1){ return true;}else{return false;}
+
 }else{return false;}
 
     }

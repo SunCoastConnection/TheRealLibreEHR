@@ -19,6 +19,7 @@ class PQRS_0046_Exclusion extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
        	// Default return 
+       	//Jackwagon measure
         return false;
     }
 }

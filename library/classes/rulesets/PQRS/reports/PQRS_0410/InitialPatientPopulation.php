@@ -21,16 +21,15 @@ class PQRS_0410_InitialPatientPopulation extends PQRSFilter
     {
 $query =
 "SELECT COUNT(b1.code) as count ".  
-"  FROM billing AS b1". 
+" FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" INNER JOIN pqrs_efcc4 AS codelist_a ON (b1.code = codelist_a.code)".
-	" WHERE b1.pid = ? ".
-    " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
-
+" INNER JOIN pqrs_ptct AS codelist_a ON (b1.code = codelist_a.code)".
+" WHERE b1.pid = ? ".
+" AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0410_a')". //using other table
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0410_a' AND b1.modifier NOT IN('GQ','GT'))". 
 " AND (b2.code = 'L40.0'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

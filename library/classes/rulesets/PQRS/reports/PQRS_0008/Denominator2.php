@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0007 -- Denominator 2
+ * PQRS Measure 0008 -- Denominator 2
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -18,7 +18,7 @@ class PQRS_0008_Denominator2 extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-return true;
+ return true;
     }
 }
 
