@@ -1,19 +1,7 @@
 /*
  * Copyright (C) 2016      Suncoast Connection
  *
- * LICENSE: This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
- *
- * @package OpenEMR
- * @link    http://www.oemr.org
+ * @package PQRS_Gateway
  * @link    http://suncoastconnection.com
  * @author  Suncoast Connection
  * @author  Bryan lee <leebc 11 at acm dot org>
@@ -5220,40 +5208,6 @@ INSERT INTO `pqrs_ccco` (`type`, `code`) VALUES
 ('pqrs_0397_a', 'C43.72'),
 ('pqrs_0397_a', 'C43.8'),
 ('pqrs_0397_a', 'C43.9'),
-('pqrs_0411_a', 'F32.0'),
-('pqrs_0411_a', 'F32.1'),
-('pqrs_0411_a', 'F32.2'),
-('pqrs_0411_a', 'F32.3'),
-('pqrs_0411_a', 'F32.4'),
-('pqrs_0411_a', 'F32.5'),
-('pqrs_0411_a', 'F32.9'),
-('pqrs_0411_a', 'F33.0'),
-('pqrs_0411_a', 'F33.1'),
-('pqrs_0411_a', 'F33.2'),
-('pqrs_0411_a', 'F33.3'),
-('pqrs_0411_a', 'F33.40'),
-('pqrs_0411_a', 'F33.41'),
-('pqrs_0411_a', 'F33.42'),
-('pqrs_0411_a', 'F33.9'),
-('pqrs_0411_a', 'F34.1'),
-('pqrs_0411_b', '90791'),
-('pqrs_0411_b', '90792'),
-('pqrs_0411_b', '90832'),
-('pqrs_0411_b', '90834'),
-('pqrs_0411_b', '90837'),
-('pqrs_0411_b', '99201'),
-('pqrs_0411_b', '99202'),
-('pqrs_0411_b', '99203'),
-('pqrs_0411_b', '99204'),
-('pqrs_0411_b', '99205'),
-('pqrs_0411_b', '99212'),
-('pqrs_0411_b', '99213'),
-('pqrs_0411_b', '99214'),
-('pqrs_0411_b', '99215'),
-('pqrs_0411_b', 'G0402'),
-('pqrs_0411_b', 'G0438'),
-('pqrs_0411_b', 'G0439'),
-
 
 ('pqrs_0426_a', '00100'),
 ('pqrs_0426_a', '00102'),

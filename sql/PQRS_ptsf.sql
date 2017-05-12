@@ -3213,6 +3213,7 @@ INSERT INTO `pqrs_ptsf` (`type`, `code`) VALUES
 ('pqrs_0393_b', '33282'),
 ('pqrs_0393_b', '93260'),
 ('pqrs_0393_b', '93261'),
+
 ('pqrs_0422_a', 'N81.10'),
 ('pqrs_0422_a', 'N81.12'),
 ('pqrs_0422_a', 'N81.0'),
