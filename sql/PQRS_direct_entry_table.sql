@@ -142,13 +142,11 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`,`statu
 
 ('PQRS_0052', 'description', 'Chronic Obstructive Pulmonary Disease (COPD): Inhaled Bronchodilator Therapy',''),
 ('PQRS_0052', 'question', 'Was patient prescribed an inhaled bronchodilator?',''),
-('PQRS_0052', 'answer', '1|Patient Prescribed Inhaled Bronchodilator Therapy (4025F  G8924)|4025F G8924',1),
-('PQRS_0052', 'answer', '2|Medical Performance Exclusion (4025F:1P G8924)|4025F:1P G8924',2),
-('PQRS_0052', 'answer', '3|Patient Performance Exclusion (4025F:2P G8924)|4025F:2P G8924',2),
-('PQRS_0052', 'answer', '4|System Performance Exclusion (4025F:3P G8924)|4025F:3P G8924',2),
-('PQRS_0052', 'answer', '5|Spirometry test results demonstrate FEV1 < 60% predicted and patient has COPD symptoms (e.g., dyspnea, cough/sputum, wheezing) (G8925)|G8925',2),
-('PQRS_0052', 'answer', '6|Spirometry Test not Performed or Documented (G8926)|G8926',2),
-('PQRS_0052', 'answer', '7|Patient not Documented to have Inhaled Bronchodilator Prescribed, Reason not Otherwise Specified (4025F:8P G8924)|4025F:8P G8924',9),
+('PQRS_0052', 'answer', '1|Long-acting inhaled bronchodilator prescribed (G9695)|4025F G8924',1),
+('PQRS_0052', 'answer', '2|Documentation of medical reason(s) for not prescribing a long-acting inhaled bronchodilator (G9696|G9696',2),
+('PQRS_0052', 'answer', '3|Documentation of patient reason(s) for not prescribing a long-acting inhaled bronchodilator (G9697) |G9697',2),
+('PQRS_0052', 'answer', '4|Documentation of system reason(s) for not prescribing a long-acting inhaled bronchodilator (G9698)|G9698',2),
+('PQRS_0052', 'answer', '5|Long-acting inhaled bronchodilator not prescribed, reason not otherwise specified( G9699|4025F:8P G8924',9),
 
 ('PQRS_0065', 'description', 'Appropriate Treatment for Children with Upper Respiratory Infection (URI)<p>***See Measure Documentation***<p>',''),
 ('PQRS_0065', 'question', 'Patients who were not prescribed or dispensed a prescription for antibiotic medication on or within 3 days after the URI Episode date<br>Numerator Instructions: For performance, the measure will be calculated as the number of patient?s encounter(s) where antibiotics were neither prescribed nor dispensed on or within three days of the episode for URI over the total number of encounters in the denominator (patients aged 3 months through 18 years with an outpatient or ED visit for URI. A higher score indicates appropriate treatment of patients with URI (e.g., the proportion for whom antibiotics were not prescribed or dispensed following the episode).',''),
