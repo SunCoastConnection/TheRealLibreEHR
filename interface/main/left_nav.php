@@ -1664,7 +1664,9 @@ if($GLOBALS['concurrent_layout'] == 2 || $GLOBALS['concurrent_layout'] == 3) {
 			if(acl_check('admin', 'super'   )) {
 				genMiscLink('RTop', 'adm', '0', xl('Merge Patients'), 'patient_file/merge_patients.php');
 			}
-
+            if (acl_check('admin', 'super'   )) {
+                genMiscLink('RTop','adm','0',xl('Merge Encounters'),'patient_file/merge_encounters/index.php');
+            }
 			if($GLOBALS['enable_auditlog_encryption']) {
 				genMiscLink('RTop', 'rep', '0', xl('Audit Log Tamper'), 'reports/audit_log_tamper_report.php');
 			}
