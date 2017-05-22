@@ -1489,7 +1489,7 @@ function resolve_rules_sql($type='',$patient_id='0',$configurableOnly=FALSE,$pla
 
     // Decide if use default vs custom rule (preference given to custom rule)
     if (!empty($customRule)) {
-      if ( $type == "pqrs" || $type == "individual"  $type =="pqrs_individual_2016") {
+      if ( $type == "pqrs" || $type == "individual" || $type =="pqrs_individual_2016") {
         // For CQM and AMC, do not use custom rules (these are to create standard clinic wide reports)
         $goRule = $rule;
       }

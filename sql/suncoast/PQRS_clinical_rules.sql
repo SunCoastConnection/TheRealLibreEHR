@@ -1,19 +1,7 @@
 /* PATCH FILE to include 2016 measures and changes
-*  If you try to create another patch file, update the SEQ in the options_list
-
+ *  If you try to create another patch file, update the SEQ in the options_list
  * Copyright (C) 2016 Suncoast Connection
  *
- * LICENSE: This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://opensource.org/licenses/gpl-lice
-nse.php>;.
  *
  * @package PQRS Gateway
  * @author  Suncoast Connection
@@ -35,8 +23,7 @@ CREATE TABLE `clinical_rules` (
   `pqrs_code` varchar(35) DEFAULT NULL COMMENT 'Measure number',
   `pqrs_individual_2016_flag` tinyint(4) DEFAULT NULL COMMENT 'Is MIPS flag',
   `pqrs_group_type` varchar(2) DEFAULT 'X' COMMENT 'XML output scheme type',
-  `active` tinyint(4) DEFAULT NULL COMMENT 'Is this measure turned on?',
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `active` tinyint(4) DEFAULT NULL COMMENT 'Is this measure turned on?');
 
 
 INSERT INTO `clinical_rules` (`id`, `pid`, `active_alert_flag`, `passive_alert_flag`, `patient_reminder_flag`, `release_version`, `web_reference`, `access_control`, `pqrs_code`, `pqrs_individual_2016_flag`, `pqrs_group_type`, `active`) VALUES

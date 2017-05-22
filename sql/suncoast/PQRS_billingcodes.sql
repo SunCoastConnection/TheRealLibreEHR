@@ -19,7 +19,7 @@ CREATE TABLE `code_types` (
   `ct_term` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 if this is a clinical term',
   `ct_problem` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 if this code type is used as a medical problem',
   `ct_drug` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 if this code type is used as a medication'
-)
+);
 
 
 INSERT INTO `code_types` (`ct_key`, `ct_id`, `ct_seq`, `ct_mod`, `ct_just`, `ct_mask`, `ct_fee`, `ct_rel`, `ct_nofs`, `ct_diag`, `ct_active`, `ct_label`, `ct_external`, `ct_claim`, `ct_proc`, `ct_term`, `ct_problem`, `ct_drug`) VALUES
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `codes` (
   PRIMARY KEY  (`id`),
   KEY `code` (`code`),
   KEY `code_type` (`code_type`)
-) AUTO_INCREMENT=19585 ;
+) AUTO_INCREMENT=16643 ;
 
 --
 -- Dumping data for table `codes`
@@ -5070,7 +5070,10 @@ INSERT INTO `codes` (`id`, `code_text`, `code_text_short`, `code`, `code_type`, 
 (4996,'PEREYRA PX W/ANTERIOR COLPORRHAPHY','PEREYRA PX W/ANTERIOR COLPORRHAPHY','57289','1','','1','0','','','',0, 1, 0, 0),
 (4997,'CONSTRUCTION ARTIFICIAL VAGINA W/O GRAFT','CONSTRUCTION ARTIFICIAL VAGINA W/O GRAFT','57291','1','','1','0','','','',0, 1, 0, 0),
 (4998,'CONSTRUCTION ARTIFICIAL VAGINA W/GRAFT','CONSTRUCTION ARTIFICIAL VAGINA W/GRAFT','57292','1','','1','0','','','',0, 1, 0, 0),
-(4999,'REVJ/RMVL PROSTHETIC VAGINAL GRAFT VAGINAL APP','REVJ/RMVL PROSTHETIC VAGINAL GRAFT VAGINAL APP','57295','1','','1','0','','','',0, 1, 0, 0),
+(4999,'REVJ/RMVL PROSTHETIC VAGINAL GRAFT VAGINAL APP','REVJ/RMVL PROSTHETIC VAGINAL GRAFT VAGINAL APP','57295','1','','1','0','','','',0, 1, 0, 0);
+
+INSERT INTO `codes` (`id`, `code_text`, `code_text_short`, `code`, `code_type`, `modifier`, `units`, `fee`, `superbill`, `related_code`, `taxrates`, `cyp_factor`, `active`, `reportable`, `financial_reporting`) VALUES
+
 (5000,'REVJ W/RMVL PROSTHETIC VAGINAL GRAFT ABDML APPR','REVJ W/RMVL PROSTHETIC VAGINAL GRAFT ABDML APPR','57296','1','','1','0','','','',0, 1, 0, 0),
 (5001,'CLSR RECTOVAGINAL FISTULA VAGINAL/TRANSANAL APPR','CLSR RECTOVAGINAL FISTULA VAGINAL/TRANSANAL APPR','57300','1','','1','0','','','',0, 1, 0, 0),
 (5002,'CLSR RECTOVAGINAL FISTULA ABDOMINAL APPROACH','CLSR RECTOVAGINAL FISTULA ABDOMINAL APPROACH','57305','1','','1','0','','','',0, 1, 0, 0),
@@ -10070,7 +10073,10 @@ INSERT INTO `codes` (`id`, `code_text`, `code_text_short`, `code`, `code_type`, 
 (9996,'NJX DX/THER PARAVER FCT JT W/US CER/THOR 2ND LVL','NJX DX/THER PARAVER FCT JT W/US CER/THOR 2ND LVL','0214T','104','','1','0','','','',0, 1, 0, 0),
 (9997,'NJX PARAVERTBRL FACET JT W/US CER/THOR 3RD&> LVL','NJX PARAVERTBRL FACET JT W/US CER/THOR 3RD&> LVL','0215T','104','','1','0','','','',0, 1, 0, 0),
 (9998,'NJX DX/THER PARAVER FCT JT W/US LUMB/SAC 1 LVL','NJX DX/THER PARAVER FCT JT W/US LUMB/SAC 1 LVL','0216T','104','','1','0','','','',0, 1, 0, 0),
-(9999,'NJX DX/THER PARAVER FCT JT W/US LUMB/SAC LVL 2','NJX DX/THER PARAVER FCT JT W/US LUMB/SAC LVL 2','0217T','104','','1','0','','','',0, 1, 0, 0),
+(9999,'NJX DX/THER PARAVER FCT JT W/US LUMB/SAC LVL 2','NJX DX/THER PARAVER FCT JT W/US LUMB/SAC LVL 2','0217T','104','','1','0','','','',0, 1, 0, 0);
+
+INSERT INTO `codes` (`id`, `code_text`, `code_text_short`, `code`, `code_type`, `modifier`, `units`, `fee`, `superbill`, `related_code`, `taxrates`, `cyp_factor`, `active`, `reportable`, `financial_reporting`) VALUES
+
 (10000,'NJX PARAVERTBRL FCT JT W/US LUMB/SAC 3RD&> LVL','NJX PARAVERTBRL FCT JT W/US LUMB/SAC 3RD&> LVL','0218T','104','','1','0','','','',0, 1, 0, 0),
 (10001,'PLMT POST FACET IMPLANT UNI/BI W/IMG & GRFT CERV','PLMT POST FACET IMPLANT UNI/BI W/IMG & GRFT CERV','0219T','104','','1','0','','','',0, 1, 0, 0),
 (10002,'PLMT POST FACET IMPLT UNI/BI W/IMG & GRFT THOR','PLMT POST FACET IMPLT UNI/BI W/IMG & GRFT THOR','0220T','104','','1','0','','','',0, 1, 0, 0),
@@ -15070,7 +15076,10 @@ INSERT INTO `codes` (`id`, `code_text`, `code_text_short`, `code`, `code_type`, 
 ('14996','Upper extremity fracture orthosis; humeral; prefabricated; includes shoulder cap design; with or without joints; forearm section; may include soft interface; straps; includes fitting and adjustments','Ue fx orth shoul cap forearm','L3981','3','','1','0','','','','0','1','0','0'),
 ('14997','Upper extremity fracture orthosis; radius/ulnar; prefabricated; includes fitting and adjustment','Upper ext fx orthosis rad/ul','L3982','3','','1','0','','','','0','1','0','0'),
 ('14998','Upper extremity fracture orthosis; wrist; prefabricated; includes fitting and adjustment','Upper ext fx orthosis wrist','L3984','3','','1','0','','','','0','1','0','0'),
-('14999','Addition to upper extremity orthosis; sock; fracture or equal; each','Sock fracture or equal each','L3995','3','','1','0','','','','0','1','0','0'),
+('14999','Addition to upper extremity orthosis; sock; fracture or equal; each','Sock fracture or equal each','L3995','3','','1','0','','','','0','1','0','0');
+
+INSERT INTO `codes` (`id`, `code_text`, `code_text_short`, `code`, `code_type`, `modifier`, `units`, `fee`, `superbill`, `related_code`, `taxrates`, `cyp_factor`, `active`, `reportable`, `financial_reporting`) VALUES
+
 ('15000','Upper limb orthosis; not otherwise specified','Upper limb orthosis nos','L3999','3','','1','0','','','','0','1','0','0'),
 ('15001','Replace girdle for spinal orthosis (ctlso or so)','Repl girdle milwaukee orth','L4000','3','','1','0','','','','0','1','0','0'),
 ('15002','Replacement strap; any orthosis; includes all components; any length; any type','Replace strap; any orthosis','L4002','3','','1','0','','','','0','1','0','0'),

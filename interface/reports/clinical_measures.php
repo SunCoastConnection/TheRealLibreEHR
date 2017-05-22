@@ -420,7 +420,7 @@ function Form_Validate() {
                       </a>
                       <span id='status_span'></span>
                       <div id='processing' style='margin:10px;display:none;'><img src='../pic/ajax-loader.gif'/></div>
-
+<?php }
 
     if(!empty($report_id)) {
 ?>
@@ -463,7 +463,7 @@ function Form_Validate() {
           <thead>
             <th><?php echo htmlspecialchars(xl('Title'), ENT_NOQUOTES); ?></th>
             <th><?php echo htmlspecialchars(xl('Total Patients'), ENT_NOQUOTES); ?></th>
-            <th><?php if(in_array($type_report, array( 'pqrs', 'pqrs_individual_2016'))) { echo htmlspecialchars(xl('Denominator'), ENT_NOQUOTES); } else { echo htmlspecialchars(xl('something else'), ENT_NOQUOTES); } } ?></th>
+            <th><?php if(in_array($type_report, array( 'pqrs', 'pqrs_individual_2016'))) { echo htmlspecialchars(xl('Denominator'), ENT_NOQUOTES); } else { echo htmlspecialchars(xl('something else'), ENT_NOQUOTES); }  ?></th>
 
             <th><?php echo htmlspecialchars(xl('Excluded Patients'), ENT_NOQUOTES); ?></th>
 
