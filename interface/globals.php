@@ -10,6 +10,7 @@ if (!defined('IS_WINDOWS'))
 // Some important php.ini overrides. Defaults for these values are often
 // too small.  You might choose to adjust them further.
 //
+$currenttheme='style_purple.css';
 ini_set('session.gc_maxlifetime', '14400');
 
 // This is for sanitization of all escapes.
@@ -217,7 +218,8 @@ if (!empty($glrow)) {
     }
     else if ($gl_name == 'css_header') {
       $GLOBALS[$gl_name] = "$rootdir/themes/" . $gl_value;
-      $GLOBALS['css_header'] = $gl_value;
+      //$GLOBALS['css_header'] = $gl_value;
+      $GLOBALS[$currenttheme] = $gl_value;
     }
     else if ($gl_name == 'specific_application') {
       if      ($gl_value == '1') $GLOBALS['athletic_team'] = true;
