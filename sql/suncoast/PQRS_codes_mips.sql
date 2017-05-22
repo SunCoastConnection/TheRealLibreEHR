@@ -1231,10 +1231,10 @@ INSERT INTO `pqrs_mips` (`type`, `code`) VALUES
 ('pqrs_0448_a', '58563'),
 ('pqrs_0448_a', '0U5B0ZZ'),
 ('pqrs_0448_a', '0U5B3ZZ'),
-('pqrs_0448_a', '0U5B7ZZ')
+('pqrs_0448_a', '0U5B7ZZ'),
 ('pqrs_0448_a', '0U5B8ZZ'),
 ('pqrs_0448_a', '0UDB7ZZ'),
-('pqrs_0448_a', '0UDB8ZZ ')
+('pqrs_0448_a', '0UDB8ZZ'),
 
 ('pqrs_0449_a', '99201'),
 ('pqrs_0449_a', '99202'),
@@ -1274,8 +1274,6 @@ INSERT INTO `pqrs_mips` (`type`, `code`) VALUES
 ('pqrs_0449_b', 'C50.912'),
 ('pqrs_0449_b', 'C50.919'),
 
-/*!450 uses 449 tables a-b!*/
-/*!451 uses 449 table a !*/
 ('pqrs_0451_b', 'C18.0'),
 ('pqrs_0451_b', 'C18.2'),
 ('pqrs_0451_b', 'C18.3'),
@@ -1288,9 +1286,7 @@ INSERT INTO `pqrs_mips` (`type`, `code`) VALUES
 ('pqrs_0451_b', 'C19'),
 ('pqrs_0451_b', 'C20'),
 
-/*!452 uses 449_a and 451_b!*/
 
-/*!453 uses 449 table a !*/
 ('pqrs_0453_b', 'C00.0'),
 ('pqrs_0453_b', 'C00.1'),
 ('pqrs_0453_b', 'C00.2'),
@@ -2452,10 +2448,4 @@ INSERT INTO `pqrs_mips` (`type`, `code`) VALUES
 ('pqrs_0453_b', 'D47.Z2'),
 ('pqrs_0453_b', 'D47.Z9');
 
-/*!454 uses 449_a and 453_b!*/
 
-/*!455 uses 449_a and 453_b!*/
-
-/*!456 uses 449_a and 453_b!*/
-
-/*!457 uses 449_a and 453_b!*/
