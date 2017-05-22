@@ -5,22 +5,7 @@
  * Copyright (C) 2011      Ken Chapple <ken@mi-squared.com>
  * Copyright (C) 2016      Suncoast Connection
  *
- * LICENSE: This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>.
- *
- * @package OpenEMR
- * @link    http://www.open-emr.org
  * @link    http://SuncoastConnection.com
- * @author  Brady Miller <brady@sparmy.com>
- * @author  Bryan lee <leebc11 at acm dot org>
  */
 
 class ReportTypes
@@ -42,7 +27,6 @@ class ReportTypes
     
     protected static $_types = array(
  
-
         "PQRS_0001" => array( ReportTypes::PQRS, "PQRS_0001" ),
         "PQRS_0005" => array( ReportTypes::PQRS, "PQRS_0005" ),
         "PQRS_0006" => array( ReportTypes::PQRS, "PQRS_0006" ),
@@ -52,12 +36,10 @@ class ReportTypes
         "PQRS_0014" => array( ReportTypes::PQRS, "PQRS_0014" ),
         "PQRS_0019" => array( ReportTypes::PQRS, "PQRS_0019" ),
         "PQRS_0021" => array( ReportTypes::PQRS, "PQRS_0021" ),
-        "PQRS_0022" => array( ReportTypes::PQRS, "PQRS_0022" ),
         "PQRS_0023" => array( ReportTypes::PQRS, "PQRS_0023" ),
         "PQRS_0024" => array( ReportTypes::PQRS, "PQRS_0024" ),
         "PQRS_0032" => array( ReportTypes::PQRS, "PQRS_0032" ),
         "PQRS_0039" => array( ReportTypes::PQRS, "PQRS_0039" ),
-        "PQRS_0041" => array( ReportTypes::PQRS, "PQRS_0041" ),
         "PQRS_0043" => array( ReportTypes::PQRS, "PQRS_0043" ),
         "PQRS_0044" => array( ReportTypes::PQRS, "PQRS_0044" ),
         "PQRS_0046" => array( ReportTypes::PQRS, "PQRS_0046" ),
@@ -66,16 +48,12 @@ class ReportTypes
         "PQRS_0050" => array( ReportTypes::PQRS, "PQRS_0050" ),
         "PQRS_0051" => array( ReportTypes::PQRS, "PQRS_0051" ),
         "PQRS_0052" => array( ReportTypes::PQRS, "PQRS_0052" ),
-        "PQRS_0053" => array( ReportTypes::PQRS, "PQRS_0053" ),
-        "PQRS_0054" => array( ReportTypes::PQRS, "PQRS_0054" ),
         "PQRS_0065" => array( ReportTypes::PQRS, "PQRS_0065" ),
         "PQRS_0066" => array( ReportTypes::PQRS, "PQRS_0066" ),
         "PQRS_0067" => array( ReportTypes::PQRS, "PQRS_0067" ),
         "PQRS_0068" => array( ReportTypes::PQRS, "PQRS_0068" ),
         "PQRS_0069" => array( ReportTypes::PQRS, "PQRS_0069" ),
         "PQRS_0070" => array( ReportTypes::PQRS, "PQRS_0070" ),
-        "PQRS_0071" => array( ReportTypes::PQRS, "PQRS_0071" ),
-        "PQRS_0072" => array( ReportTypes::PQRS, "PQRS_0072" ),
         "PQRS_0076" => array( ReportTypes::PQRS, "PQRS_0076" ),
         "PQRS_0091" => array( ReportTypes::PQRS, "PQRS_0091" ),
         "PQRS_0093" => array( ReportTypes::PQRS, "PQRS_0093" ),
@@ -92,7 +70,6 @@ class ReportTypes
         "PQRS_0117" => array( ReportTypes::PQRS, "PQRS_0117" ),
         "PQRS_0118" => array( ReportTypes::PQRS, "PQRS_0118" ),
         "PQRS_0119" => array( ReportTypes::PQRS, "PQRS_0119" ),
-        "PQRS_0121" => array( ReportTypes::PQRS, "PQRS_0121" ),
         "PQRS_0122" => array( ReportTypes::PQRS, "PQRS_0122" ),
         "PQRS_0126" => array( ReportTypes::PQRS, "PQRS_0126" ),
         "PQRS_0127" => array( ReportTypes::PQRS, "PQRS_0127" ),
@@ -113,8 +90,15 @@ class ReportTypes
         "PQRS_0155" => array( ReportTypes::PQRS, "PQRS_0155" ),
         "PQRS_0156" => array( ReportTypes::PQRS, "PQRS_0156" ),
         "PQRS_0164" => array( ReportTypes::PQRS, "PQRS_0164" ),
+        "PQRS_0165" => array( ReportTypes::PQRS, "PQRS_0165" ),
+        "PQRS_0166" => array( ReportTypes::PQRS, "PQRS_0166" ),
+        "PQRS_0167" => array( ReportTypes::PQRS, "PQRS_0167" ),
+        "PQRS_0168" => array( ReportTypes::PQRS, "PQRS_0168" ),
+        "PQRS_0176" => array( ReportTypes::PQRS, "PQRS_0176" ),
+        "PQRS_0177" => array( ReportTypes::PQRS, "PQRS_0177" ),
         "PQRS_0178" => array( ReportTypes::PQRS, "PQRS_0178" ),
         "PQRS_0179" => array( ReportTypes::PQRS, "PQRS_0179" ),
+        "PQRS_0180" => array( ReportTypes::PQRS, "PQRS_0180" ),
         "PQRS_0181" => array( ReportTypes::PQRS, "PQRS_0181" ),
         "PQRS_0182" => array( ReportTypes::PQRS, "PQRS_0182" ),
         "PQRS_0185" => array( ReportTypes::PQRS, "PQRS_0185" ),
@@ -152,10 +136,21 @@ class ReportTypes
         "PQRS_0264" => array( ReportTypes::PQRS, "PQRS_0264" ),
         "PQRS_0265" => array( ReportTypes::PQRS, "PQRS_0265" ),
         "PQRS_0268" => array( ReportTypes::PQRS, "PQRS_0268" ),
-        "PQRS_0270" => array( ReportTypes::PQRS, "PQRS_0270" ),
         "PQRS_0271" => array( ReportTypes::PQRS, "PQRS_0271" ),
-        "PQRS_0274" => array( ReportTypes::PQRS, "PQRS_0274" ),
         "PQRS_0275" => array( ReportTypes::PQRS, "PQRS_0275" ),
+        "PQRS_0276" => array( ReportTypes::PQRS, "PQRS_0276" ),
+        "PQRS_0277" => array( ReportTypes::PQRS, "PQRS_0277" ),
+        "PQRS_0278" => array( ReportTypes::PQRS, "PQRS_0278" ),
+        "PQRS_0279" => array( ReportTypes::PQRS, "PQRS_0279" ),
+        "PQRS_0282" => array( ReportTypes::PQRS, "PQRS_0282" ),
+        "PQRS_0283" => array( ReportTypes::PQRS, "PQRS_0283" ),
+        "PQRS_0284" => array( ReportTypes::PQRS, "PQRS_0284" ),
+        "PQRS_0286" => array( ReportTypes::PQRS, "PQRS_0286" ),
+        "PQRS_0288" => array( ReportTypes::PQRS, "PQRS_0288" ),
+        "PQRS_0290" => array( ReportTypes::PQRS, "PQRS_0290" ),
+        "PQRS_0291" => array( ReportTypes::PQRS, "PQRS_0291" ),
+        "PQRS_0293" => array( ReportTypes::PQRS, "PQRS_0293" ),
+        "PQRS_0294" => array( ReportTypes::PQRS, "PQRS_0294" ),
         "PQRS_0303" => array( ReportTypes::PQRS, "PQRS_0303" ),
         "PQRS_0304" => array( ReportTypes::PQRS, "PQRS_0304" ),
         "PQRS_0317" => array( ReportTypes::PQRS, "PQRS_0317" ),
@@ -176,6 +171,8 @@ class ReportTypes
         "PQRS_0335" => array( ReportTypes::PQRS, "PQRS_0335" ),
         "PQRS_0336" => array( ReportTypes::PQRS, "PQRS_0336" ),
         "PQRS_0337" => array( ReportTypes::PQRS, "PQRS_0337" ),
+        "PQRS_0338" => array( ReportTypes::PQRS, "PQRS_0338" ),
+        "PQRS_0340" => array( ReportTypes::PQRS, "PQRS_0340" ),
         "PQRS_0342" => array( ReportTypes::PQRS, "PQRS_0342" ),
         "PQRS_0343" => array( ReportTypes::PQRS, "PQRS_0343" ),
         "PQRS_0344" => array( ReportTypes::PQRS, "PQRS_0344" ),
@@ -183,7 +180,21 @@ class ReportTypes
         "PQRS_0346" => array( ReportTypes::PQRS, "PQRS_0346" ),
         "PQRS_0347" => array( ReportTypes::PQRS, "PQRS_0347" ),
         "PQRS_0348" => array( ReportTypes::PQRS, "PQRS_0348" ),
+        "PQRS_0350" => array( ReportTypes::PQRS, "PQRS_0350" ),
+        "PQRS_0351" => array( ReportTypes::PQRS, "PQRS_0351" ),
+        "PQRS_0352" => array( ReportTypes::PQRS, "PQRS_0352" ),
+        "PQRS_0353" => array( ReportTypes::PQRS, "PQRS_0353" ),
+        "PQRS_0354" => array( ReportTypes::PQRS, "PQRS_0354" ),
+        "PQRS_0355" => array( ReportTypes::PQRS, "PQRS_0355" ),
+        "PQRS_0356" => array( ReportTypes::PQRS, "PQRS_0356" ),
+        "PQRS_0357" => array( ReportTypes::PQRS, "PQRS_0357" ),
         "PQRS_0358" => array( ReportTypes::PQRS, "PQRS_0358" ),
+        "PQRS_0359" => array( ReportTypes::PQRS, "PQRS_0359" ),
+        "PQRS_0360" => array( ReportTypes::PQRS, "PQRS_0360" ),
+        "PQRS_0361" => array( ReportTypes::PQRS, "PQRS_0361" ),
+        "PQRS_0362" => array( ReportTypes::PQRS, "PQRS_0362" ),
+        "PQRS_0363" => array( ReportTypes::PQRS, "PQRS_0363" ),
+        "PQRS_0364" => array( ReportTypes::PQRS, "PQRS_0364" ),
         "PQRS_0370" => array( ReportTypes::PQRS, "PQRS_0370" ),
         "PQRS_0383" => array( ReportTypes::PQRS, "PQRS_0383" ),
         "PQRS_0384" => array( ReportTypes::PQRS, "PQRS_0384" ),
@@ -201,7 +212,6 @@ class ReportTypes
         "PQRS_0396" => array( ReportTypes::PQRS, "PQRS_0396" ),
         "PQRS_0397" => array( ReportTypes::PQRS, "PQRS_0397" ),
         "PQRS_0398" => array( ReportTypes::PQRS, "PQRS_0398" ),
-        "PQRS_0399" => array( ReportTypes::PQRS, "PQRS_0399" ),
         "PQRS_0400" => array( ReportTypes::PQRS, "PQRS_0400" ),
         "PQRS_0401" => array( ReportTypes::PQRS, "PQRS_0401" ),
         "PQRS_0402" => array( ReportTypes::PQRS, "PQRS_0402" ),
@@ -242,6 +252,25 @@ class ReportTypes
         "PQRS_0437" => array( ReportTypes::PQRS, "PQRS_0437" ),
         "PQRS_0438" => array( ReportTypes::PQRS, "PQRS_0438" ),
         "PQRS_0439" => array( ReportTypes::PQRS, "PQRS_0439" ),
+        "PQRS_0440" => array( ReportTypes::PQRS, "PQRS_0440" ),
+        "PQRS_0441" => array( ReportTypes::PQRS, "PQRS_0441" ),
+        "PQRS_0442" => array( ReportTypes::PQRS, "PQRS_0442" ),
+        "PQRS_0443" => array( ReportTypes::PQRS, "PQRS_0443" ),
+        "PQRS_0444" => array( ReportTypes::PQRS, "PQRS_0444" ),
+        "PQRS_0445" => array( ReportTypes::PQRS, "PQRS_0445" ),
+        "PQRS_0446" => array( ReportTypes::PQRS, "PQRS_0446" ),
+        "PQRS_0447" => array( ReportTypes::PQRS, "PQRS_0447" ),
+        "PQRS_0448" => array( ReportTypes::PQRS, "PQRS_0448" ),
+        "PQRS_0449" => array( ReportTypes::PQRS, "PQRS_0449" ),
+        "PQRS_0450" => array( ReportTypes::PQRS, "PQRS_0450" ),
+        "PQRS_0451" => array( ReportTypes::PQRS, "PQRS_0451" ),
+        "PQRS_0452" => array( ReportTypes::PQRS, "PQRS_0452" ),
+        "PQRS_0453" => array( ReportTypes::PQRS, "PQRS_0453" ),
+        "PQRS_0454" => array( ReportTypes::PQRS, "PQRS_0454" ),
+        "PQRS_0455" => array( ReportTypes::PQRS, "PQRS_0455" ),
+        "PQRS_0456" => array( ReportTypes::PQRS, "PQRS_0456" ),
+        "PQRS_0457" => array( ReportTypes::PQRS, "PQRS_0457" ),
+        
         "pre_0007" => array( ReportTypes::PQRS, "pre_0007" ),
         "pre_0008" => array( ReportTypes::PQRS, "pre_0008" ),
         "pre_0053" => array( ReportTypes::PQRS, "pre_0053" ),
