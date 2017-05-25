@@ -30,7 +30,7 @@ $query =
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND p.sex = 'Male' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0102_a') ".
-" AND (b2.code = 'C61')"; ";
+" AND (b2.code = 'C61'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  

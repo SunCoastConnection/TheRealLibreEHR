@@ -28,7 +28,7 @@ $query =
 " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0191_a' AND b2.modifier NOT IN('GQ','GT')); ";
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0191_a' AND b1.modifier NOT IN('GQ','GT')); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){

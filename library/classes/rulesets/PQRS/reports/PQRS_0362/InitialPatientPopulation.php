@@ -25,7 +25,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ". 
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0360_a' ;";
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0360_a') ;";
 //use 360 table
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 

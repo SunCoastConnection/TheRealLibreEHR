@@ -9,12 +9,16 @@
  * @author  Suncoast Connection
  */
 
-class PQRS_0441 extends AbstractPQRSReport
-{   
-    public function createPopulationCriteria()
-    {
-        return new PQRS_0441_PopulationCriteria();
+class PQRS_0441 extends AbstractPQRSReport {   
+    public function createPopulationCriteria() {
+		$populationCriteria = array();
+
+		$populationCriteria[] = new PQRS_0441_PopulationCriteria1();
+		$populationCriteria[] = new PQRS_0441_PopulationCriteria2();   
+
+		return $populationCriteria;    
     }
+
 }
 
 ?>

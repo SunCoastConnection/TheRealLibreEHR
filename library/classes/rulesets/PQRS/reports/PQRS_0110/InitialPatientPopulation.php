@@ -53,5 +53,5 @@ if ($result['count']> 1){ return true;} else {return false;}
 //cascade using the code list from measure 111 for the 2 encounter match requirement.
     }
 }
-
+}
 ?>

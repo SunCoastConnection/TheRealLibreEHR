@@ -21,7 +21,7 @@ class PQRS_0205_InitialPatientPopulation extends PQRSFilter
  $query =
 "SELECT COUNT(b1.code) as count ". 
 " FROM billing AS b1". 
-" INNER JOIN pqrs_efcc3 AS codelist_b ON (b1.code = codelist_a.code)".
+" INNER JOIN pqrs_efcc3 AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0204_a' ); "; 
  

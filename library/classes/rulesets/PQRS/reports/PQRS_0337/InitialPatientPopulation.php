@@ -36,4 +36,4 @@ class PQRS_0337_InitialPatientPopulation extends PQRSFilter
   if ($result['count']> 0){ return true;} else {return false;}  
         } 
     }
-}
+?>
