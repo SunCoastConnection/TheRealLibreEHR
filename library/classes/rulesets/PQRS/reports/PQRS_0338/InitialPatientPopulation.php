@@ -27,7 +27,7 @@ $query =
 " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND (b1.code IN('99201', '99202', '99203', '99204', '99205', '99212', '99213', '99214', '99215', 'G0402' )) ".
-" AND (b2.code IN('B20','Z21'); ";
+" AND b2.code IN('B20','Z21'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  

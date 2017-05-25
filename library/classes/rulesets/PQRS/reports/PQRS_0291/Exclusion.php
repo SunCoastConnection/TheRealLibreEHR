@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0290 -- Exclusion 
+ * PQRS Measure 0291 -- Exclusion 
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
 
-class PQRS_0290_Exclusion extends PQRSFilter
+class PQRS_0291_Exclusion extends PQRSFilter
 {
     public function getTitle() 
     {
