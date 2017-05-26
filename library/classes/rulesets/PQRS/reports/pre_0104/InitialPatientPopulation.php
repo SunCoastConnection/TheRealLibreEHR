@@ -16,32 +16,23 @@ class pre_0104_InitialPatientPopulation extends PQRSFilter
         return "Initial Patient Population";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
-        
- $query ="SELECT COUNT(b1.code) as count ".  
-" FROM billing AS b1".
-" WHERE b1.pid = ? ".
-" AND b1.code = 'G8465';";
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return false;}          
-        
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
-" JOIN billing AS b4 ON (b4.pid = b1.pid)".
-" INNER JOIN pqrs_ecr AS codelist_a ON (b4.code = codelist_a.code)".
+" INNER JOIN billing AS b3 ON (b3.pid = b1.pid)".
 " WHERE b1.pid = ? ".
 " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND p.sex = 'Male' ".
 " AND b1.code IN ('77427', '77425') ".
 " AND (b2.code = 'C61')".
-" AND NOT (b4.code = codelist_a.code AND codelist_a.type = 'pqrs_0104_a'); ";
+" AND (b3.code = 'G8465'); ";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;} else {return false;}   
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }

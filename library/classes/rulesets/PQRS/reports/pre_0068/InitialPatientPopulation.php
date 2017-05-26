@@ -16,16 +16,8 @@ class pre_0068_InitialPatientPopulation extends PQRSFilter
         return "Initial Patient Population";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
-        
- $query ="SELECT COUNT(b1.code) as count ".  
-" FROM billing AS b1".
-" WHERE b1.pid = ? ".
-" AND b1.code = '4090F';";
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return false;}          
-        
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
@@ -39,7 +31,7 @@ $query =
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0068_a') ".
-" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0068_b');";
+" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0068_b' AND b2.modifier NOT IN('GQ','GT'));";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
 

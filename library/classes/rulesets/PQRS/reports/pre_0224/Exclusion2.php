@@ -13,10 +13,10 @@ class pre_0224_Exclusion2 extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Exclusion";
+        return "Exclusion 2";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
 $query =
 "SELECT COUNT(b1.code) AS count".  

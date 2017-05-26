@@ -16,7 +16,7 @@ class pre_0264_Exclusion extends PQRSFilter
         return "Exclusion";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
  $query =
 " SELECT COUNT(b1.code) AS count".  

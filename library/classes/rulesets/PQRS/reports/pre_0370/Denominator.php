@@ -16,9 +16,10 @@ class pre_0370_Denominator extends PQRSFilter
         return "Denominator";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
-		//Same as initial population
-		return true;
+return true;
     }
 }
+
+?>

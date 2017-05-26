@@ -13,10 +13,10 @@ class pre_0224_Denominator2 extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Denominator";
+        return "Denominator 2";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
 return true;
     }
