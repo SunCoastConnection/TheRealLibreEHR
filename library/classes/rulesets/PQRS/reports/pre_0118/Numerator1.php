@@ -16,7 +16,7 @@ class pre_0118_Numerator1 extends PQRSFilter
         return "Numerator 1";
     }
 
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
 $query =
 "SELECT COUNT(b1.code) AS count".  
@@ -25,7 +25,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = 'G8935';";
-
+//G8937 hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count'] > 0){ return true;} else {return false;}     

@@ -4,7 +4,7 @@
  *
  * Copyright (C) 2016      Suncoast Connection
  *
- * @package PQRS_Gateway
+ * @package OpenEMR
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Suncoast Connection
@@ -17,19 +17,11 @@ class pre_0403_InitialPatientPopulation extends PQRSFilter
         return "Initial Patient Population";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
-        
- $query ="SELECT COUNT(b1.code) as count ".  
-" FROM billing AS b1".
-" WHERE b1.pid = ? ".
-" AND b1.code ='G9523';";
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return false;}            
-        
 $query =
 "SELECT COUNT(b1.code) as count ".  
-"  FROM billing AS b1". 
+" FROM billing AS b1". 
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " JOIN patient_data AS p ON (p.pid = b1.pid)".
 " INNER JOIN billing AS b2 ON (b2.pid = b1.pid)".
@@ -38,7 +30,7 @@ $query =
 " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date)>='18' ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0403_a')". //using other table
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0403_a' AND b1.modifier NOT IN('GQ','GT'))". 
 " AND (b2.code = 'N18.6'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));

@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0155 -- Call to createPopulationCriteria()
+ * Pre Measure 0155 -- Call to createPopulationCriteria()
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 

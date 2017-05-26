@@ -16,11 +16,11 @@ class pre_0118_Exclusion2 extends PQRSFilter
         return "Exclusion 2";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
 $query =
 "SELECT COUNT(b1.code) AS count".  
-"  FROM billing AS b1".
+" FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".

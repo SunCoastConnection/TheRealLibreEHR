@@ -16,20 +16,8 @@ class pre_0332_InitialPatientPopulation extends PQRSFilter
         return "Initial Patient Population";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
-        
- $query ="SELECT COUNT(b1.code) as count ".  
-" FROM billing AS b1".
-" INNER JOIN billing AS b2 ON (b2.pid=b1.pid)".
-" WHERE b1.pid = ? ".
-" AND b2.code = 'G9364'".
-" AND b1.code ='G9498';";
-
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return false;}             
-        
-        
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
@@ -42,9 +30,9 @@ $query =
 " AND fe.provider_id = '".$this->_reportOptions['provider']."'".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '18' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0332_a')".
-" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0332_b'); ";
-
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0331_a' AND b1.modifier NOT IN('GQ','GT'))".
+" AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0331_b'); ";
+//use 331 tables
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
 

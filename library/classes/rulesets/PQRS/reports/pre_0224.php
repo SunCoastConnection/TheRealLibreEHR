@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0224 -- Call to createPopulationCriteria()
+ * Pre Measure 0224 -- Call to createPopulationCriteria()
  *
  * Copyright (C) 2016      Suncoast Connection
  *
@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package PQRS_Gateway
  * @link    http://www.open-emr.org
  * @link    http://suncoastconnection.com
  * @author  Suncoast Connection

@@ -4,7 +4,7 @@
  *
  * Copyright (C) 2016      Suncoast Connection
  *
- * @package PQRS_Gateway
+ * @package OpenEMR
  * @link    http://suncoastconnection.com
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Suncoast Connection
@@ -17,7 +17,7 @@ class pre_0411_Numerator extends PQRSFilter
         return "Numerator";
     }
 
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
 $query =
 "SELECT COUNT(b1.code) as count ".  
@@ -26,7 +26,7 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".  
 " AND b1.code ='G9573';"; 
-
+//G9574 hard fail  This measure has a lot of uncoded denom rule-outs
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count'] > 0){ return true;} else {return false;} 
 		
