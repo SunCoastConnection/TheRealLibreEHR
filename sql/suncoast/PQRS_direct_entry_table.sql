@@ -1479,13 +1479,6 @@ INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `value`,`statu
 
 /*Pre-Measures*/
 
-('pre_0438', 'description', 'Pre-selection of patients for Measure 438 -- "Statin Therapy for the Prevention and Treatment of Cardiovascular Disease" <br>*** Please see Measure Documentation for Definitions and Instructions *** ',''),
-('pre_0438', 'question', 'Patients who may qualify for Measure 438.<br>Select one ONLY if it applies to the patient:<br><ul><li>Previously diagnosed or have an active diagnosis of Clinical ASCVD<li>Any fasting or direct LDL-C laboratory test result >= 190 mg/dL<li>Type 1 or Type 2 diabetes diagnosis AND The highest fasting or direct LDL-C laboratory test result of 70--189 mg/dL in or two years prior to the beginning of the measurement period</ul>*** Please see Measure Documentation for Definitions and Instructions ***',''),
-('pre_0438', 'answer', '1|Previous or active diagnosis of Clinical ASCVD (G9662)|G9662',9),
-('pre_0438', 'answer', '2|Fasting or direct LDL-C laboratory test result >= 190 mg/dL (G9663)|G9663',9),
-('pre_0438', 'answer', '3|Type 1 or Type 2 diabetes diagnosis AND Fasting or direct LDL-C laboratory test result (as required) (G9666)|G9666',9),
-
-
 ('pre_0001', 'description', 'Pre-selection of patients for Measure 001',''),
 ('pre_0007', 'description', 'Pre-selection of patients for Measure 007',''),
 ('pre_0005', 'description', 'Pre-selection of patients for Measure 005',''),
