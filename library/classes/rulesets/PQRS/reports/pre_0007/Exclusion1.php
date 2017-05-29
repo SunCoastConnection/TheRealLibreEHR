@@ -1,6 +1,6 @@
 <?php
 /**
- * pre Measure 0383 -- Numerator
+ * pre Measure 0007 -- Exclusion 1
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -8,27 +8,27 @@
  * @author  Bryan lee <bryan@suncoastconnection.com>
  * @author  Art Eaton <art@suncoastconnection.com>
  */
- 
-class pre_0383_Numerator extends PQRSFilter
-{
-    public function getTitle()
-    {
-        return "Numerator";
-    }
 
-    public function test( prePatient $patient, $beginDate, $endDate )
+class pre_0007_Exclusion1 extends PQRSFilter
+{
+    public function getTitle() 
     {
- $query =
-" SELECT COUNT(b1.code) AS count".  
+        return "Exclusion";
+    }
+    
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    {
+	  $query =
+"SELECT COUNT(b1.code) as count". 
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G9512' ; ";
-
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-
+" AND b1.code  IN('G9190','G9191','G9192');" ;
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
-		
+        
     }
 }
+
+?>

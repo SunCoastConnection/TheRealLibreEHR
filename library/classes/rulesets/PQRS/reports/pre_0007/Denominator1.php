@@ -1,6 +1,6 @@
 <?php
 /**
- * pre Measure 0387 -- Denominator 
+ * pre Measure 0007 -- Denominator 1
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,16 +9,17 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class pre_0387_Denominator extends PQRSFilter
+class pre_0007_Denominator1 extends PQRSFilter
 {
     public function getTitle() 
     {
         return "Denominator";
     }
     
-    public function test( prePatient $patient, $beginDate, $endDate )
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-return true;
+return true;       
+
     }
 }
 

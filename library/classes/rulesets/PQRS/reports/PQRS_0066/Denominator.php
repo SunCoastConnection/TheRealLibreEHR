@@ -25,10 +25,22 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code IN ('G9702','G9703') ; ";
-//This is a fail check.  Needs premeasure for code G8711
+//This is a fail check. 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result['count']> 0){ return false;} else {return true;}  
+if ($result['count']> 0){ return false;} 
+
+$query =
+" SELECT COUNT(b1.code) AS count".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND b1.code = 'G8711' ; ";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+
+if ($result['count']> 0){ return true;} else {return false;}    
     }
 }
 

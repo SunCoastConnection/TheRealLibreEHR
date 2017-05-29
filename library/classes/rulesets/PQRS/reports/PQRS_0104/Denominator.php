@@ -21,11 +21,12 @@ class PQRS_0104_Denominator extends PQRSFilter
 $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
-" INNER JOIN pqrs_ecr AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
-" AND b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0104_a'); ";
-//Rule-out
+" AND b1.code = 'G8465'; ";
+//Include
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){ return true;} else {return false;}  
+if ($result['count']> 0){ return true;} else {return false;} 
+
     }
 }
+?>

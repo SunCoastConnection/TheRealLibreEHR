@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0007 -- Initial Patient Population 1
+ * pre Measure 0007 -- Initial Patient Population 1
  *
  * Copyright (C) 2016      Suncoast Connection
  * @package PQRS_Gateway 
@@ -9,7 +9,7 @@
  * @author  Art Eaton <art@suncoastconnection.com>
  */
  
-class PQRS_0007_InitialPatientPopulation1 extends PQRSFilter
+class pre_0007_InitialPatientPopulation1 extends PQRSFilter
 {
     public function getTitle() 
     {
