@@ -15,7 +15,7 @@ REPLACE INTO `globals` (`gl_name`, `gl_index`, `gl_value`) VALUES
 ('default_encounter_view', 0, '0'),
 ('css_header', 0, 'style_purple.css'),
 ('gbl_nav_area_width', 0, '150'),
-('openemr_name', 0, 'PQRS Pilot'),
+('openemr_name', 0, 'MIPS Gateway'),
 ('full_new_patient_form', 0, '1'),
 ('patient_search_results_style', 0, '0'),
 ('gbl_tall_nav_area', 0, ''),
