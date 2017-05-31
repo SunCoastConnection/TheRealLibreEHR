@@ -13,10 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package PQRS_Gateway
  * @author  Bryan Lee <leebc11@acm.org>  (PQRS additions)
- * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://suncoastconnection.com
  */
 
 //SANITIZE ALL ESCAPES
@@ -162,88 +161,7 @@ $search_service_code = trim($_POST['search_service_code']);
 echo "<input type='hidden' name='search_service_code' value='" .
   htmlspecialchars($search_service_code, ENT_QUOTES) . "' />\n";
 
-if ($popup) {
-  echo "<input type='hidden' name='popup' value='1' />\n";
-
-  // Construct WHERE clause and save search parameters as form fields.
-  $sqlBindArray = array();
-  $where = "1 = 1";
-  $fres = sqlStatement("SELECT * FROM layout_options " .
-    "WHERE form_id = 'DEM' AND uor > 0 AND field_id != '' " .
-    "ORDER BY group_name, seq");
-  while ($frow = sqlFetchArray($fres)) {
-    $field_id  = $frow['field_id'];
-    if (strpos($field_id, 'em_') === 0) continue;
-    $data_type = $frow['data_type'];
-    if (!empty($_REQUEST[$field_id])) {
-      $value = trim($_REQUEST[$field_id]);
-      if ($field_id == 'pid') {
-        $where .= " AND $field_id = ?";
-        array_push($sqlBindArray,$value);
-      }
-      else if ($field_id == 'pubpid') {
-        $where .= " AND $field_id LIKE ?";
-        array_push($sqlBindArray,$value);
-      }
-      else {
-        $where .= " AND $field_id LIKE ?";
-        array_push($sqlBindArray,$value."%");
-      }
-      echo "<input type='hidden' name='" . htmlspecialchars( $field_id, ENT_QUOTES) .
-        "' value='" . htmlspecialchars( $value, ENT_QUOTES) . "' />\n";
-    }
-  }
-
-  // If a non-empty service code was given, then restrict to patients who
-  // have been provided that service.  Since the code is used in a LIKE
-  // clause, % and _ wildcards are supported.
-  if ($search_service_code) {
-    $where .=
-      " AND ( SELECT COUNT(*) FROM billing AS b WHERE " .
-      "b.pid = patient_data.pid AND " .
-      "b.activity = 1 AND " .
-      "b.code_type != 'COPAY' AND " .
-      "b.code LIKE ? " .
-      ") > 0";
-    array_push($sqlBindArray, $search_service_code);
-  }
-
-  $sql = "SELECT $given FROM patient_data " .
-    "WHERE $where ORDER BY $orderby LIMIT $fstart, $sqllimit";
-  $rez = sqlStatement($sql,$sqlBindArray);
-  $result = array();
-  while ($row = sqlFetchArray($rez)) $result[] = $row;
-  _set_patient_inc_count($sqllimit, count($result), $where, $sqlBindArray);
-}
-else if ($from_page == "cdr_report") {
-  // Collect setting from cdr report
-  echo "<input type='hidden' name='from_page' value='$from_page' />\n";
-  $report_id = isset($_REQUEST['report_id']) ? $_REQUEST['report_id'] : 0;
-  echo "<input type='hidden' name='report_id' value='".$report_id."' />\n";
-  $itemized_test_id = isset($_REQUEST['itemized_test_id']) ? $_REQUEST['itemized_test_id'] : 0;
-  echo "<input type='hidden' name='itemized_test_id' value='".$itemized_test_id."' />\n";
-  $numerator_label = isset($_REQUEST['numerator_label']) ? $_REQUEST['numerator_label'] : '';
-  echo "<input type='hidden' name='numerator_label' value='".$numerator_label."' />\n";
-  $pass_id = isset($_REQUEST['pass_id']) ? $_REQUEST['pass_id'] : "all";
-  echo "<input type='hidden' name='pass_id' value='".$pass_id."' />\n";
-  $print_patients = isset($_REQUEST['print_patients'])? $_REQUEST['print_patients'] : 0;
-  echo "<input type='hidden' name='print_patients' value='".$print_patients."' />\n";
-
-  // Collect patient listing from cdr report
-  if ($print_patients) {
-    // collect entire listing for printing
-    $result = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass_id,$numerator_label);
-    $GLOBALS['PATIENT_INC_COUNT'] = count($result);
-    $MAXSHOW = $GLOBALS['PATIENT_INC_COUNT'];
-  }
-  else {
-    // collect the total listing count
-    $GLOBALS['PATIENT_INC_COUNT'] = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass_id,$numerator_label,true);
-    // then just collect applicable list for pagination
-    $result = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass_id,$numerator_label,false,$sqllimit,$fstart);
-  }
-}
-else if ($from_page == "pqrs_report") {
+if ($from_page == "pqrs_report") {
   // Collect setting from pqrs report
   echo "<input type='hidden' name='from_page' value='$from_page' />\n";
   $report_id = isset($_REQUEST['report_id']) ? $_REQUEST['report_id'] : 0;
@@ -271,31 +189,7 @@ else if ($from_page == "pqrs_report") {
     $result = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass_id,$numerator_label,false,$sqllimit,$fstart);
   }
 }
-else {
-  $patient = $_REQUEST['patient'];
-  $findBy  = $_REQUEST['findBy'];
-  $searchFields = $_REQUEST['searchFields'];
 
-  echo "<input type='hidden' name='patient' value='" . htmlspecialchars( $patient, ENT_QUOTES) . "' />\n";
-  echo "<input type='hidden' name='findBy'  value='" . htmlspecialchars( $findBy, ENT_QUOTES) . "' />\n";
-
-  if ($findBy == "Last")
-      $result = getPatientLnames("$patient", $given, $orderby, $sqllimit, $fstart);
-  else if ($findBy == "ID")
-      $result = getPatientId("$patient", $given, "id ASC, ".$orderby, $sqllimit, $fstart);
-  else if ($findBy == "DOB")
-      $result = getPatientDOB("$patient", $given, "DOB ASC, ".$orderby, $sqllimit, $fstart);
-  else if ($findBy == "SSN")
-      $result = getPatientSSN("$patient", $given, "ss ASC, ".$orderby, $sqllimit, $fstart);
-  elseif ($findBy == "Phone")                  //(CHEMED) Search by phone number
-      $result = getPatientPhone("$patient", $given, $orderby, $sqllimit, $fstart);
-  else if ($findBy == "Any")
-      $result = getByPatientDemographics("$patient", $given, $orderby, $sqllimit, $fstart);
-  else if ($findBy == "Filter") {
-    $result = getByPatientDemographicsFilter($searchFields, "$patient",
-      $given, $orderby, $sqllimit, $fstart, $search_service_code);
-  }
-}
 ?>
 
 </form>
@@ -346,7 +240,7 @@ if ($fend > $count) $fend = $count;
   </td>
  </tr>
  <tr>
-   <?php if ($from_page == "cdr_report" OR $from_page == "pqrs_report") {
+   <?php if ($from_page == "pqrs_report") {
      echo "<td colspan='6' class='text'>";
      echo "<b>";
      if ($pass_id == "fail") {
@@ -583,7 +477,7 @@ if ($result) {
 		$myDesc=$explodedAnswer[1];
 		$myCode=$explodedAnswer[2];
 		$myPerformance= $thisAnswer['status'];
- error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode | $myPerformance");
+// error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode | $myPerformance");
         	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\" performance=\"$myPerformance\" >$myDesc</label></td>";
 	}
 		?>
