@@ -25,6 +25,7 @@ $query =
 " INNER JOIN pqrs_efcc1 AS codelist_a ON (b1.code = codelist_a.code)".
 " WHERE b1.pid = ? ".
 " AND b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0104_a'); "; 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
   if ($result['count']> 0){return false;} 
     
 $query =
