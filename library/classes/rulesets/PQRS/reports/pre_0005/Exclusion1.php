@@ -16,7 +16,7 @@ class pre_0005_Exclusion1 extends PQRSFilter
         return "Exclusion";
     }
     
-    public function test( prePatient $patient, $beginDate, $endDate )
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 	    
 	  $query =

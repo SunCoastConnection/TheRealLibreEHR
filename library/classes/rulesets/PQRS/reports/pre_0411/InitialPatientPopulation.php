@@ -17,7 +17,7 @@ class pre_0411_InitialPatientPopulation extends PQRSFilter
         return "Initial Patient Population";
     }
     
-    public function test( prePatient $patient, $beginDate, $endDate )
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
 "SELECT COUNT(b1.code) as count ".  

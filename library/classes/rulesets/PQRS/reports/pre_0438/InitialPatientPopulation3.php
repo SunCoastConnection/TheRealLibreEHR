@@ -17,7 +17,7 @@ class pre_0438_InitialPatientPopulation3 extends PQRSFilter
         return "Initial Patient Population 3";
     }
 
-    public function test( prePatient $patient, $beginDate, $endDate )
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 
 	$query =

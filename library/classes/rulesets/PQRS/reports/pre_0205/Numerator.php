@@ -16,7 +16,7 @@ class pre_0205_Numerator extends PQRSFilter
         return "Numerator";
     }
 
-    public function test( prePatient $patient, $beginDate, $endDate )
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
 " SELECT COUNT(b1.code) AS count".  

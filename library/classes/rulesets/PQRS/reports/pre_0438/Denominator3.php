@@ -16,7 +16,7 @@ class pre_0438_Denominator3 extends PQRSFilter
         return "Denominator 3";
     }
     
-    public function test( prePatient $patient, $beginDate, $endDate )
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 return true;
     }
