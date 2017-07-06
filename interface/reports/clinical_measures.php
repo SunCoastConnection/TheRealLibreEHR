@@ -65,8 +65,17 @@ if(!empty($report_id)) {
 
   $rule_filter = $report_view['type'];
 
-  if(in_array($type_report, array('pqrs', 'pqrs_individual_2016'))) {
+  if(in_array($type_report, array('pqrs', 'pqrs_individual_2016','mips_2017'))) {
     $begin_date = $report_view['date_begin'];
+       if (isset($report_view['title'])) {
+
+           $report_title=$report_view['title'];
+
+            } else {
+
+                $report_title="";
+
+                }
   } 
 
   $target_date = $report_view['date_target'];
@@ -412,6 +421,17 @@ function Form_Validate() {
                 <tr>
                   <td scope="row">
                     <div style='margin-left:15px'>
+                        <span>
+<?php 	if (isset($report_view['title'])) {
+		$report_title=$report_view['title'];
+    	} else {
+		$report_title="";
+    	}
+	echo ("Report Title:  $report_title \n"); ?>
+                        </span>
+                    </div>
+		  </td>
+		</tr>
 <?php if(empty($report_id)) { ?>
                       <a id='submit_button' href='#' class='css_button' onclick='runReport();'>
                         <span>
