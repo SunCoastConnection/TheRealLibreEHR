@@ -39,7 +39,7 @@ class PQRS_0118_InitialPatientPopulation2 extends PQRSFilter
 				$query =
 				"SELECT COUNT(b1.code) as count ".  
 				" FROM billing AS b1". 
-				" INNER JOIN pqrs_efcc1 AS codelist_a ON (b1.code = codelist_c.code)".
+				" INNER JOIN pqrs_efcc1 AS codelist_a ON (b1.code = codelist_a.code)".
 				" WHERE b1.pid = ? ".
 				" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0001_a');";
 				//Check for diabetes from measure #1 list

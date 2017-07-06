@@ -92,11 +92,11 @@ if(!empty($report_id)) {
 
   // Collect form parameters (set defaults if empty)
   if($type_report == 'pqrs') {
-    $begin_date = existsDefault($_POST, 'form_begin_date', '2016-01-01 00:00:00');  //change defaults in 2016
+    $begin_date = existsDefault($_POST, 'form_begin_date', '2017-01-01 00:00:00');  //change defaults in 2017
   }
 
   if($type_report == 'pqrs') {
-    $target_date = existsDefault($_POST, 'form_target_date', '2016-12-31 23:59:59');  //change defaults in 2016
+    $target_date = existsDefault($_POST, 'form_target_date', '2017-12-31 23:59:59');  //change defaults in 2017
   } 
   $plan_filter = existsDefault($_POST, 'form_plan_filter', '');
   $organize_method = (empty($plan_filter)) ? 'default' : 'plans';

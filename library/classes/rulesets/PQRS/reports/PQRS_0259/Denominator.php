@@ -20,8 +20,8 @@ class PQRS_0259_Denominator extends PQRSFilter
     {
 $query = 
 "SELECT sex AS count".
-" FROM patient_data".
-" WHERE b1.pid = ? ;";
+" FROM patient_data AS p".
+" WHERE p.pid = ? ;";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 //Rule outs follow
 if ($result['count']='Male'){ 
@@ -29,7 +29,7 @@ $query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " WHERE b1.pid = ? ".
-" b1.code = '9004F'; ";
+" AND b1.code = '9004F'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
@@ -41,7 +41,7 @@ $query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " WHERE b1.pid = ? ".
-" b1.code IN ('9003F','9004F'); ";
+" And b1.code IN ('9003F','9004F'); ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
@@ -50,3 +50,4 @@ if ($result['count']> 0){ return false;} else {return true;}
 }
     }
 }
+?>
