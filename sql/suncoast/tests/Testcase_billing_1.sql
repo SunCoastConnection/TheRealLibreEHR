@@ -1,4 +1,4 @@
-'INSERT INTO `billing` ( `date`, `code_type`, `code`, `pid`,`provider_id`, `user`, `groupname`, `authorized`, `encounter`, `billed`, `activity`, `modifier`) VALUES
+INSERT INTO `billing` ( `date`, `code_type`, `code`, `pid`,`provider_id`, `user`, `groupname`, `authorized`, `encounter`, `billed`, `activity`, `modifier`) VALUES
 (20170601112522,'CPT4','10121',1,1,1,'Default',1,1,0,1,''),
 (20170601112522,'CPT4','11004',1,1,1,'Default',1,1,0,1,''),
 (20170601112522,'CPT4','11042',1,1,1,'Default',1,1,0,1,''),
