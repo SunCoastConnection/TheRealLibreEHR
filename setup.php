@@ -20,12 +20,12 @@ $ippf_specific = false;
 if (!$COMMAND_LINE && empty($_REQUEST['site'])) {
   echo "<html>\n";
   echo "<head>\n";
-  echo "<title>PQRS Pilot Setup Tool</title>\n";
+  echo "<title>MIPS CONNECTION Setup Tool</title>\n";
   echo "<link rel='stylesheet' href='interface/themes/style_blue.css'>\n";
   echo "</head>\n";
   echo "<body>\n";
   echo "<p><b>Optional Site ID Selection</b></p>\n";
-  echo "<p>Most PQRS Pilot installations support only one site.  If that is " .
+  echo "<p>Most MIPS Connection installations support only one site.  If that is " .
     "true for you then ignore the rest of this text and just click Continue.</p>\n";
   echo "<p>Otherwise please enter a unique Site ID here.</p>\n";
   echo "<p>A Site ID is a short identifier with no spaces or special " .
@@ -99,7 +99,7 @@ else if ($state > 3) {
 ?>
 <HTML>
 <HEAD>
-<TITLE>PQRS Pilot Setup Tool</TITLE>
+<TITLE>MIPS Connection Setup Tool</TITLE>
 <LINK REL=STYLESHEET HREF="interface/themes/style_sky_blue.css">
 
 <style>
@@ -119,7 +119,7 @@ function cloneClicked() {
 </HEAD>
 <BODY>
 
-<span class="title">PQRS Pilot Setup</span>
+<span class="title">MIPS Connection Setup</span>
 <br><br>
 <span class="text">
 
@@ -136,29 +136,29 @@ function cloneClicked() {
  if ($state == 7) {
 ?>
 
-<p>Congratulations! PQRS Pilot is now installed.</p>
+<p>Congratulations! MIPS Connection is now installed.</p>
 
 <ul>
  <li>Access controls (php-GACL) are installed for fine-grained security, and can be administered in
-     PQRS Pilot's admin->acl menu.</li>
+     MIPS Connection's admin->acl menu.</li>
  <li>Reviewing <?php echo $OE_SITE_DIR; ?>/config.php is a good idea. This file
      contains some settings that you may want to change.</li>
- <li>There's much information and many extra tools bundled within the PQRS Pilot installation directory. 
-     Please refer to PQRS Pilot/Documentation. Many forms and other useful scripts can be found at PQRS Pilot/contrib.</li>
+ <li>There's much information and many extra tools bundled within the MIPS Connection installation directory. 
+     Please refer to MIPS Connection/Documentation. Many forms and other useful scripts can be found at MIPS Connection/contrib.</li>
  <li>To ensure a consistent look and feel through out the application using
      <a href='http://www.mozilla.org/products/firefox/'>Firefox</a> is recommended.</li>
- <li>The PQRS Pilot project home page and documentationcan be found at <a href = "http://suncoastconnection.com" target="_blank">http://suncoastconnection.com</a></li>
+ <li>The MIPS Connection project home page and documentationcan be found at <a href = "http://suncoastconnection.com" target="_blank">http://suncoastconnection.com</a></li>
 
 </ul>
 <p>
 We recommend you print these instructions for future reference.
 </p>
 <?php if (empty($installer->clone_database)) {
-  echo "<p><b>The initial PQRS Pilot user is '".$installer->iuser."' and the password is '".$installer->iuserpass."'</b></p>";
-  echo "<p>If you edited the PHP or Apache configuration files during this installation process, then we recommend you restart your Apache server before following below PQRS Pilot link.</p>";
+  echo "<p><b>The initial MIPS Connection user is '".$installer->iuser."' and the password is '".$installer->iuserpass."'</b></p>";
+  echo "<p>If you edited the PHP or Apache configuration files during this installation process, then we recommend you restart your Apache server before following below MIPS Connection link.</p>";
 } ?>
 <p>
- <a href='./?site=<?php echo $site_id; ?>'>Click here to start using PQRS Pilot. </a>
+ <a href='./?site=<?php echo $site_id; ?>'>Click here to start using MIPS Connection. </a>
 </p>
 
 <?php
@@ -171,7 +171,7 @@ We recommend you print these instructions for future reference.
 $inst = $_POST["inst"];
 
 if (($config == 1) && ($state < 4)) {
-  echo "PQRS Pilot has already been installed.  If you wish to force re-installation, then edit $installer->conffile (change the 'config' variable to 0), and re-run this script.<br>\n";
+  echo "MIPS Connection has already been installed.  If you wish to force re-installation, then edit $installer->conffile (change the 'config' variable to 0), and re-run this script.<br>\n";
 }
 else {
   switch ($state) {
@@ -202,8 +202,8 @@ else {
 <TR VALIGN='TOP'><TD COLSPAN=2><font color='red'>MYSQL SERVER:</font></TD></TR>
 <TR VALIGN='TOP'><TD><span class='text'>Server Host: </span></TD><TD><INPUT TYPE='TEXT' VALUE='localhost' NAME='server' SIZE='30'></TD><TD><span class='text'>(If you run MySQL and Apache/PHP on the same computer, then leave this as 'localhost'. If they are on separate computers, then enter the IP address of the computer running MySQL.)</span><br></TD></TR>
 <TR VALIGN='TOP'><TD><span class='text'>Server Port: </span></TD><TD><INPUT TYPE='TEXT' VALUE='3306' NAME='port' SIZE='30'></TD><TD><span class='text'>(This is the MySQL port. The default port for MySQL is 3306.)</span><br></TD></TR>
-<TR VALIGN='TOP'><TD><span class='text'>Database Name: </span></TD><TD><INPUT TYPE='TEXT' VALUE='pqrsdb' NAME='dbname' SIZE='30'></TD><TD><span class='text'>(This is the name of the PQRS Pilot database in MySQL - 'pqrsdb' is the recommended)</span><br></TD></TR>
-<TR VALIGN='TOP'><TD><span class='text'>Login Name: </span></TD><TD><INPUT TYPE='TEXT' VALUE='pqrs' NAME='login' SIZE='30'></TD><TD><span class='text'>(This is the name of the PQRS Pilot login name in MySQL - 'pqrs' is the recommended)</span><br></TD></TR>
+<TR VALIGN='TOP'><TD><span class='text'>Database Name: </span></TD><TD><INPUT TYPE='TEXT' VALUE='mips2017' NAME='dbname' SIZE='30'></TD><TD><span class='text'>(This is the name of the MIPS Connection database in MySQL - 'mips2017' is the recommended)</span><br></TD></TR>
+<TR VALIGN='TOP'><TD><span class='text'>Login Name: </span></TD><TD><INPUT TYPE='TEXT' VALUE='mips2017' NAME='login' SIZE='30'></TD><TD><span class='text'>(This is the name of the MIPS Connection login name in MySQL - 'mips2017' is the recommended)</span><br></TD></TR>
 <TR VALIGN='TOP'><TD><span class='text'>Passphrase: </span></TD><TD><INPUT TYPE='PASSWORD' VALUE='' NAME='pass' SIZE='30'></TD><TD><span class='text'>(This is the Login Password for when PHP accesses MySQL - it should be at least 8 characters long and composed of both numbers and letters)</span><br></TD></TR>\n";
     if ($inst != 2) {
       echo "<TR VALIGN='TOP'><TD><span class='text'>Name for Root Account: </span></TD><TD><INPUT TYPE='TEXT' VALUE='root' NAME='root' SIZE='30'></TD><TD><span class='text'>(This is name for MySQL root account. For localhost, it is usually ok to leave it 'root'.)</span><br></TD></TR>
@@ -234,7 +234,7 @@ else {
   "<option value='utf8_unicode_ci'   >Unicode (German, French, Russian, Armenian, Greek)</option>" .
   "<option value=''                  >None (Do not force UTF-8)</option>" .
   "</select>" .
-  "</TD></TR><TR VALIGN='TOP'><TD>&nbsp;</TD><TD colspan='2'><span class='text'>(This is the collation setting for mysql. Leave as 'General' if you are not sure. If the language you are planning to use in PQRS Pilot is in the menu, then you can select it. Otherwise, just select 'General'.)</span><br></TD></TR>";
+  "</TD></TR><TR VALIGN='TOP'><TD>&nbsp;</TD><TD colspan='2'><span class='text'>(This is the collation setting for mysql. Leave as 'General' if you are not sure. If the language you are planning to use in MIPS Connection is in the menu, then you can select it. Otherwise, just select 'General'.)</span><br></TD></TR>";
 }
     echo "<TR VALIGN='TOP'><TD>&nbsp;</TD></TR>";
 
@@ -275,7 +275,7 @@ else {
       echo "</tr>\n";
     }
     
-    echo "<TR VALIGN='TOP' class='noclone'><TD COLSPAN=2><font color='red'>PQRS Pilot USER:</font></TD></TR>";
+    echo "<TR VALIGN='TOP' class='noclone'><TD COLSPAN=2><font color='red'>MIPS Connection USER:</font></TD></TR>";
     echo "<TR VALIGN='TOP' class='noclone'><TD><span class='text'>Initial User:</span></TD><TD><INPUT SIZE='30' TYPE='TEXT' NAME='iuser' VALUE='admin'></TD><TD><span class='text'>(This is the login name of user that will be created for you. Limit this to one word.)</span></TD></TR>
 <TR VALIGN='TOP' class='noclone'><TD><span class='text'>Initial User Password:</span></TD><TD><INPUT SIZE='30' TYPE='PASSWORD' NAME='iuserpass' VALUE=''></TD><TD><span class='text'>(This is the password for the initial user account above.)</span></TD></TR>
 <TR VALIGN='TOP' class='noclone'><TD><span class='text'>Initial User's First Name:</span></TD><TD><INPUT SIZE='30' TYPE='TEXT' NAME='iufname' VALUE='Administrator'></TD><TD><span class='text'>(This is the First name of the 'initial user'.)</span></TD></TR>
@@ -317,7 +317,7 @@ else {
     }
     
     echo "<b>Step $state</b><br><br>\n";
-    echo "Configuring PQRS Pilot...<br><br>\n";
+    echo "Configuring MIPS Connection...<br><br>\n";
 
     // Skip below if database shell has already been created.
     if ($inst != 2) {
@@ -527,7 +527,7 @@ else {
         $gotFileFlag = 1;
       }
     }
-echo "<li>To ensure proper functioning of PQRS Pilot you must make sure that settings in php.ini file include  \"short_open_tag = On\", \"display_errors = Off\", \"register_globals = Off\", \"max_execution_time\" set to at least 60, \"max_input_time\" set to at least 90, \"post_max_size\" set to at least 30M, and \"memory_limit\" set to at least \"128M\".</li>\n";
+echo "<li>To ensure proper functioning of MIPS Connection you must make sure that settings in php.ini file include  \"short_open_tag = On\", \"display_errors = Off\", \"register_globals = Off\", \"max_execution_time\" set to at least 60, \"max_input_time\" set to at least 90, \"post_max_size\" set to at least 30M, and \"memory_limit\" set to at least \"128M\".</li>\n";
 echo "<li>In order to take full advantage of the patient documents capability you must make sure that settings in php.ini file include \"file_uploads = On\", that \"upload_max_filesize\" is appropriate for your use and that \"upload_tmp_dir\" is set to a correct value that will work on your system.</li>\n";
 if (!$gotFileFlag) {
     echo "<li>If you are having difficulty finding your php.ini file, then refer to the <a href='INSTALL' target='_blank'><span STYLE='text-decoration: underline;'>'INSTALL'</span></a> manual for suggestions.</li>\n";
@@ -551,7 +551,7 @@ break;
 echo "<b>Step $state</b><br><br>\n";
 echo "Configuration of Apache web server...<br><br>\n";
 echo "The \"".preg_replace("/${site_id}/","*",realpath($docsDirectory))."\", \"".preg_replace("/${site_id}/","*",realpath($billingDirectory))."\" and \"".preg_replace("/${site_id}/","*",realpath($billingDirectory2))."\" directories contain patient information, and
-it is important to secure these directories. Additionally, some settings are required for the Zend Framework to work in PQRS Pilot. This can be done by pasting the below to end of your apache configuration file:<br>
+it is important to secure these directories. Additionally, some settings are required for the Zend Framework to work in MIPS Connection. This can be done by pasting the below to end of your apache configuration file:<br>
 &nbsp;&nbsp;&lt;Directory \"".realpath(dirname(__FILE__))."\"&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AllowOverride FileInfo<br>
 &nbsp;&nbsp;&lt;/Directory&gt;<br>
@@ -587,7 +587,7 @@ break;
 
 	case 0:
 	default:
-echo "<p>Welcome to PQRS Pilot.  This utility will step you through the installation and configuration of PQRS Pilot for your practice.</p>\n";
+echo "<p>Welcome to MIPS Connection.  This utility will step you through the installation and configuration of MIPS Connection for your practice.</p>\n";
 echo "<ul><li>Before proceeding, be sure that you have a properly installed and configured MySQL server available, and a PHP configured webserver.</li>\n";
 
 echo "<li>Detailed installation instructions can be found in the <a href='INSTALL' target='_blank'><span STYLE='text-decoration: underline;'>'INSTALL'</span></a> manual file.</li>\n";
