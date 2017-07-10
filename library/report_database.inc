@@ -61,7 +61,8 @@ function listingReportDatabase($start_date='',$end_date='') {
                            MAX(if( `field_id` = 'progress', `field_value`, 0 )) as `progress`,
                            MAX(if( `field_id` = 'total_items', `field_value`, 0 )) as `total_items`,
                            MAX(if( `field_id` = 'progress_items', `field_value`, 0 )) as `progress_items`,
-                           MAX(if( `field_id` = 'type', `field_value`, 0 )) as `type`
+                           MAX(if( `field_id` = 'type', `field_value`, 0 )) as `type`,
+                           MAX(if( `field_id` = 'title', `field_value`, 0 )) as `title`
                            FROM `report_results`
                            GROUP BY `report_id`
                          ) AS pt
