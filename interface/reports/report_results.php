@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package PQRS_Gateway
  * @author  Bryan Lee <bryan@suncoastconnection.com>
  * @author  Brady Miller <brady@sparmy.com>
  * @link    http://www.open-emr.org
@@ -245,7 +245,6 @@ require_once "$srcdir/report_database.inc";
   }
 
     // Reset the title based on a having a title in the row
-//error_log("DEBUG: title is [".$row['title']."]",0);
   if ( $row['title'] != "0" ) {
     $type_title = xl($row['title']);
   }
