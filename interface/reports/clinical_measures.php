@@ -44,7 +44,7 @@ $back_link = existsDefault($_GET, 'back');
 // If showing an old report, then collect information
 if(!empty($report_id)) {
   $report_view = collectReportDatabase($report_id);
-  
+
   //error_log("report_view is ".print_r($report_view,TRUE),0);
 
   $date_report = $report_view['date_report'];
@@ -427,7 +427,10 @@ function Form_Validate() {
     	} else {
 		$report_title="";
     	}
-	echo ("Report Title:  $report_title \n"); ?>
+	if ($report_title != "" ) {
+		echo ("Report Title:  $report_title \n");
+	}  ?>
+
                         </span>
                     </div>
 		  </td>
@@ -605,7 +608,7 @@ function Form_Validate() {
 
           if(isset($row['is_main'])) {
               $failed_items = $row['pass_filter'] - $row['pass_target'] - $row['excluded'];
-  
+
           } 
 
           if(isset($row['itemized_test_id']) && ($failed_items > 0) ) {
