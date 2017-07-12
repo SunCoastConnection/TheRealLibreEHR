@@ -19,10 +19,10 @@ namespace ESign;
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Medical Information Integration, LLC
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  **/
 
 require_once $GLOBALS['srcdir'].'/ESign/Abstract/Controller.php';
@@ -100,7 +100,7 @@ class Encounter_Controller extends Abstract_Controller
                 $message = xlt( "An error occured signing the form" );
             }
         } else {
-            $message = xlt( "The password you entered is invalid" );
+            $message = xlt( "The passphrase you entered is invalid" );
         }
         $response = new Response( $status, $message );
         $response->encounterId = $encounterId;

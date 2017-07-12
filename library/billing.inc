@@ -1,5 +1,39 @@
 <?php
-
+/*
+ *  billing inc
+ *
+ *  billing.inc contains function for billing functions
+ *
+ *  The changes to this file as of November 16 2016 to include the exclusion of information from claims
+ *  are covered under the terms of the Mozilla Public License, v. 2.0
+ *
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ *
+ * No previous copyright in header. No header present. This is an original OpenEMR program.
+ *
+ * LICENSE: This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://opensource.org/licenses/gpl-license.php.
+ *
+ * LICENSE: This Source Code is subject to the terms of the Mozilla Public License, v. 2.0.
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreEHR
+ * @author Terry Hill <teryhill@librehealth.io>
+ * no other authors were present as there was no header file.
+ * @link http://www.libreehr.org
+ *
+ * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
+ *
+ */
 // require_once("{$GLOBALS['srcdir']}/sql.inc");
 require_once(dirname(__FILE__) . "/sql.inc");
 
@@ -27,13 +61,13 @@ function getBillingByEncounter ($pid,$encounter, $cols = "code_type, code, code_
 
 function addBilling($encounter_id, $code_type, $code, $code_text, $pid,
   $authorized="0", $provider, $modifier="", $units="", $fee="0.00",
-  $ndc_info='', $justify='', $billed=0, $notecodes='')
+  $ndc_info='', $justify='', $billed=0, $notecodes='', $exclude = '0')
 {
   $sql = "insert into billing (date, encounter, code_type, code, code_text, " .
     "pid, authorized, user, groupname, activity, billed, provider_id, " .
-    "modifier, units, fee, ndc_info, justify, notecodes) values (" .
-    "NOW(), ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?)";
-  return sqlInsert($sql, array($encounter_id,$code_type,$code,$code_text,$pid,$authorized,$_SESSION['authId'],$_SESSION['authProvider'],$billed,$provider,$modifier,$units,$fee,$ndc_info,$justify,$notecodes));
+    "modifier, units, fee, ndc_info, justify, notecodes, exclude_from_insurance_billing) values (" .
+    "NOW(), ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  return sqlInsert($sql, array($encounter_id,$code_type,$code,$code_text,$pid,$authorized,$_SESSION['authId'],$_SESSION['authProvider'],$billed,$provider,$modifier,$units,$fee,$ndc_info,$justify,$notecodes, $exclude));
 }
 
 function authorizeBilling($id, $authorized = "1")
@@ -51,12 +85,10 @@ function clearBilling($id)
     sqlStatement("update billing set justify = '' where id = '$id'");
 }
 
-// This function supports the Billing page (billing_process.php), freeb
-// processing (process_bills.php), and initiation of secondary processing
+// This function supports the Billing page (billing_process.php and initiation of secondary processing
 // (sl_eob.inc.php).  It is called in the following situations:
 //
-// * billing_process.php sets bill_time, bill_process, payer and target on
-//   queueing a claim for freeb processing.  Create claims row.
+
 // * billing_process.php sets claim status to 2, and payer, on marking a
 //   claim as billed without actually generating any billing.  Create a
 //   claims row.  In this case bill_process will remain at 0 and process_time
@@ -66,11 +98,7 @@ function clearBilling($id)
 // * billing_process.php sets claim status to 2 (billed), bill_process to 2,
 //   process_time and process_file after calling gen_x12_837.  Claims row
 //   already exists.
-// * process_bills.php sets bill_process to 2, process_time, and process_file
-//   after invoking freeb to process a claim.  Claims row already exists.
-// * billing_process.php sets claim status to 2 (billed) after creating
-//   an electronic freeb batch (hcfa-only with recent changes).  Claims
-//   row already exists.
+// * process_bills.php sets bill_process to 2, process_time.  Claims row already exists.
 // * EOB posting updates claim status to mark a payer as done.  Claims row
 //   already exists.
 // * EOB posting reopens an encounter for billing a secondary payer.  Create
@@ -172,24 +200,29 @@ function updateClaim($newversion, $patient_id, $encounter_id, $payer_id=-1, $pay
       "target = '$target', " .
       "x12_partner_id = '$partner_id'";
     ****/
+    sqlBeginTrans();
+    $version = sqlQuery( "SELECT IFNULL(MAX(version),0) + 1 AS increment FROM claims WHERE patient_id = ? AND encounter_id = ?", array( $patient_id, $encounter_id ) );
     if($crossover<>1)
     {
-    $sql = "INSERT INTO claims SET " .
-      "patient_id = '$patient_id', " .
-      "encounter_id = '$encounter_id', " .
-      "bill_time = NOW() $claimset";
+      $sql .= "INSERT INTO claims SET " .
+          "patient_id = $patient_id, " .
+          "encounter_id = $encounter_id, " .
+          "bill_time = NOW() $claimset ," .
+          "version = " . $version['increment'];
       }
      else
      {//Claim automatic forward case.
      
      $sql = "INSERT INTO claims SET " .
-      "patient_id = '$patient_id', " .
-      "encounter_id = '$encounter_id', " .
-      "bill_time = NOW(), status=$status";
+          "patient_id = $patient_id, " .
+          "encounter_id = $encounter_id, " .
+          "bill_time = NOW(), status=$status ," .
+          "version = " . $version['increment'];
      
      }
     
     sqlStatement($sql);
+    sqlCommitTrans();
   }
 
   // Otherwise update the existing claim row.
@@ -205,16 +238,11 @@ function updateClaim($newversion, $patient_id, $encounter_id, $payer_id=-1, $pay
   // Whenever a claim is marked billed, update A/R accordingly.
   //
   if ($status == 2) {
-    if ($GLOBALS['oer_config']['ws_accounting']['enabled'] === 2) {
       if ($payer_type > 0) {
         sqlStatement("UPDATE form_encounter SET " .
           "last_level_billed = '$payer_type' WHERE " .
           "pid = '$patient_id' AND encounter = '$encounter_id'");
       }
-    }
-    else {
-      $ws = new WSClaim($patient_id, $encounter_id);
-    }
   }
 
   return 1;

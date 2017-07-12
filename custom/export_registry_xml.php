@@ -36,8 +36,8 @@ set_time_limit(0);
 // is increased, these cpu intensive reports will have less affect on the performance
 // of other server activities, albeit it may negatively impact the performance
 // of this report (note this is only applicable for linux).
-if (!empty($GLOBALS['clinical_measures_report_nice'])) {
-  proc_nice($GLOBALS['clinical_measures_report_nice']);
+if (!empty($GLOBALS['cdr_report_nice'])) {
+  proc_nice($GLOBALS['cdr_report_nice']);
 }
 
 function getLabelNumber($label) {
@@ -60,10 +60,13 @@ function getLabelNumber($label) {
 }
 
 function getMeasureNumber($row) {
-       if (!empty($row['pqrs_code']) ) {
-         
-         	return $row['pqrs_code'];
-     
+       if (!empty($row['cqm_pqri_code']) || !empty($row['cqm_nqf_code']) ) {
+         if (!empty($row['cqm_pqri_code'])) {
+         	return $row['cqm_pqri_code'];
+         }
+         if (!empty($row['cqm_nqf_code'])) {
+         	return $row['cqm_nqf_code'];
+         }
        }
        else 
        {
@@ -99,7 +102,7 @@ if ( $nested == 'false' ) {
 }
 else {
         // Collect results (note using the batch method to decrease memory overhead and improve performance)
-	$dataSheet = test_rules_clinic_batch_method('collate_inner','pqrs_groups_2015',$target_date,'report','cqm','plans');
+	$dataSheet = test_rules_clinic_batch_method('collate_inner','cqm_2011',$target_date,'report','cqm','plans');
 }
 
 $firstProviderFlag = TRUE;
@@ -116,7 +119,7 @@ foreach ($dataSheet as $row) {
 		if (isset($row['is_main'])) {
 			// Add PQRI measures
  			$pqri_measures = array();
-			$pqri_measures['pqrs-measure-number'] =  getMeasureNumber($row);
+			$pqri_measures['pqri-measure-number'] =  getMeasureNumber($row);
 			$pqri_measures['patient-population'] = getLabelNumber($row['population_label']);
 			$pqri_measures['numerator'] = getLabelNumber($row['numerator_label']);
 			$pqri_measures['eligible-instances'] = $row['pass_filter'];
@@ -166,8 +169,7 @@ foreach ($dataSheet as $row) {
     	}
    	
     	 if ( $nested == 'true' ){
-    	 	$xml->open_measure_group($row['pqrs_group_measure']);
-    	 //	$xml->open_measure_group($row['cqm_measure_group']);
+    	 	$xml->open_measure_group($row['cqm_measure_group']);
     	 }
 	     $firstPlanFlag = FALSE;
        	 $firstProviderFlag = TRUE; // Reset the provider flag
@@ -187,6 +189,7 @@ $xml->close_submission();
 <html>
 <head>
 <?php html_header_show();?>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>        
 <link rel=stylesheet href="<?php echo $css_header;?>" type="text/css">
 <title><?php echo htmlspecialchars( xl('Export PQRI Report'), ENT_NOQUOTES); ?></title>
 </head>

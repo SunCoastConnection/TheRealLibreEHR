@@ -147,8 +147,9 @@ unset($userlang);
 //=========================================================================
 if(!class_exists('Smarty')) {
     define('_PC_SMARTY_LOADED',true);
-    define('SMARTY_DIR',"modules/$pcDir/pnincludes/Smarty/");
-    require_once(SMARTY_DIR.'/Smarty.class.php');
+//    define('SMARTY_DIR',"modules/$pcDir/pnincludes/Smarty/");
+    define('SMARTY_DIR', $GLOBALS['srcdir'] . "/Smarty/");
+    require_once(SMARTY_DIR.'Smarty.class.php');
 }
 require_once("modules/$pcDir/pcSmarty.class.php");
 //=========================================================================
@@ -896,7 +897,7 @@ function findFirstInDay($day,$date) {
 
         if ($closest_start > ($intime_sec + 60)) {
             //echo "free time is: " . date("h:i:s A",$free_time) . "<br />";
-            //echo "next app is: " . date("h:i:s A",$closest_start) . "<br />";
+            //echo "next bootstrap is: " . date("h:i:s A",$closest_start) . "<br />";
             $duration = ($closest_start - $free_time);
             //echo "duration is: $duration<br />";
             //we allow for 0 duration events so other things such as overlap and actual times can be calculated
@@ -1255,7 +1256,7 @@ function postcalendar_userapi_buildSubmitForm($args,$admin=false)
                                   'name'=>$cell[1]));
     }
 
-    //pennfirm get list of providers from openemr code in calendar.inc
+    //pennfirm get list of providers from libreehr code in calendar.inc
     $tpl->assign("user",getCalendarProviderInfo());
 
 
@@ -1488,14 +1489,16 @@ function &postcalendar_userapi_pcGetEventDetails($eid)
          $event['startTime'],  $event['recurrtype'],  $event['recurrfreq'],
          $event['recurrspec'], $event['topic'],       $event['alldayevent'],
          $event['location'],   $event['conttel'],     $event['contname'],
-         $event['contemail'],  $event['website'],     $event['fee'], $event['sharing'],
-         $event['catcolor'],   $event['catname'],     $event['catdesc'], $event['pid'], $event['aid'],$event['pubpid']) = $result->fields;
+         $event['contemail'],  $event['website'],     $event['fee'],
+         $event['sharing'],	   $event['catcolor'],    $event['catname'],
+         $event['catdesc'],    $event['pid'],         $event['aid'],
+         $event['pubpid']) = $result->fields;
     // there has to be a more intelligent way to do this
     @list($event['duration_hours'],$dmin) = @explode('.',($event['duration']/60/60));
     $event['duration_minutes'] = substr(sprintf('%.2f','.' . 60*($dmin/100)),2,2);
     //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     $result->Close();
-    //pennfirm fix to reflect openemr user/informant
+    //pennfirm fix to reflect libreehr user/informant
     $userid = pnUserGetVar('uid');
 
     // get the user id of event's author

@@ -13,9 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 include_once("../../globals.php");
@@ -34,7 +34,7 @@ $N = 10;
 <body class="body_top">
 
 <div id="officenotes_list">
-<a href="office_comments_full.php" onclick='top.restoreSession()' <?php if (!$GLOBALS['concurrent_layout']) echo 'target="Main"'; ?>>
+<a href="office_comments_full.php" onclick='top.restoreSession()'>
 <font class="title"><?php echo xlt('Office Notes'); ?></font>
 <font class="more"><?php echo text($tmore);?></font></a>
 

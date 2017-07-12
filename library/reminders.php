@@ -22,9 +22,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 /**
@@ -33,11 +33,6 @@
 require_once(dirname(__FILE__) . "/clinical_rules.php");
 require_once(dirname(__FILE__) . "/classes/postmaster.php");
 require_once(dirname(__FILE__) . "/maviq_phone_api.php");
-
-// This is only pertinent for users of php versions less than 5.2
-//  (ie. this wrapper is only loaded when php version is less than
-//   5.2; otherwise the native php json functions are used)
-require_once(dirname(__FILE__) . "/jsonwrapper/jsonwrapper.php");
 
 /**
  * Display the patient reminder widget.

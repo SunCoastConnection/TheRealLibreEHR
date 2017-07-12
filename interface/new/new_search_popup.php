@@ -18,6 +18,7 @@ $fake_register_globals=false;
 require_once("../globals.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/formdata.inc.php");
+require_once("$srcdir/formatting.inc.php");
 
 $fstart = $_REQUEST['fstart'] + 0;
 
@@ -27,6 +28,7 @@ $searchcolor = empty($GLOBALS['layout_search_color']) ?
 <html>
 <head>
 <?php html_header_show();?>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>    
 
 <link rel=stylesheet href="<?php echo $css_header;?>" type="text/css">
 <style>
@@ -137,8 +139,8 @@ $where = "1 = 0";
 foreach ($_REQUEST as $key => $value) {
   if (substr($key, 0, 3) != 'mf_') continue; // "match field"
   $fldname = substr($key, 3);
-  // pubpid requires special treatment.  Match on that is fatal.
-  if ($fldname == 'pubpid') {
+  // pid requires special treatment.  Match on that is fatal.
+  if ($fldname == 'pid') {
     $relevance .= " + 1000 * ( ".add_escape_custom($fldname)." LIKE ? )";
     array_push($sqlBindArray, $value);
   }
@@ -229,13 +231,13 @@ while ($trow = sqlFetchArray($tres)) {
 <table>
 <tr>
 <?php
-$pubpid_matched = false;
+$pid_matched = false;
 if ($result) {
   foreach ($result as $iter) {
     $relevance = $iter['relevance'];
     if ($relevance > 999) {
       $relevance -= 999;
-      $pubpid_matched = true;
+      $pid_matched = true;
     }
     echo "<tr id='" . htmlspecialchars( $iter['pid'], ENT_QUOTES) . "' class='oneresult";
     // Highlight entries where all fields matched.
@@ -244,7 +246,7 @@ if ($result) {
     echo  "<td class='srID'>".htmlspecialchars( $relevance, ENT_NOQUOTES)."</td>\n";
     echo  "<td class='srName'>" . htmlspecialchars( $iter['lname'] . ", " . $iter['fname'], ENT_NOQUOTES) . "</td>\n";
     foreach ($extracols as $field_id => $title) {
-      echo "<td class='srMisc'>" . htmlspecialchars( $iter[$field_id], ENT_NOQUOTES) . "</td>\n";
+      echo "<td class='srMisc'>" . htmlspecialchars( oeFormatShortDate($iter[$field_id]), ENT_NOQUOTES) . "</td>\n";
     }
   }
 }
@@ -253,7 +255,7 @@ if ($result) {
 </div>  <!-- end searchResults DIV -->
 
 <center>
-<?php if ($pubpid_matched) { ?>
+<?php if ($pid_matched) { ?>
 <input type='button' value='<?php echo htmlspecialchars( xl('Cancel'), ENT_QUOTES); ?>'
  onclick='window.close();' />
 <?php } else { ?>
@@ -277,14 +279,8 @@ var SelectPatient = function (eObj) {
 // For the old layout we load a frameset that also sets up the new pid.
 // The new layout loads just the demographics frame here, which in turn
 // will set the pid and load all the other frames.
-if ($GLOBALS['concurrent_layout']) {
   $newPage = "../patient_file/summary/demographics.php?set_pid=";
   $target = "document";
-}
-else {
-  $newPage = "../patient_file/patient_file.php?set_pid=";
-  $target = "top";
-}
 ?>
   objID = eObj.id;
   var parts = objID.split("~");
@@ -294,7 +290,7 @@ else {
 }
 
 var f = opener.document.forms[0];
-<?php if ($pubpid_matched) { ?>
+<?php if ($pid_matched) { ?>
 alert('<?php echo htmlspecialchars( xl('A patient with this ID already exists.'), ENT_QUOTES); ?>')
 <?php } else { ?>
 opener.force_submit = true;

@@ -1,28 +1,21 @@
-  <?php
+<?php
 /** 
 * library/patient_tracker.inc.php Functions used in the Patient Flow Board. 
 * 
 * Functions for use in the Patient Flow Board and Patient Flow Board Reports.
 * 
 * 
-* Copyright (C) 2015 Terry Hill <terry@lillysystems.com> 
+* Copyright (C) 2015-2017 Terry Hill <teryhill@librehealth.io> 
 * 
-* LICENSE: This program is free software; you can redistribute it and/or 
-* modify it under the terms of the GNU General Public License 
-* as published by the Free Software Foundation; either version 3 
-* of the License, or (at your option) any later version. 
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-* GNU General Public License for more details. 
-* You should have received a copy of the GNU General Public License 
-* along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
+* LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
+* See the Mozilla Public License for more details. 
+* If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
 * 
-* @package OpenEMR 
-* @author Terry Hill <terry@lillysystems.com>
-* @link http://www.open-emr.org 
+* @package LibreEHR 
+* @author Terry Hill <teryhill@librehealth.io>
+* @link http://www.libreehr.org 
 *
-* Please help the overall project by sending changes you make to the author and to the OpenEMR community.
+* Please help the overall project by sending changes you make to the author and to the LibreEHR community.
 *
 */
 require_once(dirname(__FILE__) . '/appointments.inc.php');
@@ -47,11 +40,11 @@ function get_Tracker_Time_Interval ($tracker_from_time, $tracker_to_time, $allow
         $hours = floor($tracker_time_calc/60/60);
         if(strlen($days != 0)) {
           if($hours >= 2){   
-             $tracker_time .=  ", $hours " . x1('hours'); 
+             $tracker_time .=  ", $hours " . xl('hours'); 
           }
           else
           {
-             $tracker_time .=  ", $hours " . x1('hour');   
+             $tracker_time .=  ", $hours " . xl('hour');   
           }
         }
         else
@@ -143,14 +136,14 @@ function get_Tracker_Time_Interval ($tracker_from_time, $tracker_to_time, $allow
     return $tracker_time ;
 } 
 
-function fetch_Patient_Tracker_Events($from_date, $to_date) 
+function fetch_Patient_Tracker_Events($from_date, $to_date, $provider_id = null, $facility_id = null, $form_apptstatus = null, $form_apptcat =null)
 {
     # used to determine which providers to display in the Patient Tracker
+    if ($provider_id == 'ALL'){
+      //set null to $provider id if it's 'all'
     $provider_id = null;
-    if ($_SESSION['userauthorized'] && $GLOBALS['docs_see_entire_calendar'] !='1') {
-      $provider_id = $_SESSION[authUserID];
     }
-    $events = fetchAppointments( $from_date, $to_date, null, $provider_id, null, null, null, null, null, true );
+    $events = fetchAppointments( $from_date, $to_date, null, $provider_id, $facility_id, $form_apptstatus, null, null, $form_apptcat, true );
     return $events;
 }
 
@@ -189,7 +182,7 @@ if ($enc_yn['encounter'] == '0' || $enc_yn == '0') return(false);
 function manage_tracker_status($apptdate,$appttime,$eid,$pid,$user,$status='',$room='',$enc_id='') {
 
   #First ensure the eid is not a recurrent appointment. If it is, then do not do anything and return false.
-  $pc_appt =  sqlQuery("SELECT `pc_recurrtype` FROM `openemr_postcalendar_events` WHERE `pc_eid` = ?", array($eid));
+  $pc_appt =  sqlQuery("SELECT `pc_recurrtype` FROM `libreehr_postcalendar_events` WHERE `pc_eid` = ?", array($eid));
   if ($pc_appt['pc_recurrtype'] != 0) {
     return false;
   }
@@ -227,7 +220,7 @@ function manage_tracker_status($apptdate,$appttime,$eid,$pid,$user,$status='',$r
     $tracker_id = $tracker['id'];
     if (($status != $tracker['laststatus']) || ($room != $tracker['lastroom'])) {
       #Status or room has changed, so need to update tracker.
-      #Update lastseq in tracker.	  
+      #Update lastseq in tracker.
 	   sqlStatement("UPDATE `patient_tracker` SET  `lastseq` = ? WHERE `id` = ?",
                    array(($tracker['lastseq']+1),$tracker_id));
       #Add a tracker item.
@@ -235,19 +228,21 @@ function manage_tracker_status($apptdate,$appttime,$eid,$pid,$user,$status='',$r
                 "(`pt_tracker_id`, `start_datetime`, `user`, `status`, `room`, `seq`) " .
                 "VALUES (?,?,?,?,?,?)",
                 array($tracker_id,$datetime,$user,$status,$room,($tracker['lastseq']+1)));
+        do_action( 'tracker_status_changed', $args = [ 'tracker_id' => $tracker_id, 'current_status' => $status, 'last_status' => $tracker['laststatus'] ] );
     }
     if (!empty($enc_id)) {
       #enc_id (encounter number) is not blank, so update this in tracker.
       sqlStatement("UPDATE `patient_tracker` SET `encounter` = ? WHERE `id` = ?", array($enc_id,$tracker_id));
     }  
   }
+
   #Ensure the entry in calendar appt entry has been updated.
-  $pc_appt =  sqlQuery("SELECT `pc_apptstatus`, `pc_room` FROM `openemr_postcalendar_events` WHERE `pc_eid` = ?", array($eid));
+  $pc_appt =  sqlQuery("SELECT `pc_apptstatus`, `pc_room` FROM `libreehr_postcalendar_events` WHERE `pc_eid` = ?", array($eid));
   if ($status != $pc_appt['pc_apptstatus']) {
-    sqlStatement("UPDATE `openemr_postcalendar_events` SET `pc_apptstatus` = ? WHERE `pc_eid` = ?", array($status,$eid));
+    sqlStatement("UPDATE `libreehr_postcalendar_events` SET `pc_apptstatus` = ? WHERE `pc_eid` = ?", array($status,$eid));
   }
   if ($room != $pc_appt['pc_room']) {
-    sqlStatement("UPDATE `openemr_postcalendar_events` SET `pc_room` = ? WHERE `pc_eid` = ?", array($room,$eid));
+    sqlStatement("UPDATE `libreehr_postcalendar_events` SET `pc_room` = ? WHERE `pc_eid` = ?", array($room,$eid));
   }
   if( $GLOBALS['drug_screen'] && !empty($status)  && is_checkin($status)) {
     $yearly_limit = $GLOBALS['maximum_drug_test_yearly'];
@@ -352,5 +347,17 @@ function random_drug_test($tracker_id,$percentage,$yearly_limit) {
                  "random_drug_test = ? " .
                  "WHERE id =? ", array($drugtest,$tracker_id)); 
   }
+}
+
+/* get information the statuses of the appointments*/
+function getApptStatus($appointments){
+
+    $astat = array();
+    $astat['count_all'] = count($appointments);
+    //group the appointment by status
+    foreach($appointments as $appointment){
+        $astat[$appointment['pc_apptstatus']] += 1;
+    }
+    return $astat;
 }
 ?>

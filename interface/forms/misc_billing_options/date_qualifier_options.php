@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 $box_14_qualifier_options=array(array(xl("Onset of Current Symptoms or Illness"),"431"),

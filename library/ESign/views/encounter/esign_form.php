@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Medical Information Integration, LLC
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  **/
 ?>
 <div id='esign-form-container'>
@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="esign-signature-form-element">
-		      <label for='password'><?php echo xlt('Password');?></label> 
+		      <label for='password'><?php echo xlt('Pass Phrase');?></label> 
 		      <input type='password' id='password' name='password' size='10' />
 		</div>
 		

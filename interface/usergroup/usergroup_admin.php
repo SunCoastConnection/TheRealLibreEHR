@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Roberto Vasquez <robertogagliotta@gmail.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 require_once("../globals.php");
@@ -25,7 +25,6 @@ require_once("../../library/acl.inc");
 require_once("$srcdir/sql.inc");
 require_once("$srcdir/auth.inc");
 require_once("$srcdir/formdata.inc.php");
-require_once(dirname(__FILE__) . "/../../library/classes/WSProvider.class.php");
 require_once ($GLOBALS['srcdir'] . "/classes/postmaster.php");
 
 $alertmsg = '';
@@ -40,15 +39,15 @@ $mail_id = explode(".",$SMTP_HOST);
 for($i=0;$i<$bg_count;$i++){
 if(($_GET['access_group'][$i] == "Emergency Login") && ($_GET['active'] == 'on') && ($_GET['pre_active'] == 0)){
   if(($_GET['get_admin_id'] == 1) && ($_GET['admin_id'] != "")){
-	$res = sqlStatement("select username from users where id= ? ", array($_GET["id"]));
-	$row = sqlFetchArray($res);
-	$uname=$row['username'];
-	$mail = new MyMailer();
+    $res = sqlStatement("select username from users where id= ? ", array($_GET["id"]));
+    $row = sqlFetchArray($res);
+    $uname=$row['username'];
+    $mail = new MyMailer();
         $mail->SetLanguage("en",$GLOBALS['fileroot'] . "/library/" );
         $mail->From = "admin@".$mail_id[1].".".$mail_id[2];     
-        $mail->FromName = "Administrator OpenEMR";
+        $mail->FromName = "Administrator LibreEHR";
         $text_body  = "Hello Security Admin,\n\n The Emergency Login user ".$uname.
-                                                " was activated at ".date('l jS \of F Y h:i:s A')." \n\nThanks,\nAdmin OpenEMR.";
+                                                " was activated at ".date('l jS \of F Y h:i:s A')." \n\nThanks,\nAdmin LibreEHR.";
         $mail->Body = $text_body;
         $mail->Subject = "Emergency Login User Activated";
         $mail->AddAddress($_GET['admin_id']);
@@ -126,6 +125,10 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
               $tqvar = formData('fname','P');
               sqlStatement("update users set fname='$tqvar' where id= ? ", array($_POST["id"]));
       }
+      if ($_POST["suffix"]) {
+              $tqvar = formData('suffix','P');
+              sqlStatement("update users set suffix='$tqvar' where id= ? ", array($_POST["id"]));
+      }
 
       //(CHEMED) Calendar UI preference
       if ($_POST["cal_ui"]) {
@@ -165,12 +168,6 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         }
      }
 
-      // for relay health single sign-on
-      if (isset($_POST["ssi_relayhealth"]) && $_POST["ssi_relayhealth"]) {
-        $tqvar = formData('ssi_relayhealth','P');
-        sqlStatement("update users set ssi_relayhealth = '$tqvar' where id = ? ", array($_POST["id"]));
-      }
-
       $tqvar  = $_POST["authorized"] ? 1 : 0;
       $actvar = $_POST["active"]     ? 1 : 0;
       $calvar = $_POST["calendar"]   ? 1 : 0;
@@ -186,24 +183,24 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         }
       }
       if(($_POST['access_group'])){
-	for($i=0;$i<$bg_count;$i++){
+    for($i=0;$i<$bg_count;$i++){
         if(($_POST['access_group'][$i] == "Emergency Login") && ($_POST['user_type']) == "" && ($_POST['check_acl'] == 1) && ($_POST['active']) != ""){
          $set_active_msg=1;
         }
       }
-    }	
+    }   
       if ($_POST["comments"]) {
         $tqvar = formData('comments','P');
         sqlStatement("update users set info = '$tqvar' where id = ? ", array($_POST["id"]));
       }
-	$erxrole = formData('erxrole','P');
-	sqlStatement("update users set newcrop_user_role = '$erxrole' where id = ? ", array($_POST["id"]));
+    $erxrole = formData('erxrole','P');
+    sqlStatement("update users set newcrop_user_role = '$erxrole' where id = ? ", array($_POST["id"]));
 
-	  if ($_POST["physician_type"]) {
-		$physician_type = formData('physician_type');
-		sqlStatement("update users set physician_type = '$physician_type' where id = ? ", array($_POST["id"]));
-	  }
-	  
+      if ($_POST["physician_type"]) {
+        $physician_type = formData('physician_type');
+        sqlStatement("update users set physician_type = '$physician_type' where id = ? ", array($_POST["id"]));
+      }
+      
       if (isset($phpgacl_location) && acl_check('admin', 'acl')) {
         // Set the access control group of user
         $user_data = sqlFetchArray(sqlStatement("select username from users where id= ?", array($_POST["id"])));
@@ -211,7 +208,7 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
           formData('fname','P'), formData('mname','P'), formData('lname','P'));
       }
 
-      $ws = new WSProvider($_POST['id']);
+        do_action( 'usergroup_admin_save', $_POST );
 
     }
 }
@@ -241,6 +238,8 @@ if (isset($_POST["mode"])) {
     if($GLOBALS['password_expiration_days'] != 0){
     $exp_days = $GLOBALS['password_expiration_days'];
     $exp_date = date('Y-m-d', strtotime("+$exp_days days"));
+    } else {
+        $exp_date = date('Y-m-d');
     }
     
     $insertUserSQL=            
@@ -250,10 +249,11 @@ if (isset($_POST["mode"])) {
             "', fname = '"         . trim(formData('fname'        )) .
             "', mname = '"         . trim(formData('mname'        )) .
             "', lname = '"         . trim(formData('lname'        )) .
+            "', suffix = '"        . trim(formData('suffix'       )) .
             "', federaltaxid = '"  . trim(formData('federaltaxid' )) .
             "', state_license_number = '"  . trim(formData('state_license_number' )) .
             "', newcrop_user_role = '"  . trim(formData('erxrole' )) .
-			"', physician_type = '"  . trim(formData('physician_type' )) .
+            "', physician_type = '"  . trim(formData('physician_type' )) .
             "', authorized = '"    . trim(formData('authorized'   )) .
             "', info = '"          . trim(formData('info'         )) .
             "', federaldrugid = '" . trim(formData('federaldrugid')) .
@@ -291,8 +291,6 @@ if (isset($_POST["mode"])) {
         set_user_aro($_POST['access_group'], trim(formData('rumple')),
           trim(formData('fname')), trim(formData('mname')), trim(formData('lname')));
       }
-
-      $ws = new WSProvider($prov_id);
         
     }
 
@@ -302,12 +300,12 @@ if (isset($_POST["mode"])) {
       $alertmsg .= xl('User','','',' ') . trim(formData('rumple')) . xl('already exists.','',' ');
     }
    if($_POST['access_group']){
-	 $bg_count=count($_POST['access_group']);
+     $bg_count=count($_POST['access_group']);
          for($i=0;$i<$bg_count;$i++){
           if($_POST['access_group'][$i] == "Emergency Login"){
              $set_active_msg=1;
            }
-	}
+    }
       }
   }
   else if ($_POST["mode"] == "new_group") {
@@ -396,17 +394,17 @@ $(document).ready(function(){
     tabbify();
 
     // special size for
-	$(".iframe_medium").fancybox( {
-		'overlayOpacity' : 0.0,
-		'showCloseButton' : true,
-		'frameHeight' : 450,
-		'frameWidth' : 660
-	});
-	
-	$(function(){
-		// add drag and drop functionality to fancybox
-		$("#fancy_outer").easydrag();
-	});
+    $(".iframe_medium").fancybox( {
+        'overlayOpacity' : 0.0,
+        'showCloseButton' : true,
+        'frameHeight' : 450,
+        'frameWidth' : 660
+    });
+    
+    $(function(){
+        // add drag and drop functionality to fancybox
+        $("#fancy_outer").easydrag();
+    });
 });
 
 </script>
@@ -426,21 +424,21 @@ function authorized_clicked() {
 <div>
     <div>
        <table>
-	  <tr >
-		<td><b><?php xl('User / Groups','e'); ?></b></td>
-		<td><a href="usergroup_admin_add.php" class="iframe_medium css_button"><span><?php xl('Add User','e'); ?></span></a>
-		</td>
-		<td><a href="facility_user.php" class="css_button"><span><?php xl('View Facility Specific User Information','e'); ?></span></a>
-		</td>
-	  </tr>
-	</table>
+      <tr >
+        <td><b><?php echo xlt('User / Groups'); ?></b></td>
+        <td><a href="usergroup_admin_add.php" class="iframe_medium css_button"><span><?php echo xlt('Add User'); ?></span></a>
+        </td>
+        <td><a href="facility_user.php" class="css_button"><span><?php echo xlt('View Facility Specific User Information'); ?></span></a>
+        </td>
+      </tr>
+    </table>
     </div>
     <div style="width:650px;">
         <div>
 
 <form name='userlist' method='post' action='usergroup_admin.php' onsubmit='return top.restoreSession()'>
     <input type='checkbox' name='form_inactive' value='1' onclick='submit()' <?php if ($form_inactive) echo 'checked '; ?>/>
-    <span class='text' style = "margin-left:-3px"> <?php xl('Include inactive users','e'); ?> </span>
+    <span class='text' style = "margin-left:-3px"> <?php echo xlt('Include inactive users'); ?> </span>
 </form>
 <?php
 if($set_active_msg == 1){
@@ -453,13 +451,13 @@ if ($show_message == 1){
 
 ?>
 <table cellpadding="1" cellspacing="0" class="showborder">
-	<tbody><tr height="22" class="showborder_head">
-		<th width="180px"><b><?php xl('Username','e'); ?></b></th>
-		<th width="270px"><b><?php xl('Real Name','e'); ?></b></th>
-		<th width="320px"><b><span class="bold"><?php xl('Additional Info','e'); ?></span></b></th>
-		<th><b><?php xl('Authorized','e'); ?>?</b></th>
+    <tbody><tr height="22" class="showborder_head">
+        <th width="180px"><b><?php echo xlt('Username'); ?></b></th>
+        <th width="270px"><b><?php echo xlt('Real Name'); ?></b></th>
+        <th width="320px"><b><span class="bold"><?php echo xlt('Additional Info'); ?></span></b></th>
+        <th><b><?php echo xlt('Authorized'); ?>?</b></th>
 
-		<?php
+        <?php
 $query = "SELECT * FROM users WHERE username != '' ";
 if (!$form_inactive) $query .= "AND active = '1' ";
 $query .= "ORDER BY username";
@@ -473,17 +471,17 @@ foreach ($result4 as $iter) {
       $iter{"authorized"} = "";
   }
   print "<tr height=20  class='text' style='border-bottom: 1px dashed;'>
-		<td class='text'><b><a href='user_admin.php?id=" . $iter{"id"} .
+        <td class='text'><b><a href='user_admin.php?id=" . $iter{"id"} .
     "' class='iframe_medium' onclick='top.restoreSession()'><span>" . $iter{"username"} . "</span></a></b>" ."&nbsp;</td>
-	<td><span class='text'>" . attr($iter{"fname"}) . ' ' . attr($iter{"lname"}) ."</span>&nbsp;</td>
-	<td><span class='text'>" . attr($iter{"info"}) . "</span>&nbsp;</td>
-	<td align='left'><span class='text'>" .$iter{"authorized"} . "</span>&nbsp;</td>";
+    <td><span class='text'>" . attr($iter{"fname"}) . ' ' . attr($iter{"lname"}) ."</span>&nbsp;</td>
+    <td><span class='text'>" . attr($iter{"info"}) . "</span>&nbsp;</td>
+    <td align='left'><span class='text'>" .$iter{"authorized"} . "</span>&nbsp;</td>";
   print "<td><!--<a href='usergroup_admin.php?mode=delete&id=" . $iter{"id"} .
     "' class='link_submit'>[Delete]</a>--></td>";
   print "</tr>\n";
 }
 ?>
-	</tbody></table>
+    </tbody></table>
 <?php
 if (empty($GLOBALS['disable_non_default_groups'])) {
   $res = sqlStatement("select * from groups order by name");

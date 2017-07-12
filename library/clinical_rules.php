@@ -14,11 +14,6 @@ require_once(dirname(__FILE__) . "/formdata.inc.php");
 require_once(dirname(__FILE__) . "/options.inc.php");
 require_once(dirname(__FILE__) . "/report_database.inc");
 
-// This is only pertinent for users of php versions less than 5.2
-//  (ie. this wrapper is only loaded when php version is less than
-//   5.2; otherwise the native php json functions are used)
-require_once(dirname(__FILE__) . "/jsonwrapper/jsonwrapper.php");
-
 /**
  * Return listing of CDR reminders in log.
  *
@@ -460,7 +455,7 @@ function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget 
   $batchSize = (empty($batchSize) ? 100 : $batchSize);
 
   // Collect total number of pertinent patients (to calculate batching parameters)
-  $totalNumPatients = buildPatientArray('', $provider, $pat_prov_rel, null, null, true);
+  $totalNumPatients = buildPatientArray('',$provider,$pat_prov_rel,NULL,NULL,TRUE);
 
   // Cycle through the batches and collect/combine results
 
@@ -1053,7 +1048,7 @@ function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'pr
 $query = "SELECT DISTINCT p.pid FROM patient_data p ".
 " JOIN insurance_data i on (i.pid=p.pid) ".
 " JOIN insurance_companies c on (c.id = i.provider) ".
-" WHERE c.freeb_type = 2 ".
+" WHERE c.ins_type_code = 2 ".
 " ORDER BY p.pid";
 	}
 
@@ -1077,7 +1072,7 @@ $query = "SELECT DISTINCT p.pid FROM patient_data p ".
 $query = "SELECT DISTINCT fe.pid FROM form_encounter fe ".
 " INNER JOIN insurance_data i on (i.pid=fe.pid) ".
 " INNER JOIN insurance_companies c on (c.id = i.provider) ".
-" WHERE c.freeb_type = 2 ".
+" WHERE c.ins_type_code = 2 ".
 " AND (fe.provider_id = ? OR fe.supervisor_id = ?)".
 " ORDER BY fe.pid";
 	}
@@ -1821,15 +1816,15 @@ function appointment_check($patient_id,$dateTarget='') {
 
   // Basically, if the appointment is within the current date to the target date,
   //  then return true. (will not send reminders on same day as appointment)
-  $sql = sqlStatementCdrEngine("SELECT openemr_postcalendar_events.pc_eid, " .
-    "openemr_postcalendar_events.pc_title, " .
-    "openemr_postcalendar_events.pc_eventDate, " .
-    "openemr_postcalendar_events.pc_startTime, " .
-    "openemr_postcalendar_events.pc_endTime " .
-    "FROM openemr_postcalendar_events " .
-    "WHERE openemr_postcalendar_events.pc_eventDate > ? " .
-    "AND openemr_postcalendar_events.pc_eventDate <= ? " .
-    "AND openemr_postcalendar_events.pc_pid = ?", array($currentDate,$dateTarget,$patient_id) );
+  $sql = sqlStatementCdrEngine("SELECT libreehr_postcalendar_events.pc_eid, " .
+    "libreehr_postcalendar_events.pc_title, " .
+    "libreehr_postcalendar_events.pc_eventDate, " .
+    "libreehr_postcalendar_events.pc_startTime, " .
+    "libreehr_postcalendar_events.pc_endTime " .
+    "FROM libreehr_postcalendar_events " .
+    "WHERE libreehr_postcalendar_events.pc_eventDate > ? " .
+    "AND libreehr_postcalendar_events.pc_eventDate <= ? " .
+    "AND libreehr_postcalendar_events.pc_pid = ?", array($currentDate,$dateTarget,$patient_id) );
 
   // return results of check
   //

@@ -1,8 +1,8 @@
 <?php
 /**
-* Sql functions/classes for OpenEMR.
+* Sql functions/classes for LibreHealth EHR.
 *
-* Includes classes and functions that OpenEMR uses
+* Includes classes and functions that LibreHealth EHR uses
 * to interact with SQL.
 *
 * LICENSE: This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://opensource.org/licenses/gpl-license.php>.
 * 
-* @package   OpenEMR
-* @link      http://www.open-emr.org
+* @package   LibreHealth EHR
+* @link      http://librehealth.io
 */
 
 require_once(dirname(__FILE__) . "/sqlconf.php");
@@ -26,20 +26,20 @@ require_once(dirname(__FILE__) . "/adodb/drivers/adodb-mysqli.inc.php");
 require_once(dirname(__FILE__) . "/log.inc");
 
 /**
-* ADODB_mysql class wrapper to ensure proper auditing in OpenEMR.
+* ADODB_mysql class wrapper to ensure proper auditing in LibreEHR.
 *
 * @author  Kevin Yeh <kevin.y@integralemr.com>
 */
 class ADODB_mysqli_log extends ADODB_mysqli
 {
         /**
-        * ADODB Execute function wrapper to ensure proper auditing in OpenEMR.
+        * ADODB Execute function wrapper to ensure proper auditing in LibreEHR.
         *
         * @param  string  $sql         query
         * @param  array   $inputarr    binded variables array (optional)
         * @return boolean              returns false if error
         */
-    	function Execute($sql,$inputarr=false)
+        function Execute($sql,$inputarr=false)
         {
             $retval= parent::Execute($sql,$inputarr);
             if ($retval === false) {
@@ -62,9 +62,9 @@ class ADODB_mysqli_log extends ADODB_mysqli
         }
 
         /**
-        * ADODB Execute function wrapper to skip auditing in OpenEMR.
+        * ADODB Execute function wrapper to skip auditing in LibreEHR.
         *
-        * Bypasses the OpenEMR auditing engine.
+        * Bypasses the LibreEHR auditing engine.
         *
         * @param  string  $sql         query
         * @param  array   $inputarr    binded variables array (optional)
@@ -76,10 +76,10 @@ class ADODB_mysqli_log extends ADODB_mysqli
         }
 
         /*
-        * ADODB GenID function wrapper to work with OpenEMR.
+        * ADODB GenID function wrapper to work with LibreEHR.
         *
         * Need to override to fix a bug where call to GenID was updating
-        * sequences table but always returning a zero with the OpenEMR audit
+        * sequences table but always returning a zero with the LibreEHR audit
         * engine both on and off. Note this bug only appears to occur in recent
         * php versions on windows. The fix is to use the ExecuteNoLog() function
         * rather than the Execute() functions within this function (otherwise,
@@ -132,7 +132,7 @@ $GLOBALS['dbh'] = $database->_connectionID;
 if (!$disable_utf8_flag) {
  $success_flag = $database->Execute("SET NAMES 'utf8'");
   if (!$success_flag) {
-   error_log("PHP custom error: from openemr library/sql.inc  - Unable to set up UTF8 encoding with mysql database: ".getSqlLastError(), 0);
+   error_log("PHP custom error: from librehealth ehr library/sql.inc  - Unable to set up UTF8 encoding with mysql database: ".getSqlLastError(), 0);
   }
 }
 
@@ -153,7 +153,7 @@ if (!$GLOBALS['dbh']) {
 }//if no connection
 
 /**
-* Standard sql query in OpenEMR.
+* Standard sql query in LibreEHR.
 *
 * Function that will allow use of the adodb binding
 * feature to prevent sql-injection. Will continue to
@@ -169,6 +169,9 @@ if (!$GLOBALS['dbh']) {
 */
 function sqlStatement($statement, $binds=false )
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   // Use adodb Execute with binding and return a recordset.
   //   Note that the auditSQLEvent function is embedded
   //    in the Execute command.
@@ -180,7 +183,7 @@ function sqlStatement($statement, $binds=false )
 }
 
 /**
-* Specialized sql query in OpenEMR that skips auditing.
+* Specialized sql query in LibreEHR that skips auditing.
 *
 * Function that will allow use of the adodb binding
 * feature to prevent sql-injection. Will continue to
@@ -199,6 +202,9 @@ function sqlStatement($statement, $binds=false )
 */
 function sqlStatementNoLog($statement, $binds=false )
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   // Use adodb ExecuteNoLog with binding and return a recordset.
   $recordset = $GLOBALS['adodb']['db']->ExecuteNoLog( $statement, $binds );
   if ($recordset === FALSE) {
@@ -208,7 +214,7 @@ function sqlStatementNoLog($statement, $binds=false )
 }
 
 /**
-* sqlStatement() function wrapper for CDR engine in OpenEMR.
+* sqlStatement() function wrapper for CDR engine in LibreEHR.
 * Allows option to turn on/off auditing specifically for the
 * CDR engine.
 * 
@@ -218,6 +224,9 @@ function sqlStatementNoLog($statement, $binds=false )
 */
 function sqlStatementCdrEngine($statement, $binds=false )
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   if ($GLOBALS['audit_events_cdr']) {
     return sqlStatement($statement,$binds);
   }
@@ -252,6 +261,23 @@ function sqlFetchArray($r)
 }
 
 /**
+ * Wrapper for ADODB getAssoc
+ * 
+ * @see http://adodb.org/dokuwiki/doku.php?id=v5:reference:connection:getassoc
+ * 
+ * @param string $sql
+ * @param string[] $bindvars
+ * @param boolean $forceArray
+ * @param boolean $first2Cols
+ * @return array
+ */
+function sqlGetAssoc( $sql, $bindvars=false, $forceArray=false, $first2Cols=false ) {
+  
+  return $GLOBALS['adodb']['db']->getAssoc( $sql, $bindvars, $forceArray, $first2Cols  );
+  
+}
+
+/**
 * Standard sql insert query in OpenEMR.
 *
 * Function that will allow use of the adodb binding
@@ -265,6 +291,9 @@ function sqlFetchArray($r)
 */
 function sqlInsert($statement, $binds=false)
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   //Run a adodb execute
   // Note the auditSQLEvent function is embedded in the
   //   Execute function.
@@ -278,7 +307,7 @@ function sqlInsert($statement, $binds=false)
 }
 
 /**
-* Specialized sql query in OpenEMR that only returns
+* Specialized sql query in LibreEHR that only returns
 * the first row of query results as an associative array.
 *
 * Function that will allow use of the adodb binding
@@ -290,6 +319,9 @@ function sqlInsert($statement, $binds=false)
 */
 function sqlQuery($statement, $binds=false)
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   $recordset = $GLOBALS['adodb']['db']->Execute( $statement, $binds );
 
   if ($recordset === FALSE) {
@@ -304,7 +336,7 @@ function sqlQuery($statement, $binds=false)
 }
 
 /**
-* Specialized sql query in OpenEMR that bypasses the auditing engine
+* Specialized sql query in LibreEHR that bypasses the auditing engine
 * and only returns the first row of query results as an associative array.
 *
 * Function that will allow use of the adodb binding
@@ -319,6 +351,9 @@ function sqlQuery($statement, $binds=false)
 */
 function sqlQueryNoLog($statement, $binds=false)
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   $recordset = $GLOBALS['adodb']['db']->ExecuteNoLog( $statement, $binds );
 
   if ($recordset === FALSE) {
@@ -333,7 +368,7 @@ function sqlQueryNoLog($statement, $binds=false)
 }
 
 /**
-* Specialized sql query in OpenEMR that ignores sql errors, bypasses the
+* Specialized sql query in LibreEHR that ignores sql errors, bypasses the
 * auditing engine and only returns the first row of query results as an
 * associative array.
 *
@@ -349,6 +384,9 @@ function sqlQueryNoLog($statement, $binds=false)
 */
 function sqlQueryNoLogIgnoreError($statement, $binds=false)
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   $recordset = $GLOBALS['adodb']['db']->ExecuteNoLog( $statement, $binds );
 
   if ($recordset === FALSE) {
@@ -364,7 +402,7 @@ function sqlQueryNoLogIgnoreError($statement, $binds=false)
 }
 
 /**
-* sqlQuery() function wrapper for CDR engine in OpenEMR.
+* sqlQuery() function wrapper for CDR engine in LibreEHR.
 * Allows option to turn on/off auditing specifically for the
 * CDR engine.
 *
@@ -374,6 +412,9 @@ function sqlQueryNoLogIgnoreError($statement, $binds=false)
 */
 function sqlQueryCdrEngine($statement, $binds=false )
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   if ($GLOBALS['audit_events_cdr']) {
     return sqlQuery($statement,$binds);
   }
@@ -383,7 +424,7 @@ function sqlQueryCdrEngine($statement, $binds=false )
 }
 
 /**
-* Specialized sql query in OpenEMR that skips auditing.
+* Specialized sql query in LibreEHR that skips auditing.
 *
 * This function should only be used in very special situations.
 *
@@ -459,7 +500,7 @@ function sqlNumRows($r)
 }
 
 /**
-* Error function for OpenEMR sql functions
+* Error function for LibreEHR sql functions
 *
 * @param string $statement
 * @param string $sqlerr
@@ -478,16 +519,6 @@ function HelpfulDie ($statement, $sqlerr='')
       $info=$backtrace[$level];
       echo "<br>".text($info["file"]." at ".$info["line"].":".$info["function"]);
       if($level>1){
-          foreach($info['args'] as $argn => $argv) {
-            switch (gettype($argv)) {
-              case 'object':
-                $info['args'][$argn] = get_class($argv);
-                break;
-              case 'array':
-                $info['args'][$argn] = 'array('.count($argv).')';
-                break;
-            }
-          }
           echo "(".text(implode(",",$info["args"])).")";
       }
   }
@@ -506,7 +537,7 @@ function generate_id () {
 }
 
 /**
-* Deprecated function. Standard sql query in OpenEMR.
+* Deprecated function. Standard sql query in LibreEHR.
 *
 * Function that will allow use of the adodb binding
 * feature to prevent sql-injection. Will continue to
@@ -523,6 +554,9 @@ function generate_id () {
 */
 function sqlQ($statement, $binds=false )
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   $recordset = $GLOBALS['adodb']['db']->Execute( $statement, $binds ) or
     HelpfulDie("query failed: $statement", getSqlLastError());
   return $recordset;
@@ -541,6 +575,9 @@ function sqlQ($statement, $binds=false )
 */
 function idSqlStatement($statement , $binds=false )
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   return sqlInsert($statement, $binds);
 }
 
@@ -557,6 +594,9 @@ function idSqlStatement($statement , $binds=false )
 */
 function sqlInsertClean($statement, $binds=false )
 {
+  // Below line is to avoid a nasty bug in windows.
+  if (empty($binds)) $binds = false;
+
   return sqlInsert($statement, $binds);
 }
 
@@ -615,10 +655,37 @@ function generic_sql_affected_rows()
  * Generic mysql insert id function
  * Used when converted to mysqli to centralize special circumstances.
  *
-				 */
+                 */
 function generic_sql_insert_id()
 {
   return mysqli_insert_id($GLOBALS['dbh']);
+}
+
+
+/**
+ * Begin a Transaction.
+ */
+function sqlBeginTrans()
+{
+    $GLOBALS['adodb']['db']->BeginTrans();
+}
+
+
+/**
+ * Commit a transaction
+ */
+function sqlCommitTrans($ok=true)
+{
+    $GLOBALS['adodb']['db']->CommitTrans();
+}
+
+
+/**
+ * Rollback a transaction
+ */
+function sqlRollbackTrans()
+{
+    $GLOBALS['adodb']['db']->RollbackTrans();
 }
 
 ?>

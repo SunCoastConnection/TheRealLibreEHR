@@ -16,18 +16,28 @@
  * You should have received a copy of the GNU General Public License 
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author Rod Roark <rod@sunsetsystems.com>
  * @author Roberto Vasquez <robertogagliotta@gmail.com>
- * @link http://www.open-emr.org
+ * @link http://librehealth.io
 */
+
+ $fake_register_globals=false;
+ $sanitize_all_escapes=true;
 
  include_once("../../globals.php");
  include_once("$srcdir/patient.inc");
-
+ ?>
+    <script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
+    <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-1.9.1.min.js"></script>
+<?php
+require_once($GLOBALS['srcdir']."/appointments.inc.php");
+require_once($GLOBALS['srcdir']."/formatting.inc.php");
+$DateFormat = DateFormatRead();
+$DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
  // check access controls
  if (!acl_check('patients','appt','',array('write','wsome') ))
-  die(xl('Access not allowed'));
+  die(xlt('Access not allowed'));
 
  // If the caller is updating an existing event, then get its ID so
  // we don't count it as a reserved time slot.
@@ -35,9 +45,13 @@
 
  $input_catid = $_REQUEST['catid'];
 
+ // These are the default "overbooked" statuses, which means that
+ // Even though there is an event, an appointment can be booked
+ $overbookStatuses = array_map('trim', explode( ',', $GLOBALS['appt_overbook_statuses'] ) );
+
  // Record an event into the slots array for a specified day.
- function doOneDay($catid, $udate, $starttime, $duration, $prefcatid) {
-  global $slots, $slotsecs, $slotstime, $slotbase, $slotcount, $input_catid;
+ function doOneDay($catid, $udate, $starttime, $duration, $prefcatid, $apptstatus) {
+  global $slots, $slotsecs, $slotstime, $slotbase, $slotcount, $input_catid, $overbookStatuses;
   $udate = strtotime($starttime, $udate);
   if ($udate < $slotstime) return;
   $i = (int) ($udate / $slotsecs) - $slotbase;
@@ -61,6 +75,9 @@
    } else if ($catid == 3) { // out of office
     $slots[$i] |= 2;
     break; // ignore any positive duration for OUT
+   } else if ( in_array( $apptstatus, $overbookStatuses ) ) {
+     // The slot can be overbooked IF the appointment is in this status
+     $slots[$i] |= 1;
    } else { // all other events reserve time
     $slots[$i] |= 4;
    }
@@ -72,7 +89,7 @@
 
  $catslots = 1;
  if ($input_catid) {
-  $srow = sqlQuery("SELECT pc_duration FROM openemr_postcalendar_categories WHERE pc_catid = ?", array($input_catid) );
+  $srow = sqlQuery("SELECT pc_duration FROM libreehr_postcalendar_categories WHERE pc_catid = ?", array($input_catid) );
   if ($srow['pc_duration']) $catslots = ceil($srow['pc_duration'] / $slotsecs);
  }
 
@@ -101,7 +118,7 @@
  $slotbase  = (int) ($slotstime / $slotsecs);
  $slotcount = (int) ($slotetime / $slotsecs) - $slotbase;
 
- if ($slotcount <= 0 || $slotcount > 100000) die("Invalid date range.");
+ if ($slotcount <= 0 || $slotcount > 100000) die(xlt("Invalid date range"));
 
  $slotsperday = (int) (60 * 60 * 24 / $slotsecs);
 
@@ -130,14 +147,14 @@
 
   // Note there is no need to sort the query results.
   $query = "SELECT pc_eventDate, pc_endDate, pc_startTime, pc_duration, " .
-   "pc_recurrtype, pc_recurrspec, pc_alldayevent, pc_catid, pc_prefcatid " .
-   "FROM openemr_postcalendar_events " .
+   "pc_recurrtype, pc_recurrspec, pc_alldayevent, pc_catid, pc_prefcatid, pc_apptstatus " .
+   "FROM libreehr_postcalendar_events " .
    "WHERE pc_aid = ? AND " .
-   "pc_eid != '$eid' AND " .
-   "((pc_endDate >= '$sdate' AND pc_eventDate < '$edate') OR " .
-   "(pc_endDate = '0000-00-00' AND pc_eventDate >= '$sdate' AND pc_eventDate < '$edate'))";
+   "pc_eid != ? AND " .
+   "((pc_endDate >= ? AND pc_eventDate < ? ) OR " .
+   "(pc_endDate = '0000-00-00' AND pc_eventDate >= ? AND pc_eventDate < ?))";
 
-   array_push($sqlBindArray, $providerid);
+   array_push($sqlBindArray, $providerid, $eid, $sdate, $edate, $sdate, $edate);
 
   // phyaura whimmel facility filtering
   if ($_REQUEST['facility'] > 0 ) {
@@ -188,7 +205,7 @@
      // not the desired occurrence, or if this date is in the exception array.
      if (!$repeatix && !in_array($thisymd, $exdates)) {
       doOneDay($row['pc_catid'], $thistime, $row['pc_startTime'],
-       $row['pc_duration'], $row['pc_prefcatid']);
+       $row['pc_duration'], $row['pc_prefcatid'], $row['pc_apptstatus']);
      }
      if (++$repeatix >= $repeatfreq) $repeatix = 0;
 
@@ -230,7 +247,7 @@
        else
         $adate['mday'] += 1;
       } else {
-       die("Invalid repeat type '$repeattype'");
+       die("Invalid repeat type '" . text($repeattype) ."'");
       }
      } // end recurrtype 1
 
@@ -238,7 +255,7 @@
     }
    } else {
     doOneDay($row['pc_catid'], $thistime, $row['pc_startTime'],
-     $row['pc_duration'], $row['pc_prefcatid']);
+     $row['pc_duration'], $row['pc_prefcatid'], $row['pc_apptstatus']);
    }
   }
 
@@ -263,17 +280,18 @@
   $cktime = 0 + $_REQUEST['cktime'];
   $ckindex = (int) ($cktime * 60 / $slotsecs);
   for ($j = $ckindex; $j < $ckindex + $evslots; ++$j) {
-	  if ($slots[$j] >= 4) {
-		$ckavail = false;
-		$isProv = FALSE;
-		if(isset($prov[$j])){
-			$isProv = 'TRUE';
-		}
-	  }
+      if ($slots[$j] >= 4) {
+        $ckavail = false;
+        $isProv = FALSE;
+        if(isset($prov[$j])){
+            $isProv = 'TRUE';
+        }
+      }
   }
   if ($ckavail) {
     // The chosen appointment time is available.
-    echo "<html><script language='JavaScript'>\n";
+    echo "<html>"
+      . "<script language='JavaScript'>\n";
     echo "function mytimeout() {\n";
     echo " opener.top.restoreSession();\n";
     echo " opener.document.forms[0].submit();\n";
@@ -290,23 +308,17 @@
 <html>
 <head>
 <?php html_header_show(); ?>
-<title><?php xl('Find Available Appointments','e'); ?></title>
+<title><?php echo xlt('Find Available Appointments'); ?></title>
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
 
-<!-- for the pop up calendar -->
-<style type="text/css">@import url(../../../library/dynarch_calendar.css);</style>
-<script type="text/javascript" src="../../../library/dynarch_calendar.js"></script>
-<?php include_once("{$GLOBALS['srcdir']}/dynarch_calendar_en.inc.php"); ?>
-<script type="text/javascript" src="../../../library/dynarch_calendar_setup.js"></script>
 
 <!-- for ajax-y stuff -->
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-1.2.2.min.js"></script>
 
 <script language="JavaScript">
 
  function setappt(year,mon,mday,hours,minutes) {
   if (opener.closed || ! opener.setappt)
-   alert('<?php xl('The destination form was closed; I cannot act on your selection.','e'); ?>');
+   alert('<?php echo xls('The destination form was closed; I cannot act on your selection.'); ?>');
   else
    opener.setappt(year,mon,mday,hours,minutes);
   window.close();
@@ -375,17 +387,13 @@ form {
 
 <div id="searchCriteria">
 <form method='post' name='theform' action='find_appt_popup.php?providerid=<?php echo attr($providerid) ?>&catid=<?php echo attr($input_catid) ?>'>
-   <?php xl('Start date:','e'); ?>
-   <input type='text' name='startdate' id='startdate' size='10' value='<?php echo $sdate ?>'
-    title='yyyy-mm-dd starting date for search' />
-   <img src='../../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-    id='img_date' border='0' alt='[?]' style='cursor:pointer'
-    title='<?php xl('Click here to choose a date','e'); ?>'>
-   <?php xl('for','e'); ?>
+   <?php echo xlt('Start date:'); ?>
+   <input type='text' name='startdate' id='startdate' size='10' value='<?php echo htmlspecialchars(oeFormatShortDate(attr($sdate))) ?>'/>
+   <?php echo xlt('for'); ?>
    <input type='text' name='searchdays' size='3' value='<?php echo attr($searchdays) ?>'
-    title='Number of days to search from the start date' />
-   <?php xl('days','e'); ?>&nbsp;
-   <input type='submit' value='<?php xl('Search','e'); ?>'>
+    title='<?php echo xla('Number of days to search from the start date'); ?>' />
+   <?php echo xlt('days'); ?>&nbsp;
+   <input type='submit' value='<?php echo xla('Search'); ?>'>
 </div>
 
 <?php if (!empty($slots)) : ?>
@@ -393,8 +401,8 @@ form {
 <div id="searchResultsHeader">
 <table>
  <tr>
-  <th class="srDate"><?php xl ('Day','e'); ?></th>
-  <th class="srTimes"><?php xl ('Available Times','e'); ?></th>
+  <th class="srDate"><?php echo xlt('Day'); ?></th>
+  <th class="srTimes"><?php echo xlt('Available Times'); ?></th>
  </tr>
 </table>
 </div>
@@ -454,7 +462,7 @@ form {
         echo "</td>\n";
         echo " </tr>\n";
     } else {
-        echo " <tr><td colspan='2'> " . xl('No openings were found for this period.','e') . "</td></tr>\n";
+        echo " <tr><td colspan='2'> " . xlt('No openings were found for this period.') . "</td></tr>\n";
     }
 ?>
 </table>
@@ -465,9 +473,11 @@ form {
 </form>
 </body>
 
+<link rel="stylesheet" href="../../../library/css/jquery.datetimepicker.css">
+<script type="text/javascript" src="../../../library/js/jquery.datetimepicker.full.min.js"></script>
+
 <!-- for the pop up calendar -->
 <script language='JavaScript'>
- Calendar.setup({inputField:"startdate", ifFormat:"%Y-%m-%d", button:"img_date"});
 
 // jQuery stuff to make the page a little easier to use
 
@@ -477,15 +487,20 @@ $(document).ready(function(){
     $(".oneresult a").mouseover(function () { $(this).toggleClass("blue_highlight"); $(this).children().toggleClass("blue_highlight"); });
     $(".oneresult a").mouseout(function() { $(this).toggleClass("blue_highlight"); $(this).children().toggleClass("blue_highlight"); });
     //$(".event").dblclick(function() { EditEvent(this); });
+    $("#startdate").datetimepicker({
+        timepicker: false,
+        format: "<?= $DateFormat; ?>"
+    });
+    $.datetimepicker.setLocale('<?= $DateLocale;?>');
 });
 
 
 <?php if (!$ckavail) { ?>
 <?php if (acl_check('patients','appt','','write')) {
 if($isProv): ?>
-if (confirm('<?php echo addslashes(xl('Provider not available, use it anyway?')); ?>')) {
+if (confirm('<?php echo xls('Provider not available, use it anyway?'); ?>')) {
 <?php else: ?>
-if (confirm('<?php echo addslashes(xl('This appointment slot is already used, use it anyway?')); ?>')) {
+if (confirm('<?php echo xls('This appointment slot is already used, use it anyway?'); ?>')) {
 <?php endif; ?>
 opener.top.restoreSession();
 opener.document.forms[0].submit();
@@ -493,9 +508,9 @@ window.close();
 }
 <?php } else {
 if($isProv): ?>
-alert('<?php echo addslashes(xl('Provider not available, please choose another.')); ?>');
+alert('<?php echo xls('Provider not available, please choose another.'); ?>');
 <?php else: ?>
-alert('<?php echo addslashes(xl('This appointment slot is already used, please choose another.')); ?>');
+alert('<?php echo xls('This appointment slot is already used, please choose another.'); ?>');
 <?php endif; ?>
 <?php } ?>
 <?php } ?>

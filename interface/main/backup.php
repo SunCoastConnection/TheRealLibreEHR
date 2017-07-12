@@ -11,22 +11,16 @@
 // This script creates a backup tarball and sends it to the users's
 // browser for download.  The tarball includes:
 //
-// * an OpenEMR database dump (gzipped)
+// * an LibreHealth EHR database dump (gzipped)
 // * a phpGACL database dump (gzipped), if phpGACL is used and has
 //   its own database
-// * a SQL-Ledger database dump (gzipped), if SQL-Ledger is used
-//   (currently skipped on Windows servers)
-// * the OpenEMR web directory (.tar.gz)
+// * the LibreHealth EHR web directory (.tar.gz)
 // * the phpGACL web directory (.tar.gz), if phpGACL is used
-// * the SQL-Ledger web directory (.tar.gz), if SQL-Ledger is used
-//   and its web directory exists as a sister of the openemr directory
-//   and has the name "sql-ledger" (otherwise we do not have enough
-//   information to find it)
 //
-// The OpenEMR web directory is important because it includes config-
+// The LibreHealth EHR web directory is important because it includes config-
 // uration files, patient documents, and possible customizations, and
 // also because the database structure is dependent on the installed
-// OpenEMR version.
+// LibreHealth EHR version.
 //
 // This script depends on execution of some external programs:
 // mysqldump & pg_dump.  It has been tested with Debian and Ubuntu
@@ -88,14 +82,14 @@ $auto_continue = false;
 # set up main paths
 $backup_file_prefix = "emr_backup";
 $backup_file_suffix = ".tar";
-$TMP_BASE = $GLOBALS['temporary_files_dir'] . "/openemr_web_backup";
+$TMP_BASE = $GLOBALS['temporary_files_dir'] . "/libreehr_web_backup";
 $BACKUP_DIR = $TMP_BASE . "/emr_backup";
 $TAR_FILE_PATH = $TMP_BASE . DIRECTORY_SEPARATOR . $backup_file_prefix . $backup_file_suffix;
-$EXPORT_FILE = $GLOBALS['temporary_files_dir'] . "/openemr_config.sql";
+$EXPORT_FILE = $GLOBALS['temporary_files_dir'] . "/libreehr_config.sql";
 $MYSQL_PATH = $GLOBALS['mysql_bin_dir'];
 $PERL_PATH = $GLOBALS['perl_bin_dir'];
 
-if ($form_step == 8) {
+if ($form_step == 6) {
   header("Pragma: public");
   header("Expires: 0");
   header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
@@ -174,13 +168,13 @@ if ($form_step == 0) {
 }
 
 if ($form_step == 1) {
-  $form_status .= xl('Dumping OpenEMR database') . "...<br />";
+  $form_status .= xl('Dumping LibreEHR database') . "...<br />";
   echo nl2br($form_status);
   if (file_exists($TAR_FILE_PATH))
     if (! unlink($TAR_FILE_PATH)) die(xl("Couldn't remove old backup file:") . " " . $TAR_FILE_PATH);
   if (! obliterate_dir($TMP_BASE)) die(xl("Couldn't remove dir:"). " " . $TMP_BASE);
   if (! mkdir($BACKUP_DIR, 0777, true)) die(xl("Couldn't create backup dir:") . " " . $BACKUP_DIR);
-  $file_to_compress = "$BACKUP_DIR/openemr.sql";   // gzip this file after creation
+  $file_to_compress = "$BACKUP_DIR/libreehr.sql";   // gzip this file after creation
   
   if($GLOBALS['include_de_identification']==1)
   {
@@ -222,31 +216,7 @@ if ($form_step == 2) {
 }
 
 if ($form_step == 3) {
-  if ($GLOBALS['oer_config']['ws_accounting']['enabled'] &&
-      $GLOBALS['oer_config']['ws_accounting']['enabled'] !== 2) {
-    if (IS_WINDOWS) {
-      // Somebody may want to make this work in Windows, if they have SQL-Ledger set up.
-      $form_status .= xl('Skipping SQL-Ledger dump - not implemented for Windows server') . "...<br />";
-      echo nl2br($form_status);
-      ++$form_step;
-    }
-    else {
-      $form_status .= xl('Dumping SQL-Ledger database') . "...<br />";
-      echo nl2br($form_status);
-      $file_to_compress = "$BACKUP_DIR/sql-ledger.sql";   // gzip this file after creation
-      $cmd = "PGPASSWORD=" . escapeshellarg($sl_dbpass) . " pg_dump -U " .
-        escapeshellarg($sl_dbuser) . " -h localhost --format=c -f " .
-        "$file_to_compress " . escapeshellarg($sl_dbname);
-      $auto_continue = true;
-    }
-  }
-  else {
-    ++$form_step;
-  }
-}
-
-if ($form_step == 4) {
-  $form_status .= xl('Dumping OpenEMR web directory tree') . "...<br />";
+  $form_status .= xl('Dumping LibreEHR web directory tree') . "...<br />";
   echo nl2br($form_status);
   $cur_dir = getcwd();
   chdir($webserver_root);
@@ -268,14 +238,14 @@ if ($form_step == 4) {
   }
   closedir($dh);
 
-  $arch_file = $BACKUP_DIR . DIRECTORY_SEPARATOR . "openemr.tar.gz";
+  $arch_file = $BACKUP_DIR . DIRECTORY_SEPARATOR . "libreehr.tar.gz";
   if (!create_tar_archive($arch_file, "gz", $file_list))
-    die(xl("An error occurred while dumping OpenEMR web directory tree"));
+    die(xl("An error occurred while dumping LibreEHR web directory tree"));
   chdir($cur_dir);
   $auto_continue = true;
 }
 
-if ($form_step == 5) {
+if ($form_step == 4) {
   if ((!empty($phpgacl_location)) && ($phpgacl_location != $srcdir."/../gacl") ) {
     $form_status .= xl('Dumping phpGACL web directory tree') . "...<br />";
     echo nl2br($form_status);
@@ -293,28 +263,7 @@ if ($form_step == 5) {
   }
 }
 
-if ($form_step == 6) {
-  if ($GLOBALS['oer_config']['ws_accounting']['enabled'] &&
-    $GLOBALS['oer_config']['ws_accounting']['enabled'] !== 2 &&
-    is_dir("$webserver_root/../sql-ledger"))
-  {
-    $form_status .= xl('Dumping SQL-Ledger web directory tree') . "...<br />";
-    echo nl2br($form_status);
-    $cur_dir = getcwd();
-    $arch_dir = $webserver_root . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "sql-ledger";
-    chdir($arch_dir);
-    $file_list = array('.');    // archive entire directory
-    $arch_file = $BACKUP_DIR . DIRECTORY_SEPARATOR . "sql-ledger.tar.gz";
-    if (!create_tar_archive($arch_file, "gz", $file_list))
-      die(xl("An error occurred while dumping SQL-Ledger web directory tree"));
-    chdir($cur_dir);
-    $auto_continue = true;
-  }
-  else {
-    ++$form_step;
-  }
-}
-if ($form_step == 7) {   // create the final compressed tar containing all files
+if ($form_step == 5) {   // create the final compressed tar containing all files
   $form_status .= xl('Backup file has been created. Will now send download.') . "<br />";
   echo nl2br($form_status);
   $cur_dir = getcwd();
@@ -619,9 +568,9 @@ if ($cmd) {
   {
     if ($eventlog==1)
      {
-	// ViSolve : Restore previous state, if backup fails.
+    // ViSolve : Restore previous state, if backup fails.
          $res=sqlStatement("drop table if exists log_comment_encrypt");
-       	 $res=sqlStatement("rename table log_comment_encrypt_backup to log_comment_encrypt");
+         $res=sqlStatement("rename table log_comment_encrypt_backup to log_comment_encrypt");
          $res=sqlStatement("drop table if exists log");
          $res=sqlStatement("rename table log_backup to log");
      }
@@ -634,7 +583,7 @@ if ($cmd) {
         echo "<br><b>";
         echo xl('Backup Successfully taken in')." ";
         echo  $BACKUP_EVENTLOG_DIR; 
-		echo "</b>";
+        echo "</b>";
      }
  //  ViSolve:  If the Eventlog is set, then clear the temporary table  -- Ends here
 }

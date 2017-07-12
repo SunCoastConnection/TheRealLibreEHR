@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
  * @author  Brady Miller <brady@sparmy.com>
  * @author  Kevin Yeh <kevin.y@integralemr.com>
@@ -22,7 +22,8 @@
  * @author  Julia Longtin <julialongtin@diasp.org>
  * @author  cfapress
  * @author  markleeds
- * @link    http://www.open-emr.org
+ * @author  tmccormick  <tony@mi-squared.com>
+ * @link    http://librehealth.io
  */
 
 $fake_register_globals=false;
@@ -40,8 +41,7 @@ include_once("$srcdir/sql.inc");
 
 <script language='JavaScript' src="../../library/js/jquery-1.4.3.min.js"></script>
 <script language='JavaScript'>
-function transmit_form()
-{
+        function transmit_form() {
     document.forms[0].submit();
 }
 function imsubmitted() {
@@ -60,7 +60,6 @@ function imsubmitted() {
 <body onload="javascript:document.login_form.authUser.focus();" >
 <span class="text"></span>
 <center>
-
 <form method="POST"
  action="../main/main_screen.php?auth=login&site=<?php echo attr($_SESSION['site_id']); ?>"
  target="_top" name="login_form" onsubmit="return imsubmitted();">
@@ -83,8 +82,7 @@ for ($iter = 0;$row = sqlFetchArray($res2);$iter++)
 if (count($result2) == 1) {
           $defaultLangID = $result2[0]{"lang_id"};
           $defaultLangName = $result2[0]{"lang_description"};
-}
-else {
+        } else {
           //default to english if any problems
           $defaultLangID = 1;
           $defaultLangName = "English";
@@ -96,12 +94,10 @@ if ($GLOBALS['language_menu_login']) {
     
         // sorting order of language titles depends on language translation options.
         $mainLangID = empty($_SESSION['language_choice']) ? '1' : $_SESSION['language_choice'];
-        if ($mainLangID == '1' && !empty($GLOBALS['skip_english_translation']))
-        {
+            if ($mainLangID == '1' && !empty($GLOBALS['skip_english_translation'])) {
           $sql = "SELECT *,lang_description as trans_lang_description FROM lang_languages ORDER BY lang_description, lang_id";
 	  $res3=SqlStatement($sql);
-        }
-        else {
+            } else {
           // Use and sort by the translated language name.
           $sql = "SELECT ll.lang_id, " .
             "IF(LENGTH(ld.definition),ld.definition,ll.lang_description) AS trans_lang_description, " .
@@ -120,8 +116,7 @@ if ($GLOBALS['language_menu_login']) {
 	       //default to english if only return one language
                echo "<input type='hidden' name='languageChoice' value='1' />\n";
         }
-}
-else {
+        } else {
         echo "<input type='hidden' name='languageChoice' value='".attr($defaultLangID)."' />\n";   
 }
 ?>
@@ -130,7 +125,6 @@ else {
 <td align='center' valign='middle' width='34%'>
 <div class="login-box">
 <div class="logo-left"><?php echo $logocode;?></div>
-
 <div class="table-right">
 <table width="100%">
 <?php if (count($result) != 1) { ?>
@@ -144,48 +138,56 @@ else {
 	}
 ?>
 </select>
-</td></tr>
+                                    </td>
+                                </tr>
 <?php } ?>
 
 <?php if (isset($_SESSION['loginfailure']) && ($_SESSION['loginfailure'] == 1)): ?>
-<tr><td colspan='2' class='text' style='color:red'>
+                                <tr>
+                                    <td colspan='2' class='text' style='color:red'>
 <?php echo xlt('Invalid username or pass phrase'); ?>
-</td></tr>
+                                    </td>
+                                </tr>
 <?php endif; ?>
 
 <?php if (isset($_SESSION['relogin']) && ($_SESSION['relogin'] == 1)): ?>
-<tr><td colspan='2' class='text' style='color:red;background-color:#dfdfdf;border:solid 1px #bfbfbf;text-align:center'>
-<b><?php echo xlt('Pass phrase security has recently been upgraded.'); ?><br>
+                                <tr>
+                                    <td colspan='2' class='text'
+                                        style='color:red;background-color:#dfdfdf;border:solid 1px #bfbfbf;text-align:center'>
+                                        <b><?php echo xlt('Pass Phrase security has recently been upgraded.'); ?><br>
 <?php echo xlt('Please login again.'); ?></b>
 <?php unset($_SESSION['relogin']); ?>
-</td></tr>
+                                    </td>
+                                </tr>
 <?php endif; ?>
-
+			    <!-- Fixing height and width of input box.-->
 <tr>
-<td><span class="text"><?php echo xlt('User Name:'); ?></span></td>
+                                <td><span class="text"><?php echo xlt('Username'); ?></span></td>
 <td>
-<input class="entryfield" type="text" size="25" name="authUser">
-</td></tr><tr>
-<td><span class="text"><?php echo xlt('Pass Phrase:'); ?></span></td>
+                                    <input class="entryfield" type="text" size="35" name="authUser" style = "height : 28px; width : 100%; margin-left : 0px; border : 1px solid black">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="text"><?php echo xlt('Pass Phrase'); ?></span></td>
 <td>
-<input class="entryfield" type="password" size="25" name="clearPass">
-</td></tr>
+                                    <input class="entryfield" type="password" size="35" name="clearPass" style = "height : 28px; width : 100%; margin-left : 0px; border : 1px solid black">
+                                </td>
+                            </tr>
 
 <?php
 if ($GLOBALS['language_menu_login']) {
 if (count($result3) != 1) { ?>
 <tr>
-<td><span class="text"><?php echo xlt('Language'); ?>:</span></td>
+                                        <td><span class="text"><?php echo xlt('Language'); ?></span></td>
 <td>
-<select class="entryfield" name=languageChoice size="1">
+                                            <select class="entryfield" name=languageChoice size="1" style = "height : 28px">
 <?php
         echo "<option selected='selected' value='" . attr($defaultLangID) . "'>" . xlt('Default') . " - " . xlt($defaultLangName) . "</option>\n";
         foreach ($result3 as $iter) {
 	        if ($GLOBALS['language_menu_showall']) {
                     if ( !$GLOBALS['allow_debug_language'] && $iter[lang_description] == 'dummy') continue; // skip the dummy language
                     echo "<option value='".attr($iter['lang_id'])."'>".text($iter['trans_lang_description'])."</option>\n";
-		}
-	        else {
+                                                    } else {
 		    if (in_array($iter[lang_description], $GLOBALS['language_menu_show'])) {
                         if ( !$GLOBALS['allow_debug_language'] && $iter['lang_description'] == 'dummy') continue; // skip the dummy language
 		        echo "<option value='".attr($iter['lang_id'])."'>" . text($iter['trans_lang_description']) . "</option>\n";
@@ -194,30 +196,41 @@ if (count($result3) != 1) { ?>
         }
 ?>
 </select>
-</td></tr>
-<?php }} ?>
+                                        </td>
+                                    </tr>
+                                <?php }
+                            } ?>
 
-<tr><td>&nbsp;</td><td>
-<input class="button large" type="submit" onClick="transmit_form()" value="<?php echo xla('Login');?>">
-</td></tr>
-<tr><td colspan='2' class='text' style='color:red'>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <input class="button large" type="submit" onClick="transmit_form()"
+                                           value="<?php echo xla('Login'); ?>">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan='2' class='text' style='color:red'>
 <?php
 $ip=$_SERVER['REMOTE_ADDR'];
 ?>
 </div>
-</td></tr>
+            </td>
+            </tr>
 </table>
 
 </div>
 <div style="clear: both;"> </div>
 <div class="version">
-<?php echo "v".text($openemr_version) ?> | <a  href="../../acknowledge_license_cert.html" target="main"><?php echo xlt('Acknowledgments, Licensing and Certification'); ?></a>
+            <?php echo "v" . text($libreehr_version) ?> | <a href="../../acknowledge_license_cert.html" target="main"><?php echo xlt('Acknowledgments, Licensing and Certification'); ?></a>
+            <img src="<?php echo $GLOBALS['webroot']?>/interface/pic/LibreEHR_shield.png"
+                 alt="Powered by LibreHealth EHR"
+                 style="height: 64px"/>
 </div>
 </div>
 <div class="demo">
-		<!-- Uncomment this for the OpenEMR demo installation
-		<p><center>login = admin
-		<br>password = pass
+            <!-- Uncomment this for the LibreHealth EHR demo installation
+            <p><center>login = demo
+            <br>pass phrase = I am Free!
 		-->
 </div>
 </td>

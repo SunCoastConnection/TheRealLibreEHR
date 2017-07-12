@@ -6,9 +6,10 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 //
-// This may be run after an upgraded OpenEMR has been installed.
-// Its purpose is to upgrade the MySQL OpenEMR database as needed
+// This may be run after an upgraded LibreHealth EHR has been installed.
+// Its purpose is to upgrade the MySQL LibreHealth EHR database as needed
 // for the new release.
+
 
 // Disable PHP timeout.  This will not work in safe mode.
 ini_set('max_execution_time', '0');
@@ -18,6 +19,7 @@ $ignoreAuth = true; // no login required
 require_once('interface/globals.php');
 require_once('library/sql.inc');
 require_once('library/sql_upgrade_fx.php');
+
 
 // Force logging off
 $GLOBALS["enable_auditlog"]=0;
@@ -38,12 +40,13 @@ ksort($versions);
 ?>
 <html>
 <head>
-<title>OpenEMR Database Upgrade</title>
+<title>LibreHealth EHR Database Upgrade</title>
 <link rel='STYLESHEET' href='interface/themes/style_blue.css'>
+<link rel="shortcut icon" href="public/images/favicon.ico" />
 </head>
 <body>
 <center>
-<span class='title'>OpenEMR Database Upgrade</span>
+<span class='title'>LibreHealth EHR Database Upgrade</span>
 <br>
 </center>
 <?php
@@ -53,11 +56,6 @@ if (!empty($_POST['form_submit'])) {
   foreach ($versions as $version => $filename) {
     if (strcmp($version, $form_old_version) < 0) continue;
     upgradeFromSqlFile($filename);
-  }
-
-  if (!empty($GLOBALS['ippf_specific'])) {
-    // Upgrade custom stuff for IPPF.
-    upgradeFromSqlFile('ippf_upgrade.sql');
   }
 
   if ( (!empty($v_realpatch)) && ($v_realpatch != "") && ($v_realpatch > 0) ) {
@@ -72,7 +70,7 @@ if (!empty($_POST['form_submit'])) {
   foreach ($GLOBALS_METADATA as $grpname => $grparr) {
     foreach ($grparr as $fldid => $fldarr) {
       list($fldname, $fldtype, $flddef, $flddesc) = $fldarr;
-      if (substr($fldtype, 0, 2) !== 'm_') {
+      if ( is_array($fldtype) || (substr($fldtype, 0, 2) !== 'm_') ) {
         $row = sqlQuery("SELECT count(*) AS count FROM globals WHERE gl_name = '$fldid'");
         if (empty($row['count'])) {
           sqlStatement("INSERT INTO globals ( gl_name, gl_index, gl_value ) " .
@@ -109,15 +107,17 @@ if (!empty($_POST['form_submit'])) {
 <?php
 foreach ($versions as $version => $filename) {
   echo " <option value='$version'";
-  // Defaulting to most recent version, which is now 4.3.0.
-  if ($version === '4.3.0') echo " selected";
+  // Defaulting to most recent version, which is now 1.0.1.
+  if ($version === '1.0.1') echo " selected";
   echo ">$version</option>\n";
 }
 ?>
 </select>
 </p>
-<p>If you are unsure or were using a development version between two
+<!--<p>If you are unsure or were using a development version between two
 releases, then choose the older of possible releases.</p>
+<p style="color:red">If you are upgrading from a version below 5.0.0 to version 5.0.0 or greater, do note that this upgrade can take anywhere from several minutes to several hours (you will only see a whitescreen until it is complete; do not stop the script before it is complete or you risk corrupting your data).</p>
+-->
 <p><input type='submit' name='form_submit' value='Upgrade Database' /></p>
 </form>
 </center>

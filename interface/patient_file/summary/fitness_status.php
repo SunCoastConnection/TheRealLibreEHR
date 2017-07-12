@@ -13,8 +13,6 @@ require_once("$srcdir/lists.inc");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/formatting.inc.php");
 
-$accounting_enabled = $GLOBALS['oer_config']['ws_accounting']['enabled'];
-
 // Get relevant ACL info.
 $auth_notes_a  = acl_check('encounters', 'notes_a');
 $auth_notes    = acl_check('encounters', 'notes');
@@ -42,14 +40,8 @@ if (!($auth_notes_a || $auth_notes || $auth_relaxed)) {
 
  function toencounter(enc, datestr) {
   top.restoreSession();
-<?php if ($GLOBALS['concurrent_layout']) { ?>
   parent.parent.left_nav.setEncounter(datestr, enc, parent.window.name);
-  parent.parent.left_nav.setRadio(parent.window.name, 'enc');
   parent.location.href  = '../encounter/encounter_top.php?set_encounter=' + enc;
-<?php } else { ?>
-  top.Title.location.href = '../encounter/encounter_title.php?set_encounter='   + enc;
-  top.Main.location.href  = '../encounter/patient_encounter.php?set_encounter=' + enc;
-<?php } ?>
  }
 
 </script>

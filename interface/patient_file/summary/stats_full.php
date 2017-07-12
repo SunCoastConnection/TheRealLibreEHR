@@ -1,11 +1,28 @@
 <?php
-/**
+/*
+ * Stats Full
+ *
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io> 
  * Copyright (C) 2005-2014 Rod Roark <rod@sunsetsystems.com>
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * LICENSE: This program is free software; you can redistribute it and/or 
+ * modify it under the terms of the GNU General Public License 
+ * as published by the Free Software Foundation; either version 3 
+ * of the License, or (at your option) any later version. 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
+ * 
+ * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreHealth EHR 
+ * @author Rod Roark <rod@sunsetsystems.com>
+ * @link http://librehealth.io 
  */
 
 //SANITIZE ALL ESCAPES
@@ -78,20 +95,14 @@ function educlick(codetype, codevalue) {
   dlgopen('../education.php?type=' + encodeURIComponent(codetype) +
     '&code=' + encodeURIComponent(codevalue) +
     '&language=<?php echo urlencode($language); ?>',
-    '_blank', 1024, 750);
+    '_blank', 1024, 750,true); // Force a new window instead of iframe to address cross site scripting potential
 }
 
 // Add Encounter button is clicked.
 function newEncounter() {
  var f = document.forms[0];
  top.restoreSession();
-<?php if ($GLOBALS['concurrent_layout']) { ?>
- parent.left_nav.setRadio(window.name, 'nen');
- location.href='../../forms/newpatient/new.php?autoloaded=1&calenc=';
-<?php } else { ?>
- top.Title.location.href='../encounter/encounter_title.php';
- top.Main.location.href='../encounter/patient_encounter.php?mode=new';
-<?php } ?>
+ location.href='../../forms/patient_encounter/new.php?autoloaded=1&calenc=';
 }
 
 </script>
@@ -151,11 +162,7 @@ foreach ($ISSUE_TYPES as $focustype => $focustitles) {
     <?php if ($focustype == "allergy") { ?>
       <th style='text-align:left'><?php echo xlt('Reaction'); ?></th>
     <?php } ?>
-    <?php if ($GLOBALS['athletic_team']) { ?>
-      <th style='text-align:left'><?php echo xlt('Missed'); ?></th>
-    <?php } else { ?>
-      <th style='text-align:left'><?php echo xlt('Referred By'); ?></th>
-    <?php } ?>
+    <th style='text-align:left'><?php echo xlt('Referred By'); ?></th>
     <th style='text-align:left'><?php echo xlt('Modify Date'); ?></th>
     <th style='text-align:left'><?php echo xlt('Comments'); ?></th>
     <th><?php echo xlt('Enc'); ?></th>
@@ -228,8 +235,8 @@ foreach ($ISSUE_TYPES as $focustype => $focustitles) {
 
     echo " <tr class='$bgclass detail' $colorstyle>\n";
     echo "  <td style='text-align:left' class='$click_class' id='$rowid'>" . text($disptitle) . "</td>\n";
-    echo "  <td>" . text($row['begdate']) . "&nbsp;</td>\n";
-    echo "  <td>" . text($row['enddate']) . "&nbsp;</td>\n";
+    echo "  <td>" . text(date(DateFormatRead(true), strtotime($row['begdate']))) . "&nbsp;</td>\n";
+    echo "  <td>" . text(date(DateFormatRead(true), strtotime($row['enddate']))) . "&nbsp;</td>\n";
     // both codetext and statusCompute have already been escaped above with htmlspecialchars)
     echo "  <td>" . $codetext . "</td>\n";
     echo "  <td>" . $statusCompute . "&nbsp;</td>\n";
@@ -241,12 +248,7 @@ foreach ($ISSUE_TYPES as $focustype => $focustitles) {
         echo generate_display_field(array('data_type'=>'1','list_id'=>'reaction'), $row['reaction']);
       echo "</td>\n";
     }
-    if ($GLOBALS['athletic_team']) {
-        echo "  <td class='center'>" . $row['extrainfo'] . "</td>\n"; // games missed
-    }
-    else {
-        echo "  <td>" . text($row['referredby']) . "</td>\n";
-    }
+    echo "  <td>" . text($row['referredby']) . "</td>\n";
     echo "  <td>" . text($row['modifydate']) . "</td>\n";
     echo "  <td>" . text($row['comments']) . "</td>\n";
     echo "  <td id='e_$rowid' class='noclick center' title='" . xla('View related encounters') . "'>";
@@ -287,22 +289,12 @@ $(document).ready(function(){
 
 var GotoHistory = function() {
     top.restoreSession();
-<?php if ($GLOBALS['concurrent_layout']): ?>
-    parent.left_nav.setRadio(window.name,'his');
     location.href='../history/history_full.php';
-<?php else: ?>
-    location.href='../history/history_full.php';
-<?php endif; ?>
 }
 
 var GoBack = function () {
     top.restoreSession();
-<?php if ($GLOBALS['concurrent_layout']): ?>
-    parent.left_nav.setRadio(window.name,'dem');
     location.href='demographics.php';
-<?php else: ?>
-    location.href="patient_summary.php";
-<?php endif; ?>
 }
 
 </script>

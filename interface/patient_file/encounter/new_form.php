@@ -18,19 +18,15 @@ $esignApi = new Esign\Api();
 
 function openNewForm(sel) {
  top.restoreSession();
-<?php if ($GLOBALS['concurrent_layout']) { ?>
   FormNameValueArray = sel.split('formname=');
-  if(FormNameValueArray[1] == 'newpatient')
+  if(FormNameValueArray[1] == 'patient_encounter')
    {
-    parent.location.href = sel
+    parent.location.href = sel;
    }
   else
    {
-	parent.Forms.location.href = sel;
+    parent.Forms.location.href = sel;
    }
-<?php } else { ?>
-  top.frames['Main'].location.href = sel;
-<?php } ?>
 }
 function toggleFrame1(fnum) {
   top.frames['left_nav'].document.forms[0].cb_top.checked=false;
@@ -39,35 +35,35 @@ function toggleFrame1(fnum) {
 </script>
 <style type="text/css">
 #sddm
-{	margin: 0;
-	padding: 0;
-	z-index: 30;
+{   margin: 0;
+    padding: 0;
+    z-index: 30;
 }
 
 </style>
 <script type="text/javascript" language="javascript">
 
-var timeout	= 500;
-var closetimer	= 0;
-var ddmenuitem	= 0;
+var timeout = 500;
+var closetimer  = 0;
+var ddmenuitem  = 0;
 var oldddmenuitem = 0;
 var flag = 0;
 
 // open hidden layer
 function mopen(id)
 {
-	// cancel close timer
-	//mcancelclosetime();
-	
-	flag=10;
+    // cancel close timer
+    //mcancelclosetime();
+    
+    flag=10;
 
-	// close old layer
-	//if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
-	//if(ddmenuitem) ddmenuitem.style.display = 'none';
+    // close old layer
+    //if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+    //if(ddmenuitem) ddmenuitem.style.display = 'none';
 
-	// get new layer and show it
+    // get new layer and show it
         oldddmenuitem = ddmenuitem;
-	ddmenuitem = document.getElementById(id);
+    ddmenuitem = document.getElementById(id);
         if((ddmenuitem.style.visibility == '')||(ddmenuitem.style.visibility == 'hidden')){
             if(oldddmenuitem) oldddmenuitem.style.visibility = 'hidden';
             if(oldddmenuitem) oldddmenuitem.style.display = 'none';
@@ -81,13 +77,13 @@ function mopen(id)
 // close showed layer
 function mclose()
 {
-	if(flag==10)
-	 {
-	  flag=11;
-	  return;
-	 }
-	if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
-	if(ddmenuitem) ddmenuitem.style.display = 'none';
+    if(flag==10)
+     {
+      flag=11;
+      return;
+     }
+    if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
+    if(ddmenuitem) ddmenuitem.style.display = 'none';
 }
 
 // close layer when click-out
@@ -96,7 +92,7 @@ document.onclick = mclose;
 function findPosX(id)
   {
     obj=document.getElementById(id);
-	var curleft = 0;
+    var curleft = 0;
     if(obj.offsetParent)
         while(1)
         {
@@ -110,8 +106,8 @@ function findPosX(id)
    PropertyWidth=document.getElementById(id).offsetWidth;
    if(PropertyWidth>curleft)
     {
-	 document.getElementById(id).style.left=0;
-	}
+     document.getElementById(id).style.left=0;
+    }
   }
 
   function findPosY(obj)
@@ -176,13 +172,17 @@ if (!empty($reg)) {
   if(isset($hide)){
     $StringEcho.= "<li><a id='enc2' >" . htmlspecialchars( xl('Encounter Summary'),ENT_NOQUOTES) . "</a></li>";
   }else{
-    $StringEcho.= "<li><a href='JavaScript:void(0);' id='enc2' onclick=\" return top.window.parent.left_nav.loadFrame2('enc2','RBot','patient_file/encounter/encounter_top.php')\">" . htmlspecialchars( xl('Encounter Summary'),ENT_NOQUOTES) . "</a></li>";
+    $StringEcho.= "<li><a href='JavaScript:void(0);' id='enc2' onclick=\" return top.window.parent.left_nav.loadFrame('enc','enc','patient_file/encounter/encounter_top.php')\">" . htmlspecialchars( xl('Encounter Summary'),ENT_NOQUOTES) . "</a></li>";
   }
   if ( $encounterLocked === false ) {
       foreach ($reg as $entry) {
         $new_category = trim($entry['category']);
         $new_nickname = trim($entry['nickname']);
-        if ($new_category == '') {$new_category = htmlspecialchars(xl('Miscellaneous'),ENT_QUOTES);}
+        if ($new_category == '') {
+          $new_category = htmlspecialchars(xl('Miscellaneous'),ENT_QUOTES);
+        }else{
+          $new_category = htmlspecialchars(xl($new_category),ENT_QUOTES);
+        }
         if ($new_nickname != '') {$nickname = $new_nickname;}
         else {$nickname = $entry['name'];}
         if ($old_category != $new_category) {
@@ -226,14 +226,14 @@ if ( $encounterLocked === false ) {
       $option_id = $lrow['option_id']; // should start with LBF
       $title = $lrow['title'];
       $StringEcho.= "<tr><td style='border-top: 1px solid #000000;padding:0px;'><a href='" . $rootdir .'/patient_file/encounter/load_form.php?formname=' 
-    				.urlencode($option_id) ."' >" . xl_form_title($title) . "</a></td></tr>";
+                    .urlencode($option_id) ."' >" . xl_form_title($title) . "</a></td></tr>";
       }
     }
 }
 ?>
 <!-- DISPLAYING HOOKS STARTS HERE -->
 <?php
-	$module_query = sqlStatement("SELECT msh.*,ms.menu_name,ms.path,m.mod_ui_name,m.type FROM modules_hooks_settings AS msh LEFT OUTER JOIN modules_settings AS ms ON
+    $module_query = sqlStatement("SELECT msh.*,ms.menu_name,ms.path,m.mod_ui_name,m.type FROM modules_hooks_settings AS msh LEFT OUTER JOIN modules_settings AS ms ON
                                     obj_name=enabled_hooks AND ms.mod_id=msh.mod_id LEFT OUTER JOIN modules AS m ON m.mod_id=ms.mod_id 
                                     WHERE fld_type=3 AND mod_active=1 AND sql_run=1 AND attached_to='encounter' ORDER BY mod_id");
   $DivId = 'mod_installer';
@@ -247,10 +247,10 @@ if ( $encounterLocked === false ) {
       $added      = "";
       if($modulerow['type'] == 0) {
         $modulePath = $GLOBALS['customModDir'];
-        $added		= "";
+        $added      = "";
       }
-      else{ 	
-        $added		= "index";
+      else{     
+        $added      = "index";
         $modulePath = $GLOBALS['zendModDir'];
       }
       $relative_link = "../../modules/".$modulePath."/".$modulerow['path'];
@@ -265,7 +265,7 @@ if ( $encounterLocked === false ) {
       $StringEcho.= "<tr><td style='border-top: 1px solid #000000;padding:0px;'><a onclick=\"openNewForm('$relative_link')\" href='JavaScript:void(0);'>" . xl_form_title($nickname) . "</a></td></tr>";
    }
   }
-	?>
+    ?>
 <!-- DISPLAYING HOOKS ENDS HERE -->
 <?php
 if($StringEcho){

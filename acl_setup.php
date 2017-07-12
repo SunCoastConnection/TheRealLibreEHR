@@ -6,9 +6,9 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 //
-// This program is run by the OpenEMR setup.php script to install phpGACL
+ // This program is run by the LibreHealth EHR setup.php script to install phpGACL
 // and creates the Access Control Objects and their sections.
-// See openemr/library/acl.inc file for the list of
+ // See libreehr/library/acl.inc file for the list of
 // currently supported Access Control Objects(ACO), which this
 // script will install.  This script also creates several
 // ARO groups, an "admin" ARO, and some reasonable ACL entries for
@@ -21,32 +21,27 @@
 //      Accounting
 //
 // Upgrade Howto
-// When upgrading to a new version of OpenEMR, run the acl_upgrade.php
+ // When upgrading to a new version of LibreHealth EHR, run the acl_upgrade.php
 // script to update the phpGACL access controls.  This is required to
 // ensure the database includes all the required Access Control
 // Objects(ACO).
 //
+ 
 // On 06/2009, added pertinent comments below each entry to allow capture
 //  of these terms by the translation engine.
 
-require_once dirname(__FILE__).'/library/acl.inc';
+ require_once(dirname(__FILE__).'/library/acl.inc');
 
-if(!$phpgacl_location) die('You must first set up library/acl.inc to use phpGACL!');
+ if (! $phpgacl_location) die("You must first set up library/acl.inc to use phpGACL!");
 
-require_once $phpgacl_location.'/gacl_api.class.php';
+ require_once("$phpgacl_location/gacl_api.class.php");
 
 $gacl = new gacl_api();
 
-
 // Create the ACO sections.  Every ACO must have a section.
 //
-if($gacl->add_object_section('Accounting', 'acct', 10, 0, 'ACO') === false) {
-
-?>
-Unable to create the access controls for OpenEMR.  You have likely already run this script (acl_setup.php) successfully.<br>
-Other possible problems include php-GACL configuration file errors (gacl.ini.php or gacl.class.php).<br>
-<?php
-
+ if ($gacl->add_object_section('Accounting', 'acct', 10, 0, 'ACO') === FALSE) {
+  echo "Unable to create the access controls for LibreHealth EHR.  You have likely already run this script (acl_setup.php) successfully.<br>Other possible problems include php-GACL configuration file errors (gacl.ini.php or gacl.class.php).<br>";
 	return;
 }
 	// xl('Accounting')
@@ -64,14 +59,10 @@ $gacl->add_object_section('Sensitivities',  'sensitivities', 10, 0, 'ACO');
 	// xl('Sensitivities')
 $gacl->add_object_section('Placeholder',    'placeholder',   10, 0, 'ACO');
 	// xl('Placeholder')
-$gacl->add_object_section('Nation Notes',   'nationnotes',   10, 0, 'ACO');
-	// xl('Nation Notes')
 $gacl->add_object_section('Patient Portal', 'patientportal', 10, 0, 'ACO');
 	// xl('Patient Portal')
 $gacl->add_object_section('Menus',          'menus',         10, 0, 'ACO');
 	// xl('Menus')
-
-
 // Create Accounting ACOs.
 //
 $gacl->add_object('acct', 'Billing (write optional)',            'bill',  10, 0, 'ACO');
@@ -84,7 +75,6 @@ $gacl->add_object('acct', 'Financial Reporting - my encounters', 'rep',   10, 0,
 	// xl('Financial Reporting - my encounters')
 $gacl->add_object('acct', 'Financial Reporting - anything',      'rep_a', 10, 0, 'ACO');
 	// xl('Financial Reporting - anything')
-
 
 // Create Administration ACOs.
 //
@@ -111,7 +101,6 @@ $gacl->add_object('admin', 'Pharmacy Dispensary',              'drugs',     10, 
 $gacl->add_object('admin', 'ACL Administration',               'acl',       10, 0, 'ACO');
 	// xl('ACL Administration')
 
-
 // Create ACOs for encounters.
 //
 $gacl->add_object('encounters', 'Authorize - my encounters',                         'auth',     10, 0, 'ACO');
@@ -131,7 +120,6 @@ $gacl->add_object('encounters', 'Fix encounter dates - any encounters',         
 $gacl->add_object('encounters', 'Less-private information (write,addonly optional)', 'relaxed',  10, 0, 'ACO');
 	// xl('Less-private information (write,addonly optional)')
 
-
 // Create ACOs for lists.
 //
 $gacl->add_object('lists', 'Default List (write,addonly optional)',         'default',   10, 0, 'ACO');
@@ -145,18 +133,15 @@ $gacl->add_object('lists', 'Language List (write,addonly optional)',        'lan
 $gacl->add_object('lists', 'Ethnicity-Race List (write,addonly optional)',  'ethrace',   10, 0, 'ACO');
 	// xl('Ethnicity-Race List (write,addonly optional)')
 
-
 // Create ACOs for patientportal.
 //
 $gacl->add_object('patientportal', 'Patient Portal', 'portal', 10, 0, 'ACO');
 	// xl('Patient Portal')
 
-
 // Create ACOs for modules.
 //
 $gacl->add_object('menus', 'Modules', 'modle', 10, 0, 'ACO');
 	// xl('Modules')
-
 
 // Create ACOs for patients.
 //
@@ -175,7 +160,6 @@ $gacl->add_object('patients', 'Patient Notes (write,addonly optional)',    'note
 $gacl->add_object('patients', 'Sign Lab Results (write,addonly optional)', 'sign',  10, 0, 'ACO');
 	// xl('Sign Lab Results (write,addonly optional)')
 
-
 // Create ACOs for sensitivities.
 //
 $gacl->add_object('sensitivities', 'Normal', 'normal', 10, 0, 'ACO');
@@ -183,23 +167,16 @@ $gacl->add_object('sensitivities', 'Normal', 'normal', 10, 0, 'ACO');
 $gacl->add_object('sensitivities', 'High',   'high',   20, 0, 'ACO');
 	// xl('High')
 
-
 // Create ACO for placeholder.
 //
 $gacl->add_object('placeholder', 'Placeholder (Maintains empty ACLs)', 'filler', 10, 0, 'ACO');
 	// xl('Placeholder (Maintains empty ACLs)')
 
 
-// Create ACO for nationnotes.
-//
-$gacl->add_object('nationnotes', 'Nation Notes Configure', 'nn_configure', 10, 0, 'ACO');
-	// xl('Nation Notes Configure')
-
-
 // Create ARO groups.
 //
-$users        = $gacl->add_group('users',         'OpenEMR Users',   0,      'ARO');
-	// xl('OpenEMR Users')
+ $users = $gacl->add_group('users', 'LibreEHR Users' , 0     , 'ARO');
+     // xl('LibreEHR Users')
 $admin        = $gacl->add_group('admin',         'Administrators',  $users, 'ARO');
 	// xl('Administrators')
 $clin         = $gacl->add_group('clin',          'Clinicians',      $users, 'ARO');
@@ -221,24 +198,22 @@ $pqrsreporter = $gacl->add_group('pqrsreporter',  'PQRS Reporter',   $users, 'AR
 $gacl->add_object_section('Users', 'users', 10, 0, 'ARO');
 	// xl('Users')
 
-
 // Create the Administrator in the above-created "users" section
 // and add him/her to the above-created "admin" group.
-// If this script is being used by OpenEMR's setup, then will
+ // If this script is being used by LibreHealth EHR's setup, then will
 //   incorporate the installation values. Otherwise will
 //   hardcode the 'admin' user.
 if(isset($this) && isset($this->iuser)) {
 	$gacl->add_object('users', $this->iuname, $this->iuser, 10, 0, 'ARO');
 	$gacl->add_group_object($admin, 'users', $this->iuser, 'ARO');
-} else {
+ }
+ else {
 	$gacl->add_object('users', 'Administrator', 'admin', 10, 0, 'ARO');
 	$gacl->add_group_object($admin, 'users', 'admin', 'ARO');
 }
 
-
 // Declare return terms for language translations
 //  xl('write') xl('wsome') xl('addonly') xl('view')
-
 
 // Set permissions for administrators.
 //
@@ -250,7 +225,6 @@ $gacl->add_acl(
 		'lists' => array('default', 'state', 'country', 'language', 'ethrace'),
 		'patients' => array('appt', 'demo', 'med', 'trans', 'docs', 'notes'),
 		'sensitivities' => array('normal', 'high'),
-		'nationnotes' => array('nn_configure'),
 		'patientportal' => array('portal'),
 		'menus' => array('modle')
 	),
@@ -258,7 +232,6 @@ $gacl->add_acl(
 	1, 1, 'write', 'Administrators can do anything'
 );
 	// xl('Administrators can do anything')
-
 
 // Set permissions for physicians.
 //
@@ -299,7 +272,6 @@ $gacl->add_acl(
 );
 	// xl('Things that physicians can read and modify')
 
-
 // Set permissions for clinicians.
 //
 $gacl->add_acl(
@@ -320,6 +292,7 @@ $gacl->add_acl(
 	1, 1, 'addonly', 'Things that clinicians can read and enter but not modify'
 );
 	// xl('Things that clinicians can read and enter but not modify')
+
 $gacl->add_acl(
 	array(
 		'placeholder' => array('filler')
@@ -338,7 +311,6 @@ $gacl->add_acl(
 	1, 1, 'write', 'Things that clinicians can read and modify'
 );
 	// xl('Things that clinicians can read and modify')
-
 
 // Set permissions for front office staff.
 //
@@ -374,7 +346,6 @@ $gacl->add_acl(
 	1, 1, 'write', 'Things that front office can read and modify'
 );
 	// xl('Things that front office can read and modify')
-
 
 // Set permissions for back office staff.
 //
@@ -465,7 +436,6 @@ $gacl->add_acl(
 		'lists' => array('default', 'state', 'country', 'language', 'ethrace'),
 		'patients' => array('appt', 'demo', 'med', 'trans', 'docs', 'notes'),
 		'sensitivities' => array('normal', 'high'),
-		'nationnotes' => array('nn_configure'),
 		'patientportal' => array('portal'),
 		'menus' => array('modle')
 	),
@@ -477,11 +447,11 @@ $gacl->add_acl(
 ?>
 <html>
 	<head>
-		<title>OpenEMR ACL Setup</title>
-		<link rel="stylesheet" href="interface/themes/style_blue.css">
+<title>LibreHealth EHR ACL Setup</title>
+<link rel=STYLESHEET href="interface/themes/style_blue.css">
 	</head>
 	<body>
-		<b>OpenEMR ACL Setup</b>
+<b>LibreHealth EHR ACL Setup</b>
 		<br>
 		All done configuring and installing access controls (php-GACL)!
 	</body>

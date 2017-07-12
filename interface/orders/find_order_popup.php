@@ -15,7 +15,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://opensource.org/licenses/gpl-license.php>.
 *
-* @package   OpenEMR
+* @package   LibreEHR
 * @author    Rod Roark <rod@sunsetsystems.com>
 */
 
@@ -38,6 +38,7 @@ if (isset($_GET['typeid'])) {
     $name = addslashes($ptrow['name']);
   }
 ?>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
 <script language="JavaScript">
 if (opener.closed || !opener.set_proc_type) {
  alert('<?php xl('The destination form was closed; I cannot act on your selection.','e'); ?>');
@@ -73,6 +74,7 @@ window.close();
 <html>
 <head>
 <?php html_header_show(); ?>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>    
 <title><?php echo xlt('Procedure Picker'); ?></title>
 <link rel="stylesheet" href='<?php echo attr($css_header) ?>' type='text/css'>
 

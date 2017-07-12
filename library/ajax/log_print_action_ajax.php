@@ -13,9 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 // AJAX handler for logging a printing action.
@@ -27,7 +27,7 @@ require_once("../../interface/globals.php");
 require_once("$srcdir/log.inc");
 require_once("$srcdir/classes/html2text.class.php");
 
-$h2t =& new html2text($_POST['comments']);
+$h2t = new html2text($_POST['comments']);
 $h2t->width = 0;
 $h2t->_convert(false);
 

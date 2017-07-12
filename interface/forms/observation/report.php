@@ -16,7 +16,7 @@
 //
 //
 // A copy of the GNU General Public License is included along with this program:
-// openemr/interface/login/GnuGPL.html
+// libreehr/interface/login/GnuGPL.html
 // For more information write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // 
@@ -78,7 +78,7 @@ function observation_report($pid, $encounter, $cols, $id) {
                         <td style='border:1px solid #ccc;padding:4px;'><span class=text>".text($value['table_code'])."</span></td>
                         <td style='border:1px solid #ccc;padding:4px;'><span class=text>".text($value['ob_value'])."</span></td>
                         <td style='border:1px solid #ccc;padding:4px;'><span class=text>".text($value['ob_unit'])."</span></td>
-                        <td style='border:1px solid #ccc;padding:4px;'><span class=text>".text($value['date'])."</span></td>
+                        <td style='border:1px solid #ccc;padding:4px;'><span class=text>".date(DateFormatRead(true), strtotime(text($value['date'])))."</span></td>
                     </tr>";
             print "\n";
         }

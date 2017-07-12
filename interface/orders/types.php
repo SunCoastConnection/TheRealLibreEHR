@@ -12,7 +12,7 @@ require_once("../globals.php");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/formdata.inc.php");
 
-// This script can be run either inside the OpenEMR frameset for order catalog
+// This script can be run either inside the LibreEHR frameset for order catalog
 // maintenance, or as a popup window for selecting an item to order.  In the
 // popup case the GET variables 'popup' (a boolean) and 'order' (an optional
 // item ID to select) will be provided, and maintenance may also be permitted.
@@ -29,6 +29,7 @@ if ($popup && $_POST['form_save']) {
     "procedure_type_id = '$form_order'");
   $name = addslashes($ptrow['name']);
 ?>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
 <script language="JavaScript">
 if (opener.closed || ! opener.set_proc_type) {
  alert('<?php xl('The destination form was closed; I cannot act on your selection.','e'); ?>');

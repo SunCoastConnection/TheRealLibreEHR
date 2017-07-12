@@ -15,7 +15,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://opensource.org/licenses/gpl-license.php>.
 *
-* @package   OpenEMR
+* @package   LibreEHR
 * @author    Rod Roark <rod@sunsetsystems.com>
 */
 
@@ -41,9 +41,10 @@ function invalue($name) {
 ?>
 <html>
 <head>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>    
 <title><?php echo $ppid ? xlt('Edit') : xlt('Add New') ?> <?php echo xlt('Procedure Provider'); ?></title>
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
-<script type="text/javascript" src="../../library/js/jquery.1.3.2.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>/jquery-min-3-1-1/index.js"></script>
 
 <style>
 td { font-size:10pt; }
@@ -141,7 +142,7 @@ while ($org_row = sqlFetchArray($org_res)) {
  <tr>
   <td nowrap><b><?php echo xlt('Name'); ?>:</b></td>
   <td>
-	<select name='form_name' id='form_name' class='inputtext' style='width:150px'> 
+    <select name='form_name' id='form_name' class='inputtext' style='width:150px'> 
           <?php echo $optionsStr; ?>
     </select>
   </td>
@@ -258,7 +259,7 @@ foreach(array(
  </tr>
 
  <tr>
-  <td nowrap><b><?php echo xlt('Password'); ?>:</b></td>
+  <td nowrap><b><?php echo xlt('Pass Phrase'); ?>:</b></td>
   <td>
    <input type='text' size='20' name='form_password' maxlength='255'
     value='<?php echo attr($row['password']); ?>' class='inputtext' />
