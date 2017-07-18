@@ -73,9 +73,9 @@ else {
 <link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
 
 <script language="JavaScript">
-$(document).ready(function() {
- top.printLogSetup(document.getElementById('printbutton'));
-});
+	$(document).ready(function() {
+ 		top.printLogSetup(document.getElementById('printbutton'));
+	});
 </script>
 
 <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
@@ -90,7 +90,7 @@ $(document).ready(function() {
     #report_parameters_daterange {
         visibility: visible;
         display: inline;
-		margin-bottom: 10px;
+        margin-bottom: 10px;
     }
     #report_results table {
        margin-top: 0px;
@@ -99,13 +99,13 @@ $(document).ready(function() {
 
 /* specifically exclude some from the screen */
 @media screen {
-	#report_parameters_daterange {
-		visibility: hidden;
-		display: none;
-	}
-	#report_results {
-		width: 100%;
-	}
+    #report_parameters_daterange {
+        visibility: hidden;
+        display: none;
+    }
+    #report_results {
+        width: 100%;
+    }
 }
 
 </style>
@@ -134,67 +134,67 @@ $(document).ready(function() {
 <table>
  <tr>
   <td width='60%'>
-	<div style='float:left'>
+    <div style='float:left'>
 
-	<table class='text'>
-		<tr>
+    <table class='text'>
+        <tr>
       <td class='label'>
         <?php xl('Provider','e'); ?>:
       </td>
       <td>
-	      <?php
+          <?php
          generate_form_field(array('data_type' => 10, 'field_id' => 'provider',
            'empty_title' => '-- All --'), $_POST['form_provider']);
-	      ?>
+          ?>
       </td>
-			<td class='label'>
-			   <?php xl('Visits From','e'); ?>:
-			</td>
-			<td>
+            <td class='label'>
+               <?php xl('Visits From','e'); ?>:
+            </td>
+            <td>
                                     <input type='text' name='form_from_date' id="form_from_date"
                                            size='10' value='<?= $form_from_date; ?>' title='yyyy-mm-dd'>
-			</td>
-			<td class='label'>
-			   <?php xl('To','e'); ?>:
-			</td>
-			<td>
+            </td>
+            <td class='label'>
+               <?php xl('To','e'); ?>:
+            </td>
+            <td>
                                     <input type='text' name='form_to_date' id="form_to_date" size='10'
                                            value='<?= $form_to_date; ?>' title='yyyy-mm-dd'>
-			</td>
-		</tr>
-	</table>
+            </td>
+        </tr>
+    </table>
 
-	</div>
+    </div>
 
   </td>
   <td align='left' valign='middle' height="100%">
-	<table style='border-left:1px solid; width:100%; height:100%' >
-		<tr>
-			<td>
-				<div style='margin-left:15px'>
+    <table style='border-left:1px solid; width:100%; height:100%' >
+        <tr>
+            <td>
+                <div style='margin-left:15px'>
                                     <a href='#' class='css_button'
                                        onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
-					<span>
-						<?php xl('Submit','e'); ?>
-					</span>
-					</a>
+                    <span>
+                        <?php xl('Submit','e'); ?>
+                    </span>
+                    </a>
                                     <a href='#' class='css_button'
                                        onclick='$("#form_csvexport").attr("value","true"); $("#theform").submit();'>
-					<span>
-						<?php xl('Export to CSV','e'); ?>
-					</span>
-					</a>
-					<?php if ($_POST['form_refresh']) { ?>
-					<a href='#' id='printbutton' class='css_button'>
-						<span>
-							<?php xl('Print','e'); ?>
-						</span>
-					</a>
-					<?php } ?>
-				</div>
-			</td>
-		</tr>
-	</table>
+                    <span>
+                        <?php xl('Export to CSV','e'); ?>
+                    </span>
+                    </a>
+                    <?php if ($_POST['form_refresh']) { ?>
+                    <a href='#' id='printbutton' class='css_button'>
+                        <span>
+                            <?php xl('Print','e'); ?>
+                        </span>
+                    </a>
+                    <?php } ?>
+                </div>
+            </td>
+        </tr>
+    </table>
   </td>
  </tr>
 </table>
@@ -361,7 +361,7 @@ if ($_POST['form_refresh'] || $_POST['form_csvexport']) {
 if (!$_POST['form_refresh'] && !$_POST['form_csvexport']) {
 ?>
 <div class='text'>
- 	<?php echo xl('Please input search criteria above, and click Submit to view results.', 'e' ); ?>
+    <?php echo xl('Please input search criteria above, and click Submit to view results.', 'e' ); ?>
 </div>
 <?php
 }

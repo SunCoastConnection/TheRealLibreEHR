@@ -30,7 +30,7 @@
  * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
  *
  */
-
+ 
 // Is this windows or non-windows? Create a boolean definition.
 if (!defined('IS_WINDOWS'))
  define('IS_WINDOWS', (stripos(PHP_OS,'WIN') === 0));
@@ -173,7 +173,7 @@ $GLOBALS['srcdir'] = "$webserver_root/library";
 $GLOBALS['fileroot'] = "$webserver_root";
 // Absolute path to the location of interface directory for use with include statements:
 $include_root = "$webserver_root/interface";
-// Absolute path to the location of documentroot directory for use with include statements:
+// Absolute path to the location of document root directory for use with include statements:
 $GLOBALS['webroot'] = $web_root;
 $GLOBALS['assets'] = "$web_root/assets";// assets directory
 
@@ -258,7 +258,7 @@ if (!empty($glrow)) {
   $GLOBALS['language_menu_show'] = array();
   $glres = sqlStatement("SELECT gl_name, gl_index, gl_value FROM globals " .
     "ORDER BY gl_name, gl_index");
-  while ($glrow = sqlFetchArray($glres)) {
+  while ($glrow = sqlFetchArray($glres)) {    
     $gl_name  = $glrow['gl_name'];
     $gl_value = $glrow['gl_value'];
     // Adjust for user specific settings
@@ -269,7 +269,7 @@ if (!empty($glrow)) {
         }
       }
     }
-    if ($gl_name == 'language_menu_other') {
+    if ($gl_name == 'language_menu_other') {       
       $GLOBALS['language_menu_show'][] = $gl_value;
     }
     else if ($gl_name == 'css_header') {
@@ -357,12 +357,12 @@ else {
   $GLOBALS['translate_appt_categories'] = true;
   $GLOBALS['concurrent_layout'] = 2;
   $timeout = 7200;
-  $openemr_name = 'PQRS Pilot';
-  $css_header = "$rootdir/themes/style_purple.css";
+  $libreehr_name = 'LibreEHR';
+  $css_header = "$rootdir/themes/style_default.css";
   $GLOBALS['css_header'] = $css_header;
   $GLOBALS['schedule_start'] = 8;
   $GLOBALS['schedule_end'] = 17;
-  $GLOBALS['calendar_interval'] = 60;
+  $GLOBALS['calendar_interval'] = 15;
   $GLOBALS['phone_country_code'] = '1';
   $GLOBALS['disable_non_default_groups'] = true;
   $GLOBALS['ippf_specific'] = false;
@@ -485,12 +485,12 @@ ini_set("session.bug_compat_warn","off");
 
 /* If the includer didn't specify, assume they want us to "fake" register_globals. */
 if (!isset($fake_register_globals)) {
-	$fake_register_globals = TRUE;
+    $fake_register_globals = TRUE;
 }
 
 /* Pages with "myadmin" in the URL don't need register_globals. */
 $fake_register_globals =
-	$fake_register_globals && (strpos($_SERVER['REQUEST_URI'],"myadmin") === FALSE);
+    $fake_register_globals && (strpos($_SERVER['REQUEST_URI'],"myadmin") === FALSE);
 
 
 // Emulates register_globals = On.  Moved to the bottom of globals.php to prevent

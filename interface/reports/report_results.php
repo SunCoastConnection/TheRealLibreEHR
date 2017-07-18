@@ -23,7 +23,8 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package PQRS_Gateway
+ * @package LibreHealth EHR 
+ * @author  Art Eaton <art@suncoastconnection.com>  (MIPS/MACRA Refactor)
  * @author  Bryan Lee <bryan@suncoastconnection.com>
  * @author  Brady Miller <brady@sparmy.com>
  * @link    http://librehealth.io
@@ -105,9 +106,9 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 <table>
  <tr>
   <td width='470px'>
-	<div style='float:left'>
+    <div style='float:left'>
 
-	<table class='text'>
+    <table class='text'>
 
                    <tr>
                       <td class='label'>
@@ -130,29 +131,29 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
                                   title='<?php echo htmlspecialchars( xl('yyyy-mm-dd hh:mm:ss'), ENT_QUOTES); ?>'>
                         </td>
                 </tr>
-	</table>
-	</div>
+    </table>
+    </div>
 
   </td>
   <td align='left' valign='middle' height="100%">
-	<table style='border-left:1px solid; width:100%; height:100%' >
-		<tr>
-			<td>
-				<div style='margin-left:15px'>
-					<a id='search_button' href='#' class='css_button' onclick='top.restoreSession(); $("#theform").submit()'>
-					<span>
-						<?php echo htmlspecialchars( xl('Search'), ENT_NOQUOTES); ?>
-					</span>
-					</a>
+    <table style='border-left:1px solid; width:100%; height:100%' >
+        <tr>
+            <td>
+                <div style='margin-left:15px'>
+                    <a id='search_button' href='#' class='css_button' onclick='top.restoreSession(); $("#theform").submit()'>
+                    <span>
+                        <?php echo htmlspecialchars( xl('Search'), ENT_NOQUOTES); ?>
+                    </span>
+                    </a>
                                         <a id='refresh_button' href='#' class='css_button' onclick='top.restoreSession(); $("#theform").submit()'>
                                         <span>
                                                 <?php echo htmlspecialchars( xl('Refresh'), ENT_NOQUOTES); ?>
                                         </span>
                                         </a>
-				</div>
-			</td>
-		</tr>
-	</table>
+                </div>
+            </td>
+        </tr>
+    </table>
   </td>
  </tr>
 </table>

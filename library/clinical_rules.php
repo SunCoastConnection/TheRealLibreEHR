@@ -6,6 +6,29 @@
  * session variables, because the session_write_close() function
  * is typically called before utilizing these functions.
  *
+ * Copyright (C) 2010-2012 Brady Miller <brady@sparmy.com>
+ * Copyright (C) 2011      Medical Information Integration, LLC
+ * Copyright (C) 2011      Ensofttek, LLC
+ * Copyright (C) 2016 SunCoast Connection Inc. 
+ *
+ * LICENSE: This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
+ *
+ * @package LibreEHR
+ * @author  Art Eaton <art@suncoastconnection.com>  (MIPS/MACRA Refactor)
+ * @author  Bryan Lee <bryan@suncoastconnection.com>
+ * @author  Brady Miller <brady@sparmy.com>
+ * @author  Medical Information Integration, LLC
+ * @author  Ensofttek, LLC
+ * @link    http://librehealth.io
  */
 
 require_once(dirname(__FILE__) . "/patient.inc");
@@ -448,7 +471,7 @@ function compare_log_alerts($patient_id,$current_targets,$category='clinical_rem
  * @param  integer      $report_id     id of report in database (if already bookmarked)
  * @return array                       See above for organization structure of the results.
  */
-function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget = '', $mode = '', $plan = '', $organize_mode = 'default', $options = array(), $pat_prov_rel = 'primary', $batchSize = '', $report_id = NULL) {
+function test_rules_clinic_batch_method($provider='',$type='',$dateTarget='',$mode='',$plan='',$organize_mode='default',$options=array(),$pat_prov_rel='primary',$batchSize='',$report_id=NULL) {
 
   // Default to a batchsize, if empty
 
@@ -469,9 +492,9 @@ function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget 
   // The problem with this variable is that is is added in every batch. So need to fix it by dividing this number by the number
   // of planned batches(note the fixed array will go into the test_rules_clinic function, however the original will be used
   // in the report storing/tracking engine.
-  $options_modified = $options;
+  $options_modified=$options;
 
-  if(!empty($options_modified['labs_manual'])) {
+  if (!empty($options_modified['labs_manual'])) {
     $options_modified['labs_manual'] = $options_modified['labs_manual'] / $totalNumberBatches;
   }
 
@@ -501,12 +524,12 @@ function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget 
     )
   );
 
-  if(!empty($options)) {
+  if (!empty($options)) {
     $fields = array_merge($fields, $options);
-  }
+    }
 
-  $report_id = beginReportDatabase($type, $fields, $report_id);
-  setTotalItemsReportDatabase($report_id, $totalNumPatients);
+  $report_id = beginReportDatabase($type,$fields,$report_id);
+  setTotalItemsReportDatabase($report_id,$totalNumPatients);
 
   // Set ability to itemize report if this feature is turned on
   $GLOBALS['report_itemizing_temp_flag_and_id'] = (
@@ -515,15 +538,15 @@ function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget 
       0
   );
 
-  for($i = 0; $i < $totalNumberBatches; $i++) {
+  for ($i=0;$i<$totalNumberBatches;$i++) {
     // If itemization is turned on, then reset the rule id iterator
-    if($GLOBALS['report_itemizing_temp_flag_and_id']) {
+    if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
       $GLOBALS['report_itemized_test_id_iterator'] = 1;
     }
 
     $dataSheet_batch = test_rules_clinic($provider, $type, $dateTarget, $mode, '', $plan, $organize_mode, $options_modified, $pat_prov_rel, ($batchSize * $i) + 1, $batchSize);
 
-    if($i == 0) {
+    if ($i == 0) {
       // For first cycle, simply copy it to dataSheet
       $dataSheet = $dataSheet_batch;
       $total_patients = 0;
@@ -533,7 +556,7 @@ function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget 
       //error_log("CDR: ".($batchSize*$i)." records",0);
 
       // Integrate batch results into main dataSheet
-      foreach($dataSheet_batch as $key => $row) {
+      foreach ($dataSheet_batch as $key => $row) {
         if (!$row['is_sub']) {
           //skip this stuff for the sub entries (and use previous main entry in percentage calculation)
           $total_patients = $dataSheet[$key]['total_patients'] + $row['total_patients'];
@@ -546,16 +569,16 @@ function test_rules_clinic_batch_method($provider = '', $type = '', $dateTarget 
 
         $pass_target = $dataSheet[$key]['pass_target'] + $row['pass_target'];
         $dataSheet[$key]['pass_target'] = $pass_target;
-        $dataSheet[$key]['percentage'] = calculate_percentage($pass_filter, $excluded, $pass_target);
+        $dataSheet[$key]['percentage'] = calculate_percentage($pass_filter,$excluded,$pass_target);
       }
     }
 
     //Update database to track results
-    updateReportDatabase($report_id, $total_patients);
+    updateReportDatabase($report_id,$total_patients);
   }
 
   // Record results in database and send to screen, if applicable.
-  finishReportDatabase($report_id, json_encode($dataSheet));
+  finishReportDatabase($report_id,json_encode($dataSheet));
 
   return $dataSheet;
 }
@@ -1039,7 +1062,7 @@ if (strpos($type, 'pqrs_individual') !== false ) {
  */
 function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'primary', $start = null, $batchSize = null, $onlyCount = false, $onlyMedicarePatients = false ) {
   if(empty($patient_id)) {
-    if(empty($provider)) {
+    if (empty($provider)) {
       // Look at entire practice
 	if(empty($onlyMedicarePatients)){
 		$query = 'SELECT `pid` FROM `patient_data` ORDER BY `pid`';
@@ -1055,7 +1078,7 @@ $query = "SELECT DISTINCT p.pid FROM patient_data p ".
       if($start == null || $batchSize == null || $onlyCount) {
         $rez = sqlStatementCdrEngine($query);
 
-        if($onlyCount) {
+        if ($onlyCount) {
           $patientNumber = sqlNumRows($rez);
         }
       } else {
@@ -1064,7 +1087,7 @@ $query = "SELECT DISTINCT p.pid FROM patient_data p ".
       }
     } else {
       // Look at an individual physician
-      if($pat_prov_rel == 'encounter') {
+      if( $pat_prov_rel == 'encounter' ){
         if(empty($onlyMedicarePatients)){
         	$query = 'SELECT DISTINCT `pid` FROM `form_encounter` WHERE `provider_id` = ? OR `supervisor_id` = ? ORDER BY `pid`';
 	} else {
@@ -1081,7 +1104,7 @@ $query = "SELECT DISTINCT fe.pid FROM form_encounter fe ".
         if($start == null || $batchSize == null || $onlyCount) {
           $rez = sqlStatementCdrEngine($query, array($provider, $provider));
 
-          if($onlyCount) {
+          if ($onlyCount) {
             $patientNumber = sqlNumRows($rez);
           }
         } else {
@@ -1097,9 +1120,9 @@ $query = "SELECT DISTINCT p.pid FROM patient_data p ".
 " JOIN insurance_data i on (i.pid=p.pid) ".
 " JOIN insurance_companies c on (c.id = i.provider) ".
 " WHERE `providerID` = ? ".
-" AND c.freeb_type = 2 ".
+" AND c.ins_type_code = 2 ".
 " ORDER BY p.pid";
-	}
+      }
         // Choose patients that are assigned to the specific physician (primary physician in patient demographics)
         if($start == null || $batchSize == null || $onlyCount) {
           $rez = sqlStatementCdrEngine($query, array($provider));
@@ -1115,8 +1138,8 @@ $query = "SELECT DISTINCT p.pid FROM patient_data p ".
 
     // convert the sql query results into an array if returning the array
     if(!$onlyCount) {
-      for($iter = 0; $row = sqlFetchArray($rez); $iter++) {
-        $patientData[$iter] = $row;
+      for($iter=0; $row=sqlFetchArray($rez); $iter++) {
+       $patientData[$iter]=$row;
       }
     }
   } else {
@@ -1128,7 +1151,7 @@ $query = "SELECT DISTINCT p.pid FROM patient_data p ".
     }
   }
 
-  if($onlyCount) {
+  if ($onlyCount) {
     // return the number of applicable patients
     return $patientNumber;
   } else {
@@ -1342,16 +1365,16 @@ function resolve_plans_sql($type='',$patient_id='0',$configurableOnly=FALSE) {
     }
 
     // Use the chosen plan if set
-    if(!empty($type)) {
+    if (!empty($type)) {
       if(array_key_exists($type.'_flag', $goPlan) && $goPlan[$type.'_flag'] == 1) {
         // active, so use the plan
-        array_push($newReturnArray, $goPlan);
+        array_push($newReturnArray,$goPlan);
       }
     }
     else {
       if($goPlan['pqrs_individual_2016_flag'] == 1 ) {
         // active, so use the plan
-        array_push($newReturnArray, $goPlan);
+        array_push($newReturnArray,$goPlan);
       }
     }
   }

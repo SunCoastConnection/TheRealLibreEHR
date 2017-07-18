@@ -7,7 +7,7 @@ class Controller {
        var $_current_action;
        var $_state;
        var $_args = array();
-
+       
        const PROCESS = "true";
        const HEADER = "<html><head><?php html_header_show();?></head><body>";
        const FOOTER = "</body></html>";
@@ -17,7 +17,7 @@ class Controller {
                
                $this->template_mod = "general";
                $this->_current_action = "";
-               $this->_state = true;
+               $this->_state = true;              
                $this->controller_this = "controller.php?" . $_SERVER['QUERY_STRING'];               
        }
 
@@ -68,8 +68,8 @@ class Controller {
                return include_once($file);
        }
 
-       function act($qarray) {
-
+       function act($qarray) {           
+          
                if (isset($_GET['process'])){
          unset($_GET['process']);
          unset($qarray['process']);
@@ -86,20 +86,20 @@ class Controller {
 
                $c_name = $name;
                $c_action = preg_replace("/[^A-Za-z0-9_]/","",array_pop($args));
-               $args = array_reverse($args);
+               $args = array_reverse($args);              
 
                if(!call_user_func(array(Controller,"i_once"),$GLOBALS['fileroot'] ."/controllers/C_" . $c_name . ".class.php")) {
                        echo "Unable to load controller $name\n, please check the first argument supplied in the URL and try again";
                        exit;
                }
 
-               $obj_name = "C_" . $c_name;
+               $obj_name = "C_" . $c_name;              
                $c_obj = new $obj_name();
 
                if (empty ($c_action)) {
                        $c_action = "default";
-               }
-
+               }                
+              
                $c_obj->_current_action = $c_action;
                $args_array = array();
 
@@ -141,8 +141,8 @@ class Controller {
                                }
                }
 
-
-               return $output;
+               
+               return $output;               
        }
 
        function _link($action = "default",$inlining = false) {

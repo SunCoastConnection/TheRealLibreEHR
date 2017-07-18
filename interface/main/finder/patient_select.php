@@ -13,9 +13,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package PQRS_Gateway
+ * @author  Art Eaton art@suncoastconnection.com  (MIPS/MACRA re-factor)
  * @author  Bryan Lee <leebc11@acm.org>  (PQRS additions)
  * @link    http://suncoastconnection.com
+ * @package LibreHealth EHR
+ * @author  Brady Miller <brady@sparmy.com>
+ * @link    http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES
@@ -308,26 +311,26 @@ if ($fend > $count) $fend = $count;
 
 	☺ <span class="reminder"> Reminder: You MUST run a new report to see your changes</span>  ☺ <p>
 
-	<table>
-	<tr>
-	<th class="srName"><?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES);?></th>
-	<th class="srGender"><?php echo htmlspecialchars( xl('Sex'), ENT_NOQUOTES);?></th>
-	<th class="srDOB"><?php echo htmlspecialchars( xl('DOB'), ENT_NOQUOTES);?></th>
+<table>
+<tr>
+<th class="srName"><?php echo htmlspecialchars( xl('Name'), ENT_NOQUOTES);?></th>
+<th class="srGender"><?php echo htmlspecialchars( xl('Sex'), ENT_NOQUOTES);?></th>
+<th class="srDOB"><?php echo htmlspecialchars( xl('DOB'), ENT_NOQUOTES);?></th>
 
-	<?php if (empty($GLOBALS['patient_search_results_style'])) { ?>
-	<?php
-		$add_days = 90;
-		if (!$popup && preg_match('/^(\d+)\s*(.*)/',$patient,$matches) > 0) {
-  			$add_days = $matches[1];
-  			$patient = $matches[2];
-			}
-		}
-		else {
+<?php if (empty($GLOBALS['patient_search_results_style'])) { ?>
+<?php
+$add_days = 90;
+if (!$popup && preg_match('/^(\d+)\s*(.*)/',$patient,$matches) > 0) {
+  $add_days = $matches[1];
+  $patient = $matches[2];
+}
+}
+else {
   // Alternate patient search results style; this gets address plus other
   // fields that are mandatory, up to a limit of 5.
 // -- leebc doesn't know if we need this, but errors if I removed it 2016-06-16
-  		$extracols = array();
- $tres = sqlStatement("SELECT * FROM layout_options " .
+  $extracols = array();
+  $tres = sqlStatement("SELECT * FROM layout_options " .
     "WHERE form_id = 'DEM' AND ( uor > 1 AND field_id != '' " .
     "OR uor > 0 AND field_id = 'street' ) AND " .
     "field_id NOT LIKE '_name' AND " .
@@ -335,13 +338,13 @@ if ($fend > $count) $fend = $count;
     "field_id NOT LIKE 'title' AND " .
     "field_id NOT LIKE 'ss' AND " .
     "field_id NOT LIKE 'DOB' AND " .
-    "field_id NOT LIKE 'pubpid' " .
+    "field_id NOT LIKE 'pid' " .
     "ORDER BY group_name, seq LIMIT 5");
-  		while ($trow = sqlFetchArray($tres)) {
-    			$extracols[$trow['field_id']] = $trow;
-    			echo "<th class='srMisc'>" . htmlspecialchars(xl($trow['title']), ENT_NOQUOTES) . "</th>\n";
-  			}
-		}
+  while ($trow = sqlFetchArray($tres)) {
+    $extracols[$trow['field_id']] = $trow;
+    echo "<th class='srMisc'>" . htmlspecialchars(xl($trow['title']), ENT_NOQUOTES) . "</th>\n";
+  }
+}
 
 
 
@@ -354,13 +357,13 @@ if ($fend > $count) $fend = $count;
 //error_log("***** DEBUG *****  patient_select() -- Queried p_d_e_l with \"".$query."\" and got pqrs_result \"".$pqrs_result."\"" );
 	// Need to loop and write "short answer" for each answer here
 	for ($i = 1; $i <= $number_answers_of_measure; $i++) { 
-	 ?>
+?>
 		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer'), ENT_NOQUOTES) . " $i" ;?></th>
 	<?php } ?>
 
 	<th class="srUpdate">Update</th>	
-	</tr>
-	</table>
+</tr>
+</table>
 <?php 
 }  ?>
 
@@ -380,24 +383,24 @@ if ($result) {
 			" FROM patient_data p ".
 			" JOIN insurance_data i on (i.pid=p.pid) ".
 			" JOIN insurance_companies c on (c.id = i.provider) ".
-			" WHERE c.freeb_type = 2 ".
+			" WHERE c.ins_type_code = 2 ".
 			" AND p.pid = ? ;";
 		$mc_result=sqlFetchArray(sqlStatement($mc_query, array($iter{"pid"}) ));
 		if ($mc_result['count'] > 0){
 			$medicare_flag=$GLOBALS['webroot']."/images/CMS_logo0.png";}
 		else {
 			$medicare_flag="";}
-
+        
         	echo "		<tr>
 	<td>
 		<table id='".htmlspecialchars( $iter['pid'], ENT_QUOTES)."'>\n		<tr>\n";
 		echo  "			<td class='oneresult srName' style=background-image:url(" . $medicare_flag . ");background-repeat:no-repeat;text-align:center; >" . htmlspecialchars($iter['lname'] . ", " . $iter['fname']) . "</td>\n";
         	echo  "			<td class='oneresult srGender'>" . text(getListItemTitle("sex",$iter['sex'])) . "</td>\n";
-        	if ($iter{"DOB"} != "0000-00-00 00:00:00") {
+        if ($iter{"DOB"} != "0000-00-00 00:00:00") {
             	echo "			<td class='oneresult srDOB'>" . htmlspecialchars( $iter['DOB_TS'], ENT_NOQUOTES) . "</td>\n";
-        	} else {
-            		echo "			<td class='srDOB'>&nbsp;</td>";
-        	}
+        } else {
+            echo "<td class='srDOB'>&nbsp;</td>";
+        }
         foreach ( $pqrs_result as $thisAnswer ) {
 //error_log("***** DEBUG *****  foreach1--thisAnswer=\"".$thisAnswer['value']."\"");
 		$explodedAnswer=explode("|", $thisAnswer['value']);
@@ -407,12 +410,12 @@ if ($result) {
 		$myPerformance= $thisAnswer['status'];
 // error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode | $myPerformance");
         	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\" performance=\"$myPerformance\" >$myDesc</label></td>";
-	}
+    }
 		?>
         	<td class='srAnswer'><button type="button" onclick="updatePatient(<?php echo htmlspecialchars( $iter['pid'] ) ?>)">Update</button></td>
 	</table>
         <?php
-	} 
+}
     }  // End foreach
 }  // end if $result
 ?>
@@ -475,17 +478,10 @@ $(document).ready(function(){
 
 var SelectPatient = function (eObj) {
 <?php 
-// For the old layout we load a frameset that also sets up the new pid.
 // The new layout loads just the demographics frame here, which in turn
 // will set the pid and load all the other frames.
-if ($GLOBALS['concurrent_layout']) {
     $newPage = "../../patient_file/summary/demographics.php?set_pid=";
     $target = "document";
-}
-else {
-    $newPage = "../../patient_file/patient_file.php?set_pid=";
-    $target = "top";
-}
 ?>
     var tableId = eObj.id;
     <?php if (!$popup) echo "top.restoreSession();\n"; ?>
@@ -536,5 +532,5 @@ else {
 ?>
 
 		</script>
-	</body>
+</body>
 </html>
