@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Eldho Chacko <eldho@zhservices.com>
  * @author  Ajil P M <ajilpm@zhservices.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES
@@ -36,7 +36,7 @@ require_once(dirname(__FILE__) . "/../../library/parse_patient_xml.php");
 
 $patient_data = array(
 	'sex'			 			=> 'Sex',
-	'pubpid' 				=> 'External ID',
+	'pid' 				=> 'ID',
 	'street' 				=> 'Street',
 	'city' 					=> 'City',
 	'state'					=> 'State',

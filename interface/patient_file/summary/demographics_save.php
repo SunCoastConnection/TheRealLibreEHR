@@ -1,4 +1,37 @@
 <?php
+/*
+ *  Demographics_save.php
+ *
+ *  This program demographics_save.php is the Patient summary screen data save program.
+ *
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * No previous copyright information. This is an original OpenEMR program.
+ *
+ *
+ * LICENSE: This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://opensource.org/licenses/gpl-license.php.
+ *
+ * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreHealth EHR
+ * @author Terry Hill <teryhill@librehealth.io>
+ * No other authors listed in original program header.
+ * @link http://librehealth.io
+ *
+ * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
+ *
+ */
+
 include_once("../../globals.php");
 include_once("$srcdir/patient.inc");
 include_once("$srcdir/acl.inc");
@@ -9,9 +42,6 @@ include_once("$srcdir/formdata.inc.php");
 if ($pid) {
   if ( !acl_check('patients','demo','','write') )
     die(xl('Updating demographics is not authorized.'));
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-    die(xl('You are not authorized to access this squad.'));
 } else {
   if (!acl_check('patients','demo','',array('write','addonly') ))
     die(xl('Adding demographics is not authorized.'));
@@ -46,117 +76,68 @@ while ($frow = sqlFetchArray($fres)) {
 
   $newdata[$table][$colname] = $value;
 }
+
 updatePatientData($pid, $newdata['patient_data']);
-updateEmployerData($pid, $newdata['employer_data']);
+    updateEmployerData($pid, $newdata['employer_data']);
 
-$i1dob = fixDate(formData("i1subscriber_DOB"));
-$i1date = fixDate(formData("i1effective_date"), date('Y-m-d'));
+    $total_insurances = $_REQUEST['total_insurances'];
+    for ($i = 0; $i < $total_insurances; $i++) {
+        $idob = fixDate(formData("i" . $i . "subscriber_DOB"));
+        $idate = fixDate(formData("i" . $i . "effective_date"), date('Y-m-d'));
 
-newInsuranceData(
-  $pid,
-  "primary",
-  formData("i1provider"),
-  formData("i1policy_number"),
-  formData("i1group_number"),
-  formData("i1plan_name"),
-  formData("i1subscriber_lname"),
-  formData("i1subscriber_mname"),
-  formData("i1subscriber_fname"),
-  formData("form_i1subscriber_relationship"),
-  formData("i1subscriber_ss"),
-  $i1dob,
-  formData("i1subscriber_street"),
-  formData("i1subscriber_postal_code"),
-  formData("i1subscriber_city"),
-  formData("form_i1subscriber_state"),
-  formData("form_i1subscriber_country"),
-  formData("i1subscriber_phone"),
-  formData("i1subscriber_employer"),
-  formData("i1subscriber_employer_street"),
-  formData("i1subscriber_employer_city"),
-  formData("i1subscriber_employer_postal_code"),
-  formData("form_i1subscriber_employer_state"),
-  formData("form_i1subscriber_employer_country"),
-  formData('i1copay'),
-  formData('form_i1subscriber_sex'),
-  $i1date,
-  formData('i1accept_assignment'),
-  formData('i1policy_type')
-);
+        $edate = formData("i" . $i . "termination_date");
+        If ($i == 0) {
+            $type = "primary";
+        } elseif ($i == 1) {
+            $type = "secondary";
+        } else if ($i == 2) {
+            $type = "tertiary";
+        }
 
-$i2dob = fixDate(formData("i2subscriber_DOB"));
-$i2date = fixDate(formData("i2effective_date"), date('Y-m-d'));
+        $inactive = formData('i' . $i . 'inactive_value');
+        $inactive_time = 0;
 
-newInsuranceData(
-  $pid,
-  "secondary",
-  formData("i2provider"),
-  formData("i2policy_number"),
-  formData("i2group_number"),
-  formData("i2plan_name"),
-  formData("i2subscriber_lname"),
-  formData("i2subscriber_mname"),
-  formData("i2subscriber_fname"),
-  formData("form_i2subscriber_relationship"),
-  formData("i2subscriber_ss"),
-  $i2dob,
-  formData("i2subscriber_street"),
-  formData("i2subscriber_postal_code"),
-  formData("i2subscriber_city"),
-  formData("form_i2subscriber_state"),
-  formData("form_i2subscriber_country"),
-  formData("i2subscriber_phone"),
-  formData("i2subscriber_employer"),
-  formData("i2subscriber_employer_street"),
-  formData("i2subscriber_employer_city"),
-  formData("i2subscriber_employer_postal_code"),
-  formData("form_i2subscriber_employer_state"),
-  formData("form_i2subscriber_employer_country"),
-  formData('i2copay'),
-  formData('form_i2subscriber_sex'),
-  $i2date,
-  formData('i2accept_assignment'),
-  formData('i2policy_type')
-);
+        if ($edate != '0000-00-00' && strlen(trim($edate != 0))) {
+            $inactive_time = 1;
+            $inactive = 1;
+        }
 
-$i3dob  = fixDate(formData("i3subscriber_DOB"));
-$i3date = fixDate(formData("i3effective_date"), date('Y-m-d'));
+        newInsuranceData(
+            $pid,
+            $type,
+            formData("i" . $i . "provider"),
+            formData("i" . $i . "policy_number"),
+            formData("i" . $i . "group_number"),
+            formData("i" . $i . "plan_name"),
+            formData("i" . $i . "subscriber_lname"),
+            formData("i" . $i . "subscriber_mname"),
+            formData("i" . $i . "subscriber_fname"),
+            formData("form_i" . $i . "subscriber_relationship"),
+            formData("i" . $i . "subscriber_ss"),
+            $idob,
+            formData("i" . $i . "subscriber_street"),
+            formData("i" . $i . "subscriber_postal_code"),
+            formData("i" . $i . "subscriber_city"),
+            formData("form_i" . $i . "subscriber_state"),
+            formData("form_i" . $i . "subscriber_country"),
+            formData("i" . $i . "subscriber_phone"),
+            formData("i" . $i . "subscriber_employer"),
+            formData("i" . $i . "subscriber_employer_street"),
+            formData("i" . $i . "subscriber_employer_city"),
+            formData("i" . $i . "subscriber_employer_postal_code"),
+            formData("form_i" . $i . "subscriber_employer_state"),
+            formData("form_i" . $i . "subscriber_employer_country"),
+            formData('i' . $i . 'copay'),
+            formData('form_i' . $i . 'subscriber_sex'),
+            $idate,
+            $edate,
+            formData('i' . $i . 'accept_assignment'),
+            formData('i' . $i . 'policy_type'),
+            $inactive,
+            $inactive_time
+        );
 
-newInsuranceData(
-  $pid,
-  "tertiary",
-  formData("i3provider"),
-  formData("i3policy_number"),
-  formData("i3group_number"),
-  formData("i3plan_name"),
-  formData("i3subscriber_lname"),
-  formData("i3subscriber_mname"),
-  formData("i3subscriber_fname"),
-  formData("form_i3subscriber_relationship"),
-  formData("i3subscriber_ss"),
-  $i3dob,
-  formData("i3subscriber_street"),
-  formData("i3subscriber_postal_code"),
-  formData("i3subscriber_city"),
-  formData("form_i3subscriber_state"),
-  formData("form_i3subscriber_country"),
-  formData("i3subscriber_phone"),
-  formData("i3subscriber_employer"),
-  formData("i3subscriber_employer_street"),
-  formData("i3subscriber_employer_city"),
-  formData("i3subscriber_employer_postal_code"),
-  formData("form_i3subscriber_employer_state"),
-  formData("form_i3subscriber_employer_country"),
-  formData('i3copay'),
-  formData('form_i3subscriber_sex'),
-  $i3date,
-  formData('i3accept_assignment'),
-  formData('i3policy_type')
-);
+    }
 
-if ($GLOBALS['concurrent_layout']) {
  include_once("demographics.php");
-} else {
- include_once("patient_summary.php");
-}
 ?>

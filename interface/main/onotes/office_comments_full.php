@@ -13,9 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 $fake_register_globals=false;
@@ -62,11 +62,7 @@ if ($userauthorized) { $backurl="office_comments.php"; }
 else { $backurl="../main_info.php"; }
 ?>
 
-<?php if ($GLOBALS['concurrent_layout']) { ?>
 <a href="office_comments.php" onclick='top.restoreSession()'>
-<?php } else { ?>
-<a href="<?php echo $backurl; ?>" target="Main">
-<?php } ?>
 
 <span class="title"><?php echo xlt('Office Notes'); ?></span>
 <span class="back"><?php echo text($tback); ?></span></a>

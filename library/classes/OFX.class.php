@@ -1,6 +1,6 @@
 <?php
 
-include_once(dirname(__FILE__) . "/../../includes/config.php");
+require_once $GLOBALS['OE_SITE_DIR'] . "/config.php";
 
 /**
  * class OFX
@@ -83,7 +83,7 @@ class OFX {
 		$string .= "<DTSERVER>" . date("YmdHis") . "\n";
 		$string .= "<LANGUAGE>ENG\n";
 		
-		//OpenEMR doesn't have a good grasp of timezone so we will need to revisit this later if it causes problems for transaction timestamping
+		//LibreEHR doesn't have a good grasp of timezone so we will need to revisit this later if it causes problems for transaction timestamping
 		$string .= "<DTACCTUP>" . date("YmdHis") . ".000[-8:PST]\n";
 		
 		//intuit programs requires the fields below or it won't accept our ofx transactions

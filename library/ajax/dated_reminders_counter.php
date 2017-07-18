@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Craig Bezuidenhout <http://www.tajemo.co.za/>
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES

@@ -7,6 +7,7 @@
  * but I wanted to make the code available to the project because
  * many other practices have this same need. - rod@sunsetsystems.com
  *
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
  * Copyright (C) 2006-2010 Rod Roark <rod@sunsetsystems.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -14,19 +15,24 @@
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://open-emr.org
+ * @author  Terry Hill <teryhill@librehealth.io>
+ * @link    http://librehealth.io
  */
+ 
+$sanitize_all_escapes=true;
+$fake_register_globals=false;
 
 require_once('../globals.php');
 require_once($GLOBALS['srcdir'].'/patient.inc');
-require_once($GLOBALS['srcdir'].'/sql-ledger.inc');
 require_once($GLOBALS['srcdir'].'/acl.inc');
 require_once($GLOBALS['srcdir'].'/formatting.inc.php');
 require_once($GLOBALS['srcdir'].'/options.inc.php');
 require_once($GLOBALS['srcdir'].'/formdata.inc.php');
 require_once($GLOBALS['fileroot'].'/custom/code_types.inc.php');
+$DateFormat = DateFormatRead();
+$DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
   // This determines if a particular procedure code corresponds to receipts
   // for the "Clinic" column as opposed to receipts for the practitioner.  Each
@@ -45,18 +51,11 @@ require_once($GLOBALS['fileroot'].'/custom/code_types.inc.php');
   }
 
   function bucks($amount) {
-    if ($amount) echo oeFormatMoney($amount);
+    if ($amount) echo attr(oeFormatMoney($amount));
   }
 
-  if (! acl_check('acct', 'rep')) die(xl("Unauthorized access."));
+  if (! acl_check('acct', 'rep')) die(xlt("Unauthorized access."));
 
-  $INTEGRATED_AR = $GLOBALS['oer_config']['ws_accounting']['enabled'] === 2;
-
-  if (!$INTEGRATED_AR) {
-    SLConnect();
-    $chart_id_cash = SLQueryValue("select id from chart where accno = '$sl_cash_acc'");
-    if ($sl_err) die($sl_err);
-  }
 
   $form_use_edate  = $_POST['form_use_edate'];
 
@@ -141,12 +140,12 @@ function sel_diagnosis() {
 
 </script>
 
-<title><?php xl('Cash Receipts by Provider','e')?></title>
+<title><?php echo xlt('Cash Receipts by Provider')?></title>
 </head>
 
 <body class="body_top">
 
-<span class='title'><?php xl('Report','e'); ?> - <?php xl('Cash Receipts by Provider','e'); ?></span>
+<span class='title'><?php echo xlt('Report'); ?> - <?php echo xlt('Cash Receipts by Provider'); ?></span>
 
 <form method='post' action='sl_receipts_report.php' id='theform'>
 
@@ -157,122 +156,119 @@ function sel_diagnosis() {
 <table>
  <tr>
   <td width='660px'>
-	<div style='float:left'>
+    <div style='float:left'>
 
-	<table class='text'>
-		<tr>
-			<td class='label'>
-				<?php xl('Facility','e'); ?>:
-			</td>
-			<td>
-			<?php dropdown_facility(strip_escape_custom($form_facility), 'form_facility'); ?>
-			</td>
-			<td class='label'>
-			   <?php xl('Provider','e'); ?>:
-			</td>
-			<td>
-				<?php
-				if (acl_check('acct', 'rep_a')) {
-					// Build a drop-down list of providers.
-					//
-					$query = "select id, lname, fname from users where " .
-						"authorized = 1 order by lname, fname";
-					$res = sqlStatement($query);
-					echo "   &nbsp;<select name='form_doctor'>\n";
-					echo "    <option value=''>-- " . xl('All Providers', 'e') . " --\n";
-					while ($row = sqlFetchArray($res)) {
-						$provid = $row['id'];
-						echo "    <option value='$provid'";
-						if ($provid == $_POST['form_doctor']) echo " selected";
-						echo ">" . $row['lname'] . ", " . $row['fname'] . "\n";
-					}
-					echo "   </select>\n";
-				} else {
-					echo "<input type='hidden' name='form_doctor' value='" . $_SESSION['authUserID'] . "'>";
-				}
-			?>
-			</td>
-			<td>
-			   <select name='form_use_edate'>
-				<option value='0'><?php xl('Payment Date','e'); ?></option>
-				<option value='1'<?php if ($form_use_edate) echo ' selected' ?>><?php xl('Invoice Date','e'); ?></option>
-			   </select>
-			</td>
-		</tr>
-		<tr>
-			<td class='label'>
-			   <?php xl('From','e'); ?>:
-			</td>
-			<td>
-			   <input type='text' name='form_from_date' id="form_from_date" size='10' value='<?php  echo $form_from_date; ?>'
-				title='Date of appointments mm/dd/yyyy' >
-			   <img src='../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-				id='img_from_date' border='0' alt='[?]' style='cursor:pointer'
-				title='<?php xl('Click here to choose a date','e'); ?>'>
-			</td>
-			<td class='label'>
-			   <?php xl('To','e'); ?>:
-			</td>
-			<td>
-			   <input type='text' name='form_to_date' id="form_to_date" size='10' value='<?php  echo $form_to_date; ?>'
-				title='Optional end date mm/dd/yyyy' >
-			   <img src='../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-				id='img_to_date' border='0' alt='[?]' style='cursor:pointer'
-				title='<?php xl('Click here to choose a date','e'); ?>'>
-			</td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td>
-				<?php if (!$GLOBALS['simplified_demographics']) echo '&nbsp;' . xl('Procedure/Service', 'e') . ':'; ?>
-			</td>
-			<td>
-			   <input type='text' name='form_proc_codefull' size='11' value='<?php echo $form_proc_codefull; ?>' onclick='sel_procedure()'
-				title='<?php xl('Optional procedure/service code','e'); ?>' 
-				<?php if ($GLOBALS['simplified_demographics']) echo "style='display:none'"; ?>>
-			</td>
+    <table class='text'>
+        <tr>
+            <td class='label'>
+                <?php echo xlt('Facility'); ?>:
+            </td>
+            <td>
+            <?php dropdown_facility($form_facility, 'form_facility'); ?>
+            </td>
+            <td class='label'>
+               <?php echo xlt('Provider'); ?>:
+            </td>
+            <td>
+                <?php
+                if (acl_check('acct', 'rep_a')) {
+                    // Build a drop-down list of providers.
+                    //
+                    $query = "select id, lname, fname from users where " .
+                        "authorized = 1 order by lname, fname";
+                    $res = sqlStatement($query);
+                    echo "   &nbsp;<select name='form_doctor'>\n";
+                    echo "    <option value=''>-- " . xlt('All Providers') . " --\n";
+                    while ($row = sqlFetchArray($res)) {
+                        $provid = $row['id'];
+                        echo "    <option value='". attr($provid) ."'";
+                        if ($provid == $_POST['form_doctor']) echo " selected";
+                        echo ">" . text($row['lname']) . ", " . text($row['fname']) . "\n";
+                    }
+                    echo "   </select>\n";
+                } else {
+                    echo "<input type='hidden' name='form_doctor' value='" . attr($_SESSION['authUserID']) . "'>";
+                }
+            ?>
+            </td>
+            <td>
+               <select name='form_use_edate'>
+                <option value='0'><?php echo xlt('Payment Date'); ?></option>
+                <option value='1'<?php if ($form_use_edate) echo ' selected' ?>><?php echo xlt('Invoice Date'); ?></option>
+               </select>
+            </td>
+        </tr>
+        <tr>
+            <td class='label'>
+               <?php echo xlt('From'); ?>:
+            </td>
+            <td>
+               <input type='text' name='form_from_date' id="form_from_date" size='10' value='<?php  echo attr($form_from_date); ?>'
+                title='<?php echo xla('Date of appointments mm/dd/yyyy'); ?>' >
+            </td>
+            <td class='label'>
+               <?php echo xlt('To'); ?>:
+            </td>
+            <td>
+               <input type='text' name='form_to_date' id="form_to_date" size='10' value='<?php  echo attr($form_to_date); ?>'
+                title='<?php echo xla('Optional end date mm/dd/yyyy'); ?>' >
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                <?php if (!$GLOBALS['simplified_demographics']) echo '&nbsp;' . xlt('Procedure/Service') . ':'; ?>
+            </td>
+            <td>
+               <input type='text' name='form_proc_codefull' size='11' value='<?php echo attr($form_proc_codefull); ?>' onclick='sel_procedure()'
+                title='<?php echo xla('Optional procedure/service code'); ?>' 
+                <?php if ($GLOBALS['simplified_demographics']) echo "style='display:none'"; ?>>
+            </td>
 
-			<td>
-			   <?php if (!$GLOBALS['simplified_demographics']) echo '&nbsp;' . xl('Diagnosis', 'e') . ':'; ?>
-			</td>
-			<td>
-			   <input type='text' name='form_dx_codefull' size='11' value='<?php echo $form_dx_codefull; ?>' onclick='sel_diagnosis()'
-				title='<?php xl('Enter a diagnosis code to exclude all invoices not containing it','e'); ?>'
-				<?php if ($GLOBALS['simplified_demographics']) echo "style='display:none'"; ?>>
-			</td>
+            <td>
+               <?php if (!$GLOBALS['simplified_demographics']) echo '&nbsp;' . xlt('Diagnosis') . ':'; ?>
+            </td>
+            <td>
+               <input type='text' name='form_dx_codefull' size='11' value='<?php echo attr($form_dx_codefull); ?>' onclick='sel_diagnosis()'
+                title='<?php echo xla('Enter a diagnosis code to exclude all invoices not containing it'); ?>'
+                <?php if ($GLOBALS['simplified_demographics']) echo "style='display:none'"; ?>>
+            </td>
 
-			<td>
-			   <input type='checkbox' name='form_details' value='1'<?php if ($_POST['form_details']) echo " checked"; ?>><?xl('Details','e')?>
-			   <input type='checkbox' name='form_procedures' value='1'<?php if ($form_procedures) echo " checked"; ?>><?xl('Procedures','e')?>
-			</td>
-		</tr>
-	</table>
+            <td>
+               <input type='checkbox' name='form_details' value='1'<?php if ($_POST['form_details']) echo " checked"; ?>><?php echo xlt('Details')?>
+               <input type='checkbox' name='form_procedures' value='1'<?php if ($form_procedures) echo " checked"; ?>><?php echo xlt('Procedures')?>
+            </td>
+        </tr>
+        
+    </table>
 
-	</div>
+    </div>
 
   </td>
+  
   <td align='left' valign='middle' height="100%">
-	<table style='border-left:1px solid; width:100%; height:100%' >
-		<tr>
-			<td>
-				<div style='margin-left:15px'>
-					<a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
-					<span>
-						<?php xl('Submit','e'); ?>
-					</span>
-					</a>
+  
+    <table style='border-left:1px solid; width:100%; height:100%' >
+        <tr>
+            <td>
+                <div style='margin-left:15px'>
+                    <a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
+                    <span>
+                        <?php echo xlt('Submit'); ?>
+                    </span>
+                    </a>
 
-					<?php if ($_POST['form_refresh']) { ?>
-					<a href='#' class='css_button' id='printbutton'>
-						<span>
-							<?php xl('Print','e'); ?>
-						</span>
-					</a>
-					<?php } ?>
-				</div>
-			</td>
-		</tr>
-	</table>
+                    <?php if ($_POST['form_refresh']) { ?>
+                    <a href='#' class='css_button' id='printbutton'>
+                        <span>
+                            <?php echo xlt('Print'); ?>
+                        </span>
+                    </a>
+                    <?php } ?>
+                </div>
+            </td>
+        </tr>
+    </table>
   </td>
  </tr>
 </table>
@@ -285,39 +281,43 @@ function sel_diagnosis() {
 <table border='0' cellpadding='1' cellspacing='2' width='98%'>
  <thead>
   <th>
-   <?php xl('Practitioner','e') ?>
+   <?php echo xlt('Practitioner') ?>
   </th>
   <th>
-   <?php xl('Date','e') ?>
+   <?php echo xlt('Date') ?>
   </th>
 <?php if ($form_procedures) { ?>
   <th>
-   <?php xl('Invoice','e') ?>
+   <?php if ($GLOBALS['cash_receipts_report_invoice'] == '0') {
+    echo xlt('Invoice');
+   } else {
+    echo xlt('Name');
+   }?>
   </th>
 <?php } ?>
 <?php if ($form_proc_codefull) { ?>
   <th align='right'>
-   <?php xl('InvAmt','e') ?>
+   <?php echo xlt('InvAmt') ?>
   </th>
 <?php } ?>
 <?php if ($form_proc_codefull) { ?>
   <th>
-   <?php xl('Insurance','e') ?>
+   <?php echo xlt('Insurance') ?>
   </th>
 <?php } ?>
 <?php if ($form_procedures) { ?>
   <th>
-   <?php xl('Procedure','e') ?>
+   <?php echo xlt('Procedure') ?>
   </th>
   <th align="right">
-   <?php xl('Prof.','e') ?>
+   <?php echo xlt('Prof.') ?>
   </th>
   <th align="right">
-   <?php xl('Clinic','e') ?>
+   <?php echo xlt('Clinic') ?>
   </th>
 <?php } else { ?>
   <th align="right">
-   <?php xl('Received','e') ?>
+   <?php echo xlt('Received') ?>
   </th>
 <?php } ?>
  </thead>
@@ -326,7 +326,6 @@ function sel_diagnosis() {
     $form_doctor = $_POST['form_doctor'];
     $arows = array();
 
-    if ($INTEGRATED_AR) {
       $ids_to_skip = array();
       $irow = 0;
 
@@ -338,7 +337,7 @@ function sel_diagnosis() {
           "fe.date, fe.id AS trans_id, u.id AS docid " .
           "FROM billing AS b " .
           "JOIN form_encounter AS fe ON fe.pid = b.pid AND fe.encounter = b.encounter " .
-          "JOIN forms AS f ON f.pid = b.pid AND f.encounter = b.encounter AND f.formdir = 'newpatient' " .
+          "JOIN forms AS f ON f.pid = b.pid AND f.encounter = b.encounter AND f.formdir = 'patient_encounter' " .
           "LEFT OUTER JOIN users AS u ON u.username = f.user " .
           "WHERE b.code_type = 'COPAY' AND b.activity = 1 AND " .
           "fe.date >= '$form_from_date 00:00:00' AND fe.date <= '$form_to_date 23:59:59'";
@@ -351,23 +350,27 @@ function sel_diagnosis() {
           $query .= " AND u.id = '$form_doctor'";
         }
         *************************************************************/
+        $sqlBindArray = array();
         $query = "SELECT b.fee, b.pid, b.encounter, b.code_type, b.code, b.modifier, " .
           "fe.date, fe.id AS trans_id, fe.provider_id AS docid, fe.invoice_refno " .
           "FROM billing AS b " .
           "JOIN form_encounter AS fe ON fe.pid = b.pid AND fe.encounter = b.encounter " .
           "WHERE b.code_type = 'COPAY' AND b.activity = 1 AND " .
-          "fe.date >= '$form_from_date 00:00:00' AND fe.date <= '$form_to_date 23:59:59'";
+          "fe.date >= ? AND fe.date <= ?";
+          array_push($sqlBindArray,$form_from_date . " 00:00:00",$form_to_date . " 23:59:59");
         // If a facility was specified.
         if ($form_facility) {
-          $query .= " AND fe.facility_id = '$form_facility'";
+          $query .= " AND fe.facility_id = ?";
+          array_push($sqlBindArray,$form_facility);
         }
         // If a doctor was specified.
         if ($form_doctor) {
-          $query .= " AND fe.provider_id = '$form_doctor'";
+          $query .= " AND fe.provider_id = ?";
+          array_push($sqlBindArray,$form_doctor);
         }
         /************************************************************/
         //
-        $res = sqlStatement($query);
+        $res = sqlStatement($query,$sqlBindArray);
         while ($row = sqlFetchArray($res)) {
           $trans_id = $row['trans_id'];
           $thedate = substr($row['date'], 0, 10);
@@ -380,9 +383,9 @@ function sel_diagnosis() {
           // that diagnosis.
           if ($form_dx_code && $form_dx_codetype) {
             $tmp = sqlQuery("SELECT count(*) AS count FROM billing WHERE " .
-              "pid = '$patient_id' AND encounter = '$encounter_id' AND " .
-              "code_type = '$form_dx_codetype' AND code LIKE '$form_dx_code' AND " .
-              "activity = 1");
+              "pid = ? AND encounter = ? AND " .
+              "code_type = ? AND code LIKE ? AND " .
+              "activity = 1", array($patient_id,$encounter_id,$form_dx_codetype,$form_dx_code));
             if (empty($tmp['count'])) {
               $ids_to_skip[$trans_id] = 1;
               continue;
@@ -397,7 +400,11 @@ function sel_diagnosis() {
           $arows[$key]['docid'] = $row['docid'];
           $arows[$key]['project_id'] = 0;
           $arows[$key]['memo'] = '';
-          $arows[$key]['invnumber'] = "$patient_id.$encounter_id";
+          if ($GLOBALS['cash_receipts_report_invoice'] == '0') {
+            $arows[$key]['invnumber'] = "$patient_id.$encounter_id";
+          } else{
+            $arows[$key]['invnumber'] = "$patient_name";
+          }
           $arows[$key]['irnumber'] = $row['invoice_refno'];
         } // end while
       } // end copays (not $form_proc_code)
@@ -408,7 +415,7 @@ function sel_diagnosis() {
         "fe.date, fe.id AS trans_id, u.id AS docid, s.deposit_date, s.payer_id " .
         "FROM ar_activity AS a " .
         "JOIN form_encounter AS fe ON fe.pid = a.pid AND fe.encounter = a.encounter " .
-        "JOIN forms AS f ON f.pid = a.pid AND f.encounter = a.encounter AND f.formdir = 'newpatient' " .
+        "JOIN forms AS f ON f.pid = a.pid AND f.encounter = a.encounter AND f.formdir = 'patient_encounter' " .
         "LEFT OUTER JOIN users AS u ON u.username = f.user " .
         "LEFT OUTER JOIN ar_session AS s ON s.session_id = a.session_id " .
         "WHERE a.pay_amount != 0 AND ( " .
@@ -422,38 +429,49 @@ function sel_diagnosis() {
       // If a doctor was specified.
       if ($form_doctor) $query .= " AND u.id = '$form_doctor'";
       ***************************************************************/
+      $sqlBindArray = array();
       $query = "SELECT a.pid, a.encounter, a.post_time, a.code, a.modifier, a.pay_amount, " .
         "fe.date, fe.id AS trans_id, fe.provider_id AS docid, fe.invoice_refno, s.deposit_date, s.payer_id, " .
-        "b.provider_id " .
+        "b.provider_id, concat(p.lname, ' ', p.fname) as 'pat_fulname' " .
         "FROM ar_activity AS a " .
         "JOIN form_encounter AS fe ON fe.pid = a.pid AND fe.encounter = a.encounter " .
         "LEFT OUTER JOIN ar_session AS s ON s.session_id = a.session_id " .
+        "LEFT OUTER JOIN patient_data AS p ON p.pid = a.pid " .
         "LEFT OUTER JOIN billing AS b ON b.pid = a.pid AND b.encounter = a.encounter AND " .
         "b.code = a.code AND b.modifier = a.modifier AND b.activity = 1 AND " .
         "b.code_type != 'COPAY' AND b.code_type != 'TAX' " .
         "WHERE a.pay_amount != 0 AND ( " .
-        "a.post_time >= '$form_from_date 00:00:00' AND a.post_time <= '$form_to_date 23:59:59' " .
-        "OR fe.date >= '$form_from_date 00:00:00' AND fe.date <= '$form_to_date 23:59:59' " .
-        "OR s.deposit_date >= '$form_from_date' AND s.deposit_date <= '$form_to_date' )";
+        "a.post_time >= ? AND a.post_time <= ? " .
+        "OR fe.date >= ? AND fe.date <= ? " .
+        "OR s.deposit_date >= ? AND s.deposit_date <= ? )";
+        array_push($sqlBindArray,$form_from_date . " 00:00:00",$form_to_date . " 23:59:59",$form_from_date . " 00:00:00",$form_to_date . " 23:59:59",$form_from_date,$form_to_date);
       // If a procedure code was specified.
       // Support code type if it is in the ar_activity table. Note it is not always included, so
       // also support a blank code type in ar_activity table.
-      if ($form_proc_codetype && $form_proc_code) $query .= " AND (a.code_type = '$form_proc_codetype' OR a.code_type = '') AND a.code = '$form_proc_code'";
+      if ($form_proc_codetype && $form_proc_code) {
+        $query .= " AND (a.code_type = ? OR a.code_type = '') AND a.code = ?";
+        array_push($sqlBindArray,$form_proc_codetype,$form_proc_code);
+      }
       // If a facility was specified.
-      if ($form_facility) $query .= " AND fe.facility_id = '$form_facility'";
+      if ($form_facility) {
+        $query .= " AND fe.facility_id = ?";
+        array_push($sqlBindArray,$form_facility);
+      }
       // If a doctor was specified.
       if ($form_doctor) {
-        $query .= " AND ( b.provider_id = '$form_doctor' OR " .
+        $query .= " AND ( b.provider_id = ? OR " .
           "( ( b.provider_id IS NULL OR b.provider_id = 0 ) AND " .
-          "fe.provider_id = '$form_doctor' ) )";
+          "fe.provider_id = ? ) )";
+          array_push($sqlBindArray,$form_doctor,$form_doctor);
       }
       /**************************************************************/
       //
-      $res = sqlStatement($query);
+      $res = sqlStatement($query,$sqlBindArray);
       while ($row = sqlFetchArray($res)) {
         $trans_id = $row['trans_id'];
         $patient_id = $row['pid'];
         $encounter_id = $row['encounter'];
+        $patient_name = $row['pat_fulname'];
         //
         if (!empty($ids_to_skip[$trans_id])) continue;
         //
@@ -471,9 +489,9 @@ function sel_diagnosis() {
         // that diagnosis.
         if ($form_dx_code && $form_dx_codetype) {
           $tmp = sqlQuery("SELECT count(*) AS count FROM billing WHERE " .
-            "pid = '$patient_id' AND encounter = '$encounter_id' AND " .
-            "code_type = '$form_dx_codetype' AND code LIKE '$form_dx_code' AND " .
-            "activity = 1");
+            "pid = ? AND encounter = ? AND " .
+            "code_type = ? AND code LIKE ? AND " .
+            "activity = 1", array($patient_id,$encounter_id,$form_dx_codetype,$form_dx_code));
           if (empty($tmp['count'])) {
             $ids_to_skip[$trans_id] = 1;
             continue;
@@ -489,129 +507,13 @@ function sel_diagnosis() {
         $arows[$key]['docid'] = $docid;
         $arows[$key]['project_id'] = empty($row['payer_id']) ? 0 : $row['payer_id'];
         $arows[$key]['memo'] = $row['code'];
-        $arows[$key]['invnumber'] = "$patient_id.$encounter_id";
+        if ($GLOBALS['cash_receipts_report_invoice'] == '0') {
+          $arows[$key]['invnumber'] = "$patient_id.$encounter_id";
+        } else{
+          $arows[$key]['invnumber'] = "$patient_name";
+        }
         $arows[$key]['irnumber'] = $row['invoice_refno'];
       } // end while
-    } // end $INTEGRATED_AR
-
-    else {
-      if ($form_proc_code) {
-        $query = "SELECT acc_trans.amount, acc_trans.transdate, " .
-          "acc_trans.memo, acc_trans.project_id, acc_trans.trans_id, " .
-          "ar.invnumber, ar.employee_id, invoice.sellprice, invoice.qty " .
-          "FROM acc_trans, ar, invoice WHERE " .
-          "acc_trans.chart_id = $chart_id_cash AND " .
-          "acc_trans.memo ILIKE '$form_proc_code' AND " .
-          "ar.id = acc_trans.trans_id AND " .
-          "invoice.trans_id = acc_trans.trans_id AND " .
-          "invoice.serialnumber ILIKE acc_trans.memo AND " .
-          "invoice.sellprice >= 0.00 AND " .
-          "( invoice.description ILIKE 'CPT%' OR invoice.description ILIKE 'Proc%' ) AND ";
-      }
-      else {
-        $query = "select acc_trans.amount, acc_trans.transdate, " .
-          "acc_trans.memo, acc_trans.trans_id, " .
-          "ar.invnumber, ar.employee_id from acc_trans, ar where " .
-          "acc_trans.chart_id = $chart_id_cash and " .
-          "ar.id = acc_trans.trans_id and ";
-      }
-
-      if ($form_use_edate) {
-        $query .= "ar.transdate >= '$form_from_date' and " .
-        "ar.transdate <= '$form_to_date'";
-      } else {
-        $query .= "acc_trans.transdate >= '$form_from_date' and " .
-        "acc_trans.transdate <= '$form_to_date'";
-      }
-
-      $query .= " order by ar.invnumber";
-
-      // echo "<!-- $query -->\n"; // debugging
-
-      $t_res = SLQuery($query);
-      if ($sl_err) die($sl_err);
-
-      $docname     = "";
-      $docnameleft = "";
-      $main_docid  = 0;
-      $doctotal1   = 0;
-      $grandtotal1 = 0;
-      $doctotal2   = 0;
-      $grandtotal2 = 0;
-      $last_trans_id = 0;
-      $skipping      = false;
-
-      for ($irow = 0; $irow < SLRowCount($t_res); ++$irow) {
-        $row = SLGetRow($t_res, $irow);
-
-        list($patient_id, $encounter_id) = explode(".", $row['invnumber']);
-
-        // Under some conditions we may skip invoices that matched the SQL query.
-        //
-        if ($row['trans_id'] == $last_trans_id) {
-          if ($skipping) continue;
-          // same invoice and not skipping, do nothing.
-        } else { // new invoice
-          $skipping = false;
-          // If a diagnosis code was given then skip any invoices without
-          // that diagnosis.
-          if ($form_dx_code) {
-            if (!SLQueryValue("SELECT count(*) FROM invoice WHERE " .
-              "invoice.trans_id = '" . $row['trans_id'] . "' AND " .
-              "( invoice.description ILIKE 'ICD9:$form_dx_code %' OR " .
-              "invoice.serialnumber ILIKE 'ICD9:$form_dx_code' )"))
-            {
-              $skipping = true;
-              continue;
-            }
-          }
-          // If a facility was specified then skip invoices whose encounters
-          // do not indicate that facility.
-          if ($form_facility) {
-            $tmp = sqlQuery("SELECT count(*) AS count FROM form_encounter WHERE " .
-              "pid = '$patient_id' AND encounter = '$encounter_id' AND " .
-              "facility_id = '$form_facility'");
-            if (empty($tmp['count'])) {
-              $skipping = true;
-              continue;
-            }
-          }
-          // Find out who the practitioner is.
-          /***********************************************************
-          $tmp = sqlQuery("SELECT users.id, users.authorized FROM forms, users WHERE " .
-            "forms.pid = '$patient_id' AND forms.encounter = '$encounter_id' AND " .
-            "forms.formdir = 'newpatient' AND users.username = forms.user");
-          $main_docid = empty($tmp['id']) ? 0 : $tmp['id'];
-          if (empty($tmp['authorized'])) {
-            $tmp = sqlQuery("SELECT users.id FROM billing, users WHERE " .
-              "billing.pid = '$patient_id' AND billing.encounter = '$encounter_id' AND " .
-              "billing.activity = 1 AND billing.fee > 0 AND " .
-              "users.id = billing.provider_id AND users.authorized = 1 " .
-              "ORDER BY billing.fee DESC, billing.id ASC LIMIT 1");
-            if (!empty($tmp['id'])) $main_docid = $tmp['id'];
-          }
-          ***********************************************************/
-          $tmp = sqlQuery("SELECT provider_id FROM form_encounter WHERE " .
-            "pid = '$patient_id' AND encounter = '$encounter_id' " .
-            "ORDER BY id DESC LIMIT 1");
-          $main_docid = $tmp['provider_id'] + 0;
-
-          // If a practitioner was specified then skip other practitioners.
-          if ($form_doctor) {
-            if ($form_doctor != $main_docid) {
-              $skipping = true;
-              continue;
-            }
-          }
-        } // end new invoice
-
-        $row['docid'] = $main_docid;
-        $key = sprintf("%08u%s%08u%08u%06u", $main_docid, $row['transdate'],
-          $patient_id, $encounter_id, $irow);
-        $arows[$key] = $row;
-      }
-
-    } // end not $INTEGRATED_AR
 
     ksort($arows);
     $docid = 0;
@@ -622,7 +524,7 @@ function sel_diagnosis() {
       $insconame = '';
       if ($form_proc_codefull  && $row['project_id']) {
         $tmp = sqlQuery("SELECT name FROM insurance_companies WHERE " .
-          "id = '" . $row['project_id'] . "'");
+          "id = ?", array($row['project_id']));
         $insconame = $tmp['name'];
       }
 
@@ -641,7 +543,7 @@ function sel_diagnosis() {
 
  <tr bgcolor="#ddddff">
   <td class="detail" colspan="<?php echo ($form_proc_codefull ? 4 : 2) + ($form_procedures ? 2 : 0); ?>">
-   <?php echo xl('Totals for ') . $docname ?>
+   <?php echo xlt('Totals for ') . text($docname) ?>
   </td>
   <td align="right">
    <?php bucks($doctotal1) ?>
@@ -658,8 +560,8 @@ function sel_diagnosis() {
         $doctotal2 = 0;
 
         $docid = $row['docid'];
-        $tmp = sqlQuery("SELECT lname, fname FROM users WHERE id = '$docid'");
-        $docname = empty($tmp) ? 'Unknown' : $tmp['fname'] . ' ' . $tmp['lname'];
+        $tmp = sqlQuery("SELECT lname, fname FROM users WHERE id = ?", array($docid));
+        $docname = empty($tmp) ? xl('Unknown') : $tmp['fname'] . ' ' . $tmp['lname'];
 
         $docnameleft = $docname;
       }
@@ -669,40 +571,35 @@ function sel_diagnosis() {
 
  <tr>
   <td class="detail">
-   <?php echo $docnameleft; $docnameleft = "&nbsp;" ?>
+   <?php echo text($docnameleft); $docnameleft = " " ?>
   </td>
   <td class="detail">
-   <?php echo oeFormatShortDate($row['transdate']) ?>
+   <?php date(DateFormatRead(true) . ' H:i:s', $row['transdate']); ?>
   </td>
 <?php if ($form_procedures) { ?>
   <td class="detail">
-   <?php echo empty($row['irnumber']) ? $row['invnumber'] : $row['irnumber']; ?>
+   <?php echo empty($row['irnumber']) ? text($row['invnumber']) : text($row['irnumber']); ?>
   </td>
 <?php } ?>
 <?php
         if ($form_proc_code && $form_proc_codetype) {
           echo "  <td class='detail' align='right'>";
-          if ($INTEGRATED_AR) {
             list($patient_id, $encounter_id) = explode(".", $row['invnumber']);
             $tmp = sqlQuery("SELECT SUM(fee) AS sum FROM billing WHERE " .
-              "pid = '$patient_id' AND encounter = '$encounter_id' AND " .
-              "code_type = '$form_proc_codetype' AND code = '$form_proc_code' AND activity = 1");
+              "pid = ? AND encounter = ? AND " .
+              "code_type = ? AND code = ? AND activity = 1", array($patient_id,$encounter_id,$form_proc_codetype,$form_proc_code));
             bucks($tmp['sum']);
-          }
-          else {
-            bucks($row['sellprice'] * $row['qty']);
-          }
           echo "  </td>\n";
         }
 ?>
 <?php if ($form_proc_codefull) { ?>
   <td class="detail">
-   <?php echo $insconame ?>
+   <?php echo text($insconame) ?>
   </td>
 <?php } ?>
 <?php if ($form_procedures) { ?>
   <td class="detail">
-   <?php echo $row['memo'] ?>
+   <?php echo text($row['memo']) ?>
   </td>
 <?php } ?>
   <td class="detail" align="right">
@@ -725,7 +622,7 @@ function sel_diagnosis() {
 
  <tr bgcolor="#ddddff">
   <td class="detail" colspan="<?php echo ($form_proc_codefull ? 4 : 2) + ($form_procedures ? 2 : 0); ?>">
-   <?php echo xl('Totals for ') . $docname ?>
+   <?php echo xlt('Totals for ') . text($docname) ?>
   </td>
   <td align="right">
    <?php bucks($doctotal1) ?>
@@ -739,7 +636,7 @@ function sel_diagnosis() {
 
  <tr bgcolor="#ffdddd">
   <td class="detail" colspan="<?php echo ($form_proc_codefull ? 4 : 2) + ($form_procedures ? 2 : 0); ?>">
-   <?php xl('Grand Totals','e') ?>
+   <?php echo xlt('Grand Totals') ?>
   </td>
   <td align="right">
    <?php bucks($grandtotal1) ?>
@@ -750,17 +647,20 @@ function sel_diagnosis() {
   </td>
 <?php } ?>
  </tr>
+ <?php $report_from_date = oeFormatShortDate($form_from_date)  ;
+       $report_to_date = oeFormatShortDate($form_to_date)  ;
+ ?>
+<div align='right'><span class='title' ><?php echo xlt('Report Date'). ' '; ?><?php echo text($report_from_date);?> - <?php echo text($report_to_date);?></span></div>
 
 <?php
   }
-  if (!$INTEGRATED_AR) SLClose();
 ?>
 
 </table>
 </div>
 <?php } else { ?>
 <div class='text'>
- 	<?php echo xl('Please input search criteria above, and click Submit to view results.', 'e' ); ?>
+    <?php echo xlt('Please input search criteria above, and click Submit to view results.'); ?>
 </div>
 <?php } ?>
 
@@ -769,14 +669,20 @@ function sel_diagnosis() {
 
 <!-- stuff for the popup calendar -->
 <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
-<style type="text/css">@import url(<?php echo $GLOBALS['webroot']; ?>/library/dynarch_calendar.css);</style>
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/library/dynarch_calendar.js"></script>
-<?php require_once($GLOBALS['srcdir'].'/dynarch_calendar_en.inc.php'); ?>
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/library/dynarch_calendar_setup.js"></script>
-
-<script language="Javascript">
- Calendar.setup({inputField:"form_from_date", ifFormat:"%Y-%m-%d", button:"img_from_date"});
- Calendar.setup({inputField:"form_to_date", ifFormat:"%Y-%m-%d", button:"img_to_date"});
+<link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
+<script type="text/javascript" src="../../library/js/jquery.datetimepicker.full.min.js"></script>
+<script>
+    $(function() {
+        $("#form_from_date").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $("#form_to_date").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $.datetimepicker.setLocale('<?= $DateLocale;?>');
+    });
 </script>
 
 </html>

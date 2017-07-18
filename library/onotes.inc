@@ -13,9 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 function getOnoteById ($id, $cols = "*")
@@ -31,18 +31,22 @@ function getOnoteByDate ($date, $activity = "1", $cols = "*", $limit="all", $off
 	{
 		$sql = "select $cols from onotes where date like ? ";
                 array_push($sqlBindArray,"%".$date."%");
-		if ($activity != "all")
+		if ($activity != "all") {
 			$sql .= "and activity=? ";
-                        array_push($sqlBindArray,$activity);
+			array_push($sqlBindArray,$activity);
+		}
+
 		$sql .= "order by date DESC";
 	}
 	else
 	{
 		$sql = "select $cols from onotes where date like ? ";
                 array_push($sqlBindArray,"%".$date."%");
-		if ($activity != "all")
+		if ($activity != "all") {
 			$sql .= "and activity =? ";
-                        array_push($sqlBindArray,$activity);
+			array_push($sqlBindArray,$activity);
+		}
+
 		$sql .= "order by date DESC LIMIT ".escape_limit($offset).",".escape_limit($limit);
 	}
 	

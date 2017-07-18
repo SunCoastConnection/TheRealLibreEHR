@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 // This module downloads a specified document template to the browser after
@@ -117,7 +117,7 @@ function doSubs($s) {
     }
 
     else if (keySearch($s, '{PatientID}')) {
-      $s = keyReplace($s, dataFixup($ptrow['pubpid'], xl('Chart ID')));
+      $s = keyReplace($s, dataFixup($ptrow['pid'], xl('Chart ID')));
     }
 
     else if (keySearch($s, '{Address}')) {

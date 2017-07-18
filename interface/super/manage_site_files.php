@@ -29,6 +29,7 @@ $my_files = array(
   'referral_template.html',
   'statement.inc.php',
   'letter_templates/custom_pdf.php',
+  'menu_data.json',
 );
 // Append LBF plugin filenames to the array.
 $lres = sqlStatement('SELECT * FROM list_options ' .
@@ -51,7 +52,7 @@ if (!empty($_POST['bn_save'])) {
   if ($form_filename) {
     // Textareas, at least in Firefox, return a \r\n at the end of each line
     // even though only \n was originally there.  For consistency with
-    // normal OpenEMR usage we translate those back.
+    // normal LibreEHR usage we translate those back.
     file_put_contents($filepath, str_replace("\r\n", "\n",
       $_POST['form_filedata']));
     $form_filename = '';

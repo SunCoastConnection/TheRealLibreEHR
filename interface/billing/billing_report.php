@@ -1,10 +1,37 @@
 <?php
-/**
- * This program is free software; you can redistribute it and/or
+/*
+ *  Billing Report Program
+ *
+ *  This program displays the main search and select screen for claims generation
+ *
+ *  The changes to this file as of November 16 2016 to add the 1500 pre-printed form
+ *  are covered under the terms of the Mozilla Public License, v. 2.0
+ *
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * No previous copyright listed in file. This was an original OpenEMR program.
+ *
+ * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
+ * as published by the Free Software Foundation; either version 3
  * of the License, or (at your option) any later version.
- * Added hooks for UB04 and End of day reporting Terry Hill 2014 terry@lillysystems.com
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://opensource.org/licenses/gpl-license.php.
+ *
+ * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreHealth EHR
+ * @author Terry Hill <teryhill@librehealth.io>
+ * @link http://librehealth.io
+ *
+ * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Added hooks for UB04 and End of day reporting Terry Hill 2014 teryhill@librehealth.io
+ *
  */
 
 $fake_register_globals=false;
@@ -28,6 +55,7 @@ $EXPORT_INC = "$webserver_root/custom/BillingExport.php";
 $daysheet = false;
 $daysheet_total = false;
 $provider_run = false;
+$DateFormat = DateFormatRead();
 
 if ($GLOBALS['use_custom_daysheet'] != 0) { 
   $daysheet = true;
@@ -60,23 +88,14 @@ if (isset($_POST['mode'])) {
       header("Pragma: public");
       header("Expires: 0");
       header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-      header("Content-Disposition: attachment; filename=openemr_ofx.ofx");
+      header("Content-Disposition: attachment; filename=libreehr_ofx.ofx");
       header("Content-Type: text/xml");
       echo $ofx->get_OFX();
       exit;
     }
   }
 
-  // This is obsolete.
-  if ($_POST['mode'] == 'process') {
-    if (exec("ps x | grep 'process_bills[.]php'")) {
-      $alertmsg = xl('Request ignored - claims processing is already running!');
-    } else {
-      exec("cd $webserver_root/library/freeb;" .
-        "php -q process_bills.php bill > process_bills.log 2>&1 &");
-      $alertmsg = xl('Batch processing initiated; this may take a while.');
-    }
-  }
+
 }
 
 //global variables:
@@ -91,8 +110,8 @@ $my_authorized = isset($_POST["authorized"]) ? $_POST["authorized"] : '';
 // are to be reported.
 $missing_mods_only = (isset($_POST['missing_mods_only']) && !empty($_POST['missing_mods_only']));
 
-$left_margin = isset($_POST["left_margin"]) ? $_POST["left_margin"] : 24;
-$top_margin  = isset($_POST["top_margin"] ) ? $_POST["top_margin" ] : 20;
+$left_margin = isset($_POST["left_margin"]) ? $_POST["left_margin"] : $GLOBALS['cms_left_margin_default'];
+$top_margin  = isset($_POST["top_margin"] ) ? $_POST["top_margin" ] : $GLOBALS['cms_top_margin_default'];
 
 $ofrom_date  = $from_date;
 $oto_date    = $to_date;
@@ -150,6 +169,9 @@ function set_button_states() {
   f.bn_x12_encounter.disabled   = !can_generate;
 <?php } ?>
   f.bn_process_hcfa.disabled    = !can_generate;
+<?php if ($GLOBALS['preprinted_cms_1500']) { ?>
+  f.bn_process_hcfa_form.disabled    = !can_generate;
+<?php } ?>
   f.bn_hcfa_txt_file.disabled   = !can_generate;
   // f.bn_electronic_file.disabled = !can_bill;
   f.bn_reopen.disabled          = !can_bill;
@@ -160,30 +182,17 @@ function set_button_states() {
 // Process a click to go to an encounter.
 function toencounter(pid, pubpid, pname, enc, datestr, dobstr) {
  top.restoreSession();
-<?php if ($GLOBALS['concurrent_layout']) { ?>
- var othername = (window.name == 'RTop') ? 'RBot' : 'RTop';
+     encurl = 'patient_file/encounter/encounter_top.php?set_encounter=' + enc + '&pid=' + pid;
  parent.left_nav.setPatient(pname,pid,pubpid,'',dobstr);
- parent.left_nav.setEncounter(datestr, enc, othername);
- parent.left_nav.setRadio(othername, 'enc');
- parent.frames[othername].location.href =
-  '../patient_file/encounter/encounter_top.php?set_encounter='
-  + enc + '&pid=' + pid;
-<?php } else { ?>
- location.href = '../patient_file/encounter/patient_encounter.php?set_encounter='
-  + enc + '&pid=' + pid;
-<?php } ?>
+     parent.left_nav.setEncounter(datestr, enc, 'enc');
+     parent.left_nav.loadFrame('enc2', 'enc', encurl);
 }
 // Process a click to go to an patient.
 function topatient(pid, pubpid, pname, enc, datestr, dobstr) {
  top.restoreSession();
-<?php if ($GLOBALS['concurrent_layout']) { ?>
- var othername = (window.name == 'RTop') ? 'RBot' : 'RTop';
+    paturl = 'patient_file/summary/demographics_full.php?pid=' + pid;
  parent.left_nav.setPatient(pname,pid,pubpid,'',dobstr);
- parent.frames[othername].location.href =
-  '../patient_file/summary/demographics_full.php?pid=' + pid;
-<?php } else { ?>
- location.href = '../patient_file/summary/demographics_full.php?pid=' + pid;
-<?php } ?>
+    parent.left_nav.loadFrame('dem1', 'pat1', paturl);
 }
 </script>
 <script language="javascript" type="text/javascript">
@@ -339,8 +348,11 @@ function MarkAsCleared(Type)
 <!-- ================================================== -->
 <!-- =============Included for Insurance ajax criteria==== -->
 <!-- ================================================== -->
-<script type="text/javascript" src="../../library/js/jquery.1.3.2.js"></script>
+<link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
+<script type="text/javascript" src="../../library/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../library/js/jquery.datetimepicker.full.min.js"></script>
 <?php include_once("{$GLOBALS['srcdir']}/ajax/payment_ajax_jav.inc.php"); ?>
+<script type="text/javascript" src="../../library/js/blink/jquery.modern-blink.js"></script>
 <script type="text/javascript" src="../../library/js/common.js"></script>
 <style>
 #ajax_div_insurance {
@@ -361,25 +373,13 @@ document.onclick=TakeActionOnHide;
 <body class="body_top" onLoad="TestExpandCollapse()">
 
 <p style='margin-top:5px;margin-bottom:5px;margin-left:5px'>
-
-<?php if ($GLOBALS['concurrent_layout']) { ?>
 <font class='title'><?php echo xlt('Billing Manager') ?></font>
-<?php } else if ($userauthorized) { ?>
-<a href="../main/main.php" target='Main' onclick='top.restoreSession()'><font class=title><?php echo xlt('Billing Manager') ?></font><font class=more> <?php echo $tback; ?></font></a>
-<?php } else { ?>
-<a href="../main/onotes/office_comments.php" target='Main' onclick='top.restoreSession()'><font class=title><?php echo xlt('Billing Manager') ?></font><font class=more><?php echo $tback; ?></font></a>
-<?php } ?>
-
 </p>
 
 <form name='the_form' method='post' action='billing_report.php' onsubmit='return top.restoreSession()' style="display:inline">
 
-<style type="text/css">@import url(../../library/dynarch_calendar.css);</style>
 <script type="text/javascript" src="../../library/dialog.js"></script>
 <script type="text/javascript" src="../../library/textformat.js"></script>
-<script type="text/javascript" src="../../library/dynarch_calendar.js"></script>
-<?php include_once("{$GLOBALS['srcdir']}/dynarch_calendar_en.inc.php"); ?>
-<script type="text/javascript" src="../../library/dynarch_calendar_setup.js"></script>
 <script language='JavaScript'>
  var mypcc = '1';
 </script>
@@ -402,23 +402,23 @@ $ThisPageSearchCriteriaQueryDropDownMasterDefaultKey=array();
 $ThisPageSearchCriteriaIncludeMaster=array();
 
 if ($daysheet) {
-$ThisPageSearchCriteriaDisplayMaster= array( xl("Date of Service"),xl("Date of Entry"),xl("Date of Billing"),xl("Claim Type"),xl("Patient Name"),xl("Patient Id"),xl("Insurance Company"),xl("Encounter"),xl("Whether Insured"),xl("Charge Coded"),xl("Billing Status"),xl("Authorization Status"),xl("Last Level Billed"),xl("X12 Partner"),xl("User") );
-$ThisPageSearchCriteriaKeyMaster="form_encounter.date,billing.date,claims.process_time,claims.target,patient_data.fname,".
-                                 "form_encounter.pid,claims.payer_id,form_encounter.encounter,insurance_data.provider,billing.id,billing.billed,".
+$ThisPageSearchCriteriaDisplayMaster= array( xl("Date of Service"),xl("Date of Entry"),xl("Date of Billing"),xl("Patient Name"),xl("Patient Id"),xl("Provider"),xl("Referring Provider"),xl("Insurance Company"),xl("Claim Type"),xl("Encounter"),xl("Whether Insured"),xl("Charge Coded"),xl("Billing Status"),xl("Authorization Status"),xl("Last Level Billed"),xl("X12 Partner"),xl("User") );
+$ThisPageSearchCriteriaKeyMaster="form_encounter.date,billing.date,claims.process_time,patient_data.fname,".
+                                 "form_encounter.pid,form_encounter.provider_id,form_encounter.referring_physician,claims.payer_id,claims.target,form_encounter.encounter,insurance_data.provider,billing.id,billing.billed,".
                                  "billing.authorized,form_encounter.last_level_billed,billing.x12_partner_id,billing.user";
-$ThisPageSearchCriteriaDataTypeMaster="datetime,datetime,datetime,radio,text_like,".
-                                      "text,include,text,radio,radio,radio,".
+$ThisPageSearchCriteriaDataTypeMaster="datetime,datetime,datetime,text_like,".
+                                      "text,query_drop_down,query_drop_down,include,radio,text,radio,radio,radio,".
                                       "radio_like,radio,query_drop_down,text";
 }
 else
 {
 
-$ThisPageSearchCriteriaDisplayMaster= array( xl("Date of Service"),xl("Date of Entry"),xl("Date of Billing"),xl("Claim Type"),xl("Patient Name"),xl("Patient Id"),xl("Insurance Company"),xl("Encounter"),xl("Whether Insured"),xl("Charge Coded"),xl("Billing Status"),xl("Authorization Status"),xl("Last Level Billed"),xl("X12 Partner") );
-$ThisPageSearchCriteriaKeyMaster="form_encounter.date,billing.date,claims.process_time,claims.target,patient_data.fname,".
-                                 "form_encounter.pid,claims.payer_id,form_encounter.encounter,insurance_data.provider,billing.id,billing.billed,".
+$ThisPageSearchCriteriaDisplayMaster= array( xl("Date of Service"),xl("Date of Entry"),xl("Date of Billing"),xl("Patient Name"),xl("Patient Id"),xl("Provider"),xl("Referring Provider"),xl("Insurance Company"),xl("Claim Type"),xl("Encounter"),xl("Whether Insured"),xl("Charge Coded"),xl("Billing Status"),xl("Authorization Status"),xl("Last Level Billed"),xl("X12 Partner") );
+$ThisPageSearchCriteriaKeyMaster="form_encounter.date,billing.date,claims.process_time,patient_data.fname,".
+                                 "form_encounter.pid,form_encounter.provider_id,form_encounter.referring_physician,claims.payer_id,claims.target,form_encounter.encounter,insurance_data.provider,billing.id,billing.billed,".
                                  "billing.authorized,form_encounter.last_level_billed,billing.x12_partner_id";
-$ThisPageSearchCriteriaDataTypeMaster="datetime,datetime,datetime,radio,text_like,".
-                                      "text,include,text,radio,radio,radio,".
+$ThisPageSearchCriteriaDataTypeMaster="datetime,datetime,datetime,text_like,".
+                                      "text,query_drop_down,query_drop_down,include,radio,text,radio,radio,radio,".
                                       "radio_like,radio,query_drop_down";
 
 
@@ -440,9 +440,15 @@ $ThisPageSearchCriteriaRadioKeyMaster[5]="%,1,0";
 $ThisPageSearchCriteriaDisplayRadioMaster[6]= array( xl("All"),xl("None"),xl("Ins 1"),xl("Ins 2 or Ins 3") );
 $ThisPageSearchCriteriaRadioKeyMaster[6]="all,0,1,2";
 //The below section is needed if there is any 'query_drop_down' type in the $ThisPageSearchCriteriaDataTypeMaster
-$ThisPageSearchCriteriaQueryDropDownMaster[1]="SELECT name,id FROM x12_partners;";
+$ThisPageSearchCriteriaQueryDropDownMaster[1]="SELECT id, CONCAT(lname, ', ', fname) AS name FROM users WHERE authorized = 1 AND username != '' ORDER BY name ;";
 $ThisPageSearchCriteriaQueryDropDownMasterDefault[1]= xl("All");//Only one item will be here
 $ThisPageSearchCriteriaQueryDropDownMasterDefaultKey[1]="all";//Only one item will be here
+$ThisPageSearchCriteriaQueryDropDownMaster[2]="SELECT id, CONCAT(lname, ', ', fname) AS name FROM users WHERE authorized = 1 OR npi != '' ORDER BY name ;";
+$ThisPageSearchCriteriaQueryDropDownMasterDefault[2]= xl("All");//Only one item will be here
+$ThisPageSearchCriteriaQueryDropDownMasterDefaultKey[2]="all";//Only one item will be here
+$ThisPageSearchCriteriaQueryDropDownMaster[3]="SELECT name,id FROM x12_partners;";
+$ThisPageSearchCriteriaQueryDropDownMasterDefault[3]= xl("All");//Only one item will be here
+$ThisPageSearchCriteriaQueryDropDownMasterDefaultKey[3]="all";//Only one item will be here
 //The below section is needed if there is any 'include' type in the $ThisPageSearchCriteriaDataTypeMaster
 //Function name is added here.Corresponding include files need to be included in the respective pages as done in this page.
 //It is labled(Included for Insurance ajax criteria)(Line:-279-299).
@@ -457,8 +463,8 @@ if(!isset($_REQUEST['mode']))//default case
   $_REQUEST['final_this_page_criteria_text'][1]=xl("Billing Status = Unbilled");
   
   $_REQUEST['date_master_criteria_form_encounter_date']="today";
-  $_REQUEST['master_from_date_form_encounter_date']=date("Y-m-d");
-  $_REQUEST['master_to_date_form_encounter_date']=date("Y-m-d");
+  $_REQUEST['master_from_date_form_encounter_date']=date($DateFormat);
+  $_REQUEST['master_to_date_form_encounter_date']=date($DateFormat);
   
   $_REQUEST['radio_billing_billed']=0;
  
@@ -489,43 +495,24 @@ if(!isset($_REQUEST['mode']))//default case
             <td><a onClick="javascript:return SubmitTheScreenPrint();" href="#" 
     class='link_submit'  ><?php echo '['. xlt('View Printable Report').']' ?></a></td>
           </tr>
-		  
-	 <?php if ($daysheet) { ?> 
-		  <tr>
+          
+     <?php if ($daysheet) { ?> 
+          <tr>
             <td>&nbsp;</td>
             <td><a onClick="javascript:return SubmitTheEndDayPrint();" href="#" 
     class='link_submit'  ><?php echo '['.xlt('End Of Day Report').']' ?></a>
-	<?php if ($daysheet_total) { ?> 
-	<span class=text><?php echo xlt('Totals'); ?> </span>
-	<input type=checkbox  name="end_of_day_totals_only" value="1" <?php if ($obj['end_of_day_totals_only'] === '1') echo "checked";?>>
-	<?php } ?>
-	<?php if ($provider_run) { ?> 
-	<span class=text><?php echo xlt('Provider'); ?> </span>
-	<input type=checkbox  name="end_of_day_provider_only" value="1" <?php if ($obj['end_of_day_provider_only'] === '1') echo "checked";?>>
-	<?php } ?>
-	</td>
+    <?php if ($daysheet_total) { ?> 
+    <span class=text><?php echo xlt('Totals'); ?> </span>
+    <input type=checkbox  name="end_of_day_totals_only" value="1" <?php if ($obj['end_of_day_totals_only'] === '1') echo "checked";?>>
+    <?php } ?>
+    <?php if ($provider_run) { ?> 
+    <span class=text><?php echo xlt('Provider'); ?> </span>
+    <input type=checkbox  name="end_of_day_provider_only" value="1" <?php if ($obj['end_of_day_provider_only'] === '1') echo "checked";?>>
+    <?php } ?>
+    </td>
           </tr>
-		<?php } ?>
-		  
-          <tr>
-            <td>&nbsp;</td>
-            <td>
-            <?php
-              $acct_config = $GLOBALS['oer_config']['ws_accounting'];
-              if($acct_config['enabled']) {
-                if($acct_config['enabled'] !== 2) {
-                  print '<span class=text><a href="javascript:void window.open(\'' . $acct_config['url_path'] . '\')">' . '['. xlt("SQL-Ledger") .']' . '</a> &nbsp; </span>';
-                }
-                if (acl_check('acct', 'rep')) {
-                  print '<span class=text><a href="javascript:void window.open(\'sl_receipts_report.php\')" onclick="top.restoreSession()">' . '['. xlt('Reports') .']'. '</a> &nbsp; </span>';
-                }
-                if (acl_check('acct', 'eob')) {
-                  print '<span class=text><a href="javascript:void window.open(\'sl_eob_search.php\')" onclick="top.restoreSession()">' . '['.xlt('EOBs') .']' . '</a></span>';
-                }
-              }
-            ?>
-            </td>
-          </tr>
+        <?php } ?>
+          
           <tr>
             <td>&nbsp;</td>
             <td>
@@ -535,7 +522,7 @@ if(!isset($_REQUEST['mode']))//default case
                 title="Process all queued bills to create electronic data (and print if requested)"><?php echo '['. xlt('Start Batch Processing') .']' ?></a>
                &nbsp;
                -->
-               <a href='customize_log.php' onclick='top.restoreSession()' target='_blank' class='link_submit'
+               <a href='#' id="view-log-link" class='link_submit'
                 title='<?php xla('See messages from the last set of generated claims'); ?>'><?php echo '['. xlt('View Log') .']'?></a>
             <?php } ?>
             </td>
@@ -562,8 +549,8 @@ if(!isset($_REQUEST['mode']))//default case
 <center>
 <span class='text' style="display:inline">
 <?php if (file_exists($EXPORT_INC)) { ?>
-<input type="submit" class="subbtn" name="bn_external" value="Export Billing" title="<?php echo xla('Export to external billing system') ?>">
-<input type="submit" class="subbtn" name="bn_mark" value="Mark as Cleared" title="<?php echo xla('Mark as billed but skip billing') ?>">
+<input type="submit" data-open-popup="true" class="subbtn" name="bn_external" value="Export Billing" title="<?php echo xla('Export to external billing system') ?>">
+<input type="submit" data-open-popup="true" class="subbtn" name="bn_mark" value="Mark as Cleared" title="<?php echo xla('Mark as billed but skip billing') ?>">
 <?php } else { ?>
 <!--
 <input type="submit" class="subbtn" name="bn_hcfa_print" value="Queue HCFA &amp; Print" title="<?php echo xla('Queue for HCFA batch processing and printing') ?>">
@@ -579,14 +566,19 @@ if(!isset($_REQUEST['mode']))//default case
  title="<?php echo xla('Generate and download X12 encounter claim batch')?>"
  onclick="MarkAsCleared(1)">
 <?php } ?>
-<input type="submit" class="subbtn" style="width:175px;" name="bn_process_hcfa" value="<?php echo xla('Generate CMS 1500 PDF')?>"
+<input type="submit" class="subbtn" style="width:105px;" name="bn_process_hcfa" value="<?php echo xla('CMS 1500 PDF')?>"
  title="<?php echo xla('Generate and download CMS 1500 paper claims')?>"
  onclick="MarkAsCleared(2)">
-<input type="submit" class="subbtn" style="width:175px;" name="bn_hcfa_txt_file" value="<?php echo xla('Generate CMS 1500 TEXT')?>"
+ <?php if ($GLOBALS['preprinted_cms_1500']) { ?>
+<input type="submit" class="subbtn" style="width:210px;" name="bn_process_hcfa_form" value="<?php echo xla('CMS 1500 PREPRINTED FORM')?>"
+ title="<?php echo xla('Generate and download CMS 1500 paper claims on Preprinted form')?>"
+ onclick="MarkAsCleared(2)"> 
+ <?php } ?>
+<input type="submit" class="subbtn" style="width:120px;" name="bn_hcfa_txt_file" value="<?php echo xla('CMS 1500 TEXT')?>"
  title="<?php echo xla('Making batch text files for uploading to Clearing House and will mark as billed')?>"
  onclick="MarkAsCleared(3)">
-<input type="submit" class="subbtn" name="bn_mark" value="<?php echo xla('Mark as Cleared')?>" title="<?php echo xla('Post to accounting and mark as billed')?>">
-<input type="submit" class="subbtn" name="bn_reopen" value="<?php echo xla('Re-Open')?>" title="<?php echo xla('Mark as not billed')?>">
+<input type="submit" data-open-popup="true" class="subbtn" name="bn_mark" value="<?php echo xla('Mark as Cleared')?>" title="<?php echo xla('Post to accounting and mark as billed')?>">
+<input type="submit" data-open-popup="true" class="subbtn" name="bn_reopen" value="<?php echo xla('Re-Open')?>" title="<?php echo xla('Mark as not billed')?>">
 <!--
 <input type="submit" class="subbtn" name="bn_electronic_file" value="Make Electronic Batch &amp; Clear" title="<?php echo xla('Download billing file, post to accounting and mark as billed')?>">
 -->
@@ -691,7 +683,7 @@ if ($ret = getBillsBetween("%"))
 if(is_array($ret))
  {
 ?>
-<tr ><td colspan='8' align="right" ><table width="250" border="0" cellspacing="0" cellpadding="0">
+<tr ><td colspan='9' align="right" ><table width="250" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="100" id='ExpandAll'><a  onclick="expandcollapse('expand');" class='small'  href="JavaScript:void(0);"><?php echo '('.htmlspecialchars( xl('Expand All'), ENT_QUOTES).')' ?></a></td>
     <td width="100" id='CollapseAll'><a  onclick="expandcollapse('collapse');" class='small'  href="JavaScript:void(0);"><?php echo '('.htmlspecialchars( xl('Collapse All'), ENT_QUOTES).')' ?></a></td>
@@ -735,7 +727,7 @@ if(is_array($ret))
       //
       if ($lhtml) {
         while ($rcount < $lcount) {
-          $rhtml .= "<tr bgcolor='$bgcolor'><td colspan='7'></td></tr>";
+          $rhtml .= "<tr bgcolor='$bgcolor'><td colspan='8'></td></tr>";
           ++$rcount;
         }
         // This test handles the case where we are only listing encounters
@@ -747,7 +739,7 @@ if(is_array($ret))
             $DivPut='no';
            }
           echo "<tr bgcolor='$bgcolor'>\n<td rowspan='$rcount' valign='top'>\n$lhtml</td>$rhtml\n";
-          echo "<tr bgcolor='$bgcolor'><td colspan='8' height='5'></td></tr>\n\n";
+          echo "<tr bgcolor='$bgcolor'><td colspan='9' height='5'></td></tr>\n\n";
           ++$encount;
         }
       }
@@ -774,7 +766,7 @@ if(is_array($ret))
         }
       }
 
-      $name = getPatientData($iter['enc_pid'], "fname, mname, lname, pubpid, DATE_FORMAT(DOB,'%Y-%m-%d') as DOB_YMD");
+      $name = getPatientData($iter['enc_pid'], "fname, mname, lname, pid, billing_note, DATE_FORMAT(DOB,'%Y-%m-%d') as DOB_YMD");
 
       # Check if patient has primary insurance and a subscriber exists for it.
       # If not we will highlight their name in red.
@@ -783,27 +775,50 @@ if(is_array($ret))
       $res = sqlQuery("select count(*) as count from insurance_data where " .
         "pid = ? and " .
         "type='primary' and " .
+        "subscriber_relationship != '' and " .
+        "subscriber_relationship is not null and " .
+        "subscriber_street != '' and " .
+        "subscriber_street is not null and " .
+        "subscriber_city != '' and " .
+        "subscriber_city is not null and " .
+        "subscriber_state != '' and " .
+        "subscriber_state is not null and " .
+        "subscriber_sex != '' and " .        
+        "subscriber_sex is not null and " .
+        "subscriber_DOB != '0000-00-00' and " .
+        "subscriber_DOB is not null and " .
+        "subscriber_DOB != '' and " .
+        "subscriber_fname is not null and " .
+        "subscriber_fname != '' and " .
         "subscriber_lname is not null and " .
         "subscriber_lname != '' limit 1", array($iter['enc_pid']) );
       $namecolor = ($res['count'] > 0) ? "black" : "#ff7777";
 
       $bgcolor = "#" . (($encount & 1) ? "ddddff" : "ffdddd");
-      echo "<tr bgcolor='$bgcolor'><td colspan='8' height='5'></td></tr>\n";
+      echo "<tr bgcolor='$bgcolor'><td colspan='9' height='5'></td></tr>\n";
       $lcount = 1;
       $rcount = 0;
       $oldcode = "";
 
       $ptname = $name['fname'] . " " . $name['lname'];
       $raw_encounter_date = date("Y-m-d", strtotime($iter['enc_date']));
-            
+      $billing_note = $name['billing_note'];       
             //  Add Encounter Date to display with "To Encounter" button 2/17/09  JCH
+
+      if ($namecolor != 'black') {
+      #error_log("Color: ".$namecolor, 0);
+        $lhtml .= "&nbsp;<span class=js-blink-infinite><font color='$namecolor'>". text($ptname) .
+          "</font></span><span class=small>&nbsp;(" . text($iter['enc_pid']) . "-" .
+          text($iter['enc_encounter']) . ")</span>";
+      }else{
       $lhtml .= "&nbsp;<span class=bold><font color='$namecolor'>". text($ptname) .
         "</font></span><span class=small>&nbsp;(" . text($iter['enc_pid']) . "-" .
         text($iter['enc_encounter']) . ")</span>";
+      }
 
          //Encounter details are stored to javacript as array.
-        $result4 = sqlStatement("SELECT fe.encounter,fe.date,openemr_postcalendar_categories.pc_catname FROM form_encounter AS fe ".
-            " left join openemr_postcalendar_categories on fe.pc_catid=openemr_postcalendar_categories.pc_catid  WHERE fe.pid = ? order by fe.date desc", array($iter['enc_pid']) );
+        $result4 = sqlStatement("SELECT fe.encounter,fe.date,fe.billing_note,libreehr_postcalendar_categories.pc_catname FROM form_encounter AS fe ".
+            " left join libreehr_postcalendar_categories on fe.pc_catid=libreehr_postcalendar_categories.pc_catid  WHERE fe.pid = ? order by fe.date desc", array($iter['enc_pid']) );
            if(sqlNumRows($result4)>0)
             ?>
             <script language='JavaScript'>
@@ -828,7 +843,7 @@ if(is_array($ret))
             //  Not sure why the next section seems to do nothing except post "To Encounter" button 2/17/09  JCH
       $lhtml .= "&nbsp;&nbsp;&nbsp;<a class=\"link_submit\" " .
         "href=\"javascript:window.toencounter(" . $iter['enc_pid'] .
-        ",'" . addslashes($name['pubpid']) .
+        ",'" . addslashes($name['pid']) .
         "','" . addslashes($ptname) . "'," . $iter['enc_encounter'] .
         ",'" . oeFormatShortDate($raw_encounter_date) . "',' " . 
         xl('DOB') . ": " . oeFormatShortDate($name['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAge($name['DOB_YMD']) . "');
@@ -839,7 +854,7 @@ if(is_array($ret))
             //  Changed "To xxx" buttons to allow room for encounter date display 2/17/09  JCH
       $lhtml .= "&nbsp;&nbsp;&nbsp;<a class=\"link_submit\" " .
         "href=\"javascript:window.topatient(" . $iter['enc_pid'] .
-        ",'" . addslashes($name['pubpid']) .
+        ",'" . addslashes($name['pid']) .
         "','" . addslashes($ptname) . "'," . $iter['enc_encounter'] .
         ",'" . oeFormatShortDate($raw_encounter_date) . "',' " . 
         xl('DOB') . ": " . oeFormatShortDate($name['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAge($name['DOB_YMD']) . "');
@@ -847,7 +862,10 @@ if(is_array($ret))
                  "], CalendarCategoryArray[" . $iter['enc_pid'] . "])\">[" . xlt('To Dems') . "]</a>";
         $divnos=$divnos+1;
       $lhtml .= "&nbsp;&nbsp;&nbsp;<a  onclick='divtoggle(\"spanid_$divnos\",\"divid_$divnos\");' class='small' id='aid_$divnos' href=\"JavaScript:void(0);".
-        "\">(<span id=spanid_$divnos class=\"indicator\">" . htmlspecialchars( xl('Expand'), ENT_QUOTES) . "</span>)</a>";
+        "\">(<span id=spanid_$divnos class=\"indicator\">" . htmlspecialchars( xl('Expand'), ENT_QUOTES) . '</span>)<br></a>';      
+      if($GLOBALS['notes_to_display_in_Billing'] == 2 || $GLOBALS['notes_to_display_in_Billing'] == 3){
+      $lhtml .= '<span style="margin-left: 20px; font-weight bold; color: red">'.text($billing_note).'</span>';
+      }
 
       if ($iter['id']) {
 
@@ -899,7 +917,11 @@ if(is_array($ret))
         }
         $lhtml .= "</select>";
         $DivPut='yes';
-        $lhtml .= "<br>\n&nbsp;<div   id='divid_$divnos' style='display:none'>" . text(oeFormatShortDate(substr($iter['date'], 0, 10)))
+        
+        if($GLOBALS['notes_to_display_in_Billing'] == 1 || $GLOBALS['notes_to_display_in_Billing'] == 3) {
+          $lhtml .= "<br><span style='margin-left: 20px; font-weight bold; color: green'>".text($iter['enc_billing_note'])."</span>";
+        }
+          $lhtml .= "<br>\n&nbsp;<div   id='divid_$divnos' style='display:none'>" . text(oeFormatShortDate(substr($iter['date'], 0, 10)))
           . text(substr($iter['date'], 10, 6)) . " " . xlt("Encounter was coded");
 
         $query = "SELECT * FROM claims WHERE " .
@@ -1061,11 +1083,21 @@ if(is_array($ret))
     $rhtml .= '<td><span style="font-size:8pt;">&nbsp;&nbsp;&nbsp;';
     if ($iter['id']) $rhtml .= getProviderName(empty($iter['provider_id']) ? text($iter['enc_provider_id']) : text($iter['provider_id']));
     $rhtml .= "</span></td>\n";
+    $rhtml .= '<td><span style="font-size:8pt;">&nbsp;&nbsp;&nbsp;';
+    if($GLOBALS['display_units_in_billing'] != 0) {
+      if ($iter['id']) $rhtml .= xlt("Units") . ":" . text($iter{"units"});
+    }
+    $rhtml .= "</span></td>\n";
     $rhtml .= '<td width=100>&nbsp;&nbsp;&nbsp;<span style="font-size:8pt;">';
     if ($iter['id']) $rhtml .= text(oeFormatSDFT(strtotime($iter{"date"})));
     $rhtml .= "</span></td>\n";
+    # This error message is generated if the authorized check box is not checked
     if ($iter['id'] && $iter['authorized'] != 1) {
-      $rhtml .= "<td><span class=alert>".xlt("Note: This code was not entered by an authorized user. Only authorized codes may be uploaded to the Open Medical Billing Network for processing. If you wish to upload these codes, please select an authorized user here.")."</span></td>\n";
+      $rhtml .= "<td><span class=alert>".xlt("Note: This code has not been authorized.")."</span></td>\n";
+    }
+    # This will check if an item is excluded and will tell the user if it is the case.
+    else if ($iter['id'] && $iter['authorized'] == 1 && $iter['exclude_from_insurance_billing'] == 1) {
+      $rhtml .= "<td><span class=alert>".xlt("Note: Excluded from X12 and CMS1500.")."</span></td>\n";
     }
     else {
       $rhtml .= "<td></td>\n";
@@ -1107,11 +1139,13 @@ if(is_array($ret))
           $rhtml2 .= "</span></td>\n";
           $rhtml2 .= '<td><span style="font-size:8pt;">&nbsp;&nbsp;&nbsp;';
           $rhtml2 .= "</span></td>\n";
+          $rhtml2 .= '<td><span style="font-size:8pt;">&nbsp;&nbsp;&nbsp;';
+          $rhtml2 .= "</span></td>\n";
           $rhtml2 .= '<td width=100>&nbsp;&nbsp;&nbsp;<span style="font-size:8pt;">';
           $rhtml2 .= text(oeFormatSDFT(strtotime($date)));
           $rhtml2 .= "</span></td>\n";
           if ($iter['id'] && $iter['authorized'] != 1) {
-            $rhtml2 .= "<td><span class=alert>".xlt("Note: This code was not entered by an authorized user. Only authorized codes may be uploaded to the Open Medical Billing Network for processing. If you wish to upload these codes, please select an authorized user here.")."</span></td>\n";
+            $rhtml2 .= "<td><span class=alert>".xlt("Note: This copay was entered against billing that has not been authorized. Please review status.")."</span></td>\n";
           }else{
             $rhtml2 .= "<td></td>\n";
           }
@@ -1132,7 +1166,7 @@ if(is_array($ret))
 
   if ($lhtml) {
     while ($rcount < $lcount) {
-      $rhtml .= "<tr bgcolor='$bgcolor'><td colspan='7'></td></tr>";
+      $rhtml .= "<tr bgcolor='$bgcolor'><td colspan='8'></td></tr>";
       ++$rcount;
     }
     if (!$missing_mods_only || ($mmo_empty_mod && $mmo_num_charges > 1)) {
@@ -1142,7 +1176,7 @@ if(is_array($ret))
         $DivPut='no';
        }
       echo "<tr bgcolor='$bgcolor'>\n<td rowspan='$rcount' valign='top'>\n$lhtml</td>$rhtml\n";
-      echo "<tr bgcolor='$bgcolor'><td colspan='8' height='5'></td></tr>\n";
+      echo "<tr bgcolor='$bgcolor'><td colspan='9' height='5'></td></tr>\n";
     }
   }
 
@@ -1160,6 +1194,34 @@ if ($alertmsg) {
   echo "alert('".addslashes($alertmsg)."');\n";
 }
 ?>
+$(document).ready(function() {
+    $("#view-log-link").click( function() {
+        top.restoreSession();
+        dlgopen('customize_log.php', '_blank', 500, 400);
+    });
+    
+    $('input[type="submit"]').click( function() {
+        top.restoreSession();
+        $(this).attr('data-clicked', true);
+    });
+    
+    $('form[name="update_form"]').submit( function(e) {
+        var clickedButton = $("input[type=submit][data-clicked='true'")[0];
+        
+        // clear clicked button indicator
+        $('input[type="submit"]').attr('data-clicked', false);
+        
+        if ( !clickedButton || $(clickedButton).attr("data-open-popup") !== "true" ) {
+            $(this).removeAttr("target");
+            return top.restoreSession(); 
+        } else {
+            top.restoreSession();
+            var w = window.open('about:blank','Popup_Window','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=400,height=300,left = 312,top = 234');
+            this.target = 'Popup_Window';
+        }
+    });
+          $('.js-blink-infinite').modernBlink();
+});
 </script>
 <input type="hidden" name="divnos"  id="divnos" value="<?php echo attr($divnos) ?>"/>
 <input type='hidden' name='ajax_mode' id='ajax_mode' value='' />

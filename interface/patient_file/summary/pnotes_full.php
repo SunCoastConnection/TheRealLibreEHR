@@ -13,9 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES
@@ -35,7 +35,7 @@ require_once($GLOBALS['srcdir'].'/classes/Document.class.php');
 require_once($GLOBALS['srcdir'].'/gprelations.inc.php');
 require_once($GLOBALS['srcdir'].'/formatting.inc.php');
 
-if ($GLOBALS['concurrent_layout'] && $_GET['set_pid']) {
+if ($_GET['set_pid']) {
     require_once($GLOBALS['srcdir'].'/pid.inc');
     setpid($_GET['set_pid']);
 }
@@ -227,7 +227,7 @@ function show_div(name){
 $title_docname = "";
 if ($docid) {
   $title_docname .= " " . xl("linked to document") . " ";
-  $d = new Document($docid);	
+  $d = new Document($docid);    
   $title_docname .= $d->get_url_file();
 }
 if ($orderid) {
@@ -246,8 +246,8 @@ $urlparms = "docid=$docid&orderid=$orderid";
     </div>
     <div>
         <a href="pnotes_full_add.php?<?php echo $urlparms; ?>" class="css_button iframe" onclick='top.restoreSession()'><span><?php echo xlt('Add'); ?></span></a>
-        <a href="demographics.php" <?php if (!$GLOBALS['concurrent_layout']) echo "target='Main'"; ?> class="css_button" onclick="top.restoreSession()">
-            <span><?php echo htmlspecialchars( xl('View Patient'), ENT_NOQUOTES);?></span>
+        <a href="demographics.php" class="css_button" onclick="top.restoreSession()">
+            <span><?php echo htmlspecialchars( xl('Back to Patient'), ENT_NOQUOTES);?></span>
         </a>
     </div>
     <br/>
@@ -287,9 +287,9 @@ $urlparms = "docid=$docid&orderid=$orderid";
 $billing_note = "";
 $colorbeg = "";
 $colorend = "";
-$resnote = getPatientData($patient_id, "genericname2, genericval2");
-if($resnote && $resnote['genericname2'] == 'Billing') {
-  $billing_note = $resnote['genericval2'];
+$resnote = getPatientData($patient_id, "billing_note");
+if(!empty($resnote['billing_note'])) {
+  $billing_note = $resnote['billing_note'];
   $colorbeg = "<span style='color:red'>";
   $colorend = "</span>";
 }
@@ -412,15 +412,15 @@ if ($result != "") {
     }
 
 
-	echo "  <td><a href='pnotes_full_add.php?$urlparms&trigger=edit&noteid=".htmlspecialchars( $row_note_id, ENT_QUOTES).
-	  "' class='css_button_small iframe' onclick='top.restoreSession()'><span>". htmlspecialchars( xl('Edit'), ENT_NOQUOTES) ."</span></a>\n";
+    echo "  <td><a href='pnotes_full_add.php?$urlparms&trigger=edit&noteid=".htmlspecialchars( $row_note_id, ENT_QUOTES).
+      "' class='css_button_small iframe' onclick='top.restoreSession()'><span>". htmlspecialchars( xl('Edit'), ENT_NOQUOTES) ."</span></a>\n";
 
     // display, or not, a button to delete the note
     // if the user is an admin or if they are the author of the note, they can delete it
     if (($iter['user'] == $_SESSION['authUser']) || (acl_check('admin','super','','write'))) {
-	  echo " <a href='#' class='deletenote css_button_small' id='del" . htmlspecialchars( $row_note_id, ENT_QUOTES) .
-	    "' title='" . htmlspecialchars( xl('Delete this note'), ENT_QUOTES) . "' onclick='top.restoreSession()'><span>" .
-	    htmlspecialchars( xl('Delete'), ENT_NOQUOTES) . "</span>\n";
+      echo " <a href='#' class='deletenote css_button_small' id='del" . htmlspecialchars( $row_note_id, ENT_QUOTES) .
+        "' title='" . htmlspecialchars( xl('Delete this note'), ENT_QUOTES) . "' onclick='top.restoreSession()'><span>" .
+        htmlspecialchars( xl('Delete'), ENT_NOQUOTES) . "</span>\n";
     }
     echo "  </td>\n";
 
@@ -565,15 +565,15 @@ if ($result_sent != "") {
     }
 
 
-	echo "  <td><a href='pnotes_full_add.php?$urlparms&trigger=edit&noteid=".htmlspecialchars( $row_note_id, ENT_QUOTES).
-	  "' class='css_button_small iframe' onclick='top.restoreSession()'><span>". htmlspecialchars( xl('Edit'), ENT_NOQUOTES) ."</span></a>\n";
+    echo "  <td><a href='pnotes_full_add.php?$urlparms&trigger=edit&noteid=".htmlspecialchars( $row_note_id, ENT_QUOTES).
+      "' class='css_button_small iframe' onclick='top.restoreSession()'><span>". htmlspecialchars( xl('Edit'), ENT_NOQUOTES) ."</span></a>\n";
 
     // display, or not, a button to delete the note
     // if the user is an admin or if they are the author of the note, they can delete it
     if (($iter['user'] == $_SESSION['authUser']) || (acl_check('admin','super','','write'))) {
-	  echo " <a href='#' class='deletenote css_button_small' id='del" . htmlspecialchars( $row_note_id, ENT_QUOTES) .
-	    "' title='" . htmlspecialchars( xl('Delete this note'), ENT_QUOTES) . "' onclick='top.restoreSession()'><span>" .
-	    htmlspecialchars( xl('Delete'), ENT_NOQUOTES) . "</span>\n";
+      echo " <a href='#' class='deletenote css_button_small' id='del" . htmlspecialchars( $row_note_id, ENT_QUOTES) .
+        "' title='" . htmlspecialchars( xl('Delete this note'), ENT_QUOTES) . "' onclick='top.restoreSession()'><span>" .
+        htmlspecialchars( xl('Delete'), ENT_NOQUOTES) . "</span>\n";
     }
     echo "  </td>\n";
 
@@ -649,12 +649,11 @@ if ($result_sent_count == $M) {
 <script language='JavaScript'>
 
 <?php
-if ($GLOBALS['concurrent_layout'] && $_GET['set_pid']) {
+if ($_GET['set_pid']) {
   $ndata = getPatientData($patient_id, "fname, lname, pubpid");
 ?>
- parent.left_nav.setPatient(<?php echo "'" . htmlspecialchars( $ndata['fname']." ".$ndata['lname'], ENT_QUOTES) . "'," .
-   htmlspecialchars( $patient_id, ENT_QUOTES) . ",'" . htmlspecialchars( $ndata['pubpid'], ENT_QUOTES) . "',window.name"; ?>);
- parent.left_nav.setRadio(window.name, 'pno');
+ parent.left_nav.setPatient(<?php echo "'" . addslashes($ndata['fname']." ".$ndata['lname']) . "'," .
+   addslashes($patient_id) . ",'" . addslashes($ndata['pubpid']) . "',window.name"; ?>);
 <?php
 }
 
@@ -724,7 +723,7 @@ $(document).ready(function(){
 
     var DeleteNote = function(note) {
         if (confirm("<?php echo htmlspecialchars( xl('Are you sure you want to delete this note?','','','\n '), ENT_QUOTES) .
-	  htmlspecialchars( xl('This action CANNOT be undone.'), ENT_QUOTES); ?>")) {
+      htmlspecialchars( xl('This action CANNOT be undone.'), ENT_QUOTES); ?>")) {
             top.restoreSession();
             // strip the 'del' part of the object's ID
             $("#noteid").val(note.id.replace(/del/, ""));

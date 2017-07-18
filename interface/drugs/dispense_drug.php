@@ -181,7 +181,7 @@
  // configured properly.
  //
  if (false) { // if PDF output is desired
-  $pdf =& new Cezpdf($dconfig['paper_size']);
+  $pdf = new Cezpdf($dconfig['paper_size']);
   $pdf->ezSetMargins($dconfig['top'],$dconfig['bottom'],$dconfig['left'],$dconfig['right']);
   $pdf->selectFont($GLOBALS['fileroot'] . "/library/fonts/Helvetica.afm");
   $pdf->ezSetDy(20); // dunno why we have to do this...
@@ -197,6 +197,7 @@
  else { // HTML output
 ?>
 <html>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
 <head>
 <?php html_header_show();?>
 <style type="text/css">

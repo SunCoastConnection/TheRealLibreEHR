@@ -15,7 +15,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://opensource.org/licenses/gpl-license.php>.
 *
-* @package   OpenEMR
+* @package   LibreEHR
 * @author    Rod Roark <rod@sunsetsystems.com>
 */
 
@@ -31,7 +31,7 @@
 * LEFT JOIN phone_numbers AS p ON p.type = 2 AND p.foreign_id = i.id
 * ORDER BY i.name, i.id;
 *
-* Then export as a CSV file and read it into your favorite spreadsheet app.
+* Then export as a CSV file and read it into your favorite spreadsheet bootstrap.
 */
 
 require_once("$srcdir/classes/Address.class.php");
@@ -276,7 +276,7 @@ function gen_hl7_order($orderid, &$out) {
     // IN2 segment omitted.
   }
 
-  // Guarantor. OpenEMR doesn't have these so use the patient.
+  // Guarantor. LibreEHR doesn't have these so use the patient.
   $out .= "GT1" .
     $d1 . "1" .                      // Set ID (always just 1 of these)
     $d1 .
