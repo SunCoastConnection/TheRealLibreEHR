@@ -1,14 +1,42 @@
 <?php
-// Copyright (C) 2007-2009 Rod Roark <rod@sunsetsystems.com>
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
+/*
+ *  Claim Class php
+ *
+ *  claim.class.php contains function for processing claims
+ *
+ *  The changes to this file as of November 16 2016 to include the exclusion of information from claims
+ *  are covered under the terms of the Mozilla Public License, v. 2.0
+ *
+ * @copyright Copyright (C) 2015-2017 Terry Hill <teryhill@librehealth.io>
+ *
+ * Copyright (C) 2007-2009 Rod Roark <rod@sunsetsystems.com>
+ *
+ * LICENSE: This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see http://opensource.org/licenses/gpl-license.php.
+ *
+ * LICENSE: This Source Code is subject to the terms of the Mozilla Public License, v. 2.0.
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreHealth EHR
+ * @author Rod Roark <rod@sunsetsystems.com>
+ * @author Terry Hill <teryhill@librehealth.io>
+ * @link http://librehealth.io
+ *
+ * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
+ *
+ */
 
 require_once(dirname(__FILE__) . "/classes/Address.class.php");
 require_once(dirname(__FILE__) . "/classes/InsuranceCompany.class.php");
-require_once(dirname(__FILE__) . "/sql-ledger.inc");
 require_once(dirname(__FILE__) . "/invoice_summary.inc.php");
 
 // This enforces the X12 Basic Character Set. Page A2.
@@ -46,6 +74,9 @@ class Claim {
   var $provider;          // row from users table (rendering provider)
   var $referrer;          // row from users table (referring provider)
   var $supervisor;        // row from users table (supervising provider)
+  var $ordering;          // row from users table (ordering provider) 
+  var $referring;          // row from users table (referring provider from encounter)
+  var $contract;          // row from users table (contract provider)
   var $insurance_numbers; // row from insurance_numbers table for current payer
   var $supervisor_numbers; // row from insurance_numbers table for current payer
   var $patient_data;      // row from patient_data table
@@ -107,20 +138,7 @@ class Claim {
     //
     $this->invoice = array();
     if ($this->payerSequence() != 'P') {
-      if ($GLOBALS['oer_config']['ws_accounting']['enabled'] === 2) {
         $this->invoice = ar_get_invoice_summary($this->pid, $this->encounter_id, true);
-      }
-      else if ($GLOBALS['oer_config']['ws_accounting']['enabled']) {
-        SLConnect();
-        $arres = SLQuery("select id from ar where invnumber = " .
-          "'{$this->pid}.{$this->encounter_id}'");
-        if ($sl_err) die($sl_err);
-        $arrow = SLGetRow($arres, 0);
-        if ($arrow) {
-          $this->invoice = get_invoice_summary($arrow['id'], true);
-        }
-        SLClose();
-      }
       // Secondary claims might not have modifiers in SQL-Ledger data.
       // In that case, note that we should not try to match on them.
       $this->using_modifiers = false;
@@ -150,7 +168,7 @@ class Claim {
       "b.user, b.groupname, b.authorized, b.encounter, b.code_text, b.billed, " .
       "b.activity, b.payer_id, b.bill_process, b.bill_date, b.process_date, " .
       "b.process_file, b.modifier, b.units, b.fee, b.justify, b.target, b.x12_partner_id, " .
-      "b.ndc_info, b.notecodes, ct.ct_diag " .
+      "b.ndc_info, b.notecodes, ct.ct_diag, b.exclude_from_insurance_billing " .
       "FROM billing as b INNER JOIN code_types as ct " .
       "ON b.code_type = ct.ct_key " .
       "WHERE ct.ct_claim = '1' AND ct.ct_active = '1' AND " .
@@ -160,6 +178,7 @@ class Claim {
     while ($row = sqlFetchArray($res)) {
       // Save all diagnosis codes.
       if ($row['ct_diag'] == '1') {
+        if($row['exclude_from_insurance_billing'] == 1)continue;
         $this->diags[$row['code']] = $row['code'];
         continue;
       }
@@ -217,7 +236,7 @@ class Claim {
     // try the first (and hopefully only) facility marked as a billing location.
     if (empty($this->encounter['billing_facility'])) {
       $sql = "SELECT * FROM facility " .
-        "ORDER BY billing_location DESC, id ASC LIMIT 1";
+        "ORDER BY billing_location, primary_business_entity DESC, id ASC LIMIT 1";
     }
     else {
       $sql = "SELECT * FROM facility " .
@@ -257,6 +276,26 @@ class Claim {
     $sql = "SELECT * FROM users WHERE id = '$supervisor_id'";
     $this->supervisor = sqlQuery($sql);
     if (!$this->supervisor) $this->supervisor = array();
+    
+    $ordering_id = $this->encounter['ordering_physician'];
+    $sql = "SELECT * FROM users WHERE id = '$ordering_id'";
+    $this->ordering = sqlQuery($sql);
+    if (!$this->ordering) $this->ordering = array();
+
+    $referring_id = $this->encounter['referring_physician'];
+    $sql = "SELECT * FROM users WHERE id = '$referring_id'";
+    $this->referring = sqlQuery($sql);
+    if (!$this->referring) $this->referring = array();
+    
+    $contract_id = $this->encounter['contract_physician'];
+    $sql = "SELECT * FROM users WHERE id = '$contract_id'";
+    $this->contract = sqlQuery($sql);
+    if (!$this->contract) $this->contract = array();
+    
+    $billing_options_id = $this->billing_options['provider_id'];
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $this->billing_prov_id = sqlQuery($sql, array($billing_options_id));
+    if (!$this->billing_prov_id) $this->billing_prov_id = array();
 
     $sql = "SELECT * FROM insurance_numbers WHERE " .
       "(insurance_company_id = '" . $this->procs[0]['payer_id'] .
@@ -304,14 +343,14 @@ class Claim {
       $coinsurance = 0;
       $inslabel = ($this->payerSequence($ins) == 'S') ? 'Ins2' : 'Ins1';
       $insnumber = substr($inslabel, 3);
-	  
+      
       // Compute this procedure's patient responsibility amount as of this
       // prior payer, which is the original charge minus all insurance
       // payments and "hard" adjustments up to this payer.
       $ptresp = $this->invoice[$code]['chg'] + $this->invoice[$code]['adj'];
       foreach ($this->invoice[$code]['dtl'] as $key => $value) {
-        if (isset($value['plv'])) {
-          // New method; plv (from ar_activity.payer_type) exists to
+
+          // plv (from ar_activity.payer_type) exists to
           // indicate the payer level.
           if (isset($value['pmt']) && $value['pmt'] != 0) {
             if ($value['plv'] > 0 && $value['plv'] <= $insnumber)
@@ -325,17 +364,6 @@ class Claim {
           
           $msp = isset( $value['msp'] ) ? $value['msp'] : null; // record the reason for adjustment
         }
-        else {
-          // Old method: With SQL-Ledger payer level was stored in the memo.
-          if (preg_match("/^Ins(\d)/i", $value['src'], $tmp)) {
-            if ($tmp[1] <= $insnumber) $ptresp -= $value['pmt'];
-          }
-          else if (trim(substr($key, 0, 10))) { // not an adjustment if no date
-            if (!preg_match("/Ins(\d)/i", $value['rsn'], $tmp) || $tmp[1] <= $insnumber)
-              $ptresp += $value['chg']; // adjustments are negative charges
-          }
-        }
-      }
       if ($ptresp < 0) $ptresp = 0; // we may be insane but try to hide it
 
       // Main loop, to extract adjustments for this payer and procedure.
@@ -423,19 +451,12 @@ class Claim {
       $thispaidanything = 0;
       foreach($this->invoice as $codekey => $codeval) {
         foreach ($codeval['dtl'] as $key => $value) {
-          if (isset($value['plv'])) {
-            // New method; plv exists to indicate the payer level.
+            // plv exists to indicate the payer level.
             if ($value['plv'] == $insnumber) {
               $thispaidanything += $value['pmt'];
             }
           }
-          else {
-            if (preg_match("/$inslabel/i", $value['src'], $tmp)) {
-              $thispaidanything += $value['pmt'];
-            }
-          }
         }
-      }
 
       // Allocate any unknown patient responsibility by guessing if the
       // deductible has been satisfied.
@@ -475,22 +496,13 @@ class Claim {
     foreach($this->invoice as $codekey => $codeval) {
       if ($code && strcmp($codekey,$code) != 0) continue;
       foreach ($codeval['dtl'] as $key => $value) {
-        if (isset($value['plv'])) {
-          // New method; plv (from ar_activity.payer_type) exists to
+          // plv (from ar_activity.payer_type) exists to
           // indicate the payer level.
           if ($value['plv'] == $insnumber) {
             if (!$date) $date = str_replace('-', '', trim(substr($key, 0, 10)));
             $paytotal += $value['pmt'];
           }
         }
-        else {
-          // Old method: With SQL-Ledger payer level was stored in the memo.
-          if (preg_match("/$inslabel/i", $value['src'], $tmp)) {
-            if (!$date) $date = str_replace('-', '', trim(substr($key, 0, 10)));
-            $paytotal += $value['pmt'];
-          }
-        }
-      }
       $aarr = $this->payerAdjustments($ins, $codekey);
       foreach ($aarr as $a) {
         if (strcmp($a[1],'PR') != 0) $adjtotal += $a[3];
@@ -510,19 +522,11 @@ class Claim {
     $amount = 0;
     foreach($this->invoice as $codekey => $codeval) {
       foreach ($codeval['dtl'] as $key => $value) {
-        if (isset($value['plv'])) {
-          // New method; plv exists to indicate the payer level.
+          // plv exists to indicate the payer level.
           if ($value['plv'] == 0) { // 0 indicates patient
             $amount += $value['pmt'];
           }
         }
-        else {
-          // Old method: With SQL-Ledger payer level was stored in the memo.
-          if (!preg_match("/Ins/i", $value['src'], $tmp)) {
-            $amount += $value['pmt'];
-          }
-        }
-      }
     }
     return sprintf('%.2f', $amount);
   }
@@ -631,7 +635,7 @@ class Claim {
   }
 
   function billingFacilityName() {
-    return x12clean(trim($this->billing_facility['name']));
+    return x12clean(trim($this->billing_facility['alias']));
   }
 
   function billingFacilityStreet() {
@@ -658,14 +662,20 @@ class Claim {
     return x12clean(trim($this->billing_facility['facility_npi']));
   }
   
+  function excludeEntry($prockey = 0)
+  {
+      return $this->procs[$prockey]['exclude_from_insurance_billing'];
+      
+  }  
+  
   function federalIdType() {
-	if ($this->billing_facility['tax_id_type'])
-	{
-	return $this->billing_facility['tax_id_type'];
-	}
-	else{
-	return null;
-	}
+    if ($this->billing_facility['tax_id_type'])
+    {
+    return $this->billing_facility['tax_id_type'];
+    }
+    else{
+    return null;
+    }
   }
 
   # The billing facility and the patient must both accept for this to return true.
@@ -822,12 +832,12 @@ class Claim {
   //
   function claimType($ins=0) {
     if (empty($this->payers[$ins]['object'])) return '';
-    return $this->payers[$ins]['object']->get_freeb_claim_type();
+    return $this->payers[$ins]['object']->get_ins_claim_type();
   }
 
   function claimTypeRaw($ins=0) {
     if (empty($this->payers[$ins]['object'])) return 0;
-    return $this->payers[$ins]['object']->get_freeb_type();
+    return $this->payers[$ins]['object']->get_ins_type_code();
   }
 
   function insuredLastName($ins=0) {
@@ -1102,6 +1112,14 @@ class Claim {
     return sprintf('%.2f', 0 + $this->billing_options['lab_amount']);
   }
 
+   function medicaidReferralCode() {
+    return x12clean(trim($this->billing_options['medicaid_referral_code']));
+  }
+  
+  function epsdtFlag() {
+    return x12clean(trim($this->billing_options['epsdt_flag']));
+  }
+
   function medicaidResubmissionCode() {
     return x12clean(trim($this->billing_options['medicaid_resubmission_code']));
   }
@@ -1109,9 +1127,17 @@ class Claim {
   function medicaidOriginalReference() {
     return x12clean(trim($this->billing_options['medicaid_original_reference']));
   }
+  
+  function providerQualifierCode() {
+    return x12clean(trim($this->billing_options['provider_qualifier_code']));
+  }
 
   function frequencyTypeCode() {
     return ($this->billing_options['replacement_claim'] == 1) ? '7' : '1';
+  }
+
+   function icnResubmissionNumber() {
+    return x12clean($this->billing_options['icn_resubmission_number']);
   }
 
   function additionalNotes() {
@@ -1352,6 +1378,93 @@ class Claim {
 
   function supervisorNumber() {
     return x12clean(trim(str_replace('-', '', $this->supervisor_numbers['provider_number'])));
+  }
+  
+  function billingProviderLastName() {
+    return x12clean(trim($this->billing_prov_id['lname']));
+  }
+
+  function billingProviderFirstName() {
+    return x12clean(trim($this->billing_prov_id['fname']));
+  }
+
+  function billingProviderMiddleName() {
+    return x12clean(trim($this->billing_prov_id['mname']));
+  }
+
+  function billingProviderNPI() {
+    return x12clean(trim($this->billing_prov_id['npi']));
+  }
+
+  function billingProviderUPIN() {
+    return x12clean(trim($this->billing_prov_id['upin']));
+  }
+
+  function billingProviderSSN() {
+    return x12clean(trim(str_replace('-', '', $this->billing_prov_id['federaltaxid'])));
+  }
+
+  function billingProviderTaxonomy() {
+    if (empty($this->billing_prov_id['taxonomy'])) return '207Q00000X';
+    return x12clean(trim($this->billing_prov_id['taxonomy']));
+  }
+
+  function orderingLastName() {
+    return x12clean(trim($this->ordering['lname']));
+  }
+
+  function orderingFirstName() {
+    return x12clean(trim($this->ordering['fname']));
+  }
+
+  function orderingMiddleName() {
+    return x12clean(trim($this->ordering['mname']));
+  }
+
+  function orderingNPI() {
+    return x12clean(trim($this->ordering['npi']));
+  }
+
+  function orderingUPIN() {
+    return x12clean(trim($this->ordering['upin']));
+  }
+
+  function orderingSSN() {
+    return x12clean(trim(str_replace('-', '', $this->ordering['federaltaxid'])));
+  }
+
+  function orderingTaxonomy() {
+    if (empty($this->ordering['taxonomy'])) return '207Q00000X';
+    return x12clean(trim($this->ordering['taxonomy']));
+  }
+
+  function referringLastName() {
+    return x12clean(trim($this->referring['lname']));
+  }
+
+  function referringFirstName() {
+    return x12clean(trim($this->referring['fname']));
+  }
+
+  function referringMiddleName() {
+    return x12clean(trim($this->referring['mname']));
+  }
+
+  function referringNPI() {
+    return x12clean(trim($this->referring['npi']));
+  }
+
+  function referringUPIN() {
+    return x12clean(trim($this->referring['upin']));
+  }
+
+  function referringSSN() {
+    return x12clean(trim(str_replace('-', '', $this->referring['federaltaxid'])));
+  }
+
+  function referringTaxonomy() {
+    if (empty($this->referring['taxonomy'])) return '207Q00000X';
+    return x12clean(trim($this->referring['taxonomy']));
   }
 
 }

@@ -92,7 +92,7 @@
         // just the data entry date; instead we want to go by the encounter date
         // which is the date in the form_encounter table.
         //
-        $sql = "SELECT distinct form_encounter.date AS enc_date, form_encounter.pid AS enc_pid, " .
+        $sql = "SELECT distinct form_encounter.date AS enc_date, form_encounter.pid AS enc_pid, form_encounter.billing_note AS enc_billing_note, " .
             "form_encounter.encounter AS enc_encounter, form_encounter.provider_id AS enc_provider_id, billing.* " .
             "FROM form_encounter " .
             "LEFT OUTER JOIN billing ON " .
@@ -147,7 +147,7 @@
         
         $query = sqlStatement("SELECT pid, 'COPAY' AS code_type, pay_amount AS code, date(post_time) AS date ".
             "FROM ar_activity where 1=1 $query_part2 and payer_type=0 and account_code='PCP'");
-            //new fees screen copay gives account_code='PCP' openemr payment screen copay gives code='CO-PAY'
+            //new fees screen copay gives account_code='PCP' libreehr payment screen copay gives code='CO-PAY'
         for($iter; $row=sqlFetchArray($query); $iter++)
         {
             $all[$iter] = $row;

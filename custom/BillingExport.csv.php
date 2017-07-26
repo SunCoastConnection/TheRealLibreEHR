@@ -13,7 +13,6 @@
 // HCFA 1500, UB-92, etc.
 //
 // To implement this feature, rename this file to BillingExport.php.
-// This will cause the FreeB support in OpenEMR to be replaced.
 
 require_once (dirname(__FILE__) . "/../library/sql.inc");
 
@@ -102,7 +101,7 @@ class BillingExport {
 
     // Patient information:
 
-    $query = "SELECT p.pubpid, p.ss, p.lname, p.fname, p.mname, p.DOB, " .
+    $query = "SELECT p.pid, p.ss, p.lname, p.fname, p.mname, p.DOB, " .
       "p.street, p.city, p.state, p.postal_code, p.phone_home, p.phone_biz, " .
       "p.status, p.sex, e.name " .
       "FROM patient_data AS p " .
@@ -113,7 +112,7 @@ class BillingExport {
 
     // Patient line.
     fwrite($this->tmpfh, 'PT' .
-      ',"' . $this->fixString($prow['pubpid'])      . '"' .
+      ',"' . $this->fixString($prow['pid'])      . '"' .
       ',"' . $this->fixString($prow['lname'])       . '"' .
       ',"' . $this->fixString($prow['fname'])       . '"' .
       ',"' . $this->fixMI($prow['mname'])           . '"' .
@@ -138,7 +137,7 @@ class BillingExport {
       "f.street, f.city, f.state, f.postal_code, f.pos_code, " .
       "f.domain_identifier AS clia_code " .
       "FROM form_encounter AS e " .
-      "LEFT OUTER JOIN forms ON forms.formdir = 'newpatient' AND " .
+      "LEFT OUTER JOIN forms ON forms.formdir = 'patient_encounter' AND " .
       "forms.form_id = e.id AND forms.pid = '$patient_id' " .
       "LEFT OUTER JOIN users AS u ON u.username = forms.user " .
       "LEFT OUTER JOIN facility AS f ON f.name = e.facility " .

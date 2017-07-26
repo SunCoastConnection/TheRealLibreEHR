@@ -14,8 +14,15 @@ $fake_register_globals = false;
 
 require_once("../../globals.php");
 require_once("$srcdir/formdata.inc.php");
+require_once("$srcdir/headers.inc.php");
+
+// Including Bootstrap library.
+call_required_libraries(true,false,false,false);
 
 $popup = empty($_REQUEST['popup']) ? 0 : 1;
+$defaultFilterName = empty($_REQUEST['defaultFilterName']) ? null : $_REQUEST['defaultFilterName'];
+$defaultFilterValue = empty($_REQUEST['defaultFilterValue']) ? null : $_REQUEST['defaultFilterValue'];
+$defaultFilterIndex = null;
 
 // Generate some code based on the list of columns.
 //
@@ -31,8 +38,13 @@ while ($row = sqlFetchArray($res)) {
   $header .= "   <th>";
   $header .= text($title);
   $header .= "</th>\n";
+  $headerValue = "";
+  if ( $colname == $defaultFilterName ) {
+    $defaultFilterIndex = $colcount;
+    $headerValue = $defaultFilterValue;
+  }
   $header0 .= "   <td align='center'><input type='text' size='10' ";
-  $header0 .= "value='' class='search_init' /></td>\n";
+  $header0 .= "value='$headerValue' class='form-control form-rounded' /></td>\n";
   if ($coljson) $coljson .= ", ";
   $coljson .= "{\"sName\": \"" . addcslashes($colname, "\t\r\n\"\\") . "\"}";
   ++$colcount;
@@ -41,19 +53,18 @@ while ($row = sqlFetchArray($res)) {
 <html>
 <head>
 <?php html_header_show(); ?>
-
-<link rel="stylesheet" href="<?php echo $css_header; ?>" type="text/css">
+    <title><?php echo "Patient Finder"; ?></title>
 
 <style type="text/css">
-@import "../../../library/js/datatables/media/css/demo_page.css";
-@import "../../../library/js/datatables/media/css/demo_table.css";
+@import "<?php echo $GLOBALS['standard_js_path'] ?>datatables/media/css/demo_page.css";
+@import "<?php echo $GLOBALS['standard_js_path'] ?>datatables/media/css/demo_table.css";
 .mytopdiv { float: left; margin-right: 1em; }
 </style>
 
-<script type="text/javascript" src="../../../library/js/datatables/media/js/jquery.js"></script>
-<script type="text/javascript" src="../../../library/js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path'] ?>datatables/media/js/jquery.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path'] ?>datatables/media/js/jquery.dataTables.min.js"></script>
 <!-- this is a 3rd party script -->
-<script type="text/javascript" src="../../../library/js/datatables/extras/ColReorder/media/js/ColReorderWithResize.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path'] ?>datatables/extras/ColReorder/media/js/ColReorderWithResize.js"></script>
 
 <script language="JavaScript">
 
@@ -100,8 +111,13 @@ $(document).ready(function() {
  // Borrowed from the multi_filter.html example.
  $("thead input").keyup(function () {
   // Filter on the column (the index) of this element
-	oTable.fnFilter( this.value, $("thead input").index(this) );
+    oTable.fnFilter( this.value, $("thead input").index(this) );
  });
+
+ <?php if ( $defaultFilterValue !== null &&
+    $defaultFilterIndex !== null ) { ?>
+    oTable.fnFilter( "<?php echo $defaultFilterValue; ?>", <?php echo $defaultFilterIndex; ?> );
+ <?php } ?>
 
  // OnClick handler for the rows
  $('#pt_table tbody tr').live('click', function () {
@@ -120,11 +136,7 @@ $(document).ready(function() {
   }
   else {
    top.restoreSession();
-<?php if ($GLOBALS['concurrent_layout']) { ?>
-   document.location.href = "../../patient_file/summary/demographics.php?set_pid=" + newpid;
-<?php } else { ?>
-   top.location.href = "../../patient_file/patient_file.php?set_pid=" + newpid;
-<?php } ?>
+   top.RTop.location = "../../patient_file/summary/demographics.php?set_pid=" + newpid;
   }
  } );
 
@@ -139,12 +151,12 @@ function openNewTopWindow(pid) {
 </script>
 
 </head>
-<body class="body_top">
+<body class="body_top well">
 
-<div id="dynamic"><!-- TBD: id seems unused, is this div required? -->
+<div id="dynamic">
 
 <!-- Class "display" is defined in demo_table.css -->
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="pt_table">
+<table cellpadding="0" cellspacing="0" border="0" class="table table-hover " id="pt_table">
  <thead>
   <tr>
 <?php echo $header0; ?>

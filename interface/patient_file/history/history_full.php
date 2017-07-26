@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES
@@ -32,6 +32,8 @@ require_once("$srcdir/patient.inc");
 require_once("history.inc.php");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/options.inc.php");
+require_once("$srcdir/options.js.php");
+require_once("$srcdir/headers.inc.php");
 $CPR = 4; // cells per row
 
 // Check authorization.
@@ -45,8 +47,11 @@ if ( !acl_check('patients','med','',array('write','addonly') ))
 ?>
 <html>
 <head>
-<?php html_header_show();?>
-<link rel="stylesheet" href="<?php echo $css_header ?>" type="text/css">
+<?php 
+    html_header_show();
+    //  Include datepicker library
+    call_required_libraries(false,false,false,true);
+?>
 
 <style>
 .control_label {
@@ -55,15 +60,6 @@ if ( !acl_check('patients','med','',array('write','addonly') ))
 }
 </style>
 
-<style type="text/css">@import url(../../../library/dynarch_calendar.css);</style>
-
-<script type="text/javascript" src="../../../library/dialog.js"></script>
-<script type="text/javascript" src="../../../library/textformat.js"></script>
-<script type="text/javascript" src="../../../library/dynarch_calendar.js"></script>
-<?php include_once("{$GLOBALS['srcdir']}/dynarch_calendar_en.inc.php"); ?>
-<script type="text/javascript" src="../../../library/dynarch_calendar_setup.js"></script>
-
-<script type="text/javascript" src="../../../library/js/jquery.1.3.2.js"></script>
 <script type="text/javascript" src="../../../library/js/common.js"></script>
 <?php include_once("{$GLOBALS['srcdir']}/options.js.php"); ?>
 
@@ -175,7 +171,7 @@ function smoking_statusClicked(cb)
      {
      document.getElementById('form_tobacco').selectedIndex = 6;
      }
-	 radioChange(document.getElementById('form_tobacco').value);	 
+     radioChange(document.getElementById('form_tobacco').value);     
 }
 
 // The ID of the input element to receive a found code.
@@ -217,8 +213,8 @@ $(document).ready(function(){
 
 <style type="text/css">
 div.tab {
-	height: auto;
-	width: auto;
+    height: auto;
+    width: auto;
 }
 </style>
 
@@ -250,7 +246,7 @@ $fres = sqlStatement("SELECT * FROM layout_options " .
         <a href="javascript:submit_history();" class='css_button'>
             <span><?php echo htmlspecialchars(xl('Save'),ENT_NOQUOTES); ?></span>
         </a>
-        <a href="history.php" <?php if (!$GLOBALS['concurrent_layout']) echo "target='Main'"; ?> class="css_button" onclick="top.restoreSession()">
+        <a href="history.php" class="css_button" onclick="top.restoreSession()">
             <span><?php echo htmlspecialchars(xl('Back To View'),ENT_NOQUOTES); ?></span>
         </a>
     </div>
@@ -276,6 +272,20 @@ $fres = sqlStatement("SELECT * FROM layout_options " .
 
 <script language="JavaScript">
 <?php echo $date_init; // setup for popup calendars ?>
+</script>
+
+<script language='JavaScript'>
+    // Array of skip conditions for the checkSkipConditions() function.
+    var skipArray = [
+        <?php echo $condition_str; ?>
+    ];
+    checkSkipConditions();
+    $("input").change(function() {
+        checkSkipConditions();
+    });
+    $("select").change(function() {
+        checkSkipConditions();
+    });
 </script>
 
 </html>

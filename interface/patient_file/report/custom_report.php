@@ -15,11 +15,11 @@ use ESign\Api;
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Brady Miller <brady@sparmy.com>
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Tony McCormick <tony@mi-squared.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 require_once("../../globals.php");
@@ -39,9 +39,6 @@ require_once("$srcdir/formdata.inc.php");
 require_once(dirname(__file__) . "/../../../custom/code_types.inc.php");
 require_once $GLOBALS['srcdir'].'/ESign/Api.php';
 require_once($GLOBALS["include_root"] . "/orders/single_order_results.inc.php");
-if ($GLOBALS['gbl_portal_cms_enable']) {
-  require_once($GLOBALS["include_root"] . "/cmsportal/portal.inc.php");
-}
 
 // For those who care that this is the patient report.
 $GLOBALS['PATIENT_REPORT_ACTIVE'] = true;
@@ -49,13 +46,19 @@ $GLOBALS['PATIENT_REPORT_ACTIVE'] = true;
 $PDF_OUTPUT = empty($_POST['pdf']) ? 0 : intval($_POST['pdf']);
 
 if ($PDF_OUTPUT) {
-  require_once("$srcdir/html2pdf/html2pdf.class.php");
-  // $pdf = new HTML2PDF('P', 'Letter', 'en', array(5, 5, 5, 5) );  // add a little margin 5cm all around TODO: add to globals 
+  require_once($GLOBALS['modules_dir'] . "/html2pdf/vendor/autoload.php");
   $pdf = new HTML2PDF ($GLOBALS['pdf_layout'],
                        $GLOBALS['pdf_size'],
                        $GLOBALS['pdf_language'],
-                       array($GLOBALS['pdf_left_margin'],$GLOBALS['pdf_top_margin'],$GLOBALS['pdf_right_margin'],$GLOBALS['pdf_bottom_margin'])
-          ); 
+                       true, // default unicode setting is true
+                       'UTF-8', // default encoding setting is UTF-8
+                       array($GLOBALS['pdf_left_margin'],$GLOBALS['pdf_top_margin'],$GLOBALS['pdf_right_margin'],$GLOBALS['pdf_bottom_margin']),
+                       $_SESSION['language_direction'] == 'rtl' ? true : false
+                      );
+  //set 'dejavusans' for now. which is supported by a lot of languages - http://dejavu-fonts.org/wiki/Main_Page
+  //TODO: can have this selected as setting in globals after we have more experience with this to fully support internationalization.
+  $pdf->setDefaultFont('dejavusans');
+
   ob_start();
 }
 
@@ -115,7 +118,7 @@ function postToGet($arin) {
 ?>
 
 <?php if ($PDF_OUTPUT) { ?>
-<link rel="stylesheet" href="<?php echo $webserver_root; ?>/interface/themes/style_pdf.css" type="text/css">
+<link rel="stylesheet" href="<?php echo  $webserver_root . '/interface/themes/style_pdf.css' ?>" type="text/css">
 <link rel="stylesheet" type="text/css" href="<?php echo $webserver_root; ?>/library/ESign/css/esign_report.css" />
 <?php } else {?>
 <html>
@@ -124,10 +127,7 @@ function postToGet($arin) {
 <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['webroot'] ?>/library/ESign/css/esign_report.css" />
 <?php } ?>
 
-<?php // do not show stuff from report.php in forms that is encaspulated
-      // by div of navigateLink class. Specifically used for CAMOS, but
-      // can also be used by other forms that require output in the 
-      // encounter listings output, but not in the custom report. ?>
+
 <style>
   div.navigateLink {display:none;}
   .hilite {background-color: #FFFF00;}
@@ -481,12 +481,12 @@ if ($printable) {
   }
   // Setup Headers and Footers for html2PDF only Download
   // in HTML view it's just one line at the top of page 1
-  echo '<page_header style="text-align:right;"> ' . xlt("PATIENT") . ':' . text($titleres['lname']) . ', ' . text($titleres['fname']) . ' - ' . $titleres['DOB_TS'] . '</page_header>    ';
-  echo '<page_footer style="text-align:right;">' . xlt('Generated on') . ' ' . oeFormatShortDate() . ' - ' . text($facility['name']) . ' ' . text($facility['phone']) . '</page_footer>';
+  echo '<page_header style="text-align:right;" class="custom-tag"> ' . xlt("PATIENT") . ':' . text($titleres['lname']) . ', ' . text($titleres['fname']) . ' - ' . $titleres['DOB_TS'] . '</page_header>    ';
+  echo '<page_footer style="text-align:right;" class="custom-tag">' . xlt('Generated on') . ' ' . oeFormatShortDate() . ' - ' . text($facility['name']) . ' ' . text($facility['phone']) . '</page_footer>';
 
-  // Use logo if it exists as 'practice_logo.gif' in the site dir
+  // Use logo if it exists as 'practice_logo.png' in the site dir
   // old code used the global custom dir which is no longer a valid
-   $practice_logo = "$OE_SITE_DIR/images/practice_logo.gif";
+   $practice_logo = "$OE_SITE_DIR/images/practice_logo.png";
    if (file_exists($practice_logo)) {
         echo "<img src='$practice_logo' align='left'><br />\n";
      } 
@@ -642,13 +642,13 @@ foreach ($ar as $key => $val) {
             echo "<hr />";
             echo "<div class='text billing'>";
             print "<h1>".xl('Billing Information').":</h1>";
-            if (count($ar['newpatient']) > 0) {
+            if (count($ar['patient_encounter']) > 0) {
                 $billings = array();
                 echo "<table>";
                 echo "<tr><td width='400' class='bold'>Code</td><td class='bold'>".xl('Fee')."</td></tr>\n";
                 $total = 0.00;
                 $copays = 0.00;
-                foreach ($ar['newpatient'] as $be) {
+                foreach ($ar['patient_encounter'] as $be) {
                     $ta = explode(":",$be);
                     $billing = getPatientBillingEncounter($pid,$ta[1]);
                     $billings[] = $billing;
@@ -781,7 +781,6 @@ foreach ($ar as $key => $val) {
                 $fname = basename($d->get_url());
                 $couch_docid = $d->get_couch_docid();
                 $couch_revid = $d->get_couch_revid();
-                $extension = substr($fname, strrpos($fname,"."));
                 echo "<h1>" . xl('Document') . " '" . $fname ."'</h1>";
                 $n = new Note();
                 $notes = $n->notes_factory($d->get_id());
@@ -822,7 +821,9 @@ foreach ($ar as $key => $val) {
                     '/documents/' . $from_pathname . '/' . $from_filename;
                   $to_file = substr($from_file, 0, strrpos($from_file, '.')) . '_converted.jpg';
                 }
-
+                //Extract the extension by the mime/type and not the file name extension
+                $image_data = getimagesize($from_file);
+                $extension = image_type_to_extension($image_data[2]);
                 if ($extension == ".png" || $extension == ".jpg" || $extension == ".jpeg" || $extension == ".gif") {
                   if ($PDF_OUTPUT) {
                     // OK to link to the image file because it will be accessed by the
@@ -971,7 +972,7 @@ foreach ($ar as $key => $val) {
                 $dateres = getEncounterDateByEncounter($form_encounter);
                 $formId = getFormIdByFormdirAndFormid($res[1], $form_id);
 
-                if ($res[1] == 'newpatient') {
+                if ($res[1] == 'patient_encounter') {
                     echo "<div class='text encounter'>\n";
                     echo "<h1>" . xl($formres["form_name"]) . "</h1>";
                 }
@@ -982,7 +983,7 @@ foreach ($ar as $key => $val) {
 
                 // show the encounter's date
                 echo "(" . oeFormatSDFT(strtotime($dateres["date"])) . ") ";
-                if ($res[1] == 'newpatient') {
+                if ($res[1] == 'patient_encounter') {
                     // display the provider info
                     echo ' '. xl('Provider') . ': ' . text(getProviderName(getProviderIdOfEncounter($form_encounter)));
                 }
@@ -1006,7 +1007,7 @@ foreach ($ar as $key => $val) {
                 </div>
                 <?php
 
-                if ($res[1] == 'newpatient') {
+                if ($res[1] == 'patient_encounter') {
                     // display billing info
                     $bres = sqlStatement("SELECT b.date, b.code, b.code_text " .
                       "FROM billing AS b, code_types AS ct WHERE " .
@@ -1046,26 +1047,6 @@ if ($PDF_OUTPUT) {
   $pdf->writeHTML($content, false);
   if ($PDF_OUTPUT == 1) {
     $pdf->Output('report.pdf', $GLOBALS['pdf_output']); // D = Download, I = Inline
-  }
-  else {
-    // This is the case of writing the PDF as a message to the CMS portal.
-    $ptdata = getPatientData($pid, 'cmsportal_login');
-    $contents = $pdf->Output('', true);
-    echo "<html><head>\n";
-    echo "<link rel='stylesheet' href='$css_header' type='text/css'>\n";
-    echo "</head><body class='body_top'>\n";
-    $result = cms_portal_call(array(
-      'action'   => 'putmessage',
-      'user'     => $ptdata['cmsportal_login'],
-      'title'    => xl('Your Clinical Report'),
-      'message'  => xl('Please see the attached PDF.'),
-      'filename' => 'report.pdf',
-      'mimetype' => 'application/pdf',
-      'contents' => base64_encode($contents),
-    ));
-    if ($result['errmsg']) die(text($result['errmsg']));
-    echo "<p>" . xlt('Report has been sent to the patient.') . "</p>\n";
-    echo "</body></html>\n";
   }
 }
 else {

@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Rod Roark <rod@sunsetsystems.com>
  * @author  Roberto Vasquez <robertogagliotta@gmail.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 require_once("../globals.php");
@@ -32,6 +32,7 @@ $imagedir   = "$patientdir/demographics";
 <html>
 <head>
 <title>Upload Image</title>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
 <link rel="stylesheet" href="<?php echo xl($css_header,'e');?>" type="text/css">
 </head>
 <body>

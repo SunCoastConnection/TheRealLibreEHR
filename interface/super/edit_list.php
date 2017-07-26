@@ -15,18 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
  * @author  Brady Miller <brady@sparmy.com>
  * @author  Teny <teny@zhservices.com> 
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
-require_once("../globals.php");
+require_once ('../globals.php');
+require_once $GLOBALS['srcdir'].'/headers.inc.php';
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/lists.inc");
 require_once("../../custom/code_types.inc.php");
+require_once("$srcdir/options.inc.php");
 
 $list_id = empty($_REQUEST['list_id']) ? 'language' : $_REQUEST['list_id'];
 
@@ -183,29 +185,30 @@ if ($_POST['formaction']=='save' && $list_id) {
               if ($list_id == 'transactions' && substr($id,0,3) != 'LBT')
                 $id = "LBT$id";
 
-             if ($list_id == 'apptstat') {
+              if ($list_id == 'apptstat') {
                 $notes = formTrim($iter['apptstat_color']) .'|'. formTrim($iter['apptstat_timealert']);
-             }
-			 else
-             {
-				$notes = formTrim($iter['notes']); 
-             }
+              }
+              else
+              {
+                $notes = formTrim($iter['notes']); 
+              }
               // Insert the list item
               sqlInsert("INSERT INTO list_options ( " .
-                "list_id, option_id, title, seq, is_default, option_value, mapping, notes, codes, toggle_setting_1, toggle_setting_2, activity " .
+                  "list_id, option_id, title, seq, is_default, option_value, mapping, notes, codes, toggle_setting_1, toggle_setting_2, activity, subtype " .
                 ") VALUES ( " .
-                "'$list_id', "                       .
-                "'" . $id                        . "', " .
-                "'" . formTrim($iter['title'])   . "', " .
-                "'" . formTrim($iter['seq'])     . "', " .
-                "'" . formTrim($iter['default']) . "', " .
-                "'" . $value                     . "', " .
-                "'" . formTrim($iter['mapping']) . "', " .
-                "'" . $notes                 . "', " .
-                "'" . formTrim($iter['codes'])   . "', " .
-                "'" . formTrim($iter['toggle_setting_1'])   . "', " .
-                "'" . formTrim($iter['toggle_setting_2'])   . "', " .
-                "'" . formTrim($iter['activity'])   . "' " .
+                  "'$list_id', "                              .
+                  "'" . $id                                   . "', " .
+                  "'" . formTrim($iter['title'])              . "', " .
+                  "'" . formTrim($iter['seq'])                . "', " .
+                  "'" . formTrim($iter['default'])            . "', " .
+                  "'" . $value                                . "', " .
+                  "'" . formTrim($iter['mapping'])            . "', " .
+                  "'" . $notes                                . "', " .
+                  "'" . formTrim($iter['codes'])              . "', " .
+                  "'" . formTrim($iter['toggle_setting_1'])   . "', " .
+                  "'" . formTrim($iter['toggle_setting_2'])   . "', " .
+                  "'" . formTrim($iter['activity'])           . "', " .
+                  "'" . formTrim($iter['subtype'])            . "'  " .
                 ")");
             }
         }
@@ -272,7 +275,7 @@ function getCodeDescriptions($codes) {
 
 // Write one option line to the form.
 //
-function writeOptionLine($option_id, $title, $seq, $default, $value, $mapping='', $notes='', $codes='', $tog1='', $tog2='', $active='') {
+function writeOptionLine($option_id, $title, $seq, $default, $value, $mapping='', $notes='', $codes='',$tog1='', $tog2='', $active='',$subtype='') {
   global $opt_line_no, $list_id;
   ++$opt_line_no;
   $bgcolor = "#" . (($opt_line_no & 1) ? "ddddff" : "ffdddd");
@@ -287,7 +290,6 @@ function writeOptionLine($option_id, $title, $seq, $default, $value, $mapping=''
   echo "<input type='text' name='opt[$opt_line_no][id]' value='" .
        htmlspecialchars($option_id, ENT_QUOTES) . "' size='12' maxlength='63' class='optin' />";
   echo "</td>\n";
-
   echo "  <td align='center' class='optcell'>";
   echo "<input type='text' name='opt[$opt_line_no][title]' value='" .
        htmlspecialchars($title, ENT_QUOTES) . "' size='20' maxlength='63' class='optin' />";
@@ -297,7 +299,6 @@ function writeOptionLine($option_id, $title, $seq, $default, $value, $mapping=''
   if ($GLOBALS['translate_lists'] && $_SESSION['language_choice'] > 1) {
        echo "  <td align='center' class='translation'>" . (htmlspecialchars( xl($title), ENT_QUOTES)) . "</td>\n";
   }
-    
   echo "  <td align='center' class='optcell'>";
   echo "<input type='text' name='opt[$opt_line_no][seq]' value='" .
        htmlspecialchars($seq, ENT_QUOTES) . "' size='4' maxlength='10' class='optin' />";
@@ -308,11 +309,11 @@ function writeOptionLine($option_id, $title, $seq, $default, $value, $mapping=''
     "onclick='defClicked($opt_line_no)' class='optin'$checked />";
   echo "</td>\n";
 
-    echo "  <td align='center' class='optcell'>";
-    echo "<input type='checkbox' name='opt[$opt_line_no][activity]' value='1' " .
-        " class='optin'$checked_active />";
-    echo "</td>\n";
-  
+  echo "  <td align='center' class='optcell'>";
+  echo "<input type='checkbox' name='opt[$opt_line_no][activity]' value='1' " .
+    " class='optin'$checked_active />";
+  echo "</td>\n";
+
   // Tax rates, contraceptive methods and LBF names have an additional attribute.
   //
   if ($list_id == 'taxrate' || $list_id == 'contrameth' || $list_id == 'lbfnames' || $list_id == 'transactions') {
@@ -368,11 +369,11 @@ function writeOptionLine($option_id, $title, $seq, $default, $value, $mapping=''
   // to CVX codes.
   //
   else if ($list_id == 'immunizations') {
-  echo "  <td align='center' class='optcell'>";
-  echo "<input type='text' size='10' name='opt[$opt_line_no][value]' " .
-       "value='" . htmlspecialchars($value,ENT_QUOTES) . "' onclick='sel_cvxcode(this)' " .
-       "title='" . htmlspecialchars( xl('Click to select or change CVX code'), ENT_QUOTES) . "'/>";
-  echo "</td>\n";
+    echo "  <td align='center' class='optcell'>";
+    echo "<input type='text' size='10' name='opt[$opt_line_no][value]' " .
+         "value='" . htmlspecialchars($value,ENT_QUOTES) . "' onclick='sel_cvxcode(this)' " .
+         "title='" . htmlspecialchars( xl('Click to select or change CVX code'), ENT_QUOTES) . "'/>";
+    echo "</td>\n";
   }
 
   // IPPF includes the ability to map each list item to a "master" identifier.
@@ -384,7 +385,7 @@ function writeOptionLine($option_id, $title, $seq, $default, $value, $mapping=''
         htmlspecialchars($mapping, ENT_QUOTES) . "' size='12' maxlength='15' class='optin' />";
     echo "</td>\n";
   }
-else if($list_id == 'apptstat') {
+  else if($list_id == 'apptstat') {
     list($apptstat_color, $apptstat_timealert) = explode("|", $notes);
     echo "  <td align='center' class='optcell'>";
     echo "<input type='text' class='color' name='opt[$opt_line_no][apptstat_color]' value='" .
@@ -394,27 +395,33 @@ else if($list_id == 'apptstat') {
     echo "<input type='text' name='opt[$opt_line_no][apptstat_timealert]' value='" .
         htmlspecialchars($apptstat_timealert, ENT_QUOTES) . "' size='2' maxlength='2' class='optin' />";
     echo "</td>\n";
-} else {
-  echo "  <td align='center' class='optcell'>";
-  echo "<input type='text' name='opt[$opt_line_no][notes]' value='" .
-      htmlspecialchars($notes, ENT_QUOTES) . "' size='25' maxlength='255' class='optin' />";
-  echo "</td>\n";
-}
-if($list_id == 'apptstat') {
-  echo "  <td align='center' class='optcell'>";
-  echo "<input type='checkbox' name='opt[$opt_line_no][toggle_setting_1]' value='1' " .
-    "onclick='defClicked($opt_line_no)' class='optin'$checked_tog1 />";
-  echo "</td>\n";
-  echo "  <td align='center' class='optcell'>";
-  echo "<input type='checkbox' name='opt[$opt_line_no][toggle_setting_2]' value='1' " .
-    "onclick='defClicked($opt_line_no)' class='optin'$checked_tog2 />";
-  echo "</td>\n";
-}
+  } else {
+    echo "  <td align='center' class='optcell'>";
+    echo "<input type='text' name='opt[$opt_line_no][notes]' value='" .
+        htmlspecialchars($notes, ENT_QUOTES) . "' size='25' maxlength='255' class='optin' />";
+    echo "</td>\n";
+  }
+  if($list_id == 'apptstat') {
+    echo "  <td align='center' class='optcell'>";
+    echo "<input type='checkbox' name='opt[$opt_line_no][toggle_setting_1]' value='1' " .
+      "onclick='defClicked($opt_line_no)' class='optin'$checked_tog1 />";
+    echo "</td>\n";
+    echo "  <td align='center' class='optcell'>";
+    echo "<input type='checkbox' name='opt[$opt_line_no][toggle_setting_2]' value='1' " .
+      "onclick='defClicked($opt_line_no)' class='optin'$checked_tog2 />";
+    echo "</td>\n";
+  }
   echo "  <td align='center' class='optcell'>";
   echo "<input type='text' name='opt[$opt_line_no][codes]' title='" .
       xla('Clinical Term Code(s)') ."' value='" .
       htmlspecialchars($codes, ENT_QUOTES) . "' onclick='select_clin_term_code(this)' size='25' maxlength='255' class='optin' />";
   echo "</td>\n";
+
+  if (preg_match('/_issue_list$/',$list_id)) {
+    echo "  <td align='center' class='optcell'>";
+    echo generate_select_list("opt[$opt_line_no][subtype]", 'issue_subtypes', $subtype, 'Subtype',' ', 'optin');
+    echo "</td>\n";
+  }
   echo " </tr>\n";
 }
 
@@ -566,7 +573,7 @@ function writeITLine($it_array) {
   ++$opt_line_no;
   $bgcolor = "#" . (($opt_line_no & 1) ? "ddddff" : "ffdddd");
   echo " <tr bgcolor='$bgcolor'>\n";
-  echo ctSelector($opt_line_no, $it_array, 'category', $ISSUE_TYPE_CATEGORIES, xl('OpenEMR Application Category'));
+  echo ctSelector($opt_line_no, $it_array, 'category', $ISSUE_TYPE_CATEGORIES, xl('LibreEHR Application Category'));
   echo ctGenCBox($opt_line_no, $it_array, 'active', xl('Is this active?'));
   echo ctGenCell($opt_line_no, $it_array, 'ordering' , 10, 10, xl('Order'));
   echo ctGenCell($opt_line_no, $it_array, 'type' , 20, 75, xl('Issue Type'));
@@ -613,9 +620,11 @@ a, a:visited, a:hover { color:#0000cc; }
 .help     { cursor:help; }
 .translation { color:green; }
 </style>
-
+<?php
+//Move js lib includes here as they are migrated.
+include_js_library("jscolor-1-4-5/jscolor.js");
+?>
 <script type="text/javascript" src="../../library/dialog.js"></script>
-<script type="text/javascript" src="../../library/js/jscolor/jscolor.js"></script>
 
 <script language="JavaScript">
 
@@ -870,13 +879,14 @@ while ($row = sqlFetchArray($res)) {
   <td><b><?php xl('Title'     ,'e'); ?></b></td>   
   <td><b><?php xl('Order'     ,'e'); ?></b></td>
   <td><b><?php xl('Default'   ,'e'); ?></b></td>
+  <td><b><?php xl('Active','e'); ?></b></td>
   <td><b><?php xl('Color'     ,'e'); ?></b></td> 
   <td><b><?php xl('Alert Time','e'); ?></b></td> 
   <td><b><?php xl('Check In'  ,'e');?>&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
   <td><b><?php xl('Check Out' ,'e'); ?></b></td>
   <td><b><?php xl('Code(s)'   ,'e');?></b></td>
 <?php } else if ($list_id == 'issue_types') { ?>
-  <td><b><?php echo xlt('OpenEMR Application Category'); ?></b></td>
+  <td><b><?php echo xlt('LibreEHR Application Category'); ?></b></td>
   <td><b><?php echo xlt('Active'); ?></b></td>
   <td><b><?php echo xlt('Order'); ?></b></td>
   <td><b><?php echo xlt('Type'); ?></b></td>
@@ -923,9 +933,9 @@ while ($row = sqlFetchArray($res)) {
   <td><b><?php xl('Global ID','e'); ?></b></td>
 <?php } ?>
   <td><b><?php 
-		  if ($list_id == 'language') {
-		  	xl('ISO 639-2 Code','e');
-		  } else if ($list_id == 'personal_relationship' || $list_id == 'religious_affiliation' || $list_id == 'ethnicity' || $list_id == 'race' || $list_id == 'drug_route'){
+          if ($list_id == 'language') {
+            xl('ISO 639-2 Code','e');
+          } else if ($list_id == 'personal_relationship' || $list_id == 'religious_affiliation' || $list_id == 'ethnicity' || $list_id == 'race' || $list_id == 'drug_route'){
                         xl('HL7-V3 Concept Code','e');
                   } else if ($list_id == 'Immunization_Completion_Status'){
                         xl('Treatment Completion Status','e');
@@ -937,14 +947,17 @@ while ($row = sqlFetchArray($res)) {
                         xl('Marital Status','e');
                   } else if ( $list_id == 'county' ) {
                         xl('INCITS Code','e'); //International Committee for Information Technology Standards
-		  } else {
-		  	xl('Notes','e');
-		  } 
+      } else {
+            xl('Notes','e');
+          } 
   ?></b></td>
 
-  <td><b><?php xl('Code(s)','e');?></b></td>
-
-<?php } // end not fee sheet ?>
+  <td><b><?php xl('Code(s)','e'); ?></b></td>
+  <?php 
+    if (preg_match('/_issue_list$/',$list_id)) { ?>
+  <td><b><?php echo xlt('Subtype'); ?></b></td>
+<?php }
+ } // end not fee sheet ?>
  </tr>
 
 <?php 
@@ -986,7 +999,8 @@ if ($list_id) {
     while ($row = sqlFetchArray($res)) {
       writeOptionLine($row['option_id'], $row['title'], $row['seq'],
         $row['is_default'], $row['option_value'], $row['mapping'],
-        $row['notes'],$row['codes'],$row['toggle_setting_1'],$row['toggle_setting_2'],$row['activity']);
+        $row['notes'],$row['codes'],$row['toggle_setting_1'],$row['toggle_setting_2'],
+        $row['activity'],$row['subtype']);
     }
     for ($i = 0; $i < 3; ++$i) {
       writeOptionLine('', '', '', '', 0);

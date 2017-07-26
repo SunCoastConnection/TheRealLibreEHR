@@ -18,9 +18,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  EMR Direct <http://www.emrdirect.com/>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 require_once(dirname(__FILE__) . "/log.inc");
@@ -476,7 +476,7 @@ function phimail_notify($subj,$body) {
   $mail->Host = "localhost";
   $mail->Mailer = "mail";
   $mail->Body = $body;
-  $mail->Subject = $subject;
+  $mail->Subject = $subj;
   $mail->AddAddress($recipient);
   return ($mail->Send());
 }

@@ -37,6 +37,10 @@
  *  
  *  </pre>
  *
+ *  The changes to this file as of November 16 2016 to include the exclusion of information from claims
+ *  are covered under the terms of the Mozilla Public License, v. 2.0
+ *
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
  * Copyright (C) 2006-2010 Rod Roark <rod@sunsetsystems.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or
@@ -50,11 +54,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ *
+ * LICENSE: This Source Code is subject to the terms of the Mozilla Public License, v. 2.0.
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreHealth EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
  * @author  Brady Miller <brady@sparmy.com>
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://www.open-emr.org
+ * @author  Terry Hill <teryhill@librehealth.io>
+ * @link    http://librehealth.io
  */
 
 require_once(dirname(__FILE__)."/../library/csv_like_join.php");
@@ -244,6 +254,23 @@ function convert_type_id_to_key($id) {
  foreach ($code_types as $key => $value) {
   if ($value['id'] == $id) return $key;
  } 
+}
+
+/**
+ * Checks to see if code allows justification (ct_just)
+ *
+ * @param   string   $key
+ * @return  boolean
+ */
+function check_is_code_type_justify($key) {
+ global $code_types;
+ 
+ if (!empty($code_types[$key]['just'])) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 /**
@@ -444,7 +471,7 @@ function code_set_search($form_code_type,$search_term="",$count=false,$active=tr
             // Place the common columns variable here since all check codes table
             $common_columns=" codes.id, codes.code_type, codes.modifier, codes.units, codes.fee, " .
                             "codes.superbill, codes.related_code, codes.taxrates, codes.cyp_factor, " .
-                            "codes.active, codes.reportable, codes.financial_reporting, ";
+                            "codes.active, codes.exclude_from_insurance_billing, codes.reportable, codes.financial_reporting, ";
             $columns = $common_columns . "'" . add_escape_custom($form_code_type) . "' as code_type_name ";
 
             $active_query = '';

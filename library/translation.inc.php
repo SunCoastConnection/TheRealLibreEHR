@@ -56,7 +56,7 @@ function xl($constant,$mode='r',$prepend='',$append='') {
 //
 // Use above xl() function the majority of time for translations. The
 //  below wrappers are only for specific situations in order to support
-//  granular control of translations in certain parts of OpenEMR.
+//  granular control of translations in certain parts of LibreEHR.
 //  Wrappers:
 //    xl_list_label()
 //    xl_layout_label()
@@ -228,6 +228,24 @@ function getLanguageTitle($val) {
  return $languageTitle;    
 }
 
+
+
+
+/**
+ * Returns language directionality as string 'rtl' or 'ltr'
+ * @param int $lang_id language code
+ * @return string 'ltr' 'rtl'
+ * @author Amiel <amielel@matrix.co.il>
+ */
+function getLanguageDir($lang_id) {
+    // validate language id
+    $lang_id = empty($lang_id) ? 1 : $lang_id;
+    // get language code
+    $row = sqlQuery('SELECT * FROM lang_languages WHERE lang_id = ?', array($lang_id));
+
+    return !empty($row['lang_is_rtl']) ? 'rtl' : 'ltr';
+}
+
 //----------------------------------
 
 // ----------------------------------------------------------------------------
@@ -301,4 +319,5 @@ function mb_strpad($input, $length, $pad = ' ', $type = STR_PAD_RIGHT, $charset 
 
 return $output;
 }
+
 ?>

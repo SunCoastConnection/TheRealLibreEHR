@@ -1,21 +1,42 @@
 <?php
-// Copyright (C) 2005-2015 Rod Roark <rod@sunsetsystems.com>
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// This is the Indigent Patients Report.  It displays a summary of
-// encounters within the specified time period for patients without
-// insurance.
+/*
+ *
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2005-2015 Rod Roark <rod@sunsetsystems.com>
+ *
+ * LICENSE: This program is free software; you can redistribute it and/or 
+ * modify it under the terms of the GNU General Public License 
+ * as published by the Free Software Foundation; either version 3 
+ * of the License, or (at your option) any later version. 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
+ * 
+ * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreHealth EHR 
+ * @author Rod Roark <rod@sunsetsystems.com> 
+ * 
+ * @link http://librehealth.io 
+ *
+ * This is the Indigent Patients Report.  It displays a summary of
+ * encounters within the specified time period for patients without
+ * insurance.
+ */
 
 require_once("../globals.php");
 require_once("$srcdir/patient.inc");
-require_once("$srcdir/sql-ledger.inc");
 require_once("$srcdir/formatting.inc.php");
 
 $alertmsg = '';
+require_once($srcdir."/formatting.inc.php");
+$DateFormat = DateFormatRead();
+$DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
 function bucks($amount) {
   if ($amount) return oeFormatMoney($amount);
@@ -25,9 +46,6 @@ function bucks($amount) {
 $form_start_date = fixDate($_POST['form_start_date'], date("Y-01-01"));
 $form_end_date   = fixDate($_POST['form_end_date'], date("Y-m-d"));
 
-$INTEGRATED_AR = $GLOBALS['oer_config']['ws_accounting']['enabled'] === 2;
-
-if (!$INTEGRATED_AR) SLConnect();
 ?>
 <html>
 <head>
@@ -59,7 +77,7 @@ if (!$INTEGRATED_AR) SLConnect();
 </style><link rel="stylesheet" href="<?php echo $css_header; ?>" type="text/css">
 <title><?php xl('Indigent Patients Report','e')?></title>
 
-<script type="text/javascript" src="../../library/js/jquery.1.3.2.js"></script>
+<script type="text/javascript" src="../../library/js/jquery-1.9.1.min.js"></script>
 
 <script language="JavaScript">
 
@@ -85,58 +103,52 @@ if (!$INTEGRATED_AR) SLConnect();
 <table>
  <tr>
   <td width='410px'>
-	<div style='float:left'>
+    <div style='float:left'>
 
-	<table class='text'>
-		<tr>
-			<td class='label'>
-			   <?php xl('Visits From','e'); ?>:
-			</td>
-			<td>
-			   <input type='text' name='form_start_date' id="form_start_date" size='10' value='<?php echo $form_start_date ?>'
-				onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)' title='yyyy-mm-dd'>
-			   <img src='../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-				id='img_start_date' border='0' alt='[?]' style='cursor:pointer'
-				title='<?php xl('Click here to choose a date','e'); ?>'>
-			</td>
-			<td class='label'>
-			   <?php xl('To','e'); ?>:
-			</td>
-			<td>
-			   <input type='text' name='form_end_date' id="form_end_date" size='10' value='<?php echo $form_end_date ?>'
-				onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)' title='yyyy-mm-dd'>
-			   <img src='../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-				id='img_end_date' border='0' alt='[?]' style='cursor:pointer'
-				title='<?php xl('Click here to choose a date','e'); ?>'>
-			</td>
-		</tr>
-	</table>
+    <table class='text'>
+        <tr>
+            <td class='label'>
+               <?php xl('Visits From','e'); ?>:
+            </td>
+            <td>
+               <input type='text' name='form_start_date' id="form_start_date" size='10'
+                      value='<?php htmlspecialchars(oeFormatShortDate($form_start_date)) ?>'>
+            </td>
+            <td class='label'>
+               <?php xl('To','e'); ?>:
+            </td>
+            <td>
+               <input type='text' name='form_end_date' id="form_end_date" size='10'
+                      value='<?php htmlspecialchars(oeFormatShortDate($form_end_date)) ?>'>
+            </td>
+        </tr>
+    </table>
 
-	</div>
+    </div>
 
   </td>
   <td align='left' valign='middle' height="100%">
-	<table style='border-left:1px solid; width:100%; height:100%' >
-		<tr>
-			<td>
-				<div style='margin-left:15px'>
-					<a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
-					<span>
-						<?php xl('Submit','e'); ?>
-					</span>
-					</a>
+    <table style='border-left:1px solid; width:100%; height:100%' >
+        <tr>
+            <td>
+                <div style='margin-left:15px'>
+                    <a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
+                    <span>
+                        <?php xl('Submit','e'); ?>
+                    </span>
+                    </a>
 
-					<?php if ($_POST['form_refresh']) { ?>
-					<a href='#' class='css_button' id='printbutton'>
-						<span>
-							<?php xl('Print','e'); ?>
-						</span>
-					</a>
-					<?php } ?>
-				</div>
-			</td>
-		</tr>
-	</table>
+                    <?php if ($_POST['form_refresh']) { ?>
+                    <a href='#' class='css_button' id='printbutton'>
+                        <span>
+                            <?php xl('Print','e'); ?>
+                        </span>
+                    </a>
+                    <?php } ?>
+                </div>
+            </td>
+        </tr>
+    </table>
   </td>
  </tr>
 </table>
@@ -173,7 +185,7 @@ if (!$INTEGRATED_AR) SLConnect();
  </thead>
 
 <?php
-  if ($_POST['form_search']) {
+  if ($_POST['form_refresh']) {
 
     $where = "";
 
@@ -199,8 +211,6 @@ if (!$INTEGRATED_AR) SLConnect();
       $patient_id = $row['pid'];
       $encounter_id = $row['encounter'];
       $invnumber = $row['pid'] . "." . $row['encounter'];
-
-      if ($INTEGRATED_AR) {
         $inv_duedate = '';
         $arow = sqlQuery("SELECT SUM(fee) AS amount FROM drug_sales WHERE " .
           "pid = '$patient_id' AND encounter = '$encounter_id'");
@@ -218,17 +228,6 @@ if (!$INTEGRATED_AR) SLConnect();
           "pid = '$patient_id' AND encounter = '$encounter_id'");
         $inv_paid   += $arow['pay'];
         $inv_amount -= $arow['adj'];
-      }
-      else {
-        $ares = SLQuery("SELECT duedate, amount, paid FROM ar WHERE " .
-          "ar.invnumber = '$invnumber'");
-        if ($sl_err) die($sl_err);
-        if (SLRowCount($ares) == 0) continue;
-        $arow = SLGetRow($ares, 0);
-        $inv_amount  = $arow['amount'];
-        $inv_paid    = $arow['paid'];
-        $inv_duedate = $arow['duedate'];
-      }
       $total_amount += bucks($inv_amount);
       $total_paid   += bucks($inv_paid);
 
@@ -245,10 +244,10 @@ if (!$INTEGRATED_AR) SLConnect();
    &nbsp;<?php  echo $invnumber ?></a>
   </td>
   <td class="detail">
-   &nbsp;<?php  echo oeFormatShortDate(substr($row['date'], 0, 10)) ?>
+   &nbsp;<?php date(DateFormatRead(true), strtotime(substr($row['date'], 0, 10))); ?>
   </td>
   <td class="detail">
-   &nbsp;<?php  echo oeFormatShortDate($inv_duedate) ?>
+   &nbsp;<?php date(DateFormatRead(true), strtotime($inv_duedate)); ?>
   </td>
   <td class="detail" align="right">
    <?php  echo bucks($inv_amount) ?>&nbsp;
@@ -291,7 +290,6 @@ if (!$INTEGRATED_AR) SLConnect();
  </tr>
 <?php
   }
-  if (!$INTEGRATED_AR) SLClose();
 ?>
 
 </table>
@@ -300,24 +298,28 @@ if (!$INTEGRATED_AR) SLConnect();
 </form>
 <script>
 <?php
-	if ($alertmsg) {
-		echo "alert('$alertmsg');\n";
-	}
+    if ($alertmsg) {
+        echo "alert('$alertmsg');\n";
+    }
 ?>
 </script>
 </body>
 
 <!-- stuff for the popup calendar -->
-<link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
-<style type="text/css">@import url(../../library/dynarch_calendar.css);</style>
-<script type="text/javascript" src="../../library/dynarch_calendar.js"></script>
-<?php include_once("{$GLOBALS['srcdir']}/dynarch_calendar_en.inc.php"); ?>
-<script type="text/javascript" src="../../library/dynarch_calendar_setup.js"></script>
-<script type="text/javascript" src="../../library/js/jquery.1.3.2.js"></script>
-
-<script language="Javascript">
- Calendar.setup({inputField:"form_start_date", ifFormat:"%Y-%m-%d", button:"img_start_date"});
- Calendar.setup({inputField:"form_end_date", ifFormat:"%Y-%m-%d", button:"img_end_date"});
+<link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
+<script type="text/javascript" src="../../library/js/jquery.datetimepicker.full.min.js"></script>
+<script>
+    $(function() {
+        $("#form_start_date").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $("#form_end_date").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $.datetimepicker.setLocale('<?= $DateLocale;?>');
+    });
 </script>
 
 </html>

@@ -23,9 +23,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES
@@ -43,14 +43,14 @@ $newPass2=$_REQUEST['newPass2'];
 
 if($newPass!=$newPass2)
 {
-    echo xlt("Passwords Don't match!");
+    echo xlt("Pass Phrases Do not match!");
     exit;
 }
 $errMsg='';
 $success=update_password($_SESSION['authId'],$_SESSION['authId'],$curPass,$newPass,$errMsg);
 if($success)
 {
-    echo xlt("Password change successful");
+    echo xlt("Pass Phrase change successful");
 }
 else
 {

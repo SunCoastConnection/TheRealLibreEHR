@@ -24,9 +24,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 define("SALT_PREFIX_SHA1",'$SHA1$');
@@ -102,8 +102,8 @@ function oemr_password_hash($plaintext,$salt)
         $crypt_return = crypt($plaintext,$salt);
         if ( ($crypt_return == '*0') || ($crypt_return == '*1') || (strlen($crypt_return) < 6) ) {
             // Error code returned by crypt or not hash, so die
-            error_log("FATAL ERROR: crypt() function is not working correctly in OpenEMR");
-            die("FATAL ERROR: crypt() function is not working correctly in OpenEMR");
+            error_log("FATAL ERROR: crypt() function is not working correctly in LibreEHR");
+            die("FATAL ERROR: crypt() function is not working correctly in LibreEHR");
         }
         else {
             // Hash confirmed, so return the hash.

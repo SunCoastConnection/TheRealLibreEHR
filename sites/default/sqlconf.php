@@ -1,5 +1,5 @@
 <?php
-//  PQRS_Gateway
+//  LibreEHR
 //  MySQL Config
 //  Referenced from /library/sqlconf.php.
 
@@ -8,10 +8,9 @@ $disable_utf8_flag = false;
 
 $host	= 'localhost';
 $port	= '3306';
-$login	= 'pqrsgateway';
-$pass	= 'pqrsgateway';
-$dbase	= 'pqrsgateway';
-
+$login	= 'libreehr';
+$pass	= 'libreehr';
+$dbase	= 'libreehr';
 
 $sqlconf = array();
 global $sqlconf;
