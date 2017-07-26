@@ -9,9 +9,9 @@
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * @package OpenEMR
+ * @package Librehealth EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES
@@ -31,6 +31,12 @@ require_once($GLOBALS['fileroot'].'/custom/code_types.inc.php');
 require_once($GLOBALS['srcdir'].'/csv_like_join.php');
 require_once($GLOBALS['srcdir'].'/htmlspecialchars.inc.php');
 require_once($GLOBALS['srcdir'].'/formdata.inc.php');
+?>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
+<?php
+require_once($GLOBALS['srcdir']."/formatting.inc.php");
+$DateFormat = DateFormatRead();
+$DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
 if (isset($ISSUE_TYPES['football_injury'])) {
   if ($ISSUE_TYPES['football_injury']) {
@@ -262,8 +268,8 @@ if ($_POST['form_save']) {
     "type = '"        . add_escape_custom($text_type)                  . "', " .
     "title = '"       . add_escape_custom($_POST['form_title'])        . "', " .
     "comments = '"    . add_escape_custom($_POST['form_comments'])     . "', " .
-    "begdate = "      . QuotedOrNull($form_begin)   . ", "  .
-    "enddate = "      . QuotedOrNull($form_end)     . ", "  .
+    "begdate = "      . QuotedOrNull(prepareDateBeforeSave($form_begin)) . ", "  .
+    "enddate = "      . QuotedOrNull(prepareDateBeforeSave($form_end))    . ", "  .
     "returndate = "   . QuotedOrNull($form_return)  . ", "  .
     "diagnosis = '"   . add_escape_custom($_POST['form_diagnosis'])    . "', " .
     "occurrence = '"  . add_escape_custom($_POST['form_occur'])        . "', " .
@@ -302,8 +308,8 @@ if ($_POST['form_save']) {
     "'" . add_escape_custom($_POST['form_title'])       . "', " .
     "1, "                            .
     "'" . add_escape_custom($_POST['form_comments'])    . "', " .
-    QuotedOrNull($form_begin)        . ", "  .
-    QuotedOrNull($form_end)        . ", "  .
+    QuotedOrNull(prepareDateBeforeSave($form_begin))       . ", "  .
+    QuotedOrNull(prepareDateBeforeSave($form_end))     . ", "  .
     QuotedOrNull($form_return)       . ", "  .
     "'" . add_escape_custom($_POST['form_diagnosis'])   . "', " .
     "'" . add_escape_custom($_POST['form_occur'])       . "', " .
@@ -395,27 +401,29 @@ div.section {
 
 </style>
 
-<style type="text/css">@import url(<?php echo $GLOBALS['webroot']; ?>/library/dynarch_calendar.css);</style>
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/library/dynarch_calendar.js"></script>
-<?php require_once($GLOBALS['srcdir'].'/dynarch_calendar_en.inc.php'); ?>
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/library/dynarch_calendar_setup.js"></script>
+<link rel="stylesheet" href="../../../library/css/jquery.datetimepicker.css">
+
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/library/textformat.js"></script>
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/library/dialog.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['webroot']; ?>/library/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../../../library/js/jquery.datetimepicker.full.min.js"></script>
 
 <script language="JavaScript">
 
- var mypcc = '<?php echo $GLOBALS['phone_country_code'] ?>';
 
  var aitypes = new Array(); // issue type attributes
  var aopts   = new Array(); // Option objects
 <?php
- $i = 0;	
+ $i = 0;  
  foreach ($ISSUE_TYPES as $key => $value) {
   echo " aitypes[$i] = " . attr($value[3]) . ";\n";
   echo " aopts[$i] = new Array();\n";
   $qry = sqlStatement("SELECT * FROM list_options WHERE list_id = ?",array($key."_issue_list"));
   while($res = sqlFetchArray($qry)){
     echo " aopts[$i][aopts[$i].length] = new Option('".attr(trim($res['option_id']))."', '".attr(xl_list_label(trim($res['title'])))."', false, false);\n";
+    if ($res['codes']) {
+      echo " aopts[$i][aopts[$i].length-1].setAttribute('data-code','".attr(trim($res['codes']))."');\n";
+    }
   }
   ++$i;
  }
@@ -484,24 +492,8 @@ ActiveIssueCodeRecycleFn($thispid, $ISSUE_TYPES);
   document.getElementById('row_reaction'      ).style.display = alldisp;
   document.getElementById('row_referredby'    ).style.display = (f.form_referredby.value) ? '' : comdisp;
   document.getElementById('row_comments'      ).style.display = (f.form_comments.value  ) ? '' : revdisp;
-<?php if ($GLOBALS['athletic_team']) { ?>
-  document.getElementById('row_returndate' ).style.display = comdisp;
-  document.getElementById('row_injury_grade'  ).style.display = injdisp;
-  document.getElementById('row_injury_part'   ).style.display = injdisp;
-  document.getElementById('row_injury_type'   ).style.display = injdisp;
-  document.getElementById('row_medical_system').style.display = nordisp;
-  document.getElementById('row_medical_type'  ).style.display = nordisp;
-  // Change label text of 'title' row depending on issue type:
-  document.getElementById('title_diagnosis').innerHTML = '<b>' +
-   (index == <?php echo issueTypeIndex('allergy'); ?> ?
-   '<?php echo xla('Allergy') ?>' :
-   (index == <?php echo issueTypeIndex('general'); ?> ?
-   '<?php echo xla('Title') ?>' :
-   '<?php echo xla('Text Diagnosis') ?>')) +
-   ':</b>';
-<?php } else { ?>
   document.getElementById('row_referredby'    ).style.display = (f.form_referredby.value) ? '' : comdisp;
-<?php } ?>
+
 <?php
   if ($ISSUE_TYPES['football_injury']) {
     // Generate more of these for football injury fields.
@@ -516,9 +508,11 @@ ActiveIssueCodeRecycleFn($thispid, $ISSUE_TYPES);
  }
 
  // If a clickoption title is selected, copy it to the title field.
+ // If it has a code, add that too.
  function set_text() {
   var f = document.forms[0];
   f.form_title.value = f.form_titles.options[f.form_titles.selectedIndex].text;
+  f.form_diagnosis.value = f.form_titles.options[f.form_titles.selectedIndex].getAttribute('data-code');
   f.form_titles.selectedIndex = -1;
  }
 
@@ -534,7 +528,7 @@ ActiveIssueCodeRecycleFn($thispid, $ISSUE_TYPES);
  }
 
  function closeme() {
-    if (parent.$) parent.$.fancybox.close();
+    if (parent.$ && parent.$.fancybox) parent.$.fancybox.close();
     window.close();
  }
 
@@ -663,13 +657,13 @@ function divclick(cb, divid) {
  <tr id='row_titles'>
   <td valign='top' nowrap>&nbsp;</td>
   <td valign='top'>
-   <select name='form_titles' size='<?php echo $GLOBALS['athletic_team'] ? 10 : 4; ?>' onchange='set_text()'>
+   <select name='form_titles' size='4' onchange='set_text()'>
    </select> <?php echo xlt('(Select one of these, or type your own title)'); ?>
   </td>
  </tr>
 
  <tr>
-  <td valign='top' id='title_diagnosis' nowrap><b><?php echo $GLOBALS['athletic_team'] ? xlt('Text Diagnosis') : xlt('Title'); ?>:</b></td>
+  <td valign='top' id='title_diagnosis' nowrap><b><?php echo xlt('Title'); ?>:</b></td>
   <td>
    <input type='text' size='40' name='form_title' value='<?php echo attr($irow['title']) ?>' style='width:100%' />
   </td>
@@ -694,66 +688,13 @@ function divclick(cb, divid) {
   </td>
  </tr>
 
- <!-- For Athletic Teams -->
-
- <tr<?php if (! $GLOBALS['athletic_team']) echo " style='display:none;'"; ?> id='row_injury_grade'>
-  <td valign='top' nowrap><b><?php echo xlt('Grade of Injury'); ?>:</b></td>
-  <td>
-<?php
-echo generate_select_list('form_injury_grade', 'injury_grade', $irow['injury_grade'], '');
-?>
-  </td>
- </tr>
-
- <tr<?php if (! $GLOBALS['athletic_team']) echo " style='display:none;'"; ?> id='row_injury_part'>
-  <td valign='top' nowrap><b><?php echo xlt('Injured Body Part'); ?>:</b></td>
-  <td>
-<?php
-echo generate_select_list('form_injury_part', 'injury_part', $irow['injury_part'], '');
-?>
-  </td>
- </tr>
-
- <tr<?php if (! $GLOBALS['athletic_team']) echo " style='display:none;'"; ?> id='row_injury_type'>
-  <td valign='top' nowrap><b><?php echo xlt('Injury Type'); ?>:</b></td>
-  <td>
-<?php
-echo generate_select_list('form_injury_type', 'injury_type', $irow['injury_type'], '');
-?>
-  </td>
- </tr>
-
- <tr<?php if (! $GLOBALS['athletic_team']) echo " style='display:none;'"; ?> id='row_medical_system'>
-  <td valign='top' nowrap><b><?php echo xlt('Medical System'); ?>:</b></td>
-  <td>
-<?php
-echo generate_select_list('form_medical_system', 'medical_system', $irow['injury_part'], '');
-?>
-  </td>
- </tr>
-
- <tr<?php if (! $GLOBALS['athletic_team']) echo " style='display:none;'"; ?> id='row_medical_type'>
-  <td valign='top' nowrap><b><?php echo xlt('Medical Type'); ?>:</b></td>
-  <td>
-<?php
-echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_type'], '');
-?>
-  </td>
- </tr>
-
- <!-- End For Athletic Teams -->
-
  <tr>
   <td valign='top' nowrap><b><?php echo xlt('Begin Date'); ?>:</b></td>
   <td>
 
    <input type='text' size='10' name='form_begin' id='form_begin'
-    value='<?php echo attr($irow['begdate']) ?>'
-    onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)'
+    value='<?php echo htmlspecialchars(oeFormatShortDate(attr($irow['begdate']))) ?>'
     title='<?php echo xla('yyyy-mm-dd date of onset, surgery or start of medication'); ?>' />
-   <img src='../../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-    id='img_begin' border='0' alt='[?]' style='cursor:pointer'
-    title='<?php echo xla('Click here to choose a date'); ?>' />
   </td>
  </tr>
 
@@ -761,12 +702,8 @@ echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_typ
   <td valign='top' nowrap><b><?php echo xlt('End Date'); ?>:</b></td>
   <td>
    <input type='text' size='10' name='form_end' id='form_end'
-    value='<?php echo attr($irow['enddate']) ?>'
-    onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)'
+    value='<?php echo htmlspecialchars(oeFormatShortDate(attr($irow['enddate']))) ?>'
     title='<?php echo xla('yyyy-mm-dd date of recovery or end of medication'); ?>' />
-   <img src='../../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-    id='img_end' border='0' alt='[?]' style='cursor:pointer'
-    title='<?php echo xla('Click here to choose a date'); ?>' />
     &nbsp;(<?php echo xlt('leave blank if still active'); ?>)
   </td>
  </tr>
@@ -780,20 +717,7 @@ echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_typ
   </td>
  </tr>
 
- <tr<?php if (! $GLOBALS['athletic_team']) echo " style='display:none;'"; ?> id='row_returndate'>
-  <td valign='top' nowrap><b><?php echo xlt('Returned to Play'); ?>:</b></td>
-  <td>
-   <input type='text' size='10' name='form_return' id='form_return'
-    value='<?php echo attr($irow['returndate']) ?>'
-    onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)'
-    title='<?php echo xla('yyyy-mm-dd date returned to play'); ?>' />
-   <img src='../../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-    id='img_return' border='0' alt='[?]' style='cursor:pointer'
-    title='<?php echo xla('Click here to choose a date'); ?>' />
-    &nbsp;(<?php echo xlt('leave blank if still active'); ?>)
-  </td>
- </tr>
-
+ 
  <tr id='row_occurrence'>
   <td valign='top' nowrap><b><?php echo xlt('Occurrence'); ?>:</b></td>
   <td>
@@ -819,29 +743,6 @@ echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_typ
   </td>
  </tr>
 
- <tr<?php if (! $GLOBALS['athletic_team']) echo " style='display:none;'"; ?> id='row_reinjury_id'>
-  <td valign='top' nowrap><b><?php echo xlt('Re-Injury?'); ?>:</b></td>
-  <td>
-   <select name='form_reinjury_id'>
-    <option value='0'><?php echo xlt('No'); ?></option>
-<?php
-  $pres = sqlStatement(
-   "SELECT id, begdate, title " .
-   "FROM lists WHERE " .
-   "pid = ? AND " .
-   "type = 'football_injury' AND " .
-   "activity = 1 " .
-   "ORDER BY begdate DESC", array($thispid)
-  );
-  while ($prow = sqlFetchArray($pres)) {
-    echo "   <option value='" . attr($prow['id']) . "'";
-    if ($prow['id'] == $irow['reinjury_id']) echo " selected";
-    echo ">" . text($prow['begdate']) . " " . text($prow['title']) . "\n";
-  }
-?>
-   </select>
-  </td>
- </tr>
  <!-- Reaction For Medication Allergy -->
   <tr id='row_severity'>
     <td valign='top' nowrap><b><?php echo xlt('Severity'); ?>:</b></td>
@@ -861,7 +762,7 @@ echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_typ
   </tr>
  <!-- End of reaction -->
 
- <tr<?php if ($GLOBALS['athletic_team']) echo " style='display:none;'"; ?> id='row_referredby'>
+ <tr id='row_referredby'>
   <td valign='top' nowrap><b><?php echo xlt('Referred by'); ?>:</b></td>
   <td>
    <input type='text' size='40' name='form_referredby' value='<?php echo attr($irow['referredby']) ?>'
@@ -876,7 +777,7 @@ echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_typ
   </td>
  </tr>
 
- <tr<?php if ($GLOBALS['athletic_team'] || $GLOBALS['ippf_specific']) echo " style='display:none;'"; ?>>
+ <tr<?php if ($GLOBALS['ippf_specific']) echo " style='display:none;'"; ?>>
   <td valign='top' nowrap><b><?php echo xlt('Outcome'); ?>:</b></td>
   <td>
    <?php
@@ -885,7 +786,7 @@ echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_typ
   </td>
  </tr>
 
- <tr<?php if ($GLOBALS['athletic_team'] || $GLOBALS['ippf_specific']) echo " style='display:none;'"; ?>>
+ <tr<?php if ($GLOBALS['ippf_specific']) echo " style='display:none;'"; ?>>
   <td valign='top' nowrap><b><?php echo xlt('Destination'); ?>:</b></td>
   <td>
 <?php if (true) { ?>
@@ -903,9 +804,6 @@ echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_typ
 </table>
 
 <?php
-  if ($ISSUE_TYPES['football_injury']) {
-    issue_football_injury_form($issue);
-  }
   if ($ISSUE_TYPES['ippf_gcac']) {
     if (empty($issue) || $irow['type'] == 'ippf_gcac')
       issue_ippf_gcac_form($issue, $thispid);
@@ -933,9 +831,18 @@ echo generate_select_list('form_medical_type', 'medical_type', $irow['injury_typ
 </form>
 <script language='JavaScript'>
  newtype(<?php echo $type_index ?>);
- Calendar.setup({inputField:"form_begin", ifFormat:"%Y-%m-%d", button:"img_begin"});
- Calendar.setup({inputField:"form_end", ifFormat:"%Y-%m-%d", button:"img_end"});
- Calendar.setup({inputField:"form_return", ifFormat:"%Y-%m-%d", button:"img_return"});
 </script>
+
+<script>
+    $(function() {
+        $("#form_begin, #form_end").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $.datetimepicker.setLocale('<?= $DateLocale;?>');
+    });
+</script>
+
+
 </body>
 </html>

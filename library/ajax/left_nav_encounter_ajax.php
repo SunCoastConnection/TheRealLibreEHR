@@ -67,7 +67,7 @@ if ($pid != $thispid) {
 ?>
 // The JavaScript part of switching to the new pid. Cloned from demographics.php.
 top.left_nav.setPatient(<?php echo "'" . htmlspecialchars(($prow['fname']) . " " . ($prow['lname']),ENT_QUOTES) .
-  "'," . htmlspecialchars($pid,ENT_QUOTES) . ",'" . htmlspecialchars(($prow['pubpid']),ENT_QUOTES) .
+  "'," . htmlspecialchars($pid,ENT_QUOTES) . ",'" . htmlspecialchars(($prow['pid']),ENT_QUOTES) .
   "','', ' " . htmlspecialchars(xl('DOB') . ": " . oeFormatShortDate($prow['DOB_YMD']) . " " .
   xl('Age') . ": " . getPatientAge($prow['DOB_YMD']), ENT_QUOTES) . "'"; ?>);
 // TBD: ForceDual? Maybe load demographics.php into the top frame?
@@ -77,30 +77,14 @@ top.left_nav.setPatient(<?php echo "'" . htmlspecialchars(($prow['fname']) . " "
 if ($createvisit) {
   // Write JavaScript to open the selected encounter as the active encounter.
   // Logic cloned from encounters.php.
-  if ($GLOBALS['concurrent_layout']) {
 ?>
 top.left_nav.setEncounter('<?php echo $today; ?>', enc, 'RBot');
-top.left_nav.setRadio('RBot', 'enc');
 top.left_nav.loadFrame2('enc2', 'RBot', 'patient_file/encounter/encounter_top.php?set_encounter=' + enc);
 <?php
   }
-  else {
-?>
-top.Title.location.href = '../encounter/encounter_title.php?set_encounter='   + enc;
-top.Main.location.href  = '../encounter/patient_encounter.php?set_encounter=' + enc;
-<?php
-  }
-}
 else { // if not $createvisit
-  if ($GLOBALS['concurrent_layout']) {
 ?>
-top.left_nav.loadFrame2('nen1','RBot','forms/newpatient/new.php?autoloaded=1&calenc=&issue=<?php echo $issue; ?>');
+top.left_nav.loadFrame2('nen1','RBot','forms/patient_encounter/new.php?autoloaded=1&calenc=&issue=<?php echo $issue; ?>');
 <?php
-  }
-  else {
-?>
-  // This case should not happen.
-<?php
-  }
 } // end not $createvisit
 ?>

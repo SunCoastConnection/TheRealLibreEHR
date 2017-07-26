@@ -1,5 +1,5 @@
 <?php
-// Copyright (C) 2010 OpenEMR Support LLC
+// Copyright (C) 2010 LibreHealth EHR Support LLC
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2
@@ -16,11 +16,6 @@ require_once ($GLOBALS['srcdir'] . "/classes/postmaster.php");
 require_once ($GLOBALS['srcdir'] . "/maviq_phone_api.php");
 require_once($GLOBALS['srcdir'] . "/reminders.php");
 require_once($GLOBALS['srcdir'] . "/report_database.inc");
-
-// This is only pertinent for users of php versions less than 5.2
-//  (ie. this wrapper is only loaded when php version is less than
-//   5.2; otherwise the native php json functions are used)
-require_once "$srcdir/jsonwrapper/jsonwrapper.php";
 
 //To improve performance and not freeze the session when running this
 // report, turn off session writing. Note that php session variables

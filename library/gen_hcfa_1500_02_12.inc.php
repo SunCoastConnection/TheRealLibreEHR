@@ -17,9 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 /**
@@ -119,6 +119,8 @@ function add_diagnosis(&$hcfa_entries,$number,$diag)
     $col_pos=3+13*$column_num;
     
     // First diagnosis row is 38
+    $strip='/[.#]/';
+    $diag = preg_replace($strip, '', strtoupper($diag));
     $row_pos=38+$row_num;
     $hcfa_entries[]=new hcfa_info($row_pos,$col_pos,8,$diag);
     
@@ -136,20 +138,13 @@ function process_diagnoses_02_12(&$claim,&$log)
 
     $hcfa_entries=array();
     $diags = $claim->diagArray(false);
-    if($claim->diagtype=='ICD10')
-    {
         $icd_indicator='0';        
-    }
-    else
-    {
-        $icd_indicator='9';
-    }
     
     $hcfa_entries[]=new hcfa_info(37,42,1,$icd_indicator);
     
     // Box 22. Medicaid Resubmission Code and Original Ref. No.
     $hcfa_entries[]=new hcfa_info(38,50,10,$claim->medicaidResubmissionCode());
-    $hcfa_entries[]=new hcfa_info(38,62,10,$claim->medicaidOriginalReference());
+    $hcfa_entries[]=new hcfa_info(38,62,15,$claim->medicaidOriginalReference());
     
     // Box 23. Prior Authorization Number
     $hcfa_entries[]=new hcfa_info(40,50,28,$claim->priorAuth());

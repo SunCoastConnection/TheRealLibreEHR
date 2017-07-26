@@ -49,6 +49,7 @@ $newdata['patient_data' ] = array();
 $newdata['employer_data'] = array();
 $fres = sqlStatement("SELECT * FROM layout_options " .
   "WHERE form_id = 'DEM' AND uor > 0 AND field_id != '' " .
+  "OR field_id = 'pid' " .
   "ORDER BY group_name, seq");
 while ($frow = sqlFetchArray($fres)) {
   $data_type = $frow['data_type'];
@@ -185,12 +186,8 @@ newInsuranceData(
 if ($alertmsg) {
   echo "alert('$alertmsg');\n";
 }
-if ($GLOBALS['concurrent_layout']) {
   echo "window.location='$rootdir/patient_file/summary/demographics.php?" .
     "set_pid=$pid&is_new=1';\n";
-} else {
-  echo "window.location='$rootdir/patient_file/patient_file.php?set_pid=$pid';\n";
-}
 ?>
 </script>
 

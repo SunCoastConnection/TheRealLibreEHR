@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreEHR
  * @author  Tony McCormick <tony@mi-squared.com>
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 
@@ -72,8 +72,8 @@ $form_diagnosis = (isset($_POST['form_diagnosis'])) ? $_POST['form_diagnosis'] :
 
 <div id="report_parameters">
 
-<table>
- <tr>
+    <table>
+        <tr class="misc-internet-search">
   <td>
 	<div style='float:left'>
 	<table class='text'>

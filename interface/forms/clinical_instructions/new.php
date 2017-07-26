@@ -16,7 +16,7 @@
 //
 //
 // A copy of the GNU General Public License is included along with this program:
-// openemr/interface/login/GnuGPL.html
+// libreehr/interface/login/GnuGPL.html
 // For more information write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
@@ -33,10 +33,15 @@ include_once("../../globals.php");
 include_once("$srcdir/api.inc");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/options.inc.php");
+require_once("$srcdir/formsoptions.inc.php");
 
 formHeader("Form:Clinical Instructions Form");
-$returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
+$returnurl = 'encounter_top.php';
+$form_name = 'form_clinical_instructions';
 $formid = 0 + (isset($_GET['id']) ? $_GET['id'] : '');
+if (empty($formid)) {
+        $formid = checkFormIsActive($form_name,$encounter);
+}
 $check_res = $formid ? formFetch("form_clinical_instructions", $formid) : array();
 ?>
 <html>

@@ -5,7 +5,7 @@
  * (TLH) Added payor,provider,fixed cvs download to included selected fields
  * (TLH) Added ability to download selected invoices only or all for patient
  *
- * Copyright (C) 2015 Terry Hill <terry@lillysystems.com> 
+ * Copyright (C) 2015-2017 Terry Hill <teryhill@librehealth.io> 
  * Copyright (C) 2006-2010 Rod Roark <rod@sunsetsystems.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or 
@@ -19,10 +19,10 @@
  * You should have received a copy of the GNU General Public License 
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
  * 
- * @package OpenEMR 
+ * @package LibreHealth EHR 
  * @author Rod Roark <rod@sunsetsystems.com> 
- * @author Terry Hill <terry@lilysystems.com> 
- * @link http://www.open-emr.org 
+ * @author Terry Hill <teryhill@librehealth.io> 
+ * @link http://librehealth.io
  */
  
 $fake_register_globals=false;
@@ -30,14 +30,14 @@ $sanitize_all_escapes=true;
  
 require_once("../globals.php");
 require_once("../../library/patient.inc");
-require_once("../../library/sql-ledger.inc");
 require_once("../../library/invoice_summary.inc.php");
 require_once("../../library/sl_eob.inc.php");
 require_once("../../library/formatting.inc.php");
 require_once "$srcdir/options.inc.php";
 require_once "$srcdir/formdata.inc.php";
+$DateFormat = DateFormatRead();
+$DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
-$INTEGRATED_AR = $GLOBALS['oer_config']['ws_accounting']['enabled'] === 2;
 
 $alertmsg = '';
 $bgcolor = "#aaaaaa";
@@ -61,7 +61,7 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
   if ($is_ins_summary) {
     $form_cb_ssn      = false;
     $form_cb_dob      = false;
-    $form_cb_pubpid   = false;
+    $form_cb_pid   = false;
     $form_cb_adate    = false;
     $form_cb_policy   = false;
     $form_cb_phone    = false;
@@ -73,7 +73,7 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
   } else {
     $form_cb_ssn      = $_POST['form_cb_ssn']      ? true : false;
     $form_cb_dob      = $_POST['form_cb_dob']      ? true : false;
-    $form_cb_pubpid   = $_POST['form_cb_pubpid']   ? true : false;
+    $form_cb_pid   = $_POST['form_cb_pid']   ? true : false;
     $form_cb_adate    = $_POST['form_cb_adate']    ? true : false;
     $form_cb_policy   = $_POST['form_cb_policy']   ? true : false;
     $form_cb_phone    = $_POST['form_cb_phone']    ? true : false;
@@ -86,7 +86,7 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
 } else {
   $form_cb_ssn      = true;
   $form_cb_dob      = false;
-  $form_cb_pubpid   = false;
+  $form_cb_pid   = false;
   $form_cb_adate    = false;
   $form_cb_policy   = false;
   $form_cb_phone    = true;
@@ -109,7 +109,7 @@ $initial_colspan = 1;
 if ($is_due_ins      ) ++$initial_colspan;
 if ($form_cb_ssn     ) ++$initial_colspan;
 if ($form_cb_dob     ) ++$initial_colspan;
-if ($form_cb_pubpid  ) ++$initial_colspan;
+if ($form_cb_pid  ) ++$initial_colspan;
 if ($form_cb_policy  ) ++$initial_colspan;
 if ($form_cb_phone   ) ++$initial_colspan;
 if ($form_cb_city    ) ++$initial_colspan;
@@ -126,7 +126,6 @@ $grand_total_paid        = 0;
 $grand_total_agedbal = array();
 for ($c = 0; $c < $form_age_cols; ++$c) $grand_total_agedbal[$c] = 0;
 
-if (!$INTEGRATED_AR) SLConnect();
 
 function bucks($amount) {
   if ($amount)
@@ -165,8 +164,7 @@ function endPatient($ptrow) {
 
     if (!$_POST['form_without']) {
       sqlStatement("UPDATE patient_data SET " .
-        "genericname2 = 'Billing', " .
-        "genericval2 = CONCAT('IN COLLECTIONS " . date("Y-m-d") . "', genericval2) " .
+        "billing_note = CONCAT('IN COLLECTIONS " . date("Y-m-d") . "', billing_note) " .
         "WHERE pid = ? ", array($ptrow['pid']));
     }
     $export_patient_count += 1;
@@ -299,7 +297,7 @@ else {
 
 </style>
 
-<script type="text/javascript" src="../../library/js/jquery.1.3.2.js"></script>
+<script type="text/javascript" src="../../library/js/jquery-1.9.1.min.js"></script>
 
 <script language="JavaScript">
 
@@ -336,108 +334,101 @@ function checkAll(checked) {
 <table>
  <tr>
   <td width='610px'>
-	<div style='float:left'>
+    <div style='float:left'>
 
-	<table class='text'>
-		<tr>
-			<td class='label'>
-				<table>
-					<tr>
-						<td><?php echo xlt('Displayed Columns') ?>:</td>
-					</tr>
-					<tr>
-						<td>
-						   <label><input type='checkbox' name='form_cb_ssn'<?php if ($form_cb_ssn) echo ' checked'; ?>>
-						   <?php echo xlt('SSN') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_dob'<?php if ($form_cb_dob) echo ' checked'; ?>>
-						   <?php echo xlt('DOB') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_pubpid'<?php if ($form_cb_pubpid) echo ' checked'; ?>>
-						   <?php echo xlt('ID') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_policy'<?php if ($form_cb_policy) echo ' checked'; ?>>
-						   <?php echo xlt('Policy') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_phone'<?php if ($form_cb_phone) echo ' checked'; ?>>
-						   <?php echo xlt('Phone') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_city'<?php if ($form_cb_city) echo ' checked'; ?>>
-						   <?php echo xlt('City') ?>&nbsp;</label>
-						</td>
-					</tr>
-					<tr>
-						<td>
-						   <label><input type='checkbox' name='form_cb_ins1'<?php if ($form_cb_ins1) echo ' checked'; ?>>
-						   <?php echo xlt('Primary Ins') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_referrer'<?php if ($form_cb_referrer) echo ' checked'; ?>>
-						   <?php echo xlt('Referrer') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_adate'<?php if ($form_cb_adate) echo ' checked'; ?>>
-						   <?php echo xlt('Act Date') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_idays'<?php if ($form_cb_idays) echo ' checked'; ?>>
-						   <?php echo xlt('Inactive Days') ?>&nbsp;</label>
-						</td>
-						<td>
-						   <label><input type='checkbox' name='form_cb_err'<?php if ($form_cb_err) echo ' checked'; ?>>
-						   <?php echo xlt('Errors') ?></label>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		</tr>
-			<td>
-				<table>
+    <table class='text'>
+        <tr>
+            <td class='label'>
+                <table>
+                    <tr>
+                        <td><?php echo xlt('Displayed Columns') ?>:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_ssn'<?php if ($form_cb_ssn) echo ' checked'; ?>>
+                           <?php echo xlt('SSN') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_dob'<?php if ($form_cb_dob) echo ' checked'; ?>>
+                           <?php echo xlt('DOB') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_pid'<?php if ($form_cb_pid) echo ' checked'; ?>>
+                           <?php echo xlt('ID') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_policy'<?php if ($form_cb_policy) echo ' checked'; ?>>
+                           <?php echo xlt('Policy') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_phone'<?php if ($form_cb_phone) echo ' checked'; ?>>
+                           <?php echo xlt('Phone') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_city'<?php if ($form_cb_city) echo ' checked'; ?>>
+                           <?php echo xlt('City') ?>&nbsp;</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_ins1'<?php if ($form_cb_ins1) echo ' checked'; ?>>
+                           <?php echo xlt('Primary Ins') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_referrer'<?php if ($form_cb_referrer) echo ' checked'; ?>>
+                           <?php echo xlt('Referrer') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_adate'<?php if ($form_cb_adate) echo ' checked'; ?>>
+                           <?php echo xlt('Act Date') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_idays'<?php if ($form_cb_idays) echo ' checked'; ?>>
+                           <?php echo xlt('Inactive Days') ?>&nbsp;</label>
+                        </td>
+                        <td>
+                           <label><input type='checkbox' name='form_cb_err'<?php if ($form_cb_err) echo ' checked'; ?>>
+                           <?php echo xlt('Errors') ?></label>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>        
+            <td>
+                <table>
 
-					<tr>
-						<td class='label'>
-						   <?php echo xlt('Service Date'); ?>:
-						</td>
-						<td>
-						   <input type='text' name='form_date' id="form_date" size='10' value='<?php echo attr($form_date) ?>'
-							onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)' title='yyyy-mm-dd'>
-						   <img src='../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-							id='img_from_date' border='0' alt='[?]' style='cursor:pointer'
-							title='<?php echo xla('Click here to choose a date'); ?>'>
-						</td>
-						<td class='label'>
-						   <?php echo xlt('To'); ?>:
-						</td>
-						<td>
-						   <input type='text' name='form_to_date' id="form_to_date" size='10' value='<?php echo attr($form_to_date) ?>'
-							onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)' title='yyyy-mm-dd'>
-						   <img src='../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-							id='img_to_date' border='0' alt='[?]' style='cursor:pointer'
-							title='<?php echo xla('Click here to choose a date'); ?>'>
-						</td>
-						<td>
-						   <select name='form_category'>
-						<?php
-						 foreach (array('Open' => xl('Open'),'Due Pt' => xl('Due Pt'),'Due Ins' => xl('Due Ins'),'Ins Summary' => xl('Ins Summary'),'Credits' => xl('Credits'),'All' => xl('All')) as $key => $value) {
-						  echo "    <option value='" . attr($key) . "'";
-						  if ($_POST['form_category'] == $key) echo " selected";
-						  echo ">" . text($value) . "</option>\n";
-						 }
-						?>
-						   </select>
-						</td>
+                    <tr>
+                        <td class='label'>
+                           <?php echo xlt('Service Date'); ?>:
+                        </td>
+                        <td>
+                           <input type='text' name='form_date' id="form_date" size='10'
+                                value='<?php echo htmlspecialchars(oeFormatShortDate(attr($form_date))) ?>' />
+                        </td>
+                        <td class='label'>
+                           <?php echo xlt('To'); ?>:
+                        </td>
+                        <td>
+                           <input type='text' name='form_to_date' id="form_to_date" size='10'
+                            value='<?php echo htmlspecialchars(oeFormatShortDate(attr($form_to_date))) ?>' />
+                        </td>
+                        <td>
+                           <select name='form_category'>
+                        <?php
+                         foreach (array('Open' => xl('Open'),'Due Pt' => xl('Due Pt'),'Due Ins' => xl('Due Ins'),'Ins Summary' => xl('Ins Summary'),'Credits' => xl('Credits'),'All' => xl('All')) as $key => $value) {
+                          echo "    <option value='" . attr($key) . "'";
+                          if ($_POST['form_category'] == $key) echo " selected";
+                          echo ">" . text($value) . "</option>\n";
+                         }
+                        ?>
+                           </select>
+                        </td>
 
-					</tr>
+                    </tr>
 
 
-					<tr>
-						<td class='label'>
+                    <tr>
+                        <td class='label'>
                         <?php echo xlt('Facility'); ?>:
                         </td>
                         <td>
@@ -446,9 +437,9 @@ function checkAll(checked) {
                         
                         <td class='label'>
                         <?php echo xlt('Payor'); ?>:
-						</td>
-						<td>
-						<?php  # added dropdown for payors (TLH)
+                        </td>
+                        <td>
+                        <?php  # added dropdown for payors (TLH)
                                $insurancei = getInsuranceProviders();
                                echo "   <select name='form_payer_id'>\n";
                                echo "    <option value='0'>-- " . xlt('All') . " --</option>\n";
@@ -460,30 +451,30 @@ function checkAll(checked) {
                                }
                                echo "   </select>\n";
                         ?>            
-						</td>
-					</tr>
+                        </td>
+                    </tr>
 
-					<tr>
-						<td class='label'>
-						   <?php echo xlt('Age By') ?>:
-						</td>
-						<td>
-						   <select name='form_ageby'>
-						<?php
-						 foreach (array( 'Service Date'=>xl('Service Date'), 'Last Activity Date'=>xl('Last Activity Date')) as $key => $value) {
-						  echo "    <option value='" . attr($key) . "'";
-						  if ($_POST['form_ageby'] == $value) echo " selected";
-						  echo ">" . text($value) . "</option>\n";
-						 }
-						?>
-						   </select>
-						</td>
+                    <tr>
+                        <td class='label'>
+                           <?php echo xlt('Age By') ?>:
+                        </td>
+                        <td>
+                           <select name='form_ageby'>
+                        <?php
+                         foreach (array( 'Service Date'=>xl('Service Date'), 'Last Activity Date'=>xl('Last Activity Date')) as $key => $value) {
+                          echo "    <option value='" . attr($key) . "'";
+                          if ($_POST['form_ageby'] == $value) echo " selected";
+                          echo ">" . text($value) . "</option>\n";
+                         }
+                        ?>
+                           </select>
+                        </td>
                         
                         <td class='label'>
-						   <?php echo xlt('Provider') ?>:
-						</td>
-						<td>
-						<?php  # Build a drop-down list of providers.
+                           <?php echo xlt('Provider') ?>:
+                        </td>
+                        <td>
+                        <?php  # Build a drop-down list of providers.
                                # Added (TLH)
 
                                $query = "SELECT id, lname, fname FROM users WHERE ".
@@ -503,55 +494,54 @@ function checkAll(checked) {
                                }
 
                                echo "   </select>\n";
-						?>
-						</td>
-					</tr>
-					</tr>
-						<td class='label'>
-						   <?php echo xlt('Aging Columns') ?>:
-						</td>
-						<td>
-						   <input type='text' name='form_age_cols' size='2' value='<?php echo attr($form_age_cols); ?>' />
-						</td>
-						<td class='label'>
-						   <?php echo xlt('Days/Col') ?>:
-						</td>
-						<td>
-						   <input type='text' name='form_age_inc' size='3' value='<?php echo attr($form_age_inc); ?>' />
-						</td>
-					</tr>
+                        ?>
+                        </td>
+                    </tr>                    
+                        <td class='label'>
+                           <?php echo xlt('Aging Columns') ?>:
+                        </td>
+                        <td>
+                           <input type='text' name='form_age_cols' size='2' value='<?php echo attr($form_age_cols); ?>' />
+                        </td>
+                        <td class='label'>
+                           <?php echo xlt('Days/Col') ?>:
+                        </td>
+                        <td>
+                           <input type='text' name='form_age_inc' size='3' value='<?php echo attr($form_age_inc); ?>' />
+                        </td>
+                    </tr>
 
 
-				</table>
-			</td>
-		</tr>
-	</table>
+                </table>
+            </td>
+        </tr>
+    </table>
 
-	</div>
+    </div>
 
   </td>
   <td align='left' valign='middle' height="100%">
-	<table style='border-left:1px solid; width:100%; height:100%' >
-		<tr>
-			<td>
-				<div style='margin-left:15px'>
-					<a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
-					<span>
-						<?php echo xlt('Submit'); ?>
-					</span>
-					</a>
+    <table style='border-left:1px solid; width:100%; height:100%' >
+        <tr>
+            <td>
+                <div style='margin-left:15px'>
+                    <a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
+                    <span>
+                        <?php echo xlt('Submit'); ?>
+                    </span>
+                    </a>
 
-					<?php if ($_POST['form_refresh']) { ?>
-					<a href='#' class='css_button' onclick='window.print()'>
-						<span>
-							<?php echo xlt('Print'); ?>
-						</span>
-					</a>
-					<?php } ?>
-				</div>
-			</td>
-		</tr>
-	</table>
+                    <?php if ($_POST['form_refresh']) { ?>
+                    <a href='#' class='css_button' onclick='window.print()'>
+                        <span>
+                            <?php echo xlt('Print'); ?>
+                        </span>
+                    </a>
+                    <?php } ?>
+                </div>
+            </td>
+        </tr>
+    </table>
   </td>
  </tr>
 </table>
@@ -565,9 +555,7 @@ function checkAll(checked) {
 if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport']) {
   $rows = array();
   $where = "";
-
-  if ($INTEGRATED_AR) {
-    $sqlArray = array(); 
+  $sqlArray = array(); 
     if ($_POST['form_export'] || $_POST['form_csvexport']) {
        
       $where = "( 1 = 2";
@@ -618,8 +606,8 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
     $query = "SELECT f.id, f.date, f.pid, CONCAT(w.lname, ', ', w.fname) AS provider_id, f.encounter, f.last_level_billed, " .
       "f.last_level_closed, f.last_stmt_date, f.stmt_count, f.invoice_refno, " .
       "p.fname, p.mname, p.lname, p.street, p.city, p.state, " .
-      "p.postal_code, p.phone_home, p.ss, p.genericname2, p.genericval2, " .
-      "p.pubpid, p.DOB, CONCAT(u.lname, ', ', u.fname) AS referrer, " .
+      "p.postal_code, p.phone_home, p.ss, p.billing_note, " .
+      "p.pid, p.DOB, CONCAT(u.lname, ', ', u.fname) AS referrer, " .
       "( SELECT SUM(b.fee) FROM billing AS b WHERE " .
       "b.pid = f.pid AND b.encounter = f.encounter AND " .
       "b.activity = 1 AND b.code_type != 'COPAY' ) AS charges, " .
@@ -706,8 +694,8 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
       $row['dos']       = $svcdate;
       $row['ss']        = $erow['ss'];
       $row['DOB']       = $erow['DOB'];
-      $row['pubpid']    = $erow['pubpid'];
-      $row['billnote']  = ($erow['genericname2'] == 'Billing') ? $erow['genericval2'] : '';
+      $row['pid']    = $erow['pid'];
+      $row['billnote']  = $erow['billing_note'];
       $row['referrer']  = $erow['referrer'];
       $row['provider']  = $erow['provider_id'];
       $row['irnumber']  = $erow['invoice_refno'];
@@ -787,244 +775,6 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
       $rows[$insname . '|' . $ptname . '|' . $encounter_id] = $row;
     } // end while
 
-  } // end $INTEGRATED_AR
-  else {
-    if ($_POST['form_export'] || $_POST['form_csvexport']) {  
-      $where = "( 1 = 2";
-      foreach ($_POST['form_cb'] as $key => $value) {
-         list($key_newval['pid'], $key_newval['encounter']) = explode(".", $key); 
-         $newkey = $key_newval['pid']; 
-         $newencounter =  $key_newval['encounter'];
-         # added this condition to handle the downloading of individual invoices (TLH)
-         if($_POST['form_individual'] ==1){         
-           $where .= " OR f.encounter = $newencounter ";
-         }
-         else
-         {
-           $where .= " OR f.pid = $newkey ";
-         }
-      } 
-      $where .= ' )';
-    }
-
-    if ($form_date) {
-      if ($where) $where .= " AND ";
-      $date1 = substr($form_date, 0, 4) . substr($form_date, 5, 2) .
-        substr($form_date, 8, 2);
-      if ($form_to_date) {
-        $date2 = substr($form_to_date, 0, 4) . substr($form_to_date, 5, 2) .
-          substr($form_to_date, 8, 2);
-        $where .= "((CAST (substring(ar.invnumber from position('.' in ar.invnumber) + 1 for 8) AS integer) " .
-          "BETWEEN '$date1' AND '$date2')";
-        $tmp = "date >= '$form_date' AND date <= '$form_to_date'";
-      }
-      else {
-        // This catches old converted invoices where we have no encounters:
-        $where .= "(ar.invnumber LIKE '%.$date1'";
-        $tmp = "date = '$form_date'";
-      }
-      // Pick out the encounters from MySQL with the desired DOS:
-      $rez = sqlStatement("SELECT pid, encounter FROM form_encounter WHERE $tmp");
-      while ($row = sqlFetchArray($rez)) {
-        $where .= " OR ar.invnumber = '" . $row['pid'] . "." . $row['encounter'] . "'";
-      }
-      $where .= ")";
-    }
-
-    if (! $where) {
-      $where = "1 = 1";
-    }
-
-    // Instead of the subselects in the following query, we will call
-    // get_invoice_summary() in order to get data at the procedure level and
-    // thus decide if insurance appears to be done with each invoice.
-
-    $query = "SELECT ar.id, ar.invnumber, ar.duedate, ar.amount, ar.paid, " .
-      "ar.intnotes, ar.notes, ar.shipvia, " .
-      "customer.id AS custid, customer.name, customer.address1, " .
-      "customer.city, customer.state, customer.zipcode, customer.phone " .
-      // ", (SELECT SUM(invoice.fxsellprice) FROM invoice WHERE " .
-      // "invoice.trans_id = ar.id AND invoice.fxsellprice > 0) AS charges, " .
-      // "(SELECT SUM(invoice.fxsellprice) FROM invoice WHERE " .
-      // "invoice.trans_id = ar.id AND invoice.fxsellprice < 0) AS adjustments " .
-      "FROM ar JOIN customer ON customer.id = ar.customer_id " .
-      "WHERE ( $where ) ";
-    if ($_POST['form_refresh'] && ! $is_all) {
-      $query .= "AND ar.amount != ar.paid ";
-    }
-    $query .= "ORDER BY ar.invnumber";
-
-    // echo "<!-- $query -->\n"; // debugging
-
-    $t_res = SLQuery($query);
-    if ($sl_err) die($sl_err);
-    $num_invoices = SLRowCount($t_res);
-
-    //////////////////////////////////////////////////////////////////
-
-    for ($irow = 0; $irow < $num_invoices; ++$irow) {
-      $row = SLGetRow($t_res, $irow);
-
-      // If a facility was specified then skip invoices whose encounters
-      // do not indicate that facility.
-      if ($form_facility) {
-        list($patient_id, $encounter_id) = explode(".", $row['invnumber']);
-        $tmp = sqlQuery("SELECT count(*) AS count FROM form_encounter WHERE " .
-          "pid = ? AND encounter = ? AND " .
-          "facility_id = ? ", array($patient_id, $encounter_id, $form_facility));
-        if (empty($tmp['count'])) continue;
-      }
-
-      if ($form_provider) {
-        list($patient_id, $encounter_id) = explode(".", $row['invnumber']);
-        $tmp = sqlQuery("SELECT count(*) AS count FROM form_encounter WHERE " .
-          "pid = ? AND encounter = ? AND " .
-          "provider_id = ? ", array($patient_id, $encounter_id, $form_provider));
-
-        if (empty($tmp['count'])) continue;
-      }      
-
-      $pt_balance = sprintf("%.2f",$row['amount']) - sprintf("%.2f",$row['paid']);
-
-      if ($_POST['form_category'] == 'Credits') {
-        if ($pt_balance > 0) continue;
-      }
-
-      // $duncount was originally supposed to be the number of times that
-      // the patient was sent a statement for this invoice.
-      //
-      $duncount = substr_count(strtolower($row['intnotes']), "statement sent");
-
-      // But if we have not yet billed the patient, then compute $duncount as a
-      // negative count of the number of insurance plans for which we have not
-      // yet closed out insurance.  Here we also compute $insname as the name of
-      // the insurance plan from which we are awaiting payment, and its sequence
-      // number $insposition (1-3).
-      //
-      $insname = '';
-      $insposition = 0;
-      $inseobs = strtolower($row['shipvia']);
-      $insgot = strtolower($row['notes']);
-      if (! $duncount) {
-        foreach (array('ins1', 'ins2', 'ins3') as $value) {
-          $i = strpos($insgot, $value);
-          if ($i !== false && strpos($inseobs, $value) === false) {
-            --$duncount;
-            if (!$insname && $is_due_ins) {
-              $j = strpos($insgot, "\n", $i);
-              if (!$j) $j = strlen($insgot);
-              $insname = trim(substr($row['notes'], $i + 5, $j - $i - 5));
-              $insposition = substr($value, 3); // 1, 2 or 3
-            }
-          }
-        }
-      }
-      $row['insname'] = $insname;
-
-      // Also get the primary insurance company name whenever there is one.
-      $row['ins1'] = '';
-      $i = strpos($insgot, 'ins1');
-      if ($i !== false) {
-        $j = strpos($insgot, "\n", $i);
-        if (!$j) $j = strlen($insgot);
-        $row['ins1'] = trim(substr($row['notes'], $i + 5, $j - $i - 5));
-      }
-
-      // An invoice is now due from the patient if money is owed and we are
-      // not waiting for insurance to pay.  We no longer look at the due date
-      // for this.
-      //
-      $isduept = ($duncount >= 0) ? " checked" : "";
-
-      // Skip invoices not in the desired "Due..." category.
-      //
-      if ($is_due_ins && $duncount >= 0) continue;
-      if ($is_due_pt  && $duncount <  0) continue;
-
-      $row['duncount'] = $duncount;
-
-      // Determine the date of service.  An 8-digit encounter number is
-      // presumed to be a date of service imported during conversion.
-      // Otherwise look it up in the form_encounter table.
-      //
-      $svcdate = "";
-      list($pid, $encounter) = explode(".", $row['invnumber']);
-      if (strlen($encounter) == 8) {
-        $svcdate = substr($encounter, 0, 4) . "-" . substr($encounter, 4, 2) .
-          "-" . substr($encounter, 6, 2);
-      }
-      else if ($encounter) {
-        $tmp = sqlQuery("SELECT date FROM form_encounter WHERE " .
-          "encounter = ? ", array($encounter));
-        $svcdate = substr($tmp['date'], 0, 10);
-      }
-
-      $row['dos'] = $svcdate;
-
-      // This computes the invoice's total original charges and adjustments,
-      // date of last activity, and determines if insurance has responded to
-      // all billing items.
-      //
-      $invlines = get_invoice_summary($row['id'], true);
-      $row['charges'] = 0;
-      $row['adjustments'] = 0;
-      $ins_seems_done = true;
-      $ladate = $svcdate;
-      foreach ($invlines as $key => $value) {
-        $row['charges'] += $value['chg'] + $value['adj'];
-        $row['adjustments'] += 0 - $value['adj'];
-        foreach ($value['dtl'] as $dkey => $dvalue) {
-          $dtldate = trim(substr($dkey, 0, 10));
-          if ($dtldate && $dtldate > $ladate) $ladate = $dtldate;
-        }
-        $lckey = strtolower($key);
-        if ($lckey == 'co-pay' || $lckey == 'claim') continue;
-        if (count($value['dtl']) <= 1) $ins_seems_done = false;
-      }
-      $row['billing_errmsg'] = '';
-      if ($is_due_ins && strpos($inseobs, 'ins1') === false && $ins_seems_done)
-        $row['billing_errmsg'] = 'Ins1 seems done';
-      else if (strpos($inseobs, 'ins1') !== false && !$ins_seems_done)
-        $row['billing_errmsg'] = 'Ins1 seems not done';
-
-      $row['ladate'] = $ladate;
-
-      // Compute number of days since last activity.
-      $latime = mktime(0, 0, 0, substr($ladate, 5, 2),
-        substr($ladate, 8, 2), substr($ladate, 0, 4));
-      $row['inactive_days'] = floor((time() - $latime) / (60 * 60 * 24));
-
-      $pdrow = sqlQuery("SELECT pd.fname, pd.lname, pd.mname, pd.ss, " .
-        "pd.genericname2, pd.genericval2, pd.pid, pd.pubpid, pd.DOB, " .
-        "CONCAT(u.lname, ', ', u.fname) AS referrer FROM " .
-        "integration_mapping AS im, patient_data AS pd " .
-        "LEFT OUTER JOIN users AS u ON u.id = pd.ref_providerID " .
-        "WHERE im.foreign_id = ? AND " .
-        "im.foreign_table = 'customer' AND " .
-        "pd.id = im.local_id", array($row['custid']));
-
-      $row['ss'] = $pdrow['ss'];
-      $row['DOB'] = $pdrow['DOB'];
-      $row['pubpid'] = $pdrow['pubpid'];
-      $row['billnote'] = ($pdrow['genericname2'] == 'Billing') ? $pdrow['genericval2'] : '';
-      $row['referrer'] = $pdrow['referrer'];
-      
-      $ptname = $pdrow['lname'] . ", " . $pdrow['fname'];
-      if ($pdrow['mname']) $ptname .= " " . substr($pdrow['mname'], 0, 1);
-
-      // Look up insurance policy number if we need it.
-      if ($form_cb_policy) {
-        $patient_id = $pdrow['pid'];
-        $instype = ($insposition == 2) ? 'secondary' : (($insposition == 3) ? 'tertiary' : 'primary');
-        $insrow = sqlQuery("SELECT policy_number FROM insurance_data WHERE " .
-          "pid = ? AND type = ? AND date <= ? " .
-          "ORDER BY date DESC LIMIT 1", array($patient_id, $instype, $svcdate));
-        $row['policy'] = $insrow['policy_number'];
-      }
-
-      $rows[$insname . '|' . $ptname . '|' . $encounter] = $row;
-    } // end for
-  } // end not $INTEGRATED_AR
 
   ksort($rows);
 
@@ -1099,7 +849,7 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
 <?php if ($form_cb_dob) { ?>
   <th>&nbsp;<?php echo xlt('DOB')?></th>
 <?php } ?>
-<?php if ($form_cb_pubpid) { ?>
+<?php if ($form_cb_pid) { ?>
   <th>&nbsp;<?php echo xlt('ID')?></th>
 <?php } ?>
 <?php if ($form_cb_policy) { ?>
@@ -1223,10 +973,10 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
           echo "  <td class='detail'>&nbsp;" . attr($row['ss']) . "</td>\n";
         }
         if ($form_cb_dob) {
-          echo "  <td class='detail'>&nbsp;" . attr(oeFormatShortDate($row['DOB'])) . "</td>\n";
+          echo "  <td class='detail'>&nbsp;" . attr(date(DateFormatRead(true), strtotime($row['DOB']))) . "</td>\n";
         }
-        if ($form_cb_pubpid) {
-          echo "  <td class='detail'>&nbsp;" . attr($row['pubpid']) . "</td>\n";
+        if ($form_cb_pid) {
+          echo "  <td class='detail'>&nbsp;" . attr($row['pid']) . "</td>\n";
         }
         if ($form_cb_policy) {
           echo "  <td class='detail'>&nbsp;" . attr($row['policy']) . "</td>\n";
@@ -1334,7 +1084,7 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
       } 
       if ($form_cb_pubid) 
       {
-        echo '"' . $row['pubpid']                       . '",';        
+        echo '"' . $row['pid']                       . '",';        
       }
       if ($form_cb_policy) 
       {
@@ -1423,11 +1173,10 @@ if ($_POST['form_refresh'] || $_POST['form_export'] || $_POST['form_csvexport'])
     if ($form_cb_err) echo "  <td class='detail'>&nbsp;</td>\n";
     echo " </tr>\n";
     echo "</table>\n";
-	echo "</div>\n";
+    echo "</div>\n";
   }
 } // end if form_refresh
 
-if (!$INTEGRATED_AR) SLClose();
 
 if (!$_POST['form_csvexport']) {
   if (!$_POST['form_export']) {
@@ -1438,10 +1187,10 @@ if (!$_POST['form_csvexport']) {
 <a href='javascript:;' class='css_button'  onclick='checkAll(true)'><span><?php echo xlt('Select All'); ?></span></a>
 <a href='javascript:;' class='css_button'  onclick='checkAll(false)'><span><?php echo xlt('Clear All'); ?></span></a>
 <a href='javascript:;' class='css_button' onclick='$("#form_csvexport").attr("value","true"); $("#theform").submit();'>
-	<span><?php echo xlt('Export Selected as CSV'); ?></span>
+    <span><?php echo xlt('Export Selected as CSV'); ?></span>
 </a>
 <a href='javascript:;' class='css_button' onclick='$("#form_export").attr("value","true"); $("#theform").submit();'>
-	<span><?php echo xlt('Export Selected to Collections'); ?></span>
+    <span><?php echo xlt('Export Selected to Collections'); ?></span>
 </a>
 </div>
 
@@ -1466,14 +1215,20 @@ if (!$_POST['form_csvexport']) {
 ?>
 </script>
 </body>
-<!-- stuff for the popup calendar -->
-<style type="text/css">@import url(../../library/dynarch_calendar.css);</style>
-<script type="text/javascript" src="../../library/dynarch_calendar.js"></script>
-<?php include_once("{$GLOBALS['srcdir']}/dynarch_calendar_en.inc.php"); ?>
-<script type="text/javascript" src="../../library/dynarch_calendar_setup.js"></script>
-<script language="Javascript">
- Calendar.setup({inputField:"form_date", ifFormat:"%Y-%m-%d", button:"img_from_date"});
- Calendar.setup({inputField:"form_to_date", ifFormat:"%Y-%m-%d", button:"img_to_date"});
+<link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
+<script type="text/javascript" src="../../library/js/jquery.datetimepicker.full.min.js"></script>
+<script>
+    $(function() {
+        $("#form_date").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $("#form_to_date").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $.datetimepicker.setLocale('<?= $DateLocale;?>');
+    });
 </script>
 </html>
 <?php

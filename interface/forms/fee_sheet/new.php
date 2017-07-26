@@ -2,7 +2,11 @@
 /*
 * 
 * Fee Sheet Program used to create charges, copays and add diagnosis codes to the encounter
+*
+* The changes to this file as of November 16 2016 to include the exclusion of information from claims
+* are covered under the terms of the Mozilla Public License, v. 2.0
 * 
+* @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
 * Copyright (C) 2005-2015 Rod Roark <rod@sunsetsystems.com>
 * 
 * LICENSE: This program is free software; you can redistribute it and/or 
@@ -16,10 +20,17 @@
 * You should have received a copy of the GNU General Public License 
 * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
 * 
-* @package OpenEMR 
+* LICENSE: This Source Code is subject to the terms of the Mozilla Public License, v. 2.0.
+* See the Mozilla Public License for more details.
+* If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+*
+* @package LibreHealth EHR 
 * @author Rod Roark <rod@sunsetsystems.com>
-* @author Terry Hill <terry@lillysystems.com>
-* @link http://www.open-emr.org 
+* @author Terry Hill <teryhill@librehealth.io>
+* @link http://librehealth.io
+*
+* Please help the overall project by sending changes you make to the authors and to the LibreHealth EHR community.
+*
 */
 
 $fake_register_globals=false;
@@ -114,7 +125,7 @@ function findProvider() {
   }
   if($providerid == 0) {
     $find_provider = sqlQuery("SELECT providerID FROM patient_data " .
-		"WHERE pid = ? ", array($pid) );
+        "WHERE pid = ? ", array($pid) );
     $providerid = $find_provider['providerID'];
   }  
   return $providerid;
@@ -124,7 +135,7 @@ function findProvider() {
 //
 function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
   $auth = TRUE, $del = FALSE, $units = NULL, $fee = NULL, $id = NULL,
-  $billed = FALSE, $code_text = NULL, $justify = NULL, $provider_id = 0, $notecodes='')
+  $billed = FALSE, $code_text = NULL, $justify = NULL, $provider_id = 0, $notecodes='', $exclude ="0")
 {
   global $code_types, $ndc_applies, $ndc_uom_choices, $justinit, $pid;
   global $contraception, $usbillstyle, $hasCharges;
@@ -142,7 +153,7 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
   }
   if (! $code_text) {
     $sqlArray = array();
-    $query = "select id, units, code_text from codes where code_type = ? " .
+    $query = "select id, units, exclude_from_insurance_billing, code_text from codes where code_type = ? " .
       " and " .
       "code = ? and ";
     array_push($sqlArray,$code_types[$codetype]['id'],$code);
@@ -154,6 +165,8 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
     }
     $result = sqlQuery($query, $sqlArray);
     $code_text = $result['code_text'];
+    $exclude = $result['exclude_from_insurance_billing'];
+
     if (empty($units)) $units = max(1, intval($result['units']));
     if (!isset($fee)) {
       // Fees come from the prices table now.
@@ -236,6 +249,10 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
       ($auth ? " checked" : "") . " disabled /></td>\n";
     echo "  <td class='billcell' align='center'><input type='checkbox'" .
       " disabled /></td>\n";
+    if($GLOBALS['bill_to_patient'] ==1) {
+    echo "  <td class='billcell' align='center'$usbillstyle><input type='checkbox'" .
+      ($exclude ? " checked" : "") . " disabled /></td>\n";
+  }
   }
   else { // not billed
     if (modifiers_are_used(true)) {
@@ -297,7 +314,7 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
 
     if ($code_types[$codetype]['claim'] && !$code_types[$codetype]['diag']) {
       echo "  <td class='billcell' align='center'$usbillstyle><input type='text' name='bill[".attr($lino)."][notecodes]' " .
-        "value='" . htmlspecialchars($notecodes, ENT_QUOTES) . "' maxlength='10' size='8' /></td>\n";
+        "value='" . htmlspecialchars($notecodes, ENT_QUOTES) . "' maxlength='50' size='8' /></td>\n";
     }
     else {
       echo "  <td class='billcell' align='center'$usbillstyle></td>\n";
@@ -306,6 +323,11 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
       "value='1'" . ($auth ? " checked" : "") . " /></td>\n";
     echo "  <td class='billcell' align='center'><input type='checkbox' name='bill[".attr($lino)."][del]' " .
       "value='1'" . ($del ? " checked" : "") . " /></td>\n";
+        //ADD THE NEW CHECKBOX "Bill to Patient EXCLUDE"
+    if($GLOBALS['bill_to_patient'] ==1) {
+      echo "  <td class='billcell' align='center'><input type='checkbox' name='bill[".attr($lino)."][exclude_from_insurance_billing]' " .
+        "value='1'" . ($exclude ? " checked" : "") . " /></td>\n";
+    }
   }
 
   echo "  <td class='billcell'>$strike1" . text($code_text) . "$strike2</td>\n";
@@ -412,6 +434,10 @@ function echoProdLine($lino, $drug_id, $del = FALSE, $units = NULL,
     echo "  <td class='billcell' align='center'$usbillstyle>&nbsp;</td>\n"; // auth
     echo "  <td class='billcell' align='center'><input type='checkbox' name='prod[".attr($lino)."][del]' " .
       "value='1'" . ($del ? " checked" : "") . " /></td>\n";
+    if($GLOBALS['bill_to_patient'] ==1) { 
+      echo "  <td class='billcell' align='center'><input type='checkbox' name='bill[".attr($lino)."][exclude_from_insurance_billing]' " .
+        "value='1'" . ($del ? " checked" : "") . " /></td>\n";
+    }
   }
 
   echo "  <td class='billcell'>$strike1" . text($code_text) . "$strike2</td>\n";
@@ -420,29 +446,6 @@ function echoProdLine($lino, $drug_id, $del = FALSE, $units = NULL,
   if ($fee != 0) $hasCharges = true;
 }
 
-// Build a drop-down list of providers.  This includes users who
-// have the word "provider" anywhere in their "additional info"
-// field, so that we can define providers (for billing purposes)
-// who do not appear in the calendar.
-//
-function genProviderSelect($selname, $toptext, $default=0, $disabled=false) {
-  $query = "SELECT id, lname, fname FROM users WHERE " .
-    "( authorized = 1 OR info LIKE '%provider%' ) AND username != '' " .
-    "AND active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' ) " .
-    "ORDER BY lname, fname";
-  $res = sqlStatement($query);
-  echo "   <select name='" . attr($selname) . "'";
-  if ($disabled) echo " disabled";
-  echo ">\n";
-  echo "    <option value=''>" . text($toptext) . "\n";
-  while ($row = sqlFetchArray($res)) {
-    $provid = $row['id'];
-    echo "    <option value='" . attr($provid) . "'";
-    if ($provid == $default) echo " selected";
-    echo ">" . text($row['lname'] . ", " . $row['fname']) . "\n";
-  }
-  echo "   </select>\n";
-}
 
 // Compute a current checksum of Fee Sheet data from the database.
 //
@@ -484,7 +487,7 @@ $ndc_uom_choices = array(
 // $FEE_SHEET_COLUMNS should be defined in codes.php.
 if (empty($FEE_SHEET_COLUMNS)) $FEE_SHEET_COLUMNS = 2;
 
-$returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
+$returnurl = 'encounter_top.php';
 
 // Update price level in patient demographics.
 if (!empty($_POST['pricelevel'])) {
@@ -494,7 +497,7 @@ if (!empty($_POST['pricelevel'])) {
 // Get some info about this visit.
 $visit_row = sqlQuery("SELECT fe.date, opc.pc_catname " .
   "FROM form_encounter AS fe " .
-  "LEFT JOIN openemr_postcalendar_categories AS opc ON opc.pc_catid = fe.pc_catid " .
+  "LEFT JOIN libreehr_postcalendar_categories AS opc ON opc.pc_catid = fe.pc_catid " .
   "WHERE fe.pid = ? AND fe.encounter = ? LIMIT 1", array($pid,$encounter) );
 $visit_date = substr($visit_row['date'], 0, 10);
 
@@ -517,6 +520,9 @@ if (isset($_POST['form_checksum'])) {
 if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
   $main_provid = 0 + $_POST['ProviderID'];
   $main_supid  = 0 + $_POST['SupervisorID'];
+  $main_order  = 0 + $_POST['OrderingID'];
+  $main_referr  = 0 + $_POST['ReferringID'];
+  $main_contract  = 0 + $_POST['ContractID'];
   if ($main_supid == $main_provid) $main_supid = 0;
   $default_warehouse = $_POST['default_warehouse'];
 
@@ -531,6 +537,7 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
     $code_type = $iter['code_type'];
     $code      = $iter['code'];
     $del       = $iter['del'];
+    $exclude   = $iter['exclude_from_insurance_billing'];
 
     // Skip disabled (billed) line items.
     if ($iter['billed']) continue;
@@ -580,10 +587,21 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
       continue;
     }
     $justify   = trim($iter['justify']);
+    # Code to create justification for all codes based on first justification
+    if ($GLOBALS['replicate_justification']=='1' ) {
+      if ($justify !='') {
+         $autojustify =  $justify;
+      }
+    }
+    if ( ($GLOBALS['replicate_justification']=='1') && ($justify == '') && check_is_code_type_justify($code_type) ) {
+        $justify =  $autojustify; 
+    }
+
     $notecodes = trim($iter['notecodes']);
     if ($justify) $justify = str_replace(',', ':', $justify) . ':';
     // $auth      = $iter['auth'] ? "1" : "0";
     $auth      = "1";
+    $exclude   = $iter['exclude_from_insurance_billing'] == 1 ? 1 : 0;
     $provid    = 0 + $iter['provid'];
 
     $ndc_info = '';
@@ -602,9 +620,9 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
         sqlQuery("UPDATE billing SET code = ?, " .
           "units = ?, fee = ?, modifier = ?, " .
           "authorized = ?, provider_id = ?, " .
-          "ndc_info = ?, justify = ?, notecodes = ? " .
+          "ndc_info = ?, justify = ?, notecodes = ?, exclude_from_insurance_billing = ? " .
           "WHERE " .
-          "id = ? AND billed = 0 AND activity = 1", array($code,$units,$fee,$modifier,$auth,$provid,$ndc_info,$justify,$notecodes,$id) );
+          "id = ? AND billed = 0 AND activity = 1", array($code,$units,$fee,$modifier,$auth,$provid,$ndc_info,$justify,$notecodes, $exclude, $id) );
       }
     }
 
@@ -612,7 +630,7 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
     else if (! $del) {
       $code_text = lookup_code_descriptions($code_type.":".$code);
       addBilling($encounter, $code_type, $code, $code_text, $pid, $auth,
-        $provid, $modifier, $units, $fee, $ndc_info, $justify, 0, $notecodes);
+        $provid, $modifier, $units, $fee, $ndc_info, $justify, 0, $notecodes, $exclude);
     }
   } // end for
   
@@ -677,11 +695,11 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
   /*******************************************************************
   sqlStatement("UPDATE forms, users SET forms.user = users.username WHERE " .
     "forms.pid = '$pid' AND forms.encounter = '$encounter' AND " .
-    "forms.formdir = 'newpatient' AND users.id = '$provid'");
+    "forms.formdir = 'patient_encounter' AND users.id = '$provid'");
   *******************************************************************/
   sqlStatement("UPDATE form_encounter SET provider_id = ?, " .
-    "supervisor_id = ?  WHERE " .
-    "pid = ? AND encounter = ?", array($main_provid,$main_supid,$pid,$encounter) );
+    "supervisor_id = ?, ordering_physician = ?, referring_physician = ?, contract_physician = ? WHERE " .
+    "pid = ? AND encounter = ?", array($main_provid,$main_supid,$main_order,$main_referr,$main_contract,$pid,$encounter) );
 
   // Save-and-Close is currently IPPF-specific but might be more generally
   // useful.  It provides the ability to mark an encounter as billed
@@ -744,6 +762,8 @@ $billresult = getBillingByEncounter($pid, $encounter, "*");
 <style>
 .billcell { font-family: sans-serif; font-size: 10pt }
 </style>
+<script type="text/javascript" src="../../../library/textformat.js"></script>
+<script type="text/javascript" src="../../../library/dialog.js"></script>
 <script language="JavaScript">
 
 var diags = new Array();
@@ -863,6 +883,16 @@ function setJustify(seljust) {
   }
  }
  theopts[j++] = new Option('Clear','',false,false);
+}
+// Open the add-event dialog.
+function newEvt() {
+ var f = document.forms[0];
+ var url = '../../main/calendar/add_edit_event.php?patientid=<?php echo attr($pid); ?>';
+ if (f.ProviderID && f.ProviderID.value) {
+  url += '&userid=' + parseInt(f.ProviderID.value);
+ }
+ dlgopen(url, '_blank', 600, 300);
+ return false;
 }
 
 </script>
@@ -1074,6 +1104,12 @@ echo " </tr>\n";
   <td class='billcell' align='center'<?php echo $usbillstyle; ?>><b><?php echo xlt('Note Codes');?></b></td>
   <td class='billcell' align='center'<?php echo $usbillstyle; ?>><b><?php echo xlt('Auth');?></b></td>
   <td class='billcell' align='center'><b><?php echo xlt('Delete');?></b></td>
+  <?php if($GLOBALS['bill_to_patient'] ==1) { ?>
+    <td class='billcell' align='center'>
+  <?php } else { ?>
+    <td class='billcell' align='center' style='display: none'>
+  <?php } ?>
+  <b><?php echo xlt('Exclude from Billing');?></b></td>
   <td class='billcell'><b><?php echo xlt('Description');?></b></td>
  </tr>
 
@@ -1098,6 +1134,7 @@ if ($billresult) {
     $units      = $iter["units"];
     $fee        = $iter["fee"];
     $authorized = $iter["authorized"];
+    $exclude    = $iter["exclude_from_insurance_billing"];
     $ndc_info   = $iter["ndc_info"];
     $justify    = trim($iter['justify']);
     $notecodes  = trim($iter['notecodes']);
@@ -1110,6 +1147,7 @@ if ($billresult) {
       $units      = max(1, intval(trim($bline['units'])));
       $fee        = sprintf('%01.2f',(0 + trim($bline['price'])) * $units);
       $authorized = $bline['auth'];
+      $exclude    = $bline['exclude_from_insurance_billing'];
       $ndc_info   = '';
       if ($bline['ndcnum']) {
         $ndc_info = 'N4' . trim($bline['ndcnum']) . '   ' . $bline['ndcuom'] .
@@ -1129,7 +1167,7 @@ if ($billresult) {
     echoLine($bill_lino, $iter["code_type"], trim($iter["code"]),
       $modifier, $ndc_info,  $authorized,
       $del, $units, $fee, $iter["id"], $iter["billed"],
-      $iter["code_text"], $justify, $provider_id, $notecodes);
+      $iter["code_text"], $justify, $provider_id, $notecodes, $exclude);
   }
 }
 
@@ -1257,11 +1295,14 @@ if ($_POST['newcodes']) {
   }
 }
 
-$tmp = sqlQuery("SELECT provider_id, supervisor_id FROM form_encounter " .
+$tmp = sqlQuery("SELECT provider_id, supervisor_id, ordering_physician, referring_physician, contract_physician FROM form_encounter " .
   "WHERE pid = ? AND encounter = ? " .
   "ORDER BY id DESC LIMIT 1", array($pid,$encounter) );
 $encounter_provid = 0 + findProvider();
 $encounter_supid  = 0 + $tmp['supervisor_id'];
+$encounter_order  = 0 + $tmp['ordering_physician'];
+$encounter_referr  = 0 + $tmp['referring_physician'];
+$encounter_contract  = 0 + $tmp['contract_physician'];
 ?>
 </table>
 </p>
@@ -1277,9 +1318,30 @@ echo xlt('Providers') . ": &nbsp;";
 echo "&nbsp;&nbsp;" . xlt('Rendering') . "\n";
 genProviderSelect('ProviderID', '-- '.xl("Please Select").' --', $encounter_provid, $isBilled);
 
-if (!$GLOBALS['ippf_specific']) {
+if ($GLOBALS['supervising_physician_in_feesheet']) {
   echo "&nbsp;&nbsp;" . xlt('Supervising') . "\n";
   genProviderSelect('SupervisorID', '-- '.xl("N/A").' --', $encounter_supid, $isBilled);
+}
+
+if ($GLOBALS['ordering_physician_in_feesheet']) {
+  echo "&nbsp;&nbsp;" . xlt('Ordering') . "\n";
+  genProviderSelect('OrderingID', '-- '.xl("N/A").' --', $encounter_order, $isBilled, true);
+}
+if ($GLOBALS['ordering_physician_in_feesheet'] || $GLOBALS['supervising_physician_in_feesheet'] && ($GLOBALS['referring_physician_in_feesheet'] || $GLOBALS['contract_physician_in_feesheet'])) {
+ echo "<br></br>";
+}
+if ($GLOBALS['referring_physician_in_feesheet']) {
+  echo "&nbsp;&nbsp;" . xlt('Referring') . "\n";
+  genProviderSelect('ReferringID', '-- '.xl("N/A").' --', $encounter_referr, $isBilled, true);
+}
+
+if ($GLOBALS['contract_physician_in_feesheet']) {
+  echo "&nbsp;&nbsp;" . xlt($GLOBALS['contract_physician_in_feesheet_name']) . "\n";
+  genProviderSelect('ContractID', '-- '.xl("N/A").' --', $encounter_contract, $isBilled, true);
+}
+
+if ($GLOBALS['allow_appointments_in_feesheet']) {
+  echo "<input type='button' value='" . xla('New Appointment') . "' onclick='newEvt()' />\n";
 }
 
 echo "</b></span>\n";
@@ -1350,6 +1412,7 @@ if (true) {
   echo "   </select>\n";
 }
 ?>
+</p>
 
 &nbsp; &nbsp; &nbsp;
 

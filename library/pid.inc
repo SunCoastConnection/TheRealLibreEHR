@@ -4,8 +4,8 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 
-require_once("$srcdir/../interface/globals.php");
-require_once("$srcdir/log.inc");
+require_once(__DIR__."/../interface/globals.php");
+require_once("{$GLOBALS['srcdir']}/log.inc");
 
 // Function called to set the global session variable for patient id (pid) number.
 function setpid($new_pid) {
@@ -15,7 +15,7 @@ function setpid($new_pid) {
   $new_pid_int = intval($new_pid);
   // If the $new_pid was not an integer, then send an error to error log
   if (!is_numeric($new_pid)) {
-    error_log("Critical OpenEMR Error: Attempt to set pid to following non-integer value was denied: ".$new_pid,0);
+    error_log("Critical LibreEHR Error: Attempt to set pid to following non-integer value was denied: ".$new_pid,0);
     error_log("Requested pid ".$new_pid,0);
     error_log("Returned pid ".$new_pid_int,0);
   }

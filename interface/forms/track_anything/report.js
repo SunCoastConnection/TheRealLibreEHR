@@ -14,9 +14,9 @@
 * You should have received a copy of the GNU General Public License
 * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>.
 *
-* @package OpenEMR
+* @package LibreHealth EHR
 * @author Joe Slam <trackanything@produnis.de>
-* @link http://www.open-emr.org
+* @link http://librehealth.io
 */
 
 
@@ -60,7 +60,7 @@ function ta_report_plot_graph(formid,ofc_name,the_track_name,ofc_date,ofc_value)
         var thedates = JSON.stringify(ofc_date);
         var thevalues = JSON.stringify(ofc_value);
         
-        $.ajax({ url: '../../../library/openflashchart/graph_track_anything.php',
+        $.ajax({ url: '<?php echo $modules_dir; ?>openflashchart/graph_track_anything.php',
                      type: 'POST',
                      data: { dates:  thedates, 
                                      values: thevalues, 
@@ -77,7 +77,7 @@ function ta_report_plot_graph(formid,ofc_name,the_track_name,ofc_date,ofc_value)
                                  data=returnData;
                                  flashvars.ofc = returnData;
                                  // call ofc with proper falshchart
-                                        swfobject.embedSWF('../../../library/openflashchart/open-flash-chart.swf', 
+                                        swfobject.embedSWF('<?php echo $modules_dir; ?>openflashchart/open-flash-chart.swf', 
                                         "graph" + formid, "650", "200", "9.0.0","",flashvars);  
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {

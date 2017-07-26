@@ -13,9 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package OpenEMR
+ * @package LibreHealth EHR
  * @author  Brady Miller <brady@sparmy.com>
- * @link    http://www.open-emr.org
+ * @link    http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES
@@ -78,17 +78,13 @@ $fake_register_globals=false;
 
 <?php if ( acl_check('patients', 'notes','',array('write','addonly') )): ?>
 
-<?php if ($GLOBALS['concurrent_layout']) { ?>
 <a href="pnotes_full.php?<?php echo $urlparms; ?>" onclick="top.restoreSession()">
-<?php } else { ?>
-<a href="pnotes_full.php?<?php echo $urlparms; ?>" target="Main" onclick="top.restoreSession()">
-<?php } ?>
 
 <span class="title"><?php echo htmlspecialchars( xl('Notes'), ENT_NOQUOTES); ?>
 <?php
   if ($docid) {
     echo " " . xlt("linked to document") . " ";
-    $d = new Document($docid);	
+    $d = new Document($docid);  
     echo $d->get_url_file();
   }
   else if ($orderid) {
@@ -112,11 +108,9 @@ $N = 15;
 $billing_note = "";
 $colorbeg = "";
 $colorend = "";
-$sql = "select genericname2, genericval2 " .
-    "from patient_data where pid = ? limit 1";
-$resnote = sqlQuery($sql, array($patient_id) );
-if($resnote && $resnote['genericname2'] == 'Billing') {
-  $billing_note = $resnote['genericval2'];
+$resnote = getPatientData($patient_id, "billing_note");
+if(!empty($resnote['billing_note'])) {
+  $billing_note = $resnote['billing_note'];
   $colorbeg = "<span style='color:red'>";
   $colorend = "</span>";
 }
@@ -153,7 +147,6 @@ if ($result != null) {
       echo " <tr>\n";
       echo "  <td colspan='3' align='center'>\n";
       echo "   <a ";
-      if (!$GLOBALS['concurrent_layout']) echo "target='Main' ";
       echo "href='pnotes_full.php?active=1&$urlparms" .
       "' class='alert' onclick='top.restoreSession()'>";
       echo htmlspecialchars( xl('Some notes were not displayed.','','',' '), ENT_NOQUOTES) .
@@ -204,11 +197,7 @@ $(document).ready(function(){
 var EditNote = function(note) {
 <?php if ( acl_check('patients', 'notes','',array('write','addonly') )): ?>
     top.restoreSession();
-    <?php if (!$GLOBALS['concurrent_layout']): ?>
-    top.Main.location.href = "pnotes_full.php?<?php echo $urlparms; ?>&noteid=" + note.id + "&active=1";
-    <?php else: ?>
     location.href = "pnotes_full.php?<?php echo $urlparms; ?>&noteid=" + note.id + "&active=1";
-    <?php endif; ?>
 <?php else: ?>
     // no-op
     alert("<?php echo htmlspecialchars( xl('You do not have access to view/edit this note'), ENT_QUOTES); ?>");

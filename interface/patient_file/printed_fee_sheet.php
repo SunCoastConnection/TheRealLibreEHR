@@ -98,10 +98,6 @@ else if ($form_fill == 1)
     array_push($pid_list,''); // empty element for blank form 
 }
 
-// make sure to clean up the session 
-// else we'll build off of trash in the combo-drop down for a single patient later
-unset($_SESSION['pidList']);
-
 // This file is optional. You can create it to customize how the printed
 // fee sheet looks, otherwise you'll get a mirror of your actual fee sheet.
 //
@@ -386,7 +382,7 @@ foreach ($pid_list as $pid) {
             $html .= ":<br />";
 
             if ($form_fill)
-                $html .= $patdata['pubpid'];
+                $html .= $patdata['pid'];
 
             $html .= "</td>
 </tr>
@@ -401,7 +397,7 @@ foreach ($pid_list as $pid) {
                         "FROM forms AS f " .
                         "JOIN form_encounter AS fe ON fe.id = f.form_id " .
                         "LEFT JOIN users AS u ON u.username = f.user " .
-                        "WHERE f.pid = '$pid' AND f.encounter = '$encounter' AND f.formdir = 'newpatient' AND f.deleted = 0 " .
+                        "WHERE f.pid = '$pid' AND f.encounter = '$encounter' AND f.formdir = 'patient_encounter' AND f.deleted = 0 " .
                         "ORDER BY f.id LIMIT 1";
                 $encdata = sqlQuery($query);
                 if (!empty($encdata['username'])) {

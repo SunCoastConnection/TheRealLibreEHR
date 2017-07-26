@@ -13,6 +13,8 @@ $fake_register_globals=false;
  require_once("history.inc.php");
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/acl.inc");
+ require_once("$srcdir/options.js.php");
+
 ?>
 <html>
 <head>
@@ -63,12 +65,12 @@ $(document).ready(function(){
 <?php echo htmlspecialchars(xl('for'),ENT_NOQUOTES);?>&nbsp;<span class="title"><a href="../summary/demographics.php" onclick="top.restoreSession()"><?php echo htmlspecialchars(getPatientName($pid),ENT_NOQUOTES) ?></a></span>
 </div>
 <div>
-    <a href="history_full.php" <?php if (!$GLOBALS['concurrent_layout']) echo "target='Main'"; ?>
+    <a href="history_full.php"
      class="css_button"
      onclick="top.restoreSession()">
     <span><?php echo htmlspecialchars(xl("Edit"),ENT_NOQUOTES);?></span>
     </a>
-    <a href="../summary/demographics.php" <?php if (!$GLOBALS['concurrent_layout']) echo "target='Main'"; ?> class="css_button" onclick="top.restoreSession()">
+    <a href="../summary/demographics.php" class="css_button" onclick="top.restoreSession()">
         <span><?php echo htmlspecialchars(xl('Back To Patient'),ENT_NOQUOTES);?></span>
     </a>
 </div>
@@ -92,6 +94,14 @@ $(document).ready(function(){
     </tr>
     </table>
 </div>
+
+<script language='JavaScript'>
+    // Array of skip conditions for the checkSkipConditions() function.
+    var skipArray = [
+        <?php echo $condition_str; ?>
+    ];
+    checkSkipConditions();
+</script>
 
 </body>
 </html>

@@ -1,28 +1,48 @@
 <?php
-// Copyright (C) 2006-2015 Rod Roark <rod@sunsetsystems.com>
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-
-// This is a report of receipts by payer or payment method.
-//
-// The payer option means an insurance company name or "Patient".
-//
-// The payment method option is most useful for sites using
-// pos_checkout.php (e.g. weight loss clinics) because this plugs
-// a payment method like Cash, Check, VISA, etc. into the "source"
-// column of the SQL-Ledger acc_trans table or ar_session table.
+/*
+ * Receipts by Method report
+ *
+ * This is a report of receipts by payer or payment method.
+ *
+ * The payer option means an insurance company name or "Patient".
+ *
+ * The payment method option is most useful for sites using
+ * pos_checkout.php (e.g. weight loss clinics) because this plugs
+ * a payment method like Cash, Check, VISA, etc. into the "source".
+ *
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2006-2015 Rod Roark <rod@sunsetsystems.com>
+ *
+ * LICENSE: This program is free software; you can redistribute it and/or 
+ * modify it under the terms of the GNU General Public License 
+ * as published by the Free Software Foundation; either version 3 
+ * of the License, or (at your option) any later version. 
+ * This program is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * GNU General Public License for more details. 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
+ * 
+ * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreHealth EHR 
+ * @author Rod Roark <rod@sunsetsystems.com>
+ * @link http://librehealth.io 
+ */
 
 require_once("../globals.php");
 require_once("$srcdir/patient.inc");
-require_once("$srcdir/sql-ledger.inc");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/formatting.inc.php");
 require_once "$srcdir/options.inc.php";
 require_once "$srcdir/formdata.inc.php";
 require_once("../../custom/code_types.inc.php");
+/** Current format date */
+$DateFormat = DateFormatRead();
+$DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
 // This controls whether we show pt name, policy number and DOS.
 $showing_ppd = true;
@@ -165,12 +185,9 @@ function payerCmp($a, $b) {
 
 if (! acl_check('acct', 'rep')) die(xl("Unauthorized access."));
 
-$INTEGRATED_AR = $GLOBALS['oer_config']['ws_accounting']['enabled'] === 2;
 
-if (!$INTEGRATED_AR) SLConnect();
-
-$form_from_date = fixDate($_POST['form_from_date'], date('Y-m-d'));
-$form_to_date   = fixDate($_POST['form_to_date']  , date('Y-m-d'));
+$from_date = fixDate($_POST['form_from_date'], date(DateFormatRead(true)));
+$to_date   = fixDate($_POST['form_to_date']  , date(DateFormatRead(true)));
 $form_use_edate = $_POST['form_use_edate'];
 $form_facility  = $_POST['form_facility'];
 $form_report_by = $_POST['form_report_by'];
@@ -211,7 +228,7 @@ $form_proc_code = $tmp_code_array[1];
 </style>
 
 <script type="text/javascript" src="../../library/dialog.js"></script>
-<script type="text/javascript" src="../../library/js/jquery.1.3.2.js"></script>
+<script type="text/javascript" src="../../library/js/jquery-1.9.1.min.js"></script>
 
 <script language="JavaScript">
 
@@ -256,92 +273,87 @@ function sel_procedure() {
 <table>
  <tr>
   <td width='630px'>
-	<div style='float:left'>
+    <div style='float:left'>
 
-	<table class='text'>
-		<tr>
-			<td class='label'>
-			   <?php xl('Report by','e'); ?>
-			</td>
-			<td>
-				<?php
-				echo "   <select name='form_report_by'>\n";
-				foreach (array(1 => 'Payer', 2 => 'Payment Method', 3 => 'Check Number') as $key => $value) {
-				  echo "    <option value='$key'";
-				  if ($key == $form_report_by) echo ' selected';
-				  echo ">" . xl($value) . "</option>\n";
-				}
-				echo "   </select>&nbsp;\n"; ?>
-			</td>
+    <table class='text'>
+        <tr>
+            <td class='label'>
+               <?php xl('Report by','e'); ?>
+            </td>
+            <td>
+                <?php
+                echo "   <select name='form_report_by'>\n";
+                foreach (array(1 => 'Payer', 2 => 'Payment Method', 3 => 'Check Number') as $key => $value) {
+                  echo "    <option value='$key'";
+                  if ($key == $form_report_by) echo ' selected';
+                  echo ">" . xl($value) . "</option>\n";
+                }
+                echo "   </select>&nbsp;\n"; ?>
+            </td>
 
-			<td>
-			<?php dropdown_facility(strip_escape_custom($form_facility), 'form_facility', false); ?>
-			</td>
+            <td>
+            <?php dropdown_facility(strip_escape_custom($form_facility), 'form_facility', false); ?>
+            </td>
 
-			<td>
-			   <?php if (!$GLOBALS['simplified_demographics']) echo '&nbsp;' . xl('Procedure/Service') . ':'; ?>
-			</td>
-			<td>
-			   <input type='text' name='form_proc_codefull' size='12' value='<?php echo $form_proc_codefull; ?>' onclick='sel_procedure()'
-				title='<?php xl('Click to select optional procedure code','e'); ?>'
-				<?php if ($GLOBALS['simplified_demographics']) echo "style='display:none'"; ?> />
+            <td>
+               <?php if (!$GLOBALS['simplified_demographics']) echo '&nbsp;' . xl('Procedure/Service') . ':'; ?>
+            </td>
+            <td>
+               <input type='text' name='form_proc_codefull' size='12' value='<?php echo $form_proc_codefull; ?>' onclick='sel_procedure()'
+                title='<?php xl('Click to select optional procedure code','e'); ?>'
+                <?php if ($GLOBALS['simplified_demographics']) echo "style='display:none'"; ?> />
                                 <br>
-			   &nbsp;<input type='checkbox' name='form_details' value='1'<?php if ($_POST['form_details']) echo " checked"; ?> /><?xl('Details','e')?>
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-			   <select name='form_use_edate'>
-				<option value='0'><?php xl('Payment Date','e'); ?></option>
-				<option value='1'<?php if ($form_use_edate) echo ' selected' ?>><?php xl('Invoice Date','e'); ?></option>
-			   </select>
-			</td>
-			<td>
-			   <input type='text' name='form_from_date' id="form_from_date" size='10' value='<?php echo $form_from_date ?>'
-				onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)' title='yyyy-mm-dd'>
-			   <img src='../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-				id='img_from_date' border='0' alt='[?]' style='cursor:pointer'
-				title='<?php xl('Click here to choose a date','e'); ?>'>
-			</td>
-			<td class='label'>
-			   <?php xl('To','e'); ?>:
-			</td>
-			<td>
-			   <input type='text' name='form_to_date' id="form_to_date" size='10' value='<?php echo $form_to_date ?>'
-				onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)' title='yyyy-mm-dd'>
-			   <img src='../pic/show_calendar.gif' align='absbottom' width='24' height='22'
-				id='img_to_date' border='0' alt='[?]' style='cursor:pointer'
-				title='<?php xl('Click here to choose a date','e'); ?>'>
-			</td>
-		</tr>
-	</table>
+               &nbsp;<input type='checkbox' name='form_details' value='1'<?php if ($_POST['form_details']) echo " checked"; ?> /><?xl('Details','e')?>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+               <select name='form_use_edate'>
+                <option value='0'><?php xl('Payment Date','e'); ?></option>
+                <option value='1'<?php if ($form_use_edate) echo ' selected' ?>><?php xl('Invoice Date','e'); ?></option>
+               </select>
+            </td>
+            <td class='label'>
+                <?php xl('From','e'); ?>:
+            </td>
+            <td>
+               <input type='text' name='form_from_date' id="form_from_date" size='10' value='<?php echo $form_from_date ?>'/>
+            </td>
+            <td class='label'>
+               <?php xl('To','e'); ?>:
+            </td>
+            <td>
+               <input type='text' name='form_to_date' id="form_to_date" size='10' value='<?php echo $form_to_date ?>'/>
+            </td>
+        </tr>
+    </table>
 
-	</div>
+    </div>
 
   </td>
   <td align='left' valign='middle' height="100%">
-	<table style='border-left:1px solid; width:100%; height:100%' >
-		<tr>
-			<td>
-				<div style='margin-left:15px'>
-					<a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
-					<span>
-						<?php xl('Submit','e'); ?>
-					</span>
-					</a>
+    <table style='border-left:1px solid; width:100%; height:100%' >
+        <tr>
+            <td>
+                <div style='margin-left:15px'>
+                    <a href='#' class='css_button' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
+                    <span>
+                        <?php xl('Submit','e'); ?>
+                    </span>
+                    </a>
 
-					<?php if ($_POST['form_refresh']) { ?>
-					<a href='#' class='css_button' id='printbutton'>
-						<span>
-							<?php xl('Print','e'); ?>
-						</span>
-					</a>
-					<?php } ?>
-				</div>
-			</td>
-		</tr>
-	</table>
+                    <?php if ($_POST['form_refresh']) { ?>
+                    <a href='#' class='css_button' id='printbutton'>
+                        <span>
+                            <?php xl('Print','e'); ?>
+                        </span>
+                    </a>
+                    <?php } ?>
+                </div>
+            </td>
+        </tr>
+    </table>
   </td>
  </tr>
 </table>
@@ -388,12 +400,6 @@ function sel_procedure() {
  </thead>
 <?php
 
-if (!$INTEGRATED_AR) {
-  $chart_id_cash = SLQueryValue("select id from chart where accno = '$sl_cash_acc'");
-  if ($sl_err) die($sl_err);
-  $chart_id_income = SLQueryValue("select id from chart where accno = '$sl_income_acc'");
-  if ($sl_err) die($sl_err);
-}
 
 if ($_POST['form_refresh']) {
   $from_date = $form_from_date;
@@ -406,7 +412,6 @@ if ($_POST['form_refresh']) {
   $methodadjtotal  = 0;
   $grandadjtotal  = 0;
 
-  if ($INTEGRATED_AR) {
 
     // Get co-pays using the encounter date as the pay date.  These will
     // always be considered patient payments.  Ignored if selecting by
@@ -439,7 +444,7 @@ if ($_POST['form_refresh']) {
       "fe.invoice_refno, s.deposit_date, s.payer_id, s.reference, i.name " .
       "FROM ar_activity AS a " .
       "JOIN form_encounter AS fe ON fe.pid = a.pid AND fe.encounter = a.encounter " .
-      "JOIN forms AS f ON f.pid = a.pid AND f.encounter = a.encounter AND f.formdir = 'newpatient' " .
+      "JOIN forms AS f ON f.pid = a.pid AND f.encounter = a.encounter AND f.formdir = 'patient_encounter' " .
       "LEFT JOIN ar_session AS s ON s.session_id = a.session_id " .
       "LEFT JOIN insurance_companies AS i ON i.id = s.payer_id " .
       "WHERE ( a.pay_amount != 0 OR a.adj_amount != 0 )";
@@ -501,85 +506,6 @@ if ($_POST['form_refresh']) {
         $rowmethod, $row['pay_amount'], $row['adj_amount'], $row['payer_type'],
         $row['invoice_refno']);
     }
-  } // end $INTEGRATED_AR
-  else {
-    $query = "SELECT acc_trans.amount, acc_trans.transdate, acc_trans.memo, " .
-      "replace(acc_trans.source, 'InvAdj ', '') AS source, " .
-      "acc_trans.chart_id, ar.invnumber, ar.employee_id, ar.notes " .
-      "FROM acc_trans, ar WHERE " .
-      "( acc_trans.chart_id = $chart_id_cash OR " .
-      "( acc_trans.chart_id = $chart_id_income AND " .
-      "acc_trans.source LIKE 'InvAdj %' ) ) AND " .
-      "ar.id = acc_trans.trans_id AND ";
-    if ($form_proc_code) {
-      $query .= "acc_trans.memo ILIKE '$form_proc_code%' AND ";
-    }
-    if ($form_use_edate) {
-      $query .= "ar.transdate >= '$from_date' AND " .
-      "ar.transdate <= '$to_date'";
-    } else {
-      $query .= "acc_trans.transdate >= '$from_date' AND " .
-      "acc_trans.transdate <= '$to_date'";
-    }
-    $query .= " ORDER BY source, acc_trans.transdate, ar.invnumber, acc_trans.memo";
-
-    // echo "<!-- $query -->\n";
-
-    $t_res = SLQuery($query);
-    if ($sl_err) die($sl_err);
-
-    for ($irow = 0; $irow < SLRowCount($t_res); ++$irow) {
-      $row = SLGetRow($t_res, $irow);
-      list($patient_id, $encounter_id) = explode(".", $row['invnumber']);
-
-      // If a facility was specified then skip invoices whose encounters
-      // do not indicate that facility.
-      if ($form_facility) {
-        $tmp = sqlQuery("SELECT count(*) AS count FROM form_encounter WHERE " .
-          "pid = '$patient_id' AND encounter = '$encounter_id' AND " .
-          "facility_id = '$form_facility'");
-        if (empty($tmp['count'])) continue;
-      }
-
-      $rowpayamount = 0 - $row['amount'];
-      $rowadjamount = 0;
-      if ($row['chart_id'] == $chart_id_income) {
-        $rowadjamount = $rowpayamount;
-        $rowpayamount = 0;
-      }
-
-      // Compute reporting key: insurance company name or payment method.
-      $payer_type = 0; // will be 0=pt, 1=ins1, 2=ins2 or 3=ins3
-      if ($form_report_by == '1') {
-        $rowmethod = '';
-        $rowsrc = strtolower($row['source']);
-        $insgot = strtolower($row['notes']);
-        foreach (array('ins1', 'ins2', 'ins3') as $value) {
-          if (strpos($rowsrc, $value) !== false) {
-            $i = strpos($insgot, $value);
-            if ($i !== false) {
-              $j = strpos($insgot, "\n", $i);
-              if (!$j) $j = strlen($insgot);
-              $payer_type = 0 + substr($value, 3);
-              $rowmethod = trim(substr($row['notes'], $i + 5, $j - $i - 5));
-              break;
-            }
-          }
-        } // end foreach
-      } // end reporting by payer
-      else {
-        $rowmethod = trim($row['source']);
-        if ($form_report_by != '3') {
-          // Extract only the first word as the payment method because any
-          // following text will be some petty detail like a check number.
-          $rowmethod = substr($rowmethod, 0, strcspn($rowmethod, ' /'));
-        }
-      } // end reporting by method
-
-      thisLineItem($patient_id, $encounter_id, $row['memo'], $row['transdate'],
-        $rowmethod, $rowpayamount, $rowadjamount, $payer_type);
-    } // end for
-  } // end not $INTEGRATED_AR
 
   // Not payer summary.
   if ($form_report_by != '1' || $_POST['form_details']) {
@@ -662,14 +588,13 @@ if ($_POST['form_refresh']) {
 
 <?php
 } // end form refresh
-if (!$INTEGRATED_AR) SLClose();
 ?>
 
 </table>
 </div>
 <?php } else { ?>
 <div class='text'>
- 	<?php echo xl('Please input search criteria above, and click Submit to view results.', 'e' ); ?>
+    <?php echo xl('Please input search criteria above, and click Submit to view results.', 'e' ); ?>
 </div>
 <?php } ?>
 
@@ -678,13 +603,20 @@ if (!$INTEGRATED_AR) SLClose();
 
 <!-- stuff for the popup calendar -->
 <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
-<style type="text/css">@import url(../../library/dynarch_calendar.css);</style>
-<script type="text/javascript" src="../../library/dynarch_calendar.js"></script>
-<?php include_once("{$GLOBALS['srcdir']}/dynarch_calendar_en.inc.php"); ?>
-<script type="text/javascript" src="../../library/dynarch_calendar_setup.js"></script>
-<script language="Javascript">
- Calendar.setup({inputField:"form_from_date", ifFormat:"%Y-%m-%d", button:"img_from_date"});
- Calendar.setup({inputField:"form_to_date", ifFormat:"%Y-%m-%d", button:"img_to_date"});
+<link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
+<script type="text/javascript" src="../../library/js/jquery.datetimepicker.full.min.js"></script>
+<script>
+    $(function() {
+        $("#form_from_date").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $("#form_to_date").datetimepicker({
+            timepicker: false,
+            format: "<?= $DateFormat; ?>"
+        });
+        $.datetimepicker.setLocale('<?= $DateLocale;?>');
+    });
 </script>
 
 </html>

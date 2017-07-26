@@ -4,7 +4,7 @@
 include_once("../../globals.php");
 include_once("$srcdir/api.inc");
 formHeader("Form: bronchitis");
-$returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_encounter.php';
+$returnurl = 'encounter_top.php';
 ?>
 <html><head>
 <?php html_header_show();?>
@@ -13,22 +13,22 @@ $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_enco
 
    function onset_check (form)   {
         
-	var d, s = "Today's date is: "; //Declare variables.
-	d = new Date(); //Create Date object.
-	s += (d.getMonth() + 1) + "-"; //Get month
-	s += d.getDate() + "-"; //Get day
-	s += d.getYear(); //Get year.
-	        
+    var d, s = "Today's date is: "; //Declare variables.
+    d = new Date(); //Create Date object.
+    s += (d.getMonth() + 1) + "-"; //Get month
+    s += d.getDate() + "-"; //Get day
+    s += d.getYear(); //Get year.
+            
     onset_str = form.bronchitis_date_of_illness.value;
     if (onset_str == "") {
     alert("No valid date into Onset of illness field!!! Enter date as YYYY-MM-DD");
     alert(d);
 
-	return;
+    return;
       }
     if (onset_str.length != 10) {
      alert("Your date should be 10 characters");
-	return;
+    return;
       }
     alert("OK, Bye!!!");
     return;
@@ -420,7 +420,7 @@ $returnurl = $GLOBALS['concurrent_layout'] ? 'encounter_top.php' : 'patient_enco
 <textarea name="bronchitis_treatment" rows="4" cols="67" wrap="virtual name"></textarea>
 
 <br></br>
-<input type="Button" value="<?php xl('Check Input Data','e'); ?>" style="color: #483D8B" onClick = "onset_check(my_form)"<br> 
+<input type="Button" value="<?php xl('Check Input Data','e'); ?>" style="color: #483D8B" onClick = "onset_check(my_form)"><br> 
 <br>
 <a href="javascript:top.restoreSession();document.my_form.submit();" class="link_submit">[<?php xl('Save','e'); ?>]</a>
 <br>

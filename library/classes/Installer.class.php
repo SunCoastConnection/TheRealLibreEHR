@@ -46,6 +46,7 @@ class Installer
     $this->icd9 = dirname(__FILE__) . "/../../sql/icd9.sql";
     $this->cvx = dirname(__FILE__) . "/../../sql/cvx_codes.sql";
     $this->additional_users = dirname(__FILE__) . "/../../sql/official_additional_users.sql";
+    $this->menu_def = dirname(__FILE__) . "/../../sql/menu_definitions.sql";
 
     // Record name of php-gacl installation files
     $this->gaclSetupScript1 = dirname(__FILE__) . "/../../gacl/setup.php";
@@ -233,7 +234,7 @@ class Installer
         "<p>".mysqli_error($this->dbh)." (#".mysqli_errno($this->dbh).")\n";
       return FALSE;
     }
-    // Add the official openemr users (services)
+    // Add the official libreehr users (services)
     if ($this->load_file($this->additional_users,"Additional Official Users") == FALSE) return FALSE;
 
     return TRUE;
@@ -264,7 +265,7 @@ class Installer
       return False;
     }
     $string = '<?php
-//  OpenEMR
+//  LibreEHR
 //  MySQL Config
 
 ';
@@ -351,7 +352,7 @@ $config = 1; /////////////
   }
 
   public function quick_install() {
-    // Validation of OpenEMR user settings
+    // Validation of LibreEHR user settings
     //   (applicable if not cloning from another database)
     if (empty($this->clone_database)) {
       if ( ! $this->login_is_valid() ) {
@@ -451,7 +452,7 @@ $config = 1; /////////////
     }
   }
 
-  private function connect_to_database( $server, $user, $password, $port, $dbname )
+  private function connect_to_database( $server, $user, $password, $port, $dbname='' )
   {
     if ($server == "localhost")
       $dbh = mysqli_connect($server, $user, $password, $dbname);
@@ -498,6 +499,11 @@ $config = 1; /////////////
       // Load CVX codes if present
       if (file_exists( $this->cvx )) {
         $dumpfiles[ $this->cvx ] = "CVX Immunization Codes";
+      }
+      // Load Menu Definitions if present
+      if (file_exists( $this->menu_def))
+      {
+          $dumpfiles[ $this->menu_def] = "Menu Definitions";
       }
       $this->dumpfiles = $dumpfiles;
     }
@@ -562,7 +568,7 @@ $config = 1; /////////////
     $cmd = "mysqldump -u " . escapeshellarg($login) .
       " -p" . escapeshellarg($pass) .
       " --opt --quote-names -r $backup_file " .
-      //" --opt --skip-extended-insert --quote-names -r $backup_file " .
+      //" --opt --skip-extended-insert --quote-names -r $backup_file " .  Comment out above line and enable this to have really slow DB duplication.
       escapeshellarg($dbase);
     
     $tmp0 = exec($cmd, $tmp1=array(), $tmp2);

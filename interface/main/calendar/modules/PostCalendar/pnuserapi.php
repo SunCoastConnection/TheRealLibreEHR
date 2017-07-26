@@ -499,7 +499,7 @@ function postcalendar_userapi_buildView($args)
 		$tpl->assign_by_ref('TODAY_DATE',$today_date);
 		$tpl->assign_by_ref('DATE',$Date);
 		$tpl->assign('SCHEDULE_BASE_URL', pnModURL(__POSTCALENDAR__,'user','submit'));
-		$tpl->assign_by_ref('interval',$intervals);
+		$tpl->assign_by_ref('intervals',$intervals);
         };
 
 	//=================================================================
@@ -986,7 +986,7 @@ function &postcalendar_userapi_pcQueryEvents($args)
     "concat(u.fname,' ',u.lname) as provider_name, " .
     "concat(pd.lname,', ',pd.fname) as patient_name, " .
     "concat(u2.fname, ' ', u2.lname) as owner_name, " .
-    "DOB as patient_dob, a.pc_facility, pd.pubpid " .
+    "DOB as patient_dob, a.pc_facility, pd.pid " .
     "FROM  ( $table AS a ) " .
     "LEFT JOIN $cattable AS b ON b.pc_catid = a.pc_catid ".
     "LEFT JOIN users as u ON a.pc_aid = u.id " .
@@ -996,6 +996,11 @@ function &postcalendar_userapi_pcQueryEvents($args)
     "AND ((a.pc_endDate >= '$start' AND a.pc_eventDate <= '$end') OR " .
     "(a.pc_endDate = '0000-00-00' AND a.pc_eventDate >= '$start' AND " .
     "a.pc_eventDate <= '$end')) ";
+
+    $patient_filter = do_action( 'filter_patient_select_pnuserapi', $_SESSION['authUser'] );
+    if ( $patient_filter ) {
+        $sql .= " AND ".$patient_filter;
+    }
 
   //==================================
   //FACILITY FILTERING (lemonsoftware)(CHEMED)
@@ -1117,7 +1122,6 @@ function &postcalendar_userapi_pcQueryEvents($args)
     // this is the common information
 
     $events[$i]['intervals'] 	=($tmp['duration']/60)/	$GLOBALS['day_calandar_interval'];//sets the number of rows this event should span
-    print_r($events[$i]['intervals']);
 
     $events[$i]['eid']         = $tmp['eid'];
     $events[$i]['uname']       = $tmp['uname'];

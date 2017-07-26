@@ -4,9 +4,15 @@
 *
 *============================================================*/
 
+tr, td, th {
+    text-align: left !important;
+
+}
+
 .login-box {
+        margin: 0 auto;
 	padding: 20px 20px 25px 25px;
-	text-align: center;
+	text-align: left;
 	border: solid 1px #bebebe; 
 	border-radius: 8px; 
 	-webkit-border-radius: 8px; 
@@ -15,16 +21,17 @@
 	box-shadow: 0px 1px 2px #f3f3f3;
 	-webkit-box-shadow: 0px 1px 2px #f3f3f3;
 	-moz-box-shadow: 0px 1px 2px #f3f3f3;
-	width:	500px;
+	width:	700px;
+	height: 400px;
 }
 
 .logo-left{ 
-	float: center;
+	float: left;
 }
 
 .table-right {
-	padding: 40px 20px 0px 20px;
-	
+	padding: 20px 20px;
+	float: left;
 }
 
 .entryfield {
@@ -71,7 +78,7 @@
 }
 
 .titlebar {
-	height:40px; !important
+	height:40px !important;
 }
 
 /* :..[ Social Icons ]..: */
@@ -156,9 +163,9 @@ button, input.button, ul.button-bar li a,  x:-moz-any-link { padding: .35em 1em;
 }
 
 .rounded { 
-	-webkit-border-radius: 1em; !important
-	-moz-border-radius: 1em; !important
-	border-radius: 1em; !important
+	-webkit-border-radius: 1em !important;
+	-moz-border-radius: 1em !important;
+	border-radius: 1em !important;
 }
 
 .button:hover

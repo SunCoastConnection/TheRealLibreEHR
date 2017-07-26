@@ -5,7 +5,7 @@
 * Functions for Generating an End of Day report
 * 
 * 
-* Copyright (C) 2014-2015 Terry Hill <terry@lillysystems.com> 
+* Copyright (C) 2014-2017 Terry Hill <teryhill@librehealth.io> 
 * 
 * LICENSE: This program is free software; you can redistribute it and/or 
 * modify it under the terms of the GNU General Public License 
@@ -18,9 +18,9 @@
 * You should have received a copy of the GNU General Public License 
 * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
 * 
-* @package OpenEMR 
-* @author Terry Hill <terry@lillysystems.com>
-* @link http://www.open-emr.org 
+* @package LibreEHR 
+* @author Terry Hill <teryhill@librehealth.io>
+* @link http://www.libreehr.org 
 */
 
 /**

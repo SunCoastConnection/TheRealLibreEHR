@@ -24,6 +24,7 @@ $fake_register_globals=false;
 include_once('../../globals.php');
 include_once("$srcdir/patient.inc");
 include_once("$srcdir/formdata.inc.php");
+require_once("$srcdir/formatting.inc.php");
 
 $info_msg = "";
 
@@ -52,7 +53,7 @@ if ($_REQUEST['searchby'] && $_REQUEST['searchparm']) {
 <?php html_header_show();?>
 <title><?php echo htmlspecialchars( xl('Patient Finder'), ENT_NOQUOTES); ?></title>
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
-
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
 <style>
 form {
     padding: 0px;
@@ -132,19 +133,6 @@ form {
 
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-1.2.2.min.js"></script>
 <!-- ViSolve: Verify the noresult parameter -->
-<?php
-if(isset($_GET["res"])){
-echo '
-<script language="Javascript">
-			// Pass the variable to parent hidden type and submit
-			opener.document.theform.resname.value = "noresult";
-			opener.document.theform.submit();
-			// Close the window
-			window.self.close();
-</script>';
-}
-?>
-<!-- ViSolve: Verify the noresult parameter -->
 
 <script language="JavaScript">
 
@@ -189,9 +177,6 @@ echo '
 <div id="searchstatus"><?php echo htmlspecialchars( xl('Enter your search criteria above'), ENT_NOQUOTES); ?></div>
 <?php elseif (count($result) == 0): ?>
 <div id="searchstatus" class="noResults"><?php echo htmlspecialchars( xl('No records found. Please expand your search criteria.'), ENT_NOQUOTES); ?>
-<br>
-<!--VicarePlus :: If pflag is set the new patient create link will not be displayed --!>
-<a class="noresult" href='find_patient_popup.php?res=noresult' <?php if(isset($_GET['pflag'])) { ?> style="display:none;" <?php } ?>  ><?php echo htmlspecialchars( xl('Click Here to add a new patient.'), ENT_NOQUOTES); ?></a>
 </div>
 <?php elseif (count($result)>=100): ?>
 <div id="searchstatus" class="tooManyResults"><?php echo htmlspecialchars( xl('More than 100 records found. Please narrow your search criteria.'), ENT_NOQUOTES); ?></div>
@@ -223,21 +208,20 @@ foreach ($result as $iter) {
     $itermname = $iter['mname'];
     $iterdob   = $iter['DOB'];
 
-    // the special genericname2 of 'Billing' means something, but I'm not sure
-    // what, regardless it gets special coloring and an extra line of output
-    // in the 'name' column -- JRM
+    // If billing note exists, then it gets special coloring and an extra line of output
+    // in the 'name' column.
     $trClass = "oneresult";
-    if ($iter['genericname2'] == 'Billing') { $trClass .= " billing"; }
+    if (!empty($iter['billing_note'])) { $trClass .= " billing"; }
 
     echo " <tr class='".$trClass."' id='" .
         htmlspecialchars( $iterpid."~".$iterlname."~".$iterfname."~".$iterdob, ENT_QUOTES) . "'>";
     echo "  <td class='srName'>" . htmlspecialchars( $iterlname.", ".$iterfname." ".$itermname, ENT_NOQUOTES);
-    if ($iter['genericname2'] == 'Billing') { echo "<br>" . htmlspecialchars( $iter['genericval2'], ENT_NOQUOTES); }
+    if (!empty($iter['billing_note'])) { echo "<br>" . htmlspecialchars( $iter['billing_note'], ENT_NOQUOTES); }
     echo "</td>\n";
     echo "  <td class='srPhone'>" . htmlspecialchars( $iter['phone_home'], ENT_NOQUOTES) . "</td>\n"; //(CHEMED) Search by phone number
     echo "  <td class='srSS'>" . htmlspecialchars( $iter['ss'], ENT_NOQUOTES) . "</td>\n";
-    echo "  <td class='srDOB'>" . htmlspecialchars( $iter['DOB'], ENT_NOQUOTES) . "</td>\n";
-    echo "  <td class='srID'>" . htmlspecialchars( $iter['pubpid'], ENT_NOQUOTES) . "</td>\n";
+    echo "  <td class='srDOB'>" . htmlspecialchars(oeFormatShortDate( $iter['DOB']), ENT_NOQUOTES) . "</td>\n";
+    echo "  <td class='srID'>" . htmlspecialchars( $iter['pid'], ENT_NOQUOTES) . "</td>\n";
     echo " </tr>";
 }
 ?>
