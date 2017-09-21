@@ -70,8 +70,8 @@ $billingDirectory2 = "$OE_SITE_DIR/era";
 $billingLogDirectory = "$OE_SITE_DIR/logs";
 $lettersDirectory = "$OE_SITE_DIR/letter_templates";
 $gaclWritableDirectory = dirname(__FILE__)."/gacl/admin/templates_c";
-$requiredDirectory1 = dirname(__FILE__)."/interface/main/calendar/modules/PostCalendar/pntemplates/compiled";
-$requiredDirectory2 = dirname(__FILE__)."/interface/main/calendar/modules/PostCalendar/pntemplates/cache";
+//$requiredDirectory1 = dirname(__FILE__)."/interface/main/calendar/modules/PostCalendar/pntemplates/compiled";
+//$requiredDirectory2 = dirname(__FILE__)."/interface/main/calendar/modules/PostCalendar/pntemplates/cache";
 
 $zendModuleConfigFile = dirname(__FILE__)."/interface/modules/zend_modules/config/application.config.php";
 
