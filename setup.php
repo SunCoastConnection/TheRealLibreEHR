@@ -79,7 +79,8 @@ $zendModuleConfigFile = dirname(__FILE__)."/interface/modules/zend_modules/confi
 // correct permissions.
 if (is_dir($OE_SITE_DIR)) {
   $writableFileList = array($installer->conffile,$zendModuleConfigFile);
-  $writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory, $gaclWritableDirectory, $requiredDirectory1, $requiredDirectory2);
+  //$writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory, $gaclWritableDirectory, $requiredDirectory1, $requiredDirectory2);
+  $writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory, $gaclWritableDirectory);
 }
 else {
   $writableFileList = array();
