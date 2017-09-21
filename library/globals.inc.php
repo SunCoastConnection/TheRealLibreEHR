@@ -120,7 +120,6 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'menu_styling_tabs',
                                'gbl_pt_list_page_size',
                                'gbl_pt_list_new_window',
-                               'drop_bottom',
                                'default_encounter_view',
                                'units_of_measurement',
                                'us_weight_format',
@@ -146,6 +145,8 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'floating_message_alerts',
                                'floating_message_alerts_timer',
                                'floating_message_alerts_allergies',
+                               'ubtop_margin_default',
+                               'ubleft_margin_default',
                                'cms_top_margin_default',
                                'cms_left_margin_default');
 
@@ -182,6 +183,13 @@ $GLOBALS_METADATA = array(
       xl('Second TAB on the left')
   ),
 
+    'theme_tabs_layout' => array(
+      xl('Menu Theme'),
+      'tabs_css',
+      'tabs_style_full.css',
+      xl('Pick a theme: Windows style (full) or Mac/Linux style (compact) ')
+    ),
+
     'menu_styling_tabs' => array(
       xl('Role-based Menu'),
       array(
@@ -198,7 +206,7 @@ $GLOBALS_METADATA = array(
         'Default' =>xl('Default'),
       ),
       'Administrator',
-      xl('Tab Menu Style (refresh browser).')
+      xl('Choose Application Menu: Role-based by work flows')
     ),
 
     'css_header' => array(
@@ -309,12 +317,6 @@ $GLOBALS_METADATA = array(
       xl('Phone Number for Vendor Support that Appears on the About Page.')
     ),
 
-   'drop_bottom' => array(
-      xl('Remove Bottom Pane'),
-       'bool',                          // data type
-       '0',                             // default = false
-      xl('Removes the bottom pane by default on start up.')
-    ),
 
 
     'gbl_pt_list_page_size' => array(
@@ -1261,7 +1263,19 @@ $GLOBALS_METADATA = array(
 
   // Claim Tab
   //
-  'Claim' => array(
+  'Claims' => array(
+  
+    'claim_type' => array(
+     xl('Insurance Claim Type'),
+        array(
+            '0' => xl('CMS 1500'),
+            '1' => xl('UB-04'),
+            '2' => xl('Both')
+        ),
+        '0',                              // default = CMS 1500
+        xl('Insurance Claim Type CMS 1500 , UB-04 or Both Displayed in the Billing Screen'),
+    ),
+ 
     'preprinted_cms_1500' => array(
       xl('Prints the CMS 1500 on the Preprinted form.'),
        'bool',                          // data type
@@ -1313,6 +1327,79 @@ $GLOBALS_METADATA = array(
        '0',                             // default
       xl('This specifies whether to include date in Box 31.')
     ),
+
+    'ubtop_margin_default' => array(
+      xl('Default top print margin for UB-04'),
+      'num', // data type
+      '07', // default
+      xl('This is the default top print margin for UB-04. It will adjust the final printed output up or down.')
+    ),
+
+    'ubleft_margin_default' => array(
+      xl('Default left print margin for UB-04'),
+      'num', // data type
+      '14', // default
+      xl('his is the default left print margin for UB-04. It will adjust the final printed output left or right.')
+    ),
+
+    'default_bill_type' => array(
+      xl('Default Bill Type Box 4'),
+      'text', // data type
+      '0111', // default
+      xl('This Default entry must start with a zero followed by three numbers. It will be used in Box 4 of the UB04')
+    ),
+
+     'admit_default_type' => array(
+      xl('Admission Type Box 14'),
+      'list', // data type
+      '',     // default
+      xl('This entry is for the Admission Type it needs to be a single digit. It will be used in Box 14 of the UB04'),
+      'ub_admit_type'
+    ),
+
+     'admit_default_source' => array(
+      xl('Admission Source Box 15'),
+      'list', // data type
+      '',     // default
+      xl('This entry is for the Admission Source it needs to be 2 digits (example 01, 12 etc). It will be used in Box 15 of the UB04'),
+      'ub_admit_source'
+    ),
+
+     'discharge_status_default' => array(
+      xl('Discharge Status Box 17'),
+      'text', // data type
+      '', // default
+      xl('This entry is for the Discharge Status it needs to be 2 digits (example 02, 11 etc). It will be used in Box 17 of the UB04')
+    ),
+
+     'attending_id' => array(
+      xl('Attending Physician Box 76'),
+      'provider', // data type
+      '',     // default
+      xl('Attending Physician Box 76 of the UB04')
+    ),
+
+     'operating_id' => array(
+      xl('Operating Physician Box 77'),
+      'provider', // data type
+      '',     // default
+      xl('Operating Physician Box 77 of the UB04')
+    ),
+
+    'other1_id' => array(
+      xl('Other Physician #1 Box 78'),
+      'provider', // data type
+      '',     // default
+      xl('Other Physician #1 Box 78 of the UB04')
+    ),
+
+    'other2_id' => array(
+      xl('Other Physician #2 Box 79'),
+      'provider', // data type
+      '',     // default
+      xl('Other Physician #2 Box 79 of the UB04')
+    ),
+    
   ),
 
 
@@ -1426,6 +1513,18 @@ $GLOBALS_METADATA = array(
        '17',                            // default
       xl('Ending hour of day for calendar events.')
     ),
+    
+    'calendar_refresh_freq' => array(
+      xl('Calendar Refresh Frequency'),
+      array(
+       '1000' => xl('1 second'),
+       '3000' => xl('3 seconds'),
+       '5000' => xl('5 seconds'),
+       '10000' => xl('10 seconds'),
+      ),
+       '3000',                     // default
+      xl('How often the calendar automatically refetches events.')
+    ),
 
     'calendar_interval' => array(
       xl('Calendar Interval'),
@@ -1444,11 +1543,12 @@ $GLOBALS_METADATA = array(
     'calendar_view_type' => array(
       xl('Default Calendar View'),
       array(
-       'day' => xl('Day'),
-       'week' => xl('Week'),
-       'month' => xl('Month'),
+       'providerAgenda' => xl('Agenda'),
+       'timelineDay' => xl('Day'),
+       'timelineWeek' => xl('Week'),
+       'timelineMonth' => xl('Month'),
       ),
-       'day',                           // default
+       'providerAgenda',                           // default
       xl('This sets the Default Calendar View, Default is Day.')
     ),
 
@@ -1984,6 +2084,41 @@ $GLOBALS_METADATA = array(
         '1',                              // default = false
         xl('Select to print patient address labels from popups in left nav screen.')
     ),
+
+      'env_x_width' => array(
+          xl('Envelope Width in mm'),
+          'num',                           // data type
+          '104.775',                              // default = false
+          xl('In Portrait mode, determines the width of the envelope along the x-axis in mm')
+      ),
+
+      'env_y_height' => array(
+          xl('Envelope Height in mm'),
+          'num',                           // data type
+          '241.3',                              // default = false
+          xl('In Portrait mode, determines the height of the envelope along the y-axis in mm')
+      ),
+
+      'env_font_size' => array(
+          xl('Font Size in Pt'),
+          'num',                           // data type
+          '14',                              // default = false
+          xl('Sets the font of the address text on the envelope in mm')
+      ),
+
+      'env_x_dist' => array(
+          xl('Envelope x-axis starting pt'),
+          'num',                           // data type
+          '65',                              // default = false
+          xl('Distance from the \'top\' of the envelope in mm')
+      ),
+
+      'env_y_dist' => array(
+          xl('Envelope y-axis starting pt'),
+          'num',                           // data type
+          '220',                              // default = false
+          xl(' Distance from the right most edge of the envelope in portrait position in mm')
+      ),
   ),
 
   // Portal Tab

@@ -4061,6 +4061,29 @@ INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES (
 INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('provider_qualifier_code','dn','DN',20,0);
 INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('provider_qualifier_code','dq','DQ',30,0);
 
+-- ub_admit_source
+
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('lists','ub_admit_source','UB Admit Source', 1,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','1','Physician Referral',5,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','2','Clinic Referral',10,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','3','HMO Referral',20,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','4','Transfer from Hospital',25,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','5','Transfer from SNF',30,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','6','Transfer From Another Health Care Facility',35,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','7','Emergency Room',40,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','8','Court/Law Enforcement',45,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_source','9','Information Not Available',50,0);
+
+-- ub_admit_type
+
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('lists','ub_admit_type','UB Admit Type', 1,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_type','1','Emergency',10,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_type','2','Urgent',20,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_type','3','Elective',30,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_type','4','Newborn',40,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_type','5','Trauma',50,0);
+INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('ub_admit_type','9','Information Not Available',60,0);
+
 -- 
 -- Table structure for table `lists`
 -- 
@@ -5766,6 +5789,14 @@ INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_re
 ('ICD10', 'CMS', '2016-10-01', '2017-ICD10-Code-Descriptions.zip', 'ed9c159cb4ac4ae4f145062e15f83291');
 INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES 
 ('ICD10', 'CMS', '2016-10-01', '2017-GEM-PCS.zip', 'a4e08b08fb9a53c81385867c82aa8a9e');
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES
+('ICD10', 'CMS', '2017-10-01', '2018-ICD-10-PCS-Order-File.zip', '264b342310236f2b3927062d2c72cfe3');
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES
+('ICD10', 'CMS', '2017-10-01', '2018-ICD-10-CM-General-Equivalence-Mappings.zip', '787a025fdcf6e1da1a85be779004f670');
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES
+('ICD10', 'CMS', '2017-10-01', '2018-ICD-10-Code-Descriptions.zip', '6f9c77440132e30f565222ca9bb6599c');
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES
+('ICD10', 'CMS', '2017-10-01', '2018-ICD-10-PCS-General-Equivalence-Mappings.zip', 'bb73c80e272da28712887d7979b1cebf');
 
 -- 
 -- Table structure for table `transactions`
@@ -7646,7 +7677,7 @@ INSERT INTO `menu_entries` (`id`, `label`, `icon`, `class`, `helperText`, `targe
 ('BatchCom|/interface/batchcom/batchcom.php', 'BatchCom', '', '', '', 'msc', '/interface/batchcom/batchcom.php', 0, 'null', 'null'),
 ('Billing|/interface/billing/billing_report.php', 'Billing', '', '', '', 'pat', '/interface/billing/billing_report.php', 0, 'null', 'null'),
 ('Blank Forms:', 'Blank Forms', 'fa-caret-right', '', '', NULL, NULL, 0, 'null', 'null'),
-('Calendar|/interface/main/calendar/index.php?module=PostCalendar&type=admin&func=modifyconfig', 'Calendar', '', '', '', 'lst', '/interface/main/calendar/index.php?module=PostCalendar&type=admin&func=modifyconfig', 0, '["admin","calendar"]', 'null'),
+('Calendar Administration|/modules/calendar/admin.php', 'Calendar Administration', '', '', '', 'lst', '/modules/calendar/admin.php', 0, '["admin","calendar"]', 'null'),
 ('Calendar|/interface/main/main_info.php', 'Calendar', '', '', '', 'lst', '/interface/main/main_info.php', 0, 'null', 'null'),
 ('Cash Rec|/interface/billing/sl_receipts_report.php', 'Cash Rec', '', '', '', 'rep', '/interface/billing/sl_receipts_report.php', 0, 'null', 'null'),
 ('Certificates|/interface/usergroup/ssl_certificates_admin.php', 'Certificates', '', '', '', 'adm', '/interface/usergroup/ssl_certificates_admin.php', 0, '["admin","users"]', 'null'),
@@ -7876,7 +7907,7 @@ INSERT INTO `menu_trees` (`menu_set`, `entry_id`, `icon`, `helperText`, `parent`
 ('Administrators', 'Manage Modules|/interface/modules/zend_modules/public/Installer', '', '', 'Modules:modimg', 0, NULL),
 ('Administrators', 'Language|/interface/language/language.php', '', '', 'Other:', 0, NULL),
 ('Administrators', 'Forms|/interface/forms_admin/forms_admin.php', '', '', 'Other:', 100, NULL),
-('Administrators', 'Calendar|/interface/main/calendar/index.php?module=PostCalendar&type=admin&func=modifyconfig', '', '', 'Other:', 200, NULL),
+('Administrators', 'Calendar Administration|/modules/calendar/admin.php', '', '', 'Other:', 200, NULL),
 ('Administrators', 'Logs|/interface/logview/logview.php', '', '', 'Other:', 300, NULL),
 ('Administrators', 'Database|/phpmyadmin/index.php', '', '', 'Other:', 400, NULL),
 ('Administrators', 'Certificates|/interface/usergroup/ssl_certificates_admin.php', '', '', 'Other:', 500, NULL),
@@ -7934,7 +7965,7 @@ INSERT INTO `menu_trees` (`menu_set`, `entry_id`, `icon`, `helperText`, `parent`
 ('AnsServ', 'Patient/Client:patimg', '', '', '', 300, NULL),
 ('AnsServ', 'Miscellaneous:misimg', '', '', '', 1000, NULL),
 ('AnsServ', 'Preferences|/interface/super/edit_globals.php?mode=user', '', '', 'File:file0', 100, NULL),
-('AnsServ', 'Calendar|/interface/main/calendar/index.php?module=PostCalendar&type=admin&func=modifyconfig', '', '', 'Other:', 200, NULL),
+('AnsServ', 'Calendar Administration|/modules/calendar/admin.php', '', '', 'Other:', 200, NULL),
 ('AnsServ', 'Patients|/interface/main/finder/dynamic_finder.php', '', '', 'Patient/Client:patimg', 0, NULL),
 ('AnsServ', 'New/Patient|/interface/new/new.php', '', '', 'Patient/Client:patimg', 100, NULL),
 ('AnsServ', 'Calendar|/interface/main/main_info.php', '', '', 'View:', 0, NULL),
@@ -8079,7 +8110,7 @@ INSERT INTO `menu_trees` (`menu_set`, `entry_id`, `icon`, `helperText`, `parent`
 ('default', 'Manage Modules|/interface/modules/zend_modules/public/Installer', '', '', 'Modules:modimg', 0, NULL),
 ('default', 'Language|/interface/language/language.php', '', '', 'Other:', 0, NULL),
 ('default', 'Forms|/interface/forms_admin/forms_admin.php', '', '', 'Other:', 100, NULL),
-('default', 'Calendar|/interface/main/calendar/index.php?module=PostCalendar&type=admin&func=modifyconfig', '', '', 'Other:', 200, NULL),
+('default', 'Calendar Administration|/modules/calendar/admin.php', '', '', 'Other:', 200, NULL),
 ('default', 'Logs|/interface/logview/logview.php', '', '', 'Other:', 300, NULL),
 ('default', 'Database|/phpmyadmin/index.php', '', '', 'Other:', 400, NULL),
 ('default', 'Certificates|/interface/usergroup/ssl_certificates_admin.php', '', '', 'Other:', 500, NULL),

@@ -223,7 +223,16 @@ foreach ($ISSUE_TYPES as $key => $arr) {
                 echo "  <td colspan='$numcols' style='color:red;font-weight:bold;'>&nbsp;&nbsp;" . htmlspecialchars( $row['title'] . $reaction, ENT_NOQUOTES) . "</td>\n";
         }
         else {
+          if ($key == "medical_problem" || $key == "medication") {
+              if (!empty($row['begdate']) && $row['begdate']!= '0000-00-00'){
+            echo "  <td colspan='$numcols'>&nbsp;&nbsp;" . date(DateFormatRead(), strtotime(substr($row{'begdate'}, 0, 10))) . " - " . htmlspecialchars($row['title'],ENT_NOQUOTES) . "</td>\n";
+          }else{
             echo "  <td colspan='$numcols'>&nbsp;&nbsp;" . htmlspecialchars($row['title'],ENT_NOQUOTES) . "</td>\n";
+        }
+          
+          }else{
+            echo "  <td colspan='$numcols'>&nbsp;&nbsp;" . htmlspecialchars($row['title'],ENT_NOQUOTES) . "</td>\n";
+          }
         }
 
             echo " </tr>\n";
