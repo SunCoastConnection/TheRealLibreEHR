@@ -15,6 +15,8 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
+ $newURL = $GLOBALS['OE_SITE_DIR']."/filemanager/index.php";
+ header('Location: '.$newURL);
  ?>
 <html>
  

@@ -189,7 +189,7 @@
      // xl('Accounting')
 $breakglass  = $gacl->add_group('breakglass' , 'Emergency Login'    , $users, 'ARO');
      // xl('Emergency Login')
-$pqrsreporter = $gacl->add_group('pqrsreporter',  'PQRS Reporter',   $users, 'ARO');
+$pqrsreporter = $gacl->add_group('pqrsreporter',  'MIPS Reporter',   $users, 'ARO');
 	// xl('PQRS Reporter')
 
 
@@ -386,7 +386,7 @@ $pqrsreporter = $gacl->add_group('pqrsreporter',  'PQRS Reporter',   $users, 'AR
      // xl('Things that back office can read and modify')
 
 
-// Set permissions for PQRS reporters.
+// Set permissions for MIPS reporters.
 //
 $gacl->add_acl(
 	array(
@@ -395,23 +395,23 @@ $gacl->add_acl(
 	NULL, array($pqrsreporter), NULL, NULL,
 	1, 1, 'view', 'Things that PQRS reporters can only read'
 );
-	// xl('Things that PQRS reporters can only read')
+	// xl('Things that MIPS reporters can only read')
 $gacl->add_acl(
 	array(
 		'placeholder' => array('filler')
 	),
 	NULL, array($pqrsreporter), NULL, NULL,
-	1, 1, 'addonly', 'Things that PQRS reporters can read and enter but not modify'
+	1, 1, 'addonly', 'Things that MIPS reporters can read and enter but not modify'
 );
-	// xl('Things that PQRS reporters can read and enter but not modify')
+	// xl('Things that MIPS reporters can read and enter but not modify')
 $gacl->add_acl(
 	array(
 		'placeholder' => array('filler')
 	),
 	NULL, array($pqrsreporter), NULL, NULL,
-	1, 1, 'wsome', 'Things that PQRS reporters can read and partly modify'
+	1, 1, 'wsome', 'Things that MIPS reporters can read and partly modify'
 );
-	// xl('Things that PQRS reporters can read and partly modify')
+	// xl('Things that MIPS reporters can read and partly modify')
 $gacl->add_acl(
 	array(
 		'acct' => array('disc', 'rep'),
@@ -421,9 +421,9 @@ $gacl->add_acl(
 		'sensitivities' => array('normal', 'high')
 	),
 	NULL, array($pqrsreporter), NULL, NULL,
-	1, 1, 'write', 'Things that PQRS reporters can read and modify'
+	1, 1, 'write', 'Things that MIPS reporters can read and modify'
 );
-	// xl('Things that PQRS reporters can read and modify')
+	// xl('Things that MIPS reporters can read and modify')
 
 
  // Set permissions for Emergency Login.
