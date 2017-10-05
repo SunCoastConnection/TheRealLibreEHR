@@ -11,7 +11,8 @@
     "target" : "flb",
     "url" : "/interface/patient_tracker/patient_tracker.php?skip_timeout_reset=1",
     "children" : [ ],
-    "requirement" : 0
+    "requirement" : 0,
+    "global_req" : "!disable_pat_trkr"
 }, { 
     "label" : "Messages ",
     "menu_id" : "msg0",
@@ -133,7 +134,8 @@
         "target" : "pat",
         "url" : "/interface/billing/billing_report.php",
         "children" : [ ],
-        "requirement" : 0
+        "requirement" : 0,
+        "global_req" : "!simplified_demographics"
     }, { 
         "label" : "Posting",
         "menu_id" : "bil0",
@@ -156,9 +158,10 @@
         "children" : [ ],
         "requirement" : 0,
         "acl_req" : [ "acct", "eob" ],
-        "global_req" : "enable_edihistory_in_left_menu"
+        "global_req" : "enable_edihistory_in_menu"
     } ],
-    "requirement" : 0
+    "requirement" : 0,
+    "global_req" : "enable_fees_in_menu"
 }, { 
     "label" : "Inventory",
     "menu_id" : "invimg",
@@ -493,7 +496,8 @@
             "target" : "rep",
             "url" : "/interface/reports/prescriptions_report.php",
             "children" : [ ],
-            "requirement" : 0
+            "requirement" : 0,
+            "global_req" : "!disable_prescriptions"
         }, { 
             "label" : "Patient List Creation",
             "menu_id" : "rep0",
@@ -518,87 +522,6 @@
         } ],
         "requirement" : 0
     }, { 
-        "label" : "QA Measures",
-        "children" : [ { 
-            "label" : "View Reports",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/report_results.php",
-            "children" : [ ],
-            "requirement" : 0
-        }, { 
-            "label" : "Create MIPS Report",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/clinical_measures.php?type=pqrs",
-            "children" : [ ],
-            "requirement" : 0
-        }, { 
-            "label" : "Select Measures",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/measure_activate.php",
-            "children" : [ ],
-            "requirement" : 0
-        }, { 
-            "label" : "Delete Old Reports",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/truncate_reports.php",
-            "children" : [ ],
-            "requirement" : 0
-        },{ 
-            "label" : "Report Database Import",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/import_data.php",
-            "children" : [ ],
-            "requirement" : 0
-        },{ 
-            "label" : "Remove_Provider_Assignments",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/reset_provider_to_unassigned.php",
-            "children" : [ ],
-            "requirement" : 0
-        },{ 
-            "label" : "Provider Encounter Counts",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/provider_encounter_counts.php",
-            "children" : [ ],
-            "requirement" : 0
-        },{ 
-            "label" : "Upload Claim Files",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/filemanager/index.php",
-            "children" : [ ],
-            "requirement" : 0
-        },{ 
-            "label" : "Change Demo Database",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/reload_demo_database.php",
-            "children" : [ ],
-            "requirement" : 0
-        },{ 
-            "label" : "XML Editor",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/modules/MIPS/xmleditor",
-            "children" : [ ],
-            "requirement" : 0
-        }, { 
-            "label" : "Alerts Log",
-            "menu_id" : "rep0",
-            "target" : "rep",
-            "url" : "/interface/reports/cdr_log.php",
-            "children" : [ ],
-            "requirement" : 0
-        } ],
-        "requirement" : 0
-    }, { 
         "label" : "Visits",
         "children" : [ { 
             "label" : "Appointments",
@@ -613,7 +536,8 @@
             "target" : "rep",
             "url" : "/interface/reports/patient_flow_board_report.php",
             "children" : [ ],
-            "requirement" : 0
+            "requirement" : 0,
+            "global_req" : "!disable_pat_trkr"
         }, { 
             "label" : "Encounters",
             "menu_id" : "rep0",
@@ -669,14 +593,16 @@
             "target" : "rep",
             "url" : "/interface/reports/chart_location_activity.php",
             "children" : [ ],
-            "requirement" : 0
+            "requirement" : 0,
+            "global_req" : "!disable_chart_tracker"
         }, { 
             "label" : "Charts Out",
             "menu_id" : "rep0",
             "target" : "rep",
             "url" : "/interface/reports/charts_checked_out.php",
             "children" : [ ],
-            "requirement" : 0
+            "requirement" : 0,
+            "global_req" : "!disable_chart_tracker"
         }, { 
             "label" : "Services",
             "menu_id" : "rep0",
@@ -900,7 +826,8 @@
         "target" : "msc",
         "url" : "/custom/chart_tracker.php",
         "children" : [ ],
-        "requirement" : 0
+        "requirement" : 0,
+        "global_req" : "!disable_chart_tracker"
     }, { 
         "label" : "Ofc Notes",
         "menu_id" : "ono0",
@@ -1010,24 +937,108 @@
         "url" : "/interface/patient_file/label.php",
         "target" : "pop",
         "children" : [ ],
-        "requirement" : 1
+        "requirement" : 1,
+        "global_req" : "chart_label_type"
     }, { 
         "label" : "Barcode Label",
         "menu_id" : "Popup:Barcode Label",
         "url" : "/interface/patient_file/barcode_label.php",
         "target" : "pop",
         "children" : [ ],
-        "requirement" : 1
+        "requirement" : 1,
+        "global_req" : "barcode_label_type"
     }, { 
         "label" : "Address Label",
         "menu_id" : "Popup:Address Label",
         "url" : "/interface/patient_file/addr_label.php",
         "target" : "pop",
         "children" : [ ],
-        "requirement" : 1
-    } ],
+        "requirement" : 1,
+        "global_req" : "addr_label_type"
     "requirement" : 0
 }, { 
+    "label" : "QA Measures",
+    "menu_id" : "mips",
+    "children" : [ { 
+        "label" : "View Reports",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/report_results.php",
+        "children" : [ ],
+        "requirement" : 0
+    }, { 
+        "label" : "Create MIPS Report",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/clinical_measures.php?type=pqrs",
+        "children" : [ ],
+        "requirement" : 0
+    }, { 
+        "label" : "Select Measures",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/measure_activate.php",
+        "children" : [ ],
+        "requirement" : 0
+    }, { 
+        "label" : "Delete Old Reports",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/truncate_reports.php",
+        "children" : [ ],
+        "requirement" : 0
+    },{ 
+        "label" : "Report Database Import",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/import_data.php",
+        "children" : [ ],
+        "requirement" : 0
+    },{ 
+        "label" : "Remove_Provider_Assignments",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/reset_provider_to_unassigned.php",
+        "children" : [ ],
+        "requirement" : 0
+    },{ 
+        "label" : "Provider Encounter Counts",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/provider_encounter_counts.php",
+        "children" : [ ],
+        "requirement" : 0
+    },{ 
+        "label" : "Upload Claim Files",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/filemanager/index.php",
+        "children" : [ ],
+        "requirement" : 0
+    },{ 
+        "label" : "Change Demo Database",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/reload_demo_database.php",
+        "children" : [ ],
+        "requirement" : 0
+    },{ 
+        "label" : "XML Editor",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/xmleditor",
+        "children" : [ ],
+        "requirement" : 0
+    }, { 
+        "label" : "Alerts Log",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/interface/reports/cdr_log.php",
+        "children" : [ ],
+        "requirement" : 0
+    } ],
+    "requirement" : 0
+},{ 
     "label" : "Help",
     "menu_id" : "modimg",
     "children" : [ { 

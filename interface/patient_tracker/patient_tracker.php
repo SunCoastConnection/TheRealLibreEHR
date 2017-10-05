@@ -137,7 +137,7 @@ foreach ( $appointments as $apt ) {
 <title><?php echo xlt("Flow Board") ?></title>
 <?php 
     //  Include Bootstrap and DateTimePicker
-    call_required_libraries(true,false,false,true);
+    call_required_libraries($bootstrap=true,$fancybox=false,$knockout=false,$datepicker=true);
 ?>
 
 <script type="text/javascript" src="../../library/js/common.js"></script>
@@ -402,11 +402,6 @@ function openNewTopWindow(newpid,newencounterid) {
       <h3><?php echo xlt('Appointment Date'). ' : ' . text($form_from_date) ?></h3>
   <?php } ?>
   <?php } ?>
- <div id= 'inanewwindow'> 
- <input type='hidden' name='setting_new_window' value='1' />
- <input type='checkbox' name='form_new_window' value='1'<?php echo $new_window_checked; ?> /><?php
-  echo xlt('Open Patient in New Window'); ?> 
- </div>
  </div>
 <?php if ($GLOBALS['pat_trkr_timer'] =='0') { ?>
 <table class="table">
