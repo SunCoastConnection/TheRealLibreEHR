@@ -15,6 +15,9 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
+require_once '../../interface/globals.php';
+ $newURL = "$web_root/sites/" . $_SESSION['site_id'] . "/filemanager/index.php";
+ header('Location: '.$newURL);
  ?>
 <html>
  
@@ -54,7 +57,7 @@
 	</div>  
 		<script src="assets/js/jquerycurrent.js"></script>
 	<script src="assets/js/script.js"></script>
-	<?php //echo $OE_SITE_DIR;
+	<?php echo $OE_SITE_DIR;
 	?>
 </body>
  
