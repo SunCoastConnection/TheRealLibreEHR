@@ -5,12 +5,12 @@
  * Generic script to list stored reports. Part of the module to allow the tracking,
  * storing, and viewing of reports.
  *
- * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
  * Copyright (C) 2012 Brady Miller <brady@sparmy.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 3 
+ * as published by the Free Software Foundation; either version 3
  * of the License, or (at your option) any later version.
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,7 +23,7 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR 
+ * @package LibreHealth EHR
  * @author  Art Eaton <art@suncoastconnection.com>  (MIPS/MACRA Refactor)
  * @author  Bryan Lee <bryan@suncoastconnection.com>
  * @author  Brady Miller <brady@sparmy.com>
@@ -50,7 +50,7 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 <?php html_header_show();?>
 
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
-<link rel="stylesheet" href="../../assets/css/jquery.datetimepicker.css">
+<link rel="stylesheet" href="../../assets/css/jquery-datetimepicker/jquery.datetimepicker.css">
 
 <title><?php echo htmlspecialchars( xl('Report Results/History'), ENT_NOQUOTES); ?></title>
 
@@ -319,7 +319,7 @@ function deleteReport(report_id){
     var answer = confirm('Are you sure you want to delete this report?');
     if (answer == true) {
 //        console.log('Delete Report -- report_id: ' + report_id );
-	manageReport(report_id,'DELETE','deleted');
+    manageReport(report_id,'DELETE','deleted');
     }
 }
 
@@ -329,7 +329,7 @@ function renameReport(report_id){
         confirm('You didn\'t supply a new name.');
     } else {
 //        console.log('Rename Report -- report_id: ' + report_id + ', New Name: ' + newname);
-	manageReport(report_id,'RENAME',newname);
+    manageReport(report_id,'RENAME',newname);
 
     }
 top.restoreSession();  $("#theform").submit();
