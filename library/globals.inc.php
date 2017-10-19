@@ -1537,10 +1537,10 @@ $GLOBALS_METADATA = array(
     'calendar_appt_style' => array(
       xl('Appointment Display Style'),
       array(
-        '1' => 'Last name',
-        '2' => 'Last name, first name',
-        '3' => 'Last name, first name (title)',
-        '4' => 'Last name, first name (title: description)',
+                '1' => xl('Last name'),
+                '2' => xl('Last name, first name'),
+                '3' => xl('Last name, first name (title)'),
+                '4' => xl('Last name, first name (title: description)'),
       ),
        '2',                             // default
       xl('This determines how appointments display on the calendar.')
@@ -3088,7 +3088,7 @@ $GLOBALS_METADATA = array(
     
     'report_itemizing_pqrs' => array(
       xl('Enable MIPS report itemization'),		// for itemizing reports
-      'text',                           // data type
+      'bool',                           // data type
       '1',                     // default
       xl('Creates patient lists from reports')
     ),
@@ -3132,11 +3132,5 @@ if ( function_exists( 'do_action' ) ) {
         'user_specific_globals' => $USER_SPECIFIC_GLOBALS,
         'user_specific_tabs' => $USER_SPECIFIC_TABS ] );
 }
-  // PQRS (Physician Quality Reporting System)
-  // 2016-02-02 leebc -- Globals configuration section for PQRS
-  // 2016-03-23 leebc -- Added configuration values for registry for XML
-
-
-
 
 ?>
