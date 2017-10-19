@@ -33,28 +33,28 @@ $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/
 sqlStatementNoLog($query);
 
 sqlStatementNoLog("TRUNCATE TABLE `billing`;");
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing1.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing1.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing1.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing2.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing2.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing2.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing3.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing3.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing3.sql");
 	sqlStatementNoLog($query);
 }
 
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing4.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing4.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing4.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing5.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing5.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing5.sql");
 	sqlStatementNoLog($query);
 }
@@ -65,29 +65,29 @@ $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/
 sqlStatementNoLog($query);
 
 sqlStatementNoLog("TRUNCATE TABLE `form_encounter`;");
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter1.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter1.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter1.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter2.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter2.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter2.sql");
 	sqlStatementNoLog($query);
 }
 
 sqlStatementNoLog("TRUNCATE TABLE `forms`;");
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms1.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms1.sql")) {
         $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms1.sql");
         sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql") {
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql")) {
         $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql");
         sqlStatementNoLog($query);
 }
