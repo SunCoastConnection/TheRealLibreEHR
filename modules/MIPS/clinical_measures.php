@@ -314,11 +314,7 @@ function Form_Validate() {
               <div style='float:left'>
                 <table class='text'>
 <?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2016'))) { ?>
-                  <tr>
-                    <td class='label'>
-                      <?php echo htmlspecialchars(xl('Begin Date'), ENT_NOQUOTES); ?>:
-                    </td>
-                   <tr>
+
                       <td class='label'>
                          <?php echo htmlspecialchars( xl('Begin Date'), ENT_NOQUOTES); ?>:
                       </td>
