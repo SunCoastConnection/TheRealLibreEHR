@@ -545,7 +545,10 @@ function Form_Validate() {
             }
 
             if(!empty($tempMeasuresString)) {
-              echo '('.$tempMeasuresString.')';
+                ?>
+                <a href='http://suncoastconnection.com/standards/index.php' ><?php echo '('.$tempMeasuresString.')';?></a>
+                <?php
+             
             }
 
             if(!(empty($row['concatenated_label']))) {
