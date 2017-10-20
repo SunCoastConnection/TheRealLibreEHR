@@ -275,11 +275,11 @@
         "target" : "pat",
         "url" : "/interface/eRx.php?page=epcs-admin",
         "children" : [ ],
-        "requirement" : 0,
-        "global_req" : "newcrop_user_role_erxadmin"
+        "requirement" : 1,
+        "global_req" : "erxadmin"
     } ],
-    "requirement" : 0,
-    "global_req_strict" : [ "erx_enable", "newcrop_user_role" ]
+    "requirement" : 1,
+    "global_req" : [ "erx_enable", "newcrop_user_role" ]
 }, { 
     "label" : "Administration",
     "menu_id" : "admimg",
