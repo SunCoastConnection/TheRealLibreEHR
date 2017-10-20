@@ -423,8 +423,8 @@ function Form_Validate() {
                     </td>
                     <td>
                       <select <?php echo $dis_text; ?> id='form_pat_prov_rel' name='form_pat_prov_rel' title='<?php echo xlt('Only applicable if a provider or collated list was chosen above. PRIMARY only selects patients that the provider is the primary provider. ENCOUNTER selects all patients that the provider has seen.'); ?>'>
-                        <option value='primary'<?php if($pat_prov_rel == 'primary') {echo 'selected';} ?>><?php echo xlt('Primary'); ?></option>
-                        <option value='encounter'<?php if($pat_prov_rel == 'encounter') {echo 'selected';} ?>><?php echo xlt('Encounter'); ?></option>
+                        <option value='primary'<?php if($pat_prov_rel == 'primary') {echo ' selected';} ?>><?php echo xlt('Primary'); ?></option>
+                        <option value='encounter'<?php if($pat_prov_rel == 'encounter') {echo ' selected';} ?>><?php echo xlt('Encounter'); ?></option>
                       </select>
                     </td>
                   </tr>
@@ -538,15 +538,18 @@ function Form_Validate() {
 	            case 'pqrs':
               case 'pqrs_individual_2016':
                 if(!empty($row['pqrs_code'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('PQRS').':'.$row['pqrs_code'], ENT_NOQUOTES).' ';
+                  $tempMeasuresString .= ' '.htmlspecialchars(xl('MIPS').preg_replace('/PQRS/', '',$row['pqrs_code']), ENT_NOQUOTES).' ';
+                 
                 }
                 break;
 
             }
 
             if(!empty($tempMeasuresString)) {
+                $mipsnumber = preg_replace('/PQRS_0/', '_', $row['pqrs_code']);
+                $measureURL = 'http://suncoastconnection.com/standards/Registrymeasures/2017_Measure'. $mipsnumber.'_Registry.pdf';
                 ?>
-                <a href='http://suncoastconnection.com/standards/index.php' target="_blank"><?php echo '('.$tempMeasuresString.')';?></a>
+                <a href='<?php echo $measureURL;?>' target="_blank"><?php echo $tempMeasuresString;?></a>
                 <?php
              
             }
