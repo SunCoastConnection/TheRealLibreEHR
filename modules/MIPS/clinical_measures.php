@@ -546,7 +546,7 @@ function Form_Validate() {
 
             if(!empty($tempMeasuresString)) {
                 ?>
-                <a href='http://suncoastconnection.com/standards/index.php' ><?php echo '('.$tempMeasuresString.')';?></a>
+                <a href='http://suncoastconnection.com/standards/index.php' target="_blank"><?php echo '('.$tempMeasuresString.')';?></a>
                 <?php
              
             }
