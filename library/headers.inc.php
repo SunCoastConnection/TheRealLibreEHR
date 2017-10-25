@@ -41,60 +41,31 @@ function include_css_library($path)
     Parameters for this function are passed in an unkeyed array of strings.
     Strings equate to the directory name in the /assets/ directory.   
 */
-function call_required_libraries($library_array){?>
-    <!-- All these libraries require jQuery to be loaded initially for best performance -->
+function call_required_libraries($library_array){
+/* First checking for any library in a directory matching the string "/jquery-min-/".
+ * When one is found, use that value in the URL string, then add "index.js"
+ */
+    foreach($library_array as $v){ 
+        if (preg_match("/jquery-min-/",$v)) {?>
+    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path'].$v ; ?>/index.js"></script>    
     <?php 
-    if(in_array ("jquery-min-1-2-1",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-2-1/index.js"></script>    
-    <?php 
-    if(in_array ("jquery-min-1-2-2",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-2-2/index.js"></script>    
-    <?php 
-    if(in_array ("jquery-min-1-3-2",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-3-2/index.js"></script>    
-    <?php 
-    if(in_array ("jquery-min-1-4-2",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-4-2/index.js"></script>    
-    <?php 
-    if(in_array ("jquery-min-1-4-3",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-4-3/index.js"></script>  
-    <?php 
-    if(in_array ("jquery-min-1-5-0",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-5-0/index.js"></script>
-    <?php 
-    if(in_array ("jquery-min-1-6-4",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-6-4/index.js"></script>        
-    <?php}
-     if(in_array ("jquery-min-1-7-2",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-7-2/index.js"></script>
-    <?php}
-     if(in_array ("jquery-min-1-9-1",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-9-1/index.js"></script>
-    <?php}    
-     if(in_array ("jquery-min-1-11-3",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-1-11-3/index.js"></script>
-    <?php}    
-     if(in_array ("jquery-min-2-2-0",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-2-2-0/index.js"></script>
-    <?php}    
-     if(in_array ("jquery-min-3-1-1",$library_array)){   ?>
-    <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-min-3-1-1/index.js"></script>
-    <?php}
+    } }
         
-     if(in_array ("bootstrap",$library_array)){   ?>
+    if (in_array("bootstrap",$library_array)){   ?>
         <link rel="stylesheet" href="<?php echo $GLOBALS['standard_js_path']; ?>bootstrap-3-3-4/dist/css/bootstrap.min.css" type="text/css">
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>bootstrap-3-3-4/dist/js/bootstrap.min.js"></script>
-    <?php}
-    if(in_array ("fancybox",$library_array)){   ?>
+    <?php
+    }
+    if (in_array("fancybox",$library_array)){   ?>
         <link rel="stylesheet" href="<?php echo $GLOBALS['css_path']; ?>fancybox/jquery.fancybox-1.2.6.css" media="screen" />
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>fancybox/jquery.fancybox-1.2.6.js"></script>
     <?php
     }
-    if(in_array ("knockout",$library_array)){   ?>
+    if (in_array("knockout",$library_array)){   ?>
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>knockout/knockout-3.4.0.js"></script>
     <?php
     }
-    if(in_array ("datepicker",$library_array)){   ?>
+    if (in_array("datepicker",$library_array)){   ?>
         <link rel="stylesheet" href="<?php echo $GLOBALS['css_path']; ?>jquery-datetimepicker/jquery.datetimepicker.css" media="screen" />
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
     <?php
@@ -120,7 +91,8 @@ function resolveFancyboxCompatibility(){ ?>
         })();
     </script>    
 <?php 
-} ?>
-
+} 
+//The following seem to always get called.  I don't believe this is proper.
+?>
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/textformat.js"></script>
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/dialog.js"></script>
