@@ -490,7 +490,7 @@ var SelectPatient = function (eObj) {
 	echo "function updatePatient(pid) {\n";
 	echo "	selected = $('table[id=' + pid + '] input[type=\'radio\']:checked');\n";
 	echo "	if(selected.length > 0) {\n";
-	echo "		var date = '".$report_date;\n";
+	echo "		var date = '".$report_date."';\n";
 	echo "		var code = selected.val();\n";
 	echo "		var performance = '".$myPerformance."';\n";	
 	echo "		var report_id = '".$report_id."';\n";
