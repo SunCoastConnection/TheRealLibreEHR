@@ -258,6 +258,7 @@ if ($fend > $count) $fend = $count;
 	$report_view = collectReportDatabase($report_id);
 	$type_report = $report_view['type'];
 	$report_year = end(explode('_', $type_report));
+	$report_date = $GLOBALS['pqrs_attestation_date']." 23:59:59";
 	$dataSheet = json_decode($report_view['data'],TRUE);
 	foreach ($dataSheet as $row) {
       		if ( ($row['itemized_test_id'] == $itemized_test_id) && ($row['numerator_label'] == $numerator_label) ) {
@@ -489,7 +490,7 @@ var SelectPatient = function (eObj) {
 	echo "function updatePatient(pid) {\n";
 	echo "	selected = $('table[id=' + pid + '] input[type=\'radio\']:checked');\n";
 	echo "	if(selected.length > 0) {\n";
-	echo "		var date = '".$report_year."1231235959';\n";
+	echo "		var date = '".$report_date."';\n";
 	echo "		var code = selected.val();\n";
 	echo "		var performance = '".$myPerformance."';\n";	
 	echo "		var report_id = '".$report_id."';\n";
