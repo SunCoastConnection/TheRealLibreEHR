@@ -1,6 +1,6 @@
 <?php
 /**
- * pre Measure 0364 -- Denominator 
+ * pre Measure 0008 -- Exclusion 
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 
@@ -16,26 +16,26 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
- 
-class pre_0364_Denominator extends PQRSFilter
+
+class pre_0008_Exclusion1 extends preFilter
 {
     public function getTitle() 
     {
-        return "Denominator";
+        return "Exclusion";
     }
     
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    public function test( prePatient $patient, $beginDate, $endDate )
     {
 $query =
-" SELECT COUNT(b1.code) AS count".  
+"SELECT COUNT(b1.code) as count".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G9754' ; ";
-//Requires Pre-Measure
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-if ($result['count']> 0){ return false;} else {return true;}
+" AND b1.code ='G8451';";
+
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 
