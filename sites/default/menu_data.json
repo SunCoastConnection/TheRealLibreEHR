@@ -1059,8 +1059,7 @@
         "target" : "rep",
         "url" : "/modules/filemanager/index.php",
         "children" : [ ],
-        "requirement" : 0,
-        "acl_req" : [ "admin", "super" ]
+        "requirement" : 0
     },{ 
         "label" : "Change Demo Database",
         "menu_id" : "rep0",
