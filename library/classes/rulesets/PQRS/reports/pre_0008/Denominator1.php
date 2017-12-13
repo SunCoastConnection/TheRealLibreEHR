@@ -17,7 +17,7 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
  
-class pre_0008_Denominator1 extends preFilter
+class pre_0008_Denominator1 extends PQRSFilter
 {
     public function getTitle() 
     {

@@ -17,7 +17,7 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
  
-class pre_0008_PopulationCriteria2 implements prePopulationCriteriaFactory
+class pre_0008_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {
