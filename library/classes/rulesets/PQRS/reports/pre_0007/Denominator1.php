@@ -26,7 +26,19 @@ class pre_0007_Denominator1 extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-return true;       
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    {
+		$query =
+		"SELECT COUNT(b1.code) as count ". 
+		" FROM billing AS b1". 
+		" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".  
+		" JOIN patient_data AS p ON (b1.pid = p.pid)".
+		" INNER JOIN pqrs_efcc1 AS codelist_c ON (b1.code = codelist_c.code)".		
+		" WHERE b1.pid = ? ".
+		" AND b1.code = 'G8694'";  
+		
+		$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count']> 0){ return false;}else{return true;}      
 
     }
 }
