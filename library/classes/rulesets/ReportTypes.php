@@ -292,7 +292,6 @@ class ReportTypes
         "pre_0117" => array( ReportTypes::PQRS, "pre_0117" ),
         "pre_0118" => array( ReportTypes::PQRS, "pre_0118" ),
         "pre_0119" => array( ReportTypes::PQRS, "pre_0119" ),
-        "pre_0128" => array( ReportTypes::PQRS, "pre_0128" ),
         "pre_0134" => array( ReportTypes::PQRS, "pre_0134" ),
         "pre_0146" => array( ReportTypes::PQRS, "pre_0146" ),
         "pre_0154" => array( ReportTypes::PQRS, "pre_0154" ),
