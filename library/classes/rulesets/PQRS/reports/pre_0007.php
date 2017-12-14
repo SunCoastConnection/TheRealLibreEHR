@@ -1,6 +1,6 @@
 <?php
-/*
- * pre Measure 0001 -- Denominator
+/**
+ * Pre Measure 0007 -- Call to createPopulationCriteria()
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 
@@ -16,18 +16,17 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
- 
-class pre_0001_Denominator extends PQRSFilter
-{
-    public function getTitle() 
-    {
-        return "Denominator";
+
+class pre_0007 extends AbstractPQRSReport {   
+    public function createPopulationCriteria() {
+		$populationCriteria = array();
+
+		$populationCriteria[] = new pre_0007_PopulationCriteria1();
+		$populationCriteria[] = new pre_0007_PopulationCriteria2();   
+
+		return $populationCriteria;    
     }
-    
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
-    {
-return true;
-    }
+
 }
 
 ?>
