@@ -17,7 +17,7 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
 
-class re_0008 extends AbstractPQRSReport
+class pre_0008 extends AbstractPQRSReport
 {   
     public function createPopulationCriteria()
     {
