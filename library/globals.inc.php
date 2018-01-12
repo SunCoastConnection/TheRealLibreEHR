@@ -107,7 +107,6 @@ else {
 // List of user specific tabs and globals
 $USER_SPECIFIC_TABS = array('Appearance',
                             'Locale',
-                            'Features',
                             'Report',
                             'Encounter',
                             'Claim',
@@ -128,6 +127,7 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'ledger_begin_date',
                                'print_next_appointment_on_ledger',
                                'calendar_view_type',
+                               'calendar_refresh_freq',
                                'event_color',
                                'pat_trkr_timer',
                                'ptkr_visit_reason',
@@ -554,9 +554,9 @@ $GLOBALS_METADATA = array(
     ),
 
     'disable_sql_admin_link' => array(
-     xl('Disable SQL Admin Tool Link'),
+     xl('Disable SQL Admin'),
       'bool',                           // data type
-      '0',                              // default = false
+      '1',                              // default = true
      xl('Removes menu selection for configured SQL Admin Tool')
     ),
 
@@ -767,6 +767,13 @@ $GLOBALS_METADATA = array(
       xl('Show Insurance Address Information in the Insurance Panel of Demographics.')
 
   ),
+
+    'insurance_address_demographics_report' => array(
+      xl('Show Insurance Address on Demographics Report'),
+       'bool',                          // data type
+       '0',                             // default = false
+      xl('This will Show the Insurance Address on the Demographics Report')
+    ),
 
 
     'hide_billing_widget' => array(
@@ -1114,6 +1121,13 @@ $GLOBALS_METADATA = array(
        'bool',                          // data type
        '0',                             // default = false
       xl('This will Show Aging on the custom Statement.')
+    ),
+
+    'show_insurance_name_on_custom_statement' => array(
+      xl('Show Insurance Company Name on Custom Statement'),
+       'bool',                          // data type
+       '0',                             // default = false
+      xl('This will Show Insurance Company Name on the custom Statement Instead of Insurance information on file.')
     ),
 
     'use_statement_print_exclusion' => array(
@@ -1499,13 +1513,24 @@ $GLOBALS_METADATA = array(
     'calendar_refresh_freq' => array(
       xl('Calendar Refresh Frequency'),
       array(
-       '1000' => xl('1 second'),
-       '3000' => xl('3 seconds'),
-       '5000' => xl('5 seconds'),
-       '10000' => xl('10 seconds'),
+        'none' => xl('No Refresh'),
+        '60000' => xl('60 seconds'),
+        '360000' => xl('5 minutes'),
+        '720000' => xl('10 minutes'),
       ),
-       '3000',                     // default
+       '360000',                     // default
       xl('How often the calendar automatically refetches events.')
+    ),
+    
+    'calendar_provider_view_type' => array(
+      xl('Resource Title'),
+      array(
+        'full' => xl('Provider Full Name'),
+        'last' => xl('Provider Last Name'),
+        'resource' => xl('Resource Title'),
+      ),
+       'full',                     // default
+      xl('Name Choice for Resource in Calendar.')
     ),
 
     'calendar_interval' => array(
@@ -1525,13 +1550,13 @@ $GLOBALS_METADATA = array(
     'calendar_view_type' => array(
       xl('Default Calendar View'),
       array(
-       'providerAgenda' => xl('Agenda'),
-       'timelineDay' => xl('Day'),
+       'providerAgenda' => xl('1 Day'),
+       'providerAgenda2Day' => xl('2 Day'),
        'timelineWeek' => xl('Week'),
        'timelineMonth' => xl('Month'),
       ),
        'providerAgenda',                           // default
-      xl('This sets the Default Calendar View, Default is Day.')
+      xl('This sets the Default Calendar View, Default is 1 Day.')
     ),
 
     'calendar_appt_style' => array(
@@ -1642,64 +1667,64 @@ $GLOBALS_METADATA = array(
     ),
 
     'disable_pat_trkr' => array(
-      xl('Disable Patient Flow Board'),
+      xl('Patient Flow Board: Disable'),
        'bool',                          // data type
        '0',                             // default
       xl('Do not display the patient flow board.')
     ),
 
     'ptkr_pt_list_new_window' => array(
-      xl('Open Demographics in New Window from Patient Flow Board'),
+      xl('Patient Flow Board: Open Demographics in New Window'),
        'bool',                          // data type
        '0',                             // default = false
       xl('When Checked, Demographics Will Open in New Window from Patient Flow Board.')
     ),
 
     'ptkr_visit_reason' => array(
-      xl('Show Visit Reason in Patient Flow Board'),
+      xl('Patient Flow Board: Show Visit Reason'),
        'bool',                          // data type
        '0',                             // default = false
       xl('When Checked, Visit Reason Will Show in Patient Flow Board.')
     ),
 
     'ptkr_show_pid' => array(
-      xl('Show Patient ID in Patient Flow Board'),
+      xl('Patient Flow Board: Show Patient ID'),
        'bool',                          // data type
        '1',                             // default = true
       xl('When Checked, Patient ID Will Show in Patient Flow Board.')
     ),
     'ptkr_show_room' => array(
-      xl('Show Exam Room Patient Flow Board'),
+      xl('Patient Flow Board: Show Exam Room'),
       'bool',                          // data type
       '1',                             // default = true
       xl('When Checked, Exam Room Will Show in Patient Flow Board.')
     ),
     'ptkr_show_visit_type' => array(
-      xl('Show Visit Type in Patient Flow Board'),
+      xl('Patient Flow Board: Show Visit Type'),
       'bool',                          // data type
       '1',                             // default = true
       xl('When Checked, Visit Type Will Show in Patient Flow Board.')
     ),
     'ptkr_show_encounter' => array(
-      xl('Show Patient Encounter Number in Patient Flow Board'),
+      xl('Patient Flow Board: Show Patient Encounter Number'),
        'bool',                          // data type
        '1',                             // default = true
       xl('When Checked, Patient Encounter Number Will Show in Patient Flow Board.')
     ),
       'ptkr_flag_dblbook' => array(
-          xl('Flag Double Booked Appt in Flow Board'),
+          xl('Patient Flow Board: Flag Double Booked Appt'),
           'bool',                          // data type
           '1',                             // default = true
           xl('When Checked, double booked appointments will be flagged in orange in Patient Flow Board.')
     ),
     'ptkr_date_range' => array(
-      xl('Allow Date Range in Patient Flow Board'),
+      xl('Patient Flow Board: Allow Date Range'),
        'bool',                          // data type
        '0',                             // default = false
       xl('This Allows a Date Range to be Selected in Patient Flow Board.')
     ),
     'ptkr_end_date' => array(
-      xl('Ending Date for Patient Flow Board'),
+      xl('Patient Flow Board: Ending Date'),
       array(
         'Y1' => xl('One Year Ahead'),
         'Y2' => xl('Two Years Ahead'),
@@ -1712,7 +1737,7 @@ $GLOBALS_METADATA = array(
       xl('This is the Ending date for the Patient Flow Board Date Range. (only applicable if Allow Date Range in option above is Enabled)')
     ),
     'pat_trkr_timer' => array(
-      xl('Patient Flow Board Timer Interval'),
+      xl('Patient Flow Board: Timer Interval'),
       array(
        '0' => xl('No automatic refresh'),
        '0:10' => '10',
@@ -1727,21 +1752,21 @@ $GLOBALS_METADATA = array(
     ),
 
     'status_default' => array(
-      xl('Default Status for the Patient Flow Board'),
+      xl('Patient Flow Board: Default Status'),
       'status',                           // data type
       '',                                 // default = none
       xl('Default Status for the Patient Flow Board Screen.')
     ),
 
     'checkout_roll_off' => array(
-      xl('Number of Minutes to display completed checkouts'),
+      xl('Patient Flow Board: Number of Minutes to display completed checkouts'),
        'num',
        '0',                             // default
       xl('Number of Minutes to display completed checkouts. Zero is continuous display')
     ),
 
     'drug_screen' => array(
-      xl('Enable Random Drug Testing'),
+      xl('Patient Flow Board: Enable Random Drug Testing'),
       'bool',                           // data type
       '0',                              // default
       xl('Allow Patient Flow Board to Select Patients for Drug Testing.')
@@ -2117,7 +2142,7 @@ $GLOBALS_METADATA = array(
     'portal_onsite_address' => array(
       xl('Onsite Patient Portal Site Address'),
        'text',                          // data type
-       'https://your_web_site.com/libreehr/patients',
+       'https://your_web_site.com/libreehr/patient_portal',
       xl('Website link for the Onsite Patient Portal.')
     ),
 
@@ -3087,7 +3112,7 @@ $GLOBALS_METADATA = array(
     ),
     
     'report_itemizing_pqrs' => array(
-      xl('Enable MIPS report itemization'),		// for itemizing reports
+      xl('Enable MIPS report itemization'),     // for itemizing reports
       'bool',                           // data type
       '1',                     // default
       xl('Creates patient lists from reports')
@@ -3095,39 +3120,33 @@ $GLOBALS_METADATA = array(
     
 
     'pqrs_creator' => array(
-      xl('MIPS Report Creator Name'),		// for XML generation
+      xl('MIPS Report Creator Name'),       // for XML generation
       'text',                           // data type
       'FIXME creator FIXME!!!',                     // default
       xl('MIPS Report Creator Name')
     ),
 
     'pqrs_registry_name' => array(
-      xl('MIPS Registry Name'),		// for XML generation
+      xl('MIPS Registry Name'),     // for XML generation
       'text',                           // data type
       'FIXME registry name FIXME!!!',               // default
       xl('MIPS Registry Name')
     ),
 
     'pqrs_registry_id' => array(
-      xl('MIPS Registry ID'),		// for XML generation
+      xl('MIPS Registry ID'),       // for XML generation
       'text',                           // data type
       'FIXME registry id FIXME!!!',                 // default
       xl('MIPS Registry ID')
     ),
 
     'pqrs_vendor_unique_id' => array(
-      xl('MIPS VENDOR UNIQUE ID'),	// for XML generation
+      xl('MIPS VENDOR UNIQUE ID'),  // for XML generation
       'text',                           // data type
       'FIXME vendor unique id FIXME!!!',            // default
       xl('MIPS Registry Name')
     ),
 
-     'pqrs_attestation_date' => array(
-      xl('Default Direct Entry Date'),	
-      'text',                           // data type
-      '2017-06-06',            // default
-      xl('Default date that direct entry encounters will be created on.')
-    ),
   ),
 
 );
