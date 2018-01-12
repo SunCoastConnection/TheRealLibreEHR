@@ -10,7 +10,7 @@ LibreEHR Directory structure
 2. **CONTRIB**
 
 
-3. **CONTROLERS**
+3. **CONTROLLERS**
 
 
 4. **CUSTOM**
@@ -67,7 +67,7 @@ This directory contains programs that don't have a good place to reside in the c
 
 **DOCUMENTATION**
 
-This directory is currently being purged by OpenEMR 95% of this is out of date and not pertinent to the latest versions. The file structures and and tables have changed greatly from what is in this directory.
+This directory is currently being purged by LibreEHR 95% of this is out of date and not pertinent to the latest versions. The file structures and and tables have changed greatly from what is in this directory.
 
 **GACL**
 
