@@ -330,44 +330,12 @@ function Form_Validate() {
                               <?php echo htmlspecialchars( xl('End Date'), ENT_NOQUOTES); ?>:
                         </td>
                     <td>
-                           <input type='text' name='form_end_date' id='form_end_date' size='20'
-                                  value='<?php echo htmlspecialchars( $_POST['form_end_date'], ENT_QUOTES); ?>'
+                           <input type='text' name='form_target_date' id='form_target_date' size='20'
+                                  value='<?php echo htmlspecialchars( $_POST['form_target_date'], ENT_QUOTES); ?>'
                                   title='<?php echo htmlspecialchars( xl('yyyy-mm-dd hh:mm:ss'), ENT_QUOTES); ?>'>
                         </td>
                 </tr>
-<!--                    <td>
-                      <input <?php echo $dis_text; ?> type='text' name='form_begin_date' id="form_begin_date" size='20'
-                        value='<?php echo htmlspecialchars($begin_date, ENT_QUOTES); ?>'
-                        onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)'
-                        title='<?php echo htmlspecialchars(xl('yyyy-mm-dd hh:mm:ss'), ENT_QUOTES); ?>'>
-<?php   if(empty($report_id)) { ?>
-                      <img src='../../interface/pic/show_calendar.gif' align='absbottom' width='24' height='22'
-                        id='img_begin_date' border='0' alt='[?]' style='cursor:pointer'
-                        title='<?php echo htmlspecialchars(xl('Click here to choose a date'), ENT_QUOTES); ?>'>
-<?php   } ?>
-                    </td>
-                  </tr>
-<?php } ?>
-                  <tr>
-                    <td class='label'>
-<?php if(in_array($type_report, array('pqrs', 'pqrs_individual_2016'))) { ?>
-                      <?php echo htmlspecialchars(xl('End Date'), ENT_NOQUOTES); ?>:
-<?php } else { ?>
-                      <?php echo htmlspecialchars(xl('Target Date'), ENT_NOQUOTES); ?>:
-<?php } ?>
-                    </td>
-                    <td>
-                      <input <?php echo $dis_text; ?> type='text' name='form_target_date' id="form_target_date" size='20'
-                        value='<?php echo htmlspecialchars($target_date, ENT_QUOTES); ?>'
-                        onkeyup='datekeyup(this,mypcc)' onblur='dateblur(this,mypcc)'
-                        title='<?php echo htmlspecialchars(xl('yyyy-mm-dd hh:mm:ss'), ENT_QUOTES); ?>'>
-<?php if(empty($report_id)) { ?>
-                      <img src='../../interface/pic/show_calendar.gif' align='absbottom' width='24' height='22'
-                        id='img_target_date' border='0' alt='[?]' style='cursor:pointer'
-                        title='<?php echo htmlspecialchars(xl('Click here to choose a date'), ENT_QUOTES); ?>'>
-<?php } ?>
-                    </td>
-                  </tr>-->
+
 <?php if(in_array($type_report, array('pqrs','pqrs_individual_2016'))) { ?>
                   <tr>
                     <td class='label'>
@@ -395,11 +363,7 @@ function Form_Validate() {
                     </td>
                     <td>
                       <select <?php echo $dis_text; ?> id='form_provider' name='form_provider'>
-                        <option value=''>-- <?php echo htmlspecialchars(xl('All (Cumulative)'), ENT_NOQUOTES); ?> --</option>
-<!-- TODO: Requires revision upon publishing of 2017 MIPS standard (not published yet: July 2017) -->
-                        <option value='collate_outer' <?php if($provider == 'collate_outer') {echo 'selected';} ?>>-- <?php echo htmlspecialchars(xl('All (Collated Format A)'), ENT_NOQUOTES); ?> --</option>
-                        <option value='collate_inner' <?php if($provider == 'collate_inner') {echo 'selected';} ?>>-- <?php echo htmlspecialchars(xl('All (Collated Format B)'), ENT_NOQUOTES); ?> --</option>
-<?php
+
       // Build a drop-down list of providers.
       if(!isset($provider_facility_filter)) {
         $provider_facility_filter = '';
@@ -706,7 +670,7 @@ function Form_Validate() {
             timepicker: false,
             format: "<?= $DateFormat; ?>"
         });
-        $("#form_end_date").datetimepicker({
+        $("#form_target_date").datetimepicker({
             timepicker: false,
             format: "<?= $DateFormat; ?>"
         });
