@@ -50,13 +50,20 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing3.s
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing3.sql");
 	sqlStatementNoLog($query);
 }
-
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing4.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing4.sql");
 	sqlStatementNoLog($query);
 }
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing5.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing5.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing6.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing6.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
 	sqlStatementNoLog($query);
 }
 
