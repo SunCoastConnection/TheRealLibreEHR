@@ -127,10 +127,10 @@ if(!empty($report_id)) {
 
 
 //TODO:  Generate these in code instead of hard coding 2017
-	$ENCOUNTER_FROM_DATE="01-01-2017";
+	$ENCOUNTER_FROM_DATE=$report_view['date_begin'];
 	htmlecho("ENCOUNTER_FROM_DATE is: ".$ENCOUNTER_FROM_DATE ." \n");
 
-	$ENCOUNTER_TO_DATE="12-31-2016";
+	$ENCOUNTER_TO_DATE=$report_view['date_target'];
 	htmlecho("ENCOUNTER_TO_DATE is: ".$ENCOUNTER_TO_DATE ." \n");
 
 
