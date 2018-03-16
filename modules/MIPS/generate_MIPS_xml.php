@@ -80,16 +80,15 @@ function get_TIN() {
 ###	==========	BEGIN MAIN	==========
 
 echo ("<pre>\n");
-htmlecho("Assumptions -- Things that should have been done before generating this XML:  \n");
+htmlecho("Assumptions and instructions for generating this XML:  \n");
 htmlecho(" * The eligible professional has signed a waiver giving the registry permission\n     to submit data on their behalf.  *REQUIRED*  \n");
-htmlecho(" * \"Failed Patients\" is assumed to be = Denominator - Numerator - Exclusions. *REQUIRED*  \n");
-htmlecho(" * This report does not include any \"pre_\" measures. \n");
-htmlecho(" * Go into Administration --- Facilities --- Mark ONE facility as 'Primary\n     Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
+htmlecho(" * This report must not include any \"pre_\" measures. \n");
+htmlecho(" * You have gone into Administration > Facilities > Mark ONE facility as 'Primary\n     Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
 htmlecho(" * Measures that must be reported on for EVERY Encounter will be manually   \n     dealt with in the XML.  \n");
 
-htmlecho("\nThis feature has generated XML files related to this report.\n");
+htmlecho("\nThis feature has generated an XML file related to this report.\n");
 htmlecho("The naming convention is ProviderNPI-ProviderTIN.xml \n");
-echo("<br>You can download these files by going to \"<b>QA Measures</b>\" --> \"<b>Upload Claim Files</b>\"\n and clicking on the \"<b>XML_out</b>\" directory, then the appropriate <b>.zip</b> file.\n");
+echo("<br>You can download these files by going to \"<b>QA Measures</b>\" --> \"<b>Upload Claim Files</b>\"\n and clicking on the \"<b>XML_out</b>\" directory, then the appropriate <b>.xml</b> file.\n");
 
 htmlecho("\n================================================================================ \n");
 
@@ -297,9 +296,5 @@ if(!empty($report_id)) {
 	echo ("ERROR!  No report_id specified!\n");
 }
 
-//echo("\nZipping XML files...  <b>$ZIPFILE_NAME</b>\n");
-//$output = shell_exec(" rm $OUTFILE_PATH/$ZIPFILE_NAME ");
-//echo "<pre>$output</pre>";
-//$output = shell_exec(" zip --junk-paths --move  $OUTFILE_PATH/$ZIPFILE_NAME $OUTFILE_PATH/$OUTFILE_BASENAME*.xml ");
-//echo "<pre>$output</pre>";
+
 ?>
