@@ -86,9 +86,9 @@ htmlecho(" * This report must not include any \"pre_\" measures. \n");
 htmlecho(" * You have gone into Administration > Facilities > Mark ONE facility as 'Primary\n     Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
 htmlecho(" * Measures that must be reported on for EVERY Encounter will be manually   \n     dealt with in the XML.  \n");
 
-htmlecho("\nThis feature has generated an XML file related to this report.\n");
-htmlecho("The naming convention is ProviderNPI-ProviderTIN.xml \n");
-echo("<br>You can download these files by going to \"<b>QA Measures</b>\" --> \"<b>Upload Claim Files</b>\"\n and clicking on the \"<b>XML_out</b>\" directory, then the appropriate <b>.xml</b> file.\n");
+htmlecho("\nThis tool has generated an XML file related to this report.\n");
+htmlecho("The file naming convention is ProviderNPI-ProviderTIN.xml \n");
+echo("<br>You may download these files by going to \"<b>QA Measures</b>\" --> \"<b>Upload Claim Files</b>\"\n and clicking on the \"<b>XML_out</b>\" folder, then the appropriate <b>.xml</b> file(s).\n");
 
 htmlecho("\n================================================================================ \n");
 
