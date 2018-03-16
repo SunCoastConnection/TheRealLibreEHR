@@ -222,6 +222,21 @@ function GenXml(sNested) {
   return false;
 }
 
+function GenXmlMIPS(sNested) {
+
+  top.restoreSession();
+
+  if(sNested == "PQRS") {
+    var form_rule_filter = theform.form_rule_filter.value;
+    var sLoc = 'generate_MIPS_xml.php?target_date='+theform.form_target_date.value+'&form_provider='+theform.form_provider.value+"&report_id=<?php echo attr($report_id); ?>&xmloptimize="+document.getElementById("xmloptimize").checked;
+  } else {
+    var sLoc = '../../custom/export_registry_xml.php?&target_date='+theform.form_target_date.value+'&nested='+sNested;
+  }
+  dlgopen(sLoc, '_blank', 600, 500);
+
+  return false;
+}
+
 
 
 function validateForm() {
@@ -419,9 +434,15 @@ function Form_Validate() {
 
                         Optimize XML report?
                         <input id="xmloptimize" type="checkbox" name="xmloptimize" value="1" />
+                        
                       <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXml("PQRS");'>
                         <span>
-                          <?php echo htmlspecialchars(xl('Generate XML for MIPS'), ENT_NOQUOTES); ?>
+                          <?php echo htmlspecialchars(xl('OLD XML for PQRS'), ENT_NOQUOTES); ?>
+                        </span>
+                      </a>
+                        <a href="#"  id="xml_MIPS" class='css_button' onclick='GenXmlMIPS("PQRS");'>
+                        <span>
+                          <?php echo htmlspecialchars(xl('NEW XML for MIPS'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
 <?php
