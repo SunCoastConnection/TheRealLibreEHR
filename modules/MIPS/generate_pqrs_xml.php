@@ -74,7 +74,7 @@ $query = "SELECT count(DISTINCT ri.pid) as count ".
 " FROM report_itemized ri ".
 " INNER JOIN insurance_data i on (i.pid=ri.pid) ".
 " INNER JOIN insurance_companies c on (c.id = i.provider) ".
-" WHERE c.freeb_type = 2 ".
+" WHERE c.ins_type_code = 2 ".
 " AND ri.report_id =".$report_id;
 #TODO:  Validate this query
 	$result=sqlFetchArray(sqlStatement($query))['count'];
@@ -155,14 +155,14 @@ htmlecho(" * \"Failed Patients\" is assumed to be = Denominator - Numerator - Ex
 htmlecho(" * 9 Measures were chosen for an Individual Measures report.  *REQUIRED*  \n");
 htmlecho(" * This report does not include any \"pre_\" measures. \n");
 htmlecho(" * Go into Administration --- Facilities --- Mark ONE facility as 'Primary\n     Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
-htmlecho(" * If you want to receive PQRS email notifications from CMS for this provider,\n     Go into Administration --- 'Addr Book' --- Add an email address *Optional*  \n");
+htmlecho(" * If you want to receive MIPS email notifications from CMS for this provider,\n     Go into Administration --- 'Addr Book' --- Add an email address *Optional*  \n");
 htmlecho(" * You are not reporting on GPROs.  \n");
 htmlecho(" * You are not reporting on on Risk Adjusted Measures.  \n");
 htmlecho(" * Measures that must be reported on for EVERY Encounter will be manually   \n     dealt with in the XML.  \n");
 
 htmlecho("\nThis feature has generated XML files related to this report.\n");
 htmlecho("The naming convention is ProviderNPI-ProviderTIN.xml \n");
-echo("<br>You can download these files by going to \"<b>Left Nav</b>\" --> \"<b>Upload Claim Files</b>\"\n and clicking on the \"<b>XML_out</b>\" directory, then the appropriate <b>.zip</b> file.\n");
+echo("<br>You can download these files by going to \"<b>QA Measures</b>\" --> \"<b>Upload Claim Files</b>\"\n and clicking on the \"<b>XML_out</b>\" directory, then the appropriate <b>.zip</b> file.\n");
 
 htmlecho("\n================================================================================ \n");
 
@@ -246,7 +246,7 @@ if(!empty($report_id)) {
 	htmlecho("ENCOUNTER_TO_DATE is: ".$ENCOUNTER_TO_DATE ." \n");
 
 
-	$OUTFILE_PATH=$GLOBALS['OE_SITE_DIR']."/PQRS/dropzone/files/XML_out/";
+	$OUTFILE_PATH=$GLOBALS['OE_SITE_DIR']."/filemanager/files/XML_out";
 	//htmlecho("DEBUG:  OUTFILE_PATH is $OUTFILE_PATH  \n");
 
 	$OUTFILE_BASENAME=$PROVIDER_NPI."_".$PROVIDER_TIN;
@@ -275,7 +275,7 @@ if(!empty($report_id)) {
 		htmlecho("For Measure ".$FILE_NUMBER.":   \n");
 
 		$PQRS_MEASURE_NUMBER=ltrim(substr($row['id'],strlen($row['id'])-4 ),'0');
-		htmlecho(" PQRS Measure Number is: $PQRS_MEASURE_NUMBER  \n");
+		htmlecho(" MIPS Measure Number is: $PQRS_MEASURE_NUMBER  \n");
         if (in_array($PQRS_MEASURE_NUMBER,$BLACKLIST)){
           echo(" Optimization OFF for this <i><b>INVERSE MEASURE!</b></i>  \n");  
             $xmloptimize ='false';}
@@ -347,13 +347,13 @@ if(!empty($report_id)) {
 # ==============================================================
 #  Generate XML
 		$OUTFILE_NAME="$OUTFILE_BASENAME"."_".$FILE_NUMBER.".xml";
-		$myFileHandle=fopen($OUTFILE_PATH."/".$OUTFILE_NAME, "w") or die("Unable to open file!");
+		$myFileHandle=fopen($OUTFILE_PATH."/".$OUTFILE_NAME, "w") or die("Unable to open file!".$OUTFILE_PATH."/".$OUTFILE_NAME);
 
 		htmlecho(" \nGenerating File number ".$FILE_NUMBER.": ".$OUTFILE_NAME." \n\n");
 /*		htmlecho("<?xml version=\"1.0\" encoding=\"utf-8\"?> \n"); */
 		fwrite($myFileHandle, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
 //		htmlecho("<submission type=\"PQRS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\"> \n");
-		fwrite($myFileHandle, "<submission type=\"PQRS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n");
+		fwrite($myFileHandle, "<submission type=\"MIPS-REGISTRY\" version=\"8.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"Registry_Payment.xsd\">\n");
 //		htmlecho("  <file-audit-data> \n");
 		fwrite($myFileHandle,  "  <file-audit-data>\n");
 //		htmlecho("    <create-date>".$CREATE_DATE."</create-date> \n");
