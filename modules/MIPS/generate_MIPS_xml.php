@@ -112,7 +112,7 @@ if(!empty($report_id)) {
 
 
 
-	$entityType=get_entity_type();
+	$entityType=get_entityType();
 	htmlecho("entityType is: ".$VENDOR_UNIQUE_ID ." \n");
 
 

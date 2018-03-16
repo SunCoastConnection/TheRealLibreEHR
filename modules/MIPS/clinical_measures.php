@@ -440,7 +440,7 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('OLD XML for PQRS'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-                        <a href="#"  id="xml_pqrs" class='css_button' onclick='GenXmlMIPS("PQRS");'>
+                        <a href="#"  id="xml_MIPS" class='css_button' onclick='GenXmlMIPS("PQRS");'>
                         <span>
                           <?php echo htmlspecialchars(xl('NEW XML for MIPS'), ENT_NOQUOTES); ?>
                         </span>
