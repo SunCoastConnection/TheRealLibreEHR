@@ -297,9 +297,9 @@ if(!empty($report_id)) {
 	echo ("ERROR!  No report_id specified!\n");
 }
 
-echo("\nZipping XML files...  <b>$ZIPFILE_NAME</b>\n");
-$output = shell_exec(" rm $OUTFILE_PATH/$ZIPFILE_NAME ");
-echo "<pre>$output</pre>";
-$output = shell_exec(" zip --junk-paths --move  $OUTFILE_PATH/$ZIPFILE_NAME $OUTFILE_PATH/$OUTFILE_BASENAME*.xml ");
-echo "<pre>$output</pre>";
+//echo("\nZipping XML files...  <b>$ZIPFILE_NAME</b>\n");
+//$output = shell_exec(" rm $OUTFILE_PATH/$ZIPFILE_NAME ");
+//echo "<pre>$output</pre>";
+//$output = shell_exec(" zip --junk-paths --move  $OUTFILE_PATH/$ZIPFILE_NAME $OUTFILE_PATH/$OUTFILE_BASENAME*.xml ");
+//echo "<pre>$output</pre>";
 ?>
