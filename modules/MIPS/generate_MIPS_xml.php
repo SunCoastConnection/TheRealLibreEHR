@@ -58,7 +58,7 @@ function get_Measure_Strata($population_label) {
 
 
 function get_entityType() {
-	$myGOT=$GLOBALS['pqrs_vendor_unique_id']; // use for entityType individual or group
+	$myGOT=$GLOBALS['pqrs_entityType']; // use for entityType individual or group
 	//htmlecho("DEBUG:  entityType -- Got $myGOT \n");
 	return $myGOT;
 }
@@ -113,7 +113,7 @@ if(!empty($report_id)) {
 
 
 	$entityType=get_entityType();
-	htmlecho("entityType is: ".$VENDOR_UNIQUE_ID ." \n");
+	htmlecho("entityType is: ".$entityType ." \n");
 
 
 	$COLLECTION_METHOD="false";
