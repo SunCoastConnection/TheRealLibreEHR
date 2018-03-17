@@ -273,7 +273,7 @@ if(!empty($report_id)) {
 		fwrite($myFileHandle,  "             <performanceMet>$MEETS_PERFORMANCE_INSTANCES</performanceMet>\n");
 		fwrite($myFileHandle,  "             <performanceNotMet>$PERFORMANCE_NOT_MET_INSTANCES</performanceNotMet>\n");
 		fwrite($myFileHandle,  "             <eligiblePopulation>$ELIGIBLE_INSTANCES</eligiblePopulation>\n");
-		//fwrite($myFileHandle,  "             <eligiblePopulationExclusion>$PERFORMANCE_EXCLUSION_INSTANCES</eligiblePopulationExclusion>\n");
+		fwrite($myFileHandle,  "             <eligiblePopulationExclusion>$PERFORMANCE_EXCLUSION_INSTANCES</eligiblePopulationExclusion>\n");
 		//fwrite($myFileHandle,  "             <eligiblePopulationException>$DOES_NOTEXIST</eligiblePopulationException>\n");
         //<stratum>$somedamnvalue</stratum>
         //</strata> loops would end here
