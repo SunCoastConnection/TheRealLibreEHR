@@ -161,7 +161,7 @@ if(!empty($report_id)) {
 		//begin <data>
 		fwrite($myFileHandle, "<data>\n");
 		//begin <submission>
-		fwrite($myFileHandle, " <submission>\n");
+		//fwrite($myFileHandle, " <submission>\n"); no submission element for upload file format.
 		fwrite($myFileHandle, "    <entityType>".$entityType."</entityType>\n");
 		fwrite($myFileHandle, "    <taxpayerIdentificationNumber>$PROVIDER_TIN</taxpayerIdentificationNumber>\n");
 		if ($entityType == "individual"){
@@ -266,7 +266,7 @@ if(!empty($report_id)) {
 
 
 		fwrite($myFileHandle,  "          <value>\n");
-        fwrite($myFileHandle,  "            <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
+        fwrite($myFileHandle,  "             <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
 		fwrite($myFileHandle,  "             <performance-rate>$PERFORMANCE_RATE</performance-rate>\n");        
         ///<strata> foreach loops would begin here. TODO OLD CODE=fwrite($myFileHandle,  "          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num>\n");
 		fwrite($myFileHandle,  "             <isEndToEndReported>false</isEndToEndReported>\n");
@@ -285,8 +285,8 @@ if(!empty($report_id)) {
 	}	// End loop.  LOOP LOOP LOOP LOOP
 
 
-		fwrite($myFileHandle,  "   <measurementSet>\n");
-		fwrite($myFileHandle,  " </submission>\n");
+		fwrite($myFileHandle,  "   </measurementSet>\n");
+		//fwrite($myFileHandle,  " </submission>\n"); no submission element required.
 		fwrite($myFileHandle,  "</data>\n");
 		fclose($myFileHandle);
 
