@@ -1020,7 +1020,15 @@
         "children" : [ ],
         "requirement" : 0,
         "global_req" : "enable_pqrs" 
-    }, { 
+    }, {
+        "label" : "Upload Claim Files",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/filemanager/index.php",
+        "children" : [ ],
+        "requirement" : 0,
+        "acl_req" : [ "admin", "super" ]
+    },{ 
         "label" : "Delete Old Reports",
         "menu_id" : "rep0",
         "target" : "rep",
@@ -1029,14 +1037,15 @@
         "requirement" : 0,
         "global_req" : "enable_pqrs" 
     },{ 
-        "label" : "Report Database Import",
+ 
+        "label" : "Instance Counts",
         "menu_id" : "rep0",
         "target" : "rep",
-        "url" : "/modules/MIPS/import_data.php",
+        "url" : "/modules/MIPS/instanceCount.php",
         "children" : [ ],
         "requirement" : 0,
         "acl_req" : [ "admin", "super" ],
-        "global_req" : "enable_pqrs"
+        "global_req" : "enable_pqrs" 
     },{ 
         "label" : "Remove_Provider_Assignments",
         "menu_id" : "rep0",
@@ -1053,13 +1062,24 @@
         "url" : "/modules/MIPS/provider_encounter_counts.php",
         "children" : [ ],
         "requirement" : 0
-    },{ 
-        "label" : "Upload Claim Files",
+    },{
+        "label" : "Database Import",
         "menu_id" : "rep0",
         "target" : "rep",
-        "url" : "/modules/filemanager/index.php",
+        "url" : "/modules/MIPS/import_data.php",
         "children" : [ ],
-        "requirement" : 0
+        "requirement" : 0,
+        "acl_req" : [ "admin", "super" ],
+        "global_req" : "enable_pqrs"
+    },{
+        "label" : "Database Inserts",
+        "menu_id" : "rep0",
+        "target" : "rep",
+        "url" : "/modules/MIPS/update_data.php",
+        "children" : [ ],
+        "requirement" : 0,
+        "acl_req" : [ "admin", "super" ],
+        "global_req" : "enable_pqrs"
     },{ 
         "label" : "Change Demo Database",
         "menu_id" : "rep0",
