@@ -476,7 +476,7 @@ var SelectPatient = function (eObj) {
 <?php 
 // The new layout loads just the demographics frame here, which in turn
 // will set the pid and load all the other frames.
-    $newPage = "../../patient_file/summary/demographics.php?set_pid=";
+    $newPage = "../../interface/patient_file/summary/demographics.php?set_pid=";
     $target = "document";
 ?>
     var tableId = eObj.id;
@@ -498,7 +498,7 @@ var SelectPatient = function (eObj) {
 	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
 	echo "		$.ajax({\n";
 	echo "			type: 'POST',\n";
-	echo "			url: '".$GLOBALS['webroot']."/library/classes/rulesets/PQRS/PQRSEncounter.php',\n";
+	echo "			url: '".$GLOBALS['webroot']."/modules/MIPS/PQRSEncounter.php',\n";
 	echo "			dataType: 'text',\n";
 	echo "			data: {\n";
 	echo "				pid: pid,\n";
