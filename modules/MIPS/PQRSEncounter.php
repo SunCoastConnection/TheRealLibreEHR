@@ -15,21 +15,14 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
 
-//require_once(dirname(__FILE__) . "/jsonwrapper/jsonwrapper.php");
-include_once(__DIR__.'/../../../../interface/globals.php');
-include_once(__DIR__.'/../../../../library/sql.inc');
-//
-//function listingCDRReminderLog($begin_date='',$end_date='') {
-  //if (empty($end_date)) {
-    //$end_date=date('Y-m-d H:i:s');
-  //}
-//}
 
-//pid=' + '&date=' + '20160620' + '&CPT2codevalue=
+require_once("../../globals.php");
+include_once("../../library/sql.inc");
+
 
 function AddCPT2CodeBilling($pid,$date,$ourCode,$encounter,$userID)
 {
-//error_log("DEBUG: ACPT2CBilling -- Passed us:  pid=".$pid."  date=".$date."  code=".$ourCode."  encounter=".$encounter."  user/provider=".$userID);
+
 
 	if ( $ourCode != "" ) {
 		$codesplit=explode(":",$ourCode);
@@ -39,7 +32,7 @@ function AddCPT2CodeBilling($pid,$date,$ourCode,$encounter,$userID)
 		} else {
 			$codeModifier="";
 		}
-//error_log("DEBUG: ACPT2CBilling -- codeBase=".$codeBase." codeModifier=".$codeModifier);
+
 		$query=
 		"INSERT INTO `billing` ".
 		" ( `date`, `code_type`, `code`, `pid`, ".
@@ -52,45 +45,14 @@ function AddCPT2CodeBilling($pid,$date,$ourCode,$encounter,$userID)
 		" '".$encounter."','0','1', ".
 		" '1','0','".$codeModifier."');";
 		$result = sqlQuery($query);
-// error_log("DEBUG: ACPT2CBilling -- Generated my query:  ".$query."  Executed with result:  ".$result);
+
 	}
-// TODO:  Return something specific if we were successful
+
 	return $result;
 }
 
 function AddCPT2CodeEncounter($pid,$date,$passedCodes)
 {
-	 
-//This is a DEBUG block:
-/*
-	$var="";
-	$session_string="";
-	foreach ($_SESSION as $k => $var) {
-		$session_string=$session_string." // ".$k." = ".$var;
-	}
-	error_log("DEBUG AddCPT2CodeEncounter() -- _SESSION:".$session_string);
-*/
-//$_SESSION contains:
-// language_choice = 1 
-// authUser = admin 
-// authPass = $
-// authGroup = Default 
-// authProvider = Default 
-// authId = 1 
-// cal_ui = 3 
-// userauthorized = 1 
-// last_update = 1468528344 
-// encounter =  
-// pc_username = admin 
-// pc_framewidth = 1126 
-// pc_facility = 0 
-// viewtype = day 
-// PNSVrand = 146242944 
-// PNSVlang = eng 
-// lastcaldate = 2016-07-14 
-// pid = 1,
-
-
 //	*	Get the userID
 	$myuserID=$_SESSION["authUserID"];
 // authUserID = 1 
@@ -202,24 +164,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$myperformance = $_POST['performance'];
 	$myreport_id = $_POST['report_id'];
 	$myitemized_test_id = $_POST['itemized_test_id'];
-error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code=".$mycode." performance=".$myperformance." report_id=".$myreport_id." itemized_test_id=".$myitemized_test_id);  //."  encounter=".$encounter."  user/provider=".$userID);
+//error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code=".$mycode." performance=".$myperformance." report_id=".$myreport_id." itemized_test_id=".$myitemized_test_id);  //."  encounter=".$encounter."  user/provider=".$userID);
 
 	if ( $mypid !='' and $mydate!='' and $mycode!='') {
 
 		$result=AddCPT2CodeEncounter($mypid,$mydate,$mycode);
         $result2=update_itemized_report($myreport_id, $myitemized_test_id, $myperformance, $mypid);
-// TODO:  How do we tell if we REALLY were successful.
-//		if(rand(1, 15) > 15) {
+
         		echo 'SUCCESS';
-//		} else {
-//        		echo 'FAILED:'.$result;
-//		}
+
 	}
 
-	
-		
-
-		
 }
 
 ?>

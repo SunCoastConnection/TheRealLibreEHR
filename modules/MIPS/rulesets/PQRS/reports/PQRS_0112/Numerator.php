@@ -31,7 +31,7 @@ $query =
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-" AND YEAR(fe.date) >=DATE_SUB('".$endDate."',INTERVAL 1 YEAR) ".
+" AND YEAR(fe.date) >=DATE_SUB('".$endDate."',INTERVAL 15 MONTH) ".
 " AND ( b1.code = '3014F' AND b1.modifier =''); ";
 //8P hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 

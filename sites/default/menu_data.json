@@ -1029,14 +1029,6 @@
         "requirement" : 0,
         "acl_req" : [ "admin", "super" ]
     },{ 
-        "label" : "Delete Old Reports",
-        "menu_id" : "rep0",
-        "target" : "rep",
-        "url" : "/modules/MIPS/truncate_reports.php",
-        "children" : [ ],
-        "requirement" : 0,
-        "global_req" : "enable_pqrs" 
-    },{ 
  
         "label" : "Instance Counts",
         "menu_id" : "rep0",
