@@ -40,6 +40,8 @@ require_once("$srcdir/sql.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/erx_javascript.inc.php");
+require_once("$srcdir/headers.inc.php");
+require_once("$srcdir/role.php");
 
 $alertmsg = '';
 
@@ -49,11 +51,8 @@ $alertmsg = '';
 
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
-<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['webroot'] ?>/library/js/fancybox/jquery.fancybox-1.2.6.css" media="screen" />
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/dialog.js"></script>
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery.1.3.2.js"></script>
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/common.js"></script>
-<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/fancybox/jquery.fancybox-1.2.6.js"></script>
+
+<?php call_required_libraries(array("jquery-min-3-1-1", "fancybox", "common")); ?>
 
 <script src="checkpwd_validation.js" type="text/javascript"></script>
 
@@ -124,6 +123,7 @@ function submitform() {
                 alertMsg += checkLength(f[i].name,f[i].value,30);
                 alertMsg += checkAlphaNumeric(f[i].name,f[i].value);
              }
+             
           }
        }
        if(alertMsg)
@@ -182,9 +182,9 @@ function authorized_clicked() {
 <table><tr><td>
 <span class="title"><?php echo xlt('Add User'); ?></span>&nbsp;</td>
 <td>
-<a class="css_button" name='form_save' id='form_save' href='#' onclick="return submitform()">
+<a class="css_button cp-submit" name='form_save' id='form_save' href='#' onclick="return submitform()">
     <span><?php echo xlt('Save');?></span></a>
-<a class="css_button large_button" id='cancel' href='#'>
+<a class="css_button large_button cp-negative" id='cancel' href='#'>
     <span class='css_button_span large_button_span'><?php echo xlt('Cancel');?></span>
 </a>
 </td></tr></table>
@@ -351,12 +351,45 @@ echo generate_select_list('irnpool', 'irnpool', '',
    }
   ?>
   </select></td>
+  
   <td><span class="text"><?php echo xlt('Additional Info'); ?>: </span></td>
   <td><textarea name=info style="width:120px;" cols=27 rows=4 wrap=auto></textarea></td>
+  </tr>
+  <tr>
+  <td><span class="text"><?php echo xlt('Menu role'); ?>:</span></td>
+  <td>
+  <select style="width:120px;" name="menu_role" id="menu_role">
+      <?php
+         $role = new Role();
+         $role_list = $role->getRoleList();
+         foreach($role_list as $role_title) {
+           ?>  <option value="<?php echo $role_title; ?>"><?php echo xlt($role_title); ?></option>
+          <?php
+         }
+      ?>
+      </select>
+  </td>
+  <td><span class="text"> <?php echo xlt('Full screen page'); ?>:</span></td>
+  <td>
+      <select style="width:120px;" name="fullscreen_page" id="fullscreen_page">
+                <option value="Calendar|/interface/main/main_info.php">Calendar</option>
+                <option value="Flow Board|/interface/patient_tracker/patient_tracker.php">Flow Board</option>
+      </select>
 
+  
+  </td>
+  </tr>
+  <tr>
+  <td>
+      <span class="text"> <?php echo xlt('Full screen page enabled'); ?>: </span>
+  </td>
+  <td>
+      <input type="checkbox" name="fullscreen_enable"/>
+  </td>
   <?php do_action( 'usergroup_admin_add' ); ?>
 
   </tr>
+
   <tr height="25"><td colspan="4">&nbsp;</td></tr>
 <?php
  }
@@ -471,7 +504,33 @@ $(document).ready(function(){
     $("#cancel").click(function() {
           parent.$.fn.fancybox.close();
      });
+  /*
+     $("#role_name").on('change', function(e) {
+       
+        $.ajax({
+          "url": '../../library/ajax/get_fullscreen_pages.php',
+          "method": "POST",
+          "data" : {
+             "role_name": $("#role_name").val()
+          },
+          success: function(data) {
+            obj = JSON.parse(data);
+            $("#fullscreen_page").empty();
+            obj.forEach(function(item) {
+              option = document.createElement('option');
+              option.text = item.label;
+              option.value = item.id;
+              $("#fullscreen_page").append(option);
+              
+            });
 
+          },
+          error: function(err) {
+            console.log(err);
+          }
+          });
+
+       }); */ 
 });
 </script>
 <table>

@@ -84,7 +84,7 @@ $res = sqlStatement($query,$sqlBindArray);
 <html>
 
 <head>
-<?php  call_required_libraries(array ("jquery-min-3-1-1","bootstrap","fancybox"));
+<?php  call_required_libraries(array("jquery-min-3-1-1","bootstrap","fancybox"));
       resolveFancyboxCompatibility();
 ?>
 
@@ -131,8 +131,8 @@ $res = sqlStatement($query,$sqlBindArray);
    <input type='checkbox' name='form_external' value='1'<?php if ($form_external) echo ' checked'; ?>
     title='<?php echo xla("Omit internal users?") ?>' />
    <?php echo xlt('External Only')?>&nbsp;&nbsp;
-   <input type='submit' title='<?php echo xla("Use % alone in a field to just sort on that column") ?>' class='button' name='form_search' value='<?php echo xla("Search")?>' />
-   <input type='button' class='button' value='<?php echo xla("Add New"); ?>' onclick='doedclick_add(document.forms[0].form_abook_type.value)' />
+   <input type='submit' title='<?php echo xla("Use % alone in a field to just sort on that column") ?>' class='cp-submit button' name='form_search' value='<?php echo xla("Search")?>' />
+   <input type='button' class='cp-positive button' value='<?php echo xla("Add New"); ?>' onclick='doedclick_add(document.forms[0].form_abook_type.value)' />
 </tr>
 </table>
     

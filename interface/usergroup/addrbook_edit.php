@@ -2,7 +2,7 @@
 /*
  *  addrbook_edit.php for the editing of the address book information
  *
- * Copyright (C) 2016-2017 
+ * Copyright (C) 2016-2018 Terry Hill <teryhill@librehealth.io>
  * Copyright (C) 2006-2010 Rod Roark <rod@sunsetsystems.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or
@@ -20,11 +20,12 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreEHR
+ * @package LibreHealth EHR
  * @author Rod Roark <rod@sunsetsystems.com>
+ * @author Terry Hill <teryhill@librehealth.io>
  * @link http://librehealth.io
  *
- * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
+ * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
  *
  */
 
@@ -41,6 +42,7 @@
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/formdata.inc.php");
  require_once("$srcdir/htmlspecialchars.inc.php");
+ require_once("$srcdir/headers.inc.php");
 
  // Collect user id if editing entry
  $userid = $_REQUEST['userid'];
@@ -162,6 +164,7 @@ td { font-size:10pt; }
     "lname = "        . $form_lname                  . ", " .
     "mname = "        . $form_mname                  . ", " .
     "suffix = "       . $form_suffix                 . ", " .
+    "billname= "      . invalue('form_billname')     . ", " .
     "specialty = "    . invalue('form_specialty')    . ", " .
     "organization = " . invalue('form_organization') . ", " .
     "valedictory = "  . invalue('form_valedictory')  . ", " .
@@ -227,7 +230,7 @@ td { font-size:10pt; }
     invalue('form_organization')  . ", " .
     invalue('form_valedictory')   . ", " .
     invalue('form_assistant')     . ", " .
-    "'', "                               . // billname
+    invalue('form_billname')      . ", " . // billname
     invalue('form_email')         . ", " .
     invalue('form_email_direct')  . ", " .
     invalue('form_url')           . ", " .
@@ -289,7 +292,7 @@ td { font-size:10pt; }
   typeSelect("<?php echo attr($row['abook_type']); ?>");
   //making changes to reflect appropriate value of type selcted.
   if(typeof abook_type != 'undefined' && abook_type == 'ord_lab'){
-	$('#cpoe_span').css('display','inline');
+    $('#cpoe_span').css('display','inline');
    }
  });
 </script>
@@ -322,10 +325,15 @@ td { font-size:10pt; }
      maxlength='50' value='<?php echo attr($row['fname']); ?>' />&nbsp;&nbsp;&nbsp;
    <b><?php echo xlt('Middle'); ?>:</b>&nbsp;&nbsp;&nbsp; <input type='entry' size='4' name='form_mname' class='inputtext'
      maxlength='50' value='<?php echo attr($row['mname']); ?>' />&nbsp;&nbsp;&nbsp;
-   <b><?php echo xlt('Suffix'); ?>:</b>&nbsp;&nbsp;&nbsp; <input type='entry' size='8' name='form_suffix' class='inputtext'
-     maxlength='50' value='<?php echo attr($row['suffix']); ?>' />
+
+   <b><?php echo xlt('Suffix'); ?>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type='entry' size='8' name='form_suffix' class='inputtext'
+     maxlength='50' value='<?php echo attr($row['suffix']); ?>' />&nbsp;&nbsp;&nbsp;
   </td>
  </tr>
+ <tr>
+   <td nowrap><b><?php echo xlt('Resource Name'); ?>:</b></td>&nbsp;&nbsp;&nbsp; <td><input type='entry' size='10' name='form_billname' class='inputtext'
+     maxlength='50' value='<?php echo attr($row['billname']); ?>' /></td>
+</tr>
 
  <tr id="specialtyRow">
   <td nowrap><b><?php echo xlt('Specialty'); ?>:</b></td>
@@ -518,15 +526,15 @@ td { font-size:10pt; }
 
 <br />
 
-<input type='submit' name='form_save' value='<?php echo xla('Save'); ?>' />
+<input type='submit' name='form_save' class='cp-submit' value='<?php echo xla('Save'); ?>' />
 
 <?php if ($userid && !$row['username']) { ?>
 &nbsp;
-<input type='submit' name='form_delete' value='<?php echo xla('Delete'); ?>' style='color:red' />
+<input type='submit' name='form_delete' class='cp-negative' value='<?php echo xla('Delete'); ?>' style='color:red' />
 <?php } ?>
 
 &nbsp;
-<input type='button' value='<?php echo xla('Cancel'); ?>' onclick='window.close()' />
+<input type='button' class='cp-negative' value='<?php echo xla('Cancel'); ?>' onclick='window.close()' />
 </p>
 
 </center>

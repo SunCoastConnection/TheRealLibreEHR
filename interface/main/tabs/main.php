@@ -12,6 +12,8 @@ $sanitize_all_escapes=true;
 require_once("../../globals.php");
 require_once $GLOBALS['srcdir'].'/headers.inc.php';
 require_once $GLOBALS['srcdir'].'/ESign/Api.php';
+/* for getPnotesByUser(). */
+require_once($GLOBALS['srcdir'] . '/pnotes.inc');
 $esignApi = new Api();
 
 ?>
@@ -55,8 +57,8 @@ var webroot_url="<?php echo $web_root; ?>";
 <link rel="stylesheet" type="text/css" href="css/tabs.css"/>
 
 <?php
-    /*  Include Bootstrap and Knockout Libraries    */
-  call_required_libraries(array("jquery-min-3-1-1","bootstrap","knockout"));
+    /*  Include Bootstrap, Knockout Libraries and Font Awesome library   */
+  call_required_libraries(array("jquery-min-3-1-1","bootstrap","knockout", "font-awesome"));
 ?>
 
 <script type="text/javascript" src="js/custom_bindings.js"></script>
@@ -68,6 +70,7 @@ var webroot_url="<?php echo $web_root; ?>";
 <script type="text/javascript" src="js/dialog_utils.js"></script>
 
 <link rel='stylesheet' href='<?php echo $web_root; ?>/library/fonts/typicons/typicons.min.css' />
+<link rel="shortcut icon" href="<?php echo $web_root; ?>/favicon.ico" type="image/x-icon">
 
 <?php require_once("templates/tabs_template.php"); ?>
 <?php require_once("templates/menu_template.php"); ?>
@@ -109,28 +112,51 @@ var webroot_url="<?php echo $web_root; ?>";
                                                                   .',' . json_encode($userQuery['lname'])
                                                                   .',' . json_encode($_SESSION['authGroup']); ?>));
 </script>
+
+<style type="text/css">
+
+    #messagesNotification{
+        position: relative;
+        width: 100%;
+        margin: 5px 30px 0 0;
+    }
+
+    span.nt-num{
+        position: absolute;
+        top: -5px;
+        right: 20px;
+        background-color: red;
+        color: white;
+        font-weight: bolder;
+        padding: 0 5px;
+        border: 1px solid red;
+        border-radius: 100%;
+        font-size: 12px;
+    }
+
+</style>
 <div id="mainBox">
     <div id="dialogDiv"></div>
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only"><?php echo xlt("Toggle navigation"); ?></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        </button>        
-    </div>    
+        </button>
+    </div>
     <div class="collapse navbar-collapse" id="navbar-collapse">
-        <div id="menu"  data-bind="template: {name: 'menu-template', data: application_data} "> </div>
+        <div id="menu" data-bind="template: {name: 'menu-template', data: application_data} "></div>
         <div id="userData" data-bind="template: {name: 'user-data-template', data:application_data} "></div>
     </div>
-    
+
     <div id="patientData" class="body_title" data-bind="template: {name: 'patient-data-template', data: application_data} "></div>
     <div class="body_title" data-bind="template: {name: 'tabs-controls', data: application_data} "> </div>
 
     <div class="mainFrames">
         <div id="framesDisplay" data-bind="template: {name: 'tabs-frames', data: application_data}"> </div>
     </div>
-    
+
 </div>
 <script>
     $("#dialogDiv").hide();
@@ -190,24 +216,32 @@ var webroot_url="<?php echo $web_root; ?>";
 
                         prev.css('flex', leftPercentage.toString());
                         next.css('flex', rightPercentage.toString());
-
-                        $(document).on("mouseup", function() {
-                          $('body').css('cursor', priorCursor);
-                            $('.draggable').removeClass('draggable').css('z-index', z_idx);
-
-                            // Deactivate Frame Barrier!
-                            $("#frameBarrier").css("visibility", "hidden");
-                        });
                     }
+                    $(document).on("mouseup", function() {
+                        $('body').css('cursor', 'auto');
+                        $('.draggable').removeClass('draggable').css('z-index', z_idx);
+                        // Deactivate Frame Barrier!
+                        $("#frameBarrier").css("visibility", "hidden");
+                    });
                 });
                 e.preventDefault(); // Disable selection
             });
 
         }
     })(jQuery);
-
+    //calling resize plugin upon
+    //1) initial loading -- with 2 tabs only
     $('.handle').drags();
-
+    //2) clicks in main navbar area -- opens a new tab
+    $("#navbar-collapse").on("click", function() {
+        $('.handle').drags();
+    })
+    //3) clicks in patient data area -- opens a new tab
+    $("#patientData").on("click", function() {
+        $('.handle').drags();
+    });
+  
+  
 </script>
 
 <?php do_action( 'after_main_box' ); ?>
