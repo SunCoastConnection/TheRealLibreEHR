@@ -5,11 +5,16 @@
         <!--ko if:!locked() -->
             <span class="tabSpan tabFloat bgcolor2">
                 <span  data-bind="text: title, click: tabClicked, css: {tabHidden: !visible()}"></span>
-                <span class="typcn typcn-refresh" data-bind="click: tabRefresh"></span>        
-                <span class="typcn typcn-lock-open"  data-bind="click: tabLockToggle"></span>
-                <!-- ko if:closable-->
-                    <span class="typcn typcn-delete" data-bind="click: tabClose"></span>
-                <!-- /ko -->
+                    <!--ko if:!locked() -->
+                        <span class="fa fa-unlock tab-button"  data-bind="click: tabLockToggle" title="Unlock"></span>
+                    <!-- /ko -->
+                    <!--ko if:locked() -->
+                        <span class="fa fa-lock tab-button"  data-bind="click: tabLockToggle" title="Lock"></span>
+                    <!-- /ko -->
+
+                    <!-- ko if:closable-->
+                        <span class="fa fa-times tab-button" data-bind="click: tabClose" title="Close"></span>
+                    <!-- /ko -->
             </span>
         <!-- /ko -->
     <!-- /ko -->
@@ -21,24 +26,24 @@
 
     <!-- ko  foreach: tabs.tabsList -->
         <div class="frameDisplay" data-bind="visible:visible">
-          
+
             <div class="body_title tabControls">
                 <span class="tabSpan bgcolor2">
                     <span  data-bind="text: title, click: tabClicked, css: {tabHidden: !visible()}"></span>
-                    <span class="typcn typcn-refresh" data-bind="click: tabRefresh"></span>
+                    <span class="fa fa-refresh tab-button" data-bind="click: tabRefresh" title="Refresh"></span>
                     <!--ko if:!locked() -->
-                        <span class="typcn typcn-lock-open"  data-bind="click: tabLockToggle"></span>
+                        <span class="fa fa-unlock tab-button"  data-bind="click: tabLockToggle" title="Unlock"></span>
                     <!-- /ko -->
                     <!--ko if:locked() -->
-                        <span class="typcn typcn-lock-closed"  data-bind="click: tabLockToggle"></span>
+                        <span class="fa fa-lock tab-button"  data-bind="click: tabLockToggle" title="Lock"></span>
                     <!-- /ko -->
 
                     <!-- ko if:closable-->
-                        <span class="typcn typcn-delete" data-bind="click: tabClose"></span>
+                        <span class="fa fa-times tab-button" data-bind="click: tabClose" title="Close"></span>
                     <!-- /ko -->
                 </span>
             </div>
-          
+
             <iframe data-bind="location: $data, iframeName: $data.name, ">
 
             </iframe>

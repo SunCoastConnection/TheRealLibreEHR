@@ -8,15 +8,15 @@
  *
  * Copyright (c) 2010 LibreHealth EHR Support LLC
  *
- * LICENSE: This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License 
- * as published by the Free Software Foundation; either version 3 
- * of the License, or (at your option) any later version. 
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
- * GNU General Public License for more details. 
- * You should have received a copy of the GNU General Public License 
+ * LICENSE: This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package LibreHealth EHR
@@ -24,7 +24,7 @@
  * @author Roberto Vasquez <robertogagliotta@gmail.com>
  * @author Rod Roark <rod@sunsetsystems.com>
  * @author Brady Miller <brady@sparmy.com>
- * @link http://librehealth.io 
+ * @link http://librehealth.io
  */
 
 //SANITIZE ALL ESCAPES
@@ -45,7 +45,7 @@ require_once("$srcdir/gprelations.inc.php");
 require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/headers.inc.php");
 //Include Bootstrap
-  call_required_libraries(array("jquery-min-3-1-1","bootstrap"));
+call_required_libraries(array("jquery-min-3-1-1","bootstrap","font-awesome", "jquery-ui", "iziModalToast"));
 ?>
 <html>
 <head>
@@ -59,12 +59,12 @@ require_once("$srcdir/headers.inc.php");
 <br /><br />
 <span class="title"><?php echo xlt('Reminders'); ?></span>
 
-<?php       
-        
-        // TajEmo Work by CB 2012/01/11 02:51:25 PM adding dated reminders
-        // I am asuming that at this point security checks have been performed
-        require_once '../dated_reminders/dated_reminders.php';   
-        
+<?php
+
+  // TajEmo Work by CB 2012/01/11 02:51:25 PM adding dated reminders
+  // I am asuming that at this point security checks have been performed
+  require_once '../dated_reminders/dated_reminders.php';
+
 // Check to see if the user has Admin rights, and if so, allow access to See All.
 $showall = isset($_GET['show_all']) ? $_GET['show_all'] : "" ;
 if ($showall == "yes") {
@@ -97,16 +97,17 @@ $task= isset($_REQUEST['task']) ? $_REQUEST['task'] : "";
 if (acl_check('admin', 'super'    )) {
 if ($show_all=='yes') {
     $showall = "yes";
-    $lnkvar="'messages.php?show_all=no&$activity_string_html' name='Just Mine' onclick=\"top.restoreSession()\"> (".htmlspecialchars( xl('Just Mine'), ENT_NOQUOTES).")";
+    $lnkvar="<a class='more' href='messages.php?show_all=no&$activity_string_html' name='Just Mine' onclick=\"top.restoreSession()\"> (".htmlspecialchars( xl('Just Mine'), ENT_NOQUOTES).")</a>";
 }
 else {
     $showall = "no";
-    $lnkvar="'messages.php?show_all=yes&$activity_string_html' name='See All' onclick=\"top.restoreSession()\"> (".htmlspecialchars( xl('See All'), ENT_NOQUOTES).")";
+    $lnkvar="<a class='more' href='messages.php?show_all=yes&$activity_string_html' name='See All' onclick=\"top.restoreSession()\"> (".htmlspecialchars( xl('See All'), ENT_NOQUOTES).")</a>";
 }
 }
 ?>
 <br>
-<table class="table"><tr><td><span class="title"><?php echo htmlspecialchars( xl('Messages'), ENT_NOQUOTES); ?></span> <a class='more' href=<?php echo $lnkvar; ?> ></a></td></tr></table>
+<span class="title"><?php echo htmlspecialchars( xl('Messages'), ENT_NOQUOTES); ?><?php echo $lnkvar; ?></span>
+<br><br>
 <?php
 //show the activity links
 if (empty($task) || $task=="add" || $task=="delete") { ?>
@@ -296,7 +297,7 @@ if ($noteid) {
     echo "  <td class='text'><b>";
     echo xlt('Linked document') . ":</b>\n";
     while ($gprow = sqlFetchArray($tmp)) {
-      $d = new Document($gprow['id1']); 
+      $d = new Document($gprow['id1']);
       echo "   <a href='";
       echo $GLOBALS['webroot'] . "/controller.php?document&retrieve";
       echo "&patient_id="  . $d->get_foreign_id();
@@ -349,13 +350,13 @@ if ($noteid) {
 
 <?php if ($noteid) { ?>
 <!-- This is for displaying an existing note. -->
-<input type="button" id="newnote" value="<?php echo htmlspecialchars( xl('Send message'), ENT_QUOTES); ?>">
-<input type="button" id="printnote" value="<?php echo htmlspecialchars( xl('Print message'), ENT_QUOTES); ?>">
-<input type="button" id="cancel" value="<?php echo htmlspecialchars( xl('Cancel'), ENT_QUOTES); ?>">
+<input type="button" id="newnote" class="cp-submit"  value="<?php echo htmlspecialchars( xl('Send message'), ENT_QUOTES); ?>">
+<input type="button" id="printnote" class="cp-output" value="<?php echo htmlspecialchars( xl('Print message'), ENT_QUOTES); ?>">
+<input type="button" id="cancel" class="cp-negative" value="<?php echo htmlspecialchars( xl('Cancel'), ENT_QUOTES); ?>">
 <?php } else { ?>
 <!-- This is for displaying a new note. -->
-<input type="button" id="newnote" value="<?php echo htmlspecialchars( xl('Send message'), ENT_QUOTES); ?>">
-<input type="button" id="cancel" value="<?php echo htmlspecialchars( xl('Cancel'), ENT_QUOTES); ?>">
+<input type="button" id="newnote" class="cp-submit" value="<?php echo htmlspecialchars( xl('Send message'), ENT_QUOTES); ?>">
+<input type="button" id="cancel"  class="cp-negative" value="<?php echo htmlspecialchars( xl('Cancel'), ENT_QUOTES); ?>">
 <?php }
 ?>
 
@@ -426,7 +427,7 @@ $(document).ready(function(){
  function sel_patient() {
   dlgopen('<?php echo $GLOBALS["web_root"]; ?>/modules/calendar/find_patient_popup.php', '_blank', 500, 400);
  }
- 
+
   function addtolist(sel){
     var itemtext = document.getElementById('assigned_to_text');
     var item = document.getElementById('assigned_to');
@@ -442,7 +443,7 @@ $(document).ready(function(){
       }
     }
   }
- 
+
 </script><?php
 }
 else {
@@ -495,20 +496,20 @@ else {
     }
     // Display the Messages table header.
     echo "
-    <table class='table well'><tr><td><table class='table'style=\"border-left: 1px #000000 solid; border-right: 1px #000000 solid; border-top: 1px #000000 solid;\">
+    <table class='table well'><tr><td><table class='table table-bordered table-hover'>
     <form name=MessageList action=\"messages.php?showall=".attr($showall)."&sortby=".attr($sortby)."&sortorder=".attr($sortorder)."&begin=".attr($begin)."&$activity_string_html\" method=post>
     <input type=hidden name=task value=delete>
-        <tr height=\"24\" style=\"background:lightgrey\">
-            <td align=\"center\" width=\"25\" style=\"border-bottom: 1px #000000 solid; border-right: 1px #000000 solid;\"><input type=checkbox id=\"checkAll\" onclick=\"selectAll()\"></td>
-            <td width=\"20%\" style=\"border-bottom: 1px #000000 solid; border-right: 1px #000000 solid;\" class=bold>&nbsp;<b>" .
+        <tr height=\"24\">
+            <td align=\"center\" width=\"25\"><input type=checkbox id=\"checkAll\" onclick=\"selectAll()\"></td>
+            <td width=\"20%\">&nbsp;<b>" .
               htmlspecialchars( xl('From'), ENT_NOQUOTES) . "</b> $sortlink[0]</td>
-            <td width=\"20%\" style=\"border-bottom: 1px #000000 solid; border-right: 1px #000000 solid;\" class=bold>&nbsp;<b>" .
+            <td width=\"20%\">&nbsp;<b>" .
               htmlspecialchars( xl('Patient'), ENT_NOQUOTES) . "</b> $sortlink[1]</td>
-            <td style=\"border-bottom: 1px #000000 solid; border-right: 1px #000000 solid;\" class=bold>&nbsp;<b>" .
+            <td>&nbsp;<b>" .
               htmlspecialchars( xl('Type'), ENT_NOQUOTES) . "</b> $sortlink[2]</td>
-            <td width=\"15%\" style=\"border-bottom: 1px #000000 solid; border-right: 1px #000000 solid;\" class=bold>&nbsp;<b>" .
+            <td width=\"15%\">&nbsp;<b>" .
               htmlspecialchars( xl('Date'), ENT_NOQUOTES) . "</b> $sortlink[3]</td>
-            <td width=\"15%\" style=\"border-bottom: 1px #000000 solid; \" class=bold>&nbsp;<b>" .
+            <td width=\"15%\">&nbsp;<b>" .
               htmlspecialchars( xl('Status'), ENT_NOQUOTES) . "</b> $sortlink[4]</td>
         </tr>";
         // Display the Messages table body.
@@ -552,8 +553,8 @@ else {
     </form></table>
     <table class='table well'>
         <tr>
-            <td class=\"text\"><a href=\"messages.php?showall=".attr($showall)."&sortby=".attr($sortby)."&sortorder=".attr($sortorder)."&begin=".attr($begin)."&task=addnew&$activity_string_html\" onclick=\"top.restoreSession()\">" .
-              htmlspecialchars( xl('Add New'), ENT_NOQUOTES) . "</a> &nbsp; <a href=\"javascript:confirmDeleteSelected()\" onclick=\"top.restoreSession()\">" .
+            <td class=\"text\"><a role='button' class='cp-positive' href=\"messages.php?showall=".attr($showall)."&sortby=".attr($sortby)."&sortorder=".attr($sortorder)."&begin=".attr($begin)."&task=addnew&$activity_string_html\" onclick=\"top.restoreSession()\">" .
+              htmlspecialchars( xl('Add New'), ENT_NOQUOTES) . "</a> &nbsp; <a role='button' class='deleter cp-negative' href=\"javascript:confirmDeleteSelected()\" onclick=\"top.restoreSession()\">" .
               htmlspecialchars( xl('Delete'), ENT_NOQUOTES) . "</a></td>
             <td align=right class=\"text amount-msg\">$prevlink &nbsp; $end of $total &nbsp; $nextlink</td>
         </tr>

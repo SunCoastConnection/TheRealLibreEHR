@@ -31,6 +31,19 @@
  *
  */
  
+// Default values for optional variables that are allowed to be set by callers.
+
+// Unless specified explicitly, apply Auth functions
+if (!isset($ignoreAuth)) {
+    $ignoreAuth = false;
+}
+// Same for onsite
+if (!isset($ignoreAuth_onsite_portal)) {
+    $ignoreAuth_onsite_portal = false;
+}
+
+
+
 // Is this windows or non-windows? Create a boolean definition.
 if (!defined('IS_WINDOWS'))
  define('IS_WINDOWS', (stripos(PHP_OS,'WIN') === 0));
@@ -118,7 +131,10 @@ if (empty($_SESSION['site_id']) || !empty($_GET['site'])) {
     $tmp = $_GET['site'];
   }
   else {
-    if (empty($ignoreAuth)) die("Site ID is missing from session data!");
+    if (empty($ignoreAuth)) {
+        header('Location: login/login.php?loginfirst&site='.$tmp);
+        die();
+    }
     $tmp = $_SERVER['HTTP_HOST'];
     if (!is_dir($GLOBALS['OE_SITES_BASE'] . "/$tmp")) $tmp = "default";
   }
@@ -182,7 +198,7 @@ $javascript_dir = $GLOBALS['standard_js_path']; //Make path available as a varia
 $GLOBALS['current_version_js_path'] = "$web_root/assets/js/current_version";
 
 //module configurations
-$GLOBALS['modules_dir']  = "$web_root/modules/";  //CURRENT modules directory.
+$GLOBALS['modules_dir']  = "$webserver_root/modules/";  //CURRENT modules directory.
 $modules_dir = $GLOBALS['modules_dir'];                //Make path available as a variable.
 $GLOBALS['baseModDir']  = "interface/modules/";        //base directory for the ZEND mods.  Not currently used.
 $GLOBALS['customModDir']= "custom_modules";            //OLD non zend modules, not used.
@@ -192,6 +208,9 @@ $GLOBALS['mod_nn'] = 0;                                //Nation Notes Module val
 
 // images directory
 $GLOBALS['images_path'] = "$web_root/assets/images/";
+
+//patient portal images directory
+$GLOBALS['portal_images_path'] = "$web_root/patient_portal/images/";
 
 // css directory
 $GLOBALS['css_path'] = "$web_root/assets/css/";
@@ -310,6 +329,15 @@ if (!empty($glrow)) {
             // the $css_header_value is set above
             $rtl_override = true;
         }
+    } elseif (isset($_SESSION['language_choice'])) {
+        //this will support the onsite patient portal which will have a language choice but not yet a set language direction
+        $_SESSION['language_direction'] = getLanguageDir($_SESSION['language_choice']);
+        if ( $_SESSION['language_direction'] == 'rtl' &&
+        !strpos($GLOBALS['css_header'], 'rtl')) {
+
+            // the $css_header_value is set above
+            $rtl_override = true;
+    }
     }     
     
     else { 
@@ -327,7 +355,8 @@ if (!empty($glrow)) {
         // the $css_header_value is set above
         $new_theme = 'rtl_' . $temp_css_theme_name;
 
-        // Check file existance 
+        // Check file existence
+  
         if( file_exists( $include_root.'/themes/'.$new_theme ) ) {
             $GLOBALS['css_header'] = $rootdir.'/themes/'.$new_theme;
         } else {
@@ -433,9 +462,18 @@ $login_screen = $GLOBALS['login_screen'];
 $GLOBALS['css_header'] = $css_header;
 $GLOBALS['backpic'] = $backpic;
 
+//Portal Version tag
+require_once(dirname(__FILE__) . "/../portal_version.php");
+
+$libreehr_portal_version = "$p_major.$p_minor.$p_patch".$p_tag;
+
 // 1 = send email message to given id for Emergency Login user activation,
 // else 0.
 $GLOBALS['Emergency_Login_email'] = $GLOBALS['Emergency_Login_email_id'] ? 1 : 0;
+
+if (($ignoreAuth_onsite_portal === true) && ($GLOBALS['portal_onsite_enable'] == 1)) {
+    $ignoreAuth = true;
+}
 
 if (!isset($ignoreAuth) || !$ignoreAuth) {
   include_once("$srcdir/auth.inc");
@@ -500,7 +538,6 @@ if ($fake_register_globals) {
   extract($_GET,EXTR_SKIP);
   extract($_POST,EXTR_SKIP);
 }
-
 
 include_once __DIR__ . '/../library/pluginsystem/bootstrap.php';
 ?>

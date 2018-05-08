@@ -221,7 +221,7 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 -- 
 
-INSERT INTO `categories` VALUES (1, 'Categories', '', 0, 0, 25);
+INSERT INTO `categories` VALUES (1, 'Categories', '', 0, 0, 31);
 INSERT INTO `categories` VALUES (2, 'Lab Report', '', 1, 1, 2);
 INSERT INTO `categories` VALUES (3, 'Medical Record', '', 1, 3, 4);
 INSERT INTO `categories` VALUES (4, 'Patient Information', '', 1, 5, 10);
@@ -234,6 +234,9 @@ INSERT INTO `categories` VALUES (10, 'Patient Photograph', '', 4, 8, 9);
 INSERT INTO `categories` VALUES (11, 'CCR', '', 1, 19, 20);
 INSERT INTO `categories` VALUES (12, 'CCD', '', 1, 21, 22);
 INSERT INTO `categories` VALUES (13, 'CCDA', '', 1, 23, 24);
+INSERT INTO `categories` VALUES (14, 'Onsite Portal', '', 1, 25, 30);
+INSERT INTO `categories` VALUES (15, 'Patient', '', 14, 26, 27);
+INSERT INTO `categories` VALUES (16, 'Reviewed', '', 14, 28, 29);
 
 
 -- 
@@ -250,7 +253,7 @@ CREATE TABLE `categories_seq` (
 -- Dumping data for table `categories_seq`
 -- 
 
-INSERT INTO `categories_seq` VALUES (13);
+INSERT INTO `categories_seq` VALUES (16);
 
 
 -- 
@@ -1925,6 +1928,7 @@ CREATE TABLE `history_data` (
   `value_2` varchar(255) default NULL,
   `additional_history` text,
   `exams` text,
+  `risk_factors` text,
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 ;
@@ -2153,6 +2157,8 @@ CREATE TABLE `insurance_companies` (
   `x12_receiver_id` varchar(25) default NULL,
   `x12_default_partner_id` int(11) default NULL,
   `alt_cms_id` varchar(15) NOT NULL DEFAULT '',
+  `ins_inactive` tinyint(1) NOT NULL DEFAULT '0',
+  `allow_print_statement` tinyint(1) NOT NULL DEFAULT '0' COMMENT ' 1 = Yes Print Statements',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB;
 
@@ -2403,6 +2409,7 @@ INSERT INTO `layout_options` (`form_id`, `field_id`, `group_name`, `title`, `seq
 ('DEM', 'vfc', '2Privacy', 'VFC',55,1,1,20,0, 'eligibility',1,1, '', '', 'Eligibility status for Vaccine for Children supplied vaccine',0, '', 'F', NULL),
 ('DEM', 'deceased_date', '2Privacy', 'Date Deceased',60,4,1,0,20, '',1,1, '', 'D', 'If person is deceased then enter date of death.',0, '', 'F', ''),
 ('DEM', 'deceased_reason', '2Privacy', 'Reason Deceased',65,2,1,30,255, '',1,1, '', '', 'Reason for Death',0, '', 'F', ''),
+('DEM', 'statement_y_n', '2Privacy', 'Print Statement',70,1,1,5,0, 'yesno',1,3, '', '', 'Do Not Print a Patient Statement If NO',0, '', 'F', ''),
 ('DEM', 'industry', '4Employer', 'Industry',5,26,1,0,0, 'Industry',1,1, '', '', 'Industry',0, '', 'F', ''),
 ('DEM', 'occupation', '4Employer', 'Occupation',10,26,1,0,0, 'Occupation',1,1, '', '', 'Occupation',0, '', 'F', ''),
 ('DEM', 'em_name', '4Employer', 'Employer Name',15,2,1,20,63, '',1,1, '', 'C', 'Employer Name',0, '', 'F', ''),
@@ -2445,7 +2452,7 @@ INSERT INTO `layout_options` (`form_id`,`field_id`,`group_name`,`title`,`seq`,`d
 ('LBTphreq','body','1','Details',10,3,2,30,0,'',1,3,'','','Content',5),
 ('LBTlegal','body','1','Details',10,3,2,30,0,'',1,3,'','','Content',5),
 ('LBTbill' ,'body','1','Details',10,3,2,30,0,'',1,3,'','','Content',5),
-('HIS','usertext11'       ,'1General'       ,'Risk Factors',1,21,1,0,0,'riskfactors',1,1,'','' ,'Risk Factors', 0),
+('HIS','risk_factors'       ,'1General'       ,'Risk Factors',1,21,1,0,0,'riskfactors',1,1,'','' ,'Risk Factors', 0),
 ('HIS','exams'            ,'1General'       ,'Exams/Tests' ,2,23,1,0,0,'exams'      ,1,1,'','' ,'Exam and test results', 0),
 ('HIS','history_father'   ,'2Family History','Father'                 , 1, 2,1,20,  0,'',1,1,'','' ,'', 0),
 ('HIS','dc_father'        ,'2Family History','Diagnosis Code'         , 2,15,1, 0,255,'',1,1,'','', '', 0),
@@ -3726,12 +3733,11 @@ insert into `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`
 insert into `list_options` (`list_id`, `option_id`, `title`, `seq`, `is_default`, `option_value`, `mapping`, `notes`) values('payment_gateways','authorize_net','Authorize.net','1','0','0','','');
 
 insert into list_options (list_id, option_id, title, seq, option_value, mapping, notes) values('lists','ptlistcols','Patient List Columns','1','0','','');
-INSERT INTO list_options ( list_id, option_id, title, seq, option_value, mapping, notes ) VALUES 
-('ptlistcols', 'providerID', 'Provider ID', '30', '', '0', ''),
-('ptlistcols','name'      ,'Full Name'     ,'10','3','',''),
-('ptlistcols','phone_home','Home Phone'    ,'20','3','',''),
-('ptlistcols','DOB'       ,'Date of Birth' ,'40','3','',''),
-('ptlistcols','pid'    ,'Patient ID'   ,'50','3','','');
+insert into list_options (list_id, option_id, title, seq, option_value, mapping, notes) values('ptlistcols','lname'     ,'Last Name'     ,'10','3','','');
+insert into list_options (list_id, option_id, title, seq, option_value, mapping, notes) values('ptlistcols','fname'     ,'First Name'    ,'20','3','','');
+insert into list_options (list_id, option_id, title, seq, option_value, mapping, notes) values('ptlistcols','phone_home','Home Phone'    ,'30','3','','');
+insert into list_options (list_id, option_id, title, seq, option_value, mapping, notes) values('ptlistcols','DOB'       ,'Date of Birth' ,'50','3','','');
+insert into list_options (list_id, option_id, title, seq, option_value, mapping, notes) values('ptlistcols','pid'       ,'Patient ID'    ,'70','3','','');
 
 -- Medical Problem Issue List
 INSERT INTO list_options(list_id,option_id,title) VALUES ('lists','medical_problem_issue_list','Medical Problem Issue List');
@@ -4306,21 +4312,6 @@ CREATE TABLE `notes` (
 ) ENGINE=InnoDB;
 
 
--- 
--- Table structure for table `onotes`
--- 
-
-DROP TABLE IF EXISTS `onotes`;
-CREATE TABLE `onotes` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `date` datetime default NULL,
-  `body` longtext,
-  `user` varchar(255) default NULL,
-  `groupname` varchar(255) default NULL,
-  `activity` tinyint(4) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 ;
-
 
 -- 
 -- Table structure for table `onsite_documents`
@@ -4768,7 +4759,9 @@ CREATE TABLE `patient_data` (
   `soap_import_status` TINYINT(4) DEFAULT NULL COMMENT '1-Prescription Press 2-Prescription Import 3-Allergy Press 4-Allergy Import',
   `care_team` int(11) DEFAULT NULL,
   `county` varchar(40) NOT NULL default '',
+  `statement_y_n` TEXT,
   `industry` TEXT,
+  `picture_url` varchar(2000) NOT NULL default '',
   UNIQUE KEY `pid` (`pid`),
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 ;
@@ -5853,6 +5846,9 @@ CREATE TABLE `users` (
   `upin` varchar(255) default NULL,
   `facility` varchar(255) default NULL,
   `facility_id` int(11) NOT NULL default '0',
+  `fullscreen_page` text NOT NULL,
+  `fullscreen_enable` int(11) NOT NULL default '0',
+  `menu_role` varchar(100) NOT NULL default "Default Role",
   `see_auth` int(11) NOT NULL default '1',
   `active` tinyint(1) NOT NULL default '1',
   `npi` varchar(15) default NULL,

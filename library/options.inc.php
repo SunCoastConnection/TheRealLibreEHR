@@ -94,7 +94,7 @@ function generate_select_list($tag_name, $list_id, $currvalue, $title, $empty_na
     if ($multiple) {
         $tag_name_esc = $tag_name_esc . "[]";
     }
-    $s .= "<select name='$tag_name_esc'";
+    $s .= "<select name='$tag_name_esc' class='form-control' style='width: auto; display: inline-block'";
 
     if ($multiple) {
         $s .= " multiple='multiple'";
@@ -456,7 +456,7 @@ function generate_form_field($frow, $currvalue) {
       "WHERE active = 1 AND ( info IS NULL OR info NOT LIKE '%Inactive%' ) " .
       "AND authorized = 1 " .
       "ORDER BY lname, fname");
-    echo "<select name='form_$field_id_esc' id='form_$field_id_esc' title='$description' $lbfonchange $disabled>";
+    echo "<select class='form-control' style='width: auto; display: inline-block' name='form_$field_id_esc' id='form_$field_id_esc' title='$description' $lbfonchange $disabled>";
     echo "<option value=''>" . xlt($empty_title) . "</option>";
     $got_selected = false;
     while ($urow = sqlFetchArray($ures)) {
@@ -2505,7 +2505,6 @@ function display_layout_tabs($formtype, $result1, $result2='') {
 
 function display_layout_tabs_data($formtype, $result1, $result2='') {
   global $item_count, $cell_count, $last_group, $CPR,$condition_str;
-
   $fres = sqlStatement("SELECT distinct group_name FROM layout_options " .
     "WHERE form_id = ? AND uor > 0 " .
     "ORDER BY group_name, seq", array($formtype));
@@ -3028,10 +3027,10 @@ function expand_collapse_widget($title, $label, $buttonLabel, $buttonLink, $butt
     // show button, since authorized
     // first prepare class string
     if ($buttonClass) {
-      $class_string = "css_button_small ".htmlspecialchars( $buttonClass, ENT_NOQUOTES);
+      $class_string = "css_button_small cp-positive".htmlspecialchars( $buttonClass, ENT_NOQUOTES);
     }
     else {
-      $class_string = "css_button_small";
+      $class_string = "css_button_small cp-positive";
     }
     // next, create the link
     if ($linkMethod == "javascript") {
@@ -3232,7 +3231,7 @@ function genProviderSelect($selname, $toptext, $default=0, $disabled=false, $all
   }
 
   $res = sqlStatement($query);
-  echo "   <select name='" . attr($selname) . "'";
+  echo "   <select class='form-control' style='width: auto; display: inline-block' name='" . attr($selname) . "'";
   if ($disabled) echo " disabled";
   echo ">\n";
   echo "    <option value=''>" . text($toptext) . "\n";
