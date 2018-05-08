@@ -29,29 +29,29 @@ include_once("$srcdir/acl.inc");
 if($_POST['formSubmit'] == "Submit") 
 {
 
-$query = file_get_contents(SQL/1_INSTALL/PQRS_billingcodes.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_billingcodes.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_clinical_rules.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_clinical_rules.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_direct_entry_table.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_direct_entry_table.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_efcc1.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc1.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_efcc2.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc2.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_efcc3.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc3.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_efcc4.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc4.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_efcc5.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc5.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_mips.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_mips.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_poph.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_poph.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_ptct.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_ptct.sql");
 sqlStatementNoLog($query);
-$query = file_get_contents(SQL/1_INSTALL/PQRS_codes_ptsf.sql");
+$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_ptsf.sql");
 sqlStatementNoLog($query);
 
 echo "MIPS module updated!";
