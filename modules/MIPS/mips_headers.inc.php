@@ -13,9 +13,9 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
 require_once '../../interface/globals.php';
-require_once $srcdir.'/patient.inc';
+require_once 'patient.inc';
 require_once $srcdir.'/formatting.inc.php';
-require_once $srcdir.'/options.inc.php';
-require_once $srcdir.'/formdata.inc.php';
-require_once $srcdir.'/clinical_rules.php';
-require_once $srcdir.'/report_database.inc';
+require_once 'options.inc.php';
+require_once 'formdata.inc.php';
+require_once 'clinical_rules.php';
+require_once 'report_database.inc';
