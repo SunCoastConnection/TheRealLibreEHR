@@ -119,7 +119,7 @@ h1, h2, h3 {
 	display: none;
 }
 .quickselect {
-	background-color: #f0f0f0;
+
 	border: 1px solid #333333;
 	border-radius: 4px;
 	color: #333333;
