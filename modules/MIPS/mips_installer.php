@@ -24,35 +24,40 @@ include_once("$srcdir/acl.inc");
 <span class='title' visibility: hidden>Install MIPS Module</span>
 <h1>Install/Update MIPS reporting database tables</h1>
 <b>This tool truncates all data from previous versions and installs the current database tables required for accurate MIPS reporting.</b>
-<form action="import_data.php" method="post">	
+<form action="mips_installer.php" method="post">	
 <?php
 if($_POST['formSubmit'] == "Submit") 
 {
 
-$query = file_get_contents("SQL/1_INSTALL/PQRS_billingcodes.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_clinical_rules.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_direct_entry_table.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc1.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc2.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc3.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc4.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_efcc5.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_mips.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_poph.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_ptct.sql");
-sqlStatementNoLog($query);
-$query = file_get_contents("SQL/1_INSTALL/PQRS_codes_ptsf.sql");
-sqlStatementNoLog($query);
+include_once("SQL/1_INSTALL/PQRS_billingcodes.php");
+echo "1 <br>";
+include_once("SQL/1_INSTALL/PQRS_clinical_rules.php");
+echo "2 <br>";
+include_once("SQL/1_INSTALL/PQRS_direct_entry_table.php");
+echo "3 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_efcc1.php");
+echo "4 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_efcc2.php");
+echo "5 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_efcc3.php");
+echo "6 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_efcc4.php");
+echo "7 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_efcc5.php");
+echo "8 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_mips.php");
+echo "9 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_poph.php");
+echo "10 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_ptct.php");
+echo "11 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_ptsf.php");
+echo "12 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_ccco.php");
+echo "13 <br>";
+include_once("SQL/1_INSTALL/PQRS_codes_ecr.php");
+echo "14 <br>";
+
 
 echo "MIPS module updated!";
 }else{
