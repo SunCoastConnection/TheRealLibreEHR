@@ -150,7 +150,7 @@ function runReport() {
   // Collect an id string via an ajax request
   top.restoreSession();
   $.get(
-    "../../library/ajax/collect_new_report_id.php",
+    "ajax/collect_new_report_id.php",
     function(data) {
       // Set the report id in page form
       $("#form_new_report_id").attr("value", data);
@@ -161,7 +161,7 @@ function runReport() {
       // Run the report
       top.restoreSession();
       $.post(
-        "../../library/ajax/execute_clinical_measures_report.php",
+        "ajax/execute_clinical_measures_report.php",
         {
           provider: $("#form_provider").val(),
           type: $("#form_rule_filter").val(),
@@ -183,7 +183,7 @@ function collectStatus(report_id) {
 
   // Do not send the skip_timeout_reset parameter, so don't close window before report is done.
   $.post(
-    "../../library/ajax/status_report.php",
+    "ajax/status_report.php",
     { status_report_id: report_id },
     function(data) {
       if(data == "PENDING") {
@@ -539,7 +539,7 @@ function Form_Validate() {
             ));
 ?>
 
-              <td style="text-align:center"><a href='../../interface/main/finder/patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['pass_filter']; ?></a></td>
+              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['pass_filter']; ?></a></td>
 <?php
           } else {
 ?>
@@ -559,7 +559,7 @@ function Form_Validate() {
                 'numerator_label' => attr($row['numerator_label']),
               ));
 ?>
-              <td style="text-align:center"><a href='../../interface/main/finder/patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['excluded']; ?></a></td>
+              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['excluded']; ?></a></td>
 <?php
             } else {
 ?>
@@ -578,7 +578,7 @@ function Form_Validate() {
               'numerator_label' => attr($row['numerator_label']),
             ));
 ?>
-              <td style="text-align:center"><a href='../../interface/main/finder/patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['pass_target']; ?></a></td>
+              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['pass_target']; ?></a></td>
 <?php
           } else {
 ?>
@@ -602,7 +602,7 @@ function Form_Validate() {
               'numerator_label' => attr($row['numerator_label']),
             ));
 ?>
-              <td style="text-align:center"><a href='../../interface/main/finder/patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $failed_items; ?></a></td>
+              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $failed_items; ?></a></td>
 <?php
           } else {
 ?>
@@ -664,7 +664,7 @@ function Form_Validate() {
       <input type='hidden' name='form_new_report_id' id='form_new_report_id' value=''/>
     </form>
   </body>
-  <script type="text/javascript" src="../../library/js/jquery.datetimepicker.full.min.js"></script>
+  <script type="text/javascript" src="../../assets/js/jquery-datetimepicker-2-5-4/jquery.datetimepicker.min.js"></script>
 <script>
     $(function() {
         $("#form_begin_date").datetimepicker({
