@@ -166,7 +166,7 @@ if(!empty($report_id)) {
 		fwrite($myFileHandle, "    <taxpayerIdentificationNumber>$PROVIDER_TIN</taxpayerIdentificationNumber>\n");
 		if ($entityType == "individual"){
 		fwrite($myFileHandle, "    <nationalProviderIdentifier>$PROVIDER_NPI</nationalProviderIdentifier>\n");                                    }
-		fwrite($myFileHandle, "    <performanceYear>2017</performanceYear>\n");
+		fwrite($myFileHandle, "    <performanceYear>2018</performanceYear>\n");
 		//begin <measurementSet>
 		fwrite($myFileHandle, "    <measurementSet>\n");
 		fwrite($myFileHandle, "         <submissionMethod>registry</submissionMethod>\n");
