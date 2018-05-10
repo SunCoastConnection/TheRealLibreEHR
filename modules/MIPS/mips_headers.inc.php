@@ -12,10 +12,11 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
-require_once '../../interface/globals.php';
-require_once 'patient.inc';
-require_once $srcdir.'/formatting.inc.php';
-require_once 'options.inc.php';
-require_once 'formdata.inc.php';
-require_once 'clinical_rules.php';
-require_once 'report_database.inc';
+require_once ('../../interface/globals.php');
+
+require_once("{$GLOBALS['srcdir']}/patient.inc");
+require_once("{$GLOBALS['srcdir']}/forms.inc");
+require_once("{$GLOBALS['srcdir']}/formdata.inc.php");
+require_once("{$GLOBALS['srcdir']}/options.inc.php");
+require_once("{$GLOBALS['srcdir']}/formatting.inc.php");
+

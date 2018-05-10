@@ -22,7 +22,8 @@ $sanitize_all_escapes = true;
 // STOP FAKE REGISTER GLOBALS
 $fake_register_globals = false;
 
-require_once 'mips_headers.inc.php';
+require_once ('mips_headers.inc.php');
+require_once ('clinical_rules.php');
 
 
 function existsDefault(&$array, $key, $default = '') {
