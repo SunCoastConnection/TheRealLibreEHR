@@ -35,8 +35,8 @@ function existsDefault(&$array, $key, $default = '') {
 }
 /////page title array...not needed as array anymore.
 $page_titles = array(
-  'pqrs'                  => xlt('Quality Measures 2017'),
-  'pqrs_individual_2016'  => xlt('Quality Measures 2017'),
+  'pqrs'                  => xlt('Quality Measures 2018'),
+  'pqrs_individual_2016'  => xlt('Quality Measures 2018'),
 );
 
 // See if showing an old report or creating a new report
@@ -91,8 +91,8 @@ if(!empty($report_id)) {
 
   // Collect form parameters (set defaults if empty)
 
-  $begin_date = existsDefault($_POST, 'form_begin_date', '2017-01-01 00:00:00');  //change defaults in 2017
-  $target_date = existsDefault($_POST, 'form_target_date', '2017-12-31 23:59:59');  //change defaults in 2017
+  $begin_date = existsDefault($_POST, 'form_begin_date', '2018-01-01 00:00:00');  //change defaults in 2018
+  $target_date = existsDefault($_POST, 'form_target_date', '2018-12-31 23:59:59');  //change defaults in 2018
 
   $plan_filter = existsDefault($_POST, 'form_plan_filter', '');
   $organize_method = (empty($plan_filter)) ? 'default' : 'plans';
