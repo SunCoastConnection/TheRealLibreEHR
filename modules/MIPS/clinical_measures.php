@@ -665,7 +665,7 @@ function Form_Validate() {
       <input type='hidden' name='form_new_report_id' id='form_new_report_id' value=''/>
     </form>
   </body>
-  <script type="text/javascript" src="../../assets/js/jquery-datetimepicker-2-5-4/jquery.datetimepicker.min.js"></script>
+<script type="text/javascript" src="../../library/js/jquery.datetimepicker.full.min.js"></script>
 <script>
     $(function() {
         $("#form_begin_date").datetimepicker({
