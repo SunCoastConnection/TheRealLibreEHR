@@ -396,25 +396,7 @@ function Form_Validate() {
               </div>
             </td>
             <td align='left' valign='middle' height="100%">
-     
-                <tr>
-                  <td scope="row">
-                    <div style='margin-left:15px'>
-                        <span>
-<?php  //the following isn't really necessary except to echo the title
- 	if (isset($report_view['title'])) {
-		$report_title=$report_view['title'];
-    	} else {
-		$report_title="";
-    	}
-	if ($report_title != "" ) {
-		echo ("Report Title:  $report_title \n");
-	}  ?>
 
-                        </span>
-                    </div>
-		  </td>
-		</tr>
 <?php if(empty($report_id)) { ?>
                       <a id='submit_button' href='#' class='css_button' onclick='runReport();'>
                         <span>
@@ -486,10 +468,10 @@ function Form_Validate() {
       $existProvider = false;
 
       foreach($dataSheet as $row) {
-
-  //redacted          <tr bgcolor='<?php echo $bgcolor ?>'>
-       // if(isset($row['is_main']) || isset($row['is_sub'])) {
-        if(isset($row['is_main']) ) {
+?>
+            <tr bgcolor='<?php echo $bgcolor ?>'>
+<?php
+        if(isset($row['is_main']) || isset($row['is_sub'])) {
 ?>
               <td class='detail'>
 <?php
