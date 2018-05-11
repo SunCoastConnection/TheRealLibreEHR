@@ -486,10 +486,10 @@ function Form_Validate() {
       $existProvider = false;
 
       foreach($dataSheet as $row) {
-?>
-            <tr bgcolor='<?php echo $bgcolor ?>'>
-<?php
-        if(isset($row['is_main']) || isset($row['is_sub'])) {
+
+  //redacted          <tr bgcolor='<?php echo $bgcolor ?>'>
+       // if(isset($row['is_main']) || isset($row['is_sub'])) {
+        if(isset($row['is_main']) ) {
 ?>
               <td class='detail'>
 <?php
