@@ -396,7 +396,7 @@ function Form_Validate() {
               </div>
             </td>
             <td align='left' valign='middle' height="100%">
-              <table style='border-left:1px solid; width:100%; height:100%' >
+     
                 <tr>
                   <td scope="row">
                     <div style='margin-left:15px'>
@@ -460,7 +460,7 @@ function Form_Validate() {
                     </div>
                   </td>
                 </tr>
-              </table>
+
             </td>
           </tr>
         </table>
