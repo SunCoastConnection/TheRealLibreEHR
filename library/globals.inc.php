@@ -167,8 +167,8 @@ $GLOBALS_METADATA = array(
         '/interface/new/new.php' => xl('Patient Add/Search'),
         '/interface/patient_tracker/patient_tracker.php?skip_timeout_reset=1' => xl('Patient Flow Board'),
         '/interface/main/messages/messages.php?form_active=1' => xl("Messages"),
-        '/modules/MIPS/report_results.php' => x1("SHOW MIPS Reports"),
-        '/modules/MIPS/clinical_measures.php?type=pqrs' => x1("CREATE MIPS Report"),
+        '/modules/MIPS/report_results.php' => xl("SHOW MIPS Reports"),
+        '/modules/MIPS/clinical_measures.php?type=pqrs' => xl("CREATE MIPS Report"),
       ),
        '/interface/main/main_info.php',                 // default = calendar
       xl('First TAB on the left')
@@ -183,8 +183,8 @@ $GLOBALS_METADATA = array(
         '/interface/new/new.php' => xl('Patient Add/Search'),
         '/interface/patient_tracker/patient_tracker.php?skip_timeout_reset=1' => xl('Patient Flow Board'),
         '/interface/main/main_info.php' => xl('Calendar Screen'),
-        '/modules/MIPS/report_results.php' => x1("SHOW MIPS Reports"),
-        '/modules/MIPS/clinical_measures.php?type=pqrs' => x1("CREATE MIPS Report"),
+        '/modules/MIPS/report_results.php' => xl("SHOW MIPS Reports"),
+        '/modules/MIPS/clinical_measures.php?type=pqrs' => xl("CREATE MIPS Report"),
       ),
       '/interface/main/messages/messages.php?form_active=1',    // default = Messages
       xl('Second TAB on the left')
