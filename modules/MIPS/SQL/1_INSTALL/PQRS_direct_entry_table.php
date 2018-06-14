@@ -7,6 +7,7 @@
  * 
  * @author  Art Eaton <art@suncoastconnection.com>
  * @author  Bryan lee <leebc@suncoastconnection.com>
+ * @author  Lana Woods <lana@suncoastconnection.com>
  * @package LibreHealthEHR 
  * @link    http://suncoastconnection.com
  * @link    http://librehealth.io
@@ -1382,7 +1383,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0439', 'answer', '2|Documentation of medical reason(s) for a colonoscopy performed on a patient greater than 85 years of age (e.g., last colonoscopy incomplete, last colonoscopy had inadequate prep, iron deficiency anemia, lower gastrointestinal bleeding, Crohn''s Disease (i.e., regional enteritis), familial history of adenomatous polyposis, Lynch Syndrome (i.e., hereditary non-polyposis colorectal cancer), inflammatory bowel disease, ulcerative colitis, abnormal finding of gastrointestinal tract, or changes in bowel habits) (G9660)|G9660',2),
 ('PQRS_0439', 'answer', '3|Patients greater than 85 years of age who received a routine colonoscopy for a reason other than the following: an assessment of signs/symptoms of GI tract illness, and/or the patient is considered high risk, and/or to follow-up on previously diagnoses advance lesions (G9661)|G9661',9),
 
-('PQRS_0440', 'description', 'Basal Cell Carcinoma (BCC)/Squamous Cell Carcinoma: Biopsy Reporting Time – Pathologist to Clinician',''),
+('PQRS_0440', 'description', 'Basal Cell Carcinoma (BCC)/Squamous Cell Carcinoma: Biopsy Reporting Time Â– Pathologist to Clinician',''),
 ('PQRS_0440', 'question', 'Number of final pathology reports diagnosing cutaneous basal cell carcinoma or squamous cell carcinoma (to include in situ disease) sent from the Pathologist/Dermatopathologist to the biopsying clinician for review within 7 businessdays from the time when the tissue specimen was received by the pathologist',''),
 ('PQRS_0440', 'answer', '1|Pathology report diagnosing cutaneous basal cell carcinoma or squamous cell carcinoma (to include in situ disease)sent from the Pathologist/Dermatopathologist to the biopsying clinician for review within 7 business days from the time when the tissue specimen was received by the pathologist (G9785)|G9785',1),
 ('PQRS_0440', 'answer', '2|Pathology report diagnosing cutaneous basal cell carcinoma or squamous cell carcinoma (to include in situ disease) was not sent from the Pathologist/Dermatopathologist to the biopsying clinician for review within 7 business days from the time when the tissue specimen was received by the pathologist (G9786)|G9786',9),
@@ -1390,7 +1391,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0441', 'description', ' Ischemic Vascular Disease (IVD) All or None Outcome Measure (Optimal Control) NOT A RECOMMENDED MEASURE, !INCOMPLETE! ',''),
 ('PQRS_0441', 'question', 'The number of IVDpatients who meet ALL of the following targets: Most recent BP is less than 140/90 mm Hg And Most recent tobacco status is Tobacco Free (NOTE: If there is No Documentation of Tobacco Status thepatient is not compliant for this measure) And Daily Aspirin or Other Antiplatelet Unless Contraindicated And Statin Use.',''),
 ('PQRS_0441', 'answer', '1|Most recent BP is less than or equal to 140/90 mm Hg (G9788)|G9788',1),
-('PQRS_0441', 'answer', '2|Blood pressure recorded during inpatient stays, Emergency Room Visits, Urgent Care Visits, and Patient Self-Reported BP’s (Home and Health Fair BP results) (G9789)|G9789',2),
+('PQRS_0441', 'answer', '2|Blood pressure recorded during inpatient stays, Emergency Room Visits, Urgent Care Visits, and Patient Self-Reported BPÂ’s (Home and Health Fair BP results) (G9789)|G9789',2),
 ('PQRS_0441', 'answer', '3|Most recent BP is greater than 140/90 mm Hg, or blood pressure not documented (G9790)|G9790',9),
 
 ('PQRS_0442', 'description', 'Persistence of Beta-Blocker Treatment After a Heart Attack',''),
@@ -1436,7 +1437,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0449', 'answer', '2|HER2-targeted therapies administered during the initial course of treatment(G9828)|G9828',9),
 
 
-('PQRS_0450', 'description', 'Trastuzumab Received By Patients With AJCC Stage I (T1c) – III And HER2 Positive Breast Cancer Receiving Adjuvant Chemotherapy',''),
+('PQRS_0450', 'description', 'Trastuzumab Received By Patients With AJCC Stage I (T1c) Â– III And HER2 Positive Breast Cancer Receiving Adjuvant Chemotherapy',''),
 ('PQRS_0450', 'question', 'Trastuzumab administered within 12 months of diagnosis.',''),
 ('PQRS_0450', 'answer', '1|Trastuzumab administered within 12 months of diagnosis(G9835)|G9835',1),
 ('PQRS_0450', 'answer', '2|Reason for not administering Trastuzumab documented (e.g. patient declined, patient died, patient transferred, contraindication or other clinical exclusion, neoadjuvant chemotherapy or radiation NOT complete)(G9836)|G9836',2),
