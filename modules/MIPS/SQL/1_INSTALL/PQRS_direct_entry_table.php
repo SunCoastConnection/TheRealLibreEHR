@@ -107,12 +107,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0024', 'answer', '3|Post Fracture Care not Communicated for Patient Reasons (5015F:2P)|5015F:2P',2),
 ('PQRS_0024', 'answer', '4|Post Fracture Care not Communicated Reason not Otherwise Specified (5015F:8P)|5015F:8P',9),
 
-('PQRS_0032', 'description', 'Stroke and Stroke Rehabilitation: Discharged on Antithrombotic Therapy',''),
-('PQRS_0032', 'question', 'Was Antithrombotic Therapy Prescribed at discharge?',''),
-('PQRS_0032', 'answer', '1|Antithrombotic Therapy Prescribed (G8696)|G8696',1),
-('PQRS_0032', 'answer', '2|Antithrombotic Therapy not Prescribed for Documented Reasons (G8697)|G8697',2),
-('PQRS_0032', 'answer', '3|Antithrombotic Therapy Prescription not Prescribed, Reason not Given (G8698)|G8698',9),
-
 ('PQRS_0039', 'description', 'Screening for Osteoporosis for Women Aged 65-85 Years of Age',''),
 ('PQRS_0039', 'question', 'Is there documentation in their medical record of having received a DXA test of the hip or spine?',''),
 ('PQRS_0039', 'answer', '1|Central DXA Measurement Performed (G8399)|G8399',1),
@@ -776,14 +770,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0283', 'answer', '1|Neuropsychiatric symptoms assessed and results reviewed (1181F)|1181F',1),
 ('PQRS_0283', 'answer', '2|Neuropsychiatric symptoms not assessed and results not reviewed, reason not otherwise specified (1181F:8P)|1181F:8P',9),
 
-
-('PQRS_0284', 'description', 'Dementia: Management of Neuropsychiatric Symptoms ',''),
-('PQRS_0284', 'question', 'Patients who received or were recommended to receive an intervention for neuropsychiatric symptoms within a 12 month period',''),
-('PQRS_0284', 'answer', '1|Neuropsychiatric intervention ordered (4525F)|4525F',1),
-('PQRS_0284', 'answer', '2|Neuropsychiatric intervention  received (4526F)|4526F',1),
-('PQRS_0284', 'answer', '3|Neuropsychiatric intervention not ordered, reason not otherwise specified (4525F:8P)|4525F:8P',9),
-('PQRS_0284', 'answer', '4|Neuropsychiatric intervention not received, reason not otherwise specified (4525F:8P)|4526F:8P',9),
-
 ('PQRS_0286', 'description', 'Dementia: Counseling Regarding Safety Concerns',''),
 ('PQRS_0286', 'question', 'Patients or their caregiver(s) who were counseled or referred for counseling regarding safety concerns within a 12 month period<br>  *** See Measure Details for Instructions ***',''),
 ('PQRS_0286', 'answer', '1|Safety counseling for dementia provided (6101F)|6101F',1),
@@ -814,12 +800,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0293', 'answer', '1|Rehabilitative therapy options discussed with patient (or caregiver) (4400F)|4400F',1),
 ('PQRS_0293', 'answer', '2|Documentation of medical reason(s) for not discussing rehabilitative therapy options with patient (or caregiver) (4400F:1P)|4400F:1P',2),
 ('PQRS_0293', 'answer', '3|Rehabilitative therapy options not discussed with patient (or caregiver), reason not otherwise specified (4400F:8P)|4400F:8P',9),
-
-('PQRS_0294', 'description', 'Parkinson\'s Disease Disease Medical and Surgical Treatment Options Reviewed',''),
-('PQRS_0294', 'question', 'Patients (or caregiver(s), as appropriate) who had the Parkinson\'s disease treatment options (e.g., non-pharmacological treatment, pharmacological treatment, or surgical treatment) reviewed at least once annually',''),
-('PQRS_0294', 'answer', '1|Medical and surgical treatment options reviewed with patient (or caregiver) (4325F)|4325F',1),
-('PQRS_0294', 'answer', '2|Medical and surgical treatment options not reviewed with patient (or caregiver) for medical reasons (eg, patient is unable to respond and no informant is available) (4325F:1P)|4325F:1P',2),
-('PQRS_0294', 'answer', '3|Medical and surgical treatment options not reviewed with patient (or caregiver), reasons not otherwise specified (4325F:8P)|4325F:8P',9),
 
 ('PQRS_0303', 'description', 'Cataracts: Improvement in Patient\'s Visual Function within 90 Days Following Cataract Surgery',''),
 ('PQRS_0303', 'question', 'Patients 18 years and older who had improvement in visual function achieved within 90 days following cataract surgery, based on completing a pre-operative and post-operative visual function survey',''),
@@ -1502,7 +1482,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre_0007', 'description', 'Pre-selection of patients for Measure 007',''),
 ('pre_0005', 'description', 'Pre-selection of patients for Measure 005',''),
 ('pre_0024', 'description', 'Pre-selection of patients for Measure 024',''),
-('pre_0032', 'description', 'Pre-selection of patients for Measure 032',''),
 ('pre_0047', 'description', 'Pre-selection of patients for Measure 047',''),
 ('pre_0048', 'description', 'Pre-selection of patients for Measure 048',''),
 ('pre_0050', 'description', 'Pre-selection of patients for Measure 050',''),
@@ -1553,7 +1532,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre_0271', 'description', 'Pre-selection of patients for Measure 271',''),
 ('pre_0278', 'description', 'Pre-selection of patients for Measure 278',''),
 ('pre_0279', 'description', 'Pre-selection of patients for Measure 279',''),
-('pre_0284', 'description', 'Pre-selection of patients for Measure 284',''),
 ('pre_0326', 'description', 'Pre-selection of patients for Measure 326',''),
 ('pre_0327', 'description', 'Pre-selection of patients for Measure 327',''),
 ('pre_0329', 'description', 'Pre-selection of patients for Measure 329',''),
@@ -1621,7 +1599,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre_0007', 'question', 'Patients who may qualify for Measure 007',''),
 ('pre_0005', 'question', 'Patients who may qualify for Measure 005',''),
 ('pre_0024', 'question', 'Patients who may qualify for Measure 024',''),
-('pre_0032', 'question', 'Patients who may qualify for Measure 032',''),
 ('pre_0047', 'question', 'Patients who may qualify for Measure 047',''),
 ('pre_0048', 'question', 'Patients who may qualify for Measure 048',''),
 ('pre_0050', 'question', 'Patients who may qualify for Measure 050',''),
@@ -1672,7 +1649,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre_0271', 'question', 'Patients who may qualify for Measure 271',''),
 ('pre_0278', 'question', 'Patients who may qualify for Measure 278',''),
 ('pre_0279', 'question', 'Patients who may qualify for Measure 279',''),
-('pre_0284', 'question', 'Patients who may qualify for Measure 284',''),
 ('pre_0326', 'question', 'Patients who may qualify for Measure 326',''),
 ('pre_0327', 'question', 'Patients who may qualify for Measure 327',''),
 ('pre_0329', 'question', 'Patients who may qualify for Measure 329',''),
@@ -1744,7 +1720,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre_0007', 'answer', '1|Include patients with G8694|G8694',9),
 
 ('pre_0024', 'answer', '1|Exclude patients with G9688|G9688',9),
-('pre_0032', 'answer', '1|Include patients with G9689|G9689',9),
 ('pre_0047', 'answer', '1|Exclude patients with G9692|G9692',9),
 ('pre_0048', 'answer', '1|Exclude patients with G9692|G9692',9),
 ('pre_0050', 'answer', '1|Exclude patients with G9694|G9694',9),
@@ -1862,8 +1837,6 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre_0278', 'answer', '1|Include patients with G8846|G8846',9),
 
 ('pre_0279', 'answer', '1|Include patients with G8852|G8852',9),
-
-('pre_0284', 'answer', '1|Include patients with G9947|G9947',9),
 
 ('pre_0326', 'answer', '1|Exclude patients with G9746|G9746',9),
 ('pre_0326', 'answer', '2|Include patients with G8972|G8972',9),
