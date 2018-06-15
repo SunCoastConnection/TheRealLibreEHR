@@ -120,7 +120,6 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'secondary_color',
                                'secondary_font_color',
                                'gbl_pt_list_page_size',
-                               'gbl_pt_list_new_window',
                                'default_encounter_view',
                                'units_of_measurement',
                                'us_weight_format',
@@ -143,7 +142,6 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'ptkr_flag_dblbook',
                                'status_default',
                                'checkout_roll_off',
-                               'ptkr_pt_list_new_window',
                                'erx_import_status_message',
                                'floating_message_alerts',
                                'floating_message_alerts_timer',
@@ -167,8 +165,6 @@ $GLOBALS_METADATA = array(
         '/interface/new/new.php' => xl('Patient Add/Search'),
         '/interface/patient_tracker/patient_tracker.php?skip_timeout_reset=1' => xl('Patient Flow Board'),
         '/interface/main/messages/messages.php?form_active=1' => xl("Messages"),
-        '/modules/MIPS/report_results.php' => xl("SHOW MIPS Reports"),
-        '/modules/MIPS/clinical_measures.php?type=pqrs' => xl("CREATE MIPS Report"),
       ),
        '/interface/main/main_info.php',                 // default = calendar
       xl('First TAB on the left')
@@ -183,8 +179,6 @@ $GLOBALS_METADATA = array(
         '/interface/new/new.php' => xl('Patient Add/Search'),
         '/interface/patient_tracker/patient_tracker.php?skip_timeout_reset=1' => xl('Patient Flow Board'),
         '/interface/main/main_info.php' => xl('Calendar Screen'),
-        '/modules/MIPS/report_results.php' => xl("SHOW MIPS Reports"),
-        '/modules/MIPS/clinical_measures.php?type=pqrs' => xl("CREATE MIPS Report"),
       ),
       '/interface/main/messages/messages.php?form_active=1',    // default = Messages
       xl('Second TAB on the left')
@@ -268,7 +262,7 @@ $GLOBALS_METADATA = array(
       xl('Enable Fees In Menu')
     ),
     // EDI history  2012-09-13
-    
+
     'enable_edihistory_in_menu' => array(
       xl('Enable EDI History In Fees Menu'),
        'bool',                          // data type
@@ -304,12 +298,6 @@ $GLOBALS_METADATA = array(
       xl('Number of patients to display per page in the patient list.')
     ),
 
-    'gbl_pt_list_new_window' => array(
-      xl('Patient List New Window'),
-      'bool',                           // data type
-      '0',                              // default = false
-      xl('Default state of New Window checkbox in the patient list.')
-    ),
 
     'gbl_vitals_options' => array(
       xl('Vitals Form Options'),
@@ -601,7 +589,18 @@ $GLOBALS_METADATA = array(
        '0',                             // default
       xl('Restrict non-authorized users to the Schedule Facilities set in User admin.')
     ),
-
+        'tags_filters_enabled' => array(
+      xl('Enable Tags/Filters Feature'),
+       'bool',                          // data type
+       '0',                             // default
+      xl('Enables configurable tags and filters for demographics and various purposes.')
+    ),
+        'facility_acl' => array(
+      xl('Restrict User access by Facility'),
+       'bool',                          // data type
+       '0',                             // default
+      xl('Restrict User access to patients by assigned patient facility.')
+    ),
     'set_facility_cookie' => array(
       xl('Remember Selected Facility'),
        'bool',                          // data type
@@ -667,6 +666,7 @@ $GLOBALS_METADATA = array(
         '1' => xl('Print End of Day Report 1'),
         '2' => xl('Print End of Day Report 2'),
         '3' => xl('Print End of Day Report 3'),
+        '4' => xl('Print End of Day Report 4'),
       ),                                // data type
        '1',                             // default = Print End of Day Report 1
       xl('This will allow the use of the custom End of Day report and indicate which report to use.')
@@ -1078,6 +1078,14 @@ $GLOBALS_METADATA = array(
 
   ),
 
+   'primary_insurance_required' => array(
+      xl('Require the Entry of the Primary Insurance in the New Patient Screen'),
+      'bool',
+      '0',                              // default
+      xl('Require the Entry of the Primary Insurance in the New Patient Screen')
+
+  ),
+
   ),
 
   // Statement Tab
@@ -1264,7 +1272,7 @@ $GLOBALS_METADATA = array(
   // Claim Tab
   //
   'Claims' => array(
-  
+
     'claim_type' => array(
      xl('Insurance Claim Type'),
         array(
@@ -1275,7 +1283,7 @@ $GLOBALS_METADATA = array(
         '0',                              // default = CMS 1500
         xl('Insurance Claim Type CMS 1500 , UB-04 or Both Displayed in the Billing Screen'),
     ),
- 
+
     'preprinted_cms_1500' => array(
       xl('Prints the CMS 1500 on the Preprinted form.'),
        'bool',                          // data type
@@ -1399,7 +1407,7 @@ $GLOBALS_METADATA = array(
       '',     // default
       xl('Other Physician #2 Box 79 of the UB04')
     ),
-    
+
   ),
 
 
@@ -1513,13 +1521,20 @@ $GLOBALS_METADATA = array(
        '17',                            // default
       xl('Ending hour of day for calendar events.')
     ),
-    
+
     'check_appt_time' => array(
       xl('Check Selected Appointment Time'),
        'bool',                          // data type
        '1',                             // default
       xl('Do not register appointments with time outside clinic hours.')
     ),
+
+    'use_appt_status_colors' => array(
+      xl('Use Appointment Status Colors in the Calendar'),
+       'bool',                          // data type
+       '1',                             // default
+      xl('Use the Appointment Status Colors in the Calendar Instead of the Appointment Category Colors.')
+    ),    
 
     'calendar_refresh_freq' => array(
       xl('Calendar Refresh Frequency'),
@@ -1563,7 +1578,7 @@ $GLOBALS_METADATA = array(
       array(
        'providerAgenda' => xl('1 Day'),
        'providerAgenda2Day' => xl('2 Day'),
-       'timelineWeek' => xl('Week'),
+       'providerAgendaWeek' => xl('Week'),
        'timelineMonth' => xl('Month'),
       ),
        'providerAgenda',                           // default
@@ -1692,7 +1707,7 @@ $GLOBALS_METADATA = array(
        'bool',                          // data type
        '1',                             // default
       xl('Display Canceled Appointments in Calendar.')
-    ), 
+    ),
 
     'auto_create_new_encounters' => array(
       xl('Auto-Create New Encounters'),
@@ -1708,12 +1723,6 @@ $GLOBALS_METADATA = array(
       xl('Do not display the patient flow board.')
     ),
 
-    'ptkr_pt_list_new_window' => array(
-      xl('Patient Flow Board: Open Demographics in New Window'),
-       'bool',                          // data type
-       '0',                             // default = false
-      xl('When Checked, Demographics Will Open in New Window from Patient Flow Board.')
-    ),
 
     'ptkr_visit_reason' => array(
       xl('Patient Flow Board: Show Visit Reason'),
@@ -3189,38 +3198,38 @@ $GLOBALS_METADATA = array(
       '0',                               // default
       xl('Show demo system "Save/Load database presets" menu')
     ),
-    
+
     'report_itemizing_pqrs' => array(
-      xl('Enable MIPS report itemization'),		// for itemizing reports
+      xl('Enable MIPS report itemization'),     // for itemizing reports
       'bool',                           // data type
       '1',                     // default
       xl('Creates patient lists from reports')
     ),
-    
+
 
     'pqrs_creator' => array(
-      xl('MIPS Report Creator Name'),		// for XML generation
+      xl('MIPS Report Creator Name'),       // for XML generation
       'text',                           // data type
       'FIXME creator FIXME!!!',                     // default
       xl('MIPS Report Creator Name')
     ),
 
     'pqrs_registry_name' => array(
-      xl('MIPS Registry Name'),		// for XML generation
+      xl('MIPS Registry Name'),     // for XML generation
       'text',                           // data type
       'FIXME registry name FIXME!!!',               // default
       xl('MIPS Registry Name')
     ),
 
     'pqrs_registry_id' => array(
-      xl('MIPS Registry ID'),		// for XML generation
+      xl('MIPS Registry ID'),       // for XML generation
       'text',                           // data type
       'FIXME registry id FIXME!!!',                 // default
       xl('MIPS Registry ID')
     ),
 
     'pqrs_entityType' => array(
-      xl('Reporting Entity Type'),	// for XML generation
+      xl('Reporting Entity Type'),  // for XML generation
             array(
         'individual' => 'Per Provider NPI',
         'group' => 'For whole Tax ID'
@@ -3230,7 +3239,7 @@ $GLOBALS_METADATA = array(
     ),
 
      'pqrs_attestation_date' => array(
-      xl('Default Direct Entry Date'),	
+      xl('Default Direct Entry Date'),
       'text',                           // data type
       '2017-06-06',            // default
       xl('Default date that direct entry encounters will be created on.')
