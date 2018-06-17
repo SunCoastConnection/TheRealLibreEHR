@@ -1,13 +1,13 @@
 
 <?php
 /*
- * Copyright (C) 2016      Suncoast Connection
+ * Copyright (C) 2016Suncoast Connection
  *
  * @package PQRS_Gateway
- * @link    http://suncoastconnection.com
- * @author  Suncoast Connection
- * @author  Bryan lee <leebc 11 at acm dot org>
- * @author  meggerc
+ * @linkhttp://suncoastconnection.com
+ * @authorSuncoast Connection
+ * @authorBryan lee <leebc 11 at acm dot org>
+ * @authormeggerc
 */
 
 
@@ -21,7 +21,7 @@ $query =
 id int NOT NULL auto_increment,
 type varchar(15),
 code varchar(15),
-PRIMARY KEY  (`id`)
+PRIMARY KEY(`id`)
 );";
 sqlStatementNoLog($query);
 
@@ -4263,7 +4263,7 @@ $query =
 ('pqrs_0243_b', '33426'), 
 ('pqrs_0243_b', '33427'), 
 ('pqrs_0243_b', '33430'),
-('pqrs_0243_b', '33460'),  
+('pqrs_0243_b', '33460'),
 ('pqrs_0243_b', '33463'), 
 ('pqrs_0243_b', '33464'), 
 ('pqrs_0243_b', '33465'), 
@@ -4633,6 +4633,8 @@ $query =
 ('pqrs_0325_c', 'E10.9'),
 ('pqrs_0325_c', 'E11.00'),
 ('pqrs_0325_c', 'E11.01'),
+('pqrs_0325_c', 'E11.10'),
+('pqrs_0325_c', 'E11.11'),
 ('pqrs_0325_c', 'E11.21'),
 ('pqrs_0325_c', 'E11.22'),
 ('pqrs_0325_c', 'E11.29'),
@@ -5065,6 +5067,7 @@ $query =
 ('pqrs_0359_a', '77011'),
 ('pqrs_0359_a', '77012'),
 ('pqrs_0359_a', '77013'),
+('pqrs_0359_a', '77014'),
 ('pqrs_0359_a', '77078'),
 ('pqrs_0359_a', '78072'),
 ('pqrs_0359_a', '78814'),
@@ -5075,9 +5078,6 @@ $query =
 ('pqrs_0364_a', '71260'),
 ('pqrs_0364_a', '71270'),
 ('pqrs_0364_a', '71275'),
-('pqrs_0364_a', '78814'),
-('pqrs_0364_a', '78815'),
-('pqrs_0364_a', '78816'),
 ('pqrs_0391_a', '99221'),
 ('pqrs_0391_a', '99222'),
 ('pqrs_0391_a', '99223'),
@@ -5284,7 +5284,6 @@ $query =
 ('pqrs_0397_a', 'C43.72'),
 ('pqrs_0397_a', 'C43.8'),
 ('pqrs_0397_a', 'C43.9'),
-
 ('pqrs_0426_a', '00100'),
 ('pqrs_0426_a', '00102'),
 ('pqrs_0426_a', '00103'),
@@ -5364,7 +5363,8 @@ $query =
 ('pqrs_0426_a', '00700'),
 ('pqrs_0426_a', '00702'),
 ('pqrs_0426_a', '00730'),
-('pqrs_0426_a', '00740'),
+('pqrs_0426_a', '00731'),
+('pqrs_0426_a', '00732'), 
 ('pqrs_0426_a', '00750'),
 ('pqrs_0426_a', '00752'),
 ('pqrs_0426_a', '00754'),
@@ -5377,7 +5377,9 @@ $query =
 ('pqrs_0426_a', '00797'),
 ('pqrs_0426_a', '00800'),
 ('pqrs_0426_a', '00802'),
-('pqrs_0426_a', '00810'),
+('pqrs_0426_a', '00811'),
+('pqrs_0426_a', '00812'),
+('pqrs_0426_a', '00813'),
 ('pqrs_0426_a', '00820'),
 ('pqrs_0426_a', '00830'),
 ('pqrs_0426_a', '00832'),
@@ -5435,7 +5437,6 @@ $query =
 ('pqrs_0426_a', '01170'),
 ('pqrs_0426_a', '01173'),
 ('pqrs_0426_a', '01180'),
-('pqrs_0426_a', '01190'),
 ('pqrs_0426_a', '01200'),
 ('pqrs_0426_a', '01202'),
 ('pqrs_0426_a', '01210'),
@@ -5493,8 +5494,7 @@ $query =
 ('pqrs_0426_a', '01654'),
 ('pqrs_0426_a', '01656'),
 ('pqrs_0426_a', '01670'),
-('pqrs_0426_a', '01680'),
-('pqrs_0426_a', '01682'),
+('pqrs_0426_a', '01680'), 
 ('pqrs_0426_a', '01710'),
 ('pqrs_0426_a', '01712'),
 ('pqrs_0426_a', '01714'),

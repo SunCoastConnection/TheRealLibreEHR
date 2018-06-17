@@ -1,8 +1,8 @@
 <?php
 /**
- * PQRS Measure 0386 -- Exclusion 
+ * PQRS Measure 0459 -- Call to createPopulationCriteria()
  *
- * Copyright (C) 2015 - 2017      Suncoast Connection
+ * Copyright (C) 2015 - 2018      Suncoast Connection
   * 
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
  * See the Mozilla Public License for more details. 
@@ -17,15 +17,10 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
 
-class PQRS_0386_Exclusion extends PQRSFilter
-{
-    public function getTitle() 
+class PQRS_0459 extends AbstractPQRSReport
+{   
+    public function createPopulationCriteria()
     {
-        return "Exclusion";
-    }
-    
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
-    {
-return false;
+        return new PQRS_0249_PopulationCriteria();
     }
 }

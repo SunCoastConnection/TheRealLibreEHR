@@ -1,8 +1,8 @@
 <?php
 /**
- * PQRS Measure 0346 -- Numerator
+ * PQRS Measure 0459 -- Population Criteria
  *
- * Copyright (C) 2015 - 2017      Suncoast Connection
+ * Copyright (C) 2015 - 2018      Suncoast Connection
   * 
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
  * See the Mozilla Public License for more details. 
@@ -17,26 +17,30 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
  
-class PQRS_0346_Numerator extends PQRSFilter
+class PQRS_0459_PopulationCriteria implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {
-        return "Numerator";
+        return "Population Criteria";
     }
-
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    
+    public function createInitialPatientPopulation()
     {
- $query =
-" SELECT COUNT(b1.code) AS count".  
-" FROM billing AS b1".
-" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" WHERE b1.pid = ? ".
-" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G9261'; ";
-//'G9258','G9260' Hard Fail 
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-
-if ($result['count']> 0){ return true;} else {return false;}  
-		
+        return new PQRS_0459_InitialPatientPopulation();
+    }
+    
+    public function createNumerators()
+    {
+        return new PQRS_0459_Numerator();
+    }
+    
+    public function createDenominator()
+    {
+        return new PQRS_0459_Denominator();
+    }
+    
+    public function createExclusion()
+    {
+        return new PQRS_0459_Exclusion();
     }
 }
