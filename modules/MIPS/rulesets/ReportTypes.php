@@ -267,6 +267,7 @@ class ReportTypes
         "PQRS_0455" => array( ReportTypes::PQRS, "PQRS_0455" ),
         "PQRS_0456" => array( ReportTypes::PQRS, "PQRS_0456" ),
         "PQRS_0457" => array( ReportTypes::PQRS, "PQRS_0457" ),
+        "PQRS_0459" => array( ReportTypes::PQRS, "PQRS_0459" ),
         
         "pre_0005" => array( ReportTypes::PQRS, "pre_0005" ),
         "pre_0007" => array( ReportTypes::PQRS, "pre_0007" ),
