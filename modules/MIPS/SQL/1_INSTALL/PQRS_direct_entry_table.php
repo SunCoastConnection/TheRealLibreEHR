@@ -1427,7 +1427,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0447', 'answer', '2|No documentation of a chlamydia screening test with proper follow-up (G9821) |G9821',9),
 
 ('PQRS_0448', 'description', 'Appropriate Workup Prior to Endometrial Ablation',''),
-('PQRS_0448', 'question', 'Women who received endometrial sampling or hysteroscopy with biopsyand results documentedduring the year prior to the index date (exclusive of the index date) of the endometrial ablation.',''),
+('PQRS_0448', 'question', 'Women who received endometrial sampling or hysteroscopy with biopsy and results documented during the year prior to the index date (exclusive of the index date) of the endometrial ablation.',''),
 ('PQRS_0448', 'answer', '1|Endometrial sampling or hysteroscopywith biopsy and results documented(G9823) |G9823',1),
 ('PQRS_0448', 'answer', '2|Endometrial sampling or hysteroscopywith biopsy and results not documented(G9824)|G9824',9),
 
@@ -1478,6 +1478,42 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0457', 'answer', '1|Patient spent less than three days in hospice care (G9860)|G9860',1),
 ('PQRS_0457', 'answer', '2|Patient spent greater than or equal to three days in hospice care (G9861)|G9861',9),
 
+('PQRS_0459', 'description', 'text',''),
+('PQRS_0459', 'question', 'text',''),
+('PQRS_0459', 'answer', '1|text|G0000',1),
+('PQRS_0459', 'answer', '2|text|G0000',9),
+
+('PQRS_0460', 'description', 'text',''),
+('PQRS_0460', 'question', 'text.',''),
+('PQRS_0460', 'answer', '1|text|G0000',1),
+('PQRS_0460', 'answer', '2|text|G0000',9),
+
+('PQRS_0461', 'description', 'text',''),
+('PQRS_0461', 'question', 'text.',''),
+('PQRS_0461', 'answer', '1|text|G0000',1),
+('PQRS_0461', 'answer', '2|text|G0000',9),
+
+('PQRS_0463', 'description', 'text',''),
+('PQRS_0463', 'question', 'text.',''),
+('PQRS_0463', 'answer', '1|text|G0000',1),
+('PQRS_0463', 'answer', '2|text|G0000',2),
+('PQRS_0463', 'answer', '3|text|G0000',9),
+
+('PQRS_0464', 'description', 'text',''),
+('PQRS_0464', 'question', 'text.',''),
+('PQRS_0464', 'answer', '1|text|G0000',1),
+('PQRS_0464', 'answer', '2|text|G0000',2),
+('PQRS_0464', 'answer', '2|text|G0000',9),
+
+('PQRS_0465', 'description', 'text',''),
+('PQRS_0465', 'question', 'text.',''),
+('PQRS_0465', 'answer', '1|text|G0000',1),
+('PQRS_0465', 'answer', '2|text|G0000',9),
+
+('PQRS_0467', 'description', 'text',''),
+('PQRS_0467', 'question', 'text.',''),
+('PQRS_0467', 'answer', '1|text|G0000',1),
+('PQRS_0467', 'answer', '2|text|G0000',9),
 
 ('pre_0001', 'description', 'Pre-selection of patients for Measure 001',''),
 ('pre_0007', 'description', 'Pre-selection of patients for Measure 007',''),
