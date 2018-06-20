@@ -24,7 +24,7 @@ $query =
 `measure_number` varchar(50),
 `type` varchar(100),
 `value` varchar(3072),
-`status` INT(1) );";
+`status` INT(3) );";
 sqlStatementNoLog($query);
 
 
@@ -325,7 +325,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0127', 'answer', '2|Clinician documented that patient was not an eligible candidate for footwear evaluation measure (G8416)|G8416',2),
 ('PQRS_0127', 'answer', '3|Footwear evaluation was not performed (G8415)|G8415',9),
 
-('PQRS_0128', 'description', 'Preventive Care and Screening: Body Mass Index (BMI) Screening and Follow-Up Plan
+('PQRS_0128', 'description', 'Preventive Care and Screening: Body Mass Index (BMI) Screening and Follow-Up Plan',''),
 ('PQRS_0128', 'question', 'Does patient have a documented BMI during the encounter or during the previous twelve months, AND when the BMI is outside of normal parameters, is a follow-up plan documented during the encounter or during the previous twelve months?',''),
 ('PQRS_0128', 'answer', '1|BMI Documented as Normal, No Follow-Up Plan Required (G8420)|G8420',1),
 ('PQRS_0128', 'answer', '2|BMI Documented as Above Normal Parameters, AND Follow-Up Documented (G8417)|G8417',1),
