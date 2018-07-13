@@ -66,6 +66,34 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.s
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
 	sqlStatementNoLog($query);
 }
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing8.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing9.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing10.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing11.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing12.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing13.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing14.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
+	sqlStatementNoLog($query);
+}
 
 
 sqlStatementNoLog("TRUNCATE TABLE `facility`;");
@@ -85,6 +113,10 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encou
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter2.sql");
 	sqlStatementNoLog($query);
 }
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter3.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter2.sql");
+	sqlStatementNoLog($query);
+}
 
 sqlStatementNoLog("TRUNCATE TABLE `forms`;");
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms.sql")) {
@@ -96,6 +128,10 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms1.sql
         sqlStatementNoLog($query);
 }
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql")) {
+        $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql");
+        sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms3.sql")) {
         $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql");
         sqlStatementNoLog($query);
 }
