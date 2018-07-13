@@ -114,7 +114,7 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encou
 	sqlStatementNoLog($query);
 }
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter3.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter2.sql");
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter3.sql");
 	sqlStatementNoLog($query);
 }
 
@@ -132,7 +132,7 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql
         sqlStatementNoLog($query);
 }
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms3.sql")) {
-        $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql");
+        $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms3.sql");
         sqlStatementNoLog($query);
 }
 
