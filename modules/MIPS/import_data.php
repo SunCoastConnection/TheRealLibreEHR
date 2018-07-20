@@ -156,11 +156,14 @@ sqlStatementNoLog("TRUNCATE TABLE `x12_partners`;");
 $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/x12_partners.sql");
 sqlStatementNoLog($query);
 
-sqlStatementNoLog("DELETE FROM `users` WHERE `users`.`id` > '1000';");
+sqlStatementNoLog("DELETE FROM `users` WHERE `users`.`id` > '1000000000';");
+sqlStatementNoLog("INSERT INTO `users` (`id`,`username`,`password`,`authorized`,`fname`,`mname`,`lname`,`federaltaxid`,`federaldrugid`,`facility`,`facility_id`,`see_auth`,`active`,`npi`,`cal_ui`,`taxonomy`,`calendar`,`abook_type`,`state_license_number`) VALUES ('1000000001','ClinicGroup','70702b9402107c11ef9d18d9daad4ff1','1','Clinic','','Group','','','','1','3','1','1000000001','3','','1','miscellaneous','');");
+
 $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/users.sql");
 sqlStatementNoLog($query);
 
-sqlStatementNoLog("DELETE FROM `groups` WHERE `groups`.`id` > '1000';");
+sqlStatementNoLog("DELETE FROM `groups` WHERE `groups`.`id` > '1000000000';");
+sqlStatementNoLog("INSERT INTO `groups` ( `id`, `name`,`user`) VALUES ('1000000001','Default','ClinicGroup');");
 $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/groups.sql");
 sqlStatementNoLog($query);
 echo "Database updated!";
