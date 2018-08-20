@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0238 -- Exclusion 3
+ * PQRS Measure 0226 -- Exclusion 3
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 
@@ -17,7 +17,7 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
 
-class PQRS_0238_Exclusion3 extends PQRSFilter
+class PQRS_0226_Exclusion3 extends PQRSFilter
 {
     public function getTitle() 
     {
