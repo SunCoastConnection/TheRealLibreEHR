@@ -21,7 +21,7 @@ class PQRS_0226_PopulationCriteria1 implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {
-        return "Population Criteria";
+        return "Population Criteria 1";
     }
     
     public function createInitialPatientPopulation()
