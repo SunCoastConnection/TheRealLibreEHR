@@ -48,7 +48,7 @@ $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
 }
     }
-}
+
 
 ?>
 
