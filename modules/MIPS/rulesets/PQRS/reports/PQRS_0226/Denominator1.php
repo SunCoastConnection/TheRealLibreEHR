@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0226 -- Call to createPopulationCriteria()
+ * PQRS Measure 0226 -- Denominator 1
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 
@@ -16,18 +16,19 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
-
-class PQRS_0226 extends AbstractPQRSReport{   
-    public function createPopulationCriteria() {
-		$populationCriteria = array();
-
-		$populationCriteria[] = new PQRS_0226_PopulationCriteria1();
-		$populationCriteria[] = new PQRS_0226_PopulationCriteria2(); 
-		$populationCriteria[] = new PQRS_0226_PopulationCriteria3();    
-
-		return $populationCriteria;    
+ 
+class PQRS_0226_Denominator1 extends PQRSFilter
+{
+    public function getTitle() 
+    {
+        return "Denominator 1";
     }
-
+    
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    {
+		//Same as initial population
+		return true;
+    }
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0226 -- Exclusion 
+ * PQRS Measure 0238 -- Exclusion 3
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 
@@ -17,26 +17,28 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
 
-class PQRS_0226_Exclusion extends PQRSFilter
+class PQRS_0238_Exclusion3 extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Exclusion";
+        return "Exclusion 3";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-$query =
+  $query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND (b1.code = '4004F' AND b1.modifier ='1P'); ";
+" AND b1.code = '4004F'".
+" AND b1.modifier != '1P'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
 if ($result['count']> 0){ return true;} else {return false;}  
+
     }
 }
 
