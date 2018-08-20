@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0226 -- Denominator 
+ * PQRS Measure 0238 -- Denominator 3
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 
@@ -17,11 +17,11 @@
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
  
-class PQRS_0226_Denominator extends PQRSFilter
+class PQRS_0238_Denominator3 extends PQRSFilter
 {
     public function getTitle() 
     {
-        return "Denominator";
+        return "Denominator 3";
     }
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
