@@ -475,7 +475,7 @@ $bgcolor = 0;
                 $patterns[1] = '/pre_0/';
 
                 $mipsnumber = preg_replace($patterns, '_', $row['pqrs_code']);
-                $measureURL = 'http://suncoastconnection.com/standards/Registrymeasures/2017_Measure'. $mipsnumber.'_Registry.pdf';
+                $measureURL = 'http://suncoastconnection.com/standards/Registrymeasures/2018_Measure'. $mipsnumber.'_Registry.pdf';
                 ?>
                 <a href='<?php echo $measureURL;?>' target="_blank"><?php echo $tempMeasuresString;?></a>
                 <?php
