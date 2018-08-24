@@ -339,7 +339,7 @@ if(count($updateStatus['off']) || count($updateStatus['on'])) {
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-10 General Practice/Family Medicine')">General Practice/Family Medicine</button>
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-11 General Surgery')">General Surgery</button>
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-12 Hospitalists')">Hospitalists</button>
-                            <button type="button" class="quickselect" onclick="quickSelect('MIPS-13 Infectious Disease')">Internal Medicine</button>
+                            <button type="button" class="quickselect" onclick="quickSelect('MIPS-13 Infectious Disease')">Infectious Disease</button>
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-14 Internal Medicine')">Internal Medicine</button>
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-15 Interventional Radiology')">Interventional Radiology</button>
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-16 Mental Health/Behavioral Health/Dementia')">Mental Health/Behavioral Health/Dementia</button>
