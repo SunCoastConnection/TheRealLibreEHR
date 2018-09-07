@@ -14,6 +14,7 @@
  * @link    http://librehealth.io
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
+ * TODO:  UPDATE THIS FORM using a file iterator or SWITCH STatement
  */
 require_once '../../interface/globals.php';
 include_once("$srcdir/api.inc");
@@ -166,6 +167,7 @@ sqlStatementNoLog("DELETE FROM `groups` WHERE `groups`.`id` > '1000000000';");
 sqlStatementNoLog("INSERT INTO `groups` ( `id`, `name`,`user`) VALUES ('1000000001','Default','ClinicGroup');");
 $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/groups.sql");
 sqlStatementNoLog($query);
+sqlStatementNoLog("UPDATE `sequences` SET id = (SELECT MAX(form_encounter.encounter) FROM form_encounter);");
 echo "Database updated!";
 }else{
     echo "<input type='submit' name='formSubmit' value='Submit' />";}

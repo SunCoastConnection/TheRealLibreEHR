@@ -1635,6 +1635,61 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre_0455', 'description', 'Pre-selection of patients for Measure 455',''),
 ('pre_0456', 'description', 'Pre-selection of patients for Measure 456',''),
 ('pre_0457', 'description', 'Pre-selection of patients for Measure 457',''),
+
+
+('hyper'            ,' description','Risk Factor: ADHD,Conduct Disorders, and Hyperkinetic Syndrome',''),
+('alcohol'          ,' description','Risk Factor: Alcohol Use Disorders',''),
+('anxious'          ,' description','Risk Factor: Anxiety Disorders',''),
+('autistic'         ,' description','Risk Factor: Autism Spectrum Disorders',''),
+('bipolar'          ,' description','Risk Factor: Bipolar Disorder',''),
+('c_palsy'          ,' description','Risk Factor: Cerebral Palsy',''),
+('c_fibrosis'       ,' description','Risk Factor: Cystic Fibrosis and Other Metabolic Developmental Disorders',''),
+('depressed'        ,' description','Risk Factor: Depressive Disorders',''),
+('drugs'            ,' description','Risk Factor: Drug Use Disorder',''),
+('epilepsy'         ,' description','Risk Factor: Epilepsy',''),
+('fibro_m'          ,' description','Risk Factor: Fibromyalgia, Chronic Pain and Fatigue',''),
+('hiv'              ,' description','Risk Factor: Human Immunodeficiency Virus and/or Acquired  Immunodeficiency Syndrome (HIV/AIDS)',''),
+('mental_dis'       ,' description','Risk Factor: Intellectual Disabilities and Related Conditions',''),
+('learn_dis'        ,' description','Risk Factor: Learning Disabilities',''),
+('leukemia_lymphoma',' description','Risk Factor: Leukemias and Lymphomas',''),
+('liver'            ,' description','Risk Factor: Liver Disease, Cirrhosis and Other Liver Conditions (except Viral Hepatitis)',''),
+('migraine'         ,' description','Risk Factor: Migraine and Chronic Headache',''),
+('mobility'         ,' description','Risk Factor: Mobility Impairments',''),
+('m_sclerosis'      ,' description','Risk Factor: Multiple Sclerosis and Transverse Myelitis',''),
+('m_distrophy'      ,' description','Risk Factor: Muscular Dystrophy',''),
+('obesity'          ,' description','Risk Factor: Obesity',''),
+('dev_delay'        ,' description','Risk Factor: Developmental Delays',''),
+('pvd'              ,' description','Risk Factor: Peripheral Vascular Disease (PVD)',''),
+('personality_dis'  ,' description','Risk Factor: Personality Disorders',''),
+('ptsd'             ,' description','Risk Factor: Post-Traumatic Stress Disorder (PTSD)',''),
+('ulcer'            ,' description','Risk Factor: Pressure and Chronic Ulcers',''),
+('schizo'           ,' description','Risk Factor: Schizophrenia',''),
+('psycho'           ,' description','Risk Factor: Psychotic Disorders',''),
+('blind'            ,' description','Risk Factor: Sensory - Blindness andVisual Impairment',''),
+('deaf'             ,' description','Risk Factor: Sensory – Deafness and Hearing Impairment',''),
+('spina_bif'        ,' description','Risk Factor: Spina Bifida and Other Congenital Anomalies of the Nervous System',''),
+('spine_injury'     ,' description','Risk Factor: Spinal Cord Injury',''),
+('tobacco'          ,' description','Risk Factor: Tobacco Use',''),
+('brain_dam'        ,' description','Risk Factor: Traumatic Brain Injury and Nonpsychotic Mental Disorders due to Brain Damage',''),
+('hepa'             ,' description','Risk Factor: Viral Hepatitis',''),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ('pre_0001', 'question', 'Patients who may qualify for Measure 001',''),
 ('pre_0007', 'question', 'Patients who may qualify for Measure 007',''),
 ('pre_0005', 'question', 'Patients who may qualify for Measure 005',''),
@@ -2036,6 +2091,14 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre_0457', 'answer', '1|Include patients with G9858 and G9859|G9858 G9859',9),
 
 ('PQRS_0XXX', 'question', 'Please see measure documentation for specifics.',''),
+
+
+
+
+
+
+
+
 
 ('end', 'blank', '','' );";
 sqlStatementNoLog($query);
