@@ -461,7 +461,7 @@ foreach($rules as $rule) {
 									<li class="checkbox-button">
 										<input type="hidden" name="pqrsRulesInitial[<?php echo $id; ?>]" value="<?php echo $active ?>">
 										<input type="checkbox" class="measure" id="<?php echo $id; ?>" name="pqrsRules[<?php echo $id; ?>]" value="1"<?php if($active == 1) { echo ' checked="checked"'; } ?>>
-										<label for="<?php echo $id; ?>"><?php echo $label; ?></label>
+										<label for="<?php echo $id; ?>"><?php echo "HCC ". $label; ?></label>
 									</li>
 <?php
 
