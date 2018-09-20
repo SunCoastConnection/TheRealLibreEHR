@@ -9557,4 +9557,5 @@ $query =
 ('HCC_0189','Z89.612'),
 ('HCC_0189','Z89.619');
 ";
+sqlStatementNoLog($query);
 ?> 

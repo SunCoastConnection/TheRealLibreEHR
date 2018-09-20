@@ -105,5 +105,5 @@ $query =
 ('HCC_0186','Major Organ Transplant or Replacement Status','0.891'),
 ('HCC_0188','Artificial Openings for Feeding or Elimination','0.651'),
 ('HCC_0189','Amputation Status, Lower Limb/Amputation Complications','0.779');";
-
+sqlStatementNoLog($query);
 ?>
