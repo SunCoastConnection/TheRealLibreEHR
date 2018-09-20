@@ -41,7 +41,7 @@ $query =
         $query .=  
 " AND fe.date >= '".$beginDate."'".
 " AND fe.date <= '".$endDate."'" .
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'HCC_0001') ;";
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'HCC_0088') ;";
 
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
