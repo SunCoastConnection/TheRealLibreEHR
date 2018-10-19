@@ -49,7 +49,6 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing.sq
 }
 
 while ($billingsearch == true){
-    ini_set(max_execution_time, 600);
     $billfile +=1;
     if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing".$billfile.".sql")) {
     	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing".$billfile.".sql");
@@ -70,7 +69,6 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encou
 }
 
 while ($encountersearch == true){
-    ini_set(max_execution_time, 300);
     $encounterfile +=1;
     if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter".$encounterfile.".sql")) {
     	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter".$encounterfile.".sql");
@@ -86,7 +84,6 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms.sql"
 }
 
 while ($formsearch == true){
-    ini_set(max_execution_time, 300);
     $formfile +=1;
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms".$formfile.".sql")) {
         $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms".$formfile.".sql");
