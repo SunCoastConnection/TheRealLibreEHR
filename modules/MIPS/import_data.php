@@ -83,7 +83,7 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms.sql"
 	sqlStatementNoLog($query);
 }
 
-while ($formsearch == true;){
+while ($formsearch == true){
     $formfile +=1;
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms".$formfile.".sql")) {
         $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms".$formfile.".sql");
