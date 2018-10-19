@@ -30,70 +30,30 @@ are set to NPI numbers which are ten digit numbers.</b>
 <?php
 if($_POST['formSubmit'] == "Submit") 
 {
+    
+    $billingfile = 0;
+    $encounterfile = 0;
+    $formfile = 0;
+	$billingsearch = true;    
+    $encountersearch = true;
+    $formsearch = true;    
 sqlStatementNoLog("TRUNCATE TABLE `addresses`;");
 $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/addresses.sql");
 sqlStatementNoLog($query);
+
 
 sqlStatementNoLog("TRUNCATE TABLE `billing`;");
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing1.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing1.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing2.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing2.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing3.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing3.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing4.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing4.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing5.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing5.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing6.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing6.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing7.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing8.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing8.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing9.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing9.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing10.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing10.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing11.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing11.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing12.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing12.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing13.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing13.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing14.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing14.sql");
-	sqlStatementNoLog($query);
+
+while ($billingsearch == true){
+    $billfile +=1;
+    if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing".$billfile.".sql")) {
+    	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/billing".$billfile.".sql");
+    	sqlStatementNoLog($query);
+    }else{$billingsearch == false;}
 }
 
 
@@ -101,22 +61,20 @@ sqlStatementNoLog("TRUNCATE TABLE `facility`;");
 $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/facilities.sql");
 sqlStatementNoLog($query);
 
+
 sqlStatementNoLog("TRUNCATE TABLE `form_encounter`;");
 if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter1.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter1.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter2.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter2.sql");
-	sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter3.sql")) {
-	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter3.sql");
-	sqlStatementNoLog($query);
+
+while ($encountersearch == true){
+    $encounterfile +=1;
+    if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter".$encounterfile.".sql")) {
+    	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/form_encounter".$encounterfile.".sql");
+    	sqlStatementNoLog($query);
+    }else{$encountersearch = false;}
+
 }
 
 sqlStatementNoLog("TRUNCATE TABLE `forms`;");
@@ -124,17 +82,14 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms.sql"
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms.sql");
 	sqlStatementNoLog($query);
 }
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms1.sql")) {
-        $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms1.sql");
+
+while ($formsearch == true;){
+    $formfile +=1;
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms".$formfile.".sql")) {
+        $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms".$formfile.".sql");
         sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql")) {
-        $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms2.sql");
-        sqlStatementNoLog($query);
-}
-if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms3.sql")) {
-        $query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Importer/forms3.sql");
-        sqlStatementNoLog($query);
+}else {$formsearch = false;}
+
 }
 
 sqlStatementNoLog("TRUNCATE TABLE `insurance_companies`;");
