@@ -30,7 +30,7 @@ class HCC_0002_Numerator extends PQRSFilter
         "REPLACE INTO `lists` ( `pid`,`date`, `type`, `title`, `diagnosis`, `activity`, `user`) VALUES ".
     "(?,?,'medical_problem','HCC_0002','HCC_0002',1,'".$this->_reportOptions['provider']."');";
     
-    sqlStatementNoLog($query);
+    sqlStatementNoLog($query, array($patient->id));
     
     return true;
     }
