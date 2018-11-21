@@ -1560,7 +1560,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre-selection_0327', 'description', 'Pediatric Kidney Disease: Adequacy of Volume Management',''),
 ('pre-selection_0329', 'description', 'Adult Kidney Disease: Catheter Use at Initiation of Hemodialysis',''),
 ('pre-selection_0330', 'description', 'Adult Kidney Disease: Catheter Use for Greater Than or Equal to 90 Days',''),
-('pre-selection_0332', 'description', 'Adult Sinusitis: Appropriate Choice of Antibiotic: Amoxicillin With or Without Clavulanate for Patients with Acute Bacterial Sinusitis
+('pre-selection_0332', 'description', 'Adult Sinusitis: Appropriate Choice of Antibiotic: Amoxicillin With or Without Clavulanate for Patients with Acute Bacterial Sinusitis',''),
 ('pre-selection_0337', 'description', 'Tuberculosis Prevention for Psoriasis,Psoriatic Arthritis and Rheumatoid Arthritis Patients on a Biological Immune Response Modifier',''),
 ('pre-selection_0340', 'description', 'HIV Medical Visit Frequency',''),
 ('pre-selection_0344', 'description', 'Rate of Carotid Artery Stenting (CAS) for Asymptomatic Patients, Without Major Complications',''),
