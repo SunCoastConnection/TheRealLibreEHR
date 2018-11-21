@@ -763,7 +763,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0283', 'answer', '3|Screening not performed; partial screening Or positive screening with no  recommendations, reason not given (G9920)|G9920',9),
 
 ('PQRS_0286', 'description', 'Dementia: Safety Concerns Screening and Mitigation Recommendations or Referral for Patients with Dementia',''),
-('PQRS_0286', 'question', 'Was the patient or their caregiver(s) screened for 1) danger to self or others and 2)environmental risk AND if safety concerns, are there recommendations or a referral for further safety evaluation(mitigation)?,''),
+('PQRS_0286', 'question', 'Was the patient or their caregiver(s) screened for 1) danger to self or others and 2)environmental risk AND if safety concerns, are there recommendations or a referral for further safety evaluation(mitigation)?',''),
 ('PQRS_0286', 'answer', '1|Safety screening positive, documented mitigation recommendations and or referrals,orders (G9922)|G9922',1),
 ('PQRS_0286', 'answer', '2|Safety screening, negative (G9923)|G9923',1),
 ('PQRS_0286', 'answer', '3|Documentation of medical reason(s) for not performing safety screening OR for not providing mitigation recommendations, referrals or orders (G9924)|G9924',2),
