@@ -1902,7 +1902,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 
 ('pre_0417', 'answer', '1|Exclude from denominator: aortic aneurysm is 6.0 cm or greater  diameter on CT: 9004F|9004F',9),
 ('pre_0417', 'answer', '2|Exclude from denominator: FEMALE patient with aortic aneurysm is 5.5 - 5.9 cm or greater diameter on CT: 9003F|9003F',9),
-('pre_0417', 'answer', '3|Exclude from denominator: patient had symptomatic AAA that required urgent/emergent (non-elective) repair: G9600|G9600'9),
+('pre_0417', 'answer', '3|Exclude from denominator: patient had symptomatic AAA that required urgent/emergent (non-elective) repair: G9600|G9600',9),
 
 ('pre_0418', 'answer', '1|Exclude from denominator: hospice patient: G9768|G9768',9),
 ('pre_0418', 'answer', '2|Exclude from denominator: bone density test done in past 2 yrs OR received osteoporosis treatment in past 12 mos: G9769|G9769',9),
