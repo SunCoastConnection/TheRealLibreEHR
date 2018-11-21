@@ -1046,7 +1046,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0370', 'answer', '1|Remission at twelve months as demonstrated by a twelve month (+/-30 days) PHQ-9 score of less than 5 (G9509)|G9509',1),
 ('PQRS_0370', 'answer', '2|PHQ-9 score was not assessed OR twelve month (+/-30 days) PHQ9 score is greater than or equal to 5 (G9510)|G9510',9),
 
-('PQRS_0374', 'description', 'Closing The Referral Loop: Receipt of Specialist Report
+('PQRS_0374', 'description', 'Closing The Referral Loop: Receipt of Specialist Report',''),
 ('PQRS_0374', 'question', 'Did the referring provider receive a follow up report about the patient, from the provider to whom the patient was referred?',''),
 ('PQRS_0374','answer',  '1|The referring provider received a report from the provider to whom the patient was referred (G9969)|G9969',1),
 ('PQRS_0374', 'answer', '2|The referring provider did not receive a report from the provider to whom the patient was referred (G9970)|G9970',9),
