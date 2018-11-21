@@ -393,7 +393,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0146', 'description', 'Radiology: Inappropriate Use of ''Probably Benign'' Assessment Category in Screening Mammograms <br>INVERSE MEASURE',''),
 ('PQRS_0146', 'question', 'Were mammogram findings classified as ''probably benign'' in the final patient report?',''),
 ('PQRS_0146', 'answer', '1|Mammogram assessment category of ''probably benign'' documented in the final report (3343F)|3343F',1),
-('PQRS_0146', 'answer', '2|Mammogram assessment category other than ''probably benign" documented in the final report (3350F)|3350F',9),
+('PQRS_0146', 'answer', '2|Mammogram assessment category other than ''probably benign'' documented in the final report (3350F)|3350F',9),
 
 ('PQRS_0147', 'description', 'Nuclear Medicine: Correlation with Existing Imaging Studies for All Patients Undergoing Bone Scintigraphy',''),
 ('PQRS_0147', 'question', 'Did the patient final reports include physician documentation of correlation with existing relevant imaging studies (e.g., x-ray, MRI, CT, etc.)?',''),
@@ -402,7 +402,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0147', 'answer', '3|Bone scintigraphy report not correlated in the final report with existing relevant imaging studies, reason not given (3570F:8P)|3570F:8P',9),
 
 ('PQRS_0154', 'description', 'Falls: Risk Assessment (for patients with a positive screening for falls)',''),
-('PQRS_0154', 'question', 'Did the patient have a risk assessment for falls completed within 12 months?',"),
+('PQRS_0154', 'question', 'Did the patient have a risk assessment for falls completed within 12 months?',''),
 ('PQRS_0154', 'answer', '1|Falls risk assessment documented(3288F)|3288F',1),
 ('PQRS_0154', 'answer', '2|Documentation of medical reasons for not completing a risk assessment for falls (3288:1P)|3288F:1P',2),
 ('PQRS_0154', 'answer', '4|Falls risk assessment  not completed, reason not given (3288F:8P)|3288F:8P',9),
@@ -630,7 +630,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 
 ('PQRS_0249', 'description', 'Barrett''s Esophagus',''),
 ('PQRS_0249', 'question', 'Did the patient esophageal biopsy report document the presence of Barrett''s mucosa and include a statement about dysplasia?',''),
-('PQRS_0249', 'answer', '1|Esophageal biopsy reports histologic finding of Barrett"s mucosa and contains a statement about dysplasia (present, absent, or indefinite and if present, contains appropriate grading) (3126F)|3126F',1),
+('PQRS_0249', 'answer', '1|Esophageal biopsy reports histologic finding of Barrett''s mucosa and contains a statement about dysplasia (present, absent, or indefinite and if present, contains appropriate grading) (3126F)|3126F',1),
 ('PQRS_0249', 'answer', '2|Documentation of medical reason(s) for not submitting histological finding of Barrett's mucosa (3126F:1P)|3126F:1P',2),
 ('PQRS_0249', 'answer', '3|Esophageal biopsy reports histologic finding of of Barrett''s mucosa but does not contain a statement about dysplasia (present, absent, or indefinite), reason not given (3126F:8P)|3126F:8P',9),
 
@@ -1047,7 +1047,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0370', 'answer', '2|PHQ-9 score was not assessed OR twelve month (+/-30 days) PHQ9 score is greater than or equal to 5 (G9510)|G9510',9),
 
 ('PQRS_0374', 'description', 'Closing The Referral Loop: Receipt of Specialist Report
-('PQRS_0374', 'question', 'Did the referring provider receive a follow up report about the patient, from the provider to whom the patient was referred?',"),
+('PQRS_0374', 'question', 'Did the referring provider receive a follow up report about the patient, from the provider to whom the patient was referred?',''),
 ('PQRS_0374','answer',  '1|The referring provider received a report from the provider to whom the patient was referred (G9969)|G9969',1),
 ('PQRS_0374', 'answer', '2|The referring provider did not receive a report from the provider to whom the patient was referred (G9970)|G9970',9),
 
@@ -1281,7 +1281,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0422', 'answer', '3|Intraoperative cystoscopy not performed to evaluate for lower tract injury (G9608)|G9608',9),
 
 ('PQRS_0423', 'description', 'Perioperative Anti-platelet Therapy for Patients Undergoing Carotid Endarterectomy',''),
-('PQRS_0423', 'question', 'Did the patient receive anti-platelet agents within 48 hours prior to the initiation of surgery AND have this medication precribed at hospital discharge following surgery?',")
+('PQRS_0423', 'question', 'Did the patient receive anti-platelet agents within 48 hours prior to the initiation of surgery AND have this medication precribed at hospital discharge following surgery?','')
 ('PQRS_0423', 'answer', '1|Documentation of an order for anti-platelet agents (G9609)|G9609',1),
 ('PQRS_0423', 'answer', '2|Documentation of medical reason(s) for not ordering anti-platelet agents (G9610)|G9610',2),
 ('PQRS_0423', 'answer', '3|Order for anti-platelet agents was not documented, reason not given (G9611)|G9611',9),
