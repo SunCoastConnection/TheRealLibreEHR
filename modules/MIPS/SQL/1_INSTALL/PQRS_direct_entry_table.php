@@ -1281,7 +1281,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0422', 'answer', '3|Intraoperative cystoscopy not performed to evaluate for lower tract injury (G9608)|G9608',9),
 
 ('PQRS_0423', 'description', 'Perioperative Anti-platelet Therapy for Patients Undergoing Carotid Endarterectomy',''),
-('PQRS_0423', 'question', 'Did the patient receive anti-platelet agents within 48 hours prior to the initiation of surgery AND have this medication precribed at hospital discharge following surgery?','')
+('PQRS_0423', 'question', 'Did the patient receive anti-platelet agents within 48 hours prior to the initiation of surgery AND have this medication precribed at hospital discharge following surgery?',''),
 ('PQRS_0423', 'answer', '1|Documentation of an order for anti-platelet agents (G9609)|G9609',1),
 ('PQRS_0423', 'answer', '2|Documentation of medical reason(s) for not ordering anti-platelet agents (G9610)|G9610',2),
 ('PQRS_0423', 'answer', '3|Order for anti-platelet agents was not documented, reason not given (G9611)|G9611',9),
