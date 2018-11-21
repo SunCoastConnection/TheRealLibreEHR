@@ -222,7 +222,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0099', 'answer', '3|pT category, pN category and histologic grade were not documented, reason not given (3260F:8P)|3260F:8P',9),
 
 ('PQRS_0100', 'description', 'Colorectal Cancer Resection Pathology Reporting: pT Category (Primary Tumor) and pN Category (Regional Lymph Nodes) with Histologic Grade',''),
-('PQRS_0100', 'question', 'Did the patient pathology report include the pT category, the pN category and the histologic grade?',''),'
+('PQRS_0100', 'question', 'Did the patient pathology report include the pT category, the pN category and the histologic grade?',''),
 ('PQRS_0100', 'answer', '1|pT category (primary tumor), pN category (regional lymph nodes), and histologic grade were documented in pathology report (G8721)|G8721',1),
 ('PQRS_0100', 'answer', '2|Documentation of medical reason(s) for not including the pT category, the pN category or the histologic grade in the pathology report (G8722)|G8722',2),
 ('PQRS_0100', 'answer', '3|pT category, pN category and histologic grade were not documented in the pathology report, reason not given (G8724)|G8724',9),
