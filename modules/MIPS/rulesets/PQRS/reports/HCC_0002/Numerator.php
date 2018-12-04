@@ -24,7 +24,7 @@ class HCC_0002_Numerator extends PQRSFilter
         return "Numerator";
     }
 
-    public function test( PQRSPatient $patient, $beginDate, $provider )
+    public function test( PQRSPatient $patient, $beginDate, $endDate )
     { 
         $thisprov = $this->_reportOptions['provider'];  
 
