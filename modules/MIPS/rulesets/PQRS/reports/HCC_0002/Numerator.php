@@ -25,11 +25,12 @@ class HCC_0002_Numerator extends PQRSFilter
     }
 
     public function test( PQRSPatient $patient, $beginDate, $provider )
-    {   
-     $provider = $this->_reportOptions['provider'];        
+    { 
+        $thisprov = $this->_reportOptions['provider'];  
+       $prov = string($thisprov);
         $query = 
         "REPLACE INTO lists ( pid,date, type, title, diagnosis, activity, user) VALUES ".
-    "(?,?,'medical_problem','HCC_0002','HCC_0002',1,'".$provider."');";
+    "(?,?,'medical_problem','HCC_0002','HCC_0002',1,'".$prov."');";
     
     sqlInsert($query);
     
