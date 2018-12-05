@@ -26,12 +26,11 @@ class HCC_0002_Numerator extends PQRSFilter
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     { 
-        $thisprov = $this->_reportOptions['provider'];  
 
-       $prov = print_r($thisprov,true);
         $query = 
         "REPLACE INTO lists ( pid,date, type, title, diagnosis, activity, user) VALUES ".
-    "(?,?,'medical_problem','HCC_0002','HCC_0002',1,'".$prov."');";
+    "(?,?,'medical_problem','HCC_0002','HCC_0002',1,'".$this->_reportOptions['provider']."');";
+    error_log("*DEBUG*: HCC_0002: Site: ".$_SESSION['site_id']."  About to attempt ".$query);
     
     sqlInsert($query);
     
