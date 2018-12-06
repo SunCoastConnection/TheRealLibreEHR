@@ -26,12 +26,7 @@ class HCC_0012_Numerator extends PQRSFilter
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-        $query = 
-        "REPLACE INTO `lists` ( `pid`,`date`, `type`, `title`, `diagnosis`, `activity`, `user`) VALUES ".
-    "('".$patient."','".$beginDate."','medical_problem','HCC_0012','HCC_0012',1,'".$this->_reportOptions['provider']."');";
-    
-    sqlStatementNoLog($query);
-    
+  
     return true;
     }
 }
