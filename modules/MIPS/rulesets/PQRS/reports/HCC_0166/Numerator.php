@@ -21,7 +21,7 @@ class HCC_0166_Numerator extends PQRSFilter
 {
     public function getTitle()
     {
-        return "Numerator";
+        return "Numerator HCC_0166";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
