@@ -291,7 +291,7 @@ function Form_Validate() {
     <!-- Required for the popup date selectors -->
     <div id="overDiv" style="position: absolute; visibility: hidden; z-index: 1000;"></div>
 
-    <span class='title' hidden><?php echo xlt('MIPS: ').' '.$page_titles[$rule_filter].$page_subtitle; ?></span>
+    <span class='title' hidden><?php echo xlt('QA Report: ').' '.$page_titles[$rule_filter].$page_subtitle; ?></span>
     <?php
     if(!empty($report_id)) {
         ?>
@@ -436,7 +436,7 @@ function Form_Validate() {
             <th style="text-align:left"><?php echo htmlspecialchars(xl('Title'), ENT_NOQUOTES); ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Total Patients'), ENT_NOQUOTES); ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Denominator'), ENT_NOQUOTES);  ?></th>
-            <th style="text-align:center"><?php echo htmlspecialchars(xl('Exclusions'), ENT_NOQUOTES); ?></th>
+            <th style="text-align:center"><?php echo htmlspecialchars(xl('Numerator Exclusions'), ENT_NOQUOTES); ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Performance Met'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Not Met'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Performance Rate'), ENT_NOQUOTES); ?></th>
@@ -465,7 +465,7 @@ $bgcolor = 0;
             $tempMeasuresString = '';
 
                 if(!empty($row['pqrs_code'])) {
-                  $tempMeasuresString .= ' '.htmlspecialchars(xl('MIPS ').preg_replace('/PQRS_/', '',$row['pqrs_code']), ENT_NOQUOTES).' ';              
+                  $tempMeasuresString .= ' '.preg_replace('/PQRS_/', 'MIPS ',$row['pqrs_code']), ENT_NOQUOTES).' ';              
                 }
   
 
