@@ -25,9 +25,9 @@ PRIMARY KEY(`id`)
 sqlStatementNoLog($query);
 
 $query =
-"INSERT INTO `mips_hcc_rates` (`type`, `code`,`rate`) VALUES
+"INSERT INTO `mips_hcc_rates` (`type`, `code`,`rate`) VALUES 
 ('HCC_0001','HIV/AIDS','0.47'),
-('HCC_0002','Septicemia, Sepsis, Systemic Inflammatory Response Syndrome/Shock','0.535',
+('HCC_0002','Septicemia, Sepsis, Systemic Inflammatory Response Syndrome/Shock','0.535'),
 ('HCC_0006','Opportunistic Infections','0.44'),
 ('HCC_0008','Metastatic Cancer and Acute Leukemia','2.484'),
 ('HCC_0009','Lung and Other Severe Cancers','0.973'),
