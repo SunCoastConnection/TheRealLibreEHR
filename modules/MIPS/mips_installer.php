@@ -59,7 +59,7 @@ include_once("SQL/1_INSTALL/PQRS_codes_ecr.php");
 echo "installed Efficience and Cost Reduction <br>";
 include_once("SQL/1_INSTALL/HCC_tables.php");
 echo "installed Health Condition Category tables <br>";
-include_once("SQL/1_INSTALL/category_rates_tablephp");
+include_once("SQL/1_INSTALL/category_rates_table.php");
 echo "installed HCC category rates table <br>";
 
 
