@@ -465,7 +465,7 @@ $bgcolor = 0;
             $tempMeasuresString = '';
 
                 if(!empty($row['pqrs_code'])) {
-                  $tempMeasuresString .= ' '.preg_replace('/PQRS_/', 'MIPS ',$row['pqrs_code']), ENT_NOQUOTES).' ';              
+                  $tempMeasuresString .= ' '.preg_replace('/PQRS_/', 'MIPS ',$row['pqrs_code']).' ';              
                 }
   
 
