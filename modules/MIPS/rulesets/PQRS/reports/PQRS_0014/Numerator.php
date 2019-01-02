@@ -34,6 +34,7 @@ class PQRS_0014_Numerator extends PQRSFilter
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = 'G9974';";
 //G9893
+error_log("*DEBUG*: Measure 14 Numerator query is".$query);
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  	
     }
