@@ -16,7 +16,7 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
- error_log("*DEBUG*: Measure 14 Criteria running");
+
 class PQRS_0014_PopulationCriteria implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()

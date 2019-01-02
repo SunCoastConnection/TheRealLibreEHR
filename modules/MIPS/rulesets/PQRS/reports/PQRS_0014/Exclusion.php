@@ -26,16 +26,16 @@ class PQRS_0014_Exclusion extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-        error_log("*DEBUG*: Measure 14 Exclusion running");
+
 	  $query =
 "SELECT COUNT(b1.code) as count". 
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code IN('G9975,'G9892');" ;
+" AND b1.code IN('G9975','G9892');" ;
 
-error_log("*DEBUG*: Measure 14 Exclusion query is".$query);
+
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;} 

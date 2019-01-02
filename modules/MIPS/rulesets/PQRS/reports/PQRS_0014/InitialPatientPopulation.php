@@ -44,7 +44,7 @@ class PQRS_0014_InitialPatientPopulation extends PQRSFilter
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) >= '50' ".
 " AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0014_a') ".
 " AND (b2.code = codelist_b.code AND codelist_b.type = 'pqrs_0014_b' AND b2.modifier NOT IN('GQ','GT','95'));";
-error_log("*DEBUG*: Measure 14 IPP query is".$query);
+
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;}  
 

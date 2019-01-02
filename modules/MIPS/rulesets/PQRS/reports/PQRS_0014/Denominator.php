@@ -28,7 +28,7 @@ class PQRS_0014_Denominator extends PQRSFilter
     {
 		//Same as initial population
 		return true;
-		error_log("*DEBUG*: Measure 14 Denom run");
+
     }
 }
 
