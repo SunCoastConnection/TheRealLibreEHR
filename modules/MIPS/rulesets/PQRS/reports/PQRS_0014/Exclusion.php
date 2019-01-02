@@ -35,5 +35,8 @@ class PQRS_0014_Exclusion extends PQRSFilter
 " AND b1.code IN('G9975,'G9892');" ;
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
 if ($result['count']> 0){ return true;} else {return false;} 
+
     }
 }
+
+?>
