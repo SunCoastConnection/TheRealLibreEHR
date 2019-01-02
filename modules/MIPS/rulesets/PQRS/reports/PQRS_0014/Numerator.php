@@ -26,6 +26,7 @@ class PQRS_0014_Numerator extends PQRSFilter
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
+        error_log("*DEBUG*: Measure 14 Numerator running.");
 	    $query =
 "SELECT COUNT(b1.code) as count".  
 " FROM billing AS b1".
