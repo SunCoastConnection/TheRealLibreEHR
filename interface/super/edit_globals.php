@@ -35,6 +35,7 @@ require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/globals.inc.php");
 require_once("$srcdir/user.inc");
 require_once("$srcdir/classes/CouchDB.class.php");
+require_once("$srcdir/calendar.inc");
 
 if ($_GET['mode'] != "user") {
   // Check authorization.
@@ -145,6 +146,10 @@ if ($_POST['form_save'] && $_GET['mode'] == "user") {
               $boolean = false;
             }
           }
+          elseif ($fldid == "updater_icon_visibility") {
+              //updater icon visibility
+              $boolean = true;
+          }
           elseif ($fldid == "primary_color" || $fldid == "primary_font_color" || $fldid == "secondary_color" || $fldid == "secondary_font_color" ) {
             if (strlen($_POST["form_$i"]) == 7 && substr($_POST["form_$i"], 0,1) == "#") {
             $boolean = true;
@@ -250,8 +255,9 @@ if ($_POST['form_save'] && $_GET['mode'] != "user") {
             // special treatment for some vars
             switch ($fldid) {
               case 'first_day_week':
+                // removed TLH 12/2018
                 // update PostCalendar config as well
-                sqlStatement("UPDATE libreehr_module_vars SET pn_value = ? WHERE pn_name = 'pcFirstDayOfWeek'", array($fldvalue));
+                // sqlStatement("UPDATE libreehr_module_vars SET pn_value = ? WHERE pn_name = 'pcFirstDayOfWeek'", array($fldvalue));
                 break;
             }
           //check and validate input from client side with globals.
@@ -314,6 +320,8 @@ if ($_POST['form_save'] && $_GET['mode'] != "user") {
             sqlStatement( 'DELETE FROM `globals` WHERE gl_name = ?', array( $fldid ) );
 
             sqlStatement( 'INSERT INTO `globals` ( gl_name, gl_index, gl_value ) VALUES ( ?, ?, ? )', array( $fldid, 0, $fldvalue )  );
+
+            refreshCalendar(); //if data is updated and is also valid for Calendar-Admin
           }
 
         } else {
@@ -596,6 +604,29 @@ foreach ($GLOBALS_METADATA as $grpname => $grparr) {
       echo "  </select>\n";
     }
 
+    else if ($fldtype == 'timezone') {
+      if ($_GET['mode'] == "user") {
+        $globalTitle = $globalValue;
+      }
+      // timezone_identifiers_list() returns an array containing all defined time zone identifiers
+      // for eg: Asia/Kolkata or Asia/Singapore
+      $zone_list = timezone_identifiers_list();
+
+      // generating an option list of defined time zones including default time zone from php.ini
+      echo "  <select class='form-control input-sm' name='form_$i' id='form_$i'>\n";
+      $top_choice = $flddef;     // default option
+      echo "    <option value='" . ($top_choice) . "'>" . text("Default - php.ini value") . "</option>\n";
+      foreach ($zone_list as $item) {
+        $title = $item;
+        echo "   <option value='" . ($item) . "'";
+        if ($title == $fldvalue) echo " selected";
+        echo ">";
+        echo xlt($item);
+        echo "</option>\n";
+      }
+      echo "  </select>\n";
+    }
+
     else if ($fldtype == 'list') {
       if ($_GET['mode'] == "user") {
         $globalTitle = $globalValue;
@@ -754,6 +785,11 @@ foreach ($GLOBALS_METADATA as $grpname => $grparr) {
     }
     if ($_GET['mode'] == "user") {
       echo " </td>\n";
+      if (strpos($globalTitle, '!') !== false) {
+        // removing '!' from $globalTitle which is at 0th place in string
+        // which happens in case of time zone global when default - php.ini is selected
+        $globalTitle = substr($globalTitle, strpos($globalTitle, '!') + 1);
+      }
       echo "<td align='center' style='color:red;'>" . attr($globalTitle) . "</td>\n";
       echo "<td>&nbsp</td>";
       echo "<td align='center'><input type='checkbox' class='checkbox' value='YES' name='toggle_" . $i . "' id='toggle_" . $i . "' " . attr($settingDefault) . "/></td>\n";

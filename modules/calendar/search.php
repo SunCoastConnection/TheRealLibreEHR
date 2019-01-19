@@ -28,7 +28,7 @@ function keywordFilter($arr) {
 }
 
 // get bootstrap and datetimepicker
-  call_required_libraries(array ("jquery-min-3-1-1","bootstrap","datepicker"));
+  call_required_libraries(array("jquery-min-3-1-1","bootstrap","datepicker"));
 ?>
 <html>
 <head>
@@ -165,7 +165,7 @@ function keywordFilter($arr) {
     }
     
     function goPid(pid) {
-      top.RTop.location = '../../interface/patient_file/summary/demographics.php' + '?set_pid=' + pid;
+      top.RTop.location = '../../patient_file/summary/demographics.php' + '?set_pid=' + pid;
       
       // cancel event bubble trying to open add_edit_event
       if (!e) var e = window.event;

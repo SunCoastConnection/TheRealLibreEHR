@@ -608,6 +608,9 @@
           |
           <a href="../../reports/pat_ledger.php?form=1&patient_id=<?php echo attr($pid);?>" id="ledger_link" onclick='top.restoreSession()'>
           <?php echo xlt('Ledger'); ?></a>
+          |
+          <a href="../history/track_appointments.php" id="trackAppt_link" onclick='top.restoreSession()'>
+          <?php echo htmlspecialchars(xl('Track Appointments'),ENT_NOQUOTES); ?></a>
           <!-- DISPLAYING ZEND MODULE HOOKS STARTS HERE -->
           <?php
             $module_query = sqlStatement("SELECT msh.*,ms.menu_name,ms.path,m.mod_ui_name,m.type FROM modules_hooks_settings AS msh
@@ -656,7 +659,10 @@
             <!-- start left column div -->
             <div style='float:left; margin-right:20px'>
               <table cellspacing=0 cellpadding=0>
-                <?php do_action( 'demographics_before_first_table_row' ); ?>
+                <?php if ($GLOBALS['tags_filters_enabled'])  {
+                          do_action( 'demographics_before_first_table_row' );
+                      }
+                ?>
                 <?php if (!$GLOBALS['hide_billing_widget'])  { ?>
                 <tr id="billing_widget_row">
                   <td>
@@ -1526,7 +1532,9 @@
              echo htmlspecialchars(xl_appt_category($row['pc_catname']),ENT_NOQUOTES) . "\n";
              if ($row['pc_hometext']) echo " <span style='color:green'> Com</span>";
              echo "<br>" . htmlspecialchars($row['ufname'] . " " . $row['ulname'],ENT_NOQUOTES) . "</a></div>\n";
+             if ($GLOBALS['tags_filters_enabled'])  {
              do_action( 'demographics_after_appointment', $row );
+             }
              //////
          }
          if ($resNotNull) { //////
@@ -1537,7 +1545,9 @@
                else echo "<div><hr></div>";
              }
              echo "</div>";
+             if ($GLOBALS['tags_filters_enabled'])  {
              do_action( 'demographics_after_get_appointments' );
+         }
          }
        } // End of Appointments.
              
@@ -1662,7 +1672,10 @@
       checkSkipConditions();
     </script>
   </body>
-  <?php do_action( 'demographics_before_html_end', $args = [ 'pid' => $pid ] ); ?>
+  <?php if ($GLOBALS['tags_filters_enabled'])  {
+         do_action( 'demographics_before_html_end', $args = [ 'pid' => $pid ] );
+        }  
+  ?>
 </html>
 <?php
 //this code is executed when user edit or upload a profile picture
@@ -1690,9 +1703,11 @@ if (isset($_FILES["profile_picture"])) {
                             'image/gif',
                             'image/bmp',
                             'image/vnd.microsoft.icon');
+    $extensions = array("jpg", "png", "jpeg");
     //mime check with all image formats.
     if (in_array($mime, $mime_types)) {
           $bool = 1;
+        if (in_array($imageFileType, $extensions)) {
         //if mime type matches, then do a size check
         //size check
         if ($_FILES["profile_picture"]["size"] > 20971520) {
@@ -1701,6 +1716,10 @@ if (isset($_FILES["profile_picture"])) {
         else {
           $bool = 1;
         }    
+    }
+    else {
+      $bool = 0;
+    }
     }
     else {
       $bool = 0;

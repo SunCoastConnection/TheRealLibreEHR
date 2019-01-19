@@ -42,7 +42,7 @@ function jsWaitForDelay(delay) {
 <tr>
     <td><?php echo xlt("Address")."(".xlt("line1").")";?> </td>
     <td>
-        <input type="text" class="form-control input-sm" size="40" name="address_line1" value="<?php $this->insurancecompany->address->line1;?>" 
+        <input type="text" class="form-control input-sm" size="40" name="address_line1" value="<?php echo $this->insurancecompany->address->line1;?>" 
                onKeyDown="PreventIt(event)" />
     </td>
 </tr>
@@ -59,7 +59,7 @@ function jsWaitForDelay(delay) {
         <input type="text" class="form-control input-sm" size="25" name="city" value="<?php echo $this->insurancecompany->address->city;?>" onKeyDown="PreventIt(event)" /> , 
         <input type="text" class="form-control input-sm" size="2" maxlength="2" name="state" value="<?php echo $this->insurancecompany->address->state;?>"
                onKeyDown="PreventIt(event)" /> ,
-        <input type="text" class="form-control input-sm" size="5" name="zip" value="<?php $this->insurancecompany->address->zip;?>" onKeyDown="PreventIt(event)" />
+        <input type="text" class="form-control input-sm" size="5" name="zip" value="<?php echo $this->insurancecompany->address->zip;?>" onKeyDown="PreventIt(event)" />
     </td>
 </tr>
 <tr>
@@ -123,7 +123,6 @@ This is now deprecated use the newer x12 partner code instead
         </select>
     </td>
 </tr>
-
 <tr>
     <?php if ($this->insurancecompany->get_allow_print_statement() == 0) { ?>
     <td><?php echo xlt("Do Not Print Statements");?> </td>
