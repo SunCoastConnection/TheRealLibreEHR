@@ -102,7 +102,7 @@ if ($form_esigned) {
 if ($form_not_esigned) {
 	$query .= "AND es.tid IS NULL ";
 }
-$query .= "ORDER BY fe.provider_id;"
+$query .= "ORDER BY fe.provider_id;";
 
 $res = sqlStatement($query);
 
