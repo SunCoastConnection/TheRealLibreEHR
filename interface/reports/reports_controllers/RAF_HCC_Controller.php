@@ -48,11 +48,9 @@ $query = "SELECT " .
   "f.formdir, f.form_name, " .
   "p.fname, p.mname, p.lname, p.pid,p.billing_note, p.pubpid, " .
   "u.lname AS ulname, u.fname AS ufname, u.mname AS umname " .
-  "$esign_fields" .
   "FROM ( form_encounter AS fe, forms AS f ) " .
   "LEFT OUTER JOIN patient_data AS p ON p.pid = fe.pid " .
   "LEFT JOIN users AS u ON u.id = fe.provider_id " .
-  "$esign_joins" .
   "WHERE f.pid = fe.pid AND f.encounter = fe.encounter AND f.formdir = 'patient_encounter' ";
 if ($form_to_date) {
 	$query .= "AND fe.date >= '$from_date 00:00:00' AND fe.date <= '$to_date 23:59:59' ";
