@@ -93,7 +93,7 @@ require_once "reports_controllers/RAF_HCC_Controller.php";
   <!-- Required for the popup date selectors -->
   <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 
-  <span class='title'><?php echo xlt('Report'); ?> - <?php echo xlt('Encounters'); ?></span>
+  <span class='title' hidden="hidden">RAF Encounters</span>
 
   <?php reportParametersDaterange(); #TRK ?>
 
