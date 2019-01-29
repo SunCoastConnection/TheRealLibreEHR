@@ -152,6 +152,7 @@ require_once "reports_controllers/RAF_HCC_Controller.php";
             <th><?php echo xlt('Patient'); ?></th>
             <th><?php echo xlt('PID'); ?></th>
             <th><?php echo xlt('RAF'); ?></th>
+            <th><?php echo xlt('Facility'); ?></th>
             <th><?php echo xlt('Status'); ?></th>
             <th><?php echo xlt('Encounter'); ?></th>
             <th><?php echo xlt('Encounter Number'); ?></th>
