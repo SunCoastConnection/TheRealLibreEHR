@@ -44,7 +44,7 @@ $form_details   = true;
 
 
 $query = "SELECT " .
-  "fe.encounter, fe.date, fe.reason,fe.facility " .
+  "fe.encounter, fe.date, fe.reason,fe.facility, " .
   "f.formdir, f.form_name, " .
   "p.fname, p.mname, p.lname, p.pid,p.billing_note, p.pubpid, " .
   "u.lname AS ulname, u.fname AS ufname, u.mname AS umname " .
