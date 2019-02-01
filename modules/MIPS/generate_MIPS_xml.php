@@ -22,7 +22,7 @@ $sanitize_all_escapes = true;
 $fake_register_globals = false;
 
 require_once ('mips_headers.inc.php');
-
+require_once("report_functions.inc.php");
 $BLACKLIST = array('0001','0146','0164','0192','0238','0322','0323','0324','0328','0329','0330','0331','0333','0334',
 '0345','0346','0347','0348','0388','0392','0393','0405','0406','0416','0432','0433','0434','0437','0439','0441');
 
