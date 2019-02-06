@@ -26,15 +26,7 @@ class pre_0463_Exclusion extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-    $query =
-"SELECT COUNT(b1.code) as count ".  
-    " FROM billing AS b1".
-    " WHERE b1.pid = ? ".
-    " AND b1.code = 'G9957'; ";
-
-    $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-
-    if ($result['count']> 0){ error_log("pre_0463 IPP"); return true;} else{ error_log("pre_0463 IPP");return false;}
+return false;
     }
 }
 ?>

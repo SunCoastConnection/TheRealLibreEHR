@@ -36,7 +36,7 @@ class pre_0463_Numerator extends PQRSFilter
 //G9958 hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result['count']> 0){ error_log("pre_0463 IPP"); return true;} else { error_log("pre_0463 IPP");return false;}  
+if ($result['count']> 0){ return true;} else {return false;}  
 		
     }
 }
