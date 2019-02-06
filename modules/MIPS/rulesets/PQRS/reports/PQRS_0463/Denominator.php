@@ -48,7 +48,7 @@ class PQRS_0463_Denominator extends PQRSFilter
         
         if ($result['count']> 0){ return true;} else {return false;}  
 
-    }else {return false;}
+    }
     }
 }
 ?>
