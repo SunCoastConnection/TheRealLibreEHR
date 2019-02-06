@@ -16,7 +16,7 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
-error_log("pre_0463 Den"); 
+
 class pre_0463_Denominator extends PQRSFilter
 {
     public function getTitle() 
@@ -26,6 +26,7 @@ class pre_0463_Denominator extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
+        error_log("pre_0463 Den"); 
 return true;
     }
 }

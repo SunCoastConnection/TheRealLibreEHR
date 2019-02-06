@@ -16,7 +16,7 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
- error_log("pre_0463 IPP");
+
 class pre_0463_InitialPatientPopulation extends PQRSFilter
 {
     public function getTitle() 
@@ -42,7 +42,7 @@ $query =
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '3' AND '17' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){return true; } else {return false;}  
+if ($result['count']> 0){ error_log("pre_0463 IPP");return true; } else { error_log("pre_0463 IPP");return false;}  
     }
 }
 ?>

@@ -16,7 +16,7 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
-error_log("pre_0463 Ex");
+
 class pre_0463_Exclusion extends PQRSFilter
 {
     public function getTitle() 
@@ -34,7 +34,7 @@ class pre_0463_Exclusion extends PQRSFilter
 
     $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-    if ($result['count']> 0){ return true;} else{return false;}
+    if ($result['count']> 0){ error_log("pre_0463 IPP"); return true;} else{ error_log("pre_0463 IPP");return false;}
     }
 }
 ?>
