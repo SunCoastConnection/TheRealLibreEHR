@@ -16,7 +16,7 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
- 
+error_log("pre_0463 Num"); 
 class pre_0463_Numerator extends PQRSFilter
 {
     public function getTitle()
