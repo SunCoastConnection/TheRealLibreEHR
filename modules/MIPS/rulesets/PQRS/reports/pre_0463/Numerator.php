@@ -26,7 +26,7 @@ class pre_0463_Numerator extends PQRSFilter
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-return false;
+return true;
 		
     }
 }

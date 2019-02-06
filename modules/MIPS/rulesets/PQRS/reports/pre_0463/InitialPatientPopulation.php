@@ -26,23 +26,7 @@ class pre_0463_InitialPatientPopulation extends PQRSFilter
     
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-$query =
-"SELECT COUNT(b1.code) as count ".  
-" FROM billing AS b1". 
-" INNER JOIN pqrs_mips AS codelist_a ON (b1.code = codelist_a.code)".
-" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
-" WHERE b1.pid = ? ".
-        "";
-        $thisprov = $this->_reportOptions['provider'];
-        if ($thisprov != 1000000001){ $query .=
-        " AND fe.provider_id = '".$this->_reportOptions['provider']."'";}
-        $query .=
-" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0424_a') ". 
-" AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '3' AND '17' ; ";
-
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count']> 0){return true; } else {return false;}  
+return true;
     }
 }
 ?>
