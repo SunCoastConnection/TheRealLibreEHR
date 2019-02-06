@@ -27,7 +27,7 @@ class pre_0463_Exclusion extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
     $query =
-    " SELECT COUNT(b1.code) AS count".  
+"SELECT COUNT(b1.code) as count ".  
     " FROM billing AS b1".
     " WHERE b1.pid = ? ".
     " AND b1.code = 'G9957'; ";
