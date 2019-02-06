@@ -37,7 +37,7 @@ $query =
         " AND fe.provider_id = '".$this->_reportOptions['provider']."'";}
         $query .=
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0424_a'); "; 
+" AND (b1.code = codelist_a.code AND codelist_a.type = 'pqrs_0424_a') "; 
 " AND TIMESTAMPDIFF(YEAR,p.DOB,fe.date) BETWEEN '3' AND '17' ; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
