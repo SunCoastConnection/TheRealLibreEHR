@@ -30,6 +30,7 @@ $query =
 "SELECT COUNT(b1.code) as count ".  
 " FROM billing AS b1". 
 " INNER JOIN pqrs_mips AS codelist_a ON (b1.code = codelist_a.code)".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
         "";
         $thisprov = $this->_reportOptions['provider'];
