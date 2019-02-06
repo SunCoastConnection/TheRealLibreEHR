@@ -25,6 +25,10 @@ $fake_register_globals = false;
 
 require_once '../../interface/globals.php';
 require_once $srcdir.'/api.inc';
+require_once("$srcdir/headers.inc.php");
+//Include Bootstrap
+call_required_libraries(array("bootstrap"));
+
 
 $updateStatus = array(
 	'off' => array(),
@@ -78,6 +82,7 @@ h1, h2, h3 {
 }
 #measures ul {
 	padding-left: 1em;
+	display: inline;
 }
 #measures li {
 	list-style: none;
@@ -119,7 +124,6 @@ h1, h2, h3 {
 	display: none;
 }
 .quickselect {
-	
 	border: 1px solid #333333;
 	border-radius: 4px;
 	color: #333333;
@@ -128,6 +132,13 @@ h1, h2, h3 {
 	margin: 0.25ex 0.15ex 0.15ex 0ex;
 	padding: 0 0.75ex;
 	font-size: 9pt;
+}
+.ma-title {
+	font-size: 20px; 
+	margin-left: 15px;
+}
+.row{
+	margin: 0;
 }
 		</style>
 		<script type="text/javascript" src="../../library/js/jquery-1.9.1.min.js"></script>
@@ -309,7 +320,7 @@ $(document).ready(function() {
 	</head>
 	<body class="body_top">
 		<form action="?action=save" method="post">
-			<h1>MIPS Measure Selector</h1>
+			<h2>MIPS Measure Selector</h2>
 <?php
 
 if(count($updateStatus['off']) || count($updateStatus['on'])) {
@@ -321,12 +332,9 @@ if(count($updateStatus['off']) || count($updateStatus['on'])) {
 }
 
 ?>
-			<p><input type="submit" value="Update" /></p>
 			<div id="measures">
-				<ul>
-
-					<li>MIPS Specialty Sets for 2018
-						<ul>
+				<div class="row"><p><span class="align-middle"><input class="btn btn-success btn-sm align-middle" type="submit" value="Update" /></span><span class="align-middle ma-title">MIPS Specialty Sets for 2018</span></p></div>
+				<div class="row">
 							<button type="button" class="quickselect" onclick="quickSelect('MIPS-1 Allergy/Immunology')">Allergy/Immunology</button>
 							<button type="button" class="quickselect" onclick="quickSelect('MIPS-2 Anesthesiology')">Anesthesiology</button>
 							<button type="button" class="quickselect" onclick="quickSelect('MIPS-3 Cardiology')">Cardiology</button>
@@ -361,9 +369,8 @@ if(count($updateStatus['off']) || count($updateStatus['on'])) {
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-32 Thoracic Surgery')">Thoracic Surgery</button>
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-33 Urology')">Urology</button>
                             <button type="button" class="quickselect" onclick="quickSelect('MIPS-34 Vascular Surgery')">Vascular Surgery</button>
-						</ul>
-					</li>
-					
+				</div>
+				<br/>
 					<li>
 						<input type="checkbox" id="pqrs-toggle">
 						<label for="pqrs-toggle">All Measures</label>
@@ -477,7 +484,6 @@ foreach($rules as $rule) {
 					</li>
 				</ul>
 			</div>
-			<p><input type="submit" value="Update" /></p>
 		</form>
 	</body>
 </html>
