@@ -37,3 +37,4 @@ class pre_0463_Exclusion extends PQRSFilter
     if ($result['count']> 0){ return true;} else{return false;}
     }
 }
+?>
