@@ -162,6 +162,7 @@ if(!empty($report_id)) {
 		fwrite($myFileHandle, "<data>\n");
 		//begin <submission>
 		//fwrite($myFileHandle, " <submission>\n"); no submission element for upload file format.
+		fwrite($myFileHandle, "    <programName>mips</programName>\n");
 		fwrite($myFileHandle, "    <entityType>".$entityType."</entityType>\n");
 		fwrite($myFileHandle, "    <taxpayerIdentificationNumber>$PROVIDER_TIN</taxpayerIdentificationNumber>\n");
 		if ($entityType == "individual"){
@@ -265,9 +266,7 @@ if(!empty($report_id)) {
 		fwrite($myFileHandle,  "        <measureId>$PQRS_MEASURE_NUMBER</measureId>\n");
 
 
-		fwrite($myFileHandle,  "          <value>\n");
-        fwrite($myFileHandle,  "             <reporting-rate>$REPORTING_RATE</reporting-rate>\n");
-		fwrite($myFileHandle,  "             <performance-rate>$PERFORMANCE_RATE</performance-rate>\n");        
+		fwrite($myFileHandle,  "          <value>\n");        
         ///<strata> foreach loops would begin here. TODO OLD CODE=fwrite($myFileHandle,  "          <measure-strata-num>$MEASURE_STRATA_NUM</measure-strata-num>\n");
 		fwrite($myFileHandle,  "             <isEndToEndReported>false</isEndToEndReported>\n");
 		fwrite($myFileHandle,  "             <performanceMet>$MEETS_PERFORMANCE_INSTANCES</performanceMet>\n");
