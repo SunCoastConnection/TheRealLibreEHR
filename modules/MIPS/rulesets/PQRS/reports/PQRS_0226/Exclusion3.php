@@ -33,7 +33,7 @@ class PQRS_0226_Exclusion3 extends PQRSFilter
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = '4004F'".
-" AND b1.modifier != '1P'; ";
+" AND b1.modifier = '1P'; ";
 
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
