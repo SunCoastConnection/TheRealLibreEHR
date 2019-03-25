@@ -32,7 +32,7 @@ $query =
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND (b1.code IN ('G9902',G9906') ".
+" AND (b1.code IN ('G9902','G9906') ".
 " OR (b1.code = '4004F' AND b1.modifier NOT IN('8P')));";
 //G9902 advances to criteria 2
 
