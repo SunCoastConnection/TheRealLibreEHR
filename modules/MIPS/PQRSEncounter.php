@@ -145,7 +145,7 @@ function findProvider($pid) {
 }	// End function find_provider()
 
 function update_itemized_report( $myperformance,$myreport_id, $myitemized_test_id, $mypid) {
-$query = "UPDATE report_itemized SET pass = '".$myperformance."' WHERE report_id = '".$myreport_id."' AND itemized_test_id = '".$myitemized_test_id."' AND pid = '".$mypid."' AND numerator_label = 'Numerator';";
+$query = "UPDATE report_itemized SET pass = '".$myperformance."' WHERE report_id = '".$myreport_id."' AND itemized_test_id = '".$myitemized_test_id."' AND pid = '".$mypid."' AND (numerator_label IN('Numerator','Numerator1','Numerator2','Numerator3'));";
 //error_log("report_itemized query is: ".$query);
  sqlStatement($query);
 }
