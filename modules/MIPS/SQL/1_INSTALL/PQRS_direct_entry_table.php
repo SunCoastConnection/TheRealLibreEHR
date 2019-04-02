@@ -465,7 +465,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0179', 'question', 'Does the patient have at least one documented assessment and classification (good/poor) of disease prognosis utilizing clinical markers of poor prognosis, within 12 months?',''),
 ('PQRS_0179', 'answer', '1|Disease prognosis for rheumatoid arthritis assessed, poor prognosis documented (3475F)|3475F',1),
 ('PQRS_0179', 'answer', '2|Disease prognosis for rheumatoid arthritis assessed, good prognosis documented (3476F)|3476F',1),
-('PQRS_0179', 'answer', '3|Disease prognosis for rheumatoid arthritis not assessed and classified, reason not given (3475F:8P)|3475F:8P)',9),
+('PQRS_0179', 'answer', '3|Disease prognosis for rheumatoid arthritis not assessed and classified, reason not given (3475F:8P)|3475F:8P',9),
 
 ('PQRS_0180', 'description', ' Rheumatoid Arthritis (RA): Glucocorticoid Management',''),
 ('PQRS_0180', 'question', 'Has the patient been assessed for glucocorticoid use and if on prolonged doses of prednisone >=10 mg daily (or equivalent) with improvement or no change in disease activity, is there documentation of a glucocorticoid management plan within 12 months?',''),
