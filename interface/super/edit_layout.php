@@ -54,13 +54,13 @@ while ($lrow = sqlFetchArray($lres)) {
 
 // array of the data_types of the fields
 $datatypes = array(
-  "1"  => xl("List box"), 
+  "1"  => xl("List box"),
   "2"  => xl("Textbox"),
   "3"  => xl("Textarea"),
   "4"  => xl("Text-date"),
   "5"  => xl("Email"),
-  "6"  => xl("Integer"),  
-  "7"  => xl("URL"), 
+  "6"  => xl("Integer"),
+  "7"  => xl("URL"),
   "10" => xl("Providers"),
   "11" => xl("Providers NPI"),
   "12" => xl("Pharmacies"),
@@ -361,7 +361,7 @@ else if ($_POST['formaction'] == "movegroup" && $layout_id) {
 
 else if ($_POST['formaction'] == "renamegroup" && $layout_id) {
   $currpos = substr($_POST['renameoldgroupname'], 0, 1);
-  // update the database rows 
+  // update the database rows
   sqlStatement("UPDATE layout_options SET " .
     "group_name = '" . $currpos . $_POST['renamegroupname'] . "' ".
     "WHERE form_id = '$layout_id' AND ".
@@ -404,10 +404,10 @@ function writeFieldLine($linedata) {
     global $fld_line_no, $sources, $lbfonly, $extra_html;
     ++$fld_line_no;
     $checked = $linedata['default_value'] ? " checked" : "";
-  
+
     //echo " <tr bgcolor='$bgcolor'>\n";
     echo " <tr id='fld[$fld_line_no]' class='".($fld_line_no % 2 ? 'even' : 'odd')."'>\n";
-  
+
     echo "  <td class='optcell' style='width:4%' nowrap>";
     // tuck the group_name INPUT in here
     echo "<input type='hidden' name='fld[$fld_line_no][group]' value='" .
@@ -439,7 +439,7 @@ function writeFieldLine($linedata) {
          class='optin noselect' style='width:100%' />";
 
     echo "</td>\n";
-  
+
     echo "  <td align='center' class='optcell' style='width:12%'>";
     echo "<input type='text' id='fld[$fld_line_no][title]' name='fld[$fld_line_no][title]' value='" .
          htmlspecialchars($linedata['title'], ENT_QUOTES) . "' size='15' maxlength='63' class='optin' style='width:100%' />";
@@ -449,7 +449,7 @@ function writeFieldLine($linedata) {
     if ($GLOBALS['translate_layout'] && $_SESSION['language_choice'] > 1) {
         echo "<td align='center' class='translation' style='width:10%'>" . htmlspecialchars(xl($linedata['title']), ENT_QUOTES) . "</td>\n";
     }
-    
+
     echo "  <td align='center' class='optcell' style='width:4%'>";
     echo "<select name='fld[$fld_line_no][uor]' class='optin'>";
     foreach (array(0 =>xl('Unused'), 1 =>xl('Optional'), 2 =>xl('Required')) as $key => $value) {
@@ -459,7 +459,7 @@ function writeFieldLine($linedata) {
     }
     echo "</select>";
     echo "</td>\n";
-  
+
     echo "  <td align='center' class='optcell' style='width:8%'>";
     echo "<select name='fld[$fld_line_no][data_type]' id='fld[$fld_line_no][data_type]'>";
     echo "<option value=''></option>";
@@ -474,8 +474,8 @@ function writeFieldLine($linedata) {
     echo "  </td>";
 
     echo "  <td align='center' class='optcell' style='width:4%'>";
-    if ($linedata['data_type'] == 2 || $linedata['data_type'] == 3 || 
-      $linedata['data_type'] == 5 || $linedata['data_type'] == 6 ||  $linedata['data_type'] == 7 || 
+    if ($linedata['data_type'] == 2 || $linedata['data_type'] == 3 ||
+      $linedata['data_type'] == 5 || $linedata['data_type'] == 6 ||  $linedata['data_type'] == 7 ||
       $linedata['data_type'] == 21 || $linedata['data_type'] == 22 ||
       $linedata['data_type'] == 23 || $linedata['data_type'] == 25 ||
       $linedata['data_type'] == 27 || $linedata['data_type'] == 28 ||
@@ -484,12 +484,16 @@ function writeFieldLine($linedata) {
       // Show the width field
       echo "<input type='text' name='fld[$fld_line_no][lengthWidth]' value='" .
         htmlspecialchars($linedata['fld_length'], ENT_QUOTES) .
-        "' size='1' maxlength='10' class='optin' title='" . xla('Width') . "' />";
+        "' size='1' maxlength='10' class='optin ";
+      if ($linedata['data_type'] == 3) {
+        echo "halfinput";
+      }
+      echo "' title='" . xla('Width') . "' />";
       if ($linedata['data_type'] == 3) {
         // Show the height field
         echo "<input type='text' name='fld[$fld_line_no][lengthHeight]' value='" .
           htmlspecialchars($linedata['fld_rows'], ENT_QUOTES) .
-          "' size='1' maxlength='10' class='optin' title='" . xla('Height') . "' />";
+          "' size='1' maxlength='10' class='optin halfinput' title='" . xla('Height') . "' />";
       }
       else {
         // Hide the height field
@@ -515,14 +519,14 @@ function writeFieldLine($linedata) {
       $linedata['data_type'] == 22 || $linedata['data_type'] == 23 ||
       $linedata['data_type'] == 25 || $linedata['data_type'] == 26 ||
       $linedata['data_type'] == 27 || $linedata['data_type'] == 32 ||
-      $linedata['data_type'] == 33 || 
+      $linedata['data_type'] == 33 ||
       $linedata['data_type'] == 36)
     {
      echo "<input type='text' name='fld[$fld_line_no][list_id]' value='" .
         htmlspecialchars($linedata['list_id'], ENT_QUOTES) . "'".
         "size='6' maxlength='30' class='optin listid' style='cursor: pointer'".
         "title='". xl('Choose list') . "' />";
-    
+
 
     }
     else {
@@ -545,17 +549,17 @@ function writeFieldLine($linedata) {
     }
     echo "</td>\n";
     //Backup List End
-    
+
     echo "  <td align='center' class='optcell' style='width:4%'>";
     echo "<input type='text' name='fld[$fld_line_no][titlecols]' value='" .
          htmlspecialchars($linedata['titlecols'], ENT_QUOTES) . "' size='3' maxlength='10' class='optin' style='width:100%' />";
     echo "</td>\n";
-  
+
     echo "  <td align='center' class='optcell' style='width:4%'>";
     echo "<input type='text' name='fld[$fld_line_no][datacols]' value='" .
          htmlspecialchars($linedata['datacols'], ENT_QUOTES) . "' size='3' maxlength='10' class='optin' style='width:100%' />";
     echo "</td>\n";
-  
+
     echo "  <td align='center' class='optcell' style='width:5%' title='" .
           "A = " . xla('Age') .
         ", B = " . xla('Gestational Age') .
@@ -571,14 +575,14 @@ function writeFieldLine($linedata) {
         ", U = " . xla('Capitalize all') .
         ", V = " . xla('Vendor') .
         ", 0 = " . xla('Read Only') .
-        ", 1 = " . xla('Write Once') . 
-        ", 2 = " . xla('Billing Code Descriptions') . 
+        ", 1 = " . xla('Write Once') .
+        ", 2 = " . xla('Billing Code Descriptions') .
         "'>";
     echo "<input type='text' name='fld[$fld_line_no][edit_options]' value='" .
       htmlspecialchars($linedata['edit_options'], ENT_QUOTES) . "' size='3' " .
       "maxlength='36' class='optin' style='width:100%' />";
     echo "</td>\n";
- 
+
     /*****************************************************************
     echo "  <td align='center' class='optcell'>";
     if ($linedata['data_type'] == 2) {
@@ -588,7 +592,7 @@ function writeFieldLine($linedata) {
       echo "&nbsp;";
     }
     echo "</td>\n";
-  
+
     echo "  <td align='center' class='optcell'>";
     echo "<input type='text' name='fld[$fld_line_no][desc]' value='" .
          htmlspecialchars($linedata['description'], ENT_QUOTES) . "' size='20' maxlength='63' class='optin' />";
@@ -727,18 +731,52 @@ function writeFieldLine($linedata) {
 <!-- supporting javascript code -->
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery.js"></script>
 
+<?php call_required_libraries(array("bootstrap")); ?>
+
 <link rel="stylesheet" href='<?php  echo $css_header ?>' type='text/css'>
 
 <title><?php  xl('Layout Editor','e'); ?></title>
 
 <style>
-tr.head   { font-size:10pt; background-color:#cccccc; }
-tr.detail { font-size:10pt; }
-td        { font-size:10pt; }
-input     { font-size:10pt; }
-a, a:visited, a:hover { color:#0000cc; }
-.optcell  { }
-.optin    { background: transparent; }
+.marginlessrow{
+  margin: 0;
+}
+table{
+  width: 100%;
+}
+.popupbox{
+  border: 1px grey solid !important;
+}
+tr.head {
+  font-size:10pt; background-color:#cccccc;
+}
+tr.detail {
+  font-size:10pt;
+}
+td {
+  font-size:10pt;
+}
+td>input{
+  width:100%;
+}
+td>select{
+  width:100%;
+}
+.halfinput{
+  width:auto !important;
+}
+input {
+  font-size:10pt;
+}
+a, a:visited, a:hover {
+  color:#0000cc;
+}
+.optcell {
+
+}
+.optin {
+  background: transparent;
+}
 .group {
     margin: 0pt 0pt 8pt 0pt;
     padding: 0;
@@ -756,8 +794,12 @@ a, a:visited, a:hover { color:#0000cc; }
     background-color: #ffdddd;
     padding: 3px 0px 3px 0px;
 }
-.help { cursor: help; }
-.layouts_title { font-size: 110%; }
+.help {
+  cursor: help;
+}
+.layouts_title {
+  font-size: 110%;
+}
 .translation {
     color: green;
     font-size:10pt;
@@ -947,29 +989,30 @@ foreach ($layouts as $key => $value) {
 </select></p>
 
 <?php if ($layout_id) { ?>
-<div style='margin: 0 0 8pt 0;'>
+<div class="row marginlessrow" style='margin: 0 0 8pt 0;'>
+  <div class="row marginlessrow">
 <input type='button' class='addgroup cp-positive' id='addgroup' value=<?php xl('Add Group','e','\'','\''); ?>/>
+</div>
 </div>
 <?php } ?>
 
-<?php 
+<?php
 $prevgroup = "!@#asdf1234"; // an unlikely group name
 $firstgroup = true; // flag indicates it's the first group to be displayed
 while ($row = sqlFetchArray($res)) {
   if ($row['group_name'] != $prevgroup) {
     if ($firstgroup == false) { echo "</tbody></table></div>\n"; }
     echo "<div id='".$row['group_name']."' class='group'>";
-    echo "<div class='text bold layouts_title' style='background-color: #eef'>";
+    echo "<div class='text bold layouts_title row marginlessrow' style='background-color: #eef'>";
     // echo preg_replace("/^\d+/", "", $row['group_name']);
-    echo substr($row['group_name'], 1);
-    echo "&nbsp; ";
+    echo "<div>".substr($row['group_name'], 1)."</div>";
     // if not english and set to translate layout labels, then show the translation of group name
     if ($GLOBALS['translate_layout'] && $_SESSION['language_choice'] > 1) {
       // echo "<span class='translation'>>>&nbsp; " . xl(preg_replace("/^\d+/", "", $row['group_name'])) . "</span>";
       echo "<span class='translation'>>>&nbsp; " . xl(substr($row['group_name'], 1)) . "</span>";
-      echo "&nbsp; ";   
+      echo "&nbsp; ";
     }
-    echo "&nbsp; ";
+    echo "<div class='row marginlessrow'>";
     echo " <input type='button' class='addfield cp-positive' id='addto~".$row['group_name']."' value='" . xl('Add Field') . "'/>";
     echo "&nbsp; &nbsp; ";
     echo " <input type='button' class='renamegroup cp-positive' id='".$row['group_name']."' value='" . xl('Rename Group') . "'/>";
@@ -979,7 +1022,7 @@ while ($row = sqlFetchArray($res)) {
     echo " <input type='button' class='movegroup cp-misc' id='".$row['group_name']."~up' value='" . xl('Move Up') . "'/>";
     echo "&nbsp; &nbsp; ";
     echo " <input type='button' class='movegroup cp-misc' id='".$row['group_name']."~down' value='" . xl('Move Down') . "'/>";
-    echo "</div>";
+    echo "</div></div>";
     $firstgroup = false;
 ?>
 
@@ -992,8 +1035,8 @@ while ($row = sqlFetchArray($res)) {
   <th><?php xl('Label','e'); ?>&nbsp;<span class="help" title=<?php xl('The label that appears to the user on the form','e','\'','\''); ?> >(?)</span></th>
   <?php // if not english and showing layout label translations, then show translation header for title
   if ($GLOBALS['translate_layout'] && $_SESSION['language_choice'] > 1) {
-   echo "<th>" . xl('Translation')."<span class='help' title='" . xl('The translated label that will appear on the form in current language') . "'>&nbsp;(?)</span></th>";  
-  } ?>        
+   echo "<th>" . xl('Translation')."<span class='help' title='" . xl('The translated label that will appear on the form in current language') . "'>&nbsp;(?)</span></th>";
+  } ?>
   <th><?php xl('UOR','e'); ?></th>
   <th><?php xl('Data Type','e'); ?></th>
   <th><?php xl('Size','e'); ?></th>
@@ -1028,19 +1071,16 @@ while ($row = sqlFetchArray($res)) {
 <?php echo $extra_html; ?>
 
 <?php if ($layout_id) { ?>
-&nbsp;&nbsp;
 
 <input type='button' name='deletefields' id='deletefields' class='cp-negative' value='<?php xl('Delete selected','e'); ?>' style="font-size:90%" disabled="disabled" />
 <input type='button' name='movefields' id='movefields' class='cp-misc' value='<?php xl('Move selected to...','e'); ?>' style="font-size:90%" disabled="disabled" />
-<p>
   <input type='button' name='save' id='save' class='cp-submit' value='<?php xl('Save Changes','e'); ?>' />
-</p>
 <?php } ?>
 
 </form>
 
 <!-- template DIV that appears when user chooses to rename an existing group -->
-<div id="renamegroupdetail" style="border: 1px solid black; padding: 3px; display: none; visibility: hidden; background-color: lightgrey;">
+<div id="renamegroupdetail" class="popupbox row marginlessrow" style="padding: 3px; display: none; visibility: hidden; background-color: lightgrey;">
 <input type="hidden" name="renameoldgroupname" id="renameoldgroupname" value="">
 <?php xl('Group Name','e'); ?>: <input type="textbox" size="20" maxlength="30" name="renamegroupname" id="renamegroupname">
 <br>
@@ -1049,7 +1089,7 @@ while ($row = sqlFetchArray($res)) {
 </div>
 
 <!-- template DIV that appears when user chooses to add a new group -->
-<div id="groupdetail" style="border: 1px solid black; padding: 3px; display: none; visibility: hidden; background-color: lightgrey;">
+<div id="groupdetail" class="row marginlessrow popupbox" style="padding: 3px; display: none; visibility: hidden; background-color: lightgrey;">
 <span class='bold'>
 <?php xl('Group Name','e'); ?>: <input type="textbox" size="20" maxlength="30" name="newgroupname" id="newgroupname">
 <br>
@@ -1105,8 +1145,8 @@ foreach ($datatypes as $key=>$value) {
 ?>
 </select>
 </td>
-<td><input type="textbox" name="gnewlengthWidth" id="gnewlengthWidth" value="" size="1" maxlength="3" title="<?php echo xla('Width'); ?>">
-    <input type="textbox" name="gnewlengthHeight" id="gnewlengthHeight" value="" size="1" maxlength="3" title="<?php echo xla('Height'); ?>"></td>
+<td><input type="textbox" name="gnewlengthWidth" class="halfinput" id="gnewlengthWidth" value="" size="5" maxlength="3" title="<?php echo xla('Width'); ?>">
+    <input type="textbox" name="gnewlengthHeight" class="halfinput" id="gnewlengthHeight" value="" size="5" maxlength="3" title="<?php echo xla('Height'); ?>"></td>
 <td><input type="textbox" name="gnewmaxSize" id="gnewmaxSize" value="" size="1" maxlength="3" title="<?php echo xla('Maximum Size (entering 0 will allow any size)'); ?>"></td>
 <td><input type="textbox" name="gnewlistid" id="gnewlistid" value="" size="8" maxlength="31" class="listid">
 </td>
@@ -1126,7 +1166,7 @@ foreach ($datatypes as $key=>$value) {
 </div>
 
 <!-- template DIV that appears when user chooses to add a new field to a group -->
-<div id="fielddetail" class="fielddetail" style="display: none; visibility: hidden">
+<div id="fielddetail" class="row marginlessrow fielddetail popupbox" style="display: none; visibility: hidden">
 <input type="hidden" name="newfieldgroupid" id="newfieldgroupid" value="">
 <table style="border-collapse: collapse;">
  <thead>
@@ -1180,8 +1220,8 @@ foreach ($datatypes as $key=>$value) {
 ?>
     </select>
    </td>
-   <td><input type="textbox" name="newlengthWidth" id="newlengthWidth" value="" size="1" maxlength="3" title="<?php echo xla('Width'); ?>">
-       <input type="textbox" name="newlengthHeight" id="newlengthHeight" value="" size="1" maxlength="3" title="<?php echo xla('Height'); ?>"></td>
+   <td><input type="textbox" class="halfinput" name="newlengthWidth" id="newlengthWidth" value="" size="3" maxlength="3" title="<?php echo xla('Width'); ?>">
+       <input type="textbox" class="halfinput" name="newlengthHeight" id="newlengthHeight" value="" size="3" maxlength="3" title="<?php echo xla('Height'); ?>"></td>
    <td><input type="textbox" name="newmaxSize" id="newmaxSize" value="" size="1" maxlength="3" title="<?php echo xla('Maximum Size (entering 0 will allow any size)'); ?>"></td>
    <td><input type="textbox" name="newlistid" id="newlistid" value="" size="8" maxlength="31" class="listid">
    </td>
@@ -1192,14 +1232,12 @@ foreach ($datatypes as $key=>$value) {
        <input type="hidden"  name="newdefault" id="newdefault" value="" /> </td>
    <td><input type="textbox" name="newdesc" id="newdesc" value="" size="30" maxlength="63"> </td>
   </tr>
-  <tr>
-   <td colspan="9">
-    <input type="button" class="savenewfield" value=<?php xl('Save New Field','e','\'','\''); ?>>
-    <input type="button" class="cancelnewfield" value=<?php xl('Cancel','e','\'','\''); ?>>
-   </td>
-  </tr>
  </tbody>
 </table>
+<div class="row marginlessrow">
+    <input type="button" class="savenewfield" value=<?php xl('Save New Field','e','\'','\''); ?>>
+    <input type="button" class="cancelnewfield" value=<?php xl('Cancel','e','\'','\''); ?>>
+</div>
 </div>
 
 </body>
@@ -1247,7 +1285,7 @@ $(document).ready(function(){
 
     $(".addfield").click(function() { AddField(this); });
     $("#deletefields").click(function() { DeleteFields(this); });
-    $(".selectfield").click(function() { 
+    $(".selectfield").click(function() {
         var TRparent = $(this).parent().parent();
         $(TRparent).children("td").toggleClass("highlight");
         // disable the delete-move buttons
@@ -1285,7 +1323,7 @@ $(document).ready(function(){
         // show the field details DIV
         $('#groupdetail').css('visibility', 'visible');
         $('#groupdetail').css('display', 'block');
-        $(btnObj).parent().append($("#groupdetail"));
+        $(btnObj).parent().parent().append($("#groupdetail"));
         $('#groupdetail > #newgroupname').focus();
         // Assign a sensible default sequence number.
         $('#gnewseq').val(10);
@@ -1307,7 +1345,7 @@ $(document).ready(function(){
         $("#newgroupname").val(validname);
 
         // now, check the first group field values
-        
+
         // seq must be numeric and less than 999
         if (! IsNumeric($("#gnewseq").val(), 0, 999)) {
             alert("<?php xl('Order must be a number between 1 and 999','e'); ?>");
@@ -1392,7 +1430,7 @@ $(document).ready(function(){
     var RenameGroup = function(btnObj) {
         $('#renamegroupdetail').css('visibility', 'visible');
         $('#renamegroupdetail').css('display', 'block');
-        $(btnObj).parent().append($("#renamegroupdetail"));
+        $(btnObj).parent().parent().append($("#renamegroupdetail"));
         $('#renameoldgroupname').val($(btnObj).attr("id"));
         $('#renamegroupname').val($(btnObj).attr("id").replace(/^\d+/, ""));
     }
@@ -1437,7 +1475,7 @@ $(document).ready(function(){
         // show the field details DIV
         $('#fielddetail').css('visibility', 'visible');
         $('#fielddetail').css('display', 'block');
-        $(btnObj).parent().append($("#fielddetail"));
+        $(btnObj).parent().parent().append($("#fielddetail"));
         // Assign a sensible default sequence number.
         $('#newseq').val(getNextSeq(groupid));
     };
@@ -1459,11 +1497,11 @@ $(document).ready(function(){
             $("#theform").submit();
         }
     };
-    
+
     // save the new field to the form
     var SaveNewField = function(btnObj) {
         // check the new field values for correct formatting
-    
+
         // seq must be numeric and less than 999
         if (! IsNumeric($("#newseq").val(), 0, 999)) {
             alert("<?php xl('Order must be a number between 1 and 999','e'); ?>");
@@ -1498,12 +1536,12 @@ $(document).ready(function(){
         // similarly with the backuplistid field
         validid = $("#newbackuplistid").val().replace(/(\s|\W)/g, "_");
         $("#newbackuplistid").val(validid);
-    
+
         // submit the form to add a new field to a specific group
         $("#formaction").val("addfield");
         $("#theform").submit();
     };
-    
+
     // just hide the new field DIV
     var CancelNewField = function(btnObj) {
         // hide the field details DIV
@@ -1518,12 +1556,12 @@ $(document).ready(function(){
         window.open("./show_lists_popup.php", "lists", "width=300,height=500,scrollbars=yes");
         selectedfield = btnObj;
     };
-    
+
     // show the popup choice of groups
     var ShowGroups = function(btnObj) {
         window.open("./show_groups_popup.php?layout_id=<?php echo $layout_id;?>", "groups", "width=300,height=300,scrollbars=yes");
     };
-    
+
 
 
     // Initialize the list item selectors in skip conditions.
@@ -1636,7 +1674,7 @@ function ResetNewFieldValues () {
 function IsNumeric(value, min, max) {
     if (value == "" || value == null) return false;
     if (! IsN(value) ||
-        parseInt(value) < min || 
+        parseInt(value) < min ||
         parseInt(value) > max)
         return false;
 
