@@ -111,7 +111,8 @@ $USER_SPECIFIC_TABS = array('Appearance',
                             'Claim',
                             'Demographic',
                             'Calendar',
-                            'Connectors');
+                            'Connectors',
+                            'System');
 $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'default_tab_2',
                                'css_header',
@@ -120,6 +121,7 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'secondary_color',
                                'secondary_font_color',
                                'gbl_pt_list_page_size',
+                               'gbl_appt_list_page_size',
                                'default_encounter_view',
                                'units_of_measurement',
                                'us_weight_format',
@@ -129,6 +131,7 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'print_next_appointment_on_ledger',
                                'calendar_view_type',
                                'calendar_refresh_freq',
+                               'ehr_timezone',
                                'check_appt_time',
                                'event_color',
                                'pat_trkr_timer',
@@ -162,7 +165,7 @@ $GLOBALS_METADATA = array(
       array(
         '/interface/main/main_info.php' => xl('Calendar Screen'),
         '/interface/main/finder/dynamic_finder.php' => xl('Dynamic Finder'),
-        '/interface/new/new.php' => xl('Patient Add/Search'),
+        '/interface/new/new_comprehensive.php' => xl('Patient Add/Search'),
         '/interface/patient_tracker/patient_tracker.php?skip_timeout_reset=1' => xl('Patient Flow Board'),
         '/interface/main/messages/messages.php?form_active=1' => xl("Messages"),
         '/modules/MIPS/report_results.php' => xl("SHOW MIPS Reports"),
@@ -178,7 +181,7 @@ $GLOBALS_METADATA = array(
       array(
         '/interface/main/messages/messages.php?form_active=1' => xl("Messages"),
         '/interface/main/finder/dynamic_finder.php' => xl('Dynamic Finder'),
-        '/interface/new/new.php' => xl('Patient Add/Search'),
+        '/interface/new/new_comprehensive.php' => xl('Patient Add/Search'),
         '/interface/patient_tracker/patient_tracker.php?skip_timeout_reset=1' => xl('Patient Flow Board'),
         '/interface/main/main_info.php' => xl('Calendar Screen'),
         '/modules/MIPS/report_results.php' => xl("SHOW MIPS Reports"),
@@ -274,6 +277,14 @@ $GLOBALS_METADATA = array(
       xl('EDI History (under Fees) for storing and interpreting EDI claim response files')
     ),
 
+    //SHOW UPDATER ICON
+      'updater_icon_visibility' => array(
+      xl('Show updater floating action button'),
+       'bool',                          // data type
+       '1',                             // default = true
+      xl('The Updater Floating Action Button at the bottom of the screen')
+    ),
+
     'online_support_link' => array(
       xl('Online Forum Support Link'),
        'text',                          // data type
@@ -300,6 +311,19 @@ $GLOBALS_METADATA = array(
       ),
        '10',
       xl('Number of patients to display per page in the patient list.')
+    ),
+
+
+    'gbl_appt_list_page_size' => array(
+      xl('Appointment List Page Size'),
+      array(
+        '10'  =>  '10',
+        '25'  =>  '25',
+        '50'  =>  '50',
+        '100' => '100',
+      ),
+       '10',
+      xl('Number of appointments to display per page in track appointments list.')
     ),
 
 
@@ -1538,7 +1562,7 @@ $GLOBALS_METADATA = array(
        'bool',                          // data type
        '1',                             // default
       xl('Use the Appointment Status Colors in the Calendar Instead of the Appointment Category Colors.')
-    ),    
+    ),
 
     'calendar_refresh_freq' => array(
       xl('Calendar Refresh Frequency'),
@@ -1557,6 +1581,7 @@ $GLOBALS_METADATA = array(
       array(
         'full' => xl('Provider Full Name'),
         'last' => xl('Provider Last Name'),
+        'last_first' => xl('Provider Last Name and First Initial'),
         'resource' => xl('Resource Title'),
       ),
        'full',                     // default
@@ -1682,6 +1707,13 @@ $GLOBALS_METADATA = array(
       xl('Color for the last set when not all member appointments are displayed.')
     ),
 
+    'appt_recurrences_widget' => array(
+      xl('Recurrent Appointment Display Widget'),
+      'bool',                           // data type
+      '0',                              // default
+      xl('Display the recurrent appointment widget in the patient summary.')
+    ),
+
     'num_past_appointments_to_show' => array(
       xl('Past Appointment Display Widget'),
        'num',                           // data type
@@ -1719,6 +1751,12 @@ $GLOBALS_METADATA = array(
        '1',                             // default
       xl('Automatically create a new encounter when an appointment check in status is selected.')
     ),
+    'default_category' => array(
+      xl('The Default Category in the Appointment Select'),
+       'num',                           // data type
+       '1',                             // default
+      xl('This is used to Assign a Default Catagory for the Appointment Visit.')
+    ),
 
     'disable_pat_trkr' => array(
       xl('Patient Flow Board: Disable'),
@@ -1746,6 +1784,12 @@ $GLOBALS_METADATA = array(
       'bool',                          // data type
       '1',                             // default = true
       xl('When Checked, Exam Room Will Show in Patient Flow Board.')
+    ),
+    'ptkr_show_facility' => array(
+      xl('Patient Flow Board: Show Facility'),
+      'bool',                          // data type
+      '1',                             // default = true
+      xl('When Checked, Facility Will Show in Patient Flow Board.')
     ),
     'ptkr_show_visit_type' => array(
       xl('Patient Flow Board: Show Visit Type'),
@@ -2577,7 +2621,7 @@ $GLOBALS_METADATA = array(
       xl('Enable NewCrop eRx Service'),
       'bool',
       '0',
-      xl('Enable NewCrop eRx Service.') + ' ' +
+      xl('Enable NewCrop eRx Service.') . ' ' .
       xl('Contact the community for information on subscribing to the NewCrop eRx service.')
   ),
 
@@ -3077,6 +3121,15 @@ $GLOBALS_METADATA = array(
     //
     'System' => array(
 
+    'ehr_timezone' => array(
+      xl('EHR Time Zone'),
+       'timezone',          // data type
+       '!' . date_default_timezone_get(),    // defaults to php.ini "date.timezone" value if set valid otherwise UTC
+       // concatenated '!' to avoid Default option from not coming in list
+       // when php.ini value is same as an item on zone_list
+      xl('Set EHR time zone.')
+    ),
+
     'mysql_bin_dir' => array(
       xl('Path to MySQL Binaries'),
       'text',                           // data type
@@ -3125,8 +3178,9 @@ $GLOBALS_METADATA = array(
     'gb_how_sort_categories' => array(
       xl('How to sort the categories'),
       array(
-        '0' => 'Sort by seq',
-        '1' => 'Sort alphabetically'
+        '0' => 'Sort by Categorie ID',
+        '1' => 'Sort alphabetically',
+        '2' => 'Sort by Sequence Number'
       ),
       '1',
       xl('What kind of sorting will be used for the categories.')
@@ -3247,6 +3301,26 @@ $GLOBALS_METADATA = array(
       'text',                           // data type
       '2017-06-06',            // default
       xl('Default date that direct entry encounters will be created on.')
+    ),
+  ),
+
+  'LIMS' => array(
+    'lims_enabled' => array(
+      xl('LIMS Enabled/Disabled'),
+      'bool',
+      '0',
+      xl('Enable the laboratory information management system')
+    ),
+    'lims_application' => array(
+      xl('LIMS Software to use'),
+      [ 'SENAITE LIMS' => 'senaite' ], // temporary, figuring out how to create an associative array while auto-detecting directories
+      xl('Choose the LIMS software to use')
+    ),
+    'lims_url' => array(
+      xl('LIMS API Address'),
+      'text',
+      'http://localhost:8080',
+      xl('Address where the LIMS backend API is available')
     ),
   ),
 

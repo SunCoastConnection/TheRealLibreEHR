@@ -57,7 +57,8 @@ if (!acl_check('patients', 'appt', '', array('write' , 'wsome'))) {
  $eid           = $_GET['eid'];         // only for existing events
  $date          = $_GET['date'];        // this and below only for new events
  $userid        = $_GET['userid'];
- $default_catid = $_GET['catid'] ? $_GET['catid'] : '5';
+ $default_catid = $GLOBALS['default_category'] ;
+
  //
 if ($date) {
   $date = substr($date, 0, 4) . '-' . substr($date, 4, 2) . '-' . substr($date, 6);
@@ -2013,6 +2014,9 @@ function validate(valu) {
     }
 
     //check if user selected appt. time is within clinic hours
+    <?php
+    if ($GLOBALS['time_display_format'] != 0 ) {
+    ?>
     var checkApptTime = '<?php echo($GLOBALS['check_appt_time']) ?>';
     if (f.form_allday.value < 1 && checkApptTime == 1) {
         //only when Time radio button is selected (value is "0", otherwise "1")
@@ -2020,7 +2024,7 @@ function validate(valu) {
         var userAMPM = f.form_ampm.value; //"1" for AM, "2" for PM
         var userHour = parseInt(f.form_hour.value);
         var userMinute = parseInt(f.form_minute.value);
-        if (userAMPM == "1") {
+        if (userAMPM == "1" && userHour <= '12') {
             //AM, 00:00 midnight to 11:59 noon
             var userTime = userHour + (userMinute/60);
         } else {
@@ -2032,11 +2036,15 @@ function validate(valu) {
         //while user (selected) time is in 12 hour format
         var clinicStartTime = parseInt('<?php echo($GLOBALS['schedule_start']) ?>');
         var clinicEndTime = parseInt('<?php echo($GLOBALS['schedule_end']) ?>');
-        if (userTime < clinicStartTime || userTime > clinicEndTime) {
+        if ((userTime < clinicStartTime || userTime > clinicEndTime) && userHour != '12') {
             alert('<?php echo addslashes(xl("Please select time between clinic hours.")); ?>');
             return false;
         }
     }
+
+    <?php
+    }
+    ?>
 
     <?php
     if($_GET['prov']!=true){

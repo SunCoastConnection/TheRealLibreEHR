@@ -35,6 +35,7 @@ require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/globals.inc.php");
 require_once("$srcdir/user.inc");
 require_once("$srcdir/classes/CouchDB.class.php");
+require_once("$srcdir/calendar.inc");
 
 if ($_GET['mode'] != "user") {
   // Check authorization.
@@ -145,6 +146,10 @@ if ($_POST['form_save'] && $_GET['mode'] == "user") {
               $boolean = false;
             }
           }
+          elseif ($fldid == "updater_icon_visibility") {
+              //updater icon visibility
+              $boolean = true;
+          }
           elseif ($fldid == "primary_color" || $fldid == "primary_font_color" || $fldid == "secondary_color" || $fldid == "secondary_font_color" ) {
             if (strlen($_POST["form_$i"]) == 7 && substr($_POST["form_$i"], 0,1) == "#") {
             $boolean = true;
@@ -250,8 +255,9 @@ if ($_POST['form_save'] && $_GET['mode'] != "user") {
             // special treatment for some vars
             switch ($fldid) {
               case 'first_day_week':
+                // removed TLH 12/2018
                 // update PostCalendar config as well
-                sqlStatement("UPDATE libreehr_module_vars SET pn_value = ? WHERE pn_name = 'pcFirstDayOfWeek'", array($fldvalue));
+                // sqlStatement("UPDATE libreehr_module_vars SET pn_value = ? WHERE pn_name = 'pcFirstDayOfWeek'", array($fldvalue));
                 break;
             }
           //check and validate input from client side with globals.
@@ -314,6 +320,9 @@ if ($_POST['form_save'] && $_GET['mode'] != "user") {
             sqlStatement( 'DELETE FROM `globals` WHERE gl_name = ?', array( $fldid ) );
 
             sqlStatement( 'INSERT INTO `globals` ( gl_name, gl_index, gl_value ) VALUES ( ?, ?, ? )', array( $fldid, 0, $fldvalue )  );
+
+           refreshCalendar(); //if data is updated and is also valid for Calendar-Admin
+
           }
 
         } else {
@@ -591,6 +600,29 @@ foreach ($GLOBALS_METADATA as $grpname => $grparr) {
         if ($title == $fldvalue) echo " selected";
         echo ">";
         echo xlt($name);
+        echo "</option>\n";
+      }
+      echo "  </select>\n";
+    }
+
+    else if ($fldtype == 'timezone') {
+      if ($_GET['mode'] == "user") {
+        $globalTitle = $globalValue;
+      }
+      $zone_list = timezone_identifiers_list();
+      echo "  <select name='form_$i' id='form_$i'>\n";
+      if ($flddef ==" ") {
+        $top_choice = date_default_timezone_get();
+      }else{
+        $top_choice = $flddef;
+      }
+      echo "    <option value=''>" . text($top_choice) . "\n";
+      foreach ($zone_list as $item) {
+        $title = $item;
+        echo "   <option value='" . ($item) . "'";
+        if ($title == $fldvalue) echo " selected";
+        echo ">";
+        echo xlt($item);
         echo "</option>\n";
       }
       echo "  </select>\n";
