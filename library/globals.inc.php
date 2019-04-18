@@ -1364,32 +1364,39 @@ $GLOBALS_METADATA = array(
       xl('This specifies whether to include date in Box 31.')
     ),
 
+    'preprinted_cms_1450' => array(
+      xl('Prints the CMS 1450 on the Preprinted form.'),
+       'bool',                          // data type
+       '0',                             // default = false
+      xl('Prints the CMS 1450 on the Preprinted form.')
+    ),
+
     'ubtop_margin_default' => array(
-      xl('Default top print margin for UB-04'),
+      xl('Default top print margin for UB-04/CMS 1450'),
       'num', // data type
       '07', // default
-      xl('This is the default top print margin for UB-04. It will adjust the final printed output up or down.')
+      xl('This is the default top print margin for UB-04/CMS 1450. It will adjust the final printed output up or down.')
     ),
 
     'ubleft_margin_default' => array(
-      xl('Default left print margin for UB-04'),
+      xl('Default left print margin for UB-04/CMS 1450'),
       'num', // data type
       '14', // default
-      xl('his is the default left print margin for UB-04. It will adjust the final printed output left or right.')
+      xl('his is the default left print margin for UB-04/CMS 1450. It will adjust the final printed output left or right.')
     ),
 
     'default_bill_type' => array(
       xl('Default Bill Type Box 4'),
       'text', // data type
       '0111', // default
-      xl('This Default entry must start with a zero followed by three numbers. It will be used in Box 4 of the UB04')
+      xl('This Default entry must start with a zero followed by three numbers. It will be used in Box 4 of the UB04/CMS 1450')
     ),
 
      'admit_default_type' => array(
       xl('Admission Type Box 14'),
       'list', // data type
       '',     // default
-      xl('This entry is for the Admission Type it needs to be a single digit. It will be used in Box 14 of the UB04'),
+      xl('This entry is for the Admission Type it needs to be a single digit. It will be used in Box 14 of the UB04/CMS 1450'),
       'ub_admit_type'
     ),
 
@@ -1397,7 +1404,7 @@ $GLOBALS_METADATA = array(
       xl('Admission Source Box 15'),
       'list', // data type
       '',     // default
-      xl('This entry is for the Admission Source it needs to be 2 digits (example 01, 12 etc). It will be used in Box 15 of the UB04'),
+      xl('This entry is for the Admission Source it needs to be 2 digits (example 01, 12 etc). It will be used in Box 15 of the UB04/CMS 1450'),
       'ub_admit_source'
     ),
 
@@ -1405,35 +1412,63 @@ $GLOBALS_METADATA = array(
       xl('Discharge Status Box 17'),
       'text', // data type
       '', // default
-      xl('This entry is for the Discharge Status it needs to be 2 digits (example 02, 11 etc). It will be used in Box 17 of the UB04')
+      xl('This entry is for the Discharge Status it needs to be 2 digits (example 02, 11 etc). It will be used in Box 17 of the UB04/CMS 1450')
     ),
 
      'attending_id' => array(
       xl('Attending Physician Box 76'),
       'provider', // data type
       '',     // default
-      xl('Attending Physician Box 76 of the UB04')
+      xl('Attending Physician Box 76 of the UB04/CMS 1450')
+    ),
+
+    'attending_qualifier_code' => array(
+      xl('Attending Physician Qualifier Code Box 76'),
+      'text', // data type
+      '',     // default
+      xl('Attending Physician Qualifier Code Box 76 of the UB04')
     ),
 
      'operating_id' => array(
       xl('Operating Physician Box 77'),
       'provider', // data type
       '',     // default
-      xl('Operating Physician Box 77 of the UB04')
+      xl('Operating Physician Box 77 of the UB04/CMS 1450')
+    ),
+
+    'operating_qualifier_code' => array(
+      xl('Operating Physician Qualifier Code Box 77'),
+      'text', // data type
+      '',     // default
+      xl('Operating Physician Qualifier Code Box 77 of the UB04')
     ),
 
     'other1_id' => array(
       xl('Other Physician #1 Box 78'),
       'provider', // data type
       '',     // default
-      xl('Other Physician #1 Box 78 of the UB04')
+      xl('Other Physician #1 Box 78 of the UB04/CMS 1450')
+    ),
+
+    'other1_qualifier_code' => array(
+      xl('Other Physician #1 Qualifier Code Box 78'),
+      'text', // data type
+      '',     // default
+      xl('Other Physician #1 Qualifier Code Box 78 of the UB04')
     ),
 
     'other2_id' => array(
       xl('Other Physician #2 Box 79'),
       'provider', // data type
       '',     // default
-      xl('Other Physician #2 Box 79 of the UB04')
+      xl('Other Physician #2 Box 79 of the UB04/CMS 1450')
+    ),
+
+    'other2_qualifier_code' => array(
+      xl('Other Physician #2 Qualifier Code Box 79'),
+      'text', // data type
+      '',     // default
+      xl('Other Physician #2 Qualifier Code Box 79 of the UB04')
     ),
 
   ),
