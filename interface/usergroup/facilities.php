@@ -65,12 +65,20 @@ if (isset($_POST["mode"]) && $_POST["mode"] == "facility" && $_POST["newmode"] !
   "attn = '"  . trim(formData('attn' )) . "', " .
   "tax_id_type = '"  . trim(formData('tax_id_type' )) . "', " .
   "primary_business_entity = '"  . trim(formData('primary_business_entity' )) . "', ".
-  "facility_npi = '" . trim(formData('facility_npi')) . "'");
+  "facility_npi = '" . trim(formData('facility_npi')) . "', ".
+  "inactive = '" . trim(formData('inactive')) . "'");
 
   refreshCalendar(); //after "Add Facility" process is complete
 }
 
 /*      Editing existing facility                   */
+if (trim(formData('inactive')) == 1) {
+        $service_location=0;
+        $billing_location=0;
+} else {
+        $service_location=trim(formData('service_location'));
+        $billing_location=trim(formData('billing_location'));
+}
 if ($_POST["mode"] == "facility" && $_POST["newmode"] == "admin_facility")
 {
     sqlStatement("update facility set
@@ -87,58 +95,109 @@ if ($_POST["mode"] == "facility" && $_POST["newmode"] == "admin_facility")
         website='" . trim(formData('website')) . "',
         email='" . trim(formData('email')) . "',
         color='" . trim(formData('ncolor')) . "',
-        service_location='" . trim(formData('service_location')) . "',
-        billing_location='" . trim(formData('billing_location')) . "',
+        service_location='" . $service_location . "',
+        billing_location='" . $billing_location . "',
         accepts_assignment='" . trim(formData('accepts_assignment')) . "',
         pos_code='" . trim(formData('pos_code')) . "',
         domain_identifier='" . trim(formData('domain_identifier')) . "',
         facility_npi='" . trim(formData('facility_npi')) . "',
         attn='" . trim(formData('attn')) . "' ,
         primary_business_entity='" . trim(formData('primary_business_entity')) . "' ,
-        tax_id_type='" . trim(formData('tax_id_type')) . "'
+        tax_id_type='" . trim(formData('tax_id_type')) . "' ,
+        inactive='" . trim(formData('inactive')) . "'
+
     where id='" . trim(formData('fid')) . "'" );
 
     refreshCalendar(); //after "Edit Facility" process is complete
 }
+$form_inactive = empty($_REQUEST['form_inactive']) ? false : true;
 
 ?>
 <html>
 <head>
 <?php
-  call_required_libraries(array("jquery-min-3-1-1","bootstrap","fancybox"));
-    resolveFancyboxCompatibility();
+  call_required_libraries(array("jquery-min-3-1-1","bootstrap","font-awesome","jquery-ui","iziModalToast"));
 ?>
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/common.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-ui.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery.easydrag.handler.beta2.js"></script>
 
 <script type="text/javascript">
 
 $(document).ready(function(){
 
-    // fancy box
-    enable_modals();
-
-    // special size for
-    $(".addfac_modal").fancybox( {
-        'overlayOpacity' : 0.0,
-        'showCloseButton' : true,
-        'frameHeight' : 460,
-        'frameWidth' : 650
+    //iziModal for adding new facilities
+    $(".addFacilities").on("click", function (event) {
+      event.preventDefault();
+      $("#addFacilities-iframe").iziModal('open');
     });
 
-    // special size for
-    $(".medium_modal").fancybox( {
-        'overlayOpacity' : 0.0,
-        'showCloseButton' : true,
-        'frameHeight' : 460,
-        'frameWidth' : 650
+    $("#addFacilities-iframe").iziModal({
+      title: 'Add Facility',
+      subtitle: 'Enter details about the new facility',
+      headerColor: '#88A0B9',
+      closeOnEscape: true,
+      fullscreen: true,
+      overlayClose: false,
+      closeButton: true,
+      theme: 'light',
+      iframe: true,
+      width: 700,
+      focusInput: true,
+      padding: 5,
+      iframeHeight: 350,
+      iframeURL: "facilities_add.php"
     });
 
+    //iziModal for editing existing facilities
+    $(".editFacilities").on("click", function (event) {
+      event.preventDefault();
+      var dyn_link = parseInt($(this).attr("data-text"));
+      initIziLink(dyn_link);
+
+    });
+
+    function initIziLink(link) {
+      $("#editFacilities-iframe").iziModal({
+        title: 'Edit Facility',
+        subtitle: 'Edit details about the facility',
+        headerColor: '#88A0B9',
+        closeOnEscape: true,
+        fullscreen: true,
+        overlayClose: false,
+        closeButton: true,
+        theme: 'light',
+        iframe: true,
+        width: 700,
+        focusInput: true,
+        padding: 5,
+        iframeHeight: 350,
+        iframeURL: "facility_admin.php?fid=" + link,
+        onClosed: function () {
+          setTimeout(function () {
+            parent.$(".fa-refresh").click();
+          }, 300);
+        }
+
+});
+
+      setTimeout(function () {
+        call_izi();
+      }, 100);
+    }
+
+    function call_izi() {
+      $("#editFacilities-iframe").iziModal('open');
+    }
 });
 
 </script>
 </head>
 
 <body class="body_top">
+  <!-- to initialize the iziModal -->
+  <div id="addFacilities-iframe"></div>
+  <div id="editFacilities-iframe"></div>
 
 <div>
     <div>
@@ -148,7 +207,7 @@ $(document).ready(function(){
                 <b><?php echo xlt('Facilities'); ?></b>&nbsp;
             </td>
             <td>
-                 <a href="facilities_add.php" class="iframe addfac_modal css_button cp-positive"><span><?php echo xlt('Add');?></span></a>
+                 <a href="#" class="css_button cp-positive addFacilities"><span><?php echo xlt('Add');?></span></a>
             </td>
         </tr>
     </table>
@@ -156,6 +215,10 @@ $(document).ready(function(){
     <br>
     <div>
         <div>
+    <form name='facilitylist' method='post' action='facilities.php' onsubmit='return top.restoreSession()'><br>
+    <input type='checkbox' name='form_inactive' value='1' onclick='submit()' <?php if ($form_inactive) echo 'checked '; ?>/>
+    <span class='text'> <?php echo xlt('Include inactive facilities'); ?> </span>
+    </form>
     <table class="table table-hover">
     <tr>
         <th><?php echo xlt('Name'); ?></th>
@@ -164,7 +227,11 @@ $(document).ready(function(){
     </tr>
      <?php
         $fres = 0;
+        if ($form_inactive) {
         $fres = sqlStatement("select * from facility order by name");
+        } else {
+          $fres = sqlStatement("select * from facility WHERE inactive = '0' order by name");
+        }
         if ($fres) {
           $result2 = array();
           for ($iter3 = 0;$frow = sqlFetchArray($fres);$iter3++)
@@ -179,7 +246,7 @@ $(document).ready(function(){
           if ($iter3{state}!="")$varstate=$iter3{state}.",";
     ?>
     <tr height="22">
-       <td><b><a href="facility_admin.php?fid=<?php echo $iter3{id};?>" class="iframe medium_modal"><span><?php echo htmlspecialchars($iter3{name});?></span></a></b>&nbsp;</td>
+       <td><b><a href="#" data-text="<?php echo $iter3{id};?>" class="editFacilities"><span><?php echo htmlspecialchars($iter3{name});?></span></a></b>&nbsp;</td>
        <td><?php echo htmlspecialchars($varstreet.$varcity.$varstate.$iter3{country_code}." ".$iter3{postal_code}); ?>&nbsp;</td>
        <td><?php echo htmlspecialchars($iter3{phone});?>&nbsp;</td>
     </tr>
