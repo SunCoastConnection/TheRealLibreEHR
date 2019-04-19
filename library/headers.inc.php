@@ -47,7 +47,8 @@ function include_css_library($path)
     Parameters for this function are passed in an unkeyed array of strings.
     Strings equate to the directory name in the /assets/ directory.
 */
-function call_required_libraries($library_array){
+function call_required_libraries($library_array)
+{
 /* First checking for any library in a directory matching the string "/jquery-min-/".
  * When one is found, use that value in the URL string, then add "index.js"
  */
@@ -71,6 +72,13 @@ function call_required_libraries($library_array){
     <?php
     }
 
+
+    if (in_array("bootstrap-4-0", $library_array)) {   ?>
+        <link rel="stylesheet" href="<?php echo $GLOBALS['standard_js_path']; ?>bootstrap-4-0/css/bootstrap.min.css" type="text/css">
+        <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>bootstrap-4-0/js/bootstrap.min.js"></script>
+        <?php
+    }
+
     if (in_array("fancybox",$library_array)){   ?>
         <link rel="stylesheet" href="<?php echo $GLOBALS['css_path']; ?>fancybox/jquery.fancybox-1.2.6.css" media="screen" />
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>fancybox/jquery.fancybox-1.2.6.js"></script>
@@ -89,6 +97,10 @@ function call_required_libraries($library_array){
     if (in_array("knockout",$library_array)){   ?>
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>knockout/knockout-3.4.0.js"></script>
     <?php
+    }
+    if (in_array("blink", $library_array)) {   ?>
+        <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-modern-blink-0-1-3/jquery.modern-blink.js"></script>
+        <?php
     }
 
     if (in_array("datepicker",$library_array)){   ?>
@@ -148,7 +160,9 @@ function call_required_libraries($library_array){
     This function resolves the Console-error "Uncaught TypeError: Cannot read property 'msie' of undefined" . This error comes up when using
     fancybox-1.2.6 and fancybox-1.3.4 versions with jQuery version 3.1.1. It is because the $.browser method was removed in jQuery 1.9.
 */
-function resolveFancyboxCompatibility(){ ?>
+function resolveFancyboxCompatibility()
+{
+    ?>
     <script type="text/javascript">
         jQuery.browser = {};
         (function () {

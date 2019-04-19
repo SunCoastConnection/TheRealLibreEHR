@@ -1046,6 +1046,19 @@ $GLOBALS_METADATA = array(
       '',
       xl('To automatically open the specified form. Some sports teams use football_injury_audit here.')
     ),
+    'encounter_feesheet_list_num' => array(
+      xl('Number of Lists to Display in Fee Sheet'),
+       'num',                           // data type
+       '4',                             // default = 4
+      xl('Number of Lists to Display in Fee Sheet for Quick Select')
+    ),
+
+    'coding_done_in_feesheet' => array(
+      xl('Allow User to Specify Coding Done in Fee Sheet'),
+      'bool',                           // data type
+      '0',                              // default = false
+      xl('Allow User to Specify Coding Done in Fee Sheet.')
+    ),
 
   ),
 
