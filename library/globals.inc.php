@@ -3128,6 +3128,20 @@ $GLOBALS_METADATA = array(
       xl('Period in days where a user may login with an expired password.')
     ),
 
+    'log_password_login_attempts' => array(
+      xl('Enable Invalid Login Attempts Checking'),
+       'bool',                          // data type
+      '0',                              // default
+      xl('Enable Invalid Login Attempts Checking.')
+    ),
+
+    'password_login_attempts' => array(
+      xl('Number of Failed Login Attempts Allowed'),
+      'num',                            // data type
+      '3',                              // default
+      xl('Number of Failed Login Attempts Allowed Before User Account is Locked')
+    ),
+
     'is_client_ssl_enabled' => array(
       xl('Enable Client SSL'),
        'bool',                          // data type

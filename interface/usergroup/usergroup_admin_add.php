@@ -196,8 +196,8 @@ function authorized_clicked() {
 </style>
 </head>
 <body class="body_top">
-<table>
-    <tr>
+<table><tr><td>
+<span class="title"><?php echo xlt('Add User'); ?></span>&nbsp;</td>
 
 <td>
 <a class="css_button cp-submit" name='form_save' id='form_save' href='#' onclick="return submitform()">

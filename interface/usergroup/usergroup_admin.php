@@ -259,9 +259,10 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
       $tqvar  = $_POST["authorized"] ? 1 : 0;
       $actvar = $_POST["active"]     ? 1 : 0;
       $calvar = $_POST["calendar"]   ? 1 : 0;
+      $lockvar = $_POST["locked"]   ? 1 : 0;
 
       sqlStatement("UPDATE users SET authorized = $tqvar, active = $actvar, " .
-        "calendar = $calvar, see_auth = ? WHERE " .
+        "calendar = $calvar, locked = $lockvar, see_auth = ? WHERE " .
         "id = ? ", array($_POST['see_auth'], $_POST["id"]));
       //Display message when Emergency Login user was activated
       $bg_count=count($_POST['access_group']);
@@ -312,6 +313,7 @@ if (isset($_POST["mode"])) {
     // $_POST["info"] = addslashes($_POST["info"]);
 
     $calvar = $_POST["calendar"] ? 1 : 0;
+    $lockvar = $_POST["locked"] ? 1 : 0;
     $fullscreen_enable = $_POST["fullscreen_enable"] ? 1 : 0;
     $menuRole = $_POST["menu_role"] ?: "Sample Role";
     $res = sqlStatement("select distinct username from users where username != ''");
@@ -427,6 +429,7 @@ if (isset($_FILES)) {
             "', irnpool = '"       . trim(formData('irnpool'      )) .
             "', calendar = '"      . $calvar                         .
             "', picture_url = '"      . $picture_url                         .
+            "', locked = '"      . $lockvar .
             "', pwd_expiration_date = '" . trim("$exp_date") .
             "'";
 
@@ -536,72 +539,37 @@ $form_inactive = empty($_REQUEST['form_inactive']) ? false : true;
 ?>
 <html>
 <head>
-    <?php call_required_libraries(array("jquery-min-3-1-1","bootstrap","font-awesome", "iziModalToast")); ?>
+
+<?php call_required_libraries(array("jquery-min-3-1-1","bootstrap","fancybox-custom"));
+      resolveFancyboxCompatibility();
+?>
 
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/common.js"></script>
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-ui.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery.easydrag.handler.beta2.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
 
-            $(".addUser").click(function () {
-                $("#addUser-iframe").iziModal('open');
-    });
+    // fancy box
+    enable_modals();
 
-            $(".editUser").click(function () {
-                var link = $(this).attr("data-text");
-                var title = $(this).children("span").text();
-                initIziLink(link , title);
-    });
 
-            function initIziLink(link, title) {
-                $("#editUser-iframe").iziModal({
-                    title: '<b style="color: white">'+title+'</b>',
-                    subtitle: 'Edit a new user with administrative roles',
-                    headerColor: '#88A0B9',
-                    closeOnEscape: true,
-                    fullscreen:true,
-                    overlayClose: false,
-                    closeButton: true,
-                    theme: 'light',  // light
-                    iframe: true,
-                    width:900,
-                    focusInput: true,
-                    padding:5,
-                    iframeHeight: 400,
-                    iframeURL:'user_admin.php?id='+link,
-                    onClosed:function () {
-                        location.reload();
-                    }
+    tabbify();
+
+    // special size for
+    $(".iframe_medium").fancybox( {
+        'overlayOpacity' : 0.0,
+        'showCloseButton' : true,
+        'frameHeight' : 450,
+        'frameWidth' : 660
 });
 
-                setTimeout(function () {
-                    call_izi();
-                },200);
-            }
 
-            function call_izi() {
-                $("#editUser-iframe").iziModal('open');
-            }
 
-            $("#addUser-iframe").iziModal({
-                title: 'Add a new user',
-                subtitle: 'Add a new user with administrative roles',
-                headerColor: '#88A0B9',
-                closeOnEscape: true,
-                fullscreen:true,
-                overlayClose: false,
-                closeButton: true,
-                theme: 'light',  // light
-                iframe: true,
-                width:900,
-                focusInput: true,
-                padding:5,
-                iframeHeight: 400,
-                iframeURL: "usergroup_admin_add.php",
-                onClosed:function () {
-                    location.reload();
-                }
+    $(function(){
+        // add drag and drop functionality to fancybox
+        $("#fancy_outer").easydrag();
             });
 
         });
@@ -620,16 +588,13 @@ function authorized_clicked() {
 </head>
 <body class="body_top">
 
-<!-- iframes to initialize izi -->
-<div id="addUser-iframe"></div>
-<div id="editUser-iframe"></div>
 
 <div>
     <div>
        <table>
       <tr >
         <td><b><?php echo xlt('User / Groups'); ?></b>&nbsp;&nbsp;</td>
-                <td><a href="#" class="css_button cp-positive addUser"><span><?php echo xlt('Add User'); ?></span></a>
+        <td><a href="usergroup_admin_add.php" class="iframe_medium css_button cp-positive"><span><?php echo xlt('Add User'); ?></span></a>
         </td>
         <td><a href="facility_user.php" class="css_button cp-misc"><span><?php echo xlt('View Facility Specific User Information'); ?></span></a>
         </td>
@@ -659,6 +624,12 @@ if ($show_message == 1){
         <th><b><span><?php echo xlt('Additional Info'); ?></span></b></th>
         <th><b><?php echo xlt('Authorized'); ?>?</b></th>
 
+        <th><b><?php
+        if (!empty($GLOBALS['log_password_login_attempts'])) {
+        echo xlt('Locked') . '?';
+        }
+        ?></b></th>
+
         <?php
 $query = "SELECT * FROM users WHERE username != '' ";
 if (!$form_inactive) $query .= "AND active = '1' ";
@@ -672,11 +643,26 @@ foreach ($result4 as $iter) {
   } else {
       $iter{"authorized"} = "";
   }
+    if ($iter{"locked"}) {
+    $iter{"locked"} = xl('yes');
+  } else {
+      $iter{"locked"} = "";
+  }
+  if (!empty($GLOBALS['log_password_login_attempts'])) {
+  print "<tr>
+        <td><b><a href='user_admin.php?id=" . $iter{"id"} .
+    "' class='iframe_medium' onclick='top.restoreSession()'><span>" . $iter{"username"} . "</span></a></b>" ."&nbsp;</td>
+    <td><span class='text'>" . attr($iter{"fname"}) . ' ' . attr($iter{"lname"}) ."</span>&nbsp;</td>
+    <td><span class='text'>" . attr($iter{"info"}) . "</span>&nbsp;</td>
+    <td><span class='text'>" . $iter{"authorized"} . "</span>&nbsp;</td>
+    <td align='left' style='color: red;'><span class='text'>" .$iter{"locked"} . "</span>&nbsp;</td>";
+  } else {
   print "<tr>
         <td><b><a data-text=".$iter{"id"}." href='#' class='editUser' onclick='top.restoreSession()'><span>" . $iter{"username"} . "</span></a></b>" ."&nbsp;</td>
     <td><span class='text'>" . attr($iter{"fname"}) . ' ' . attr($iter{"lname"}) ."</span>&nbsp;</td>
     <td><span class='text'>" . attr($iter{"info"}) . "</span>&nbsp;</td>
     <td align='left'><span class='text'>" .$iter{"authorized"} . "</span>&nbsp;</td>";
+  }
   print "<td><!--<a href='usergroup_admin.php?mode=delete&id=" . $iter{"id"} .
     "' class='link_submit'>[Delete]</a>--></td>";
   print "</tr>\n";
@@ -706,15 +692,7 @@ if (empty($GLOBALS['disable_non_default_groups'])) {
 <script language="JavaScript">
 <?php
   if ($alertmsg = trim($alertmsg)) {
-        echo "var alertMsg ="."'".$alertmsg.";'\n";;
-        echo "
-      iziToast.warning({
-            title: 'Warning -',
-            message: alertMsg,
-            position: 'bottomRight',
-            icon: 'fa fa-exclamation-triangle'
-        });
-    ";
+    echo "alert('$alertmsg');\n";
   }
 ?>
 </script>
