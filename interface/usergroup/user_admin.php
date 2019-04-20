@@ -40,6 +40,7 @@ require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/calendar.inc");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/erx_javascript.inc.php");
+require_once("$srcdir/headers.inc.php");
 require_once("$srcdir/role.php");
 
 if (!$_GET["id"] || !acl_check('admin', 'users'))
@@ -425,7 +426,7 @@ $bg_count=count($acl_name);
 
 <tr height="30" style="valign:middle;">
 <td><span class="text">&nbsp;</span></td><td>&nbsp;</td>
-<td colspan="2"><span class=text><?php echo xlt('Provider'); ?>:
+<td colspan="4"><span class="text"><?php echo xlt('Provider'); ?>:
  <input type="checkbox" name="authorized" onclick="authorized_clicked()"<?php
   if ($iter["authorized"]) echo " checked"; ?> />
  &nbsp;&nbsp;<span class='text'><?php echo xlt('Calendar'); ?>:
@@ -434,6 +435,10 @@ $bg_count=count($acl_name);
   if (!$iter["authorized"]) echo " disabled"; ?> />
  &nbsp;&nbsp;<span class='text'><?php echo xlt('Active'); ?>:
  <input type="checkbox" name="active"<?php if ($iter["active"]) echo " checked"; ?> />
+ <?php if (!empty($GLOBALS['log_password_login_attempts'])) { ?>
+ &nbsp;&nbsp;<span class='text'><?php echo xlt('User Locked'); ?>:
+ <input type="checkbox" name="locked"<?php if ($iter["locked"]) echo " checked"; ?> />
+ <?php } ?>
 </td>
 </tr>
 
