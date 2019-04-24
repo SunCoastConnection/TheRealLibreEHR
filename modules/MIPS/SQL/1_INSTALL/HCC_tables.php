@@ -5,7 +5,7 @@
  * @package MIPS_Gateway
  * @linkhttp://suncoastconnection.com
  * @author Suncoast Connection
- * @author Art Eaton
+ * @author Art Eaton art@suncoastconnection.com
 */
 
 
