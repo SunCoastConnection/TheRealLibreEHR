@@ -149,7 +149,7 @@ include_once("$srcdir/headers.inc.php");
                                 </tr>
                             <?php } ?>
 
-                            <?php if (isset($_SESSION['loginfailure']) && ($_SESSION['loginfailure'] == 1)): ?>
+                            <?php if (isset($_SESSION['loginfailure']) && ($_SESSION['loginfailure'] == 1) && !isset($_SESSION['userAttemptsRemaining']) && !isset($_SESSION['isUserAccountLocked'])): ?>
                                 <tr>
                                     <td colspan='2' class='text' style='color:red'>
                                         <?php echo xlt('Invalid username or pass phrase'); ?>
@@ -234,7 +234,7 @@ include_once("$srcdir/headers.inc.php");
                 <?php
                     if (isset($_SESSION['userAccountName'])) {
                         if (isset($_SESSION['isUserAccountLocked'])) {
-                            echo "<b style='color:red;'> Your Account has been locked due to higher login attempts, contact admin to unlock your account</b>";
+                            echo "<b style='color:red;'> Your Account has been locked due to incorrect login attempts, Please contact the site admin to unlock your account</b>";
                         }
                         else if($_SESSION['userAttemptsRemaining']) {
                             $attempts_remaining = $_SESSION['userAttemptsRemaining'];

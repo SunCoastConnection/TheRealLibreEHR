@@ -86,15 +86,20 @@ if (isset($_GET['auth']) && ($_GET['auth'] == "login") && isset($_POST['authUser
                     update_login_attempts($userId, $login_attempts);
                 }
 
-
-
-
+                // if attempts remaining is 0, then unset it and set user locked
+                // because we compare the user login attempt at the time of login
+                // if the login attempt is n-1 where n is the maximum number of
+                // login attempts allowed by the admin then it would fail since we
+                // fetch the previous attempts from db, that would definitely
+                // lead to a condition n-1 < n , so at nth attempt he wont have a
+                // user locked screen, to prevent it, set the below logic
+                if ($_SESSION['userAttemptsRemaining'] == 0) {
+                    unset($_SESSION['userAttemptsRemaining']);
+                    lock_user_account($userId);
+                    $_SESSION['isUserAccountLocked'] = true;
+                }
             }
-
         }
-
-
-
 
         $_SESSION['loginfailure'] = 1;
         authLoginScreen();

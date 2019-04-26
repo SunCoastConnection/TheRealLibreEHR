@@ -94,10 +94,18 @@ else {
 
 
 $username = (isset($_POST['authUser'])) ? $_POST['authUser'] : '';
-$check_fullscreen = sqlStatement("select fullscreen_enable, id from users where username = ?", array($username));
+$check_fullscreen = sqlStatement("select fullscreen_enable, locked, id from users where username = ?", array($username));
 $row = sqlFetchArray($check_fullscreen);
 
 update_login_attempts($row['id'], 0);
+
+
+if ($row['locked']) {
+  $_SESSION['userAccountName'] = $_POST['authUser'];
+  $_SESSION['isUserAccountLocked'] = true;
+  authLoginScreen();
+  exit();
+}
 
 
 //echo $row["fullscreen_enable"];
