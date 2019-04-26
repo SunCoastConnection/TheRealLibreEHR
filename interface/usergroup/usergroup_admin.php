@@ -644,7 +644,7 @@ foreach ($result4 as $iter) {
       $iter{"authorized"} = "";
   }
     if ($iter{"locked"}) {
-    $iter{"locked"} = xl('yes');
+    $iter{"locked"} = xl('LOCKED');
   } else {
       $iter{"locked"} = "";
   }
@@ -655,7 +655,7 @@ foreach ($result4 as $iter) {
     <td><span class='text'>" . attr($iter{"fname"}) . ' ' . attr($iter{"lname"}) ."</span>&nbsp;</td>
     <td><span class='text'>" . attr($iter{"info"}) . "</span>&nbsp;</td>
     <td><span class='text'>" . $iter{"authorized"} . "</span>&nbsp;</td>
-    <td align='left' style='color: red;'><span class='text'>" .$iter{"locked"} . "</span>&nbsp;</td>";
+    <td align='left' ><b><span class='text' style='color:red;'>" .$iter{"locked"} . "</span></b>&nbsp;</td>";
   } else {
   print "<tr>
         <td><b><a data-text=".$iter{"id"}." href='#' class='editUser' onclick='top.restoreSession()'><span>" . $iter{"username"} . "</span></a></b>" ."&nbsp;</td>

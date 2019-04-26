@@ -234,7 +234,7 @@ include_once("$srcdir/headers.inc.php");
                 <?php
                     if (isset($_SESSION['userAccountName'])) {
                         if (isset($_SESSION['isUserAccountLocked'])) {
-                            echo "<b style='color:red;'> Your Account has been locked due to incorrect login attempts, Please contact the site admin to unlock your account</b>";
+                            echo "<b style='color:red;'> Account locked, Please contact your system administrator to unlock your account</b>";
                         }
                         else if($_SESSION['userAttemptsRemaining']) {
                             $attempts_remaining = $_SESSION['userAttemptsRemaining'];
