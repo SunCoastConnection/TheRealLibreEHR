@@ -89,6 +89,19 @@
   ALTER TABLE `facility` ADD COLUMN `inactive` TINYINT(1)  NOT NULL DEFAULT 0 ;
 #EndIf
 
+#IfNotTable cases_to_documents
+CREATE TABLE IF NOT EXISTS `cases_to_documents` (
+ `case_id` int(11) NOT NULL DEFAULT '0',
+ `document_id` int(11) NOT NULL DEFAULT '0',
+ PRIMARY KEY (`case_id`,`document_id`),
+ KEY `FK_categories_to_documents_documents` (`document_id`),
+ CONSTRAINT `cases_to_documents_ibfk_1` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+#EndIf
+#IfMissingColumn ar_activity billing_id
+  ALTER TABLE `ar_activity` ADD COLUMN `billing_id` INT(11) NOT NULL AFTER `sequence_no`;
+#EndIf
+
 #IfMissingColumn insurance_data family_deductible
   ALTER TABLE `insurance_data` ADD COLUMN `family_deductible` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 0 AFTER `inactive_time`;
 #EndIf
@@ -116,6 +129,14 @@
 #IfMissingColumn insurance_data out_of_pocket_met  
   ALTER TABLE `insurance_data` ADD COLUMN `out_of_pocket_met` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 0 AFTER `max_out_of_pocket`;
 #EndIf
+
+#IfNotRow2D list_options list_id lists option_id transactions_modifiers
+INSERT INTO list_options (list_id,option_id,title,seq,is_default,option_value,mapping,notes,codes,toggle_setting_1,toggle_setting_2,activity,subtype) VALUES
+('lists','transactions_modifiers','Transactions Screen Modifiers',0,0,0,'','','',0,0,1,''),
+('transactions_modifiers','GP','GP',10,0,0,'','','',0,0,1,''),
+('transactions_modifiers','59','59',20,0,0,'','','',0,0,1,''),
+('transactions_modifiers','KX','KX',30,0,0,'','','',0,0,1,'');
+#Endif
 
 #IfMissingColumn  ar_activity  unapplied
    ALTER TABLE `ar_activity`  ADD COLUMN `unapplied` TINYINT(1) NOT NULL DEFAULT '0' AFTER `reason_code`;
@@ -145,3 +166,32 @@ INSERT INTO list_options (list_id,option_id,title,seq,is_default,option_value,ma
   ALTER TABLE `libreehr_postcalendar_categories` ADD COLUMN `pc_icon_color` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `pc_categories_icon`;
   ALTER TABLE `libreehr_postcalendar_categories` ADD COLUMN `pc_icon_bg_color` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `pc_icon_color`;
 #Endif
+
+#IfColumn insurance_companies ins_co_initials
+ ALTER TABLE `insurance_companies` CHANGE `ins_co_initials` `ins_co_initials` VARCHAR(10) NOT NULL ;
+#ENDIF
+
+#IfMissingColumn  users  locked
+   ALTER TABLE `users`  ADD COLUMN `locked` TINYINT(1) NOT NULL DEFAULT '0';
+#Endif
+
+#IfMissingColumn  users  login_attempts
+   ALTER TABLE `users`  ADD COLUMN `login_attempts` INT(2) NOT NULL DEFAULT '0';
+#Endif
+
+#IfMissingColumn  users  last_login
+   ALTER TABLE `users`  ADD COLUMN `last_login` timestamp;
+#Endif
+
+#IfNotRow2D list_options list_id lists option_id insurance_account_type
+INSERT INTO list_options (list_id,option_id,title,seq,is_default,option_value,mapping,notes,codes,toggle_setting_1,toggle_setting_2,activity,subtype) VALUES
+('lists','insurance_account_type','Insurance Account Types',0,0,0,'','','',0,0,1,''),
+('insurance_account_type','CL','COLLECTIONS',10,0,0,'','','',0,0,1,''),
+('insurance_account_type','BC','BCBS',15,0,0,'','','',0,0,1,''),
+('insurance_account_type','SP','SELF PAY',20,0,0,'','','',0,0,1,''),
+('insurance_account_type','CP','WORKERS COMP',30,0,0,'','','',0,0,1,'');
+#Endif
+
+#IfMissingColumn insurance_companies account_type
+ ALTER TABLE `insurance_companies` ADD `account_type` VARCHAR(15) DEFAULT NULL;
+#EndIf
