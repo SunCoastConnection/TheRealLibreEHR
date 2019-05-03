@@ -1092,13 +1092,6 @@
         "children" : [ ],
         "requirement" : 0
     },{
-        "label" : "Provider RAF Report",
-        "menu_id" : "mips7",
-        "target" : "mips",
-        "url" : "/modules/MIPS/raf_enc_report.php",
-        "children" : [ ],
-        "requirement" : 0
-    },{
         "label" : "Database Import",
         "menu_id" : "mips8",
         "target" : "mips",
