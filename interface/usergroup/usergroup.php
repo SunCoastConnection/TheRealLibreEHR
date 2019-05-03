@@ -6,17 +6,17 @@ $_SESSION["encounter"] = "";
 
 if (/*$userauthorized*/ true) {
 ?>
-<HTML>
-<HEAD>
-<TITLE>
+<html>
+<head>
+<title>
 <?php echo $libreehr_name ?>
-</TITLE>
+</title>
 
 <script language='JavaScript'>
 <?php require($GLOBALS['srcdir'] . "/restoreSession.php"); ?>
 </script>
 
-</HEAD>
+</head>
 <frameset rows="<?php echo "$GLOBALS[navBarHeight],$GLOBALS[titleBarHeight]" ?>,*" cols="*" frameborder="NO" border="0" framespacing="0">
   <frame src="usergroup_navigation.php" name="Navigation" scrolling="no" noresize frameborder="NO">
   <frame src="usergroup_title.php" name="Title" scrolling="no" noresize frameborder="NO">

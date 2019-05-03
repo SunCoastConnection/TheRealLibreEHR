@@ -500,7 +500,7 @@ foreach($result as $iter2) {
 </tr>
 
 <tr>
-  <td><span class="text"><?php echo xlt('Provider Type'); ?>: </span></td>
+  <td><span class="text"><?php echo xlt('Clinician Type'); ?>: </span></td>
   <td><?php echo generate_select_list("physician_type", "physician_type", $iter['physician_type'],'',xl('Select Type'),'physician_type_class','','',''); ?></td>
 <td class='text'><?php echo xlt('See Authorizations'); ?>: </td>
 <td><select name="see_auth" style="width:150px;" >
@@ -536,6 +536,7 @@ foreach($result as $iter2) {
 </select></td>
 </tr>
 <!-- END (CHEMED) Calendar UI preference -->
+<?php if ($GLOBALS['erx_enable']) { ?>
 
 <tr>
 <td><span class="text"><?php echo xlt('State License Number'); ?>: </span></td>
@@ -545,6 +546,7 @@ foreach($result as $iter2) {
   <?php echo generate_select_list("erxrole", "newcrop_erx_role", $iter['newcrop_user_role'],'',xl('Select Role'),'','','',array('style'=>'width:150px')); ?>
 </td>
 </tr>
+<?php } ?>
 
 <tr>
 </tr>
@@ -640,11 +642,11 @@ Display red alert if entered password matched one of last three passwords/Displa
 ?>
 </table>
 
-<input TYPE="HIDDEN" NAME="id" VALUE="<?php echo attr($_GET["id"]); ?>">
-<input TYPE="HIDDEN" NAME="mode" VALUE="update">
-<input TYPE="HIDDEN" NAME="privatemode" VALUE="user_admin">
+<input TYPE="hidden" NAME="id" VALUE="<?php echo attr($_GET["id"]); ?>">
+<input TYPE="hidden" NAME="mode" VALUE="update">
+<input TYPE="hidden" NAME="privatemode" VALUE="user_admin">
 
-<input TYPE="HIDDEN" NAME="secure_pwd" VALUE="<?php echo $GLOBALS['secure_password']; ?>">
+<input TYPE="hidden" NAME="secure_pwd" VALUE="<?php echo $GLOBALS['secure_password']; ?>">
 </form>
 <script language="JavaScript">
 $(document).ready(function(){
@@ -671,9 +673,9 @@ $(document).ready(function(){
     }
   }
 </script>
-</BODY>
+</body>
 
-</HTML>
+</html>
 
 <?php
 //  d41d8cd98f00b204e9800998ecf8427e == blank

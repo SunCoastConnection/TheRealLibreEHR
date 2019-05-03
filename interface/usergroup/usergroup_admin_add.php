@@ -294,7 +294,7 @@ if ($fres) {
 
 <tr>
     <td>
-        <span class="text"><?php echo xlt('Provider Type'); ?>: </span>
+        <span class="text"><?php echo xlt('Clinician Type'); ?>: </span>
     </td>
     <td>
         <?php echo generate_select_list("physician_type", "physician_type", '','',xl('Select Type'),'physician_type_class','','',''); ?>
@@ -326,6 +326,7 @@ if ($fres) {
 </select></td>
 </tr>
 <!-- END (CHEMED) Calendar UI preference -->
+<?php if ($GLOBALS['erx_enable']) { ?>
 
 <tr>
 <td><span class="text"><?php echo xlt('State License Number'); ?>: </span></td>
@@ -335,6 +336,7 @@ if ($fres) {
   <?php echo generate_select_list("erxrole", "newcrop_erx_role", '','','--Select Role--','','','',array('style'=>'width:120px')); ?>
 </td>
 </tr>
+<?php } ?>
 
 <?php if ($GLOBALS['inhouse_pharmacy']) { ?>
 <tr>
