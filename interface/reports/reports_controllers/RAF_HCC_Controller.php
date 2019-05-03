@@ -144,10 +144,10 @@ function showResults() {
                   	echo "<td>"; echo text($row['age']); echo "&nbsp;</td>";
                   	echo "<td>"; echo text($row['sex']); echo "&nbsp;</td>";
                   	echo "<td>"; echo text($row['facility']); echo "&nbsp;</td>";
-                  	echo "<td>"; echo text($status); echo "&nbsp;</td>";
-                  	echo "<td>"; echo text($row['reason']); echo "&nbsp;</td>";
+                  	//echo "<td>"; echo text($status); echo "&nbsp;</td>";
+                  	//echo "<td>"; echo text($row['reason']); echo "&nbsp;</td>";
                  	echo "<td>"; echo text($row['encounter']); echo "&nbsp;</td>";
-                  	echo "<td>"; echo $encnames; /*since this variable contains html, have already html escaped it above*/ echo "&nbsp;</td>";
+                //  	echo "<td>"; echo $encnames; /*since this variable contains html, have already html escaped it above*/ echo "&nbsp;</td>";
                   	echo "<td>"; echo text($coded); echo "</td>";
                 echo "</tr>";
             } else {

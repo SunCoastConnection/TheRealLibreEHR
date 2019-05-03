@@ -155,10 +155,14 @@ require_once "reports_controllers/RAF_HCC_Controller.php";
             <th><?php echo xlt('Age'); ?></th>
             <th><?php echo xlt('Gender'); ?></th>
             <th><?php echo xlt('Facility'); ?></th>
+            <?php /*
             <th><?php echo xlt('Status'); ?></th>
             <th><?php echo xlt('Encounter'); ?></th>
+            */?>
             <th><?php echo xlt('Encounter Number'); ?></th>
+            <?php /*
             <th><?php echo xlt('Form'); ?></th>
+            */?>
             <th><?php echo xlt('Coding'); ?></th>
           <?php } else { ?>
             <th><?php echo xlt('Provider'); ?></td>
