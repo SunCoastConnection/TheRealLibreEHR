@@ -17,7 +17,7 @@
  * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
  */
 
-require_once("../../../interface/globals.php");
+require_once("../globals.php");
 require_once $GLOBALS['srcdir'].'/headers.inc.php';
 require_once("../../library/report_functions.php");
 require_once("$srcdir/forms.inc");
