@@ -46,7 +46,7 @@ $form_details   = true;
 $query = "SELECT " .
   "fe.encounter, fe.date, fe.reason,fe.facility, " .
   "f.formdir, f.form_name, " .
-  "p.fname, p.mname, p.lname, p.pid,p.billing_note, p.pubpid, " .
+  "p.fname, p.mname, p.lname, p.pid,p.billing_note, TIMESTAMPDIFF(YEAR,p.dob,CURDATE()) AS age, p.sex, p.pubpid, " .
   "u.lname AS ulname, u.fname AS ufname, u.mname AS umname " .
   "FROM ( form_encounter AS fe, forms AS f ) " .
   "LEFT OUTER JOIN patient_data AS p ON p.pid = fe.pid " .
@@ -141,6 +141,8 @@ function showResults() {
                   	echo "<td>"; echo text($row['lname'] . ', ' . $row['fname'] . ' ' . $row['mname']); echo "&nbsp;</td>";
                   	echo "<td>"; echo text($row['pid']); echo "&nbsp;</td>";
                   	echo "<td>"; echo text($row['billing_note']); echo "&nbsp;</td>";
+                  	echo "<td>"; echo text($row['age']); echo "&nbsp;</td>";
+                  	echo "<td>"; echo text($row['sex']); echo "&nbsp;</td>";
                   	echo "<td>"; echo text($row['facility']); echo "&nbsp;</td>";
                   	echo "<td>"; echo text($status); echo "&nbsp;</td>";
                   	echo "<td>"; echo text($row['reason']); echo "&nbsp;</td>";
