@@ -1095,7 +1095,7 @@
         "label" : "Provider RAF Report",
         "menu_id" : "mips7",
         "target" : "mips",
-        "url" : "/modules/MIPS/raf_enc_report.php",
+        "url" : "/modules/MIPS/reports/raf_enc_report.php",
         "children" : [ ],
         "requirement" : 0
     },{
