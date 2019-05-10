@@ -117,7 +117,7 @@ if(isset($_SESSION['category']) && $_SESSION['category']!=NULL) {
                         class="icp icp-dd btn btn-info dropdown-toggle iconpicker-component iconpicker-element"
                         data-toggle="dropdown">
                     <?php if (strlen($selectedCat['pc_categories_icon']) != '0') { ?>
-                      Select <i class="fa  '. <?php echo $selectedCat['pc_categories_icon'] ?> .' "></i>
+                      Select <i class="fa <?= $selectedCat['pc_categories_icon'] ?>"></i>
                     <?php } else { ?>
                       Select <i class="fa fa-plus"></i>
                     <?php } ?>
@@ -217,11 +217,11 @@ if(isset($_SESSION['category']) && $_SESSION['category']!=NULL) {
           <?php if(!empty($selectedCat)) { ?>
               <button type="submit" class="btn btn-danger cp-negative" name="deleteCat" value="1"
               onclick="return confirm('<?php echo xlt('Are you sure you want to do that?');?>');"><?php echo xlt('Delete');?></button>
+              <?php } ?>
               <button type="submit" class="btn btn-primary cp-positive" name="updateCat" value="1"><?php echo xlt('Update');?></button>
             </div>
           </div>
           <!-- end if -->
-          <?php } ?>
 
         </div>
 
