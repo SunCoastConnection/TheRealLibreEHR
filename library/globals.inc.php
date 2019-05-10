@@ -3241,7 +3241,7 @@ $GLOBALS_METADATA = array(
     'gb_how_sort_categories' => array(
       xl('How to sort the categories'),
       array(
-        '0' => 'Sort by Categorie ID',
+        '0' => 'Sort by Category ID',
         '1' => 'Sort alphabetically',
         '2' => 'Sort by Sequence Number'
       ),

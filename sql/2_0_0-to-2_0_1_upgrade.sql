@@ -207,6 +207,10 @@ INSERT INTO `list_options` ( `list_id`, `option_id`, `title`, `seq`, `is_default
 ALTER TABLE `patient_tracker_element` ADD `reason` VARCHAR(255) NOT NULL AFTER `user`;
 #EndIf
 
+#IfMissingColumn users picture_url
+ALTER TABLE `users` ADD `picture_url` VARCHAR(2000) NOT NULL AFTER `suffix`;
+#EndIf
+
 #IfNotRow layout_options field_id facility
 INSERT INTO `layout_options` (`form_id`, `field_id`, `group_name`, `title`, `seq`, `data_type`, `uor`, `fld_length`, `max_length`, `list_id`, `titlecols`, `datacols`, `default_value`, `edit_options`, `description`, `fld_rows`, `list_backup_id`, `source`, `conditions`) VALUES
 ('DEM', 'facility', '1Face Sheet', 'Facility', 32, 35, 1, 0, 0, '', 1, 1, '', '', '', 0, '', 'F', '');
@@ -436,4 +440,3 @@ DROP TABLE IF EXISTS `libreehr_postcalendar_topics`;
 #IfTable libreehr_postcalendar_limits
 DROP TABLE IF EXISTS `libreehr_postcalendar_limits`;
 #EndIf
-

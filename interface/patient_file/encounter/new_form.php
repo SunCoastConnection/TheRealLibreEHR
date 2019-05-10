@@ -54,7 +54,6 @@ function mopen(id)
 {
     // cancel close timer
     //mcancelclosetime();
-    
     flag=10;
 
     // close old layer
@@ -77,17 +76,12 @@ function mopen(id)
 // close showed layer
 function mclose()
 {
-    if(flag==10)
-     {
-      flag=11;
-      return;
-     }
     if(ddmenuitem) ddmenuitem.style.visibility = 'hidden';
     if(ddmenuitem) ddmenuitem.style.display = 'none';
+
 }
 
-// close layer when click-out
-document.onclick = mclose;
+
 //=================================================
 function findPosX(id)
   {
@@ -189,7 +183,7 @@ if (!empty($reg)) {
           $new_category_ = $new_category;
           $new_category_ = str_replace(' ','_',$new_category_);
           if ($old_category != '') {$StringEcho.= "</table></div></li>";}
-          $StringEcho.= "<li class=\"encounter-form-category-li\"><a href='JavaScript:void(0);' onClick=\"mopen('$DivId');\" >$new_category</a><div id='$DivId' ><table border='0' cellspacing='0' cellpadding='0'>";
+          $StringEcho.= "<li class=\"encounter-form-category-li\"><a href='JavaScript:void(0);' onmouseover=\"mopen('$DivId');\" >$new_category</a><div id='$DivId' onmouseleave=mclose(); style='z-index: 1;'><table border='0' cellspacing='0' cellpadding='0'>";
           $old_category = $new_category;
           $DivId++;
         }
@@ -221,7 +215,7 @@ if ( $encounterLocked === false ) {
       if(!$StringEcho){
         $StringEcho= '<ul id="sddm">';
       }
-      $StringEcho.= "<li class=\"encounter-form-category-li\"><a href='JavaScript:void(0);' onClick=\"mopen('lbf');\" >".xl('Layout Based') ."</a><div id='lbf' ><table border='0'  cellspacing='0' cellpadding='0'>";
+      $StringEcho.= "<li class=\"encounter-form-category-li\"><a href='JavaScript:void(0);' onmouseover=\"mopen('lbf');\" >".xl('Layout Based') ."</a><div id='lbf' ><table border='0'  cellspacing='0' cellpadding='0'>";
       while ($lrow = sqlFetchArray($lres)) {
       $option_id = $lrow['option_id']; // should start with LBF
       $title = $lrow['title'];
@@ -258,7 +252,7 @@ if ( $encounterLocked === false ) {
       if($jid==0 || ($modid!=$modulerow['mod_id'])){
         if($modid!='')
         $StringEcho.= '</table></div></li>';
-      $StringEcho.= "<li><a href='JavaScript:void(0);' onClick=\"mopen('$DivId');\" >$new_category</a><div id='$DivId' ><table border='0' cellspacing='0' cellpadding='0'>";
+      $StringEcho.= "<li><a href='JavaScript:void(0);' onmouseover=\"mopen('$DivId');\" >$new_category</a><div id='$DivId' ><table border='0' cellspacing='0' cellpadding='0'>";
       }
       $jid++;
       $modid = $modulerow['mod_id'];

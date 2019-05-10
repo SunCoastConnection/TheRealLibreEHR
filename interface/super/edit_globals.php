@@ -114,6 +114,8 @@ function checkBackgroundServices(){
 <html>
 
 <head>
+    <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
+
 <?php
 
 html_header_show();
@@ -322,7 +324,6 @@ if ($_POST['form_save'] && $_GET['mode'] != "user") {
             sqlStatement( 'INSERT INTO `globals` ( gl_name, gl_index, gl_value ) VALUES ( ?, ?, ? )', array( $fldid, 0, $fldvalue )  );
 
            refreshCalendar(); //if data is updated and is also valid for Calendar-Admin
-
           }
 
         } else {
@@ -357,6 +358,7 @@ if ($_POST['form_save'] && $_GET['mode'] != "user") {
    include_js_library("jscolor-1-4-5/jscolor.js");
 ?>
 
+
 <script type="text/javascript" src="../../library/js/common.js"></script>
 <?php if ($_GET['mode'] == "user") { ?>
   <title><?php  echo xlt('User Settings'); ?></title>
@@ -370,6 +372,7 @@ tr.detail { font-size:10pt; }
 td        { font-size:10pt; }
 input     { font-size:10pt; }
 </style>
+
 </head>
 
 <body class="body_top">
@@ -609,14 +612,14 @@ foreach ($GLOBALS_METADATA as $grpname => $grparr) {
       if ($_GET['mode'] == "user") {
         $globalTitle = $globalValue;
       }
+      // timezone_identifiers_list() returns an array containing all defined time zone identifiers
+      // for eg: Asia/Kolkata or Asia/Singapore
       $zone_list = timezone_identifiers_list();
-      echo "  <select name='form_$i' id='form_$i'>\n";
-      if ($flddef ==" ") {
-        $top_choice = date_default_timezone_get();
-      }else{
-        $top_choice = $flddef;
-      }
-      echo "    <option value=''>" . text($top_choice) . "\n";
+
+      // generating an option list of defined time zones including default time zone from php.ini
+      echo "  <select class='form-control input-sm' name='form_$i' id='form_$i'>\n";
+      $top_choice = $flddef;     // default option
+      echo "    <option value='" . ($top_choice) . "'>" . text("Default - php.ini value") . "</option>\n";
       foreach ($zone_list as $item) {
         $title = $item;
         echo "   <option value='" . ($item) . "'";
@@ -786,6 +789,11 @@ foreach ($GLOBALS_METADATA as $grpname => $grparr) {
     }
     if ($_GET['mode'] == "user") {
       echo " </td>\n";
+      if (strpos($globalTitle, '!') !== false) {
+        // removing '!' from $globalTitle which is at 0th place in string
+        // which happens in case of time zone global when default - php.ini is selected
+        $globalTitle = substr($globalTitle, strpos($globalTitle, '!') + 1);
+      }
       echo "<td align='center' style='color:red;'>" . attr($globalTitle) . "</td>\n";
       echo "<td>&nbsp</td>";
       echo "<td align='center'><input type='checkbox' class='checkbox' value='YES' name='toggle_" . $i . "' id='toggle_" . $i . "' " . attr($settingDefault) . "/></td>\n";

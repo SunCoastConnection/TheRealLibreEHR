@@ -16,6 +16,8 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
+ // Turn off all error reporting to users on screen
+error_reporting(0);
 // SANITIZE ALL ESCAPES
 $sanitize_all_escapes = true;
 
@@ -72,10 +74,7 @@ if(!empty($report_id)) {
   $organize_method = $report_view['organize_mode'];
   $provider  = $report_view['provider'];
   $pat_prov_rel = $report_view['pat_prov_rel'];
-  
-
   $dataSheet = json_decode($report_view['data'], true);
- 
   $page_subtitle = ' - '.xlt('Date of Report').': '.text($date_report);
   $dis_text = ' disabled="disabled" ';
 
@@ -93,7 +92,6 @@ if(!empty($report_id)) {
 
   $begin_date = existsDefault($_POST, 'form_begin_date', '2018-01-01 00:00:00');  //change defaults in 2018
   $target_date = existsDefault($_POST, 'form_target_date', '2018-12-31 23:59:59');  //change defaults in 2018
-
   $plan_filter = existsDefault($_POST, 'form_plan_filter', '');
   $organize_method = (empty($plan_filter)) ? 'default' : 'plans';
   $provider = trim(existsDefault($_POST, 'form_provider', ''));
@@ -104,17 +102,17 @@ if(!empty($report_id)) {
 //end is empty/old report
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
-
 $widthDyn = '470px';  //determine what is needed for pqrs
-
 ?>
 
 
 <html>
   <head>
+    <link rel="stylesheet" href="../../assets/css/iziModalToast/iziToast.min.css" type="text/css">
     <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">  <!--should include stylesheet in project-->
     <link rel="stylesheet" href="../../assets/css/jquery-datetimepicker/jquery.datetimepicker.css">
     <title><?php echo $page_titles[$type_report]; ?></title>
+    <script type="text/javascript" src="../../assets/js/iziModalToast/iziToast.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="../../library/overlib_mini.js"></script>
     <script type="text/javascript" src="../../library/textformat.js"></script>
     <script type="text/javascript" src="../../library/dialog.js"></script>
@@ -128,12 +126,6 @@ $(document).ready(function() {
 });
 
 function runReport() {
-  // Validate first
-  if(!validateForm()) {
-    alert("<?php echo xls('Rule Set and Plan Set selections are not consistent. Please fix and Submit again.'); ?>");
-    return false;
-  }
-
   // Showing processing wheel
   $("#processing").show();
 
@@ -220,45 +212,25 @@ function GenXmlMIPS(sNested) {
     var sLoc = '../../custom/export_registry_xml.php?&target_date='+theform.form_target_date.value+'&nested='+sNested;
   }
   dlgopen(sLoc, '_blank', 600, 500);
-
   return false;
 }
-
-
-
-function validateForm() {
-  return true;
-}
-
 function Form_Validate() {
 <?php if(empty($report_id) && in_array($type_report, array('pqrs', 'pqrs_individual_2016',))) { ?>
   var d = document.forms[0];
-
   FromDate = d.form_begin_date.value;
   ToDate = d.form_target_date.value;
 
   if(FromDate.length > 0 && ToDate.length > 0) {
     if(FromDate > ToDate) {
-      alert("<?php echo xls('End date must be later than Begin date!'); ?>");
+      iziToast.warning({
+      title: 'Caution',
+      message:"<?php echo xls('End date must be later than Begin date!'); ?>",
+  });
       return false;
     }
+      runReport();
   }
-
-<?php
-    }
-
-    if($report_id != '') {
-?>
-  // For Results are in Gray Background & disabling anchor links
-  $("#report_results").css("opacity", '0.4');
-  $("#report_results").css("filter", 'alpha(opacity=40)');
-  $("a").removeAttr("href");
-
 <?php } ?>
-  $("#form_refresh").attr("value","true");
-
-  runReport();
-
   return true;
 }
     </script>
@@ -277,7 +249,6 @@ function Form_Validate() {
     margin-top: 0px;
   }
 }
-
 /* specifically exclude some from the screen */
 @media screen {
   #report_parameters_daterange {
@@ -290,7 +261,6 @@ function Form_Validate() {
   <body class="body_top">
     <!-- Required for the popup date selectors -->
     <div id="overDiv" style="position: absolute; visibility: hidden; z-index: 1000;"></div>
-
     <span class='title' hidden><?php echo xlt('QA Report: ').' '.$page_titles[$rule_filter].$page_subtitle; ?></span>
     <?php
     if(!empty($report_id)) {
@@ -298,17 +268,13 @@ function Form_Validate() {
         <span class='label'><?php echo xlt('Report Dates:   ').' '.$begin_date.'   ~   '.$target_date; ?></span>
         <?php } ?>
 
-    <form method='post' name='theform' id='theform' action='clinical_measures.php?type=<?php echo attr($type_report) ;?>' onsubmit='return validateForm()'>
+    <form method='post' name='theform' id='theform' action='clinical_measures.php?type=<?php echo attr($type_report) ;?>' onsubmit='return Form_Validate()'>
       <div id="report_parameters">
         <table>
           <tr>
             <td scope="row" width='<?php echo $widthDyn; ?>'>
               <div style='float:left'>
                 <table class='text'>
-                
-                
-
-
                       <td class='label'>
                          <?php echo htmlspecialchars( xl('Begin Date'), ENT_NOQUOTES);  ?>:
                       </td>
@@ -318,7 +284,6 @@ function Form_Validate() {
                                 title='<?php echo htmlspecialchars( xl('yyyy-mm-dd hh:mm:ss'), ENT_QUOTES); ?>'>
                       </td>
                    </tr>
-
                 <tr>
                         <td class='label'>
                               <?php echo htmlspecialchars( xl('End Date'), ENT_NOQUOTES); ?>:
@@ -329,8 +294,6 @@ function Form_Validate() {
                                   title='<?php echo htmlspecialchars( xl('yyyy-mm-dd hh:mm:ss'), ENT_QUOTES); ?>'>
                         </td>
                 </tr>
-               
-
                   <tr>
                     <td class='label'>
                       <?php echo xlt('Report Type'); ?>:
@@ -341,11 +304,7 @@ function Form_Validate() {
                       </select>
                     </td>
                   </tr>
-
-
-
 		<input type='hidden' id='form_plan_filter' name='form_plan_filter' value=''>
-
                   <tr>
                     <td class='label'>
                       <?php echo htmlspecialchars(xl('Individual Provider Selection'), ENT_NOQUOTES); ?>:
@@ -356,9 +315,7 @@ function Form_Validate() {
 
 <?php
       // Build a drop-down list of providers.
- 
       $providers = sqlStatement('SELECT `id`, `lname`, `fname` FROM `users` WHERE `authorized` = 1  ORDER BY `lname`, `fname`;');
-
       while($providerRow = sqlFetchArray($providers)) {
 ?>
                         <option value='<?php echo htmlspecialchars($providerRow['id'], ENT_QUOTES); ?>' <?php if($providerRow['id'] == $provider) echo ' selected'; ?>><?php echo htmlspecialchars($providerRow['lname'].', '.$providerRow['fname'], ENT_NOQUOTES); ?></option>
@@ -377,14 +334,13 @@ function Form_Validate() {
                       </select>
                     </td>
                   </tr>
-
                 </table>
               </div>
             </td>
             <td align='left' valign='middle' height="100%">
 
 <?php if(empty($report_id)) { ?>
-                      <a id='submit_button' href='#' class='css_button' onclick='runReport();'>
+                      <a id='submit_button' href='#' class='css_button' onclick='Form_Validate();'>
                         <span>
                           <?php echo htmlspecialchars(xl('Submit'), ENT_NOQUOTES); ?>
                         </span>
@@ -392,7 +348,6 @@ function Form_Validate() {
                       <span id='status_span'></span>
                       <div id='processing' style='margin:10px;display:none;'><img src='../../interface/pic/ajax-loader.gif'/></div>
 <?php }
-
     if(!empty($report_id)) {
 ?>
                       <a href='#' class='css_button' id='printbutton'>
@@ -400,17 +355,14 @@ function Form_Validate() {
                           <?php echo htmlspecialchars(xl('Print'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
-
                         Optimize XML report?
                         <input id="xmloptimize" type="checkbox" name="xmloptimize" value="1" />
-                        
                         <a href="#"  id="xml_MIPS" class='css_button' onclick='GenXmlMIPS("PQRS");'>
                         <span>
                           <?php echo htmlspecialchars(xl('NEW XML for MIPS'), ENT_NOQUOTES); ?>
                         </span>
                       </a>
 <?php
-
       if($back_link == 'list') {
 ?>
                       <a href='report_results.php' class='css_button' onclick='top.restoreSession()'><span><?php echo xlt('Return To Report Results'); ?></span></a>
@@ -423,7 +375,6 @@ function Form_Validate() {
                     </div>
                   </td>
                 </tr>
-
             </td>
           </tr>
         </table>
@@ -473,7 +424,6 @@ $bgcolor = 0;
                 $patterns = array();
                 $patterns[0] = '/PQRS_0/';
                 $patterns[1] = '/pre_0/';
-
                 $mipsnumber = preg_replace($patterns, '_', $row['pqrs_code']);
                 $measureURL = 'http://suncoastconnection.com/standards/Registrymeasures/2018_Measure'. $mipsnumber.'_Registry.pdf';
                 ?>
@@ -510,9 +460,6 @@ $bgcolor = 0;
               <td style="text-align:center"><?php echo $row['pass_filter']; ?></td>
 <?php
           }
-
-
-
             if(isset($row['itemized_test_id']) && $row['excluded'] > 0) {
 
               $query = http_build_query(array(
@@ -530,9 +477,6 @@ $bgcolor = 0;
               <td style="text-align:center"><?php echo $row['excluded']; ?></td>
 <?php
             }
-
-
- 
           if(isset($row['itemized_test_id']) && $row['pass_target'] > 0) {
             $query = http_build_query(array(
               'from_page' => 'pqrs_report',
