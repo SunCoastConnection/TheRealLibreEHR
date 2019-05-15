@@ -363,6 +363,8 @@ else {
       }
     }
 
+    
+
     // Skip below if database shell has already been created.
     if ($inst != 2) {
       echo "Creating database...\n";

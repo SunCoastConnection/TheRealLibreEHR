@@ -115,6 +115,8 @@ $form_inactive = empty($_REQUEST['form_inactive']) ? false : true;
 ?>
 <html>
 <head>
+    <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
+
 <?php
   call_required_libraries(array("jquery-min-3-1-1","bootstrap","font-awesome","jquery-ui","iziModalToast"));
 ?>
@@ -145,7 +147,7 @@ $(document).ready(function(){
       width: 700,
       focusInput: true,
       padding: 5,
-      iframeHeight: 350,
+      iframeHeight: 700,
       iframeURL: "facilities_add.php"
     });
 
@@ -171,14 +173,11 @@ $(document).ready(function(){
         width: 700,
         focusInput: true,
         padding: 5,
-        iframeHeight: 350,
+        iframeHeight: 700,
         iframeURL: "facility_admin.php?fid=" + link,
         onClosed: function () {
-          setTimeout(function () {
-            parent.$(".fa-refresh").click();
-          }, 300);
+         location.reload();
         }
-
 });
 
       setTimeout(function () {

@@ -4,6 +4,7 @@
  */
 
 include_once('../globals.php');
+
 ?>
 <html>
 <head>
@@ -17,6 +18,7 @@ include_once('../globals.php');
         display:block;
       }
 </style>
+
 
 <script type="text/javascript" language="javascript">
 function toencounter(rawdata) {
@@ -50,6 +52,7 @@ function toencounter(rawdata) {
     top.frames[frame].location.href  = '../patient_file/encounter/encounter_top.php?set_encounter=' + enc;
 }
 </script>
+
 </head>
 <body class="body_title">
 <?php
@@ -63,7 +66,7 @@ $res = sqlQuery("select * from users where username='".$_SESSION{"authUser"}."'"
 
 <?php if (acl_check('patients','demo','',array('write','addonly') )) { ?>
 <tr><td style="vertical-align:text-bottom;">
-        <a href='' class="css_button_small" style="margin:0px;vertical-align:top;" id='new0' onClick=" return top.window.parent.left_nav.loadFrame2('new0','RTop','new/new.php')">
+        <a href='' class="css_button_small" style="margin:0px;vertical-align:top;" id='new0' onClick=" return top.window.parent.left_nav.loadFrame2('new0','RTop','new/new_comprehensive.php')">
         <span><?php echo htmlspecialchars( xl('NEW PATIENT'), ENT_QUOTES); ?></span></a>
     </td>
     <td style="vertical-align:text-bottom;">

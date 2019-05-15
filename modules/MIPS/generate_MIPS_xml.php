@@ -1,3 +1,8 @@
+<html>
+<head>
+  <link rel="stylesheet" href="../../assets/css/base.css" type="text/css">
+</head>
+<body class="body_top">
 <?php
 /**
  * Clinical Measures Engine Report Form
@@ -15,6 +20,8 @@
  *
  * Please support this product by sharing your changes with the LibreHealth.io community.
  */
+ // Turn off all error reporting to user on screen
+error_reporting(0);
 // SANITIZE ALL ESCAPES
 $sanitize_all_escapes = true;
 
@@ -75,31 +82,27 @@ function get_TIN() {
 		htmlecho("ERROR:  No facility is set as the Primary Business Entity.\n   You MUST set one with the correct TIN. \n");
 		return "TINTINTINTINTINTINTIN";
 	}
-}
+}?>
 
-###	==========	BEGIN MAIN	==========
-
+  <p>Assumptions and instructions for generating this XML: </p>
+  <ul>
+    <li>The eligible professional has signed a waiver giving the registry permission to submit data on their behalf. <b>*REQUIRED*</b></li>
+    <li>This report must not include any "pre_" measures.</li>
+    <li>You have gone into Administration > Facilities > Mark ONE facility as 'Primary Business Entity'.  Be sure it has the correct TIN.<b> *REQUIRED*</b></li>
+    <li>Measures that must be reported on for EVERY Encounter will be manually  dealt with in the XML. </li>
+  </ul>
+<p>This tool has generated an XML file related to this report.</p>
+<p>The file naming convention is ProviderNPI-ProviderTIN.xml</p>
+<p>You may download these files by going to "<b>QA Measures</b>  -->"
+  <b> Upload Claim Files</b>" and clicking on the "<b> XML_out</b>" folder, then the appropriate <b>.xml</b> file(s).</p>
+<p>======================================================================</p>
+<?php
 echo ("<pre>\n");
-htmlecho("Assumptions and instructions for generating this XML:  \n");
-htmlecho(" * The eligible professional has signed a waiver giving the registry permission\n     to submit data on their behalf.  *REQUIRED*  \n");
-htmlecho(" * This report must not include any \"pre_\" measures. \n");
-htmlecho(" * You have gone into Administration > Facilities > Mark ONE facility as 'Primary\n     Business Entity'.  Be sure it has the correct TIN.   *REQUIRED*  \n");
-htmlecho(" * Measures that must be reported on for EVERY Encounter will be manually   \n     dealt with in the XML.  \n");
-
-htmlecho("\nThis tool has generated an XML file related to this report.\n");
-htmlecho("The file naming convention is ProviderNPI-ProviderTIN.xml \n");
-echo("<br>You may download these files by going to \"<b>QA Measures</b>\" --> \"<b>Upload Claim Files</b>\"\n and clicking on the \"<b>XML_out</b>\" folder, then the appropriate <b>.xml</b> file(s).\n");
-
-htmlecho("\n================================================================================ \n");
-
-
-
 $report_id = $_GET['report_id'] ;
 //$report_id = (isset($_REQUEST['report_id'])) ;
 htmlecho("Report_ID: $report_id  \n");
 $xmloptimize = $_GET['xmloptimize'];
 htmlecho ("Run with reporting-rate optimization: ".$xmloptimize."\n");
-
 if(!empty($report_id)) {
 	$report_view = collectReportDatabase($report_id);
 	//echo ("DEBUG report_view is:  ".implode($report_view)."\n" );
@@ -294,6 +297,7 @@ if(!empty($report_id)) {
 } else {	// End if(!empty($report_id))
 	echo ("ERROR!  No report_id specified!\n");
 }
-
-
 ?>
+</body>
+</html>
+

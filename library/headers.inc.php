@@ -47,8 +47,7 @@ function include_css_library($path)
     Parameters for this function are passed in an unkeyed array of strings.
     Strings equate to the directory name in the /assets/ directory.
 */
-function call_required_libraries($library_array)
-{
+function call_required_libraries($library_array){
 /* First checking for any library in a directory matching the string "/jquery-min-/".
  * When one is found, use that value in the URL string, then add "index.js"
  */
@@ -143,12 +142,42 @@ function call_required_libraries($library_array)
     <?php
     }
 
-    if(in_array('iziModalToast' , $library_array)){ ?>
-        <link rel="stylesheet" href="<?php echo $GLOBALS['css_path']; ?>iziModalToast/iziToast.min.css" media="screen"/>
-        <link rel="stylesheet" href="<?php echo $GLOBALS['css_path']; ?>iziModalToast/iziModal.min.css" media="screen"/>
-        <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>iziModalToast/jquery.js"></script>
-        <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>iziModalToast/iziToast.min.js"></script>
+	if(in_array("iziModalToast", $library_array)) { ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['css_path']; ?>iziModalToast/iziModal.min.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['css_path']; ?>iziModalToast/iziToast.min.css">
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>iziModalToast/iziModal.min.js"></script>
+        <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>iziModalToast/iziToast.min.js"></script>
+		<?php
+	}
+
+    if(in_array("datatables", $library_array)) { ?>
+
+        <style type="text/css">
+            @import "<?php echo $GLOBALS['webroot'] ?>/assets/js/datatables/media/css/demo_page.css";
+            @import "<?php echo $GLOBALS['webroot'] ?>/assets/js/datatables/media/css/demo_table.css";
+            @import "<?php echo $GLOBALS['webroot'] ?>/assets/css/jquery-ui-1-12-1/jquery-ui.css";
+
+            .mytopdiv { float: left; margin-right: 1em; }
+        </style>
+
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/assets/js/datatables/media/js/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/assets/js/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/assets/js/jquery-min-3-3-1/index.js"></script>
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/tooltip.js"></script>
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/assets/js/fancybox-1.3.4/jquery.fancybox-1.3.4.pack.js"></script>
+        <script type='text/javascript' src='<?php echo $GLOBALS['webroot'] ?>/library/dialog.js'></script>
+        <link rel="stylesheet" href="<?php echo $GLOBALS['webroot'] ?>/assets/js/fancybox-1.3.4/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-1.9.1.min.js"></script> <!-- Including jquery plugin to handle uncaught ReferenceError $  -->
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/overlib_mini.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['webroot'] ?>/assets/js/DataTables-1.10.16/datatables.css">
+        <script type="text/javascript" charset="utf8" src="<?php echo $GLOBALS['webroot'] ?>/assets/js/DataTables-1.10.16/datatables.js"></script>
+        <!-- this is a 3rd party script -->
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/assets/js/datatables/extras/ColReorder/media/js/ColReorderWithResize.js"></script>
+        <link rel="stylesheet" href="<?php echo $GLOBALS['webroot'] ?>/library/css/jquery.datetimepicker.css">
+
+
+
         <?php
     }
 
@@ -160,9 +189,7 @@ function call_required_libraries($library_array)
     This function resolves the Console-error "Uncaught TypeError: Cannot read property 'msie' of undefined" . This error comes up when using
     fancybox-1.2.6 and fancybox-1.3.4 versions with jQuery version 3.1.1. It is because the $.browser method was removed in jQuery 1.9.
 */
-function resolveFancyboxCompatibility()
-{
-    ?>
+function resolveFancyboxCompatibility() { ?>
     <script type="text/javascript">
         jQuery.browser = {};
         (function () {

@@ -426,7 +426,7 @@ $bg_count=count($acl_name);
 
 <tr height="30" style="valign:middle;">
 <td><span class="text">&nbsp;</span></td><td>&nbsp;</td>
-<td colspan="4"><span class="text"><?php echo xlt('Provider'); ?>:
+<td colspan="2"><span class=text><?php echo xlt('Provider'); ?>:
  <input type="checkbox" name="authorized" onclick="authorized_clicked()"<?php
   if ($iter["authorized"]) echo " checked"; ?> />
  &nbsp;&nbsp;<span class='text'><?php echo xlt('Calendar'); ?>:
@@ -492,7 +492,6 @@ foreach($result as $iter2) {
   </select>
  </td>
 </tr>
-
 
 <tr>
 <td><span class=text><?php echo xlt('Federal Tax ID'); ?>: </span></td><td><input type=entry name=taxid style="width:150px;"  value="<?php echo $iter["federaltaxid"]?>"></td>
@@ -642,11 +641,11 @@ Display red alert if entered password matched one of last three passwords/Displa
 ?>
 </table>
 
-<input TYPE="hidden" NAME="id" VALUE="<?php echo attr($_GET["id"]); ?>">
-<input TYPE="hidden" NAME="mode" VALUE="update">
-<input TYPE="hidden" NAME="privatemode" VALUE="user_admin">
+<input TYPE="HIDDEN" NAME="id" VALUE="<?php echo attr($_GET["id"]); ?>">
+<input TYPE="HIDDEN" NAME="mode" VALUE="update">
+<input TYPE="HIDDEN" NAME="privatemode" VALUE="user_admin">
 
-<input TYPE="hidden" NAME="secure_pwd" VALUE="<?php echo $GLOBALS['secure_password']; ?>">
+<input TYPE="HIDDEN" NAME="secure_pwd" VALUE="<?php echo $GLOBALS['secure_password']; ?>">
 </form>
 <script language="JavaScript">
 $(document).ready(function(){
@@ -673,9 +672,9 @@ $(document).ready(function(){
     }
   }
 </script>
-</body>
+</BODY>
 
-</html>
+</HTML>
 
 <?php
 //  d41d8cd98f00b204e9800998ecf8427e == blank

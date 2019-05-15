@@ -115,10 +115,7 @@ $alertmsg = '';
                     toggle( $(this), "#DEM" );
                 });
 
-
                 tabbify();
-
-
             });
 
             $(document).ready(function(){

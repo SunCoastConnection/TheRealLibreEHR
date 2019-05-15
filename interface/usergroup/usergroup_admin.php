@@ -539,10 +539,7 @@ $form_inactive = empty($_REQUEST['form_inactive']) ? false : true;
 ?>
 <html>
 <head>
-
-<?php call_required_libraries(array("jquery-min-3-1-1","bootstrap","fancybox-custom"));
-      resolveFancyboxCompatibility();
-?>
+    <?php call_required_libraries(array("jquery-min-3-1-1","bootstrap","font-awesome", "iziModalToast")); ?>
 
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/common.js"></script>
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-ui.js"></script>
@@ -550,26 +547,64 @@ $form_inactive = empty($_REQUEST['form_inactive']) ? false : true;
 <script type="text/javascript">
 
 $(document).ready(function(){
+            $(".addUser").click(function () {
+                $("#addUser-iframe").iziModal('open');
+            });
 
-    // fancy box
-    enable_modals();
+            $(".editUser").click(function () {
+                var link = $(this).attr("data-text");
+                var title = $(this).children("span").text();
+                initIziLink(link , title);
+            });
 
-
-    tabbify();
-
-    // special size for
-    $(".iframe_medium").fancybox( {
-        'overlayOpacity' : 0.0,
-        'showCloseButton' : true,
-        'frameHeight' : 450,
-        'frameWidth' : 660
+            function initIziLink(link, title) {
+                $("#editUser-iframe").iziModal({
+                    title: '<b style="color: white">'+title+'</b>',
+                    subtitle: 'Edit a new user with administrative roles',
+                    headerColor: '#88A0B9',
+                    closeOnEscape: true,
+                    fullscreen:true,
+                    overlayClose: false,
+                    closeButton: true,
+                    theme: 'light',  // light
+                    iframe: true,
+                    width:900,
+                    focusInput: true,
+                    padding:5,
+                    iframeHeight: 700,
+                    iframeURL:'user_admin.php?id='+link,
+                    onClosed:function () {
+                        location.reload();
+                    }
 });
 
+                setTimeout(function () {
+                    call_izi();
+                },200);
+            }
 
+            function call_izi() {
+                $("#editUser-iframe").iziModal('open');
+            }
 
-    $(function(){
-        // add drag and drop functionality to fancybox
-        $("#fancy_outer").easydrag();
+            $("#addUser-iframe").iziModal({
+                title: 'Add a new user',
+                subtitle: 'Add a new user with administrative roles',
+                headerColor: '#88A0B9',
+                closeOnEscape: true,
+                fullscreen:true,
+                overlayClose: false,
+                closeButton: true,
+                theme: 'light',  // light
+                iframe: true,
+                width:900,
+                focusInput: true,
+                padding:5,
+                iframeHeight: 700,
+                iframeURL: "usergroup_admin_add.php",
+                onClosed:function () {
+                    location.reload();
+                }
             });
 
         });
@@ -588,13 +623,16 @@ function authorized_clicked() {
 </head>
 <body class="body_top">
 
+<!-- iframes to initialize izi -->
+<div id="addUser-iframe"></div>
+<div id="editUser-iframe"></div>
 
 <div>
     <div>
        <table>
       <tr >
         <td><b><?php echo xlt('User / Groups'); ?></b>&nbsp;&nbsp;</td>
-        <td><a href="usergroup_admin_add.php" class="iframe_medium css_button cp-positive"><span><?php echo xlt('Add User'); ?></span></a>
+                <td><a href="#" class="css_button cp-positive addUser"><span><?php echo xlt('Add User'); ?></span></a>
         </td>
         <td><a href="facility_user.php" class="css_button cp-misc"><span><?php echo xlt('View Facility Specific User Information'); ?></span></a>
         </td>
@@ -692,7 +730,15 @@ if (empty($GLOBALS['disable_non_default_groups'])) {
 <script language="JavaScript">
 <?php
   if ($alertmsg = trim($alertmsg)) {
-    echo "alert('$alertmsg');\n";
+        echo "var alertMsg ="."'".$alertmsg.";'\n";;
+        echo "
+      iziToast.warning({
+            title: 'Warning -',
+            message: alertMsg,
+            position: 'bottomRight',
+            icon: 'fa fa-exclamation-triangle'
+        });
+    ";
   }
 ?>
 </script>

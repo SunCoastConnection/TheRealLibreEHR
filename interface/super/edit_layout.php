@@ -1071,13 +1071,13 @@ while ($row = sqlFetchArray($res)) {
 <?php echo $extra_html; ?>
 
 <?php if ($layout_id) { ?>
-
 <input type='button' name='deletefields' id='deletefields' class='cp-negative' value='<?php xl('Delete selected','e'); ?>' style="font-size:90%" disabled="disabled" />
 <input type='button' name='movefields' id='movefields' class='cp-misc' value='<?php xl('Move selected to...','e'); ?>' style="font-size:90%" disabled="disabled" />
   <input type='button' name='save' id='save' class='cp-submit' value='<?php xl('Save Changes','e'); ?>' />
 <?php } ?>
 
 </form>
+
 
 <!-- template DIV that appears when user chooses to rename an existing group -->
 <div id="renamegroupdetail" class="popupbox row marginlessrow" style="padding: 3px; display: none; visibility: hidden; background-color: lightgrey;">
