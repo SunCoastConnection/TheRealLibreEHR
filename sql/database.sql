@@ -21,7 +21,6 @@ CREATE TABLE `addresses` (
   KEY `foreign_id` (`foreign_id`)
 ) ENGINE=InnoDB;
 
-
 --
 -- Table structure for table `amc_misc_data`
 --
@@ -36,8 +35,6 @@ CREATE TABLE `amc_misc_data` (
   `date_completed` datetime default NULL,
   KEY  (`amc_id`,`pid`,`map_id`)
 ) ENGINE=InnoDB;
-
-
 --
 -- Table structure for table `amendments`
 --
@@ -962,13 +959,13 @@ CREATE TABLE `facility` (
   `facility_code` VARCHAR(31) default NULL,
   `inactive` TINYINT(1)  NOT NULL DEFAULT 0,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `facility`
 --
 
-INSERT INTO `facility` VALUES (3, 'Your Clinic Name Here', 'Your Clinic Name Here', '000-000-0000', '000-000-0000', '', '', '', '', '', '', NULL, NULL, 1, 1, 0, NULL, '', '', '', '', '','#99FFFF','0', '');
+INSERT INTO `facility` VALUES (1, 'Your Clinic Name Here', 'Your Clinic Name Here', '000-000-0000', '000-000-0000', '', '', '', '', '', '', NULL, NULL, 1, 1, 0, NULL, '', '', '', '', '','#99FFFF','0','','0');
 
 
 
@@ -1132,6 +1129,7 @@ CREATE TABLE `form_misc_billing_options` (
   `icn_resubmission_number` varchar(35) default NULL,
   `box_14_date_qual` char(3) default NULL,
   `box_15_date_qual` char(3) default NULL,
+  `onset_date` DATE NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 ;
 
@@ -2163,7 +2161,8 @@ CREATE TABLE `insurance_companies` (
   `ins_inactive` tinyint(1) NOT NULL DEFAULT '0',
   `allow_print_statement` tinyint(1) NOT NULL DEFAULT '0' COMMENT ' 1 = Yes Print Statements',
   `tier` varchar(5) NOT NULL DEFAULT '',
-  `ins_co_initials` varchar(5) NOT NULL DEFAULT '',
+  `ins_co_initials` varchar(10) NOT NULL DEFAULT '',
+  `account_type` VARCHAR(15) DEFAULT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB;
 
@@ -4011,11 +4010,6 @@ INSERT INTO list_options ( list_id, option_id, title, seq, codes ) VALUES ('reac
 -- County
 
 INSERT INTO list_options (list_id, option_id, title) VALUES ('lists','county','County');
-INSERT INTO list_options (list_id, option_id, title, notes, seq) VALUES ('county','adair','ADAIR','001', '10');
-INSERT INTO list_options (list_id, option_id, title, notes, seq) VALUES ('county','andrew','ANDREW','003', '20');
-INSERT INTO list_options (list_id, option_id, title, notes, seq) VALUES ('county','atchison','ATCHISON','005', '30');
-INSERT INTO list_options (list_id, option_id, title, notes, seq) VALUES ('county','audrain','AUDRAIN','007', '40');
-INSERT INTO list_options (list_id, option_id, title, notes, seq) VALUES ('county','barry','BARRY','009', '50');
 
 -- Immunization Manufacturers
 
@@ -4149,7 +4143,12 @@ INSERT INTO list_options (list_id,option_id,title,seq,is_default,option_value,ma
 ('lists','insurance_payment_method','Insurance Payment Method',0,0,0,'','','',0,0,1,''),
 ('insurance_payment_method','check_payment','Check Payment',10,0,0,'','','',0,0,1,''),
 ('insurance_payment_method','credit_card','Credit Card',20,0,0,'','','',0,0,1,'');
-
+INSERT INTO list_options (list_id,option_id,title,seq,is_default,option_value,mapping,notes,codes,toggle_setting_1,toggle_setting_2,activity,subtype) VALUES
+('lists','insurance_account_type','Insurance Account Types',0,0,0,'','','',0,0,1,''),
+('insurance_account_type','CL','COLLECTIONS',10,0,0,'','','',0,0,1,''),
+('insurance_account_type','BC','BCBS',15,0,0,'','','',0,0,1,''),
+('insurance_account_type','SP','SELF PAY',20,0,0,'','','',0,0,1,''),
+('insurance_account_type','CP','WORKERS COMP',30,0,0,'','','',0,0,1,'');
 -- --------------------------------------------------------
 --
 -- Table structure for table `lists`
@@ -4523,29 +4522,36 @@ CREATE TABLE `libreehr_postcalendar_categories` (
   `pc_cattype` INT( 11 ) NOT NULL COMMENT 'Used in grouping categories',
   `pc_active` tinyint(1) NOT NULL default 1,
   `pc_seq` int(11) NOT NULL default '0',
+  `pc_categories_icon` text NOT NULL,
+  `pc_icon_color` varchar(15) NULL,
+  `pc_icon_bg_color` varchar(15) NULL,
   PRIMARY KEY  (`pc_catid`),
   KEY `basic_cat` (`pc_catname`,`pc_catcolor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 ;
 
+
 --
 -- Dumping data for table `libreehr_postcalendar_categories`
+-- Not including inserts for `pc_categories_icon`, `pc_icon_color`, `pc_icon_bg_color`
 --
 
-INSERT INTO `libreehr_postcalendar_categories` VALUES (1, 'No Show', '#DDDDDD', 'Reserved to define when an event did not occur as specified.', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 0, 0, 0, 0, 0, 0,1,1);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (2, 'In Office', '#99CCFF', 'Reserved todefine when a provider may haveavailable appointments after.', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 1, 3, 2, 0, 0, 1,1,2);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (3, 'Out Of Office', '#99FFFF', 'Reserved to define when a provider may not have available appointments after.', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 1, 3, 2, 0, 0, 1,1,3);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (4, 'Vacation', '#EFEFEF', 'Reserved for use to define Scheduled Vacation Time', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 0, 0, 0, 1, 0, 1,1,4);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (5, 'Office Visit', '#FFFFCC', 'Normal Office Visit', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0,0,1,5);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (6, 'Holidays','#9676DB','Clinic holiday',0,NULL,'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}',0,86400,1,3,2,0,0,2,1,6);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (7, 'Closed','#2374AB','Clinic closed',0,NULL,'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}',0,86400,1,3,2,0,0,2,1,7);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (8, 'Lunch', '#FFFF33', 'Lunch', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 3600, 0, 3, 2, 0, 0, 1,1,8);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (9, 'Established Patient', '#CCFF33', '', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0, 0,1,9);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (10,'New Patient', '#CCFFFF', '', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 1800, 0, 0, 0, 0, 0, 0,1,10);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (11,'Reserved','#FF7777','Reserved',1,NULL,'a:5:{s:17:\"event_repeat_freq\";s:1:\"1\";s:22:\"event_repeat_freq_type\";s:1:\"4\";s:19:\"event_repeat_on_num\";s:1:\"1\";s:19:\"event_repeat_on_day\";s:1:\"0\";s:20:\"event_repeat_on_freq\";s:1:\"0\";}',0,900,0,3,2,0,0, 1,1,11);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (12, 'Health and Behavioral Assessment', '#C7C7C7', 'Health and Behavioral Assessment', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0,0,1,12);
-INSERT INTO `libreehr_postcalendar_categories` VALUES (13, 'Preventive Care Services', '#CCCCFF', 'Preventive Care Services', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0,0,1,13);
-
-INSERT INTO `libreehr_postcalendar_categories` VALUES (14, 'Ophthalmological Services', '#F89219', 'Ophthalmological Services', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0,0,1,14);
+INSERT INTO `libreehr_postcalendar_categories` (`pc_catid`,`pc_catname`, `pc_catcolor`, `pc_catdesc`,
+  `pc_recurrtype`, `pc_enddate`, `pc_recurrspec`,`pc_recurrfreq`,`pc_duration`, `pc_end_date_flag`, `pc_end_date_type`, 
+  `pc_end_date_freq`, `pc_end_all_day`, `pc_dailylimit`,`pc_cattype`, `pc_active`, `pc_seq`) VALUES
+ (1, 'No Show', '#DDDDDD', 'Reserved to define when an event did not occur as specified.', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 0, 0, 0, 0, 0, 0,1,1),
+ (2, 'In Office', '#99CCFF', 'Reserved todefine when a provider may haveavailable appointments after.', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 1, 3, 2, 0, 0, 1,1,2),
+ (3, 'Out Of Office', '#99FFFF', 'Reserved to define when a provider may not have available appointments after.', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 1, 3, 2, 0, 0, 1,1,3),
+ (4, 'Vacation', '#EFEFEF', 'Reserved for use to define Scheduled Vacation Time', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 0, 0, 0, 1, 0, 1,1,4),
+ (5, 'Office Visit', '#FFFFCC', 'Normal Office Visit', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0,0,1,5),
+ (6, 'Holidays','#9676DB','Clinic holiday',0,NULL,'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}',0,86400,1,3,2,0,0,2,1,6),
+ (7, 'Closed','#2374AB','Clinic closed',0,NULL,'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}',0,86400,1,3,2,0,0,2,1,7),
+ (8, 'Lunch', '#FFFF33', 'Lunch', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 3600, 0, 3, 2, 0, 0, 1,1,8),
+ (9, 'Established Patient', '#CCFF33', '', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0, 0,1,9),
+ (10,'New Patient', '#CCFFFF', '', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 1800, 0, 0, 0, 0, 0, 0,1,10),
+ (11,'Reserved','#FF7777','Reserved',1,NULL,'a:5:{s:17:\"event_repeat_freq\";s:1:\"1\";s:22:\"event_repeat_freq_type\";s:1:\"4\";s:19:\"event_repeat_on_num\";s:1:\"1\";s:19:\"event_repeat_on_day\";s:1:\"0\";s:20:\"event_repeat_on_freq\";s:1:\"0\";}',0,900,0,3,2,0,0, 1,1,11),
+ (12, 'Health and Behavioral Assessment', '#C7C7C7', 'Health and Behavioral Assessment', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0,0,1,12),
+ (13, 'Preventive Care Services',  '#CCCCFF', 'Preventive Care Services',  0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0,0,1,13),
+ (14, 'Ophthalmological Services', '#F89219', 'Ophthalmological Services', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 900, 0, 0, 0, 0, 0,0,1,14);
 
 
 --
@@ -4592,6 +4598,8 @@ CREATE TABLE `libreehr_postcalendar_events` (
   `pc_billing_location` SMALLINT (6) NOT NULL DEFAULT '0',
   `pc_room` varchar(20) NOT NULL DEFAULT '',
   `cancel_reason` text,
+  `case_number` VARCHAR(50) DEFAULT NULL,
+  `case_body_part` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY  (`pc_eid`),
   KEY `basic_event` (`pc_catid`,`pc_aid`,`pc_eventDate`,`pc_endDate`,`pc_eventstatus`,`pc_sharing`,`pc_topic`),
   KEY `pc_eventDate` (`pc_eventDate`)
@@ -5850,6 +5858,11 @@ CREATE TABLE `users` (
   `physician_type` VARCHAR(50) DEFAULT NULL,
   `suffix` varchar(255) DEFAULT NULL,
   `picture_url` varchar(2000) NOT NULL default '',
+  `locked` TINYINT(1) NOT NULL DEFAULT '0',
+  `login_attempts` INT(2) NOT NULL DEFAULT '0',
+  `last_login` timestamp,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment 'needed for laravel',
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'needed for laravel',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 ;
 
@@ -6074,6 +6087,7 @@ CREATE TABLE `ar_activity` (
   `reason_code` varchar(255) DEFAULT NULL COMMENT 'Use as needed to show the primary payer adjustment reason code',
   `unapplied`      TINYINT(1) NOT NULL DEFAULT '0',
   `date_closed`    date COMMENT 'Date closed',
+  `ready_to_bill` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (sequence_no, pid, encounter),
   KEY session_id (session_id)
 ) ENGINE=InnoDB;
@@ -7675,3 +7689,4 @@ DROP TABLE IF EXISTS cases_to_documents;
  KEY `FK_categories_to_documents_documents` (`document_id`),
  CONSTRAINT `cases_to_documents_ibfk_1` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

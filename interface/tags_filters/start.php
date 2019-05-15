@@ -3,6 +3,8 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 if ( $GLOBALS['tags_filters_enabled'] ) {
+
+
 function tf_filter_patient_select( $username )
 {
     // Fetch all the group filters
@@ -84,6 +86,7 @@ function update_tags_filters()
 }
 add_action( 'update_plugin', 'update_tags_filters' );
 }
+
 if ( $GLOBALS['facility_acl']==1 ) {
 ///////////////////////////////////////////////////////////////////////////////
 ////test add of facility acl stuff.
