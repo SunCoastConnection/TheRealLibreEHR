@@ -933,7 +933,7 @@ $ThisPageSearchCriteriaDisplayRadioMaster=array();
 
 
       $_REQUEST['final_this_page_criteria'][0]="(form_encounter.date between '".$from_date."' and '".$to_date."')";
-      $_REQUEST['final_this_page_criteria'][1]="billing.billed = '0'";
+      $_REQUEST['final_this_page_criteria'][1]="billing.billed = '$unbilled'";
 
       $_REQUEST['final_this_page_criteria_text'][0]=xl("Date of Service = Today");
       $_REQUEST['final_this_page_criteria_text'][1]=xl("Billing Status = Unbilled");
@@ -1033,9 +1033,25 @@ $.fn.valAndTrigger = function (element) {
 
 $(document).ready(function () {
 
-  $('#new_ui_from_date').datepicker({ dateFormat: "yy-mm-dd" }).datepicker("setDate", new Date());
+  $('#new_ui_from_date').datepicker({
+    dateFormat: "yy-mm-dd",
+     onSelect: function(dateText) {
 
-  $('#new_ui_to_date').datepicker({ dateFormat: "yy-mm-dd" });
+        let date_value =  $('#new_ui_from_date').val()  + "  to  " + $('#new_ui_to_date').val()
+        $('#new_ui_date_copy').val(date_value)
+
+
+     } }).datepicker("setDate", new Date());
+
+  $('#new_ui_to_date').datepicker({ dateFormat: "yy-mm-dd",
+   onSelect: function(dateText) {
+
+        let date_value =  $('#new_ui_from_date').val()  + "  to  " + $('#new_ui_to_date').val()
+        $('#new_ui_date_copy').val(date_value)
+
+
+     }
+      });
 
   $('#new_ui_insurance').select2({  multiple: true});
 
