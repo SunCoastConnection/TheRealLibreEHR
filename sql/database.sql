@@ -5871,6 +5871,8 @@ CREATE TABLE `users` (
   `locked` TINYINT(1) NOT NULL DEFAULT '0',
   `login_attempts` INT(2) NOT NULL DEFAULT '0',
   `last_login` timestamp,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment 'needed for laravel',
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'needed for laravel',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 ;
 
