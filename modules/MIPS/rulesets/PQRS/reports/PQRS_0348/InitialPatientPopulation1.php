@@ -10,11 +10,11 @@
  * 
  * @author  Art Eaton <art@suncoastconnection.com>
  * @author  Bryan lee <bryan@suncoastconnection.com>
- * @package LibreHealthEHR 
+ * @package LibreEHR 
  * @link    http://suncoastconnection.com
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  *
- * Please support this product by sharing your changes with the LibreHealth.io community.
+ * Please support this product by sharing your changes with the Libre.io community.
  */
  ///this measure has a wierd everything.
 class PQRS_0348_InitialPatientPopulation1 extends PQRSFilter

@@ -23,8 +23,8 @@
  * Purpose: to archive old entries in the csv files and old files
  * 
  * @author Kevin McCormick
- * @link: http://librehealth.io
- * @package LibreHealth EHR
+ * @link: http://LibreEHR.org
+ * @package Libre EHR
  * @subpackage ediHistory
  */
  

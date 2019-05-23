@@ -1,5 +1,5 @@
 <?php
-/** @package    LibreHealth EHR::Model::DAO */
+/** @package    Libre EHR::Model::DAO */
 
 /**
  *
@@ -9,9 +9,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  */
 
 /**
@@ -22,7 +22,7 @@ require_once ( "verysimple/Phreeze/IDaoMap2.php" );
 
 /**
  *
- * @package LibreHealth EHR::Model::DAO
+ * @package Libre EHR::Model::DAO
  * @author ClassBuilder
  * @version 1.0
  */

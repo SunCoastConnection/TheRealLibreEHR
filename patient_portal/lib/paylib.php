@@ -11,9 +11,9 @@
  *
  * @package LibreEHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the authors and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the authors and to the Libre EHR community.
  *
  */
 session_start();

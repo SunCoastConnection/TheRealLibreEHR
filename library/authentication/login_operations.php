@@ -17,7 +17,7 @@
  *
  * @package LibreEHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 require_once("$srcdir/authentication/common_operations.php");

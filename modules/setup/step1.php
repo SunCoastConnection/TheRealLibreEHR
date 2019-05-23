@@ -8,9 +8,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -96,7 +96,7 @@ require_once("includes/header.inc.php");
         $errorWritable = 0;
         foreach ($writableFileList as $tempFile) {
             if (is_writable($tempFile)) {
-                echo "<i class='fa fa-file-o librehealth-color'></i> -&nbsp; '".realpath($tempFile)."' file is <span class='green'><b>ready</b></span>.<br>\n";
+                echo "<i class='fa fa-file-o Libre-color'></i> -&nbsp; '".realpath($tempFile)."' file is <span class='green'><b>ready</b></span>.<br>\n";
             }
             else {
                 echo "<p><span class='red'>UNABLE</span> to open file <span class='red'>'".realpath($tempFile)."'</span> for writing.<br>\n";
@@ -130,7 +130,7 @@ require_once("includes/header.inc.php");
             $errorWritable = 0;
             foreach ($writableDirList as $tempDir) {
                 if (is_writable($tempDir)) {
-                    echo "<i class='fa fa-file-o librehealth-color'></i> -&nbsp;'".realpath($tempDir)."' directory is <span class='green'><b>ready</b></span>.<br><br>\n";
+                    echo "<i class='fa fa-file-o Libre-color'></i> -&nbsp;'".realpath($tempDir)."' directory is <span class='green'><b>ready</b></span>.<br><br>\n";
                 }
                 else {
                     echo "<p><span class='red'>UNABLE</span> to open directory <span class='red'> '".realpath($tempDir)."' </span> for writing by web server.<br></p>\n";

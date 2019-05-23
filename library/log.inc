@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__). "/sql.inc");
 require_once(dirname(__FILE__). "/formdata.inc.php");
 
-function newEvent($event, $user, $groupname, $success, $comments="", $patient_id=null, $log_from = 'librehealthehr', $menu_item = 'dashboard', $ccda_doc_id = 0) {
+function newEvent($event, $user, $groupname, $success, $comments="", $patient_id=null, $log_from = 'Libreehr', $menu_item = 'dashboard', $ccda_doc_id = 0) {
     $adodb = $GLOBALS['adodb']['db'];
     $crt_user=isset($_SERVER['SSL_CLIENT_S_DN_CN']) ?  $_SERVER['SSL_CLIENT_S_DN_CN'] : null;
 

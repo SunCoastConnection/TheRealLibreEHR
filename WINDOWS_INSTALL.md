@@ -1,4 +1,4 @@
-# LibreHealth EHR Setup for Windows
+# Libre EHR Setup for Windows
 
 Last Updated: November 19th, 2018
 
@@ -8,7 +8,7 @@ Last Updated: November 19th, 2018
 
 #### Unpacking
 
-- Fork the [repository](https://github.com/LibreHealthIO/lh-ehr).
+- Fork the [repository](https://github.com/LibreIO/lh-ehr).
 
 - Clone the fork to your local machine with git bash.
 
@@ -16,7 +16,7 @@ Last Updated: November 19th, 2018
 git clone https://github.com/YOURUSERNAME/lh-ehr.git
 ```
 
-LibreHealth EHR will be cloned into a directory named `lh-ehr`. Note this location for further use.
+Libre EHR will be cloned into a directory named `lh-ehr`. Note this location for further use.
 
 #### Requirements
 
@@ -78,15 +78,15 @@ error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE
 
 ![Setup Complete](./Documentation/1_Installing/images/windows_installation/Step_10.png)
 
-15. Congratulations! You have successfully setup the LibreHealth EHR Developer Environment. It is recommended to bookmark the Login Page for easy access. Login with the username `admin` and password that you set up to access EHR.
+15. Congratulations! You have successfully setup the Libre EHR Developer Environment. It is recommended to bookmark the Login Page for easy access. Login with the username `admin` and password that you set up to access EHR.
 
 ### Additional Information
 
 #### Setting up Access Control
 
-phpGACL access controls are installed and configured automatically during LibreHealth EHR setup. It can be administered within LibreHealth EHR in the `admin` -> `acl` menu. This is a very powerful access control software.
+phpGACL access controls are installed and configured automatically during Libre EHR setup. It can be administered within Libre EHR in the `admin` -> `acl` menu. This is a very powerful access control software.
 
-Learn more about phpGACL [here](http://phpgacl.sourceforge.net/). It is recommended to read the phpGACL manual in the `/lh-ehr/Documentation/README.phpgacl.md` file, the online documentation at [LibreHealth](http://librehealth.io/), and the comments in the `/lh-ehr/library/acl.inc` file.
+Learn more about phpGACL [here](http://phpgacl.sourceforge.net/). It is recommended to read the phpGACL manual in the `/lh-ehr/Documentation/README.phpgacl.md` file, the online documentation at [Libre](http://LibreEHR.org/), and the comments in the `/lh-ehr/library/acl.inc` file.
 
 #### Patient Documents Capability
 
@@ -94,7 +94,7 @@ In order to take full advantage of the patient documents capability you must mak
 
 #### Updating the Project
 
-Be sure to back up your LibreHealthEHR installation and database before updating!
+Be sure to back up your LibreEHR installation and database before updating!
 
 Login to EHR. There should be an orange button at the bottom right which you can hover over to reveal two options. Click the `</>` button that appears. Follow the instructions to update EHR.
 
@@ -142,4 +142,4 @@ You can go to `localhost/lh-ehr` and it will redirect you to the login page.
 
 **Q. I need help! How do I contact someone?**
 
-Feel free to drop by the [LibreHealth Online Chat](https://chat.librehealth.io) or the [LibreHealth Support Forum](https://forums.librehealth.io/c/7-support)!
+Feel free to drop by the [Libre Online Chat](https://chat.Libre.io) or the [Libre Support Forum](https://forums.Libre.io/c/7-support)!

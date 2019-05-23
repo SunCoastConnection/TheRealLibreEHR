@@ -19,15 +19,15 @@
  * 
  * 
  * @author Kevin McCormick
- * @link: http://librehealth.io
- * @package LibreHealth EHR
+ * @link: http://LibreEHR.org
+ * @package Libre EHR
  * @subpackage ediHistory
  */
   
 // 
 // handle multiple file uploads of edi files
 // handle a zip archive of edi files
-// we need the LibreHealth EHR $GLOBALS['site_dir'] $site = $GLOBALS['site_dir'] 
+// we need the Libre EHR $GLOBALS['site_dir'] $site = $GLOBALS['site_dir'] 
 // because IMHO it makes sense to store these files under /edi/history  
 // However, the particular location of the files is not important
 // 

@@ -5,7 +5,7 @@
  *  allowing the user to change status and view those changed here and in the Calendar
  *  Will allow the collection of length of time spent in each status
  * 
- * Copyright (C) DATE - Person (or LibreHealth.io Project)
+ * Copyright (C) DATE - Person (or Libre.io Project)
  * 
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0 and the following 
  * Healthcare Disclaimer
@@ -35,7 +35,7 @@
  * 
  * @package LibreEHR 
  * @author Name <email@address.com> 
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *  
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  * 

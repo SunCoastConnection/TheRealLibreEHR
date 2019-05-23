@@ -15,10 +15,10 @@
  * General Public License along with this program.
  * If not, see <http://opensource.org/licenses/gpl-license.php>.
  *
- * @package    LibreHealth EHR
+ * @package    Libre EHR
  * @subpackage NewCrop
  * @author     Sam Likins <sam.likins@wsi-services.com>
- * @link       http://librehealth.io
+ * @link       http://LibreEHR.org
  */
 
 class eRxGlobals {
@@ -57,16 +57,16 @@ class eRxGlobals {
     }
 
     /**
-     * Return the version of LibreHealth EHR
-     * @return string LibreHealth EHR version
+     * Return the version of Libre EHR
+     * @return string Libre EHR version
      */
     public function getLibreEHRVersion() {
         return $this->getGlobalValue('libreehr_version');
     }
 
     /**
-     * Return the LibreHealth EHR site directory
-     * @return string LibreHealth EHR site directory
+     * Return the Libre EHR site directory
+     * @return string Libre EHR site directory
      */
     public function getLibreEHRSiteDirectory() {
         return $this->getGlobalValue('OE_SITE_DIR');

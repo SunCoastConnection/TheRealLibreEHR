@@ -1,12 +1,12 @@
-# `docker` support for LibreHealth EHR
+# `docker` support for Libre EHR
 
 **Table of Contents**
 
-- [`docker` support for LibreHealth EHR](#docker-support-for-librehealth-ehr)
+- [`docker` support for Libre EHR](#docker-support-for-Libre-ehr)
     - [Getting started](#getting-started)
         - [1. Install Composer, Docker and docker-compose (for ubuntu in this example)](#1-install-composer-docker-and-docker-compose-for-ubuntu-in-this-example)
         - [2. Get the source code (if not already)](#2-get-the-source-code-if-not-already)
-        - [3. Configure the docker resources for LibreHealth EHR](#3-configure-the-docker-resources-for-librehealth-ehr)
+        - [3. Configure the docker resources for Libre EHR](#3-configure-the-docker-resources-for-Libre-ehr)
         - [Ensure that your user is part of the `docker` user group](#ensure-that-your-user-is-part-of-the-docker-user-group)
             - [Development Start Up](#development-start-up)
             - [Production Start Up](#production-start-up)
@@ -16,13 +16,13 @@
             - [Step 1](#step-1)
             - [Step 2](#step-2)
                 - [MySQL database settings](#mysql-database-settings)
-                - [LibreHealth EHR Settings](#librehealth-ehr-settings)
+                - [Libre EHR Settings](#Libre-ehr-settings)
             - [Step 3](#step-3)
             - [Step 4](#step-4)
             - [Step 5](#step-5)
             - [Step 6](#step-6)
             - [Step 7](#step-7)
-        - [5. Using LibreHealth EHR](#5-using-librehealth-ehr)
+        - [5. Using Libre EHR](#5-using-Libre-ehr)
         - [If you did not have the initial dataset loaded](#if-you-did-not-have-the-initial-dataset-loaded)
         - [With the initial database with sample data](#with-the-initial-database-with-sample-data)
     - [Stopping the container](#stopping-the-container)
@@ -35,17 +35,17 @@
         - [Performing on-demand backup](#performing-on-demand-backup)
             - [on-demand backup](#on-demand-backup)
             - [Restoring from a backup](#restoring-from-a-backup)
-    - [Updating LibreHealth EHR](#updating-librehealth-ehr)
+    - [Updating Libre EHR](#updating-Libre-ehr)
     - [Accessing the Database using adminer](#accessing-the-database-using-adminer)
     - [Destroying it all (this is destructive)](#destroying-it-all-this-is-destructive)
         - [Production](#production-2)
         - [Development](#development-2)
     - [Viewing logs for a given container](#viewing-logs-for-a-given-container)
         - [Production](#production-3)
-            - [For LibreHealth EHR](#for-librehealth-ehr)
+            - [For Libre EHR](#for-Libre-ehr)
             - [For MariaDB](#for-mariadb)
         - [Development](#development-3)
-            - [For LibreHealth EHR](#for-librehealth-ehr-1)
+            - [For Libre EHR](#for-Libre-ehr-1)
             - [For MariaDB](#for-mariadb-1)
 
 <!-- markdown-toc end -->
@@ -64,11 +64,11 @@ To start a simple `lh-ehr` instance, follow the steps:
 
 ### 2. Get the source code (if not already)
 
-    $ git clone https://github.com/LibreHealthIO/lh-ehr.git
+    $ git clone https://github.com/LibreIO/lh-ehr.git
 
-### 3. Configure the docker resources for LibreHealth EHR
+### 3. Configure the docker resources for Libre EHR
 
-The librehealth_ehr container is configured for PHP 7.2 and Apache2.
+The Libre_ehr container is configured for PHP 7.2 and Apache2.
 
 The `docker/.env.ehr` contains the information for the EHR database itself. Database credentials should match those in `docker/.env.mysql`.
 
@@ -78,7 +78,7 @@ We have created a bash script, which is geared towards production use currently 
 
 We created a separate script for development use and that use is documented in this README. Both scripts have a `help` command, or by calling `docker/dev` or `docker/run` with no arguments.
 
-It allows you manage the lifecycle of the containers for LibreHealth EHR.
+It allows you manage the lifecycle of the containers for Libre EHR.
 
 
 **Note**: This is geared towards Linux users. You should install the [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) if you are using Windows 10.
@@ -129,7 +129,7 @@ $ docker/run start
 
 :warning: You should place this behind a reverse proxy with HTTPS if this is running remotely. This image does not include HTTPS support. :warning:
 
-Now go to [http://localhost:8000](https://localhost:8000) and [proceed to step 5](#5-using-librehealth-ehr).
+Now go to [http://localhost:8000](https://localhost:8000) and [proceed to step 5](#5-using-Libre-ehr).
 
 If you created a new database then the setup wizard will guide you through the installation steps. Instructions follow below for that.
 
@@ -167,9 +167,9 @@ The following are based off of `docker/.env.mysql`
 - Username should be whatever you set `MYSQL_USER` to in `docker/.env.mysql`
 - Password should be changed from the default and should match what you set `MYSQL_PASSWORD` to in `docker/.env.mysql`
 
-##### LibreHealth EHR Settings
+##### Libre EHR Settings
 
-The next section is for the initial administrative user for LibreHealth EHR. All fields should be changed according to the instructions.
+The next section is for the initial administrative user for Libre EHR. All fields should be changed according to the instructions.
 
 When the above is completed, press <kbd>Continue</kbd>
 
@@ -198,7 +198,7 @@ You should print this page and store it in a secure location.
 Once done, follow the link which is boxed in red above.
 
 
-### 5. Using LibreHealth EHR
+### 5. Using Libre EHR
 
 
 ### If you did not have the initial dataset loaded
@@ -254,7 +254,7 @@ Currently we create two volumes.
 |  `db_data` | The data directory for `mariadb`                                                                           |
 
 
-We make use of [lh-docker-cron-backup](https://gitlab.com/librehealth/lsc/lh-docker-cron-backup/), which automates nightly backups.
+We make use of [lh-docker-cron-backup](https://gitlab.com/Libre/lsc/lh-docker-cron-backup/), which automates nightly backups.
 
 You should store these offsite somewhere secure. By default, the `sites`, and `db_data` volumes are backed up.
 
@@ -306,7 +306,7 @@ Where `2018-12-15_00-00-01` is the datestamp you wish to restore in the format: 
 ```
 For single-digit month/days/seconds do `00`,`01`,`02`,`03`,`04`,`05`,`06`,`07`,`08`,`09`
 
-## Updating LibreHealth EHR
+## Updating Libre EHR
 
 This is only applicable to production.
 
@@ -344,7 +344,7 @@ It is possible to view the logs for a given container.
 
 ### Production
 
-#### For LibreHealth EHR
+#### For Libre EHR
 
 ``` bash
 docker/run logs lh-ehr
@@ -359,7 +359,7 @@ docker/run logs db
 
 The commands are mirrored for development but use a different script.
 
-#### For LibreHealth EHR
+#### For Libre EHR
 
 ``` bash
 docker/dev logs lh-ehr

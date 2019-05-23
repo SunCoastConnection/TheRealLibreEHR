@@ -6,8 +6,8 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 //
-// This may be run after an upgraded LibreHealth EHR has been installed.
-// Its purpose is to upgrade the MySQL LibreHealth EHR database as needed
+// This may be run after an upgraded Libre EHR has been installed.
+// Its purpose is to upgrade the MySQL Libre EHR database as needed
 // for the new release.
 
 
@@ -31,7 +31,7 @@ $EMRversion = trim(preg_replace('/\s*\([^)]*\)/', '', $GLOBALS['libreehr_version
 
 <html>
 <head>
-<title>LibreHealth EHR <?php echo attr($EMRversion) ?> <?php echo xlt('Database Patch'); ?></title>
+<title>Libre EHR <?php echo attr($EMRversion) ?> <?php echo xlt('Database Patch'); ?></title>
 <link rel='STYLESHEET' href='interface/themes/style_setup.css'>
 <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -39,7 +39,7 @@ $EMRversion = trim(preg_replace('/\s*\([^)]*\)/', '', $GLOBALS['libreehr_version
 
 <div style="box-shadow: 3px 3px 5px 6px #ccc; border-radius: 20px; padding: 10px 40px;background-color:#EFEFEF; width:500px; margin:40px auto">
 
-  <p style="font-weight:bold; font-size:1.8em; text-align:center">LibreHealth EHR <?php echo text($EMRversion),' ',xlt('Database Patch'),' ',text($v_realpatch) ?></p>
+  <p style="font-weight:bold; font-size:1.8em; text-align:center">Libre EHR <?php echo text($EMRversion),' ',xlt('Database Patch'),' ',text($v_realpatch) ?></p>
   <p style="font-weight:bold; text-align:center;"><?php echo xlt('Applying Patch to site'),' : ',text($_SESSION['site_id']) ?></p>
 
 

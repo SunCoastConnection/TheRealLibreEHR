@@ -8,9 +8,9 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  */
 ?>
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
         <meta content="width=device-width, initial-scale=1, user-scalable=yes" name="viewport">
         <meta http-equiv="X-Frame-Options" content="deny">
         <base href="<?php $this->eprint($this->ROOT_URL); ?>" />
-        <meta name="description" content="LibreHealth EHR Patient Portal" />
+        <meta name="description" content="Libre EHR Patient Portal" />
         <!--<meta name="author" content="Form | sjpadgett@gmail.com" />-->
 
         <!-- Styles -->

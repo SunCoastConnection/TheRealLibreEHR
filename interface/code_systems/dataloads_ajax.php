@@ -1,7 +1,7 @@
 <?php
 /**
  * This file implements the main jquery interface for loading external
- * database files into LibreHealth EHR
+ * database files into Libre EHR
  *
  * Copyright (C) 2012 Patient Healthcare Analytics, Inc.
  * Copyright (C) 2011 Phyaura, LLC <info@phyaura.com>
@@ -17,11 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  (Mac) Kevin McAloon <mcaloon@patienthealthcareanalytics.com>
  * @author  Rohit Kumar <pandit.rohit@netsity.com>
- * @author  Brady Miller <brady@sparmy.com>
- * @link    http://librehealth.io
+ 
+ * @link    http://LibreEHR.org
  */
 
 

@@ -40,7 +40,7 @@
  *  The changes to this file as of November 16 2016 to include the exclusion of information from claims
  *  are covered under the terms of the Mozilla Public License, v. 2.0
  *
- * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
  * Copyright (C) 2006-2010 Rod Roark <rod@sunsetsystems.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or
@@ -59,12 +59,12 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @author  Brady Miller <brady@sparmy.com>
+ 
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @author  Terry Hill <teryhill@librehealth.io>
- * @link    http://librehealth.io
+ * @author  Terry Hill <teryhill@yahoo.com>
+ * @link    http://LibreEHR.org
  */
 
 require_once(dirname(__FILE__)."/../library/csv_like_join.php");

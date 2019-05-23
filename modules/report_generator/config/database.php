@@ -71,7 +71,7 @@ return [
             'engine' => null,
         ],
 
-        # LibreHealthEHR database connection
+        # LibreEHR database connection
         'mysql_libreehr' => [
             'driver' => 'mysql',
             'host' => env('DB_LIBREEHR_HOST', '127.0.0.1'),

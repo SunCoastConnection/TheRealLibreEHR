@@ -1,7 +1,7 @@
 {
     "name": "ReportGenerator",
     "alias": "reportgenerator",
-    "description": "This module is a Report Generator tool for LibreHealth EHR system.",
+    "description": "This module is a Report Generator tool for Libre EHR system.",
     "keywords": [],
     "active": 1,
     "order": 0,

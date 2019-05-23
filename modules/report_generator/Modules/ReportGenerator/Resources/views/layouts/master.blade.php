@@ -7,8 +7,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Tigpezeghe Rodrige K. @ tigrodrige@gmail.com">
-        <meta name="description" content="LibreHealthEHR Report generator">
-        <title>@yield('title') - LibreHealthEHR</title>
+        <meta name="description" content="LibreEHR Report generator">
+        <title>@yield('title') - LibreEHR</title>
 
         <!-- Custom app.css in public/assets/css -->
         <link rel="stylesheet" href="{{URL::asset('assets/css/master.css')}}">

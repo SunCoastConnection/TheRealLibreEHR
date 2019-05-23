@@ -1,12 +1,12 @@
 SETTING UP GIT/GITHUB
 
-How to setup git/github and your local system to get started with contributing to librehealthehr
+How to setup git/github and your local system to get started with contributing to Libreehr
 
 Note if on Windows download and install Git Bash and use it to run the commands below
 
 	1)create a github account https://github.com if you don't have, if you have log in to you account
 	
-	2)navigate to this url https://github.com/LibreHealthIO/lh-ehr and fork the repository
+	2)navigate to this url https://github.com/LibreIO/lh-ehr and fork the repository
 
 	3)follow the instructions on this url https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
 	  until you have created and setup your SSH PUBLIC KEY
@@ -21,8 +21,8 @@ Note if on Windows download and install Git Bash and use it to run the commands 
 	  cd lh-ehr
 
 	7) Set up a connection to the main LibreEHR github respository:
-	   git remote add upstream git://github.com/LibreHealthIO/lh-ehr.git
-	   (now the main LibreHealthEHR github repository is called ‘upstream’)
+	   git remote add upstream git://github.com/LibreIO/lh-ehr.git
+	   (now the main LibreEHR github repository is called ‘upstream’)
 
 	8) All the pieces are now set up. You have your local repository that is connected to your public github repository(origin) and is connected to the
 	   official Libreehr github repository(upstream)

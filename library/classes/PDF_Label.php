@@ -29,7 +29,7 @@
 // 1.5: + Added 3422 format
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Modified to function in LibreHealth EHR 8-19-2014 Terry Hill <teryhill@librehealth.io> 
+// Modified to function in Libre EHR 8-19-2014 Terry Hill <teryhill@yahoo.com> 
 
 /**
  * PDF_Label - PDF label editing

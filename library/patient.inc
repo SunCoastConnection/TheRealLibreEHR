@@ -4,7 +4,7 @@
  *
  *  This program patient.inc includes functions for manipulating patient information.
  *
- * @copyright Copyright (C) 2016 Terry Hill <teryhill@librehealth.io>
+ * @copyright Copyright (C) 2016 Terry Hill <teryhill@yahoo.com>
  * No previous copyright information. This is an original OpenEMR program.
  *
  *
@@ -23,9 +23,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *

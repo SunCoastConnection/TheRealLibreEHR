@@ -15,12 +15,12 @@
  * General Public License along with this program.
  * If not, see <http://opensource.org/licenses/gpl-license.php>.
  *
- * @package    LibreHealth EHR
+ * @package    Libre EHR
  * @subpackage NewCrop
  * @author     Eldho Chacko <eldho@zhservices.com>
  * @author     Vinish K <vinish@zhservices.com>
  * @author     Sam Likins <sam.likins@wsi-services.com>
- * @link       http://librehealth.io
+ * @link       http://LibreEHR.org
  */
 
 $sanitize_all_escapes = true;       // SANITIZE ALL ESCAPES

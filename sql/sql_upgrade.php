@@ -6,8 +6,8 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 //
-// This may be run after an upgraded LibreHealth EHR has been installed.
-// Its purpose is to upgrade the MySQL LibreHealth EHR database as needed
+// This may be run after an upgraded Libre EHR has been installed.
+// Its purpose is to upgrade the MySQL Libre EHR database as needed
 // for the new release.
 
 
@@ -40,13 +40,13 @@ ksort($versions);
 ?>
 <html>
 <head>
-<title>LibreHealth EHR Database Upgrade</title>
+<title>Libre EHR Database Upgrade</title>
 <link rel='STYLESHEET' href='../interface/themes/style_setup.css'>
 <link rel="shortcut icon" href="../public/images/favicon.ico" />
 </head>
 <body>
 <center>
-<span class='title'>LibreHealth EHR Database Upgrade</span>
+<span class='title'>Libre EHR Database Upgrade</span>
 <br>
 </center>
 <?php

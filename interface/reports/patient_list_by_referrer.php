@@ -5,15 +5,15 @@
  * range, or all patients if no date range is entered, by the
  * referring provider selected.
  *
- * Copyright (C) 2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2017 Terry Hill <teryhill@yahoo.com> 
  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  * 
  * @package LibreEHR
- * @author Terry Hill <teryhill@librehealth.io> 
- * @link http://librehealth.io
+ * @author Terry Hill <teryhill@yahoo.com> 
+ * @link http://LibreEHR.org
  */
 
  require_once "reports_controllers/PatientListByReferrerController.php";

@@ -20,8 +20,8 @@
  *   <http://opensource.org/licenses/gpl-license.php>
  * 
  * @author Kevin McCormick
- * @link: http://librehealth.io
- * @package LibreHealth EHR
+ * @link: http://LibreEHR.org
+ * @package Libre EHR
  * @subpackage ediHistory
  */
  
@@ -331,7 +331,7 @@ function ibr_997_parse($seg_ar) {
             
         if ( $ar_seg[0] == "AK2" ) { 
             // this segment describes accept/reject status of each claim
-            // if 276 claim status is sent by LibreHealth EHR, 
+            // if 276 claim status is sent by Libre EHR, 
             // then need to account for that possibility here
             //   it is probably to sent results to a different csv file
             //

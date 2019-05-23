@@ -10,11 +10,11 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Tigpezeghe Rodrige <tigrodrige@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  */
 
@@ -205,7 +205,7 @@ function csvexport($filename) {
 /* This function format amount(money/currencies).
  * @params: $amount - Value to be formatted.
  * @return: none
- * @attribution: 2015-2017 Terry Hill <teryhill@librehealth.io>
+ * @attribution: 2015-2017 Terry Hill <teryhill@yahoo.com>
  * and 2005-2010 Rod Roark <rod@sunsetsystems.com>*/
 function bucks($amount) {
   if ($amount) oeFormatMoney($amount);

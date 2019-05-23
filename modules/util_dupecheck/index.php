@@ -2,7 +2,7 @@
 require_once("../../interface/globals.php");
 require_once("./Utils.php");
 
-/* Use this code to identify duplicate patients in LibreHealth EHR
+/* Use this code to identify duplicate patients in Libre EHR
  *
  */
 $parameters = GetParameters();
@@ -98,7 +98,7 @@ if ($parameters['go'] == "Go") {
     // counter that gathers duplicates into groups
     $dupecount = 0;
 
-    // for EACH patient in LibreHealth EHR find potential matches
+    // for EACH patient in Libre EHR find potential matches
     $sqlstmt = "select id, pid, fname, lname, DOB, sex, ss from patient_data";
     switch ($parameters['sortby']) {
         case 'DOB':
@@ -206,7 +206,7 @@ $(document).ready(function(){
         return true;
     });
 
-    // pop up an LibreHealth EHR window directly to the patient info
+    // pop up an Libre EHR window directly to the patient info
     var moreinfoWin = null; 
     $(".moreinfo").click(function(evt) { 
         if (moreinfoWin) { moreinfoWin.close(); }

@@ -10,9 +10,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -76,13 +76,13 @@
     <p class="clearfix"></p>
     <div class="alert-info">
         <p>
-            Now you need to supply the MySQL server information and path information. Detailed instructions on each item can be found in the <a href='https://github.com/LibreHealthIO/lh-ehr/blob/master/INSTALL.md#step-2' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.
+            Now you need to supply the MySQL server information and path information. Detailed instructions on each item can be found in the <a href='https://github.com/LibreIO/lh-ehr/blob/master/INSTALL.md#step-2' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.
         </p>
     </div>
     <p class="clearfix"></p>
     <p class="clearfix"></p>
     <form id="databaseForm" method="post" action="step5.php">
-        <h4 class="librehealth-color">MySQL SERVER</h4>
+        <h4 class="Libre-color">MySQL SERVER</h4>
         <div class="form-group">
             <div class="row">
                 <div class="col-md-2"><label>Server Host:</label></div>
@@ -99,13 +99,13 @@
             <div class="row">
                 <div class="col-md-2"><label>Database Name:</label></div>
                 <div class="col-md-4"><input type="text" value="libreehr" name="dbname" class="form-control" required></div>
-                <div class="col-md-6"><p class="help-block">(This is the name of the LibreHealth EHR database in MySQL - 'libreehr' is recommended.)</p></div>
+                <div class="col-md-6"><p class="help-block">(This is the name of the Libre EHR database in MySQL - 'libreehr' is recommended.)</p></div>
             </div>
             <p class="clearfix"></p>
             <div class="row">
                 <div class="col-md-2"><label>Login Name:</label></div>
                 <div class="col-md-4"><input type="text" value="libreehr" name="login" class="form-control" ></div>
-                <div class="col-md-6"><p class="help-block">(This is the name of the LibreHealth EHR login name in MySQL - 'libreehr' is the recommended)</p></div>
+                <div class="col-md-6"><p class="help-block">(This is the name of the Libre EHR login name in MySQL - 'libreehr' is the recommended)</p></div>
             </div>
             <p class="clearfix"></p>
             <div class="row">
@@ -169,7 +169,7 @@
                               <option value=\'\'                  >None (Do not force UTF-8)</option>
                      </select>
                 </div>
-                <div class="col-md-6"><p class="help-block">(This is the collation setting for mysql. Leave as \'General\' if you are not sure. If the language you are planning to use in LibreHealth EHR is in the menu, then you can select it. Otherwise, just select \'General\'.)</p></div>
+                <div class="col-md-6"><p class="help-block">(This is the collation setting for mysql. Leave as \'General\' if you are not sure. If the language you are planning to use in Libre EHR is in the menu, then you can select it. Otherwise, just select \'General\'.)</p></div>
                     </div>
                 ';
                 echo '</div>';
@@ -227,7 +227,7 @@
         ?>
         <div class="text-center"><hr style="width: 90%"/></div>
         <div id="libreUser">
-        <h4 class="librehealth-color">LIBREEHR USER</h4>
+        <h4 class="Libre-color">LIBREEHR USER</h4>
         <div class="form-group">
             <div class="row">
                 <div class="col-md-2"><label>Initial User:</label></div>

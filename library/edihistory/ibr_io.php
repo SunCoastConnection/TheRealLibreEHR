@@ -20,8 +20,8 @@
  * 
  * 
  * @author Kevin McCormick
- * @link: http://librehealth.io
- * @package LibreHealth EHR
+ * @link: http://LibreEHR.org
+ * @package Libre EHR
  * @subpackage ediHistory
  */
  
@@ -241,7 +241,7 @@ function ibr_disp_claimst() {
     }
     // see if we have a usable filename
     if (strpos($filename, 'batch')) {
-        // maybe we have the LibreHealth EHR filename
+        // maybe we have the Libre EHR filename
         $btname = trim($filename);
      } elseif (strlen($filename) >= 9 && strlen($filename) < 14) {
          // try bht03 number: batch_icn + stnum; not '0123'

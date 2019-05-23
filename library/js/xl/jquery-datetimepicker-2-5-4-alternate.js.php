@@ -41,8 +41,6 @@
  *	  });
  *
  *
- * Copyright (C) 2017 Brady Miller <brady.g.miller@gmail.com>
- *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 3
@@ -55,8 +53,7 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package LibreEHR
- * @author  Brady Miller <brady.g.miller@gmail.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 ?>
 

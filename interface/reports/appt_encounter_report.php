@@ -1,7 +1,7 @@
 <?php
 /*
  *
- * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com> 
  * Copyright (C) 2005-2010 Rod Roark <rod@sunsetsystems.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or 
@@ -19,10 +19,10 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR 
+ * @package Libre EHR 
  * @author Rod Roark <rod@sunsetsystems.com> 
  * 
- * @link http://librehealth.io 
+ * @link http://LibreEHR.org 
  *
  * This report cross-references appointments with encounters.
  * For a given date, show a line for each appointment with the

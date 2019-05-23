@@ -15,9 +15,9 @@
     * You should have received a copy of the GNU General Public License
     * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
     *
-    * @package LibreHealth EHR
+    * @package Libre EHR
     * @author  Craig Bezuidenhout <http://www.tajemo.co.za/>
-    * @link    http://librehealth.io
+    * @link    http://LibreEHR.org
     */
     
    // removed as jquery is already called in messages page (if you need to use jQuery, uncomment it futher down)
@@ -180,7 +180,7 @@
        }    
        top.restoreSession();
        // Send the skip_timeout_reset parameter to not count this as a manual entry in the
-       //  timing out mechanism in LibreHealth EHR.
+       //  timing out mechanism in Libre EHR.
        $.post("<?php echo $GLOBALS['webroot']; ?>/interface/main/dated_reminders/dated_reminders.php",
          { drR: id, skip_timeout_reset: "1" }, 
          function(data) {

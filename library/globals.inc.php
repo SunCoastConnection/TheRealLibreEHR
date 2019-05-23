@@ -8,12 +8,12 @@
 // of the License, or (at your option) any later version.
 // Modified by dozens of contributors
 
-/* @package LibreHealth EHR
+/* @package Libre EHR
  * @author Rod Roark <rod@sunsetsystems.com>
  * @author Tony McCormick <tony@mi-squared.com>
- * @author Terry Hill <teryhill@librehealth.io>
+ * @author Terry Hill <teryhill@yahoo.com>
  *
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  */
 
 // REQUIRED FOR TRANSLATION ENGINE.  DO NOT REMOVE
@@ -214,7 +214,7 @@ $GLOBALS_METADATA = array(
     'libreehr_name' => array(
       xl('Application Title'),
        'text',
-       'LibreHealth EHR',
+       'Libre EHR',
       xl('Application name for login page and main window title.')
     ),
 
@@ -289,8 +289,8 @@ $GLOBALS_METADATA = array(
     'online_support_link' => array(
       xl('Online Forum Support Link'),
        'text',                          // data type
-       'https://forums.librehealth.io/c/7-support',
-      xl('URL for LibreHealth EHR Website.')
+       'https://forums.Libre.io/c/7-support',
+      xl('URL for Libre EHR Website.')
     ),
 
     'support_phone_number' => array(

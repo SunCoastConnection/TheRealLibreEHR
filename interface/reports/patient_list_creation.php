@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
- * @link    http://librehealth.io
+ * @package Libre EHR
+ * @link    http://LibreEHR.org
  */
 require_once "reports_controllers/PatientListCreationController.php";
 ?>

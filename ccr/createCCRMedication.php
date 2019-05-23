@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Garden State Health Systems <http://www.gshsys.com/>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 

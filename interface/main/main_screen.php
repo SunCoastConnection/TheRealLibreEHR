@@ -1,6 +1,6 @@
 <?php
 /**
- * The outside frame that holds all of the LibreHealth EHR User Interface.
+ * The outside frame that holds all of the Libre EHR User Interface.
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -13,9 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
- * @author  Brady Miller <brady@sparmy.com>
- * @link    http://librehealth.io
+ * @package Libre EHR
+ 
+ * @link    http://LibreEHR.org
  */
 
 $fake_register_globals=false;
@@ -26,11 +26,11 @@ require_once('../globals.php');
 require_once("$srcdir/formdata.inc.php");
 
 // Creates a new session id when load this outer frame
-// (allows creations of separate LibreHealth EHR frames to view patients concurrently
+// (allows creations of separate Libre EHR frames to view patients concurrently
 //  on different browser frame/windows)
 // This session id is used below in the restoreSession.php include to create a
-// session cookie for this specific LibreHealth EHR instance that is then maintained
-// within the LibreHealth EHR instance by calling top.restoreSession() whenever
+// session cookie for this specific Libre EHR instance that is then maintained
+// within the Libre EHR instance by calling top.restoreSession() whenever
 // refreshing or starting a new script.
 if (isset($_POST['new_login_session_management'])) {
   // This is a new login, so create a new session id and remove the old session

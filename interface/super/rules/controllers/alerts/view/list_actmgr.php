@@ -2,8 +2,6 @@
 /**
  * Script to configure the Rules.
  *
- * Copyright (C) 2015 Brady Miller <brady@sparmy.com>
- *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 3
@@ -17,8 +15,8 @@
  *
  * @package LibreEHR
  * @author  Ensoftek
- * @author  Brady Miller <brady@sparmy.com>
- * @link    http://librehealth.io
+ 
+ * @link    http://LibreEHR.org
  */
 
 require_once(dirname(__FILE__)."/../../../../../../library/acl.inc"); 

@@ -18,7 +18,7 @@
  * @package LibreEHR
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Medical Information Integration, LLC
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  **/
 ?>
 <div id='esign-form-container'>

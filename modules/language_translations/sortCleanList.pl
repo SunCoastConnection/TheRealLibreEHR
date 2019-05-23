@@ -5,9 +5,6 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 #
-# author Brady Miller
-# email  brady@sparmy.com
-# date   05/21/09
 #
 # This is a perl script that will simply sort and remove redundant entries
 #  from a list to maintain the manuallyAddedConstants.txt and the

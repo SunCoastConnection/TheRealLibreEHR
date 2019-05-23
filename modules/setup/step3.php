@@ -7,9 +7,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -62,9 +62,9 @@ require_once("includes/header.inc.php");
     drawSetupStep($step);
     ?>
     <p class="clearfix"></p>
-    <h4 class="librehealth-color">Optional Site ID Selection</h4>
+    <h4 class="Libre-color">Optional Site ID Selection</h4>
     <p>
-        Most LibreHealth EHR installations support only one site. If that is
+        Most Libre EHR installations support only one site. If that is
         true for you then ignore the rest of this text and just select option for Database.
         Otherwise please enter a unique Site ID below.
     </p>
@@ -114,7 +114,7 @@ require_once("includes/header.inc.php");
     </div>
     <p class="clearfix"></p>
     <p class="clearfix"></p>
-    <h4 class="librehealth-color">Select Option</h4>
+    <h4 class="Libre-color">Select Option</h4>
     
     <?php
         echo '<form action="step2.php" method="post">

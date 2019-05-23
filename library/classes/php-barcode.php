@@ -19,7 +19,7 @@
  * @author HOUREZ Jonathan
  * @copyright 2013 
  *
- * Added to LIBREEHR by Terry Hill <teryhill@librehealth.io> 
+ * Added to LIBREEHR by Terry Hill <teryhill@yahoo.com> 
  * this is from the barcode-coder website
  *
  */

@@ -1,5 +1,5 @@
 <?php
-/** @package    LibreHealth EHR::Model */
+/** @package    Libre EHR::Model */
 
 /**
  *
@@ -9,9 +9,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  */
 
 /** import supporting libraries */
@@ -22,7 +22,7 @@ require_once("PatientCriteria.php");
  * The Patient class extends PatientDAO which provides the access
  * to the datastore.
  *
- * @package LibreHealth EHR::Model
+ * @package Libre EHR::Model
  * @author ClassBuilder
  * @version 1.0
  */

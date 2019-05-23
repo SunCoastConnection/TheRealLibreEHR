@@ -30,7 +30,7 @@ class Wizard
             }
             else if($step == $key){
                 $css_class = ' class="step active-step"';
-                $step_num  = "<div class=\"pull-right step-count\"><span class=\"librehealth-color\">$key</span>&nbsp;/&nbsp;6</div>\n";
+                $step_num  = "<div class=\"pull-right step-count\"><span class=\"Libre-color\">$key</span>&nbsp;/&nbsp;6</div>\n";
                 $output .= "\t\t<div".$css_class."></div>\n";
             }
             else{

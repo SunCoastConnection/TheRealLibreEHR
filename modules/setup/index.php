@@ -8,9 +8,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -70,10 +70,10 @@ require_once ("includes/header.inc.php");
         <div class="col-md-6">
             <div class="col-md-10 col-sm-12 col-xs-12 pull-right">
                 <div class="card">
-                    <a class="github-fork-ribbon" href="https://github.com/LibreHealthIO/lh-ehr" target="_blank" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
-                    <h2 style="font-weight: bolder">LibreHealth EHR</h2>
+                    <a class="github-fork-ribbon" href="https://github.com/LibreIO/lh-ehr" target="_blank" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+                    <h2 style="font-weight: bolder">Libre EHR</h2>
                     <div class="text-center">
-                        <img src="libs/images/logo2.png" class="img-responsive center-block librehealth-logo">
+                        <img src="libs/images/logo2.png" class="img-responsive center-block Libre-logo">
                     </div>
                     <p class="clearfix"></p>
                     <p class="clearfix"></p>
@@ -81,7 +81,7 @@ require_once ("includes/header.inc.php");
 
                     <div class="text-left">
                        <p>
-                           The LibreHealth EHR application is a clinically-focused electronic health
+                           The Libre EHR application is a clinically-focused electronic health
                            record (EHR) system designed to be both easy to use
                            “out of the box” and also customizable for use in a variety of
                            health care settings.
