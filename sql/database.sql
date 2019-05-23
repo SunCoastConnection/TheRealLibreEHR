@@ -4542,7 +4542,7 @@ CREATE TABLE `libreehr_postcalendar_categories` (
 --
 
 INSERT INTO `libreehr_postcalendar_categories` (`pc_catid`,`pc_catname`, `pc_catcolor`, `pc_catdesc`,
-  `pc_recurrtype`, `pc_enddate`, `pc_recurrspec`,`pc_recurrfreq`,`pc_duration`, `pc_end_date_flag`, `pc_end_date_type`, 
+  `pc_recurrtype`, `pc_enddate`, `pc_recurrspec`,`pc_recurrfreq`,`pc_duration`, `pc_end_date_flag`, `pc_end_date_type`,
   `pc_end_date_freq`, `pc_end_all_day`, `pc_dailylimit`,`pc_cattype`, `pc_active`, `pc_seq`) VALUES
  (1, 'No Show', '#DDDDDD', 'Reserved to define when an event did not occur as specified.', 0, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"0";s:22:"event_repeat_freq_type";s:1:"0";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 0, 0, 0, 0, 0, 0,1,1),
  (2, 'In Office', '#99CCFF', 'Reserved todefine when a provider may haveavailable appointments after.', 1, NULL, 'a:5:{s:17:"event_repeat_freq";s:1:"1";s:22:"event_repeat_freq_type";s:1:"4";s:19:"event_repeat_on_num";s:1:"1";s:19:"event_repeat_on_day";s:1:"0";s:20:"event_repeat_on_freq";s:1:"0";}', 0, 0, 1, 3, 2, 0, 0, 1,1,2),
@@ -4721,6 +4721,18 @@ CREATE TABLE `patient_data` (
   `vfc` varchar(255) NOT NULL DEFAULT '',
   `mothersname` varchar(255) NOT NULL DEFAULT '',
   `guardiansname` TEXT,
+  `guardian_relationship` TEXT,
+  `guardian_sex` varchar(255) NOT NULL default '',
+  `guardian_address` varchar(255) NOT NULL default '',
+  `guardian_city` varchar(255) NOT NULL default '',
+  `guardian_state` varchar(2) NOT NULL default '',
+  `guardian_postal_code` varchar(50) NOT NULL default '',
+  `guardian_country` varchar(50) NOT NULL default '',
+  `guardian_home_phone` varchar(15) NOT NULL default '',
+  `guardian_work_phone` varchar(15) NOT NULL default '',
+  `guardian_mobile_phone` varchar(15) NOT NULL default '',
+  `guardian_email` varchar(150) NOT NULL default '',
+  `guardian_pid` int(11) default null,
   `allow_imm_reg_use` varchar(255) NOT NULL DEFAULT '',
   `allow_imm_info_share` varchar(255) NOT NULL DEFAULT '',
   `allow_health_info_ex` varchar(255) NOT NULL DEFAULT '',
@@ -4732,6 +4744,9 @@ CREATE TABLE `patient_data` (
   `county` varchar(40) NOT NULL default '',
   `statement_y_n` TEXT,
   `industry` TEXT,
+  `patient_pref_schd` text,
+  `work_status` varchar(25) NOT NULL default '',
+  `pcpID` int(11) default NULL,
   `picture_url` varchar(2000) NOT NULL default '',
   UNIQUE KEY `pid` (`pid`),
   KEY `id` (`id`)
@@ -7691,7 +7706,7 @@ CREATE TABLE IF NOT EXISTS `lims_analysisrequests` (
 --
 
 DROP TABLE IF EXISTS cases_to_documents;
- 
+
  CREATE TABLE IF NOT EXISTS `cases_to_documents` (
  `case_id` int(11) NOT NULL DEFAULT '0',
  `document_id` int(11) NOT NULL DEFAULT '0',

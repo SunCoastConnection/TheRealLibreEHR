@@ -122,11 +122,11 @@ CREATE TABLE IF NOT EXISTS `cases_to_documents` (
   ALTER TABLE `insurance_data` ADD COLUMN `pays_at` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 0 AFTER `individual_deductible_met`;
 #EndIf
 
-#IfMissingColumn insurance_data max_out_of_pocket  
+#IfMissingColumn insurance_data max_out_of_pocket
   ALTER TABLE `insurance_data` ADD COLUMN `max_out_of_pocket` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 0 AFTER `pays_at`;
 #EndIf
 
-#IfMissingColumn insurance_data out_of_pocket_met  
+#IfMissingColumn insurance_data out_of_pocket_met
   ALTER TABLE `insurance_data` ADD COLUMN `out_of_pocket_met` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 0 AFTER `max_out_of_pocket`;
 #EndIf
 
@@ -201,12 +201,60 @@ INSERT INTO list_options (list_id,option_id,title,seq,is_default,option_value,ma
 CREATE TABLE IF NOT EXISTS `transactions_log` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `date` datetime NOT NULL,
- `description` varchar(255) NOT NULL COMMENT 'Ex: Charges added to superbill',
+ `description` varchar(255) NOT NULL COMMENT 'Ex: Charges added to Feesheet',
  `encounter` int(11) NOT NULL,
  `change_made` varchar(255) NOT NULL COMMENT 'the change from one payment amount to another. ex: $10 to $20',
  `billing_id` int(11) NOT NULL,
  `pid` int(11) NOT NULL,
- `user_id` int(11) NOT NULL COMMENT 'authorized user who effects the change',
+ `user_id` int(11) NOT NULL COMMENT 'user who made the change',
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+#EndIf
+
+#IfMissingColumn patient_data guardian_relationship
+  ALTER TABLE `patient_data` ADD `guardian_relationship` TEXT  AFTER `guardiansname`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_sex
+  ALTER TABLE `patient_data` ADD `guardian_sex` varchar(15) NOT NULL default ''  AFTER `guardian_relationship`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_address
+  ALTER TABLE `patient_data` ADD `guardian_address` varchar(255) NOT NULL default ''  AFTER `guardian_sex`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_city
+  ALTER TABLE `patient_data` ADD `guardian_city` varchar(255) NOT NULL default ''  AFTER `guardian_address`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_state
+  ALTER TABLE `patient_data` ADD `guardian_state` varchar(2) NOT NULL default ''  AFTER `guardian_city`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_postal_code
+  ALTER TABLE `patient_data` ADD `guardian_postal_code` varchar(50) NOT NULL default ''  AFTER `guardian_state`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_country
+  ALTER TABLE `patient_data` ADD `guardian_country` varchar(50) NOT NULL default ''  AFTER `guardian_postal_code`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_home_phone
+  ALTER TABLE `patient_data` ADD `guardian_home_phone` varchar(15) NOT NULL default ''  AFTER `guardian_country`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_work_phone
+  ALTER TABLE `patient_data` ADD `guardian_work_phone` varchar(15) NOT NULL default ''  AFTER `guardian_home_phone`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_mobile_phone
+  ALTER TABLE `patient_data` ADD `guardian_mobile_phone` varchar(15) NOT NULL default ''  AFTER `guardian_work_phone`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_email
+  ALTER TABLE `patient_data` ADD `guardian_email` varchar(150) NOT NULL default ''  AFTER `guardian_mobile_phone`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_pid
+  ALTER TABLE `patient_data` ADD `guardian_pid` int(11) default null  AFTER `guardian_email`;
 #EndIf
