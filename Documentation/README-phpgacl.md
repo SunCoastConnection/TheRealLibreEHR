@@ -37,7 +37,7 @@ has not been automatically installed.  Setting it up takes some careful
 study, planning and a bit of time.  If you don't have the time then you
 should hire an experienced person to set things up for you.  Helpful
 installation and configuration instructions can be found on the wiki at the
-Libre.io site.
+LibreEHR.org site.
 
 Alternatively, it's possible to set up your own access rules without
 using phpGACL by customizing the code in library/acl.inc.  See that
@@ -46,7 +46,7 @@ module for more information.
 phpGACL is available from http://phpgacl.sourceforge.net/.  Read
 its documentation and install it according to its instructions.
 Helpful installation and configuration instructions can also be
-found on the wiki at the Libre.io site.
+found on the wiki at the LibreEHR.org site.
 
 The admin GUI needs to be protected, so add something like this
 to your Apache configuration:

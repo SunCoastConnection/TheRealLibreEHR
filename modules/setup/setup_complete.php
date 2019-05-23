@@ -121,7 +121,7 @@ require_once("includes/header.inc.php");
             Please refer to Libre EHR/Documentation. Many forms and other useful scripts can be found at Libre EHR/contrib.</li>
         <li>To ensure a consistent look and feel through out the application using
             <a href='http://www.mozilla.org/products/firefox/'>Firefox</a> is recommended.</li>
-        <li>The Libre EHR project home page, documentation, and forums can be found at <a href = "https://forums.Libre.io/c/7-support" target="_blank">Libre EHR</a></li>
+        <li>The Libre EHR project home page, documentation, and forums can be found at <a href = "https://forums.LibreEHR.org/c/7-support" target="_blank">Libre EHR</a></li>
         <li>We pursue grants to help fund the future development of Libre EHR.  Please contact us via our website to let us know how you use Libre EHR.  This information is valuable for evaluating the benefits of Libre EHR to the medical community worldwide, and serves as a great way for you to advise us on how to serve you better.</li>
     </ul>
         </div>

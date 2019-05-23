@@ -557,4 +557,4 @@ AllowOverride All
 
 **Q. I need help! How do I reach you?**
 
-Feel free to drop by [Libre Chat](https://chat.Libre.io) or the [Libre Support Forum](https://forums.Libre.io/c/7-support)!
+Feel free to drop by [Libre Chat](https://chat.LibreEHR.org) or the [Libre Support Forum](https://forums.LibreEHR.org/c/7-support)!

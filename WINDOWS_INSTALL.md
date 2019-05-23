@@ -142,4 +142,4 @@ You can go to `localhost/lh-ehr` and it will redirect you to the login page.
 
 **Q. I need help! How do I contact someone?**
 
-Feel free to drop by the [Libre Online Chat](https://chat.Libre.io) or the [Libre Support Forum](https://forums.Libre.io/c/7-support)!
+Feel free to drop by the [Libre Online Chat](https://chat.LibreEHR.org) or the [Libre Support Forum](https://forums.LibreEHR.org/c/7-support)!

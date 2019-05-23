@@ -18,7 +18,7 @@
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
- * Please support this product by sharing your changes with the Libre.io community.
+ * Please support this product by sharing your changes with the LibreEHR.org community.
  */
  // Turn off all error reporting to user on screen
 error_reporting(0);

@@ -47,7 +47,7 @@ require_once("../globals.php");
       <span class="text"><?php  echo xlt('Support Phone Number'); ?>: <?php echo $GLOBALS['support_phone_number'] ?></span><br><br>
     <?php } ?>
    </div>
-    <a href="<?php echo "https://wiki.Libre.io"; ?>" target="_blank" class="css_button cp-misc"><span><?php echo xlt('User Manual'); ?></span></a><br><br>
+    <a href="<?php echo "https://wiki.LibreEHR.org"; ?>" target="_blank" class="css_button cp-misc"><span><?php echo xlt('User Manual'); ?></span></a><br><br>
     <?php if (!empty($GLOBALS['online_support_link'])) { ?>
              <a href='<?php echo $GLOBALS["online_support_link"]; ?>' target="_blank" class="css_button cp-misc"><span><?php echo xlt('Online Support'); ?></span></a><br><br>
     <?php } ?>

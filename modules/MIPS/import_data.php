@@ -13,7 +13,7 @@
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
- * Please support this product by sharing your changes with the Libre.io community.
+ * Please support this product by sharing your changes with the LibreEHR.org community.
  * TODO:  UPDATE THIS FORM using a file iterator or SWITCH STatement
  */
 require_once '../../interface/globals.php';

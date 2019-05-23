@@ -14,7 +14,7 @@
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
- * Please support this product by sharing your changes with the Libre.io community.
+ * Please support this product by sharing your changes with the LibreEHR.org community.
  */
  ///TOTAL JACK WAGON CRAP  Needs re-write...but not until it can be reported.
 class PQRS_0398_InitialPatientPopulation extends PQRSFilter

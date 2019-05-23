@@ -14,7 +14,7 @@
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
- * Please support this product by sharing your changes with the Libre.io community.
+ * Please support this product by sharing your changes with the LibreEHR.org community.
  */
  ///this measure has a wierd everything.
 class PQRS_0348_InitialPatientPopulation1 extends PQRSFilter

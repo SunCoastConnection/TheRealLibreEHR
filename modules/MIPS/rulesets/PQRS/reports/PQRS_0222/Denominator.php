@@ -14,7 +14,7 @@
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
- * Please support this product by sharing your changes with the Libre.io community.
+ * Please support this product by sharing your changes with the LibreEHR.org community.
  */
  
 class PQRS_0222_Denominator extends PQRSFilter

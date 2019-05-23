@@ -1,6 +1,6 @@
 ARG PHP_DOCKER_TAG=7.2-apache
 FROM php:${PHP_DOCKER_TAG}
-LABEL maintainer="Libre Infrastructure Team <infrastructure@Libre.io>"
+LABEL maintainer="Libre Infrastructure Team <infrastructure@LibreEHR.org>"
 
 VOLUME /var/www/html/sites
 
