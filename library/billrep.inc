@@ -92,7 +92,7 @@
         // just the data entry date; instead we want to go by the encounter date
         // which is the date in the form_encounter table.
         //
-        $sql = "SELECT distinct form_encounter.date AS enc_date, form_encounter.pid AS enc_pid, form_encounter.billing_note AS enc_billing_note, " .
+        $sql = "SELECT distinct form_encounter.id as form_enc_id, form_encounter.coding_complete as form_enc_coding_done, form_encounter.date AS enc_date, form_encounter.pid AS enc_pid, form_encounter.billing_note AS enc_billing_note, " .
             "form_encounter.encounter AS enc_encounter, form_encounter.provider_id AS enc_provider_id, billing.* " .
             "FROM form_encounter " .
             "LEFT OUTER JOIN billing ON " .
@@ -146,7 +146,7 @@
         {
             $all[$iter] = $row;
         }
-        
+
         $query = sqlStatement("SELECT pid, 'COPAY' AS code_type, pay_amount AS code, date(post_time) AS date ".
             "FROM ar_activity where 1=1 $query_part2 and payer_type=0 and account_code='PCP'");
             //new fees screen copay gives account_code='PCP' libreehr payment screen copay gives code='CO-PAY'
@@ -200,24 +200,24 @@
 
         return;
     }
-    
+
     function ReturnOFXSql()
      {
         GenerateTheQueryPart();
         global $query_part,$billstring,$auth;
-        
+
           $sql = "SELECT distinct billing.*, concat(patient_data.fname, ' ', patient_data.lname) as name from billing "
           . "join patient_data on patient_data.pid = billing.pid "
           . "join form_encounter on "
-          . "billing.encounter = form_encounter.encounter AND " 
-          . "billing.pid = form_encounter.pid " 
-          . "join claims on claims.patient_id = form_encounter.pid and claims.encounter_id = form_encounter.encounter " 
+          . "billing.encounter = form_encounter.encounter AND "
+          . "billing.pid = form_encounter.pid "
+          . "join claims on claims.patient_id = form_encounter.pid and claims.encounter_id = form_encounter.encounter "
           . "join insurance_data on insurance_data.pid = form_encounter.pid and insurance_data.type = 'primary' "
           . "where billed = '1' "
-          . "$auth " 
-          . "$billstring  $query_part  " 
+          . "$auth "
+          . "$billstring  $query_part  "
           . "order by billing.pid,billing.encounter";
-          
+
          return $sql;
      }
 
