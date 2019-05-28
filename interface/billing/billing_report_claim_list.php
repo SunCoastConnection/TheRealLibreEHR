@@ -1,15 +1,42 @@
 <?php
+/*
+ *  Billing Report Claim List
+ *
+ *  This program contains functions and support code for the main search and select screen for claims generation
+ *
+ * @copyright Copyright (C) 2019 Terry Hill <teryhill@yahoo.com>
+ *
+ * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * See the Mozilla Public License for more details.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * @package LibreEHR
+ * @author Terry Hill <teryhill@yahoo.com>
+ *
+ * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
+ *
+ */
 
 $HIDDEN_DIV_INDEX = 0;
 
-function echoBillingTemplateHeader($tpl_patient_name, 
+function echoBillingTemplateHeader(
+  $tpl_form_encounter_id,
+  $tpl_coding_done,
+  $tpl_patient_name,
   $tpl_encounter_id,
   $tpl_patient_href,
-  $tpl_encounter_href, 
+  $tpl_encounter_href,
   $tpl_payer_type_selection_box,
   $tpl_partner_type_selection_box,
   $blinkingMessage) {
-      
+
+
+
+$checkedOrNot = "";
+if ($tpl_coding_done == "1") {
+  $checkedOrNot = "checked";
+}
+
   global $HIDDEN_DIV_INDEX;
 
   $DIV_BLINKING_CLASSES = "";
@@ -18,12 +45,16 @@ function echoBillingTemplateHeader($tpl_patient_name,
   }
   echo "<table class='table primary-table table-condensed'>";
   echo "<tr>";
-  echo "<td style='width:10%'><a class='patient_name' href=$tpl_patient_href><span class='$DIV_BLINKING_CLASSES' title='$blinkingMessage'>$tpl_patient_name</span></a></td>";
+  echo "<td style='width:10%'><input type='checkbox' class='patient_check_box'>&nbsp;&nbsp;<a class='patient_name' href=$tpl_patient_href><span class='$DIV_BLINKING_CLASSES' title='$blinkingMessage'>$tpl_patient_name</span></a></td>";
 
   echo "<td style='width:10%'><a class='patient_encounter' href=$tpl_encounter_href>$tpl_encounter_id</td>";
   echo "<td style='width:10%'>$tpl_payer_type_selection_box</td>";
   echo "<td style='width:10%'>$tpl_partner_type_selection_box</td>";
   echo "<td style='width:10%'><i class='fa fa-arrow-down' data-target='#claim_messages_$HIDDEN_DIV_INDEX' data-toggle='modal'></i></td>";
+  echo '<td style="width:10%"><label class="switch">
+  <input type="checkbox"'.$checkedOrNot.' onclick="toggleCodingDoneSwitch('.$tpl_form_encounter_id.', this);">
+  <span class="slider round"></span>
+</label></td>';
   echo "</tr>";
 
   echo "</table>";
@@ -179,7 +210,7 @@ function PrintToEncounterButton($iter, $name, $ptname, $raw_encounter_date)
 
 function PrintToPatientButton($iter, $name, $ptname, $raw_encounter_date)
 {
-  $href = 
+  $href =
         "javascript:window.topatient(" . $iter['enc_pid'] .
         ",'" . addslashes($name['pid']) .
         "','" . addslashes($ptname) . "'," . $iter['enc_encounter'] .
@@ -211,7 +242,7 @@ function getMissingFieldString($missing_field_results, $fieldArray) {
   for($i = 0; $i < count($emptyVariableArray); $i++) {
     $missingFieldString .= ", ".$emptyVariableArray[$i];
   }
-  
+
   if ($missingFieldString != null){
     $missingFieldString .= " are missing";
     $missingFieldString = ltrim($missingFieldString, ',');
@@ -282,7 +313,7 @@ function generateClaimMessagesBasedOnStatus($lhtml, $divnos, $iter, $raw_encount
       global $HIDDEN_DIV_INDEX;
 
 
-        $lhtml .= "<div class='modal fade' id='claim_messages_$HIDDEN_DIV_INDEX' 
+        $lhtml .= "<div class='modal fade' id='claim_messages_$HIDDEN_DIV_INDEX'
         style='padding:10px; line-spacing:1.5em;'>".
         '    <div class="modal-dialog">
       <!-- Modal content-->
@@ -571,24 +602,24 @@ function printRightSideHtmlByValidations($rhtml, $bgcolor, $iter, $oldcode, $cod
     if ($iter['modifier']) $rhtml .= ":" . text($iter['modifier']);
     $rhtml .= "$justify</td>\n";
 
-   
+
     if ($iter['id'] && $iter['fee'] > 0) {
        $rhtml .= '<td>';
         $rhtml .= text(oeFormatMoney($iter['fee']));
        $rhtml .= "</td>\n";
     }
-   
+
     $rhtml .= '<td>';
     if ($iter['id']) $rhtml .= getProviderName(empty($iter['provider_id']) ? text($iter['enc_provider_id']) : text($iter['provider_id']));
 
       $rhtml .= "</td>\n";
-   
+
     if($GLOBALS['display_units_in_billing'] != 0) {
        $rhtml .= '<td>';
       if ($iter['id']) $rhtml .= xlt("Units") . ":" . text($iter{"units"});
       $rhtml .= "</td>\n";
     }
-    
+
     $rhtml .= '<td>';
     if ($iter['id']) $rhtml .= text(oeFormatSDFT(strtotime($iter{"date"})));
     $rhtml .= "</td>\n";
@@ -729,12 +760,12 @@ function PrintBillingReport() {
         //  Add Encounter Date to display with "To Encounter" button 2/17/09  JCH
         $patient_href=   PrintToPatientButton($iter, $name, $ptname, $raw_encounter_date);
         $encounter_href = PrintToEncounterButton($iter, $name, $ptname, $raw_encounter_date);
- 
+
         list($tpl_patient_name, $tpl_encounter_id, $tpl_patient_href, $tpl_encounter_href)= returnPatientData($namecolor, "", $ptname, $iter, $encounter_href, $patient_href);
 
         loadInsuranceDataToJsArray($iter);
         //  Not sure why the next section seems to do nothing except post "To Encounter" button 2/17/09  JCH
-        
+
         //  Changed "To xxx" buttons to allow room for encounter date display 2/17/09  JCH
 
 
@@ -749,7 +780,7 @@ function PrintBillingReport() {
         if ($iter['id']) {
           $lcount += 2;
           $default_x12_partner = "";
-        
+
           list($tpl_payer_type_selection_box, $default_x12_partner) = generateClaimsPayerTypeSelectionBox("", $this_encounter_id, $bgcolor, $iter, $raw_encounter_date);
 
           list($tpl_partner_type_selection_box, $DivPut) = generateInsurancePartnerTypeSelectionBox("", $this_encounter_id, $bgcolor, $xname, $default_x12_partner);
@@ -763,10 +794,13 @@ function PrintBillingReport() {
       } // end if ($last_encounter_id != $this_encounter_id)
 
       if ($last_encounter_id != $this_encounter_id) {
-            echoBillingTemplateHeader($tpl_patient_name, 
+            echoBillingTemplateHeader(
+                          $iter['form_enc_id'],
+                          $iter['form_enc_coding_done'],
+                          $tpl_patient_name,
                           $tpl_encounter_id,
                           $tpl_patient_href,
-                          $tpl_encounter_href, 
+                          $tpl_encounter_href,
                           $tpl_payer_type_selection_box,
                           $tpl_partner_type_selection_box,
                           $blinkingMessage);
@@ -794,9 +828,9 @@ function PrintBillingReport() {
         //print a new table header
         echoCodeRowTableHeaders($iter['code_type']);
       }
-     
+
       list($tpl_code_row, $oldcode)  = printRightSideHtmlByValidations("", $bgcolor, $iter, $oldcode, $code_types, $GLOBALS, $last_encounter_id, $this_encounter_id, $CheckBoxBilling);
-      
+
 
       echoBillingCodeRow($tpl_code_row.$tpl_claim_messages);
 

@@ -4,33 +4,16 @@
  *
  *  This program displays the main search and select screen for claims generation
  *
- *  The changes to this file as of November 16 2016 to add the 1500 pre-printed form
- *  are covered under the terms of the Mozilla Public License, v. 2.0
- *
- * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
- * No previous copyright listed in file. This was an original OpenEMR program.
- *
- * LICENSE: This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 3
- * of the License, or (at your option) any later version.
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see http://opensource.org/licenses/gpl-license.php.
+ * @copyright Copyright (C) 2016-2019 Terry Hill <teryhill@yahoo.com>
  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Libre EHR
+ * @package LibreEHR
  * @author Terry Hill <teryhill@yahoo.com>
- * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
- * Added hooks for UB04 and End of day reporting Terry Hill 2014 teryhill@yahoo.com
+ * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
  */
 
@@ -211,6 +194,68 @@ body, html {
   background: white;
   color: #000;
   width: 100px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: green;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px green;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 .subbtn { margin-top:3px; margin-bottom:3px; margin-left:2px; margin-right:2px }
 </style>
@@ -471,11 +516,6 @@ function MarkAsCleared(Type)
 <!-- =============Included for Insurance ajax criteria==== -->
 <!-- ================================================== -->
 </head>
-<body class="body_top" onLoad="TestExpandCollapse()">
-
-<p style='margin-top:5px;margin-bottom:5px;margin-left:5px'>
-<font class='title'><?php echo xlt('Build Claim List') ?></font>
-</p>
 
 <?php
 
@@ -489,11 +529,7 @@ function MarkAsCleared(Type)
     while ($row = sqlFetchArray($res))
 {
 
-      $text = $row['name'];
-      array_push($resultArray, $text);
-
-
-
+      array_push($resultArray, $row);
 }
 
      return $resultArray;
@@ -501,72 +537,97 @@ function MarkAsCleared(Type)
  }
 ?>
 <!--- BUILD NEW UI HERE -->
-<div class="col-xs-12">
 
   <div class="col-xs-6">
       <form name="the_form" method="Post">
-      <table class="table table-responsive borderless">
+
+      <table class="table  borderless">
         <input type="hidden" name="mode">
         <tr>
           <td>
-            <b> Select Criteria</b>
+            <b> <?php echo xlt('Select Criteria'); ?></b>
           </td>
         </tr>
         <!-- first row -->
+        <?php
+          $billing_category_array = array("all"=>"all",
+                                    "0"=>"unbilled",
+                                    "1"=>"Billed",
+                                    "7"=>"Denied"
+                                    );
+        ?>
         <tr>
           <td>
-            <b>Billing Status</b>
+            <b><?php echo xlt('Billing Status'); ?></b>
             <br/>
             <select name="new_ui_billing_status" id="new_ui_billing_status" class="form-control reactive_element">
-              <option value="all">All</option>
-              <option value="0">Unbilled</option>
-              <option value="1">Billed</option>
-              <option value="7">Denied</option>
+              <option></option>
+
+              <?php
+                foreach ($billing_category_array as $key => $value) {
+                  $selected_string = "";
+                  if (isset($_REQUEST['new_ui_billing_status'])) {
+                    if ($_REQUEST['new_ui_billing_status'] == $key) {
+                      $selected_string = "selected";
+                    }
+                  }
+
+                  echo "<option value='$key' $selected_string>$value</option>";
+                }
+              ?>
+
             </select>
           </td>
           <td>
-            <b> Claim Type</b>
+            <b> <?php echo xlt('Claim Type'); ?></b>
             <br/>
             <select name="new_ui_claim_type" id="new_ui_claim_type" class="reactive_element form-control">
-              <option value="all">All</option>
-              <option value="standard">eClaim</option>
-              <option value="hcfa">Paper</option>
+              <option></option>
+              <option value="all"><?php echo xlt('All'); ?></option>
+              <option value="standard"><?php echo xlt('eClaim'); ?></option>
+              <option value="hcfa"><?php echo xlt('Paper'); ?></option>
+
             </select>
           </td>
         </tr>
         <!--second row-->
         <tr>
           <td>
-            <b>Date of Service</b>
+            <b><?php echo xlt('Date of Service'); ?></b>
             <br/>
 
-            <input  type="text" id="new_ui_from_date"  name="from_date" class="form-control reactive_element">
+            <input  type="text" id="new_ui_from_date"  name="from_date" class="form-control reactive_element" value="<?php echo $_REQUEST['from_date']; ?>">
              &nbsp;
              to
              &nbsp;
-             <input type="text" id="new_ui_to_date"  name="to_date" class="form-control reactive_element">
+             <input type="text" id="new_ui_to_date"  name="to_date" class="form-control reactive_element" value="<?php echo $_REQUEST['to_date']; ?>">
 
           </td>
           <td>
-            <b> Patient Id</b>
+            <b> <?php echo xlt('Patient Id'); ?></b>
             <br/>
-            <input type="text" id="new_ui_pid" name="pid" class="form-control reactive_element" onclick="sel_patient()">
+            <input type="text" id="new_ui_pid" name="pid" class="form-control reactive_element" onclick="sel_patient()" value="<?php echo $_REQUEST['pid'];?>">
           </td>
         </tr>
 
  <tr>
           <td>
-            <b>Insurance</b>
+            <b><?php echo xlt('Insurance'); ?></b>
             <br/>
-            <select id="new_ui_insurance" name="insurance" class="form-control reactive_element">
 
               <?php
 
                 $insurance_company_array = get_all_insurance_companies();
 
 
-                foreach ($insurance_company_array as $key => $value) {
-                  echo "<option value='$value'>$value</option>";
+            ?>
+            <select multiple="multiple" id="new_ui_insurance" name="insurance[]" class="form-control reactive_element">
+
+              <?php
+                foreach ($insurance_company_array as $key) {
+                  $name = $key['name'];
+                  $id = $key['id'];
+                  echo "<option value='$id'>$name</option>";
                 }
 
 
@@ -576,16 +637,16 @@ function MarkAsCleared(Type)
 
       </td>
           <td>
-            <b> Patient Name</b>
+            <b> <?php echo xlt('Patient Name'); ?></b>
             <br/>
-            <input type="text" name="pid" class="form-control reactive_element" id="new_ui_patient_name" disabled>
+            <input type="text" class="form-control reactive_element" id="new_ui_patient_name" name="new_ui_patient_name" value="<?php echo $_REQUEST['new_ui_patient_name'];?>" onclick="this.select();" readonly>
       </td>
           <input type='hidden' name='form_pid' value='0' />
         </tr>
         <tr>
           <td>
-            <b>Account type</b> <br/>
-            <select id="new_ui_account_type" name="account_type" class="reactive_element">
+            <b><?php echo xlt('Account type'); ?></b> <br/>
+            <select multiple="true" id="new_ui_account_type" name="account_type" class="reactive_element">
 <?php
                 $account_type_list = get_account_type_list();
                 foreach ($account_type_list as $key) {
@@ -596,6 +657,10 @@ function MarkAsCleared(Type)
 
             </select>
           </td>
+          <td>
+            <b><?php echo xlt('Ready For Billing'); ?></b>
+            <input type="checkbox" name="new_ui_coding_complete" id="new_ui_coding_complete"  class="reactive_element">
+          </td>
         </tr>
       </table>
     </form>
@@ -603,75 +668,64 @@ function MarkAsCleared(Type)
 
   <div class="col-xs-6" style="background-color:#eee;">
 
-      <table class="table table-responsive borderless" style="background-color:#eee;">
+      <table class="table  borderless" style="background-color:#eee;">
           <tr>
           <td>
-            <b> Current Criteria</b>
+            <b> <?php echo xlt('Current Criteria'); ?></b>
           </td>
           </tr>
           <tr>
-          <td>Billing Status:&nbsp;
-          <input type="text" id="new_ui_billing_status_copy" class="criteria_copy_input"></td>
+          <td><?php echo xlt('Billing Status'); ?>:&nbsp;
+          <input type="text" id="new_ui_billing_status_copy" class="criteria_copy_input" onclick="this.select();" data-input-type="selection_box"></td>
           </tr>
           <tr>
-          <td>Date:&nbsp;
-          <input type="text"id="new_ui_date_copy" class="criteria_copy_input"></td>
+          <td><?php echo xlt('Date'); ?>:&nbsp;
+          <input type="text"id="new_ui_date_copy" class="criteria_copy_input" onclick="this.select();"
+          value="<?php echo $_REQUEST['from_date']; ?> - <?php echo $_REQUEST['to_date']; ?>" data-input-type="date_box"></td>
           </tr>
 
           <tr>
-          <td>Insurance:&nbsp;
-          <input type="text" id="new_ui_insurance_copy" class="criteria_copy_input">
+          <td><?php echo xlt('Insurance'); ?>:&nbsp;
+          <input type="text" id="new_ui_insurance_copy"class="criteria_copy_input" onclick="this.select();" data-input-type="selection_box">
     </td>
           </tr>
 
           <tr>
-          <td>Claim Type:&nbsp;
-          <input type="text" id="new_ui_claim_type_copy" class="criteria_copy_input">
+          <td><?php echo xlt('Claim Type'); ?>:&nbsp;
+          <input type="text" id="new_ui_claim_type_copy" class="criteria_copy_input" onclick="this.select();" data-input-type="selection_box">
             </td>
           </tr>
           <tr>
-          <td>Patient Id:&nbsp;
-          <input type="text" id="new_ui_pid_copy" class="criteria_copy_input">
+          <td><?php echo xlt('Patient Id'); ?>:&nbsp;
+          <input type="text" id="new_ui_pid_copy"class="criteria_copy_input" onclick="this.select();" data-input-type="text_box">
           </td>
           </tr>
         <tr>
-          <td>Patient Name:&nbsp;
-          <input type="text"  id="new_ui_patient_name_copy" class="criteria_copy_input">
-
-
+          <td><?php echo xlt('Patient Name'); ?>:&nbsp;
+          <input type="text"  id="new_ui_patient_name_copy" class="criteria_copy_input" onclick="this.select();" data-input-type="text_box">
       </td>
  </tr>
     <tr>
-          <td>Account type:&nbsp;
-          <input type="text" id="new_ui_account_type_copy" class="criteria_copy_input" style="width: 100%;">
+          <td><?php echo xlt('Account type'); ?>:&nbsp;
+          <input type="text" id="new_ui_account_type_copy" class="criteria_copy_input" onclick="this.select();" data-input-type="selection_box">
 
     </tr>
+        <tr>
+          <td><?php echo xlt('Ready For Billing'); ?>:&nbsp;
+          <input type="text" name="new_ui_coding_complete_copy" id="new_ui_coding_complete_copy" class="criteria_copy_input" onclick="this.select();" data-input-type="check_box">
+          </td>
+        </tr>
 </table>
   </div>
 
   <div class="text-right">
     <b>
-    <button class="btn" id="clear_criteria">Clear</button>
-    <button onclick="SubmitTheScreen()" class="btn btn-primary" >Update List</button>
+    <button class="btn" id="clear_criteria"><?php echo xlt('Clear'); ?></button>
+    <button onclick="SubmitTheScreen()" class="btn btn-primary" ><?php echo xlt('Update List'); ?></button>
   </b>
   </div>
 
-</div>
 <!--- NEW UI END -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <form name='update_form' method='post' action='billing_process.php' onsubmit='return top.restoreSession()' style="display:inline">
 <center>
@@ -797,6 +851,35 @@ $list = getBillsListBetween("%");
 ?>
 
 <input type='hidden' name='bill_list' value="<?php echo attr($list); ?>" />
+
+<div class="col-xs-12 text-left">
+  <h4 style="cursor: pointer;" id='selectAllPatientCheckBox'><?php echo xlt('Select All'); ?> </h4>
+</div>
+<script>
+function toggleCodingCompleteStatus(id, toggle) {
+
+
+    console.log("toggle is "+ toggle)
+
+  $.post("ajax/billing_report_api.php", {form_encounter_id:id, toggle:toggle}, function(result){
+    console.log(result)
+
+
+  });
+}
+function toggleCodingDoneSwitch(encounter_id, ele) {
+  var toggle = $(ele).prop("checked")
+  console.log(" toggle ui element is " + toggle)
+  if (toggle) {
+    toggle = "1";
+  }
+  else {
+    toggle = "0";
+  }
+  console.log( " toggle ui value is " + toggle)
+  toggleCodingCompleteStatus(encounter_id, toggle)
+}
+</script>
 
 <!-- new form for uploading -->
 
@@ -932,8 +1015,44 @@ $ThisPageSearchCriteriaDisplayRadioMaster=array();
           else {
 
 
+      if (!empty($from_date) && !empty($to_date)) {
+
+
       $_REQUEST['final_this_page_criteria'][0]="(form_encounter.date between '".$from_date."' and '".$to_date."')";
+      }
+
       $_REQUEST['final_this_page_criteria'][1]="billing.billed = '$unbilled'";
+
+      $request_count = count($_REQUEST['final_this_page_criteria']);
+
+      if (isset($_REQUEST['insurance']) && !empty($_REQUEST['insurance'])) {
+        $insurance_company_ids = $_REQUEST['insurance'];
+        foreach($insurance_company_ids as $id) {
+          $_REQUEST['final_this_page_criteria'][$request_count] = "claims.payer_id = '$id'";
+          $request_count++;
+        }
+      }
+
+      $request_count = count($_REQUEST['final_this_page_criteria']) + 1;
+      $new_ui_billing_status = $_REQUEST['new_ui_billing_status'];
+
+
+      $_REQUEST['final_this_page_criteria'][$request_count++] = "billing.billed = '$new_ui_billing_status'";
+
+      if (isset($_REQUEST['pid']) && !empty($_REQUEST['pid'])) {
+      $new_ui_pid = $_REQUEST['pid'];
+          $_REQUEST['final_this_page_criteria'][$request_count++] = "form_encounter.pid = '$new_ui_pid'";
+      }
+
+
+      if (isset($_REQUEST['new_ui_claim_type']) && !empty($_REQUEST['new_ui_claim_type'])) {
+        $new_ui_claim_type = $_REQUEST['new_ui_claim_type'];
+        $_REQUEST['final_this_page_criteria'][$request_count++] = "claims.target = '$new_ui_claim_type'";
+      }
+
+      if (isset($_REQUEST['new_ui_coding_complete'])) {
+        array_push($_REQUEST['final_this_page_criteria'], "form_encounter.coding_complete = '1'");
+      }
 
       $_REQUEST['final_this_page_criteria_text'][0]=xl("Date of Service = Today");
       $_REQUEST['final_this_page_criteria_text'][1]=xl("Billing Status = Unbilled");
@@ -970,6 +1089,11 @@ $(document).ready(function() {
         dlgopen('customize_log.php', '_blank', 500, 400);
     });
 
+    $('#selectAllPatientCheckBox').click(function () {
+
+      $(".patient_check_box").prop('checked',  !$(".patient_check_box").prop('checked'));
+    });
+
     $('input[type="submit"]').click( function() {
         top.restoreSession();
         $(this).attr('data-clicked', true);
@@ -991,9 +1115,16 @@ $(document).ready(function() {
         }
     });
 
-    $('#new_ui_billing_status').val("0").change();
+    <?php
+      if (!isset($_REQUEST['new_ui_billing_status'])) {
+        echo "$('#new_ui_billing_status').val('0').change();";
+      }
+    ?>
+
     $('#new_ui_billing_status_copy').val("Unbilled");
+    if ($('#new_ui_date_copy').val() == "") {
     $('#new_ui_date_copy').val("today");
+    }
 
           $('.js-blink-infinite').modernBlink();
 });
@@ -1019,8 +1150,9 @@ function setpatient(pid, lname, fname, dob) {
 
   $('#new_ui_pid').val(pid);
   $('#new_ui_patient_name').val(patient_name);
-  $('#new_ui_pid_copy').text(pid);
-  $('#new_ui_patient_name_copy').text(patient_name);
+
+  $('#new_ui_pid_copy').val(pid);
+  $('#new_ui_patient_name_copy').val(patient_name);
 
 
 }
@@ -1041,9 +1173,10 @@ $(document).ready(function () {
         $('#new_ui_date_copy').val(date_value)
 
 
-     } }).datepicker("setDate", new Date());
+     } })
 
-  $('#new_ui_to_date').datepicker({ dateFormat: "yy-mm-dd",
+  $('#new_ui_to_date').datepicker({
+    dateFormat: "yy-mm-dd",
    onSelect: function(dateText) {
 
         let date_value =  $('#new_ui_from_date').val()  + "  to  " + $('#new_ui_to_date').val()
@@ -1057,43 +1190,59 @@ $(document).ready(function () {
 
   $('#new_ui_account_type').select2({multiple: true});
 
-  $(document).on('change', '.reactive_element', function() {
+  $('#new_ui_billing_status').select2();
+  $('#new_ui_claim_type').select2();
+
+  $('.criteria_copy_input').on('input',function(e){
+      let id = $(this).attr('id')
+      let type = $(this).attr('data-input-type')
+      let target_id = id.replace("_copy","")
+      let value = $(this).val()
+      if(type == "text_box") {
+        $("#" + target_id).val(value)
+      }
+      else if (type == "selection_box") {
+        $('#' + target_id).val(value).trigger('change');
+      }
+      else if (type == "date_box") {
+        $('#new_ui_from_date').val()
+        $('#new_ui_to_date').val()
+      }
+      else if (type == "check_box") {
+        $('#' + target_id).prop("checked", false);
+
+      }
 
 
 
   });
 
-  $('.reactive_element').on('input', function() {
+$('#new_ui_coding_complete').click(function() {
 
-      let id = $(this).attr('id');
-
-      let suffix = "_copy";
-
-      if (id == "new_ui_from_date" || id == "new_ui_to_date") {
-        let date_value =  $('#new_ui_from_date').val()  + "  to  " + $('#new_ui_to_date').val()
-        $('#new_ui_date_copy').val(date_value)
-
-      }
-      else if (id == "new_ui_billing_status") {
-          let value = $("#"+id+" option:selected").text();
-          $('#' + id + suffix).val(value);
+    if (!this.checked) {
+        $('#new_ui_coding_complete_copy').val("False");
 
       }
       else {
-        if (value == undefined) {
-          let value = $("#"+id+" option:selected").text();
-          console.log(value);
+        $('#new_ui_coding_complete_copy').val("True");
         }
-        $('#' + id + suffix).val(value);
-      }
   });
 
 
   $('.reactive_element').on("select2:select", function(e) {
       let id = $(this).attr('id');
-      let value = $("#"+id).val();
+      let value = $("#"+id).select2("data");
+      var parsedValue = "";
+      for (var i = 0; i < value.length; i++) {
+        if (i != 0) {
+          parsedValue += "," + value[i].text;
+        }
+        else {
+         parsedValue += value[i].text;
+        }
+      }
       let suffix = "_copy";
-      $('#' + id + suffix).val(value);
+      $('#' + id + suffix).val(parsedValue);
 
 
 

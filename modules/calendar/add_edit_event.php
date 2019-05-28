@@ -1187,7 +1187,7 @@ $ures = sqlStatement(
           $catoptions .= " selected";
       }
   } else {
-   if ($crow['pc_catid'] == $default_catid) {
+   if ($crow['pc_seq'] == $default_catid) {
     $catoptions .= " selected";
     $thisduration = $duration;
    }

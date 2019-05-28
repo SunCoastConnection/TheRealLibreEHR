@@ -32,7 +32,7 @@ function ta_report_getCheckedBoxes(chkboxName) {
         checkedValue.push(checkboxes[i].value);
      }
   }
-  return checkedValue; 
+  return checkedValue;
 }
 //---------------------------------------------------------------
 
@@ -62,13 +62,13 @@ function ta_report_plot_graph(formid,ofc_name,the_track_name,ofc_date,ofc_value)
 
     jQuery.ajax({ url: '../../../modules/openflashchart/graph_track_anything.php',
                      type: 'POST',
-                     data: { dates:  thedates, 
-                                     values: thevalues, 
-                                     items:  theitems, 
-                                     track:  thetrack, 
+                     data: { dates:  thedates,
+                                     values: thevalues,
+                                     items:  theitems,
+                                     track:  thetrack,
                                      thecheckboxes: checkedBoxes
                                    },
-                         dataType: "json",  
+                         dataType: "json",
                          success: function(returnData){
                                  // ofc will look after a variable named "ofc"
                                  // inside of the flashvars
@@ -78,15 +78,12 @@ function ta_report_plot_graph(formid,ofc_name,the_track_name,ofc_date,ofc_value)
                                  flashvars.ofc = returnData;
                                  // call ofc with proper falshchart
                                         swfobject.embedSWF('../../../modules/openflashchart/open-flash-chart.swf',
-                                        "graph" + formid, "650", "200", "9.0.0","",flashvars);  
+                                        "graph" + formid, "650", "200", "9.0.0","",flashvars);
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 alert(XMLHttpRequest.responseText);
-                            console.log(textStatus);
-                            console.log(XMLHttpRequest);
-                            console.log(errorThrown);
                                 //alert("XMLHttpRequest="+XMLHttpRequest.responseText+"\ntextStatus="+textStatus+"\nerrorThrown="+errorThrown);
                         }
-        
-        }); // end ajax query   
+
+        }); // end ajax query
 }
