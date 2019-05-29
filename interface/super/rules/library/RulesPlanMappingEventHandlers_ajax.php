@@ -22,7 +22,7 @@
  * @package LibreEHR
  * @author  Jan Jajalla <jajalla23@gmail.com>
  * @author  Roberto Vasquez <roberto.gagliotta@gmail.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 require_once( dirname(__FILE__) . "/../../../globals.php" );

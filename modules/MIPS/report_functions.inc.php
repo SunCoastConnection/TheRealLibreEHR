@@ -5,7 +5,7 @@
  *
  * @package LibreEHR
  * @author  Art Eaton
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 /**

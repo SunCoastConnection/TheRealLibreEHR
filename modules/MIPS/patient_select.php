@@ -16,8 +16,8 @@
  * @author  Art Eaton art@suncoastconnection.com  (MIPS/MACRA re-factor)
  * @author  Bryan Lee <leebc11@acm.org>  (PQRS additions)
  * @link    http://suncoastconnection.com
- * @package LibreHealth EHR
- * @link    http://librehealth.io
+ * @package Libre EHR
+ * @link    http://LibreEHR.org
  */
 
 //SANITIZE ALL ESCAPES

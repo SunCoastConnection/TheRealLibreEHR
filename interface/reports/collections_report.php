@@ -5,7 +5,7 @@
  * (TLH) Added payor,provider,fixed cvs download to included selected fields
  * (TLH) Added ability to download selected invoices only or all for patient
  *
- * Copyright (C) 2015-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2015-2017 Terry Hill <teryhill@yahoo.com> 
  * Copyright (C) 2006-2010 Rod Roark <rod@sunsetsystems.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or 
@@ -19,10 +19,10 @@
  * You should have received a copy of the GNU General Public License 
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
  * 
- * @package LibreHealth EHR 
+ * @package Libre EHR 
  * @author Rod Roark <rod@sunsetsystems.com> 
- * @author Terry Hill <teryhill@librehealth.io> 
- * @link http://librehealth.io
+ * @author Terry Hill <teryhill@yahoo.com> 
+ * @link http://LibreEHR.org
  */
  
 require_once "reports_controllers/CollectionsController.php";

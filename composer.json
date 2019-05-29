@@ -1,7 +1,7 @@
 {
     "name": "LibreEHR",
     "type": "project",
-    "description" : "LibreHealth EHR - Free Open Source Electronic Health Records based on OpenEMR",
+    "description" : "Libre EHR - Free Open Source Electronic Health Records based on OpenEMR",
     "keywords": ["libreehr", "openemr"],
     "authors" : [ { 
             "name": "Ken Chapple",

@@ -33,9 +33,9 @@
  *
  * @package LibreEHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @author  Brady Miller <brady@sparmy.com>
+ 
  * @author  Teny <teny@zhservices.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
  // Build the $ISSUE_TYPE_CATEGORIES array

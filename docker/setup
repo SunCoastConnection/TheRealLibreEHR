@@ -6,9 +6,9 @@
 # See the Mozilla Public License for more details.
 # If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #
-# @package Librehealth EHR
-# @author Robby O'Connor <rob@librehealth.io>
-# @link http://librehealth.io
+# @package Libre EHR
+# @author Robby O'Connor <rob@LibreEHR.org>
+# @link http://LibreEHR.org
 #
 # Please help the overall project by sending changes you make to the author and to the LibreEHR community.
 #
@@ -38,11 +38,11 @@ MYSQL_USER=$database_user
 MYSQL_PASSWORD=$database_pass
 EOF
     cat > docker/.env.ehr <<EOF
-LIBREHEALTH_DB_HOST=db
-LIBREHEALTH_DB_PORT=3306
-LIBREHEALTH_DB_NAME=$database_name
-LIBREHEALTH_DB_USER=$database_user
-LIBREHEALTH_DB_PASSWORD=$database_pass
+Libre_DB_HOST=db
+Libre_DB_PORT=3306
+Libre_DB_NAME=$database_name
+Libre_DB_USER=$database_user
+Libre_DB_PASSWORD=$database_pass
 SCHEDULE=0 0 * * *
 BACKUP_DIR=./backups
 EOF

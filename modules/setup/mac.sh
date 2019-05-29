@@ -13,7 +13,7 @@ rootSite="LibreEHR";
 if [[ "$EUID" = 0 ]]; then
 
     echo "Already root"
-    s=(osascript -e 'tell app "System Events" to display dialog "LibreHealth EHR" ')
+    s=(osascript -e 'tell app "System Events" to display dialog "Libre EHR" ')
     response=$?
 
       #comparing the value obtained to see if user accepted or not
@@ -21,7 +21,7 @@ if [[ "$EUID" = 0 ]]; then
             echo "$(tput setaf 1)Upgrade stoped. User ended action"
             exit 1
           else
-            echo "$(tput setaf 2)Librehealth preparing to install packages... $(tput setaf 7)"
+            echo "$(tput setaf 2)Libre preparing to install packages... $(tput setaf 7)"
         fi
 
         # Check if  Homebrew is already installed,if not we install it
@@ -83,7 +83,7 @@ if [[ "$EUID" = 0 ]]; then
     else
     sudo -k
     if sudo true; then
-    s=(osascript -e 'tell app "System Events" to display dialog "LibreHealth EHR" ')
+    s=(osascript -e 'tell app "System Events" to display dialog "Libre EHR" ')
     response=$?
 
       #comparing the value obtained to see if user accepted or not
@@ -91,7 +91,7 @@ if [[ "$EUID" = 0 ]]; then
             echo "$(tput setaf 1)Upgrade stoped. User ended action"
             exit 1
           else
-            echo "$(tput setaf 2)Librehealth preparing to install packages... $(tput setaf 7)"
+            echo "$(tput setaf 2)Libre preparing to install packages... $(tput setaf 7)"
         fi
 
         # Check if  Homebrew is already installed,if not we install it

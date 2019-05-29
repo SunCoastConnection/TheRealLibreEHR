@@ -8,9 +8,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -90,7 +90,7 @@ if($task == 'annul'){
                 <li><span class='blueblack'>\"".preg_replace("/${site_id}/","",realpath($billingDirectory2))."\"</span>.</li>
             </ul>
                   
-             <p><span class='librehealth-color'>This can be done by pasting the below to end of your apache configuration file:</span></p>
+             <p><span class='Libre-color'>This can be done by pasting the below to end of your apache configuration file:</span></p>
         <div class=\"well well-sm well-terminal\">
         &nbsp;&nbsp;&lt;Directory \"".realpath(dirname(__FILE__))."\"&gt;<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AllowOverride FileInfo<br>
@@ -117,7 +117,7 @@ if($task == 'annul'){
 
         echo "<div class='alert alert-info text-center'>
             <span class='fa fa-info-circle'></span> <span class='black'>If you are having difficulty finding your apache configuration file, then refer to the</span> 
-            <a href='https://github.com/LibreHealthIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> 
+            <a href='https://github.com/LibreIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> 
             <span class='black'>manual for suggestions.</span>
             <br><br><span class='black'>We recommend you print these instructions for future reference.</span>
             <button class='small btn-default printMe'><span class='fa fa-print'></span> Print</button>

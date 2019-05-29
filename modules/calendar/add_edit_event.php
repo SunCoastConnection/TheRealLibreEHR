@@ -12,9 +12,9 @@
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
  // The event editor looks something like this:

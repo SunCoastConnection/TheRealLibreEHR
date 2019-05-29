@@ -4,7 +4,7 @@
  *
  *  This program creates the misc_billing_form
  *
- * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
  *
  *
  * LICENSE: This program is free software; you can redistribute it and/or
@@ -22,11 +22,11 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
- * @author Terry Hill <teryhill@librehealth.io>
- * @link http://librehealth.io
+ * @package Libre EHR
+ * @author Terry Hill <teryhill@yahoo.com>
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  */
 $fake_register_globals=false;

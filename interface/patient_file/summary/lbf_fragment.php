@@ -1,6 +1,5 @@
 <?php
 /*******************************************************************************\
- * Copyright 2010 Brady Miller <brady@sparmy.com>                               *
  * Copyright 2011 Rod Roark <rod@sunsetsystems.com>                             *
  *                                                                              *
  * This program is free software; you can redistribute it and/or                *

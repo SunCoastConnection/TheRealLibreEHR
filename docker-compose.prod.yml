@@ -9,7 +9,7 @@ services:
     env_file: ./docker/.env.mysql
 
   lh-ehr:
-    image: registry.gitlab.com/librehealth/ehr/lh-ehr:latest
+    image: registry.gitlab.com/Libre/ehr/lh-ehr:latest
     volumes:
       - sites:/var/www/html/sites
     ports:
@@ -26,7 +26,7 @@ services:
     depends_on:
       - db
   backup:
-    image: registry.gitlab.com/librehealth/lsc/lh-docker-cron-backup:latest
+    image: registry.gitlab.com/Libre/lsc/lh-docker-cron-backup:latest
     depends_on:
       - db
       - lh-ehr

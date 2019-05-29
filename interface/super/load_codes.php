@@ -17,7 +17,7 @@
  *
  * @package LibreEHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 set_time_limit(0);

@@ -6,7 +6,6 @@
  * session variables, because the session_write_close() function
  * is typically called before utilizing these functions.
  *
- * Copyright (C) 2010-2012 Brady Miller <brady@sparmy.com>
  * Copyright (C) 2011      Medical Information Integration, LLC
  * Copyright (C) 2011      Ensofttek, LLC
  * Copyright (C) 2016 SunCoast Connection Inc. 
@@ -25,10 +24,10 @@
  * @package LibreEHR
  * @author  Art Eaton <art@suncoastconnection.com>  (MIPS/MACRA Refactor)
  * @author  Bryan Lee <bryan@suncoastconnection.com>
- * @author  Brady Miller <brady@sparmy.com>
+ 
  * @author  Medical Information Integration, LLC
  * @author  Ensofttek, LLC
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 require_once(dirname(__FILE__) . "/patient.inc");

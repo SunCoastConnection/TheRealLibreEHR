@@ -2,7 +2,7 @@
 /*
  * Criteria.tab
  *
- * Copyright (C) 2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2017 Terry Hill <teryhill@yahoo.com> 
  * Copyright (C) 2011 Z&H Consultancy Services Private Limited <sam@zhservices.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or 
@@ -20,10 +20,10 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR 
+ * @package Libre EHR 
  * @author Eldho Chacko <eldho@zhservices.com>
  * @author Paul Simon K <paul@zhservices.com>
- * @link http://librehealth.io 
+ * @link http://LibreEHR.org 
  */
 ?>
 <!-- This displays the search criteria.The master processing is done here.This page is included in the billing_report.php  -->

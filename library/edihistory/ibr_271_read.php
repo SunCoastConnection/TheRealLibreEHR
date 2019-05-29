@@ -18,8 +18,8 @@
  * Strictly pre-alpha script to read x12 271 eligibility inquiry response files
  * 
  * @author Kevin McCormick
- * @link: http://librehealth.io
- * @package LibreHealth EHR
+ * @link: http://LibreEHR.org
+ * @package Libre EHR
  * @subpackage ediHistory
  */
 /* ********************

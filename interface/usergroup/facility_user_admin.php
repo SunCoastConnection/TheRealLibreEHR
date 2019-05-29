@@ -22,9 +22,9 @@
  * For more information write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @Author  Scott Wakefield <scott@npclinics.com.au>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 //SANITIZE ALL ESCAPES

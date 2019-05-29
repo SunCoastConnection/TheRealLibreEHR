@@ -14,7 +14,6 @@
  * @author Terry Hill <teryhill@yahoo.com>
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
- * Added hooks for UB04 and End of day reporting Terry Hill 2014 teryhill@yahoo.com
  *
  */
 

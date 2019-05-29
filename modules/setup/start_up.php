@@ -7,9 +7,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -45,13 +45,13 @@
 <p class="clearfix"></p>
 <p class="clearfix"></p>
 
-    <h3 class="librehealth-color">Installation Instructions</h3>
+    <h3 class="Libre-color">Installation Instructions</h3>
     <p class="clearfix"></p>
     <p class="clearfix"></p>
    <ul class="list-unstyled">
-       <li><i class="glyphicon glyphicon-send librehealth-color"></i> &nbsp;Before proceeding, be sure that you have a properly installed and configured MySQL server available, and a PHP configured webserver.</li>
-       <li><i class="glyphicon glyphicon-send librehealth-color"></i> &nbsp;Detailed installation instructions can be found in the <a href='https://github.com/LibreHealthIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.</li>
-       <li><i class="glyphicon glyphicon-send librehealth-color"></i> &nbsp;If you are upgrading from a previous version, do <strong>NOT</strong> use this script.  Please read the 'Upgrading' section found in the <a href='https://github.com/LibreHealthIO/lh-ehr/blob/master/INSTALL.md#upgrading' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.</li>
+       <li><i class="glyphicon glyphicon-send Libre-color"></i> &nbsp;Before proceeding, be sure that you have a properly installed and configured MySQL server available, and a PHP configured webserver.</li>
+       <li><i class="glyphicon glyphicon-send Libre-color"></i> &nbsp;Detailed installation instructions can be found in the <a href='https://github.com/LibreIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.</li>
+       <li><i class="glyphicon glyphicon-send Libre-color"></i> &nbsp;If you are upgrading from a previous version, do <strong>NOT</strong> use this script.  Please read the 'Upgrading' section found in the <a href='https://github.com/LibreIO/lh-ehr/blob/master/INSTALL.md#upgrading' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.</li>
    </ul>
 
     <p class="clearfix"></p>
@@ -61,7 +61,7 @@
     </div>
     <p class="clearfix"></p>
     <p class="clearfix"></p>
-    <h4 class="librehealth-color text-center">HINTS</h4>
+    <h4 class="Libre-color text-center">HINTS</h4>
 
     <div class="alert alert-success alert-dismissible">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

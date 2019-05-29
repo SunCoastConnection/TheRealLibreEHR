@@ -2,7 +2,7 @@
 
 // Copyright (C) 2005-2006 Rod Roark <rod@sunsetsystems.com>
 // Copyright (C) 2016       Raymond Magauran <magauran@medfetch.com>
-// Copyright (C) 2015-2018  Terry Hill <teryhill@librehealth.io>
+// Copyright (C) 2015-2018  Terry Hill <teryhill@yahoo.com>
 //
 // Windows compatibility mods 2009 Bill Cernansky [mi-squared.com]
 //

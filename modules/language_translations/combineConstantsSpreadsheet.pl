@@ -5,10 +5,6 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 #
-# author Brady Miller
-# email  brady@sparmy.com
-# date   04/03/09
-#
 # This is a perl script that will create a new ranslation spreadsheet
 # file from a constant file and an old spreadsheet file.  Output will
 # go to newSpreadsheet.tsv and errors and message swill be logged to

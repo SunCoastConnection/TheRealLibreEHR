@@ -17,10 +17,10 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
- * @author  Brady Miller <brady@sparmy.com>
- * @author  Terry Hill <teryhill@librehealth.io>
- * @link    http://librehealth.io
+ * @package Libre EHR
+ 
+ * @author  Terry Hill <teryhill@yahoo.com>
+ * @link    http://LibreEHR.org
  */
 
 require_once("$srcdir/options.inc.php");

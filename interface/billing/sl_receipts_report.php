@@ -7,7 +7,7 @@
  * but I wanted to make the code available to the project because
  * many other practices have this same need. - rod@sunsetsystems.com
  *
- * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
  * Copyright (C) 2006-2010 Rod Roark <rod@sunsetsystems.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -15,10 +15,10 @@
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @author  Terry Hill <teryhill@librehealth.io>
- * @link    http://librehealth.io
+ * @author  Terry Hill <teryhill@yahoo.com>
+ * @link    http://LibreEHR.org
  */
 
 $sanitize_all_escapes=true;

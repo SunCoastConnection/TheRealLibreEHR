@@ -17,7 +17,7 @@
  *
  * @package LibreEHR
  * @author  Visolve <services@visolve.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 $fake_register_globals=false;
 $sanitize_all_escapes=true;

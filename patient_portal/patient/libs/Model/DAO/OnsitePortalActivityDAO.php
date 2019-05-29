@@ -1,5 +1,5 @@
 <?php
-/** @package LibreHealth EHR::Model::DAO */
+/** @package Libre EHR::Model::DAO */
 /**
  *
  * Copyright (C) 2016-2017 Jerry Padgett <sjpadgett@gmail.com>
@@ -8,9 +8,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  */
 
 /** import supporting libraries */
@@ -27,7 +27,7 @@ require_once("OnsitePortalActivityMap.php");
  * Add any custom business logic to the Model class which is extended from this DAO class.
  * Leaving this file alone will allow easy re-generation of all DAOs in the event of schema changes
  *
- * @package LibreHealth EHR::Model::DAO
+ * @package Libre EHR::Model::DAO
  * @author ClassBuilder
  * @version 1.0
  */

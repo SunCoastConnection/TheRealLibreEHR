@@ -7,9 +7,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  */
 
  ?>
@@ -17,7 +17,7 @@
     <div class="container">
         <hr>
         <footer>
-            <p class="muted"><small> LibreHealth EHR <?php echo xlt('Onsite Patient Portal'); ?> Copyright  &copy 2016-<?php echo date('Y'); ?></small></p>
+            <p class="muted"><small> Libre EHR <?php echo xlt('Onsite Patient Portal'); ?> Copyright  &copy 2016-<?php echo date('Y'); ?></small></p>
         </footer>
     </div>
     </body>

@@ -8,7 +8,7 @@
 *
 * @package LibreEHR
 * @author  Tony McCormick <tony@mi-squared.com>
-* @author  Terry Hill <teryhill@librehealth.io>
+* @author  Terry Hill <teryhill@yahoo.com>
 * @link    http://www.libreehr.org
 *
 * add a switch to the encounter const and make the query before assigning it to the const.

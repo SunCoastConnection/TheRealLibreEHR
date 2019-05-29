@@ -2,7 +2,7 @@
 /**
  *
  * Copyright (C) 2016-2017 Jerry Padgett <sjpadgett@gmail.com>
- * Copyright (C) 2015-2017 Terry Hill <teryhill@librehealth.io>
+ * Copyright (C) 2015-2017 Terry Hill <teryhill@yahoo.com>
  * Copyright (C) 2005-2006, 2013 Rod Roark <rod@sunsetsystems.com>
  *
  * This program is used to find un-used appointments in the Patient Portal, 
@@ -22,11 +22,11 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
  * @author Rod Roark <rod@sunsetsystems.com>
- * @author Terry Hill <teryhill@librehealth.io>
- * @link http://librehealth.io
+ * @author Terry Hill <teryhill@yahoo.com>
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the authors and to the OpenEMR community.
  *

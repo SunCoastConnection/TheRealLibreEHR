@@ -26,7 +26,7 @@
  *
  * @author Thomas J Bradley
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  */
 
 /**

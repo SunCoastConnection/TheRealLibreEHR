@@ -2,7 +2,7 @@
 /**
  * library/acl.inc 
  * 
- * Functions wrapping php-GACL's functionality, to create a generic LibreHealth EHR access control system.
+ * Functions wrapping php-GACL's functionality, to create a generic Libre EHR access control system.
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,14 +16,14 @@
  * along with this program. If not, see 
  * http://www.gnu.org/licenses/licenses.html#GPL .
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @license http://www.gnu.org/licenses/licenses.html#GPL GNU GPL V3+
- * @author  Brady Miller <brady@sparmy.com>
+ 
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
-// php-GACL access controls are included in LibreHealth EHR. The below
+// php-GACL access controls are included in Libre EHR. The below
 // function will automatically create the path where gacl.class.php
 // can be found. Note that this path can be manually set below
 // for users who are using an external version of php-GACL.

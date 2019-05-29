@@ -1,6 +1,6 @@
 <?php
 
-// Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+// Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
 // Copyright (C) 2007-2014 Rod Roark <rod@sunsetsystems.com>
 // Copyright © 2010 by Andrew Moore <amoore@cpan.org>
 // Copyright © 2010 by "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
@@ -2928,7 +2928,7 @@ function generate_layout_validation($form_id) {
  *                                     defaults to true
  * @return void - just echo the html encoded string
  *
- * Note: This should become a data-type at some point, according to Brady
+ * Note: This should become a data-type at some point.
  */
 function dropdown_facility($selected = '', $name = 'form_facility', $allow_unspecified = true,
   $allow_allfacilities = true, $disabled='', $onchange='')
@@ -3209,7 +3209,7 @@ function lbf_current_value($frow, $formid, $encounter) {
   return $currvalue;
 }
 
-# Generates a dropdown list for providers. This Code added by Terry Hill teryhill@librehealth.io
+# Generates a dropdown list for providers. This Code added by Terry Hill teryhill@yahoo.com
 # If you specify the $allprov it will list everyone that has an entry in the NPI field.
 function genProviderSelect($selname, $toptext, $default=0, $disabled=false, $allprov=false)
 {

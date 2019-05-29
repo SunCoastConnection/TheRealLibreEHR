@@ -4,7 +4,7 @@
 
 * @package   LibreEHR
 * @author    Art Eaton <art@suncoastconnection.com>
-* @link      http://LibreHealth.io
+* @link      http://LibreEHR.org
 */
 
 $ignoreAuth = true; 

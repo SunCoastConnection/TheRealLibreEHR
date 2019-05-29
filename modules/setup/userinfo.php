@@ -8,9 +8,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -56,19 +56,19 @@ $task = $_POST["task"];
                 <p class="clearfix"></p>
         <h2><strong>User Information</strong></h2>
         <p class="alert alert-info">Please let us know more about you and your facility by helping us fill the form below NB: E-mail is for security bulletins.</p>
-        <i>Fields with (<span class="arial librehealth-color"> *</span>) are mandatory</i>
+        <i>Fields with (<span class="arial Libre-color"> *</span>) are mandatory</i>
         <p class="clearfix"></p>
-        <h4 class="librehealth-color text-right"><small>(Please provide information about yourself below) </small>PERSONAL INFO</h4>
+        <h4 class="Libre-color text-right"><small>(Please provide information about yourself below) </small>PERSONAL INFO</h4>
         <p class="clearfix"></p>
         <form id="userForm" method="POST" action="parameters.php" enctype="multipart/form-data">
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-2"><label>First Name <span class="arial librehealth-color"> *</span> :</label></div>
+                    <div class="col-md-2"><label>First Name <span class="arial Libre-color"> *</span> :</label></div>
                     <div class="col-md-9"><input value="<?php echo($iufname) ?>" name="iufname" placeholder="Enter First Name" type="text" class="form-control" required></div>
                 </div>
                 <p class="clearfix"></p>
                 <div class="row">
-                    <div class="col-md-2"><label>Last Name <span class="arial librehealth-color"> *</span> :</label></div>
+                    <div class="col-md-2"><label>Last Name <span class="arial Libre-color"> *</span> :</label></div>
                     <div class="col-md-9"><input type="text" value="<?php echo($iuname) ?>"  placeholder="Enter Last Name" name="iulname" class="form-control" required></div>
                 </div>
                 <p class="clearfix"></p>
@@ -78,7 +78,7 @@ $task = $_POST["task"];
                 </div>
                 <p class="clearfix"></p>
                 <div class="row">
-                    <div class="col-md-2"><label>Email <span class="arial librehealth-color"> *</span> :</label></div>
+                    <div class="col-md-2"><label>Email <span class="arial Libre-color"> *</span> :</label></div>
                     <div class="col-md-9"><input type="email" value="" placeholder="Email address" name="iuemail" class="form-control"></div>
                 </div>
                 <p class="clearfix"></p>
@@ -100,12 +100,12 @@ $task = $_POST["task"];
                 <p class="clearfix"></p>
                 <p class="clearfix"></p>
                 <p class="clearfix"></p>
-                <h4 class="librehealth-color text-right"><small>(Please provide information about your default facility) </small>ABOUT FACILITY</h4>
+                <h4 class="Libre-color text-right"><small>(Please provide information about your default facility) </small>ABOUT FACILITY</h4>
                 <p class="clearfix"></p>
                 <div class="row">
-                    <div class="col-md-2"><label>Facilty Name <span class="arial librehealth-color"> *</span> : <span class="hint-symbol" data-toggle="tooltip" title="Name of facility you own. Can be a hospital, clinic or any medical unit.">[ ? ]</span></label></div>
+                    <div class="col-md-2"><label>Facilty Name <span class="arial Libre-color"> *</span> : <span class="hint-symbol" data-toggle="tooltip" title="Name of facility you own. Can be a hospital, clinic or any medical unit.">[ ? ]</span></label></div>
                     <div class="col-md-4"><input type="text" value="" placeholder="e.g Medline Plus Clinic" name="facility" class="form-control" required></div>
-                    <div class="col-md-2"><label>Legal Entity <span class="arial librehealth-color"> *</span> : <span class="hint-symbol" data-toggle="tooltip" title="Name of facility that is registered under for the government or any legal party">[ ? ]</span></label></div>
+                    <div class="col-md-2"><label>Legal Entity <span class="arial Libre-color"> *</span> : <span class="hint-symbol" data-toggle="tooltip" title="Name of facility that is registered under for the government or any legal party">[ ? ]</span></label></div>
                     <div class="col-md-3"><input type="text" value="" placeholder="e.g Medline Plus Clinic" name="legal" class="form-control"></div>
                 </div>
                 <p class="clearfix"></p>

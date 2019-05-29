@@ -13,9 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @author  Brady Miller <brady@sparmy.com>
+ 
  * @author  Kevin Yeh <kevin.y@integralemr.com>
  * @author  Scott Wakefield <scott.wakefield@gmail.com>
  * @author  ViCarePlus <visolve_emr@visolve.com>
@@ -23,7 +23,7 @@
  * @author  cfapress
  * @author  markleeds
  * @author  tmccormick  <tony@mi-squared.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 $fake_register_globals = false;
@@ -259,12 +259,12 @@ include_once("$srcdir/headers.inc.php");
         <div class="version">
             <?php echo "v" . text($libreehr_version) ?> | <a href="../../acknowledge_license_cert.html" target="main"><?php echo xlt('Acknowledgments, Licensing and Certification'); ?></a>
             <img src="<?php echo $GLOBALS['webroot']?>/interface/pic/LibreEHR_shield.png"
-                 alt="Powered by LibreHealth EHR"
+                 alt="Powered by Libre EHR"
                  style="height: 64px"/>
         </div>
         </div>
         <div class="demo">
-            <!-- Uncomment this for the LibreHealth EHR demo installation
+            <!-- Uncomment this for the Libre EHR demo installation
             <p><center>login = demo
             <br>pass phrase = I am Free!
             -->

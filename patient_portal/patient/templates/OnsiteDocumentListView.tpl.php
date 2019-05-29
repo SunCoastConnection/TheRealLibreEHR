@@ -9,15 +9,15 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  */
 
-    $this->assign('title', xlt("LibreHealth EHR Patient Portal") . " | " . xlt("Patient Documents"));
+    $this->assign('title', xlt("Libre EHR Patient Portal") . " | " . xlt("Patient Documents"));
     $this->assign('nav','onsitedocuments');
 
     $pid = $this->cpid;
@@ -43,7 +43,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>LibreHealth EHR <?php echo xlt(' Portal'); ?>  |  <?php echo xlt('Documents'); ?></title>
+<title>Libre EHR <?php echo xlt(' Portal'); ?>  |  <?php echo xlt('Documents'); ?></title>
 <meta   content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 <meta name="description" content="Developed By sjpadgett@gmail.com">
 

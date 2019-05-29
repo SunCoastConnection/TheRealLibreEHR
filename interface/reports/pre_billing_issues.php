@@ -8,10 +8,10 @@
 *
 * @package LibreEHR
 * @author  Tony McCormick <tony@mi-squared.com>
-* @author  Terry Hill <teryhill@librehealth.io>
+* @author  Terry Hill <teryhill@yahoo.com>
 * @link    http://www.libreehr.org
 *
-* Added date parameters 2016 Terry Hill <teryhill@librehealth.io>
+* Added date parameters 2016 Terry Hill <teryhill@yahoo.com>
 */
 
 require_once "reports_controllers/PreBillingIssuesController.php";

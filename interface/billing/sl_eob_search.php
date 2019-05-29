@@ -18,11 +18,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Jerry Padgett <sjpadgett@gmail.com>
  * @author  Rod Roark <rod@sunsetsystems.com>
  * @author  Roberto Vasquez <robertogagliotta@gmail.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 require_once("../globals.php");
@@ -289,7 +289,7 @@ if ($_POST['form_portalnotify']) {
       // and start a new one.  This is an associative array:
       //
       //  cid     = same as pid
-      //  pid     = LibreHealth EHR patient ID
+      //  pid     = Libre EHR patient ID
       //  patient = patient name
       //  amount  = total amount due
       //  adjust  = adjustments (already applied to amount)

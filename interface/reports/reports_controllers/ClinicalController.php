@@ -10,11 +10,11 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Tigpezeghe Rodrige <tigrodrige@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  */
 
@@ -38,7 +38,7 @@ $comarr = array('allow_sms'=>xl('Allow SMS'),'allow_voice'=>xl('Allow Voice Mess
 $DateFormat = DateFormatRead(true);
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
-/*Attribution: 2010-2017 LibreHealth EHR Support LLC */
+/*Attribution: 2010-2017 Libre EHR Support LLC */
 function add_date($givendate, $day = 0, $mth = 0, $yr = 0)
 {
     $DateFormat = DateFormatRead(true);

@@ -2,7 +2,7 @@
 /**
  * Display patient notes.
  *
- * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com> 
  * No other information in the previous header
  *
  * LICENSE: This program is free software; you can redistribute it and/or
@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
- * @author  Brady Miller <brady@sparmy.com>
- * @link    http://librehealth.io
+ * @package Libre EHR
+ 
+ * @link    http://LibreEHR.org
  */
 
 //SANITIZE ALL ESCAPES

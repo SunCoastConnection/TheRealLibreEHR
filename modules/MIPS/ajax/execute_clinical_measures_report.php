@@ -1,8 +1,6 @@
 <?php
 /**
  * Run a Measures Engine Report.
- *
- * Copyright (C) 2012      Brady Miller <brady@sparmy.com>
  * Copyright (C) 2016      Suncoast Connection
  *
  * LICENSE: This program is free software; you can redistribute it and/or
@@ -19,7 +17,7 @@
  * @package OpenEMR
  * @link    http://www.open-emr.org
  * @link    http://SuncoastConnection.com
- * @author  Brady Miller <brady@sparmy.com>
+ 
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Sam Likins <sam.likins@wsi-services.com>
  */

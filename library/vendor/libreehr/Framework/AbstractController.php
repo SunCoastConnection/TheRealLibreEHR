@@ -20,7 +20,7 @@ namespace Framework;
  * @package framework
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Medical Information Integration, LLC
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  **/
 
 abstract class AbstractController 

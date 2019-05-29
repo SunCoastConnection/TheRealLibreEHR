@@ -15,7 +15,7 @@
  *
  * @package LibreEHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 // Given a list ID, name of a target form field and a default value, this creates

@@ -8,9 +8,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -44,11 +44,11 @@ if($task == 'annul'){
 <div class="card">
     <p class="clearfix"></p>
 
-    <h4>LibreHealth EHR Upgrade</h4>
+    <h4>Libre EHR Upgrade</h4>
     <p class="clearfix"></p>
     <div class="alert-info">
         <p>
-            PLease follow the instructions given below to upgrade your system for an efficient functioning of the LibreHealth Software<br>
+            PLease follow the instructions given below to upgrade your system for an efficient functioning of the Libre Software<br>
             <span class="fa fa-info-circle"></span> NB: This might require downloads/installations of softwares on your system!
         </p>
     </div>
@@ -72,11 +72,11 @@ if($task == 'annul'){
                         <span class="fa fa-info-circle"></span> NB: This will require some internet connection so make sure you have a good internet connection in order for you to 
                         upgrade your system.
                         </div>
-                        <h4 class="librehealth-color"><span class="fa fa-terminal"></span>&nbsp; Open a terminal application</h4>
+                        <h4 class="Libre-color"><span class="fa fa-terminal"></span>&nbsp; Open a terminal application</h4>
                         <p>Open a terminal at the root of your LibreEHR folder. To do this press the following keys <span class="badge">&nbsp; CTRL + ALT + T &nbsp;</span>
                     
                         <p class="clearfix"></p>
-                        <h4 class="librehealth-color"><span class="fa fa-folder-open-o"></span>&nbsp; Browse to the root of your LibreEHR directory</h4>
+                        <h4 class="Libre-color"><span class="fa fa-folder-open-o"></span>&nbsp; Browse to the root of your LibreEHR directory</h4>
                         <p>To do this type the following command in the terminal opened above 
                         <div class="well well-sm well-terminal">
                             <span class="green"><span class="fa fa-terminal"></span>user@user:$</span>&nbsp;&nbsp; sudo cd /var/www/html/LibreEHR
@@ -84,14 +84,14 @@ if($task == 'annul'){
                         
                         
                         <p class="clearfix"></p>
-                        <h4 class="librehealth-color"><span class="fa fa-file-code-o"></span>&nbsp; Change the script into an executable one (sudo command is optional)</h4>
+                        <h4 class="Libre-color"><span class="fa fa-file-code-o"></span>&nbsp; Change the script into an executable one (sudo command is optional)</h4>
                         <p>To do this type the following command in the terminal opened above 
                         <div class="well well-sm well-terminal">
                             <span class="green"><span class="fa fa-terminal"></span>user@user:/var/www/html/LibreEHR#</span>&nbsp;&nbsp; sudo chmod +x libreehr.sh
                         </div>
                         
                             <p class="clearfix"></p>
-                        <h4 class="librehealth-color"><span class="fa fa-send-o"></span>&nbsp; Run/Execute the upgrade script (sudo command is optional)</h4>
+                        <h4 class="Libre-color"><span class="fa fa-send-o"></span>&nbsp; Run/Execute the upgrade script (sudo command is optional)</h4>
                         <p>To do this type the following command in the terminal opened above 
                         <div class="well well-sm well-terminal">
                             <span class="green"><span class="fa fa-terminal"></span>user@user:/var/www/html/LibreEHR#</span>&nbsp;&nbsp; sudo ./libreehr.sh
@@ -121,7 +121,7 @@ if($task == 'annul'){
                                     <h4>Download <a href="http://www.wampserver.com/en/" target="_blank" class="white owl-link">WAMPP</a>/<a href="https://www.apachefriends.org/download.html" target="_blank" class="white owl-link">XAMPP</a></h4>
                                     <p>
                                         Get the latest version of WAMPP/XAMPP from the following link. This software
-                                        is a 3-in-1 software (Apache2, PHP, and MySQL) that enables the proper functioning of Librehealth EHR.
+                                        is a 3-in-1 software (Apache2, PHP, and MySQL) that enables the proper functioning of Libre EHR.
                                     </p>
                                 </div>
                             </div>
@@ -179,11 +179,11 @@ if($task == 'annul'){
                         <span class="fa fa-info-circle"></span> NB: This will require some internet connection so make sure you have a good internet connection in order for you to 
                         upgrade your system.
                         </div>
-                        <h4 class="librehealth-color"><span class="fa fa-terminal"></span>&nbsp; Open a terminal application</h4>
+                        <h4 class="Libre-color"><span class="fa fa-terminal"></span>&nbsp; Open a terminal application</h4>
                         <p>Open a terminal at the root of your LibreEHR folder. To do this press the following keys <span class="badge">&nbsp; CTRL + ALT + T &nbsp;</span>
                     
                         <p class="clearfix"></p>
-                        <h4 class="librehealth-color"><span class="fa fa-folder-open-o"></span>&nbsp; Browse to the root of your LibreEHR directory</h4>
+                        <h4 class="Libre-color"><span class="fa fa-folder-open-o"></span>&nbsp; Browse to the root of your LibreEHR directory</h4>
                         <p>To do this type the following command in the terminal opened above 
                         <div class="well well-sm well-terminal">
                             <span class="green"><span class="fa fa-terminal"></span>user@user:$</span>&nbsp;&nbsp; sudo cd /var/www/html/LibreEHR
@@ -191,14 +191,14 @@ if($task == 'annul'){
                         
                         
                         <p class="clearfix"></p>
-                        <h4 class="librehealth-color"><span class="fa fa-file-code-o"></span>&nbsp; Change the script into an executable one (sudo command is optional)</h4>
+                        <h4 class="Libre-color"><span class="fa fa-file-code-o"></span>&nbsp; Change the script into an executable one (sudo command is optional)</h4>
                         <p>To do this type the following command in the terminal opened above 
                         <div class="well well-sm well-terminal">
                             <span class="green"><span class="fa fa-terminal"></span>user@user:/var/www/html/LibreEHR#</span>&nbsp;&nbsp; sudo chmod +x libreehr.sh
                         </div>
                         
                             <p class="clearfix"></p>
-                        <h4 class="librehealth-color"><span class="fa fa-send-o"></span>&nbsp; Run/Execute the upgrade script (sudo command is optional)</h4>
+                        <h4 class="Libre-color"><span class="fa fa-send-o"></span>&nbsp; Run/Execute the upgrade script (sudo command is optional)</h4>
                         <p>To do this type the following command in the terminal opened above 
                         <div class="well well-sm well-terminal">
                             <span class="green"><span class="fa fa-terminal"></span>user@user:/var/www/html/LibreEHR#</span>&nbsp;&nbsp; sudo ./libreehr.sh

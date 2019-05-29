@@ -1,7 +1,7 @@
 <?php
 /** 
 * 
-* Copyright (C) 2014-2017 Terry Hill <teryhill@librehealth.io> 
+* Copyright (C) 2014-2017 Terry Hill <teryhill@yahoo.com> 
 * 
 * LICENSE: This Source Code is subject to the terms of the Mozilla Public License, v. 2.0.
 * See the Mozilla Public License for more details.
@@ -11,11 +11,11 @@
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 *
-* @package LibreHealth EHR
-* @author Terry Hill <teryhill@librehealth.io>
-* @link http://librehealth.io
+* @package Libre EHR
+* @author Terry Hill <teryhill@yahoo.com>
+* @link http://LibreEHR.org
 *
-* Please help the overall project by sending changes you make to the authors and to the LibreHealth EHR community.
+* Please help the overall project by sending changes you make to the authors and to the Libre EHR community.
 *
 */
 require("new.php");

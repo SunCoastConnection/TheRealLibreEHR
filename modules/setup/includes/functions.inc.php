@@ -7,9 +7,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -30,7 +30,7 @@
             }
             else if($step == $key){
             $css_class = ' class="step active-step"';
-            $step_num  = "<div class=\"pull-right step-count\"><span class=\"librehealth-color\">$key</span>&nbsp;/&nbsp;7</div>\n";
+            $step_num  = "<div class=\"pull-right step-count\"><span class=\"Libre-color\">$key</span>&nbsp;/&nbsp;7</div>\n";
             $output .= "\t\t<div".$css_class."></div>\n";
             }
             else{

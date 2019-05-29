@@ -3,7 +3,7 @@
  * This is a report to create a patient ledger of charges with payments
  * applied.
  *
- * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
  * Copyright (C) 2015 Rich Genandt <rgenandt@gmail.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or
@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  WMT
- * @author  Terry Hill <teryhill@librehealth.io>
- * @link    http://librehealth.io
+ * @author  Terry Hill <teryhill@yahoo.com>
+ * @link    http://LibreEHR.org
  */
 
 require_once "reports_controllers/PatientLedgerController.php";
