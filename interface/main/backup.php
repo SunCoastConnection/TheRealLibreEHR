@@ -11,16 +11,16 @@
 // This script creates a backup tarball and sends it to the users's
 // browser for download.  The tarball includes:
 //
-// * an LibreHealth EHR database dump (gzipped)
+// * an Libre EHR database dump (gzipped)
 // * a phpGACL database dump (gzipped), if phpGACL is used and has
 //   its own database
-// * the LibreHealth EHR web directory (.tar.gz)
+// * the Libre EHR web directory (.tar.gz)
 // * the phpGACL web directory (.tar.gz), if phpGACL is used
 //
-// The LibreHealth EHR web directory is important because it includes config-
+// The Libre EHR web directory is important because it includes config-
 // uration files, patient documents, and possible customizations, and
 // also because the database structure is dependent on the installed
-// LibreHealth EHR version.
+// Libre EHR version.
 //
 // This script depends on execution of some external programs:
 // mysqldump & pg_dump.  It has been tested with Debian and Ubuntu

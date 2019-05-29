@@ -18,7 +18,7 @@
  * @package LibreEHR
  * @author  Rod Roark <rod@sunsetsystems.com>
  * @author  Roberto Vasquez <robertogagliotta@gmail.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 require_once("../globals.php");

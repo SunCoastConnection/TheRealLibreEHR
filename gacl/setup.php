@@ -14,7 +14,7 @@ $db_user = $gacl->_db_user;
 $db_password = $gacl->_db_password;
 
 $failed = 0;
-echo '<h4 class="librehealth-color">Configuration...</h4>';
+echo '<h4 class="Libre-color">Configuration...</h4>';
 echo '
             <p>driver = <span class="blueblack">'.$db_type.',</span></p>
             <p>host = <span class="blueblack">'.$db_host.',</span></p>
@@ -43,7 +43,7 @@ function echo_normal($text) {
  * Test database connection
  */
 echo '<p class="clearfix"></p>';
-echo '<h4 class="librehealth-color">Testing database connection...</h4>';
+echo '<h4 class="Libre-color">Testing database connection...</h4>';
 
 if (is_object($db->_connectionID)) {
     echo_success('<span class="blueblack">'.$db_type.'</span> database on <span class="blueblack">' .$db_host.'</span>');
@@ -58,7 +58,7 @@ if (is_object($db->_connectionID)) {
  * Do database specific stuff.
  */
 echo "<p class='clearfix'></p>";
-echo "<h4 class='librehealth-color'>Testing database type...</h4>";
+echo "<h4 class='Libre-color'>Testing database type...</h4>";
 
 switch ( $db_type ) {
 	case ($db_type == "mysql" OR $db_type == "mysqlt" OR $db_type == "maxsql" OR $db_type == "mysqli" ):

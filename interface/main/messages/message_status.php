@@ -5,24 +5,24 @@
  * This file is included as an invisible iframe by forms that want to be
  * notified when a new message for the user comes in.
  *
- * Copyright (C) 2015-2017 Tony McCormick <tony@mi-squared.com> 
+ * Copyright (C) 2015-2017 Tony McCormick <tony@mi-squared.com>
  * Copyright (C) 2012 Julia Longtin <julialongtin@diasp.org>
  *
  *
  * LICENSE: This Source Code is subject to the terms of the Mozilla Public License, v. 2.0
- * See the Mozilla Public License for more details. 
+ * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Julia Longtin <julialongtin@diasp.org>
  * @author  Tony McCormick <tony@mi-squared.com>
- * @author  Terry Hill <teryhill@librehealth.io>
- * @link    http://librehealth.io
+ * @author  Terry Hill <teryhill@yahoo.com>
+ * @link    http://LibreEHR.org
  *
  * This file is included as an invisible iframe by forms that want to be
  * notified when a new message for the user comes in.
  *
- * Added globals for the messages and the display interval 2016 Terry Hill <teryhill@librehealth.io>
+ * Added globals for the messages and the display interval 2016 Terry Hill <teryhill@yahoo.com>
  */
 /* Sanitize All Escapes */
 $fake_register_globals = false;
@@ -53,7 +53,7 @@ require_once($GLOBALS['srcdir'] . '/dated_reminder_functions.php');
             $total = getPnotesByUser(true, false, $_SESSION['authUser'], true);
             $total += GetAllReminderCount();
             if ($total > 0) {
-                echo '<div id="notice' . $notices . '"><div class="sticky"></div><div class="colour">blue</div><div class="title">' . xlt('Notice') . '</div><div class="text">' . xlt('You have') . ' ' . $total . ' ' . xlt('active notes and reminders' . (($total > 1) ? 's' : '')) . '.</div></div>';
+                echo '<div id="notice' . $notices . '"><div class="sticky"></div><div class="colour">blue</div><div class="title">' . xlt('Notice') . '</div><div class="text">' . xlt('You have') . ' ' . $total . ' ' . xlt('active notes and reminders') . '.</div></div>';
                 $notices++;
             }
         }
@@ -65,7 +65,7 @@ require_once($GLOBALS['srcdir'] . '/dated_reminder_functions.php');
         }
     }
     if ($GLOBALS['floating_message_alerts_allergies']) {
-        // Check for Allergies with Reaction/severity 
+        // Check for Allergies with Reaction/severity
         if (acl_check('patients', 'med')) {
            $sql = "SELECT * FROM lists WHERE pid = ? AND type = 'allergy' ORDER BY begdate";
            $res = sqlStatement($sql, array($pid));

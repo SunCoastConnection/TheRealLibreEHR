@@ -22,7 +22,7 @@
  *
  * @package LibreEHR
  *
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *

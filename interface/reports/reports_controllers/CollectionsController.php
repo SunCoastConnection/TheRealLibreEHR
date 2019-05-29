@@ -10,11 +10,11 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Tigpezeghe Rodrige <tigrodrige@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  */
 
 $fake_register_globals=false;
@@ -119,7 +119,7 @@ $grand_total_paid        = 0;
 $grand_total_agedbal = array();
 for ($c = 0; $c < $form_age_cols; ++$c) $grand_total_agedbal[$c] = 0;
 
-/*Attribution: 2010-2017 LibreHealth EHR Support LLC*/
+/*Attribution: 2010-2017 Libre EHR Support LLC*/
 function endPatient($ptrow) {
   global $export_patient_count, $export_dollars, $bgcolor;
   global $grand_total_charges, $grand_total_adjustments, $grand_total_paid;
@@ -197,7 +197,7 @@ function endPatient($ptrow) {
   }
 }
 
-/*Attribution: 2010-2017 LibreHealth EHR Support LLC*/
+/*Attribution: 2010-2017 Libre EHR Support LLC*/
 function endInsurance($insrow) {
   global $export_patient_count, $export_dollars, $bgcolor;
   global $grand_total_charges, $grand_total_adjustments, $grand_total_paid;
@@ -239,7 +239,7 @@ function endInsurance($insrow) {
   }
 }
 
-/*Attribution: 2010-2017 LibreHealth EHR Support LLC*/
+/*Attribution: 2010-2017 Libre EHR Support LLC*/
 function getInsName($payerid) {
   $tmp = sqlQuery("SELECT name FROM insurance_companies WHERE id = ? ", array($payerid));
   return $tmp['name'];

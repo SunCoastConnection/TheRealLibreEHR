@@ -15,9 +15,9 @@ ini_set('display_errors', 1);
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Naveen Muthusamy <kmnaveen101@gmail.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 require '../interface/globals.php';
 require '../library/headers.inc.php';

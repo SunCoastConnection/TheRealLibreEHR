@@ -35,7 +35,7 @@ $config_files_array = array();
 ?>
 
     <div class="card">
-        <h4 class="green">LibreHealth Successfully Installed</h4>
+        <h4 class="green">Libre Successfully Installed</h4>
 
         <?php $iterator =  getSitesDirectories($sitespath);
             foreach($iterator as $file) {
@@ -63,7 +63,7 @@ $config_files_array = array();
                     array_push($not_installed_libreehr_sites, $value);
                 }
 
-                // echo "<p class='librehealth-color'>". $key."has the value ". $value. "</p>";
+                // echo "<p class='Libre-color'>". $key."has the value ". $value. "</p>";
             }
         }
          ?>
@@ -80,7 +80,7 @@ $config_files_array = array();
                 <ul class="list-unstyled">
                 <?php
                 foreach ($installed_libreehr_sites as $value) {
-                    echo "<li class='librehealth-color'><span class='fa fa-mail-forward green'></span> ". basename(dirname($value)) ."</li>";
+                    echo "<li class='Libre-color'><span class='fa fa-mail-forward green'></span> ". basename(dirname($value)) ."</li>";
                 }
                 ?>
                 </ul>

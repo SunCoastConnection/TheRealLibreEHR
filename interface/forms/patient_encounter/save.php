@@ -19,10 +19,10 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
- * @author  Brady Miller <brady@sparmy.com>
+ * @package Libre EHR
+ 
  * @author  Roberto Vasquez <robertogagliotta@gmail.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 $fake_register_globals=false;

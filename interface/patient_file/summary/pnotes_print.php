@@ -14,8 +14,8 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package LibreEHR
- * @author  Brady Miller <brady@sparmy.com>
- * @link    http://librehealth.io
+ 
+ * @link    http://LibreEHR.org
  */
 
 //SANITIZE ALL ESCAPES

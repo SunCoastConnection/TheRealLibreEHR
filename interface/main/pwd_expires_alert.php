@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  ViCarePlus Team, Visolve <vicareplus_engg@visolve.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 $fake_register_globals=false;

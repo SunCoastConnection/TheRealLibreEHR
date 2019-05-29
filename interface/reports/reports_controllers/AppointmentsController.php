@@ -10,11 +10,11 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Tigpezeghe Rodrige <tigrodrige@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  */
 
@@ -73,7 +73,7 @@ $form_orderby = getComparisonOrder( $_REQUEST['form_orderby'] ) ?  $_REQUEST['fo
 // Reminders related stuff
 $incl_reminders = isset($_POST['incl_reminders']) ? 1 : 0;
 
-/* Attribution: 2015-2017 Terry Hill <teryhill@librehealth.io> 
+/* Attribution: 2015-2017 Terry Hill <teryhill@yahoo.com> 
  * and 2005-2010 Rod Roark <rod@sunsetsystems.com>*/
 function fetch_rule_txt ($list_id, $option_id) {
     $rs = sqlQuery('SELECT title, seq from list_options WHERE list_id=? AND option_id=?',
@@ -82,7 +82,7 @@ function fetch_rule_txt ($list_id, $option_id) {
     return $rs;
 }
 
-/* Attribution: 2015-2017 Terry Hill <teryhill@librehealth.io> 
+/* Attribution: 2015-2017 Terry Hill <teryhill@yahoo.com> 
  * and 2005-2010 Rod Roark <rod@sunsetsystems.com>*/
 function fetch_reminders($pid, $appt_date) {
     $rems = test_rules_clinic('','passive_alert',$appt_date,'reminders-due',$pid);

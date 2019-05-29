@@ -15,11 +15,11 @@
  *
  * @package LibreEHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @author  Brady Miller <brady@sparmy.com>
+ 
  * @author  Kevin Yeh <kevin.y@integralemr.com>
  * @author  ViCarePlus <visolve_emr@visolve.com>
  * @author  cfapress
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 //----------THINGS WE ALWAYS DO

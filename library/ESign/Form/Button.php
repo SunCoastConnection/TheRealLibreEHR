@@ -6,7 +6,7 @@ namespace ESign;
  * Form implementation of ButtonIF interface, which is used to 
  * display a button that triggers esign behavior.
  * 
- * Copyright (C) 2013 LibreHealth EHR
+ * Copyright (C) 2013 Libre EHR
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,10 +19,10 @@ namespace ESign;
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Medical Information Integration, LLC
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  **/
 
 require_once $GLOBALS['srcdir'].'/ESign/ButtonIF.php';

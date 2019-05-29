@@ -8,9 +8,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -87,7 +87,7 @@ $task = $_POST["task"];
         $gotFileFlag = 1;
         }
         }
-        echo "<li>To ensure proper functioning of LibreHealth EHR you must make sure that settings in php.ini file include:
+        echo "<li>To ensure proper functioning of Libre EHR you must make sure that settings in php.ini file include:
             <ul>
                 <li>\"short_open_tag = <span class='blueblack'>On</span>\"</li>
                 <li>\"display_errors = <span class='blueblack'>Off</span>\"</li>
@@ -107,14 +107,14 @@ $task = $_POST["task"];
                 <li>\"upload_tmp_dir\" is set to a correct default value that will work on your system.</li>
             </ul>";
 
-            echo "<li>To ensure proper functioning of LibreHealth EHR you must make sure that settings in MYSQL <span class='blueblack'>/etc/mysql/my.cnf</span> file include:
+            echo "<li>To ensure proper functioning of Libre EHR you must make sure that settings in MYSQL <span class='blueblack'>/etc/mysql/my.cnf</span> file include:
             <ul>
                 <li>\"key_buffer_size\" set to 2% of your system's RAM (Less thatn 2% recommended) </li>
                 <li>\"innodb_buffer_pool_size\" set to 70% of available RAM.</li>
             </ul>";
 
             if (!$gotFileFlag) {
-            echo "<li>If you are having difficulty finding your php.ini file, then refer to the <a href='https://github.com/LibreHealthIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual for suggestions.</li>\n";
+            echo "<li>If you are having difficulty finding your php.ini file, then refer to the <a href='https://github.com/LibreIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual for suggestions.</li>\n";
         }
         echo "</ul>";
         echo "</div>";

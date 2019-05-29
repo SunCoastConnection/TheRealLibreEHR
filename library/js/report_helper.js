@@ -15,9 +15,9 @@
  * along with this program. If not, see 
  * http://www.gnu.org/licenses/licenses.html#GPL .
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 var oeFixedHeaderSrc;     // the report's main table

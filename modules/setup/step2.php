@@ -10,9 +10,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -110,9 +110,9 @@ require_once("includes/header.inc.php");
     <?php
        echo "
            <div class='pull-left'>
-            Operating system:<span class='librehealth-color'> ".$os."</span><br>
-            About system:<span class='librehealth-color'> ".$about_sys."</span><br>
-            Server software:<span class='librehealth-color'> ".$server_software."</span><br>
+            Operating system:<span class='Libre-color'> ".$os."</span><br>
+            About system:<span class='Libre-color'> ".$about_sys."</span><br>
+            Server software:<span class='Libre-color'> ".$server_software."</span><br>
            </div>
        ";
 
@@ -165,13 +165,13 @@ require_once("includes/header.inc.php");
                                     ';
                                 foreach($extension_check_array as $extension) {
                                   if(!extension_loaded($extension)) {
-                                          $pass .= '<li class="text-left"><span class="fa fa-mail-forward red"></span> You are missing the <strong><span class="red">'.$extension.'</span></strong> extension <small class="librehealth-color">'; if($extension){$pass.='(required for LIMS integration)';} $pass.='</small></li>';
+                                          $pass .= '<li class="text-left"><span class="fa fa-mail-forward red"></span> You are missing the <strong><span class="red">'.$extension.'</span></strong> extension <small class="Libre-color">'; if($extension){$pass.='(required for LIMS integration)';} $pass.='</small></li>';
                                   }
                                   else{   $pass .= '<li class="text-left"><span class="fa fa-mail-forward green"></span> You have the <strong><span class="green">'.$extension.'</span></strong> extension ';
-                                  if($extension == 'mbstring'){$pass.='<small class="librehealth-color">(required for LIMS)';} $pass.='</small>';
-                                  if($extension == 'mysql'){$pass.='<small class="librehealth-color">(required for LIMS, Updater integration)';} $pass.='</small>';
-                                  if($extension == 'xml'){$pass.='<small class="librehealth-color">(required for LIMS, Updater integration)';} $pass.='</small>';
-                                  if($extension == 'gd'){$pass.='<small class="librehealth-color">(required for LIMS, Updater integration)';} $pass.='</small>
+                                  if($extension == 'mbstring'){$pass.='<small class="Libre-color">(required for LIMS)';} $pass.='</small>';
+                                  if($extension == 'mysql'){$pass.='<small class="Libre-color">(required for LIMS, Updater integration)';} $pass.='</small>';
+                                  if($extension == 'xml'){$pass.='<small class="Libre-color">(required for LIMS, Updater integration)';} $pass.='</small>';
+                                  if($extension == 'gd'){$pass.='<small class="Libre-color">(required for LIMS, Updater integration)';} $pass.='</small>
                                                    </li>';
                                   }
                                     };

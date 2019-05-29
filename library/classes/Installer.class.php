@@ -36,7 +36,7 @@ class Installer
     // Record names of sql table files
     $this->main_sql = dirname(__FILE__) . '/../../sql/database.sql';
     $this->translation_sql = dirname(__FILE__) . '/../../modules/language_translations/currentLanguage_utf8.sql';
-    //$this->devel_translation_sql = "https://github.com/LibreHealthIO/lh-ehr-contribs/currentLanguage_utf8.sql";  //does not exist
+    $this->devel_translation_sql = "https://github.com/LibreIO/lh-ehr-contribs/currentLanguage_utf8.sql";  //does not exist
     $this->cvx = dirname(__FILE__) . "/../../sql/cvx_codes.sql";
     $this->additional_users = dirname(__FILE__) . "/../../sql/official_additional_users.sql";
     //$this->menu_def = dirname(__FILE__) . "/../../sql/menu_definitions.sql";  //REVIEW
@@ -290,7 +290,7 @@ class Installer
               private function setup_env_file($db_credentials) {
                   $dot_env_file_path = dirname(__FILE__) . '/../../modules/report_generator'; // expected .env file path
                   $dot_env_file = $dot_env_file_path.'/.env';
-            
+
                   // 1. Check if file EXISTS, else create file.
                   if(file_exists($dot_env_file)){
                      // 2. If file exists, check if the application key and databases' credentials have been specified.
@@ -308,9 +308,9 @@ class Installer
                       $this->create_dot_env_file($dot_env_file);  // Create file.
                       $this->generate_application_key();  // Generate application key.
                       $this->write_to_env_file($dot_env_file, $db_credentials ); // Write database credentials.
-            
+
                   }
-            
+
                   // 5. If file is successfully created and written to, call the 'php artisan make:database' command.
                   exec('cd '.escapeshellarg($dot_env_file_path)); // move to the report generator directory first!
                   exec('php artisan make:database'); // run 'php artisan make:database' command here.
@@ -319,9 +319,9 @@ class Installer
                   //    1. creates report generateor database called 'librereportgenerator'.
                   //    2. runs laravel-module's database migration command, (programmatically).
                   //    3. runs laravel-module's database seeds, (programmatically).
-            
+
               }
-            
+
               /**
               * Create laravel .env file for specifying various application variables.
               * @param dot_env_file path to .env file. Includes file's name
@@ -336,48 +336,48 @@ class Installer
               * @author 2018 Tigpezeghe Rodrige K. <tigrodrige@gmail.com>
               //RESTORE COMMENT HERE AFTER FIX
               private function write_to_env_file($dot_env_file, $db_credentials, $update = FALSE){
-            
+
                   if($update){ // Just delete the existing file and recreate it.
                       unlink($dot_env_file);
                       $this->create_dot_env_file($dot_env_file);
                   }
-            
+
                   $env_file_open = @fopen($dot_env_file, 'w'); // Open .env file for writing
                   if ( !$env_file_open ) { // If .env file doesn't open
                       $this->error_message = 'Unable to open'.$dot_env_file.' file for writing';
                       return FALSE;
                   }
-            
+
                   $string_connection_1 ='DB_REPORT_GENERATOR_CONNECTION=mysql_report_generator';
                   $string_connection_2 = 'DB_LIBREEHR_CONNECTION=mysql_libreehr';
-            
+
                   $errors = 0;   //fmg: variable keeps running track of any errors
-            
+
                   fwrite($env_file_open,$string_connection_1) or $errors++;
                   fwrite($env_file_open,"DB_REPORT_GENERATOR_HOST=$db_credentials['db_host']\n") or $errors++;
                   fwrite($env_file_open,"DB_REPORT_GENERATOR_PORT=$db_credentials['db_port']\n") or $errors++;
                   fwrite($env_file_open,"DB_REPORT_GENERATOR_DATABASE=$db_credentials['db_name']\n") or $errors++;
                   fwrite($env_file_open,"DB_REPORT_GENERATOR_USERNAME=$db_credentials['db_username']\n") or $errors++;
                   fwrite($env_file_open,"DB_REPORT_GENERATOR_PASSWORD=$db_credentials['db_password']\n\n") or $errors++;
-            
+
                   fwrite($env_file_open,$string_connection_2) or $errors++;
                   fwrite($env_file_open,"DB_LIBREEHR_HOST=$db_credentials['db_host']\n") or $errors++;
                   fwrite($env_file_open,"DB_LIBREEHR_PORT=$db_credentials['db_port']\n") or $errors++;
                   fwrite($env_file_open,"DB_LIBREEHR_DATABASE=$db_credentials['db_name']\n") or $errors++;
                   fwrite($env_file_open,"DB_LIBREEHR_USERNAME=$db_credentials['db_username']\n") or $errors++;
                   fwrite($env_file_open,"DB_LIBREEHR_PASSWORD=$db_credentials['db_password']\n\n") or $errors++;
-            
+
                   fclose($env_file_open) or $errors++;
-            
+
                   // Report errors when writing this file.
                   if ($errors != 0) {
                     $this->error_message = "ERROR. Couldn't write $errors lines to config file '$dot_env_file'.\n";
                     return FALSE;
                   }
-            
+
                   return TRUE;
               }
-            
+
               /**
               * Create laravel .env file for specifying various application variables.
               * @param dot_env_file
@@ -396,16 +396,16 @@ class Installer
                           APP_LOG_LEVEL=debug
                           APP_URL=http://localhost
                       ';
-            
+
                       $env_file_open = @fopen($dot_env_file, 'w'); // Open .env file for writing
                       if ( !$env_file_open ) { // If .env file doesn't open
                           $this->error_message = 'Unable to open .'$dot_env_file'. file for writing';
                           return FALSE;
                       }
-            
+
                       fwrite($env_file_open, $initial_string);
                       fclose($env_file_open);
-            
+
                       return TRUE;
                   }
                   else {
@@ -413,7 +413,7 @@ class Installer
                       return FALSE;
                   }
               }
-            
+
               /**
               * Generate laravel application key for report generator.
               * This key will be used for the whole laravel app.
@@ -428,7 +428,7 @@ class Installer
                   exec('cd ../../library/classes'); // Go back to the installer directory.
               }
 
-REMOVE THIS LINE AFTER FIX*/  
+REMOVE THIS LINE AFTER FIX*/
 
 
   public function write_configuration_file() {
@@ -672,7 +672,7 @@ $config = 1; /////////////
 
         // Use the local translation set
         $dumpfiles[ $this->translation_sql ] = "Language Translation (utf8)";
-      
+
 
       // Load CVX codes if present
       if (file_exists( $this->cvx )) {

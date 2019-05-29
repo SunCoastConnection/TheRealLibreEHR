@@ -1,12 +1,12 @@
 <?php
 /*
- * Download documents from LibreHealth EHR to the patient portal in a zip file(get_patient_documents.php)
+ * Download documents from Libre EHR to the patient portal in a zip file(get_patient_documents.php)
  *
  * This program is used to download patient documents in a zip file in the Patient Portal.
  * The original author did not pursue this but I thought it would be a good addition to 
  * the patient portal 
  * 
- * Copyright (C) 2015-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2015-2017 Terry Hill <teryhill@yahoo.com> 
  * Copyright (C) 2012 Giorgos Vasilakos <giorg.vasilakos@gmail.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or 
@@ -24,12 +24,12 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Giorgos Vasilakos <giorg.vasilakos@gmail.com>
- * @author Terry Hill <teryhill@librehealth.io> 
- * @link http://librehealth.io
+ * @author Terry Hill <teryhill@yahoo.com> 
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the authors and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the authors and to the Libre EHR community.
  * 
  */
     

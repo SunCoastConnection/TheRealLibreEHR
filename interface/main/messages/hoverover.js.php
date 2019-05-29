@@ -12,10 +12,10 @@
  * This file is included as an invisible iframe by forms that want to be
  * notified when a new message for the user comes in.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Julia Longtin <julialongtin@diasp.org>
  * @author  Tony McCormick <tony@mi-squared.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 /* for $GLOBALS[]. */
 require_once('../../globals.php'); 

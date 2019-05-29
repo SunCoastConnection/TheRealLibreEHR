@@ -1,4 +1,4 @@
-# LibreHealthEHR Merge Encounters
+# LibreEHR Merge Encounters
 
 ## Technologies Used
 

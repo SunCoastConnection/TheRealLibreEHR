@@ -4,10 +4,10 @@
 // Sponsored by David Eschelbacher, MD
 // Copyright (C) 2018 Apoorv Choubey < theapoorvs1@gmail.com >
 //
-// @package LibreHealth EHR
+// @package Libre EHR
 // @author Rod Roark <rod@sunsetsystems.com>
 // @author Apoorv Choubey < theapoorvs1@gmail.com >
-// @link http://librehealth.io
+// @link http://LibreEHR.org
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License

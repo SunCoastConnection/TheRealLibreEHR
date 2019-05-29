@@ -16,10 +16,10 @@ use ESign\Api;
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
  * @package LibreEHR
- * @author  Brady Miller <brady@sparmy.com>
+ 
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Tony McCormick <tony@mi-squared.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 require_once("../../globals.php");

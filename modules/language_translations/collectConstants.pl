@@ -5,10 +5,6 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 #
-# author Brady Miller
-# email  brady@sparmy.com
-# date   03/25/09
-#
 # This is a perl script that will collect unique constants within
 # LibreEHR source code.
 #  It effectively finds all xl("constants","") within LibreEHR.

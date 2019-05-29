@@ -6,7 +6,7 @@
  * Migrated this from the original template driven form developed
  * by Sherwin Gaddis <sherwingaddis@gmail.com>
  *
- * @copyright Copyright (C) 2018 Terry Hill <teryhill@librehealth.io>
+ * @copyright Copyright (C) 2018 Terry Hill <teryhill@yahoo.com>
  *
  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
@@ -16,13 +16,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
- * @author  Terry Hill <teryhill@librehealth.io>
+ * @package Libre EHR
+ * @author  Terry Hill <teryhill@yahoo.com>
  * @author  Nilesh Prasad <prasadnilesh96@gmail.com>
  * @author  Sherwin Gaddis <sherwingaddis@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  */
 $fake_register_globals=false;

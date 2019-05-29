@@ -7,9 +7,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -22,7 +22,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="libs/images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LibreHealth EHR Setup Tool</title>
+    <title>Libre EHR Setup Tool</title>
     <link type="text/css" rel="stylesheet" href="libs/css/font-awesome/css/font-awesome.css">
     <link type="text/css" rel="stylesheet" href="libs/css/bootstrap/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="libs/css/bootstrap/css/bootstrap-select.min.css">
@@ -40,18 +40,18 @@
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="navbar-header">
             <a class="navbar-brand header-nav" href="#" style="margin-top:-10px;">
-                <img src="libs/images/LibreHealth.png" alt="librehealth-logo" title="librehealthehr-logo" width="140">
+                <img src="libs/images/Libre.png" alt="Libre-logo" title="Libreehr-logo" width="140">
             </a>
 
         </div>
     </nav>
 
-    <h1 class="white" style="font-family: GreatVibes;font-weight: bolder;">Welcome to Librehealth-ehr</h1>
+    <h1 class="white" style="font-family: GreatVibes;font-weight: bolder;">Welcome to Libre-ehr</h1>
     <div class="divider">
         <div class="divider-child"></div>
     </div>
     <p class="clearfix"></p>
-    <p class="text-center white" style="font-weight: bolder">This utility will step you through the installation and configuration of LibrehealthEHR for your practice</p>
+    <p class="text-center white" style="font-weight: bolder">This utility will step you through the installation and configuration of LibreEHR for your practice</p>
     <p class="clearfix"></p>
     <p class="clearfix"></p>
     <p class="clearfix"></p>

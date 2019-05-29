@@ -22,16 +22,16 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Cassian LUP <cassi.lup@gmail.com>
  * @author Kevin Yeh <kevin.y@integralemr.com>
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Moved out of individual get_* portal functions for re-use by
  * Kevin Yeh (kevin.y@integralemr.com) May 2013
  *
- * Please help the overall project by sending changes you make to the authors and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the authors and to the Libre EHR community.
  *
  */
  
@@ -60,6 +60,6 @@
     }
     //
 
-    $ignoreAuth=true; // ignore the standard authentication for a regular LibreHealth EHR user
+    $ignoreAuth=true; // ignore the standard authentication for a regular Libre EHR user
     require_once(dirname(__file__) . './../interface/globals.php');
 ?>

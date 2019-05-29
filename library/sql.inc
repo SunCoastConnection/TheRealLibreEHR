@@ -1,8 +1,8 @@
 <?php
 /**
-* Sql functions/classes for LibreHealth EHR.
+* Sql functions/classes for Libre EHR.
 *
-* Includes classes and functions that LibreHealth EHR uses
+* Includes classes and functions that Libre EHR uses
 * to interact with SQL.
 *
 * LICENSE: This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://opensource.org/licenses/gpl-license.php>.
 * 
-* @package   LibreHealth EHR
-* @link      http://librehealth.io
+* @package   Libre EHR
+* @link      http://LibreEHR.org
 */
 
 require_once(dirname(__FILE__) . "/sqlconf.php");
@@ -132,7 +132,7 @@ $GLOBALS['dbh'] = $database->_connectionID;
 if (!$disable_utf8_flag) {
  $success_flag = $database->Execute("SET NAMES 'utf8'");
   if (!$success_flag) {
-   error_log("PHP custom error: from librehealth ehr library/sql.inc  - Unable to set up UTF8 encoding with mysql database: ".getSqlLastError(), 0);
+   error_log("PHP custom error: from Libre ehr library/sql.inc  - Unable to set up UTF8 encoding with mysql database: ".getSqlLastError(), 0);
   }
 }
 

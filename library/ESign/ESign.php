@@ -20,8 +20,8 @@ namespace ESign;
  * @package LibreEHR
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Medical Information Integration, LLC
- * @author  Brady Miller <brady@sparmy.com>
- * @link    http://librehealth.io
+ 
+ * @link    http://LibreEHR.org
  **/
 
 include_once $GLOBALS['srcdir'].'/sql.inc';

@@ -6,7 +6,7 @@
  *  This report shows past encounters with filtering and sorting, 
  *  Added filtering to show encounters not e-signed, encounters e-signed and forms e-signed.
  * 
- * Copyright (C) 2015-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2015-2017 Terry Hill <teryhill@yahoo.com> 
  * Copyright (C) 2007-2010 Rod Roark <rod@sunsetsystems.com>
  * 
  * LICENSE: This program is free software; you can redistribute it and/or 
@@ -20,10 +20,10 @@
  * You should have received a copy of the GNU General Public License 
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
  * 
- * @package LibreHealth EHR 
- * @author Terry Hill <teryhill@librehealth.io> 
+ * @package Libre EHR 
+ * @author Terry Hill <teryhill@yahoo.com> 
  * @author Rod Roark <rod@sunsetsystems.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  */
 

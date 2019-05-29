@@ -2,7 +2,7 @@
 /**
  *
  * Copyright (C) 2012-2013 Naina Mohamed <naina@capminds.com> CapMinds Technologies
- * Copyright (C) 2017 Terry Hill <teryhill@librehealth.io>
+ * Copyright (C) 2017 Terry Hill <teryhill@yahoo.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,9 +19,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Naina Mohamed <naina@capminds.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
  
  

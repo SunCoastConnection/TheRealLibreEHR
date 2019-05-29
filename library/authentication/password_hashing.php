@@ -26,7 +26,7 @@
  *
  * @package LibreEHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 define("SALT_PREFIX_SHA1",'$SHA1$');

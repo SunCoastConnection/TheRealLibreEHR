@@ -6,7 +6,7 @@
  * Program for displaying Address Labels 
  * from the appointment report
  * 
- * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com> 
  * 
  * LICENSE: This program is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License 
@@ -20,7 +20,7 @@
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;. 
  * 
  * @package LibreEHR 
- * @author Terry Hill <teryhill@librehealth.io>
+ * @author Terry Hill <teryhill@yahoo.com>
  * @link http://www.libreehr.org 
  */
 # I used the program example supplied with the Avery Label Print Class to produce this program

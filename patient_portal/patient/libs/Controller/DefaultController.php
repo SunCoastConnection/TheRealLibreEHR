@@ -1,5 +1,5 @@
 <?php
-/** @package LibreHealth EHR::Controller */
+/** @package Libre EHR::Controller */
 
 /** import supporting libraries */
 require_once("AppBaseController.php");
@@ -10,7 +10,7 @@ require_once("AppBaseController.php");
  * From phreeze package
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
  *
- * @package LibreHealth EHR::Controller
+ * @package Libre EHR::Controller
  * @author ClassBuilder
  * @version 1.0
  */

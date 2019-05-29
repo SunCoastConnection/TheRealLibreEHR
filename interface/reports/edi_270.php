@@ -7,7 +7,7 @@
  *  The changes to this file as of November 16 2016  to bring it to the 5010 standard
  *  are covered under the terms of the Mozilla Public License, v. 2.0
  *
- * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
  *
  * Copyright (C) 2010 MMF Systems, Inc>
  *
@@ -26,12 +26,12 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
- * @author Terry Hill <teryhill@librehealth.io>
+ * @package Libre EHR
+ * @author Terry Hill <teryhill@yahoo.com>
  * No other authors mentioned in the previous header file.
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  */
 

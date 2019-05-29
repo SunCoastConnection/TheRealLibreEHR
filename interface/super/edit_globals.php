@@ -4,7 +4,7 @@
  *
  * This program allows the editing of the system Globals
  *
- * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
  * Copyright (C) 2010 Rod Roark <rod@sunsetsystems.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or
@@ -18,12 +18,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
- * @author Terry Hill <teryhill@librehealth.io>
+ * @package Libre EHR
+ * @author Terry Hill <teryhill@yahoo.com>
  * @author Rod Roark <rod@sunsetsystems.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  */
 

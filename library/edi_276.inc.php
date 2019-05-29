@@ -4,7 +4,7 @@
  *
  * This program creates the segments for the x12 276 Claim Status file
  *
- * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
+ * @copyright Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0 and the following
  * Healthcare Disclaimer
@@ -33,7 +33,7 @@
  * See the Mozilla Public License for more details.
  *
  * @package LibreEHR
- * @author Terry Hill <teryhill@librehealth.io>
+ * @author Terry Hill <teryhill@yahoo.com>
  * @link http://www.libreehr.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.

@@ -20,12 +20,12 @@
  * 
  * 
  * @author Kevin McCormick
- * @link: http://librehealth.io
- * @package LibreHealth EHR
+ * @link: http://LibreEHR.org
+ * @package Libre EHR
  * @subpackage ediHistory
  */
 
-/* these lines for LibreHealth EHR
+/* these lines for Libre EHR
  */  
 $sanitize_all_escapes=true; 
 $fake_register_globals=false; 
@@ -42,14 +42,14 @@ define('SITE_IN', 1);
 // however for a startup they may, or a "mask" value of 1000 or 10000
 // would be a good idea if there are problems with deciphering the pid-encounter
 // same idea for pid value, but since encounter is unique and always last, it is essential
-// possibly check the mask value in LibreHealth EHR globals to set this
+// possibly check the mask value in Libre EHR globals to set this
 /**
  * Try and prevent panic if patient invoice number is mangled by treating the last
  * digits as the encounter number
  */
 if (!defined("IBR_ENCOUNTER_DIGIT_LENGTH")) define("IBR_ENCOUNTER_DIGIT_LENGTH",  "5");
 /**
- * these delimiters are hardcoded into LibreHealth EHR batch files
+ * these delimiters are hardcoded into Libre EHR batch files
  */   
 if (!defined("SEG_ELEM_DELIM")) define( "SEG_ELEM_DELIM" , "*");
 if (!defined("SEG_TERM_DELIM")) define( "SEG_TERM_DELIM" , "~");

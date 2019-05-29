@@ -8,9 +8,9 @@
  *
  * Rewrite and modifications by sjpadgett@gmail.com Padgetts Consulting 2016.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Medical Information Integration,LLC <info@mi-squared.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
   */
 
 $sanitize_all_escapes=true;

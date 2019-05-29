@@ -2,8 +2,8 @@
 /**
  * Portal Registration Wizard
  *
- * @package LibreHealth EHR
- * @link    http://librehealth.io
+ * @package Libre EHR
+ * @link    http://LibreEHR.org
  * @author  Jerry Padgett <sjpadgett@gmail.com>
  * @copyright Copyright (c) 2017 Jerry Padgett <sjpadgett@gmail.com>
  * @license https://www.gnu.org/licenses/agpl-3.0.en.html GNU Affero General Public License 3

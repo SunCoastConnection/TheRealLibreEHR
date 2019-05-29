@@ -1,5 +1,5 @@
 <?php
-/** @package LibreHealth EHR::Controller */
+/** @package Libre EHR::Controller */
 
 /**
  *
@@ -9,9 +9,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  */
 
 /** import supporting libraries */
@@ -20,7 +20,7 @@ require_once("AppBaseController.php");
 /**
  * DefaultController is the entry point to the application
  *
- * @package LibreHealth EHR::Controller
+ * @package Libre EHR::Controller
  * @author ClassBuilder
  * @version 1.0
  */

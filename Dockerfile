@@ -1,6 +1,6 @@
 ARG PHP_DOCKER_TAG=7.2-apache
 FROM php:${PHP_DOCKER_TAG}
-LABEL maintainer="LibreHealth Infrastructure Team <infrastructure@librehealth.io>"
+LABEL maintainer="Libre Infrastructure Team <infrastructure@LibreEHR.org>"
 
 VOLUME /var/www/html/sites
 
@@ -52,7 +52,7 @@ RUN { \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 
-# Installing latest LibreHealth EHR (master)
+# Installing latest Libre EHR (master)
 RUN set -ex; rm -fr /vaw/www/html
 RUN a2enmod rewrite expires
 

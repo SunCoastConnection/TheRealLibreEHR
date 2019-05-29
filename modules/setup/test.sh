@@ -12,7 +12,7 @@ zenity  --notification  --window-icon=/var/www/html/$rootSite/modules/setup/libs
 if [[ "$EUID" = 0 ]]; then
 
     echo "Already root"
-        zenity --question --width=350 --height=100 --text="Do you want to install this package?" --title="LibrehealthEHR Upgrade" 2> /dev/null
+        zenity --question --width=350 --height=100 --text="Do you want to install this package?" --title="LibreEHR Upgrade" 2> /dev/null
         test=$? #get the response from thr dialog box
 
         #comparing the value obtained to see if user accepted or not
@@ -20,10 +20,10 @@ if [[ "$EUID" = 0 ]]; then
             echo "$(tput setaf 1)Upgrade stoped. User ended action"
             exit;
           else
-            echo "$(tput setaf 2)Librehealth preparing to install packages... $(tput setaf 7)"
+            echo "$(tput setaf 2)Libre preparing to install packages... $(tput setaf 7)"
         fi
 
-        ans=$(zenity --title="LibrehealthEHR Upgrade" --list --width=600 --height=300  --text "The following packages will be installed" --checklist  --column "Pick" --column "options" TRUE "git" TRUE "php-soap" TRUE "php-gd" TRUE "php-gettext" TRUE "php-zip" TRUE "php-json" TRUE "php-curl" TRUE "php-xml" TRUE "php-soap" TRUE "php-mbstring" TRUE "mysql-server" TRUE "apache2" TRUE "imagemagick" TRUE "libtiff-tools" TRUE "php(7.0.*)" TRUE "libapache2-mod-php" TRUE "composer(dependency manager)" --separator=":" 2> /dev/null);
+        ans=$(zenity --title="LibreEHR Upgrade" --list --width=600 --height=300  --text "The following packages will be installed" --checklist  --column "Pick" --column "options" TRUE "git" TRUE "php-soap" TRUE "php-gd" TRUE "php-gettext" TRUE "php-zip" TRUE "php-json" TRUE "php-curl" TRUE "php-xml" TRUE "php-soap" TRUE "php-mbstring" TRUE "mysql-server" TRUE "apache2" TRUE "imagemagick" TRUE "libtiff-tools" TRUE "php(7.0.*)" TRUE "libapache2-mod-php" TRUE "composer(dependency manager)" --separator=":" 2> /dev/null);
         response=$? #get response from above dialog box
          #comparing the value obtained to see if user accepted or not
         if [[ $response -eq $deny ]]; then
@@ -65,7 +65,7 @@ if [[ "$EUID" = 0 ]]; then
             sudo -k # make sure to ask for password on next sudo
             if sudo true; then
                 echo "(2) correct password"
-                   zenity --question --width=350 --height=100 --text="Do you want to install this package?" --title="LibrehealthEHR Upgrade" 2> /dev/null
+                   zenity --question --width=350 --height=100 --text="Do you want to install this package?" --title="LibreEHR Upgrade" 2> /dev/null
                    test=$? #get the response from thr dialog box
 
                     #comparing the value obtained to see if user accepted or not
@@ -76,7 +76,7 @@ if [[ "$EUID" = 0 ]]; then
                         echo "use accepted"
                     fi
 
-                ans=$(zenity --title="LibrehealthEHR Upgrade" --list --width=600 --height=300  --text "The following packages will be installed (you can decide to uncheck ones already installed.)" --checklist  --column "Pick" --column "options" TRUE "php7.0-curl" TRUE "php7.0-xml" TRUE "php7.0-soap" TRUE "php7.0-mbstring" --separator=":" 2> /dev/null);
+                ans=$(zenity --title="LibreEHR Upgrade" --list --width=600 --height=300  --text "The following packages will be installed (you can decide to uncheck ones already installed.)" --checklist  --column "Pick" --column "options" TRUE "php7.0-curl" TRUE "php7.0-xml" TRUE "php7.0-soap" TRUE "php7.0-mbstring" --separator=":" 2> /dev/null);
                 response=$? #get response from above dialog box
                  #comparing the value obtained to see if user accepted or not
                 if [[ $response -eq $deny ]]; then

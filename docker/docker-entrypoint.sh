@@ -43,7 +43,7 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 	if [ ! -e .htaccess ]; then
 		# NOTE: The "Indexes" option is disabled in the php:apache base image
 		cat > .htaccess <<- EOF
-    # BEGIN LibreHealth
+    # BEGIN Libre
     <IfModule mod_rewrite.c>
         RewriteEngine On
         RewriteBase /
@@ -52,17 +52,17 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
         RewriteCond %{REQUEST_FILENAME} !-d
         RewriteRule . /index.php [L]
     </IfModule>
-    # END LibreHealth
+    # END Libre
 EOF
 		chown "$user:$group" .htaccess
 	fi
 
 	envs=(
-		LIBREHEALTH_DB_HOST
-		LIBREHEALTH_DB_PORT
-		LIBREHEALTH_DB_USER
-		LIBREHEALTH_DB_PASSWORD
-		LIBREHEALTH_DB_NAME
+		Libre_DB_HOST
+		Libre_DB_PORT
+		Libre_DB_USER
+		Libre_DB_PASSWORD
+		Libre_DB_NAME
 	)
 
 	haveConfig=
@@ -74,13 +74,13 @@ EOF
 	done
 
 	# Control startup order when not using
-	#  $ docker run --health-cmd='mysqladmin ping -h"${LIBREHEALTH_DB_HOST}" --silent (...)'
+	#  $ docker run --health-cmd='mysqladmin ping -h"${Libre_DB_HOST}" --silent (...)'
 	#  nor health service
 	#  more: https://docs.docker.com/compose/startup-order/
 	#
 	#  This was an express request from community:
-	while ! mysqladmin ping -h"${LIBREHEALTH_DB_HOST}" -u"${LIBREHEALTH_DB_USER}" -p"${LIBREHEALTH_DB_PASSWORD}" --silent; do
-		>&2 echo "MYSQL host ${LIBREHEALTH_DB_HOST} is unavailable - sleeping ..."
+	while ! mysqladmin ping -h"${Libre_DB_HOST}" -u"${Libre_DB_USER}" -p"${Libre_DB_PASSWORD}" --silent; do
+		>&2 echo "MYSQL host ${Libre_DB_HOST} is unavailable - sleeping ..."
 		sleep 1
 	done
 	>&2 echo "DB is up - continue ..."

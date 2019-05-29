@@ -1,6 +1,6 @@
 JS include directory structure
 
-@package LibreHealthEHR
+@package LibreEHR
 
 The /js/ directory contains minimized javascript libraries
 and sub-directories with other javascript resource packages

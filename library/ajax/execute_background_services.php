@@ -49,7 +49,7 @@
  *
  * @package LibreEHR
  * @author  EMR Direct <http://www.emrdirect.com/>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 //SANITIZE ALL ESCAPES

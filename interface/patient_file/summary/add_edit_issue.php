@@ -9,9 +9,9 @@
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author  Rod Roark <rod@sunsetsystems.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 //SANITIZE ALL ESCAPES

@@ -19,19 +19,19 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
  * @author Cassian LUP <cassi.lup@gmail.com>
- * @link http://Librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the authors and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the authors and to the Libre EHR community.
  *
  */
 
     //setting the session & other config options
     session_start();
 
-    //don't require standard LibreHealth EHR authorization in globals.php
+    //don't require standard Libre EHR authorization in globals.php
     $ignoreAuth = 1;
 
     //SANITIZE ALL ESCAPES
@@ -238,7 +238,7 @@ if (!(isset($_SESSION['password_update']) || isset($_GET['requestNew']))) {
             </table>
         </form>
 
-        <div class="copyright"><?php echo xlt('Powered by');?> LibreHealth EHR</div>
+        <div class="copyright"><?php echo xlt('Powered by');?> Libre EHR</div>
 
       </div>
     <?php } elseif (isset($_GET['requestNew'])) { ?>

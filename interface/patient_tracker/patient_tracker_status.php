@@ -5,15 +5,15 @@
  * This allows entry and editing of current status for the patient from within patient tracker and updates the status on the calendar.
  * Contains a drop down for the Room information driven by the list Patient Flow Board Rooms.
  *
- * Copyright (C) 2015-2017 Terry Hill <teryhill@librehealth.io>
+ * Copyright (C) 2015-2017 Terry Hill <teryhill@yahoo.com>
  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
- * @author Terry Hill <teryhill@librehealth.io>
- * @link http://librehealth.io 
+ * @package Libre EHR
+ * @author Terry Hill <teryhill@yahoo.com>
+ * @link http://LibreEHR.org 
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *

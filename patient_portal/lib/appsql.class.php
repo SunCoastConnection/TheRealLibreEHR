@@ -9,11 +9,11 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Jerry Padgett <sjpadgett@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the authors and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the authors and to the Libre EHR community.
  *
  */
 // namespace OnsitePortal;
@@ -108,7 +108,7 @@ class ApplicationTable
      * @param array $auditvals
      *          Parameters of audit
      * @param boolean $log
-     *          LibreHealth EHR Logging True / False
+     *          Libre EHR Logging True / False
      * @param boolean $error
      *          Error Display True / False
      * @param type audit array params for portal audits
@@ -213,7 +213,7 @@ class ApplicationTable
      * Function errorHandler
      * All error display and log
      * Display the Error, Line and File
-     * Same behavior of HelpfulDie fuction in LibreHealth EHR
+     * Same behavior of HelpfulDie fuction in Libre EHR
      * Path /library/sql.inc
      *
      * @param type $e
@@ -333,7 +333,7 @@ class ApplicationTable
     }
 
     /*
-     * Using generate id function from LibreHealth EHR sql.inc library file
+     * Using generate id function from Libre EHR sql.inc library file
      * @param string $seqname table name containing sequence (default is adodbseq)
      * @param integer $startID id to start with for a new sequence (default is 1)
      * @return integer returns the sequence integer

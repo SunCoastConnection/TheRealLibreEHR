@@ -16,9 +16,9 @@
  * along with this program; if not,                                             *
  * see <http://opensource.org/licenses/gpl-license.php>                         *
  ********************************************************************************
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author Joe Slam <joe@produnis.de>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  * 
  */
 

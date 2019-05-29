@@ -17,7 +17,7 @@
  *
  * @package LibreEHR
  * @author  Jan Jajalla <jansta23@gmail.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 /**

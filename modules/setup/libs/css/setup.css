@@ -6,9 +6,9 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package Librehealth EHR
+ * @package Libre EHR
  * @author Mua Laurent <muarachmann@gmail.com>
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
  *
@@ -39,11 +39,11 @@ span.arial{
     COLORS AND BACKGROUNDS
  ================================*/
 
-.librehealth-color {
+.Libre-color {
     color: rgb(245, 144, 49); /* #F57C31 */
 }
 
-.librehealth-background{
+.Libre-background{
     background-color: rgb(245, 144, 49);
 
 }
@@ -244,7 +244,7 @@ ul.files-list {
         MISCELANEOUS
  ================================*/
 
-.librehealth-logo{
+.Libre-logo{
     width: 100px;
     height: 100px;
     animation-name: spin;

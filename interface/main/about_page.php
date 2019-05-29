@@ -1,11 +1,11 @@
 <?php
 /** 
- * LibreHealth EHR About Page 
+ * Libre EHR About Page 
  *
- * This Displays an About page for LibreHealth EHR Displaying Version Number, Support Phone Number
+ * This Displays an About page for Libre EHR Displaying Version Number, Support Phone Number
  * If it have been entered in Globals along with the Manual and On Line Support Links
  * 
- * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io> 
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com> 
  * 
  * LICENSE: This program is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License 
@@ -22,11 +22,11 @@
  * See the Mozilla Public License for more details. 
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  * 
- * @package LibreHealth EHR 
- * @author Terry Hill <teryhill@librehealth.io> 
- * @link http://librehealth.io
+ * @package Libre EHR 
+ * @author Terry Hill <teryhill@yahoo.com> 
+ * @link http://LibreEHR.org
  *  
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  * 
  */ 
  
@@ -41,13 +41,13 @@ require_once("../globals.php");
  </head>
   <body class="body_top">
     <div style="text-align: center;">
-    <span class="title"><?php  echo xlt('About LibreHealth EHR'); ?> </span><br><br>  
+    <span class="title"><?php  echo xlt('About Libre EHR'); ?> </span><br><br>  
     <span class="text"><?php  echo xlt('Version Number'); ?>: <?php echo "v".text($libreehr_version) ?></span><br><br>
     <?php if (!empty($GLOBALS['support_phone_number'])) { ?>
       <span class="text"><?php  echo xlt('Support Phone Number'); ?>: <?php echo $GLOBALS['support_phone_number'] ?></span><br><br>
     <?php } ?>
    </div>
-    <a href="<?php echo "https://wiki.librehealth.io"; ?>" target="_blank" class="css_button cp-misc"><span><?php echo xlt('User Manual'); ?></span></a><br><br>
+    <a href="<?php echo "https://wiki.LibreEHR.org"; ?>" target="_blank" class="css_button cp-misc"><span><?php echo xlt('User Manual'); ?></span></a><br><br>
     <?php if (!empty($GLOBALS['online_support_link'])) { ?>
              <a href='<?php echo $GLOBALS["online_support_link"]; ?>' target="_blank" class="css_button cp-misc"><span><?php echo xlt('Online Support'); ?></span></a><br><br>
     <?php } ?>

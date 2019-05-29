@@ -5,8 +5,7 @@
  * Generic script to list stored reports. Part of the module to allow the tracking,
  * storing, and viewing of reports.
  *
- * Copyright (C) 2016-2017 Terry Hill <teryhill@librehealth.io>
- * Copyright (C) 2012 Brady Miller <brady@sparmy.com>
+ * Copyright (C) 2016-2017 Terry Hill <teryhill@yahoo.com>
  *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,11 +22,11 @@
  * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Art Eaton <art@suncoastconnection.com>  (MIPS/MACRA Refactor)
  * @author  Bryan Lee <bryan@suncoastconnection.com>
- * @author  Brady Miller <brady@sparmy.com>
- * @link    http://librehealth.io
+ 
+ * @link    http://LibreEHR.org
  */
 
 //SANITIZE ALL ESCAPES

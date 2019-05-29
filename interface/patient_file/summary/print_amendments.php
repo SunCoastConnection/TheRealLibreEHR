@@ -17,7 +17,7 @@
  *
  * @package LibreEHR
  * @author  Hema Bandaru <hemab@drcloudemr.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 
 //SANITIZE ALL ESCAPES

@@ -10,11 +10,11 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  * 
  * @author  Art Eaton <art@suncoastconnection.com>
- * @package LibreHealthEHR 
+ * @package LibreEHR 
  * @link    http://suncoastconnection.com
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  *
- * Please support this product by sharing your changes with the LibreHealth.io community.
+ * Please support this product by sharing your changes with the LibreEHR.org community.
  */
 
 class HCC_0055 extends AbstractPQRSReport

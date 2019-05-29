@@ -31,11 +31,11 @@
  *
  * See the Mozilla Public License for more details.
  *
- * @package Librehealth EHR 
+ * @package Libre EHR 
  * @author Anirudh (anirudh.s.c.96@hotmail.com)
- * @link http://librehealth.io
+ * @link http://LibreEHR.org
  *
- * Please help the overall project by sending changes you make to the author and to the LibreHealth EHR community.
+ * Please help the overall project by sending changes you make to the author and to the Libre EHR community.
  *
  *
  */

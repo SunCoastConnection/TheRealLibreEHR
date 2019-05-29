@@ -21,7 +21,7 @@ namespace ESign;
  * @package LibreEHR
  * @author  Ken Chapple <ken@mi-squared.com>
  * @author  Medical Information Integration, LLC
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  **/
 
 interface VerificationIF

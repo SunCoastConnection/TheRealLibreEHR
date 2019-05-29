@@ -1,6 +1,6 @@
 FONTS directory structure
 
-@package LibreHealthEHR
+@package LibreEHR
 
 The /fonts/ directory contains fonts, and only fonts
 and sub-directories with font packages that are contiguous,

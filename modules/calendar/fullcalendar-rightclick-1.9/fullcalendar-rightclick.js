@@ -6,7 +6,7 @@
 
  // Note: This file has been modified from v1.9 to support dayRightclick
  //       in versions of FullCalendar used in EHR. Please see comment at
- //       https://github.com/LibreHealthIO/lh-ehr/pull/1199/#issuecomment-412256963 and
+ //       https://github.com/LibreIO/lh-ehr/pull/1199/#issuecomment-412256963 and
  //       https://github.com/mherrmann/fullcalendar-rightclick/issues/14 which is the issue used in modification
 
 
