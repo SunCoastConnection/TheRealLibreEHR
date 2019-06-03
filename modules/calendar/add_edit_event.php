@@ -2,18 +2,13 @@
 /**
  * Add or edit an event in the calendar.
  *
- * Can be displayed as a popup window, or as an iframe via
- * fancybox.
- *
- * Copyright (C) 2005-2013 Rod Roark <rod@sunsetsystems.com>
- *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
  * @package Libre EHR
- * @author  Rod Roark <rod@sunsetsystems.com>
+ * @author  Rod Roark <rod@sunsetsystems.com> -Original calendar system.
  * @link    http://LibreEHR.org
  */
 
@@ -1654,12 +1649,7 @@ $classpati='';
             echo "<option value='" . attr($facrow['id']) . "' $selected>" . text($facrow['name']) . "</option>";
           }
         } else {
-          //if not restricting then list all facilities
-          //where service_location is not 0 including default facility
-          //in Facility in calendar's event panel
-          $selected = ( $facrow['id'] == $e2f ) ? 'selected="selected"' : '' ;
-          echo "<option value='" . attr($facrow['id']) . "' $selected>" . text($facrow['name']) . "</option>";
-        } else {
+
         $selected = ( $facrow['id'] == $e2f ) ? 'selected="selected"' : '' ;
          echo "<option value='" . attr($facrow['id']) . "' $selected>" . text($facrow['name']) . "</option>";
         }
