@@ -35,14 +35,15 @@ abstract class AbstractPQRSReport implements RsReportIF
     {
         // require all .php files in the report's sub-folder
         $className = get_class( $this );
-        foreach ( glob( dirname(__FILE__)."/../reports/".$className."/*.php" ) as $filename ) {
+        foreach ( glob( dirname(__FILE__)."/../reports/MIPSCQM".$className."/*.php" ) as $filename ) {
             require_once( $filename );
         }
-        foreach ( glob( dirname(__FILE__)."/../groups/".$className."/*.php" ) as $filename ) {
+        //require HCC
+        foreach ( glob( dirname(__FILE__)."/../reports/HCC/".$className."/*.php" ) as $filename ) {
             require_once( $filename );
         }
-        // require common .php files
-        foreach ( glob( dirname(__FILE__)."/../reports/common/*.php" ) as $filename ) {
+        // require premeasures
+        foreach ( glob( dirname(__FILE__)."/../reports/Premeasures/".$className."/*.php" ) as $filename ) {
             require_once( $filename );
         }
         // require clinical types
