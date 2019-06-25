@@ -1,6 +1,6 @@
 <?php
-/**
- * PQRS Always Met Numerator 2
+/*
+ * PQRS Measure 0001 -- Population Criteria
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 
@@ -16,16 +16,37 @@
  *
  * Please support this product by sharing your changes with the LibreEHR.org community.
  */
-
-class PQRS_always_met_Numerator2 extends PQRSFilter
+ 
+class PQRS_0001_PopulationCriteria implements PQRSPopulationCriteriaFactory
 {
     public function getTitle()
     {
-        return "Numerator 2";
+        return "Population Criteria";
     }
-
-    public function test( PQRSPatient $patient, $beginDate, $endDate )
+    
+    public function createInitialPatientPopulation()
     {
-        return true;
+        return new PQRS_0001_InitialPatientPopulation();
+    }
+    
+    public function createNumerators()
+    {
+        return new PQRS_0001_Numerator();
+    }
+    
+    public function createDenominator()
+    {
+        return new PQRS_0001_Denominator();
+    }
+    
+    public function createExclusion()
+    {
+        return new PQRS_0001_Exclusion();
+    }
+    public function createNotMet()
+    {
+        return new PQRS_0001_NotMet();
     }
 }
+
+?>
