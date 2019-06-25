@@ -43,7 +43,7 @@ abstract class AbstractPQRSReport implements RsReportIF
             require_once( $filename );
         }
         // require premeasures
-        foreach ( glob( dirname(__FILE__)."/../reports/Premeasures/".$className."/*.php" ) as $filename ) {
+        foreach ( glob( dirname(__FILE__)."/../reports/Premeasure/".$className."/*.php" ) as $filename ) {
             require_once( $filename );
         }
         // require clinical types
