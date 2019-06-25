@@ -116,6 +116,14 @@ abstract class AbstractPQRSReport implements RsReportIF
                 foreach ( $numerators as $numerator ) {
                     $numerator->setReportOptions($this->_reportOptions);
                 }
+                
+                $notmet = $populationCriteria->createNotMet();
+                if ( !is_array( $notmet ) ) {
+                    $notmet = array( $notmet );
+                }
+                foreach ( $notmets as $notmet ) {
+                    $notmet->setReportOptions($this->_reportOptions);
+                }
 
                 $exclusion = $populationCriteria->createExclusion();
                 if ( !$exclusion instanceof PQRSFilterIF ) {
@@ -137,6 +145,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                 $patExclArr = array();
                 $patExceptArr = array();
                 $numeratorPatientPopulations = $this->initNumeratorPopulations( $numerators );
+                $notmetPatientPopulations = $this->initNotMetPopulations( $notmets );
                 foreach ( $this->_pqrsPopulation as $patient )
                 {
                     if ( !$initialPatientPopulationFilter->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) )
@@ -176,6 +185,9 @@ abstract class AbstractPQRSReport implements RsReportIF
 
                     foreach ( $numerators as $numerator ) {
                         $this->testNumerator( $patient, $numerator, $numeratorPatientPopulations );
+                    }
+                    foreach ( $notmets as $notmet ) {
+                        $this->testNotMet( $patient, $notmet, $notmetPatientPopulations );
                     }
                 }
 
@@ -219,6 +231,15 @@ abstract class AbstractPQRSReport implements RsReportIF
         }
         return $numeratorPatientPopulations;
     }
+    
+    private function initNotMetPopulations( array $notmets )
+    {
+        $notmetPatientPopulations = array();
+        foreach ( $notmets as $notmet ) {
+            $notmetPatientPopulations[$notmet->getTitle()] = 0;
+        }
+        return $notmetPatientPopulations;
+    }
 
     private function testNumerator( $patient, $numerator, &$numeratorPatientPopulations )
     {
@@ -246,4 +267,32 @@ abstract class AbstractPQRSReport implements RsReportIF
             throw new Exception( "Numerator must be an instance of PQRSFilterIF" );
         }
     }
+    
+    private function testNotMet( $patient, $notmet, &$notmetPatientPopulations )
+    {
+        if ( $notmet instanceof PQRSFilterIF  )
+        {
+            if ( $notmet->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) ) {
+
+                $notmetPatientPopulations[$notmet->getTitle()]++;
+
+                // If itemization is turned on, then record the "passed" item
+                if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
+                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $notmet->getTitle());
+                }
+            }
+            else {
+                // If itemization is turned on, then record the "failed" item
+                if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
+                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $notmet->getTitle());
+                }
+
+            }
+        }
+        else
+        {
+            throw new Exception( "Numerator Not Met must be an instance of PQRSFilterIF" );
+        }
+    }
+    
 }
