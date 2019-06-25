@@ -95,3 +95,6 @@ SET     p.billing_note = l.totalraf;
 
 
 UPDATE patient_data SET billing_note=SUBSTRING(billing_note, 1, 5);
+
+/*Community, NonDual, AgedCommunity, NonDual, DisabledCommunity, FBDual, AgedCommunity, FBDual, DisabledCommunity, PBDual, AgedCommunit
+ IF address = TAMPA OR (address = victory AND facility.POS IN(31,32,33)) SET org_type = INSTITUTIONAL ELSE SET org_type = Community */ 

@@ -63,7 +63,7 @@ $query =
 ('HCC_0075','Myasthenia Gravis/Myoneural Disorders, Inflammatory','0.408'),
 ('HCC_0076','Muscular Dystrophy','0.565'),
 ('HCC_0077','Multiple Sclerosis ','0.556'),
-('HCC_0078','Parkinsonâ€™s and Huntingtonâ€™s Diseases ','0.691'),
+('HCC_0078','Parkinsons and Huntingtons Diseases ','0.691'),
 ('HCC_0079','Seizure Disorders and Convulsions','0.284'),
 ('HCC_0080','Coma, Brain Compression/Anoxic','0.57'),
 ('HCC_0082','Respirator Dependence/Tracheostomy Status','1.52'),
@@ -104,6 +104,6 @@ $query =
 ('HCC_0176','Complications of Specified Implanted Device or Graft','0.566'),
 ('HCC_0186','Major Organ Transplant or Replacement Status','0.891'),
 ('HCC_0188','Artificial Openings for Feeding or Elimination','0.651'),
-('HCC_0189','Amputation Status, Lower Limb/Amputation Complications','0.779');";
+('HCC_0189','Amputation Status, Lower Limb/Amputation Complications','0.787','0.407');";
 sqlStatementNoLog($query);
 ?>
