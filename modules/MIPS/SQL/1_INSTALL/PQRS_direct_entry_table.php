@@ -119,7 +119,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0046', 'answer', '1,Discharge medications reconciled with the current medication list in the outpatient medical record (1111F)|1111F',1),
 ('PQRS_0046', 'answer', '2,Discharge medication not reconciled with the current medication list in the outpatient medical record, reason not given (1111F:8P)|(1111F:8P',9),
 
-('PQRS_0047', 'description', 'Care Plan',''),
+('PQRS_0047', 'description', 'Advance Care Plan',''),
 ('PQRS_0047', 'question', 'Was an Advance Care Planning discussed and documented with the patient or their surrogate?',''),
 ('PQRS_0047', 'answer', '1,Advance Care Planning discussed and documented; advance care plan or surrogate decision maker documented in the medical record (1123F)|1123F',1),
 ('PQRS_0047', 'answer', '2,Advance Care Planning discussed and documented in the medical record; patient did not wish or was not able to name a surrogate decision maker or provide an advance care plan (1124F)|1124F',1),

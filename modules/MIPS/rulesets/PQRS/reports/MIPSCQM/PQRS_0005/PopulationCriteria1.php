@@ -45,6 +45,10 @@ class PQRS_0005_PopulationCriteria1 implements PQRSPopulationCriteriaFactory
         return new PQRS_0005_Exclusion1();
         // Both variants use same Exclusion
     }
+    public function createNotMet()
+    {
+        return new PQRS_0001_NotMet1();
+    }
 }
 
 ?>

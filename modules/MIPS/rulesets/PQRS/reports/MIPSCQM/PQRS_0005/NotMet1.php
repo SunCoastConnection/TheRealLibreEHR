@@ -1,43 +1,41 @@
 <?php
-/**
- * pre Measure 0224 -- Exclusion 1
+/*
+ * PQRS Measure 0005 -- NotMet
  *
- * Copyright (C) 2015 - 2017      Suncoast Connection
+ * Copyright (C) 2018   Suncoast Connection
   * 
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
  * See the Mozilla Public License for more details. 
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  * 
  * @author  Art Eaton <art@suncoastconnection.com>
- * @author  Bryan lee <bryan@suncoastconnection.com>
  * @package LibreEHR 
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
  * Please support this product by sharing your changes with the LibreEHR.org community.
  */
-
-class pre_0224_Exclusion1 extends PQRSFilter
+ 
+class PQRS_0005_NotMet extends PQRSFilter
 {
-    public function getTitle() 
+    public function getTitle()
     {
-        return "Exclusion";
+        return "NotMet1";
     }
-    
+
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 $query =
-"SELECT COUNT(b1.code) AS count".  
-" FROM billing AS b1".
+"SELECT COUNT(b1.code) as count ".  
+" FROM billing AS b1 ".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = '3319F' AND b1.modifier IN ('1P', '3P');";
-
-$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
-
-if ($result['count'] > 0){ return true;} else {return false;}     
-
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".  
+" AND b1.code = '4010F'".
+" AND b1.modifier = '8P';"; 
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
+if ($result['count'] > 0){ return true;} else {return false;}  
+	
     }
 }
 
