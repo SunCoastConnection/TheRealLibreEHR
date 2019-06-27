@@ -1,7 +1,7 @@
 <?php
 /**
  * Display Measures Engine Report Form
- * Copyright (C) 2015 - 2017      Suncoast Connection
+ * Copyright (C) 2015 - 2019      Suncoast Connection
  * 
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
  * See the Mozilla Public License for more details. 
@@ -37,8 +37,8 @@ function existsDefault(&$array, $key, $default = '') {
 }
 /////page title array...not needed as array anymore.
 $page_titles = array(
-  'pqrs'                  => xlt('Quality Measures 2018'),
-  'pqrs_individual_2016'  => xlt('Quality Measures 2018'),
+  'pqrs'                  => xlt('Quality Measures 2019'),
+  'pqrs_individual_2016'  => xlt('Quality Measures 2019'),
 );
 
 // See if showing an old report or creating a new report
@@ -90,8 +90,8 @@ if(!empty($report_id)) {
 
   // Collect form parameters (set defaults if empty)
 
-  $begin_date = existsDefault($_POST, 'form_begin_date', '2018-01-01 00:00:00');  //change defaults in 2018
-  $target_date = existsDefault($_POST, 'form_target_date', '2018-12-31 23:59:59');  //change defaults in 2018
+  $begin_date = existsDefault($_POST, 'form_begin_date', '2019-01-01 00:00:00');  //change defaults in 2018
+  $target_date = existsDefault($_POST, 'form_target_date', '2019-12-31 23:59:59');  //change defaults in 2018
   $plan_filter = existsDefault($_POST, 'form_plan_filter', '');
   $organize_method = (empty($plan_filter)) ? 'default' : 'plans';
   $provider = trim(existsDefault($_POST, 'form_provider', ''));
@@ -425,7 +425,7 @@ $bgcolor = 0;
                 $patterns[0] = '/PQRS_0/';
                 $patterns[1] = '/pre_0/';
                 $mipsnumber = preg_replace($patterns, '_', $row['pqrs_code']);
-                $measureURL = 'http://suncoastconnection.com/standards/Registrymeasures/2018_Measure'. $mipsnumber.'_Registry.pdf';
+                $measureURL = 'http://suncoastconnection.com/standards/Registrymeasures/2019_Measure'. $mipsnumber.'_MIPSCQM.pdf';
                 ?>
                 <a href='<?php echo $measureURL;?>' target="_blank"><?php echo $tempMeasuresString;?></a>
                 <?php
