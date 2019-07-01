@@ -16,7 +16,7 @@
  * Please support this product by sharing your changes with the LibreEHR.org community.
  */
  
-class PQRS_0005_NotMet extends PQRSFilter
+class PQRS_0005_NotMet2 extends PQRSFilter
 {
     public function getTitle()
     {

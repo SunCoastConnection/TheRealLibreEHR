@@ -1,6 +1,6 @@
 <?php
 /*
- * PQRS Measure 0005 -- NotMet1
+ * PQRS Measure 0006 -- NotMet
  *
  * Copyright (C) 2018   Suncoast Connection
   * 
@@ -16,26 +16,25 @@
  * Please support this product by sharing your changes with the LibreEHR.org community.
  */
  
-class PQRS_0005_NotMet1 extends PQRSFilter
+class PQRS_0006_NotMet extends PQRSFilter
 {
     public function getTitle()
     {
-        return "NotMet1";
+        return "NotMet";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
-$query =
-"SELECT COUNT(b1.code) as count ".  
-" FROM billing AS b1 ".
+	    $query =
+"SELECT COUNT(b1.code) as count".  
+" FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
-" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".  
-" AND b1.code = '4010F'".
-" AND b1.modifier = '8P';"; 
+" AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
+" AND b1.code = '4086F' ". 
+" AND b1.modifier ='8P' ;";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id)));
-if ($result['count'] > 0){ return true;} else {return false;}  
-	
+if ($result['count']> 0){ return true;} else {return false;}  
     }
 }
 
