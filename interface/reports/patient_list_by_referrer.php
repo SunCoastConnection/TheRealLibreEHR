@@ -171,7 +171,7 @@ if ($_POST['form_refresh'] || $_POST['form_csvexport']) {
  <tbody>
 <?php
   } // end not export
-  $totalpts = prepareAndShowResults(); // Prepare and show results. (TRK)
+  $totalpts = prepareAndShowResults($from_date,$to_date); // Prepare and show results. (TRK)
   if (!$_POST['form_csvexport']) {
 ?>
  <tr class="report_totals">
