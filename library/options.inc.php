@@ -94,7 +94,7 @@ function generate_select_list($tag_name, $list_id, $currvalue, $title, $empty_na
     if ($multiple) {
         $tag_name_esc = $tag_name_esc . "[]";
     }
-    $s .= "<select name='$tag_name_esc' class='$class' style='width: auto; display: inline-block'";
+    $s .= "<select name='$tag_name_esc' class='$class' style='display: block'";
 
     if ($multiple) {
         $s .= " multiple='multiple'";

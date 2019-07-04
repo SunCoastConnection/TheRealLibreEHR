@@ -182,11 +182,6 @@ function submitform() {
        }
     }
 }
-function authorized_clicked() {
-     var f = document.forms[0];
-     f.calendar.disabled = !f.authorized.checked;
-     f.calendar.checked  =  f.authorized.checked;
-}
 
 </script>
 <style type="text/css">
@@ -205,141 +200,154 @@ function authorized_clicked() {
 
     <div class="container">
         <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="username">Username <sup class="text-danger">*</sup>:</label>
-                    <input type="text" class="form-control" id="username">
-                </div>
-                <div class="form-group">
-                    <label for="fname">First name <sup class="text-danger">*</sup>:</label>
-                    <input type="text" class="form-control" id="fname" name="fname">
-                </div>
-                <div class="form-group">
-                    <label for="lname">Last name <sup class="text-danger">*</sup>:</label>
-                    <input type="text" class="form-control" id="lname" name="lname">
-                </div>
-                <div class="form-group">
-                    <label for="suffix">Suffix:</label>
-                    <input type="text" class="form-control" id="suffix" name="suffix">
-                </div>
-                <div class="form-group">
-                    <label for="first_name">DEA Number:</label>
-                    <input type="text" class="form-control" id="first_name">
-                </div>
-                <div class="form-group">
-                    <label for="first_name">NPI:</label>
-                    <input type="text" class="form-control" id="first_name">
-                </div>
-                <div class="form-group">
-                    <label for="default_facility">Clinician Type:</label>
-                    <select class="form-control" id="default_facility">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="taxonomy"></label>
-                    <input type="text" name="taxonomy" id="taxonomy" class="form-control" value="207Q00000X">
-                </div>
-                <div class="form-group">
-                    <label for="access_group"><?php echo xlt('Access Control'); ?></label>
-                    <select name="access_group[]" id="access_group" multiple class="form-control">
-                        <?php
-                        $list_acl_groups = acl_get_group_title_list();
-                        $default_acl_group = 'Administrators';
-                        foreach ($list_acl_groups as $value) {
-                            if ($default_acl_group == $value) {
-                                // Modified 6-2009 by BM - Translate group name if applicable
-                                echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
+            <form id="addNewUser" method='post'  target="_parent" action="usergroup_admin.php" enctype="multipart/form-data">
+                <input type='hidden' name='mode' value='new_user'>
+                <input type='hidden' name='secure_pwd' value="<?php echo $GLOBALS['secure_password']; ?>">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="username"><?php echo xlt('Username'); ?> <sup class="text-danger">*</sup>:</label>
+                        <input type="text" class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="fname"><?php echo xlt('First Name'); ?> <sup class="text-danger">*</sup>:</label>
+                        <input type="text" class="form-control" id="fname" name="fname">
+                    </div>
+                    <div class="form-group">
+                        <label for="lname"><?php echo xlt('Last Name'); ?> <sup class="text-danger">*</sup>:</label>
+                        <input type="text" class="form-control" id="lname" name="lname">
+                    </div>
+                    <div class="form-group">
+                        <label for="suffix"><?php echo xlt('Suffix'); ?>:</label>
+                        <input type="text" class="form-control" id="suffix" name="suffix">
+                    </div>
+                    <div class="form-group">
+                        <label for="federaldrugid"><?php echo xlt('DEA Number'); ?>:</label>
+                        <input type="text" class="form-control" id="federaldrugid" name="federaldrugid">
+                    </div>
+                    <div class="form-group">
+                        <label for="npi"><?php echo xlt('NPI'); ?>:</label>
+                        <input type="text" class="form-control" id="npi" name="npi">
+                    </div>
+                    <div class="form-group">
+                        <label for="default_facility"><?php echo xlt('Clinician Type'); ?>:</label>
+                        <?php echo generate_select_list("physician_type", "physician_type", '', '', xl('Select Type'),'form-control','','', array('style'=>'width:100%;display:block;')); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="taxonomy"><?php echo xlt('Taxonomy'); ?>"</label>
+                        <input type="text" name="taxonomy" id="taxonomy" class="form-control" value="207Q00000X">
+                    </div>
+                    <div class="form-group">
+                        <label for="access_group"><?php echo xlt('Access Control'); ?></label>
+                        <select name="access_group[]" id="access_group" multiple class="form-control">
+                            <?php
+                            $list_acl_groups = acl_get_group_title_list();
+                            $default_acl_group = 'Administrators';
+                            foreach ($list_acl_groups as $value) {
+                                if ($default_acl_group == $value) {
+                                    // Modified 6-2009 by BM - Translate group name if applicable
+                                    echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
+                                }
+                                else {
+                                    // Modified 6-2009 by BM - Translate group name if applicable
+                                    echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
+                                }
                             }
-                            else {
-                                // Modified 6-2009 by BM - Translate group name if applicable
-                                echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
-                            }
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="menu_role">Menu Role:</label>
-                    <select class="form-control" name="menu_role" id="menu_role">
-                        <?php
-                        $role = new Role();
-                        $role_list = $role->getRoleList();
-                        foreach($role_list as $role_title) { ?>
-                            <option value="<?php echo $role_title; ?>"><?php echo xlt($role_title); ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="provider">Full Screen Page Enabled:</label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="fullscreen_enable" name="fullscreen_enable">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <div class="form-group">
-                        <label for="user_passphrase">Pass Phrase <sup class="text-danger">*</sup>:</label>
-                        <input type="text" class="form-control" id="user_passphrase">
-                    </div>
-                    <div class="form-group">
-                        <label for="adminPass">Pass Phrase <sup class="text-danger">*</sup>:</label>
-                        <input type="password" class="form-control" id="adminPass" name="adminPass" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label for="provider">Provider:</label>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="provider"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calendar &nbsp;&nbsp;&nbsp;<input type="checkbox" id="calendar">
-                    </div>
-                    <div class="form-group">
-                        <label for="middle_name">Middle name:</label>
-                        <input type="text" class="form-control" id="middle_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="default_facility">Default Facility:</label>
-                        <select class="form-control" id="default_facility">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="tax_id">Federal Tax ID:</label>
-                        <input type="text" class="form-control" id="tax_id">
-                    </div>
-                    <div class="form-group">
-                        <label for="see_auth">See Authorizations:</label>
-                        <select class="form-control" id="see_auth" name="see_auth">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                        <label for="menu_role"><?php echo xlt('Menu Role'); ?>:</label>
+                        <select class="form-control" name="menu_role" id="menu_role">
+                            <?php
+                            $role = new Role();
+                            $role_list = $role->getRoleList();
+                            foreach($role_list as $role_title) { ?>
+                                <option value="<?php echo $role_title; ?>"><?php echo xlt($role_title); ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="calendar_ui">Calendar UI:</label>
-                        <select class="form-control" id="calendar_ui">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="info">Additional Info:</label>
-                        <textarea rows="6" class="form-control" name="info" id="info" wrap="hard"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="fullscreen_page">Full screen Page:</label>
-                        <select class="form-control" name="fullscreen_page" id="fullscreen_page">
-                            <option value="Calendar|/interface/main/main_info.php">Calendar</option>
-                            <option value="Flow Board|/interface/patient_tracker/patient_tracker.php">Flow Board</option>
-                        </select>
+                        <label for="provider">Full Screen Page Enabled:</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="fullscreen_enable" name="fullscreen_enable">
                     </div>
                 </div>
-            </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="stiltskin"><?php echo xlt('Pass Phrase'); ?> <sup class="text-danger">*</sup>:</label>
+                            <input type="text" class="form-control" id="stiltskin" name="stiltskin">
+                        </div>
+                        <div class="form-group">
+                            <label for="adminPass"><?php echo xlt('Your Pass Phrase'); ?> <sup class="text-danger">*</sup>:</label>
+                            <input type="password" class="form-control" id="adminPass" name="adminPass" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="authorized"><?php echo xlt('Provider'); ?>:</label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="authorized" name="authorized" value="1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calendar &nbsp;&nbsp;&nbsp;<input type="checkbox" id="calendar" name="calendar" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="mname"><?php echo xlt('Middle Name'); ?>:</label>
+                            <input type="text" class="form-control" id="mname" name="mname">
+                        </div>
+                        <div class="form-group">
+                            <label for="facility_id"><?php echo xlt('Default Facility'); ?>:</label>
+                            <select class="form-control" id="facility_id" name="facility_id">
+                                <?php
+                                $fres = sqlStatement("select * from facility where service_location != 0 order by name");
+                                if ($fres) {
+                                    for ($iter = 0;$frow = sqlFetchArray($fres);$iter++)
+                                        $result[$iter] = $frow;
+                                    foreach($result as $iter) {
+                                        ?>
+                                        <option value="<?php echo $iter{'id'};?>"><?php echo $iter{'name'};?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="federaltaxid"><?php echo xlt('Federal Tax ID'); ?>:</label>
+                            <input type="text" class="form-control" id="federaltaxid" name="federaltaxid">
+                        </div>
+                        <div class="form-group">
+                            <label for="specialty"><?php echo xlt('Job Description'); ?>:</label>
+                            <input type="text" class="form-control" id="specialty" name="specialty">
+                        </div>
+                        <div class="form-group">
+                            <label for="see_auth"><?php echo xlt('See Authorizations'); ?>:</label>
+                            <select class="form-control" id="see_auth" name="see_auth">
+                                <?php
+                                foreach (array(1 => xl('None'), 2 => xl('Only Mine'), 3 => xl('All')) as $key => $value) {
+                                    echo " <option value='$key'>$value</option>\n";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cal_ui"><?php echo xlt('Calendar UI'); ?>:</label>
+                            <select class="form-control" id="cal_ui" name="cal_ui">
+                                <?php
+                                foreach (array(3 => xl('Outlook'), 1 => xl('Original'), 2 => xl('Fancy')) as $key => $value) {
+                                    echo " <option value='$key'>$value</option>\n";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="info">Additional Info:</label>
+                            <textarea rows="6" class="form-control" name="info" id="info" wrap="hard"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fullscreen_page"><?php echo xlt('Full screen page'); ?>:</label>
+                            <select class="form-control" name="fullscreen_page" id="fullscreen_page">
+                                <option value="Calendar|/interface/main/main_info.php">Calendar</option>
+                                <option value="Flow Board|/interface/patient_tracker/patient_tracker.php">Flow Board</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -553,7 +561,6 @@ echo generate_select_list('irnpool', 'irnpool', '',
                 <option value="Flow Board|/interface/patient_tracker/patient_tracker.php">Flow Board</option>
       </select>
 
-
   </td>
   </tr>
   <tr>
@@ -678,6 +685,7 @@ if (empty($GLOBALS['disable_non_default_groups'])) {
   }
 ?>
 $(document).ready(function(){
+
     $("#cancel").click(function() {
         parent.$('#addUser-iframe').iziModal('close');
     });
@@ -685,6 +693,20 @@ $(document).ready(function(){
     $("#access_group").select2({
         placeholder: "Select Access control group"
     });
+
+    // check and uncheck calendar when provider is clicked
+    $("#authorized").click(function () {
+        $("#calendar").attr({
+           "disabled": !$(this).is(':checked'),
+           "checked": $(this).is(':checked')
+        });
+    });
+
+    function authorized_clicked() {
+        var f = document.forms[0];
+        f.calendar.disabled = !f.authorized.checked;
+        f.calendar.checked  =  f.authorized.checked;
+    }
   /*
      $("#role_name").on('change', function(e) {
 
