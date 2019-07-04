@@ -52,7 +52,7 @@ $alertmsg = '';
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 
-<?php call_required_libraries(array("jquery-min-3-1-1", "fancybox", "common")); ?>
+<?php call_required_libraries(array("jquery-min-3-1-1", "bootstrap-3-3-7", "common", "select2")); ?>
 
 <script src="checkpwd_validation.js" type="text/javascript"></script>
 
@@ -151,7 +151,7 @@ function submitform() {
        <?php } // End erx_enable only include block?>
 
         document.forms[0].submit();
-        parent.$.fn.fancybox.close();
+        parent.$('#addUser-iframe').iziModal('close');
 
     } else {
        if (document.forms[0].rumple.value.length<=0)
@@ -193,9 +193,158 @@ function authorized_clicked() {
   .physician_type_class{
     width: 120px !important;
   }
+    input.form-control{
+        border-radius: 0px !important;
+        height: 32px !important;
+        border: 1px solid lightslategray;
+    }
+
 </style>
 </head>
 <body class="body_top">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="username">Username <sup class="text-danger">*</sup>:</label>
+                    <input type="text" class="form-control" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="fname">First name <sup class="text-danger">*</sup>:</label>
+                    <input type="text" class="form-control" id="fname" name="fname">
+                </div>
+                <div class="form-group">
+                    <label for="lname">Last name <sup class="text-danger">*</sup>:</label>
+                    <input type="text" class="form-control" id="lname" name="lname">
+                </div>
+                <div class="form-group">
+                    <label for="suffix">Suffix:</label>
+                    <input type="text" class="form-control" id="suffix" name="suffix">
+                </div>
+                <div class="form-group">
+                    <label for="first_name">DEA Number:</label>
+                    <input type="text" class="form-control" id="first_name">
+                </div>
+                <div class="form-group">
+                    <label for="first_name">NPI:</label>
+                    <input type="text" class="form-control" id="first_name">
+                </div>
+                <div class="form-group">
+                    <label for="default_facility">Clinician Type:</label>
+                    <select class="form-control" id="default_facility">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taxonomy"></label>
+                    <input type="text" name="taxonomy" id="taxonomy" class="form-control" value="207Q00000X">
+                </div>
+                <div class="form-group">
+                    <label for="access_group"><?php echo xlt('Access Control'); ?></label>
+                    <select name="access_group[]" id="access_group" multiple class="form-control">
+                        <?php
+                        $list_acl_groups = acl_get_group_title_list();
+                        $default_acl_group = 'Administrators';
+                        foreach ($list_acl_groups as $value) {
+                            if ($default_acl_group == $value) {
+                                // Modified 6-2009 by BM - Translate group name if applicable
+                                echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
+                            }
+                            else {
+                                // Modified 6-2009 by BM - Translate group name if applicable
+                                echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="menu_role">Menu Role:</label>
+                    <select class="form-control" name="menu_role" id="menu_role">
+                        <?php
+                        $role = new Role();
+                        $role_list = $role->getRoleList();
+                        foreach($role_list as $role_title) { ?>
+                            <option value="<?php echo $role_title; ?>"><?php echo xlt($role_title); ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="provider">Full Screen Page Enabled:</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="fullscreen_enable" name="fullscreen_enable">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="user_passphrase">Pass Phrase <sup class="text-danger">*</sup>:</label>
+                        <input type="text" class="form-control" id="user_passphrase">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPass">Pass Phrase <sup class="text-danger">*</sup>:</label>
+                        <input type="password" class="form-control" id="adminPass" name="adminPass" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="provider">Provider:</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="provider"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calendar &nbsp;&nbsp;&nbsp;<input type="checkbox" id="calendar">
+                    </div>
+                    <div class="form-group">
+                        <label for="middle_name">Middle name:</label>
+                        <input type="text" class="form-control" id="middle_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="default_facility">Default Facility:</label>
+                        <select class="form-control" id="default_facility">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tax_id">Federal Tax ID:</label>
+                        <input type="text" class="form-control" id="tax_id">
+                    </div>
+                    <div class="form-group">
+                        <label for="see_auth">See Authorizations:</label>
+                        <select class="form-control" id="see_auth" name="see_auth">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="calendar_ui">Calendar UI:</label>
+                        <select class="form-control" id="calendar_ui">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="info">Additional Info:</label>
+                        <textarea rows="6" class="form-control" name="info" id="info" wrap="hard"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fullscreen_page">Full screen Page:</label>
+                        <select class="form-control" name="fullscreen_page" id="fullscreen_page">
+                            <option value="Calendar|/interface/main/main_info.php">Calendar</option>
+                            <option value="Flow Board|/interface/patient_tracker/patient_tracker.php">Flow Board</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 <table><tr><td>
 <span class="title"><?php echo xlt('Add User'); ?></span>&nbsp;</td>
 
@@ -530,8 +679,12 @@ if (empty($GLOBALS['disable_non_default_groups'])) {
 ?>
 $(document).ready(function(){
     $("#cancel").click(function() {
-          parent.$.fn.fancybox.close();
-     });
+        parent.$('#addUser-iframe').iziModal('close');
+    });
+
+    $("#access_group").select2({
+        placeholder: "Select Access control group"
+    });
   /*
      $("#role_name").on('change', function(e) {
 
