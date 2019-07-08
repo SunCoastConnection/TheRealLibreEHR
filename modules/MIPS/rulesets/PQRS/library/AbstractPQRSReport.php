@@ -46,10 +46,7 @@ abstract class AbstractPQRSReport implements RsReportIF
         foreach ( glob( dirname(__FILE__)."/../reports/Premeasure/".$className."/*.php" ) as $filename ) {
             require_once( $filename );
         }
-        // require clinical types
-        foreach ( glob( dirname(__FILE__)."/../../../ClinicalTypes/*.php" ) as $filename ) {
-            require_once( $filename );
-        }
+
 
         $this->_pqrsPopulation = new PQRSPopulation( $patientIdArray );
         $this->_rowRule = $rowRule;
