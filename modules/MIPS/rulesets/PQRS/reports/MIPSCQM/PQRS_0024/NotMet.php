@@ -1,27 +1,24 @@
 <?php
-/**
- * PQRS Measure 0024 -- Numerator
+/*
+ * PQRS Measure 0024 -- NotMet
  *
- * Copyright (C) 2015 - 2019      Suncoast Connection
+ * Copyright (C) 2019   Suncoast Connection
   * 
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
  * See the Mozilla Public License for more details. 
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  * 
  * @author  Art Eaton <art@suncoastconnection.com>
- * @author  Bryan lee <bryan@suncoastconnection.com>
  * @package LibreEHR 
  * @link    http://suncoastconnection.com
- * @link    http://LibreEHR.org
  *
- * Please support this product by sharing your changes with the LibreEHR.org community.
  */
  
-class PQRS_0024_Numerator extends PQRSFilter
+class PQRS_0024_NotMet extends PQRSFilter
 {
     public function getTitle()
     {
-        return "Numerator";
+        return "NotMet";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
@@ -33,11 +30,11 @@ $query =
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
 " AND b1.code = '5015F' ".
-" AND b1.modifier ='' ;";
+" AND b1.modifier ='8P' ;";
 //8P is hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result['count']> 0){ return true;} else {return false;}     
+if ($result['count']> 0){ return true;} else {return false;} 
 	
     }
 }
