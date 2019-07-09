@@ -50,7 +50,6 @@ $alertmsg = '';
 <head>
 
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
-<link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 
 <?php call_required_libraries(array("jquery-min-3-1-1", "bootstrap-3-3-7", "common", "select2")); ?>
 
@@ -73,22 +72,17 @@ function trimAll(sString)
 function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
-                $('#prof_img')
-                    .attr('src', e.target.result)
-                    .width(64)
-                    .height(64);
-                $('#prof_img').css("display", "block");
+                $('#prof_img').attr('src', e.target.result).width(64).height(64).css("display", "block");
                 $('#file_input_button').text("Edit Profile Picture");
             };
-
             reader.readAsDataURL(input.files[0]);
         }
 }
 
 function submitform() {
-    if (document.forms[0].rumple.value.length>0 && document.forms[0].stiltskin.value.length>0 && document.getElementById('fname').value.length >0 && document.getElementById('lname').value.length >0) {
+    console.log(document.forms[0]);
+    if (document.forms[0].rumple1.value.length>0 && document.forms[0].stiltskin.value.length>0 && document.getElementById('fname').value.length >0 && document.getElementById('lname').value.length >0) {
        top.restoreSession();
 
        //Checking if secure password is enabled or disabled.
@@ -105,9 +99,9 @@ function submitform() {
        } //secure_pwd if ends here
 
        <?php if($GLOBALS['erx_enable']){ ?>
-       alertMsg='';
-       f=document.forms[0];
-       for(i=0;i<f.length;i++){
+       let alertMsg='';
+       f = document.forms[0];
+       for(i=0; i<f.length; i++){
           if(f[i].type=='text' && f[i].value)
           {
              if(f[i].name == 'rumple')
@@ -143,12 +137,11 @@ function submitform() {
 
           }
        }
-       if(alertMsg)
-       {
+       if(alertMsg) {
           alert(alertMsg);
           return false;
        }
-       <?php } // End erx_enable only include block?>
+       <?php } // End erx_enable only include block ?>
 
         document.forms[0].submit();
         parent.$('#addUser-iframe').iziModal('close');
@@ -188,109 +181,179 @@ function submitform() {
   .physician_type_class{
     width: 120px !important;
   }
-    input.form-control{
+    input.form-control, select.form-control{
         border-radius: 0px !important;
-        height: 32px !important;
+        height: 24px !important;
+        font-size: 13px;
         border: 1px solid lightslategray;
+    }
+
+    .form-group > label{
+        font-size: 13.5px;
+        height: 22px !important;
     }
 
 </style>
 </head>
 <body class="body_top">
-
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <form id="addNewUser" method='post'  target="_parent" action="usergroup_admin.php" enctype="multipart/form-data">
-                <input type='hidden' name='mode' value='new_user'>
-                <input type='hidden' name='secure_pwd' value="<?php echo $GLOBALS['secure_password']; ?>">
-                <div class="col-sm-6">
+            <form id="addNewUser" name="new_user" method='post'  target="_parent" action="usergroup_admin.php" enctype="multipart/form-data">
+                <div class="col-sm-6 form-horizontal">
                     <div class="form-group">
-                        <label for="username"><?php echo xlt('Username'); ?> <sup class="text-danger">*</sup>:</label>
-                        <input type="text" class="form-control" id="username">
+                        <label for="username" class="col-sm-4"><?php echo xlt('Username'); ?> <sup class="text-danger">*</sup>:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="username">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="fname"><?php echo xlt('First Name'); ?> <sup class="text-danger">*</sup>:</label>
-                        <input type="text" class="form-control" id="fname" name="fname">
-                    </div>
-                    <div class="form-group">
-                        <label for="lname"><?php echo xlt('Last Name'); ?> <sup class="text-danger">*</sup>:</label>
-                        <input type="text" class="form-control" id="lname" name="lname">
-                    </div>
-                    <div class="form-group">
-                        <label for="suffix"><?php echo xlt('Suffix'); ?>:</label>
-                        <input type="text" class="form-control" id="suffix" name="suffix">
-                    </div>
-                    <div class="form-group">
-                        <label for="federaldrugid"><?php echo xlt('DEA Number'); ?>:</label>
-                        <input type="text" class="form-control" id="federaldrugid" name="federaldrugid">
-                    </div>
-                    <div class="form-group">
-                        <label for="npi"><?php echo xlt('NPI'); ?>:</label>
-                        <input type="text" class="form-control" id="npi" name="npi">
-                    </div>
-                    <div class="form-group">
-                        <label for="default_facility"><?php echo xlt('Clinician Type'); ?>:</label>
-                        <?php echo generate_select_list("physician_type", "physician_type", '', '', xl('Select Type'),'form-control','','', array('style'=>'width:100%;display:block;')); ?>
-                    </div>
-                    <div class="form-group">
-                        <label for="taxonomy"><?php echo xlt('Taxonomy'); ?>"</label>
-                        <input type="text" name="taxonomy" id="taxonomy" class="form-control" value="207Q00000X">
-                    </div>
-                    <div class="form-group">
-                        <label for="access_group"><?php echo xlt('Access Control'); ?></label>
-                        <select name="access_group[]" id="access_group" multiple class="form-control">
-                            <?php
-                            $list_acl_groups = acl_get_group_title_list();
-                            $default_acl_group = 'Administrators';
-                            foreach ($list_acl_groups as $value) {
-                                if ($default_acl_group == $value) {
-                                    // Modified 6-2009 by BM - Translate group name if applicable
-                                    echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
+                    <div class="form-group <?php if ($GLOBALS['disable_non_default_groups']) echo "hidden"; ?>">
+                        <label for="groupname" class="col-sm-4"><?php echo xlt('Groupname'); ?>:</label>
+                        <div class="col-sm-8">
+                            <select name="groupname" id="groupname" class="form-control">
+                                <?php
+                                $res = sqlStatement("select distinct name from groups");
+                                $result2 = array();
+                                for ($iter = 0;$row = sqlFetchArray($res);$iter++)
+                                    $result2[$iter] = $row;
+                                foreach ($result2 as $iter) {
+                                    print "<option value='".$iter{"name"}."'>" . $iter{"name"} . "</option>\n";
                                 }
-                                else {
-                                    // Modified 6-2009 by BM - Translate group name if applicable
-                                    echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fname" class="col-sm-4"><?php echo xlt('First Name'); ?> <sup class="text-danger">*</sup>:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="fname" name="fname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lname" class="col-sm-4"><?php echo xlt('Last Name'); ?> <sup class="text-danger">*</sup>:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="lname" name="lname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="suffix" class="col-sm-4"><?php echo xlt('Suffix'); ?>:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="suffix" name="suffix">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="federaldrugid" class="col-sm-4"><?php echo xlt('DEA Number'); ?>:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="federaldrugid" name="federaldrugid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="npi" class="col-sm-4"><?php echo xlt('NPI'); ?>:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="npi" name="npi">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="default_facility" class="col-sm-4"><?php echo xlt('Clinician Type'); ?>:</label>
+                        <div class="col-sm-8">
+                            <?php echo generate_select_list("physician_type", "physician_type", '', '', xl('Select Type'),'form-control','','', array('style'=>'width:100%;display:block;')); ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="taxonomy" class="col-sm-4"><?php echo xlt('Taxonomy'); ?>:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="taxonomy" id="taxonomy" class="form-control" value="207Q00000X">
+                        </div>
+                    </div>
+                    <?php if ($GLOBALS['erx_enable']) { ?>
+                    <div class="form-group">
+                        <label for="state_license_number" class="col-sm-4"><?php echo xlt('State License Number'); ?>:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="state_license_number" id="state_license_number" class="form-control">
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php // List the access control groups if phpgacl installed
+                    if (isset($phpgacl_location) && acl_check('admin', 'acl')) { ?>
+                    <div class="form-group">
+                        <label for="access_group" class="col-sm-4"><?php echo xlt('Access Control'); ?>:</label>
+                        <div class="col-sm-8">
+                            <select name="access_group[]" id="access_group" multiple class="form-control">
+                                <?php
+                                $list_acl_groups = acl_get_group_title_list();
+                                $default_acl_group = 'Administrators';
+                                foreach ($list_acl_groups as $value) {
+                                    if ($default_acl_group == $value) {
+                                        // Modified 6-2009 by BM - Translate group name if applicable
+                                        echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
+                                    }
+                                    else {
+                                        // Modified 6-2009 by BM - Translate group name if applicable
+                                        echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
+                                    }
                                 }
-                            }
-                            ?>
-                        </select>
+                                ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="menu_role"><?php echo xlt('Menu Role'); ?>:</label>
-                        <select class="form-control" name="menu_role" id="menu_role">
-                            <?php
-                            $role = new Role();
-                            $role_list = $role->getRoleList();
-                            foreach($role_list as $role_title) { ?>
-                                <option value="<?php echo $role_title; ?>"><?php echo xlt($role_title); ?></option>
-                            <?php } ?>
-                        </select>
+                        <label for="menu_role" class="col-sm-4"><?php echo xlt('Menu Role'); ?>:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="menu_role" id="menu_role">
+                                <?php
+                                $role = new Role();
+                                $role_list = $role->getRoleList();
+                                foreach($role_list as $role_title) { ?>
+                                    <option value="<?php echo $role_title; ?>"><?php echo xlt($role_title); ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="provider">Full Screen Page Enabled:</label>
+                        <label for="provider" class="col-sm-4">Full Screen Page Enabled:</label>
+                        <div class="col-sm-8">
                         &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="fullscreen_enable" name="fullscreen_enable">
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
                     <div class="form-group">
-                        <div class="form-group">
-                            <label for="stiltskin"><?php echo xlt('Pass Phrase'); ?> <sup class="text-danger">*</sup>:</label>
+                        <label for="fullscreen_page" class="col-sm-4"><?php echo xlt('Full screen page'); ?>:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="fullscreen_page" id="fullscreen_page">
+                                <option value="Calendar|/interface/main/main_info.php">Calendar</option>
+                                <option value="Flow Board|/interface/patient_tracker/patient_tracker.php">Flow Board</option>
+                            </select>
+                        </div>
+                    </div>
+                        <?php do_action( 'usergroup_admin_add' ); ?>
+                    <?php } ?>
+                </div>
+                <div class="col-sm-6 form-horizontal">
+                    <div class="form-group">
+                        <label for="stiltskin" class="col-sm-4"><?php echo xlt('Pass Phrase'); ?> <sup class="text-danger">*</sup>:</label>
+                        <div class="col-sm-8">
                             <input type="text" class="form-control" id="stiltskin" name="stiltskin">
                         </div>
-                        <div class="form-group">
-                            <label for="adminPass"><?php echo xlt('Your Pass Phrase'); ?> <sup class="text-danger">*</sup>:</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPass" class="col-sm-4"><?php echo xlt('Your Pass Phrase'); ?> <sup class="text-danger">*</sup>:</label>
+                        <div class="col-sm-8">
                             <input type="password" class="form-control" id="adminPass" name="adminPass" autocomplete="off">
                         </div>
-                        <div class="form-group">
-                            <label for="authorized"><?php echo xlt('Provider'); ?>:</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="authorized" class="col-sm-4"><?php echo xlt('Provider'); ?>:</label>
+                        <div class="col-sm-8">
                             &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="authorized" name="authorized" value="1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Calendar &nbsp;&nbsp;&nbsp;<input type="checkbox" id="calendar" name="calendar" disabled>
                         </div>
-                        <div class="form-group">
-                            <label for="mname"><?php echo xlt('Middle Name'); ?>:</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="mname" class="col-sm-4"><?php echo xlt('Middle Name'); ?>:</label>
+                        <div class="col-sm-8">
                             <input type="text" class="form-control" id="mname" name="mname">
                         </div>
-                        <div class="form-group">
-                            <label for="facility_id"><?php echo xlt('Default Facility'); ?>:</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="facility_id" class="col-sm-4"><?php echo xlt('Default Facility'); ?>:</label>
+                        <div class="col-sm-8">
                             <select class="form-control" id="facility_id" name="facility_id">
                                 <?php
                                 $fres = sqlStatement("select * from facility where service_location != 0 order by name");
@@ -306,16 +369,22 @@ function submitform() {
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="federaltaxid"><?php echo xlt('Federal Tax ID'); ?>:</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="federaltaxid" class="col-sm-4"><?php echo xlt('Federal Tax ID'); ?>:</label>
+                        <div class="col-sm-8">
                             <input type="text" class="form-control" id="federaltaxid" name="federaltaxid">
                         </div>
-                        <div class="form-group">
-                            <label for="specialty"><?php echo xlt('Job Description'); ?>:</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialty" class="col-sm-4"><?php echo xlt('Job Description'); ?>:</label>
+                        <div class="col-sm-8">
                             <input type="text" class="form-control" id="specialty" name="specialty">
                         </div>
-                        <div class="form-group">
-                            <label for="see_auth"><?php echo xlt('See Authorizations'); ?>:</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="see_auth" class="col-sm-4"><?php echo xlt('See Authorizations'); ?>:</label>
+                        <div class="col-sm-8">
                             <select class="form-control" id="see_auth" name="see_auth">
                                 <?php
                                 foreach (array(1 => xl('None'), 2 => xl('Only Mine'), 3 => xl('All')) as $key => $value) {
@@ -324,8 +393,24 @@ function submitform() {
                                 ?>
                             </select>
                         </div>
+                    </div>
+                    <?php if ($GLOBALS['inhouse_pharmacy']) { ?>
                         <div class="form-group">
-                            <label for="cal_ui"><?php echo xlt('Calendar UI'); ?>:</label>
+                            <label for="see_auth" class="col-sm-4"><?php echo xlt('Default Warehouse'); ?>:</label>
+                            <div class="col-sm-8">
+                                <?php echo generate_select_list('default_warehouse', 'warehouse', '', ''); ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="see_auth" class="col-sm-4"><?php echo xlt('Invoice Refno Pool'); ?>:</label>
+                            <div class="col-sm-8">
+                                <?php echo generate_select_list('irnpool', 'irnpool', '', xl('Invoice reference number pool, if used')); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <div class="form-group">
+                        <label for="cal_ui" class="col-sm-4"><?php echo xlt('Calendar UI'); ?>:</label>
+                        <div class="col-sm-8">
                             <select class="form-control" id="cal_ui" name="cal_ui">
                                 <?php
                                 foreach (array(3 => xl('Outlook'), 1 => xl('Original'), 2 => xl('Fancy')) as $key => $value) {
@@ -334,411 +419,181 @@ function submitform() {
                                 ?>
                             </select>
                         </div>
+                    </div>
+                    <?php if ($GLOBALS['erx_enable']) { ?>
                         <div class="form-group">
-                            <label for="info">Additional Info:</label>
-                            <textarea rows="6" class="form-control" name="info" id="info" wrap="hard"></textarea>
+                            <label for="newcrop_erx_role" class="col-sm-4"><?php echo xlt('NewCrop eRX Role'); ?>:</label>
+                            <div class="col-sm-8">
+                                <?php echo generate_select_list("erxrole", "newcrop_erx_role", '','','--Select Role--','form-control','','',array('style'=>'width:100%;display:block;')); ?>
+                            </div>
                         </div>
+                    <?php } ?>
+                    <?php // List the access control groups if phpgacl installed
+                    if (isset($phpgacl_location) && acl_check('admin', 'acl')) { ?>
                         <div class="form-group">
-                            <label for="fullscreen_page"><?php echo xlt('Full screen page'); ?>:</label>
-                            <select class="form-control" name="fullscreen_page" id="fullscreen_page">
-                                <option value="Calendar|/interface/main/main_info.php">Calendar</option>
-                                <option value="Flow Board|/interface/patient_tracker/patient_tracker.php">Flow Board</option>
-                            </select>
+                            <label for="info" class="col-sm-4">Additional Info:</label>
+                            <div class="col-sm-8">
+                                <textarea rows="6" class="form-control" name="info" id="info" wrap="hard"></textarea>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <div class="form-group">
+                        <label for="files" class="css_button cp-positive" id="file_input_button"><?php echo xlt('Add Profile Picture'); ?>
+                            <input type="file" name="profile_picture" id="files"  class="hidden" style="display: none;" onchange="readURL(this);" />
+                        </label>
+                        <div class="col-sm-8">
+                            <img id="prof_img" src="" class="hidden img-responsive img-circle" style="border-radius: 100%; border: 1px solid lightskyblue;">
                         </div>
                     </div>
                 </div>
+
+                <input type="hidden" name="newauthPass">
+                <input type='hidden' name='mode' value='new_user'>
+                <input type='hidden' name='secure_pwd' value="<?php echo $GLOBALS['secure_password']; ?>">
             </form>
+        </div>
+
+                <div class="row">
+                    <div class="col-sm-12 <?php if ($GLOBALS['disable_non_default_groups']) echo "hidden"; ?>">
+                        <table class="table table-responsive table-hover">
+                            <form name='new_group' method='post' action="usergroup_admin.php">
+                                <input type="hidden" name="mode" value="new_group">
+                            <tr>
+                                <td><span class="bold"><?php echo xlt('New Group'); ?>:</span></td>
+                                <td><span class="bold"><?php echo xlt('Groupname'); ?>: </span><input type="text" name=groupname size=10></td>
+                                <td><label for="rumple1" class="text"><?php echo xlt('Initial User'); ?>: </label>
+                                    <select name="rumple" id="rumple1">
+                                        <?php
+                                        $res = sqlStatement("select distinct username from users where username != ''");
+                                        for ($iter = 0;$row = sqlFetchArray($res);$iter++)
+                                            $result[$iter] = $row;
+                                        foreach ($result as $iter) {
+                                            print "<option value='".$iter{"username"}."'>" . $iter{"username"} . "</option>\n";
+                                        }
+                                        ?>
+                                    </select></td>
+                                <td><input type="submit" class="btn btn-sm btn-default" value=<?php echo xlt('Save'); ?>></td>
+                            </tr>
+                            </form>
+                            <form name='new_group' method='post' action="usergroup_admin.php">
+                                <input type="hidden" name="mode" value="new_group">
+                                <tr>
+                                    <td><span class="bold"><?php echo xlt('Add User To Group'); ?>:</span></td>
+                                    <td><label for="rumple2" class="bold"><?php echo xlt('User'); ?>: </label>
+                                        <select name=rumple id="rumple2">
+                                        <?php
+                                        $res = sqlStatement("select distinct username from users where username != ''");
+                                        for ($iter = 0;$row = sqlFetchArray($res);$iter++)
+                                            $result3[$iter] = $row;
+                                        foreach ($result3 as $iter) {
+                                            print "<option value='".$iter{"username"}."'>" . $iter{"username"} . "</option>\n";
+                                        }
+                                        ?>
+                                        </select>
+                                    </td>
+                                    <td><label class="bold" for="groupname"><?php echo xlt('Groupname'); ?>: </label>
+                                        <select name="groupname" id="groupname">
+                                        <?php
+                                        $res = sqlStatement("select distinct name from groups");
+                                        $result2 = array();
+                                        for ($iter = 0;$row = sqlFetchArray($res);$iter++)
+                                            $result2[$iter] = $row;
+                                        foreach ($result2 as $iter) {
+                                            print "<option value='".$iter{"name"}."'>" . $iter{"name"} . "</option>\n";
+                                        }
+                                        ?>
+                                        </select>
+                                    </td>
+                                <td><input type="submit" class="btn btn-sm btn-success" value=<?php echo xlt('Add User To Group'); ?>></td>
+                            </tr>
+                            </form>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                        <?php
+                        if (empty($GLOBALS['disable_non_default_groups'])) {
+                            $res = sqlStatement("select * from groups order by name");
+                            for ($iter = 0;$row = sqlFetchArray($res);$iter++)
+                                $result5[$iter] = $row;
+
+                            foreach ($result5 as $iter) {
+                                $grouplist{$iter{"name"}} .= $iter{"user"} .
+                                    "(<a class='link_submit' href='usergroup_admin.php?mode=delete_group&id=" .
+                                    $iter{"id"} . "' onclick='top.restoreSession()'>Remove</a>), ";
+                            }
+
+                            foreach ($grouplist as $groupname => $list) {
+                                print "<span class='bold'>" . $groupname . "</span><br>\n<span class='text'>" .
+                                    substr($list,0,strlen($list)-2) . "</span><br>\n";
+                            }
+                        }
+                        ?>
+                </div>
+
+        <div class="row">
+            <div class="container text-center">
+                <a class="css_button cp-submit" name='form_save' id='form_save' href='#' onclick="return submitform()">
+                    <span><?php echo xlt('Save');?></span></a>
+                <a class="css_button large_button cp-negative" id='cancel' href='#'>
+                    <span class='css_button_span large_button_span'><?php echo xlt('Cancel');?></span>
+                </a>
+            </div>
         </div>
     </div>
 
+    <script language="JavaScript">
+        <?php
+        if ($alertmsg = trim($alertmsg)) {
+            echo "alert('$alertmsg');\n";
+        }
+        ?>
+        $(document).ready(function(){
 
-
-<table><tr><td>
-<span class="title"><?php echo xlt('Add User'); ?></span>&nbsp;</td>
-
-<td>
-<a class="css_button cp-submit" name='form_save' id='form_save' href='#' onclick="return submitform()">
-    <span><?php echo xlt('Save');?></span></a>
-<a class="css_button large_button cp-negative" id='cancel' href='#'>
-    <span class='css_button_span large_button_span'><?php echo xlt('Cancel');?></span>
-</a>
-    </td>
-    </tr>
-</table>
-<br><br>
-<form name='new_user' method='post'  target="_parent" action="usergroup_admin.php" enctype="multipart/form-data"
- onsubmit='return top.restoreSession()'>
-<table border=0>
-<tr>
-<td><img id="prof_img" style="display: none; border-radius: 40px; border: 8px solid #888;"></td>
-<td style="padding-left: 350px;">
-<input type="file" name="profile_picture" id="files"  class="hidden" style="display: none;" onchange="readURL(this);" />
-<label for="files" class="css_button cp-positive" id="file_input_button"><?php echo xlt('Add Profile Picture'); ?>
-</label>
-</td>
-</tr>
-<tr><td valign=top>
-<input type='hidden' name='mode' value='new_user'>
-<input type='hidden' name='secure_pwd' value="<?php echo $GLOBALS['secure_password']; ?>">
-<span class="bold">&nbsp;</span>
-</td><td>
-<table border=0 cellpadding=0 cellspacing=0 style="width:600px;">
-<tr>
-<td style="width:150px;"><span class="text"><?php echo xlt('Username'); ?>: </span></td><td  style="width:220px;"><input type=entry name=rumple style="width:120px;"> <span class="mandatory">&nbsp;*</span></td>
-<td style="width:150px;"><span class="text"><?php echo xlt('Pass Phrase'); ?>: </span></td><td style="width:250px;"><input type="entry" style="width:120px;" name=stiltskin><span class="mandatory">&nbsp;*</span></td>
-</tr>
-<tr>
-
-    <td style="width:150px;"></td><td  style="width:220px;"></span></td>
-    <TD style="width:200px;"><span class=text><?php echo xlt('Your Pass Phrase'); ?>: </span></TD>
-    <TD class='text' style="width:280px;"><input type='password' name=adminPass style="width:120px;"  value="" autocomplete='off'><font class="mandatory">*</font></TD>
-
-</tr>
-<tr>
-<td><span class="text"<?php if ($GLOBALS['disable_non_default_groups']) echo " style='display:none'"; ?>><?php echo xlt('Groupname'); ?>: </span></td>
-<td>
-<select name=groupname<?php if ($GLOBALS['disable_non_default_groups']) echo " style='display:none'"; ?>>
-<?php
-$res = sqlStatement("select distinct name from groups");
-$result2 = array();
-for ($iter = 0;$row = sqlFetchArray($res);$iter++)
-  $result2[$iter] = $row;
-foreach ($result2 as $iter) {
-  print "<option value='".$iter{"name"}."'>" . $iter{"name"} . "</option>\n";
-}
-?>
-</select></td>
-<td><span class="text"><?php echo xlt('Provider'); ?>: </span></td><td>
- <input type='checkbox' name='authorized' value='1' onclick='authorized_clicked()' />
- &nbsp;&nbsp;<span class='text'><?php echo xlt('Calendar'); ?>:
- <input type='checkbox' name='calendar' disabled />
-</td>
-</tr>
-<tr>
-<td><span class="text"><?php echo xlt('First Name'); ?>: </span></td><td><input type=entry name='fname' id='fname' style="width:120px;"><span class="mandatory">&nbsp;*</span></td>
-<td><span class="text"><?php echo xlt('Middle Name'); ?>: </span></td><td><input type=entry name='mname' style="width:120px;"></td>
-</tr>
-<tr>
-<td><span class="text"><?php echo xlt('Last Name'); ?>: </span></td><td><input type=entry name='lname' id='lname' style="width:120px;"><span class="mandatory">&nbsp;*</span></td>
-<td><span class="text"><?php echo xlt('Default Facility'); ?>: </span></td><td><select style="width:120px;" name=facility_id>
-<?php
-$fres = sqlStatement("select * from facility where service_location != 0 order by name");
-if ($fres) {
-  for ($iter = 0;$frow = sqlFetchArray($fres);$iter++)
-    $result[$iter] = $frow;
-  foreach($result as $iter) {
-?>
-<option value="<?php echo $iter{'id'};?>"><?php echo $iter{'name'};?></option>
-<?php
-  }
-}
-?>
-</select></td>
-</tr>
-<tr>
-<td><span class=text><?php echo xlt('Suffix'); ?>: </span></td><td><input type=entry name=suffix style="width:150px;"></td>
-<td><span class="text"><?php echo xlt('Federal Tax ID'); ?>: </span></td><td><input type=entry name='federaltaxid' style="width:120px;"></td>
-
-</tr>
-<tr>
-<td><span class="text"><?php echo xlt('DEA Number'); ?>: </span></td><td><input type=entry name='federaldrugid' style="width:120px;"></td>
-
-
-<tr>
-<td><span class="text"><?php echo xlt('NPI'); ?>: </span></td><td><input type="entry" name="npi" style="width:120px;"></td>
-<td><span class="text"><?php echo xlt('Job Description'); ?>: </span></td><td><input type="entry" name="specialty" style="width:120px;"></td>
-</tr>
-
-<tr>
-    <td>
-        <span class="text"><?php echo xlt('Clinician Type'); ?>: </span>
-    </td>
-    <td>
-        <?php echo generate_select_list("physician_type", "physician_type", '','',xl('Select Type'),'physician_type_class','','',''); ?>
-    </td>
-    <td class='text'><?php echo xlt('See Authorizations'); ?>: </td>
-<td><select name="see_auth" style="width:120px;">
-<?php
- foreach (array(1 => xl('None'), 2 => xl('Only Mine'), 3 => xl('All')) as $key => $value)
- {
-  echo " <option value='$key'";
-  echo ">$value</option>\n";
- }
-?>
-</select></td>
-
-</tr>
-
-<!-- (CHEMED) Calendar UI preference -->
-<tr>
-<td><span class="text"><?php echo xlt('Taxonomy'); ?>: </span></td>
-<td><input type="entry" name="taxonomy" style="width:120px;" value="207Q00000X"></td>
-<td><span class="text"><?php echo xlt('Calendar UI'); ?>: </span></td><td><select name="cal_ui" style="width:120px;">
-<?php
- foreach (array(3 => xl('Outlook'), 1 => xl('Original'), 2 => xl('Fancy')) as $key => $value)
- {
-  echo " <option value='$key'>$value</option>\n";
- }
-?>
-</select></td>
-</tr>
-<!-- END (CHEMED) Calendar UI preference -->
-<?php if ($GLOBALS['erx_enable']) { ?>
-
-<tr>
-<td><span class="text"><?php echo xlt('State License Number'); ?>: </span></td>
-<td><input type="entry" name="state_license_number" style="width:120px;"></td>
-<td class='text'><?php echo xlt('NewCrop eRX Role'); ?>:</td>
-<td>
-  <?php echo generate_select_list("erxrole", "newcrop_erx_role", '','','--Select Role--','','','',array('style'=>'width:120px')); ?>
-</td>
-</tr>
-<?php } ?>
-
-<?php if ($GLOBALS['inhouse_pharmacy']) { ?>
-<tr>
- <td class="text"><?php echo xlt('Default Warehouse'); ?>: </td>
- <td class='text'>
-<?php
-echo generate_select_list('default_warehouse', 'warehouse',
-  '', '');
-?>
- </td>
- <td class="text"><?php echo xlt('Invoice Refno Pool'); ?>: </td>
- <td class='text'>
-<?php
-echo generate_select_list('irnpool', 'irnpool', '',
-  xl('Invoice reference number pool, if used'));
-?>
- </td>
-</tr>
-<?php } ?>
-
-<?php
- // List the access control groups if phpgacl installed
- if (isset($phpgacl_location) && acl_check('admin', 'acl')) {
-?>
-  <tr>
-  <td class='text'><?php echo xlt('Access Control'); ?>:</td>
-  <td><select name="access_group[]" multiple style="width:120px;">
-  <?php
-   $list_acl_groups = acl_get_group_title_list();
-   $default_acl_group = 'Administrators';
-   foreach ($list_acl_groups as $value) {
-    if ($default_acl_group == $value) {
-     // Modified 6-2009 by BM - Translate group name if applicable
-     echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
-    }
-    else {
-     // Modified 6-2009 by BM - Translate group name if applicable
-     echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
-    }
-   }
-  ?>
-  </select></td>
-
-  <td><span class="text"><?php echo xlt('Additional Info'); ?>: </span></td>
-  <td><textarea name=info style="width:120px;" cols=27 rows=4 wrap=auto></textarea></td>
-  </tr>
-  <tr>
-  <td><span class="text"><?php echo xlt('Menu role'); ?>:</span></td>
-  <td>
-  <select style="width:120px;" name="menu_role" id="menu_role">
-      <?php
-         $role = new Role();
-         $role_list = $role->getRoleList();
-         foreach($role_list as $role_title) {
-           ?>  <option value="<?php echo $role_title; ?>"><?php echo xlt($role_title); ?></option>
-          <?php
-         }
-      ?>
-      </select>
-  </td>
-  <td><span class="text"> <?php echo xlt('Full screen page'); ?>:</span></td>
-  <td>
-      <select style="width:120px;" name="fullscreen_page" id="fullscreen_page">
-                <option value="Calendar|/interface/main/main_info.php">Calendar</option>
-                <option value="Flow Board|/interface/patient_tracker/patient_tracker.php">Flow Board</option>
-      </select>
-
-  </td>
-  </tr>
-  <tr>
-  <td>
-      <span class="text"> <?php echo xlt('Full screen page enabled'); ?>: </span>
-  </td>
-  <td>
-      <input type="checkbox" name="fullscreen_enable"/>
-  </td>
-
-  </tr>
-
-  <tr height="25"><td colspan="4">&nbsp;</td></tr>
-<?php
- }
-?>
-
-</table>
-
-<br>
-
-<input type="hidden" name="newauthPass">
-</form>
-</td>
-
-</tr>
-
-<tr<?php if ($GLOBALS['disable_non_default_groups']) echo " style='display:none'"; ?>>
-
-<td valign=top>
-<form name='new_group' method='post' action="usergroup_admin.php"
- onsubmit='return top.restoreSession()'>
-<br>
-<input type=hidden name=mode value=new_group>
-<span class="bold"><?php echo xlt('New Group'); ?>:</span>
-</td><td>
-<span class="text"><?php echo xlt('Groupname'); ?>: </span><input type=entry name=groupname size=10>
-&nbsp;&nbsp;&nbsp;
-<span class="text"><?php echo xlt('Initial User'); ?>: </span>
-<select name=rumple>
-<?php
-$res = sqlStatement("select distinct username from users where username != ''");
-for ($iter = 0;$row = sqlFetchArray($res);$iter++)
-  $result[$iter] = $row;
-foreach ($result as $iter) {
-  print "<option value='".$iter{"username"}."'>" . $iter{"username"} . "</option>\n";
-}
-?>
-</select>
-&nbsp;&nbsp;&nbsp;
-<input type="submit" value=<?php echo xlt('Save'); ?>>
-</form>
-</td>
-
-</tr>
-
-<tr <?php if ($GLOBALS['disable_non_default_groups']) echo " style='display:none'"; ?>>
-
-<td valign=top>
-<form name='new_group' method='post' action="usergroup_admin.php"
- onsubmit='return top.restoreSession()'>
-<input type=hidden name=mode value=new_group>
-<span class="bold"><?php echo xlt('Add User To Group'); ?>:</span>
-</td><td>
-<span class="text">
-<?php echo xlt('User'); ?>
-: </span>
-<select name=rumple>
-<?php
-$res = sqlStatement("select distinct username from users where username != ''");
-for ($iter = 0;$row = sqlFetchArray($res);$iter++)
-  $result3[$iter] = $row;
-foreach ($result3 as $iter) {
-  print "<option value='".$iter{"username"}."'>" . $iter{"username"} . "</option>\n";
-}
-?>
-</select>
-&nbsp;&nbsp;&nbsp;
-<span class="text"><?php echo xlt('Groupname'); ?>: </span>
-<select name=groupname>
-<?php
-$res = sqlStatement("select distinct name from groups");
-$result2 = array();
-for ($iter = 0;$row = sqlFetchArray($res);$iter++)
-  $result2[$iter] = $row;
-foreach ($result2 as $iter) {
-  print "<option value='".$iter{"name"}."'>" . $iter{"name"} . "</option>\n";
-}
-?>
-</select>
-&nbsp;&nbsp;&nbsp;
-<input type="submit" value=<?php echo xlt('Add User To Group'); ?>>
-</form>
-</td>
-</tr>
-
-</table>
-
-<?php
-if (empty($GLOBALS['disable_non_default_groups'])) {
-  $res = sqlStatement("select * from groups order by name");
-  for ($iter = 0;$row = sqlFetchArray($res);$iter++)
-    $result5[$iter] = $row;
-
-  foreach ($result5 as $iter) {
-    $grouplist{$iter{"name"}} .= $iter{"user"} .
-      "(<a class='link_submit' href='usergroup_admin.php?mode=delete_group&id=" .
-      $iter{"id"} . "' onclick='top.restoreSession()'>Remove</a>), ";
-  }
-
-  foreach ($grouplist as $groupname => $list) {
-    print "<span class='bold'>" . $groupname . "</span><br>\n<span class='text'>" .
-      substr($list,0,strlen($list)-2) . "</span><br>\n";
-  }
-}
-?>
-
-<script language="JavaScript">
-<?php
-  if ($alertmsg = trim($alertmsg)) {
-    echo "alert('$alertmsg');\n";
-  }
-?>
-$(document).ready(function(){
-
-    $("#cancel").click(function() {
-        parent.$('#addUser-iframe').iziModal('close');
-    });
-
-    $("#access_group").select2({
-        placeholder: "Select Access control group"
-    });
-
-    // check and uncheck calendar when provider is clicked
-    $("#authorized").click(function () {
-        $("#calendar").attr({
-           "disabled": !$(this).is(':checked'),
-           "checked": $(this).is(':checked')
-        });
-    });
-
-    function authorized_clicked() {
-        var f = document.forms[0];
-        f.calendar.disabled = !f.authorized.checked;
-        f.calendar.checked  =  f.authorized.checked;
-    }
-  /*
-     $("#role_name").on('change', function(e) {
-
-        $.ajax({
-          "url": '../../library/ajax/get_fullscreen_pages.php',
-          "method": "POST",
-          "data" : {
-             "role_name": $("#role_name").val()
-          },
-          success: function(data) {
-            obj = JSON.parse(data);
-            $("#fullscreen_page").empty();
-            obj.forEach(function(item) {
-              option = document.createElement('option');
-              option.text = item.label;
-              option.value = item.id;
-              $("#fullscreen_page").append(option);
-
+            $("#cancel").click(function() {
+                parent.$('#addUser-iframe').iziModal('close');
             });
 
-          },
-          error: function(err) {
-            console.log(err);
-          }
-          });
+            $("#access_group").select2({
+                placeholder: "Select Access control group"
+            });
 
-       }); */
-});
-</script>
-<table>
+            // check and uncheck calendar when provider is clicked
+            $("#authorized").click(function () {
+                $("#calendar").attr({
+                    "disabled": !$(this).is(':checked'),
+                    "checked": $(this).is(':checked')
+                });
+            });
 
-</table>
+            /*
+               $("#role_name").on('change', function(e) {
+                  $.ajax({
+                    "url": '../../library/ajax/get_fullscreen_pages.php',
+                    "method": "POST",
+                    "data" : {
+                       "role_name": $("#role_name").val()
+                    },
+                    success: function(data) {
+                      obj = JSON.parse(data);
+                      $("#fullscreen_page").empty();
+                      obj.forEach(function(item) {
+                        option = document.createElement('option');
+                        option.text = item.label;
+                        option.value = item.id;
+                        $("#fullscreen_page").append(option);
 
+                      });
+
+                    },
+                    error: function(err) {
+                      console.log(err);
+                    }
+                    });
+
+                 }); */
+        });
+    </script>
 </body>
 </html>
