@@ -32,7 +32,7 @@ class PQRS_0268_Numerator extends PQRSFilter
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = '4340F'; ";
+" AND (b1.code = '4340F' AND b1.modifier ='') ";
 //8P hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
