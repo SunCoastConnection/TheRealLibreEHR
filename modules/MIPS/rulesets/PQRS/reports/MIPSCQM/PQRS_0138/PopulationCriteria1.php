@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0138 -- Population Criteria2
+ * PQRS Measure 0138 -- Population Criteria1
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 

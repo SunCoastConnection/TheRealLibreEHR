@@ -31,8 +31,8 @@ class PQRS_0141_NotMet extends PQRSFilter
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND ((b1.code = '3284F' AND b1.modifier ='')".
-" OR (b1.code = '0517F' AND b1.modifier ='8P' AND b2.code = '3285F' AND b1.modifier ='8P')); ";
+" AND ((b1.code = '3284F' AND b1.modifier ='8P')".
+" OR (b1.code = '0517F' AND b1.modifier ='8P' AND b2.code = '3285F')); ";
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 //hard fail identical to above but with modifier 8P for each of the above 2 conditions
 if ($result['count']> 0){ return true;} else {return false;}  	        
