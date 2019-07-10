@@ -1,6 +1,6 @@
 <?php
 /*
- * PQRS Measure 00XX -- NotMet
+ * PQRS Measure 0117 -- NotMet
  *
  * Copyright (C) 2019   Suncoast Connection
   * 
@@ -14,7 +14,7 @@
  *
  */
  
-class PQRS_00XX_NotMet extends PQRSFilter
+class PQRS_0117_NotMet extends PQRSFilter
 {
     public function getTitle()
     {
@@ -24,7 +24,17 @@ class PQRS_00XX_NotMet extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 
-        
+ $query =
+" SELECT COUNT(b1.code) AS count".  
+" FROM billing AS b1".
+" JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
+" WHERE b1.pid = ? ".
+" AND fe.date >= DATE_SUB('".$beginDate."', INTERVAL 1 YEAR)".
+" AND b1.code IN ( '2022F','2024F','2026F') AND b1.modifier ='8P'; ";
+//Hard fail  (2022F or 2024F or 2026F with 8P
+$result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
+
+if ($result['count']> 0){ return true;} else {return false;}           
 
     }
 }
