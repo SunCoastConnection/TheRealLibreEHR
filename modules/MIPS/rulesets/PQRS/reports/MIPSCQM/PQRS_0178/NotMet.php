@@ -1,6 +1,6 @@
 <?php
 /*
- * PQRS Measure 0167 -- NotMet
+ * PQRS Measure 0178 -- NotMet
  *
  * Copyright (C) 2019   Suncoast Connection
   * 
@@ -14,7 +14,7 @@
  *
  */
  
-class PQRS_0167_NotMet extends PQRSFilter
+class PQRS_0178_NotMet extends PQRSFilter
 {
     public function getTitle()
     {
@@ -24,17 +24,18 @@ class PQRS_0167_NotMet extends PQRSFilter
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 
- $query =
+$query =
 " SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G8576'; ";
-//G8576 hard fail...which is what you actually want.
+" AND b1.code = '1170F' AND b1.modifier ='8P'; ";
+//8P hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result['count']> 0){ return true;} else {return false;}
+if ($result['count']> 0){ return true;} else {return false;}          
+
     }
 }
 

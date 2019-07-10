@@ -1,6 +1,6 @@
 <?php
 /**
- * PQRS Measure 0138 -- Population Criteria
+ * PQRS Measure 0138 -- Population Criteria2
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
   * 
@@ -43,4 +43,9 @@ class PQRS_0138_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
     {
         return new PQRS_0138_Exclusion2();
     }
+    public function createNotMet()
+    {
+        return new PQRS_0138_NotMet2();
+    }
 }
+?>
