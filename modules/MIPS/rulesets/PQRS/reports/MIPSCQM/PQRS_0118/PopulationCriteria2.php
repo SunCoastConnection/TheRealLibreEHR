@@ -38,10 +38,13 @@ class PQRS_0118_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
     {
         return new PQRS_0118_Denominator2();
     }
-    
     public function createExclusion()
     {
         return new PQRS_0118_Exclusion2();
+    }
+    public function createNotMet()
+    {
+        return new PQRS_0118_NotMet2();
     }
 }
 

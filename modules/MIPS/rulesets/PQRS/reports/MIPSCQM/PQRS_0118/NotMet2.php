@@ -1,6 +1,6 @@
 <?php
 /*
- * PQRS Measure 0130 -- NotMet
+ * PQRS Measure 0118 -- NotMet2
  *
  * Copyright (C) 2019   Suncoast Connection
   * 
@@ -14,27 +14,27 @@
  *
  */
  
-class PQRS_0130_NotMet extends PQRSFilter
+class PQRS_0118_NotMet2 extends PQRSFilter
 {
     public function getTitle()
     {
-        return "NotMet";
+        return "NotMet2";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
     {
 
-$query =
-" SELECT COUNT(b1.code) AS count".  
+ $query =
+"SELECT COUNT(b1.code) AS count".  
 " FROM billing AS b1".
 " JOIN form_encounter AS fe ON (b1.encounter = fe.encounter)".
 " WHERE b1.pid = ? ".
 " AND fe.date BETWEEN '".$beginDate."' AND '".$endDate."' ".
-" AND b1.code = 'G8428'; ";
-//G8428 hard fail
+" AND b1.code = 'G8475';";
+//G8475 hard fail
 $result = sqlFetchArray(sqlStatementNoLog($query, array($patient->id))); 
 
-if ($result['count']> 0){ return true;} else {return false;}          
+if ($result['count'] > 0){ return true;} else {return false;}        
 
     }
 }
