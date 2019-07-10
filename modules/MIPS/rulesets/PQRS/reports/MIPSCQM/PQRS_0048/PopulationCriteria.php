@@ -2,7 +2,7 @@
 /**
  * PQRS Measure 0048 -- Population Criteria
  *
- * Copyright (C) 2015 - 2017      Suncoast Connection
+ * Copyright (C) 2015 - 2019      Suncoast Connection
   * 
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
  * See the Mozilla Public License for more details. 
@@ -42,6 +42,11 @@ class PQRS_0048_PopulationCriteria implements PQRSPopulationCriteriaFactory
     public function createExclusion()
     {
         return new PQRS_0048_Exclusion();
+    }
+    
+    public function createNotMet()
+    {
+        return new PQRS_0048_NotMet();
     }
 }
 
