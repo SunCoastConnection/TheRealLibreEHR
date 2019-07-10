@@ -1,6 +1,6 @@
 <?php
 /*
- * PQRS Measure 00XX -- NotMet
+ * PQRS Measure 0109 -- NotMet
  *
  * Copyright (C) 2019   Suncoast Connection
   * 
@@ -14,7 +14,7 @@
  *
  */
  
-class PQRS_00XX_NotMet extends PQRSFilter
+class PQRS_0109_NotMet extends PQRSFilter
 {
     public function getTitle()
     {
