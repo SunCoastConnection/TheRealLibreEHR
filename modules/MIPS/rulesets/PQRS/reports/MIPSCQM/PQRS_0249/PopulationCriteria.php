@@ -43,4 +43,10 @@ class PQRS_0249_PopulationCriteria implements PQRSPopulationCriteriaFactory
     {
         return new PQRS_0249_Exclusion();
     }
+    
+    public function createNotMet()
+    {
+        return new PQRS_0249_NotMet();
+    }
 }
+?>
