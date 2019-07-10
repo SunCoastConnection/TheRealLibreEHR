@@ -45,7 +45,7 @@ class PQRS_0118_PopulationCriteria1 implements PQRSPopulationCriteriaFactory
     }
     public function createNotMet()
     {
-        return new PQRS_0118_NotMet2();
+        return new PQRS_0118_NotMet1();
     }
 }
 
