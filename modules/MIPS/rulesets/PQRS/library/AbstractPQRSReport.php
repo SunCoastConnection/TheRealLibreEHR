@@ -193,6 +193,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                 // tally results, run exclusion on each numerator
                 $pass_filt = $denominatorPatientPopulation;
                 $exclude_filt = $exclusionsPatientPopulation;
+                $pass_not = $notmetPatientPopulations;
                 foreach ( $numeratorPatientPopulations as $title => $pass_targ ) {
 
                     if(count($patExclArr) > 0){
@@ -214,7 +215,7 @@ abstract class AbstractPQRSReport implements RsReportIF
 /////May redo NotMet like Exclusion/Exception above with a value of 5
                     $percentage = calculate_percentage( $pass_filt, $exclude_filt, $pass_targ );
                     $this->_resultsArray[]= new PQRSResult( $this->_rowRule, $title, $populationCriteria->getTitle(),
-                        $totalPatients, $pass_filt, $exclude_filt, $pass_targ, $pass_notmet, $percentage );
+                        $totalPatients, $pass_filt, $exclude_filt, $pass_targ, $pass_not, $percentage );
                 }
             }
         }
