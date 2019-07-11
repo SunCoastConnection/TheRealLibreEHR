@@ -11,6 +11,10 @@ require_once('ReportTypes.php');
 
 class ReportManager {
   public function __construct() {
+      
+    foreach(glob(dirname(__FILE__).'/library/*.php') as $filename) {
+      require_once($filename);
+    }
     foreach(glob(dirname(__FILE__).'PQRS/library/*.php') as $filename) {
       require_once($filename);
     }
