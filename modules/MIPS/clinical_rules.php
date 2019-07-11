@@ -563,6 +563,9 @@ function test_rules_clinic_batch_method($provider='',$type='',$dateTarget='',$mo
           $dataSheet[$key]['pass_filter'] = $pass_filter;
 //        }
 
+        $pass_notmet = $dataSheet[$key]['pass_notmet'] + $row['pass_notmet'];
+        $dataSheet[$key]['pass_notmet'] = $pass_notmet;
+
 
         $pass_target = $dataSheet[$key]['pass_target'] + $row['pass_target'];
         $dataSheet[$key]['pass_target'] = $pass_target;
