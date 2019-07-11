@@ -555,11 +555,11 @@ $bgcolor = 0;
               'numerator_label' => attr($row['numerator_label']),
             ));
 ?>
-              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $failed_items; ?></a></td>
+              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $unreported_items; ?></a></td>
 <?php
           } else {
 ?>
-              <td style="text-align:center"><?php echo $failed_items; ?></td>
+              <td style="text-align:center"><?php echo $unreported_items; ?></td>
 <?php
           }         
           
