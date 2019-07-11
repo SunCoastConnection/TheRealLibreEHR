@@ -144,7 +144,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                 $patExclArr = array();
                 $patExceptArr = array();
                 $numeratorPatientPopulations = $this->initNumeratorPopulations( $numerators );
-                $notmetPatientPopulations = $this->initNotMetPopulations( $notmets );
+                $notmetPatientPopulations = $this->initNotMetPopulations( $notmet );
                 foreach ( $this->_pqrsPopulation as $patient )
                 {
                     if ( !$initialPatientPopulationFilter->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) )
@@ -185,8 +185,8 @@ abstract class AbstractPQRSReport implements RsReportIF
                     foreach ( $numerators as $numerator ) {
                         $this->testNumerator( $patient, $numerator, $numeratorPatientPopulations );
                     }
-                    foreach ( $notmets as $notmet ) {
-                        $this->testNotMet( $patient, $notmet, $notmetPatientPopulations );
+                    foreach ( $notmet as $notmets ) {
+                        $this->testNotMet( $patient, $notmets, $notmetPatientPopulations );
                     }
                 }
 
@@ -269,28 +269,28 @@ abstract class AbstractPQRSReport implements RsReportIF
     
     private function testNotMet( $patient, $notmet, &$notmetPatientPopulations )
     {
-        if ( $notmet instanceof PQRSFilterIF  )
+        if ( $notmets instanceof PQRSFilterIF  )
         {
-            if ( $notmet->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) ) {
+            if ( $notmets->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) ) {
 
-                $notmetPatientPopulations[$notmet->getTitle()]++;
+                $notmetPatientPopulations[$notmets->getTitle()]++;
 
                 // If itemization is turned on, then record the "passed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
-                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $notmet->getTitle());
+                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $notmets->getTitle());
                 }
             }
             else {
                 // If itemization is turned on, then record the "failed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
-                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $notmet->getTitle());
+                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $notmets->getTitle());
                 }
 
             }
         }
         else
         {
-            throw new Exception( "Numerator Not Met must be an instance of PQRSFilterIF" );
+            throw new Exception( "NotMet must be an instance of PQRSFilterIF" );
         }
     }
     
