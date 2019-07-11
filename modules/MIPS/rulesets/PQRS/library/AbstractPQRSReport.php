@@ -35,7 +35,7 @@ abstract class AbstractPQRSReport implements RsReportIF
     {
         // require all .php files in the report's sub-folder
         $className = get_class( $this );
-        foreach ( glob( dirname(__FILE__)."/../reports/MIPSCQM".$className."/*.php" ) as $filename ) {
+        foreach ( glob( dirname(__FILE__)."/../reports/MIPSCQM/".$className."/*.php" ) as $filename ) {
             require_once( $filename );
         }
         //require HCC

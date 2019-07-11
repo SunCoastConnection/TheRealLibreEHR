@@ -24,7 +24,14 @@ class PQRSReportFactory extends RsReportFactoryAbstract {
       require_once($filename);
     }
 
-    foreach(glob(dirname(__FILE__).'/reports/*.php') as $filename) {
+    foreach(glob(dirname(__FILE__).'/reports/MIPSCQM/*.php') as $filename) {
+      require_once($filename);
+    }
+    
+      foreach(glob(dirname(__FILE__).'/reports/HCC/*.php') as $filename) {
+      require_once($filename);
+    }
+      foreach(glob(dirname(__FILE__).'/reports/Premeasure/*.php') as $filename) {
       require_once($filename);
     }
 
