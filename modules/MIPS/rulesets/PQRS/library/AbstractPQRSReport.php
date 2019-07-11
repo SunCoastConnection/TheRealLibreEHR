@@ -236,7 +236,7 @@ abstract class AbstractPQRSReport implements RsReportIF
     {
         $notmetPatientPopulations = array();
         foreach ( $notmets as $notmet ) {
-            $notmetPatientPopulations[$notmets->getTitle()] = 0;
+            $notmetPatientPopulations[$notmet->getTitle()] = 0;
         }
         return $notmetPatientPopulations;
     }
