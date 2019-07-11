@@ -539,29 +539,7 @@ $bgcolor = 0;
 <?php
           }         
 //////////////////Implement Unreported          
-           $unreported_items = 0;
-
-          if(isset($row['is_main'])) {
-              $unreported_items = $row['pass_filter'] - $row['pass_target'] - $row['excluded'] - $row['pass_notmet'];
-
-          } 
-
-          if(isset($row['itemized_test_id']) && ($unreported_items > 0) ) {
-            $query = http_build_query(array(
-              'from_page' => 'pqrs_report',
-              'pass_id' => 'fail',
-              'report_id' => attr($report_id),
-              'itemized_test_id' => attr($row['itemized_test_id']),
-              'numerator_label' => attr($row['numerator_label']),
-            ));
-?>
-              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $unreported_items; ?></a></td>
-<?php
-          } else {
-?>
-              <td style="text-align:center"><?php echo $unreported_items; ?></td>
-<?php
-          }         
+          
           
           
 //////////////////
