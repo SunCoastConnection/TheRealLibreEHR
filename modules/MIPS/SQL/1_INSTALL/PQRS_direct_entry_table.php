@@ -1446,7 +1446,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('pre-selection_0222', 'description', 'Functional Deficit: Change in Risk-Adjusted Functional Status for Patients with Elbow, Wrist or Hand Impairments',''),
 ('pre-selection_0223', 'description', 'Functional Deficit: Change in Risk-Adjusted Functional Status for Patients with Other General Orthopedic Impairments',''),
 ('pre-selection_0236', 'description', 'Controlling High Blood Pressure',''),
-('pre-selection_0238', 'description', 'Use of High-Risk Medications in the Elderly','')
+('pre-selection_0238', 'description', 'Use of High-Risk Medications in the Elderly',''),
 ('pre-selection_0249', 'description', 'Barrett''s Esophagus',''),
 ('pre-selection_0250', 'description', 'Radical Prostatectomy Pathology Reporting',''),
 ('pre-selection_0258', 'description', 'Rate of Open Repair of Small or Moderate Non-Ruptured Abdominal Aortic Aneurysms (AAA) without Major Complications',''),
