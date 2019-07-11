@@ -267,7 +267,7 @@ abstract class AbstractPQRSReport implements RsReportIF
         }
     }
     
-    private function testNotMet( $patient, $notmet, &$notmetPatientPopulations )
+    private function testNotMet( $patient, $notmets, &$notmetPatientPopulations )
     {
         if ( $notmets instanceof PQRSFilterIF  )
         {
