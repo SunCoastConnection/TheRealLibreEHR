@@ -11,27 +11,14 @@ require_once('ReportTypes.php');
 
 class ReportManager {
   public function __construct() {
-      
     foreach(glob(dirname(__FILE__).'/library/*.php') as $filename) {
       require_once($filename);
     }
-    foreach(glob(dirname(__FILE__).'PQRS/library/*.php') as $filename) {
-      require_once($filename);
-    }
 
-
-    foreach(glob(dirname(__FILE__).'/PQRS/reports/MIPSCQM/*.php') as $filename) {
+    
+    foreach(glob(dirname(__FILE__).'/PQRS/*.php') as $filename) {
       require_once($filename);
     }
-    
-      foreach(glob(dirname(__FILE__).'/PQRS/reports/HCC/*.php') as $filename) {
-      require_once($filename);
-    }
-      foreach(glob(dirname(__FILE__).'/PQRS/reports/Premeasure/*.php') as $filename) {
-      require_once($filename);
-    }
-    
-    
   }
 
   public function runReport($rowRule, $patients, $dateTarget, $options = array()) {
