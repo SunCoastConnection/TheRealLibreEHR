@@ -120,8 +120,8 @@ abstract class AbstractPQRSReport implements RsReportIF
                 if ( !is_array( $notmet ) ) {
                     $notmet = array( $notmet );
                 }
-                foreach ( $notmets as $notmet ) {
-                    $notmet->setReportOptions($this->_reportOptions);
+                foreach ( $notmet as $notmets ) {
+                    $notmets->setReportOptions($this->_reportOptions);
                 }
 
                 $exclusion = $populationCriteria->createExclusion();
