@@ -104,6 +104,6 @@ $query =
 ('HCC_0176','Complications of Specified Implanted Device or Graft','0.566'),
 ('HCC_0186','Major Organ Transplant or Replacement Status','0.891'),
 ('HCC_0188','Artificial Openings for Feeding or Elimination','0.651'),
-('HCC_0189','Amputation Status, Lower Limb/Amputation Complications','0.787','0.407');";
+('HCC_0189','Amputation Status, Lower Limb/Amputation Complications','0.787');";
 sqlStatementNoLog($query);
 ?>
