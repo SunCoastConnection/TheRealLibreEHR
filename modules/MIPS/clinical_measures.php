@@ -387,10 +387,11 @@ function Form_Validate() {
             <th style="text-align:left"><?php echo htmlspecialchars(xl('Title'), ENT_NOQUOTES); ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Total Patients'), ENT_NOQUOTES); ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Denominator'), ENT_NOQUOTES);  ?></th>
-            <th style="text-align:center"><?php echo htmlspecialchars(xl('Numerator Exclusions'), ENT_NOQUOTES); ?></th>
+            <th style="text-align:center"><?php echo htmlspecialchars(xl('Numerator Exceptions'), ENT_NOQUOTES); ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Performance Met'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Not Met'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Performance Rate'), ENT_NOQUOTES); ?></th>
+            <th style="text-align:center"><?php echo htmlspecialchars(xl('Unreported'), ENT_NOQUOTES);  ?></th>
           </thead>
           <tbody>  <!-- added for better print-ability -->
 <?php
@@ -517,7 +518,30 @@ $bgcolor = 0;
               <td style="text-align:center"><?php echo $failed_items; ?></td>
 <?php
           }
-
+          
+ //////////// Implement NotMet        
+           if(isset($row['itemized_test_id']) && $row['pass_notmet'] > 0) {
+            $query = http_build_query(array(
+              'from_page' => 'pqrs_report',
+              'pass_id' => 'pass',
+              'report_id' => attr($report_id),
+              'itemized_test_id' => attr($row['itemized_test_id']),
+              'numerator_label' => attr($row['numerator_label']),
+            ));
+?>
+              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['pass_notmet']; ?></a></td>
+<?php
+          } else {
+?>
+              <td style="text-align:center"><?php echo $row['pass_notmet']; ?></td>
+<?php
+          }         
+          
+          
+          
+          
+          
+//////////////////
 ?>
               <td style="text-align:center"><?php echo $row['percentage']; ?></td>
 <?php

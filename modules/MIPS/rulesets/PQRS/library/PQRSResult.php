@@ -27,9 +27,10 @@ class PQRSResult implements RsResultIF
     public $patientsInPopulation; // Number of patients that pass filter
     public $patientsExcluded; // Number of patients that are excluded
     public $patientsIncluded; // Number of patients that pass target
+    public $patientsNotMet; // Number of patients that pass NotMet
     public $percentage; // Calculated percentage
 
-    public function __construct( $rowRule, $numeratorLabel, $populationLabel, $totalPatients, $patientsInPopulation, $patientsExcluded, $patientsIncluded, $percentage )
+    public function __construct( $rowRule, $numeratorLabel, $populationLabel, $totalPatients, $patientsInPopulation, $patientsExcluded, $patientsIncluded, $patientsNotMet, $percentage )
     {
         $this->rule = $rowRule;
         $this->numeratorLabel = $numeratorLabel;
@@ -38,6 +39,7 @@ class PQRSResult implements RsResultIF
         $this->patientsInPopulation = $patientsInPopulation;
         $this->patientsExcluded = $patientsExcluded;
         $this->patientsIncluded = $patientsIncluded;
+        $this->patientsNotMet = $patientsNotMet;
         $this->percentage = $percentage;
 
         // If itemization is turned on, then record the itemized_test_id 
@@ -73,6 +75,7 @@ class PQRSResult implements RsResultIF
             'excluded' => $this->patientsExcluded,
             'pass_filter' => $this->patientsInPopulation,
             'pass_target' => $this->patientsIncluded,
+            'pass_notmet' => $this->patientsNotMet,
             'percentage' => $this->percentage );
             $rowFormat = array_merge( $rowFormat, $this->rule );
 

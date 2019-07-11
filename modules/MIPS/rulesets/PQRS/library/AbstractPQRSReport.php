@@ -139,7 +139,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                 $totalPatients = count( $this->_pqrsPopulation );
                 $initialPatientPopulation = 0;
                 $denominatorPatientPopulation = 0;
-                $exclusionsPatientPopulation = 0;
+                $exclusionsPatientPopulation = 0; //exclusions now reported as exceptions!
                 $exceptionsPatientPopulation = 0; // this is a bridge to no where variable (calculated but not used below). Will keep for now, though.
                 $patExclArr = array();
                 $patExceptArr = array();
