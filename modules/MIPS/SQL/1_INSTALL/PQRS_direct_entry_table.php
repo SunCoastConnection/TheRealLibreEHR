@@ -584,7 +584,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0249', 'description', 'Barrett''s Esophagus',''),
 ('PQRS_0249', 'question', 'Did the patient esophageal biopsy report document the presence of Barrett''s mucosa and include a statement about dysplasia?',''),
 ('PQRS_0249', 'answer', '1,Esophageal biopsy reports histologic finding of Barrett''s mucosa and contains a statement about dysplasia (present, absent, or indefinite and if present, contains appropriate grading) (3126F)|3126F',1),
-('PQRS_0249', 'answer', '2,Documentation of medical reason(s) for not submitting histological finding of Barrett's mucosa (3126F:1P)|3126F:1P',2),
+('PQRS_0249', 'answer', '2,Documentation of medical reason(s) for not submitting histological finding of Barrett\'s mucosa (3126F:1P)|3126F:1P',2),
 ('PQRS_0249', 'answer', '3,Esophageal biopsy reports histologic finding of of Barrett''s mucosa but does not contain a statement about dysplasia (present, absent, or indefinite), reason not given (3126F:8P)|3126F:8P',9),
 
 ('PQRS_0250', 'description', 'Radical Prostatectomy Pathology Reporting',''),
@@ -687,7 +687,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0283', 'answer', '3,Screening not performed; partial screening Or positive screening with no  recommendations, reason not given (G9920)|G9920',9),
 
 ('PQRS_0286', 'description', 'Dementia: Safety Concerns Screening and Mitigation Recommendations or Referral for Patients with Dementia',''),
-('PQRS_0286', 'question', Was the patient or their caregiver(s) screened for 1) danger to self or others and 2)environmental risk AND if safety concerns, are there recommendations or a referral for further safety evaluation(mitigation)?,''),
+('PQRS_0286', 'question', 'Was the patient or their caregiver(s) screened for 1) danger to self or others and 2)environmental risk AND if safety concerns, are there recommendations or a referral for further safety evaluation(mitigation)?',''),
 ('PQRS_0286', 'answer', '1,Safety screening positive, documented mitigation recommendations and or referrals,orders (G9922)|G9922',1),
 ('PQRS_0286', 'answer', '2,Safety screening, negative (G9923)|G9923',1),
 ('PQRS_0286', 'answer', '3,Documentation of medical reason(s) for not performing safety screening OR for not providing mitigation recommendations, referrals or orders (G9924)|G9924',2),
@@ -940,7 +940,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0364', 'question', 'Did final reports with document appropriate follow-up recommendations for incidentally detected pulmonary nodules (e.g., follow-up CT imaging studies needed or that no follow-up is needed) based at a minimum on nodule size AND patient risk factors?',''),
 ('PQRS_0364', 'answer', '1,Follow-up recommendations documented according to recommended guidelines for incidentally detected pulmonary nodules (e.g., follow-up CT imaging studies needed or that no follow-up is needed) based at a minimum on nodule size AND patient risk factors (G9345)|G9345',1),
 ('PQRS_0364', 'answer', '2,Documentation of medical reason(s) that follow-up imaging is indicated (G9755)|G9755',2),
-('PQRS_0364', 'answer', '3,Follow-up recommendations not documented or don't follow recommended guidelines for incidentally detected pulmonary nodules, reason not given (G9347)|G9347',9),
+('PQRS_0364', 'answer', '3,Follow-up recommendations not documented or don\'t follow recommended guidelines for incidentally detected pulmonary nodules, reason not given (G9347)|G9347',9),
 
 ('PQRS_0370', 'description', 'Depression Remission at Twelve Months',''),
 ('PQRS_0370', 'question', 'Did the patient achieve remission at twelve months as demonstrated by a twelve month (+/- 30 days) PHQ-9 score of less than five?',''),
@@ -1024,7 +1024,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0394', 'answer', '4,Patient did not have one dose of meningococcal vaccine on or between the patient\'s 11th and 13th birthdays (G9415) *AND* Patient did not have one tetanus, diphtheria toxoids and acellular pertussis vaccine (Tdap) OR one tetanus, diphtheria toxoids vaccine (Td) on or between the patient\'s 10th and 13th birthdays OR one tetanus and one diphtheria vaccine on or between the patient\'s 10th and 13th birthdays (G9417) (G9415 G9417)|G9415 G9417',9),
 
 ('PQRS_0395', 'description', 'Lung Cancer Reporting (Biopsy/Cytology Specimens)',''),
-('PQRS_0395', 'question', Was the biopsy and cytology specimen report classified into specific histologic type (squamous cell carcinoma, adenocarcinoma) OR classified as NSCLC-NOS with an explanation included in the pathology report',''),
+('PQRS_0395', 'question', 'Was the biopsy and cytology specimen report classified into specific histologic type (squamous cell carcinoma, adenocarcinoma) OR classified as NSCLC-NOS with an explanation included in the pathology report',''),
 ('PQRS_0395', 'answer', '1,Biopsy and cytology specimen report documents classification into specific histologic type OR classified as NSCLC-NOS with an explanation (G9418)|G9418',1),
 ('PQRS_0395', 'answer', '2,Documentation of medical reason(s) for not including the histological type OR NSCLC-NOS classification (G9419)|G9419',2),
 ('PQRS_0395', 'answer', '3,Biopsy and cytology specimen report does not document classification into specific histologic type OR as NSCLC-NOS (G9421)|G9421',9),
