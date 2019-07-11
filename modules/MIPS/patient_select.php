@@ -203,8 +203,7 @@ if ($from_page == "pqrs_report") {
   <td class='text' align='right'>
 <?php
 // Show start and end row number, and number of rows, with paging links.
-//
-// $count = $fstart + $GLOBALS['PATIENT_INC_COUNT']; // Why did I do that???
+
 $count = $GLOBALS['PATIENT_INC_COUNT'];
 $fend = $fstart + $MAXSHOW;
 if ($fend > $count) $fend = $count;
@@ -229,13 +228,13 @@ if ($fend > $count) $fend = $count;
      echo "<td colspan='6' class='text'>";
      echo "<b>";
      if ($pass_id == "fail") {
-       echo xlt("Performance Not Met");
+       echo xlt("Performance Not Met(Unreported)");
      }
      else if ($pass_id == "pass") {
        echo xlt("Performance Met");
      }
      else if ($pass_id == "exclude") {
-       echo xlt("Denominator Exceptions");
+       echo xlt("Exceptions");
      }
      else { // $pass_id == "all"
        echo xlt("All Patients");
@@ -428,7 +427,7 @@ if ($result) {
 <?php
 // Show start and end row number, and number of rows, with paging links.
 //
-// $count = $fstart + $GLOBALS['PATIENT_INC_COUNT']; // Why did I do that???
+
 $count = $GLOBALS['PATIENT_INC_COUNT'];
 $fend = $fstart + $MAXSHOW;
 if ($fend > $count) $fend = $count;
