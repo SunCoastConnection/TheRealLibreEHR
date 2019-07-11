@@ -390,8 +390,9 @@ function Form_Validate() {
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Numerator Exceptions'), ENT_NOQUOTES); ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Performance Met'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Not Met'), ENT_NOQUOTES);  ?></th>
+            <th style="text-align:center"><?php echo htmlspecialchars(xl('Hard Fail'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Performance Rate'), ENT_NOQUOTES); ?></th>
-            <th style="text-align:center"><?php echo htmlspecialchars(xl('Unreported'), ENT_NOQUOTES);  ?></th>
+            
           </thead>
           <tbody>  <!-- added for better print-ability -->
 <?php
