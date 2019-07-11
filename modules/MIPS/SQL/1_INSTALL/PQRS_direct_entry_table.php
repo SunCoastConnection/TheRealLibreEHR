@@ -566,7 +566,7 @@ $query ="INSERT INTO `pqrs_direct_entry_lookup` (`measure_number`, `type`, `valu
 ('PQRS_0236', 'answer', '4,Most recent systolic blood pressure is 140 mmHg or AND most recent diastolic blood pressure is 90 mmHg or higher (G8753 G8755)|G8753 G8755',9),
 ('PQRS_0236', 'answer', '5,Blood pressure measurement not documented, reason not given (G8756)|G8756',9),
 
-('PQRS_0238', 'description', 'Use of High-Risk Medications in the Elderly  <br>INVERSE MEASURE ','')
+('PQRS_0238', 'description', 'Use of High-Risk Medications in the Elderly  <br>INVERSE MEASURE ',''),
 ('PQRS_0238', 'question', 'Was the patient ordered high-risk medication at least once during the measurement period and if yes, were there two or more orders for the same high risk medication?',''),
 ('PQRS_0238', 'answer', '1,One order for high-risk medication (G9365)|G9365',1),
 ('PQRS_0238', 'answer', '2,High-risk medication not ordered during the measurement period (G9366)|G9366',9),
