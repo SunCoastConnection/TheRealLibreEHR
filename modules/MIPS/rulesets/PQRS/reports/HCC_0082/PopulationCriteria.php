@@ -46,7 +46,7 @@ class HCC_0082_PopulationCriteria implements PQRSPopulationCriteriaFactory
         
         public function createNotMet()
     {
-        return new HCC_0083_NotMet();
+        return new HCC_0082_NotMet();
     }
 }
 
