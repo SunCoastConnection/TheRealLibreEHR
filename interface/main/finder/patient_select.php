@@ -210,7 +210,7 @@ if ($popup) {
     if ( $where ) {
       $where .= " AND ";
     }
-    $where .= " WHERE " . $patient_filter;
+    $where .= $patient_filter;
   }
 
   $sql = "SELECT $given FROM patient_data " .
