@@ -66,7 +66,7 @@ $query =
 ('HCC_0078','Parkinsons and Huntingtons Diseases ', '0.145'), 
 ('HCC_0079','Seizure Disorders and Convulsions',  '0.088'), 
 ('HCC_0080','Coma, Brain Compression/Anoxic', '0.042'), 
-('HCC_0082','Respirator Dependence/Tracheostomy Status','1.52'), '1.631'),
+('HCC_0082','Respirator Dependence/Tracheostomy Status', '1.631'),
 ('HCC_0083','Respiratory Arrest','0.727'), 
 ('HCC_0084','Cardio-Respiratory Failure and Shock', '0.297'), 
 ('HCC_0085','Congestive Heart Failure', '0.191'), 

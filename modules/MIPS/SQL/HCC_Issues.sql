@@ -68,11 +68,10 @@ UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '84' AND `pid`  IN(SELECT pid
 UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '83' AND `pid`  IN(SELECT pid from aaa_lists where `subtype`= '82');                                                                                    
 UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '88' AND `pid`  IN(SELECT pid from aaa_lists where `subtype` IN('86','87'));
 UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '87' AND `pid`  IN(SELECT pid from aaa_lists where `subtype`= '86');                                                                                  
-UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '100' AND `pid` IN(SELECT pid from aaa_lists where `subtype`= '99');                                                                                   
-UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '87' AND `pid`  IN(SELECT pid from aaa_lists where `subtype`= '86');                                                                                  
+UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '100' AND `pid` IN(SELECT pid from aaa_lists where `subtype`= '99');                                                                                                                                                                    
 UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '189' AND `pid` IN(SELECT pid from aaa_lists where `subtype`= '106');                                                                                    
 UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '161' AND `pid` IN(SELECT pid from aaa_lists where `subtype` IN('106','157','158'));
-UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '158' AND `pid` IN(SELECT pid from aaa_lists where `subtype` IN('106','157'));                                                                                     
+UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '158' AND `pid` IN(SELECT pid from aaa_lists where `subtype` IN('157'));                                                                                     
 UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '108' AND `pid` IN(SELECT pid from aaa_lists where `subtype` IN('106','107'));
 UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '107' AND `pid` IN(SELECT pid from aaa_lists where `subtype`= '106');                                                                                   
 UPDATE lists SET `extrainfo` ='' WHERE `subtype` = '112' AND `pid` IN(SELECT pid from aaa_lists where `subtype` IN('110','111'));
