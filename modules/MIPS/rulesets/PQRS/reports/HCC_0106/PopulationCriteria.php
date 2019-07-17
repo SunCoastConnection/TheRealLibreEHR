@@ -43,6 +43,11 @@ class HCC_0106_PopulationCriteria implements PQRSPopulationCriteriaFactory
     {
         return new HCC_0106_Exclusion();
     }
+            
+        public function createNotMet()
+    {
+        return new HCC_0106_NotMet();
+    }
 }
 
 ?>
