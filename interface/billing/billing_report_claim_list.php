@@ -215,7 +215,7 @@ function PrintToPatientButton($iter, $name, $ptname, $raw_encounter_date)
         ",'" . addslashes($name['pid']) .
         "','" . addslashes($ptname) . "'," . $iter['enc_encounter'] .
         ",'" . oeFormatShortDate($raw_encounter_date) . "',' " .
-        xl('DOB') . ": " . oeFormatShortDate($name['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAge($name['DOB_YMD']) . "');
+        xl('DOB') . ": " . oeFormatShortDate($name['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAge($name['DOB_YMD']) . "','" . $iter['form_enc_case_number'] . "');
                  top.window.parent.left_nav.setPatientEncounter(EncounterIdArray[" . $iter['enc_pid'] . "],EncounterDateArray[" . $iter['enc_pid'] .
                  "], CalendarCategoryArray[" . $iter['enc_pid'] . "])";
   return $href;
