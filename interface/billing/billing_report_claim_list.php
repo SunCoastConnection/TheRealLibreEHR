@@ -45,7 +45,7 @@ if ($tpl_coding_done == "1") {
   }
   echo "<table class='table primary-table table-condensed'>";
   echo "<tr>";
-  echo "<td style='width:10%'><input type='checkbox' class='patient_check_box'>&nbsp;&nbsp;<a class='patient_name' href=$tpl_patient_href><span class='$DIV_BLINKING_CLASSES' title='$blinkingMessage'>$tpl_patient_name</span></a></td>";
+  echo "<td style='width:10%'><input type='checkbox' class='patient_check_box'>&nbsp;&nbsp;<a class='patient_name' href=".'"'.$tpl_patient_href.'"'."><span class='$DIV_BLINKING_CLASSES' title='$blinkingMessage'>$tpl_patient_name</span></a></td>";
 
   echo "<td style='width:10%'><a class='patient_encounter' href=$tpl_encounter_href>$tpl_encounter_id</td>";
   echo "<td style='width:10%'>$tpl_payer_type_selection_box</td>";
@@ -104,7 +104,7 @@ function returnPatientData($namecolor, $lhtml, $ptname, $iter, $encounter_href, 
 
   // $lhtml .= '<td><a class="patient_encounter" href="'.$encounter_href.'">' . text($iter['enc_pid']) . "-" .text($iter['enc_encounter']) . "</a></td>";
 
-  $encounter_id  = $iter['enc_pid']."-".text($iter['enc_encounter']);
+  $encounter_id  = $iter['enc_pid']."-".text($iter['enc_encounter']) . "-" . text($iter['form_enc_case_number']);
 
   return array($ptname, $encounter_id, $patient_href, $encounter_href);
 }
@@ -215,7 +215,7 @@ function PrintToPatientButton($iter, $name, $ptname, $raw_encounter_date)
         ",'" . addslashes($name['pid']) .
         "','" . addslashes($ptname) . "'," . $iter['enc_encounter'] .
         ",'" . oeFormatShortDate($raw_encounter_date) . "',' " .
-        xl('DOB') . ": " . oeFormatShortDate($name['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAge($name['DOB_YMD']) . "');
+        xl('DOB') . ": " . oeFormatShortDate($name['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAge($name['DOB_YMD']) . "','" . $iter['form_enc_case_number'] . "');
                  top.window.parent.left_nav.setPatientEncounter(EncounterIdArray[" . $iter['enc_pid'] . "],EncounterDateArray[" . $iter['enc_pid'] .
                  "], CalendarCategoryArray[" . $iter['enc_pid'] . "])";
   return $href;
@@ -228,10 +228,11 @@ function getInsuranceDataProviderTypeByPid($iter, $raw_encounter_date)
         "FROM insurance_data AS id, insurance_companies AS ic WHERE " .
         "ic.id = id.provider AND " .
         "id.pid = ? AND " .
+        "id.case_number = ? AND " .
         "id.date <= ? " .
         "ORDER BY id.type ASC, id.date DESC";
 
-      return  sqlStatement($query, array($iter['enc_pid'],$raw_encounter_date) );
+      return  sqlStatement($query, array($iter['enc_pid'],$iter['form_enc_case_number'],$raw_encounter_date) );
 }
 
 
@@ -335,11 +336,12 @@ function generateClaimMessagesBasedOnStatus($lhtml, $divnos, $iter, $raw_encount
            "FROM insurance_data AS id, insurance_companies AS ic WHERE " .
            "id.pid = ? AND " .
            "id.provider = ? AND " .
+           "id.case_number = ? AND " .
            "id.date <= ? AND " .
            "ic.id = id.provider " .
            "ORDER BY id.type ASC, id.date DESC";
 
-         $irow= sqlQuery($query, array($iter['enc_pid'],$crow['payer_id'],$raw_encounter_date) );
+          $irow= sqlQuery($query, array($iter['enc_pid'],$crow['payer_id'],$iter['form_enc_case_number'],$raw_encounter_date) );
 
          if ($crow['bill_process']) {
            $lhtml .= "<br>\n&nbsp;" .
@@ -596,8 +598,24 @@ function printRightSideHtmlByValidations($rhtml, $bgcolor, $iter, $oldcode, $cod
     //$justify = printJustificationText($iter, $code_types, $justify);
 
 
-    $rhtml .= "<td>" .
-      ($iter['code_type'] == 'COPAY' ? text(oeFormatMoney($iter['code'])) : text($iter['code']));
+    $rhtml .= "<td class='code_type'>";
+
+
+    $justification_text = "";
+    if ($iter['justify'] != "") {
+      $justification_text = "<b style='color:#888'>(";
+      $justification_text .= $iter['justify'];
+      $justification_text .= ")</b>";
+    }
+
+
+    if ($iter['code_type'] == 'COPAY') {
+      $rhtml .= text(oeFormatMoney($iter['code']));
+    }
+    else {
+
+      $rhtml .= text($iter['code']).$justification_text;
+    }
 
     if ($iter['modifier']) $rhtml .= ":" . text($iter['modifier']);
     $rhtml .= "$justify</td>\n";
