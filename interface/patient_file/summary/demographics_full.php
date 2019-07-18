@@ -58,7 +58,12 @@
   
    // Check authorization.
    if ($pid) {
-        do_action( 'demographics_check_auth', $args = array( 'username' => $_SESSION['authUser'], 'pid' => $pid ) );
+//////////////////facacl return true:false////
+        if ( $GLOBALS['facility_acl']==1 ) {
+             require_once("../../../modules/ACL/facacl.inc.php");
+             demographics_check_auth($args = array( 'username' => $_SESSION['authUser'], 'pid' => $pid ) );
+        }
+///////////////////endfacacl//////
     if (!acl_check('patients', 'demo', '', 'write'))
      die(xl('Updating demographics is not authorized.'));
    } else {

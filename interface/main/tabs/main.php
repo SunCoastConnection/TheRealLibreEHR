@@ -265,8 +265,8 @@ var webroot_url="<?php echo $web_root; ?>";
                 <div id='updater-settings-iframe'></div>
                 <div id='developer-mode-iframe'></div>";
     }
+
 ?>
-<?php do_action( 'after_main_box' ); ?>
 <style type="text/css">
     #updater-icon, #updater-options, #developer-mode {
     border: none; /* Remove borders */

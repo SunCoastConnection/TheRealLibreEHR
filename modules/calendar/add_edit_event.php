@@ -719,7 +719,6 @@ if ($_POST['form_action'] == "save") {
           }
     }
 
-                do_action( 'before_update_event',  $data = [ 'pc_eid' => $eid, ] );
 
                 // mod the SINGLE event or ALL EVENTS in a repeating series
                 // simple provider case
@@ -753,11 +752,6 @@ if ($_POST['form_action'] == "save") {
                     "pc_billing_location = '" . add_escape_custom((int)$_POST['billing_facility']) ."' "  .
                     "WHERE pc_eid = '" . add_escape_custom($eid) . "'");
 
-                do_action( 'after_update_event',
-                    $data = [ 'pc_eid' => $eid, 'pc_pid' => $_POST['form_pid'],
-                        'pc_aid' => $_POST['form_provider'], 'pc_eventDate' => $event_date, 'pc_startTime' => $starttime,
-                        'pc_catid' => $_POST['form_category'], 'pc_apptstatus' => $_POST['form_apptstatus'], 'pc_title' => $_POST['form_title'],
-                        ] );
             }
         }
 

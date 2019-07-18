@@ -27,8 +27,9 @@ $fetchedEvents = fetchAllEvents($_POST['start'], $_POST['end']);
 
 // facility ACL check
 if ($GLOBALS['facility_acl'] == 1) {
-  $facility_filter = do_action('filter_patient_select_pnuserapi', $_SESSION['authUser']);
-  // do_action returns either
+    require_once("../../ACL/facacl.inc.php");
+  $facility_filter = filter_patient_facility_calendar($_SESSION['authUser']);
+  // filter_patient_facility_calendar returns either
   // 1. $where = " pd.facility IN ( $facilityString ) "; i.e. schedule/allowed facility ids in a SQL string or
   // 2. $where = " pd.facility = '-1' "; when logged in user has no corresponding facilities in users_facility table i.e. no allowed facilities
   $facilities_allowed_to_user = array();  // array to contain facility ids which logged in user is allowed to see
@@ -56,6 +57,8 @@ if ($GLOBALS['facility_acl'] == 1) {
     // $facilities_allowed_to_user is an empty array
   }
 }
+////end facacl check
+
 
 foreach($fetchedEvents as $event) {
  // event - facility check

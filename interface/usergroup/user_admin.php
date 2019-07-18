@@ -624,7 +624,6 @@ echo generate_select_list('irnpool', 'irnpool', $iter['irnpool'],
   <td>
       <input type="checkbox" name="fullscreen_enable" <?php if($iter['fullscreen_enable'] == 1) echo "checked"; ?>/>
   </td>
-  <?php do_action( 'usergroup_admin_edit', $iter ); ?>
 
   </tr>
   <tr height="20" valign="bottom">

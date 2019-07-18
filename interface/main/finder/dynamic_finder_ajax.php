@@ -57,10 +57,15 @@ if (isset($_GET['iSortCol_0'])) {
 // Global filtering.
 //
 $where = "";
-$patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
-if ( $patient_filter ) {
-    $where .= " WHERE " . $patient_filter;
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {if ( $GLOBALS['facility_acl']==1 ) {
+    require_once("../../../modules/ACL/facacl.inc.php");
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
+    if ( $patient_filter ) {
+        $where .= " WHERE " . $patient_filter;
+    }
 }
+///////////////////////////
 $allowedCols = sqlStatement(
   'SELECT COLUMN_NAME
       FROM information_schema.COLUMNS

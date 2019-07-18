@@ -229,7 +229,6 @@ function manage_tracker_status($apptdate,$appttime,$eid,$pid,$user,$status='',$r
                 "(`pt_tracker_id`, `start_datetime`, `user`, `status`, `room`, `seq`, `reason`) " .
                 "VALUES (?,?,?,?,?,?,?)",
                 array($tracker_id,$datetime,$user,$status,$room,($tracker['lastseq']+1),$reason));
-        do_action( 'tracker_status_changed', $args = [ 'tracker_id' => $tracker_id, 'current_status' => $status, 'last_status' => $tracker['laststatus'] ] );
     }
     if (!empty($enc_id)) {
       #enc_id (encounter number) is not blank, so update this in tracker.

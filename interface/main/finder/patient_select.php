@@ -205,14 +205,17 @@ if ($popup) {
     array_push($sqlBindArray, $search_service_code);
   }
 
-  $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
-  if ( $patient_filter ) {
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {if ( $GLOBALS['facility_acl']==1 ) {
+    require_once("../../../modules/ACL/facacl.inc.php");
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
+    if ( $patient_filter ) {
     if ( $where ) {
       $where .= " AND ";
     }
     $where .= $patient_filter;
   }
-
+}
   $sql = "SELECT $given FROM patient_data " .
     "WHERE $where ORDER BY $orderby LIMIT $fstart, $sqllimit";
   $rez = sqlStatement($sql,$sqlBindArray);
