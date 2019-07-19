@@ -239,15 +239,15 @@ $(document).ready(function(){
             $varstreet="";//these are assigned conditionally below,blank assignment is done so that old values doesn't get propagated to next level.
             $varcity="";
             $varstate="";
-          $varstreet=$iter3{street };
-          if ($iter3{street }!="")$varstreet=$iter3{street }.",";
-          if ($iter3{city}!="")$varcity=$iter3{city}.",";
-          if ($iter3{state}!="")$varstate=$iter3{state}.",";
+          $varstreet = $iter3['street'];
+          if ($iter3['street'] != "") $varstreet = $iter3['street'].",";
+          if ($iter3['city'] != "")$varcity = $iter3['city'].",";
+          if ($iter3['state']!= "")$varstate = $iter3['state'].",";
     ?>
     <tr height="22">
-       <td><b><a href="#" data-text="<?php echo $iter3{id};?>" class="editFacilities"><span><?php echo htmlspecialchars($iter3{name});?></span></a></b>&nbsp;</td>
-       <td><?php echo htmlspecialchars($varstreet.$varcity.$varstate.$iter3{country_code}." ".$iter3{postal_code}); ?>&nbsp;</td>
-       <td><?php echo htmlspecialchars($iter3{phone});?>&nbsp;</td>
+       <td><b><a href="#" data-text="<?php echo $iter3['id'];?>" class="editFacilities"><span><?php echo htmlspecialchars($iter3['name']);?></span></a></b>&nbsp;</td>
+       <td><?php echo htmlspecialchars($varstreet.$varcity.$varstate.$iter3['country_code']." ".$iter3['postal_code']); ?>&nbsp;</td>
+       <td><?php echo htmlspecialchars($iter3['phone']);?>&nbsp;</td>
     </tr>
 <?php
   }
