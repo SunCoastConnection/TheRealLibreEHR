@@ -297,8 +297,6 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
           formData('fname','P'), formData('mname','P'), formData('lname','P'));
       }
 
-        do_action( 'usergroup_admin_save', $_POST );
-
         refreshCalendar(); //after "Edit User" process is complete
 
     }

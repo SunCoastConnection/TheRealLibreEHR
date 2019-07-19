@@ -613,19 +613,13 @@ $GLOBALS_METADATA = array(
     ),
 
     'restrict_user_facility' => array(
-      xl('Restrict Users to Facilities'),
+      xl('Restrict Users Schedule and Encounter Facilities'),
        'bool',                          // data type
        '0',                             // default
       xl('Restrict non-authorized users to the Schedule Facilities set in User admin.')
     ),
-        'tags_filters_enabled' => array(
-      xl('Enable Tags/Filters Feature'),
-       'bool',                          // data type
-       '0',                             // default
-      xl('Enables configurable tags and filters for demographics and various purposes.')
-    ),
         'facility_acl' => array(
-      xl('Restrict User access by Facility'),
+      xl('Restrict Users by Patient Facility (requires above)'),
        'bool',                          // data type
        '0',                             // default
       xl('Restrict User access to patients by assigned patient facility.')
@@ -3388,12 +3382,5 @@ $GLOBALS_METADATA = array(
   ),
 
 );
-
-if ( function_exists( 'do_action' ) ) {
-    do_action( 'globals_init', $args = [
-        'global_metadata' => $GLOBALS_METADATA,
-        'user_specific_globals' => $USER_SPECIFIC_GLOBALS,
-        'user_specific_tabs' => $USER_SPECIFIC_TABS ] );
-}
 
 ?>

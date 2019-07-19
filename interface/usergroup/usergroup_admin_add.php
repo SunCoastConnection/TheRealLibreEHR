@@ -414,7 +414,6 @@ echo generate_select_list('irnpool', 'irnpool', '',
   <td>
       <input type="checkbox" name="fullscreen_enable"/>
   </td>
-  <?php do_action( 'usergroup_admin_add' ); ?>
 
   </tr>
 
