@@ -1066,6 +1066,8 @@ CREATE TABLE `form_encounter` (
   `document_image` varchar(80) DEFAULT NULL,
   `seq_number` varchar(80) DEFAULT NULL,
   `coding_complete` TINYINT(1) NOT NULL DEFAULT '0',
+  `case_number` INT(20) DEFAULT NULL,
+  `case_body_part` INT(20) DEFAULT NULL,
   PRIMARY KEY  (`id`),
   KEY `pid_encounter` (`pid`, `encounter`),
   KEY `encounter_date` (`date`)

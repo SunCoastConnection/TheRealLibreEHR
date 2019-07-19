@@ -29,7 +29,7 @@
   // other interfaces can still read the data during this lock, however
   // sqlStatement("lock tables patient_data read");
 
-  $result = sqlQuery("SELECT MAX(id)+2 AS pid FROM patient_data");
+  $result = sqlQuery("SELECT MAX(id)+1 AS pid FROM patient_data");
   
   $newpid = 1;
   
@@ -41,7 +41,7 @@
     // sqlStatement("unlock tables");
     die("Internal error: setpid($newpid) failed!");
   }
-  $pid = substr(time(), 0,5).$newpid;
+  //$pid = substr(time(), 0,5).$newpid;
     //MAKE THE UPLOAD DIRECTORY IF IT DOESN'T EXIST
   if (realpath($GLOBALS['OE_SITES_BASE']."/".$_SESSION['site_id']."/profile_pictures")) {
       
