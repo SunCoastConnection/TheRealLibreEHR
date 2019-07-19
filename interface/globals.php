@@ -535,7 +535,6 @@ if ($fake_register_globals) {
   extract($_POST,EXTR_SKIP);
 }
 
-include_once __DIR__ . '/../library/pluginsystem/bootstrap.php';
 
 if ($GLOBALS['calendar_timezone'] !== '') {
   // getting selected option (in globals)
