@@ -89,5 +89,5 @@ function demographics_check_auth( $args )
 //////////////////////////////////////////////////////////////////////
 }
 else {
-    error_log("facacl.inc.php was called but GLOBAL 'facility_acl' = false";
+    error_log("facacl.inc.php was called but GLOBAL 'facility_acl' = false");  }
 ?>

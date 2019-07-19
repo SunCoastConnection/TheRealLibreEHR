@@ -571,7 +571,7 @@ function getPatientLnames($term = "%", $given = "pid, id, lname, fname, mname, p
 
 //////////////////facacl////
 if ( $GLOBALS['facility_acl']==1 ) {
-    require_once("../../../modules/ACL/facacl.inc.php");
+    require_once("../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
@@ -640,7 +640,7 @@ function getPatientId($pid = "%", $given = "pid, id, lname, fname, mname, provid
     $where = "pid LIKE ? ";
 //////////////////facacl////
 if ( $GLOBALS['facility_acl']==1 ) {
-    require_once("../../../modules/ACL/facacl.inc.php");
+    require_once("../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
@@ -684,7 +684,7 @@ function getByPatientDemographics($searchTerm = "%", $given = "pid, id, lname, f
 
 //////////////////facacl////
 if ( $GLOBALS['facility_acl']==1 ) {
-    require_once("../../../modules/ACL/facacl.inc.php");
+    require_once("../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
@@ -727,7 +727,7 @@ function getByPatientDemographicsFilter($searchFields, $searchTerm = "%",
 
 //////////////////facacl////
 if ( $GLOBALS['facility_acl']==1 ) {
-    require_once("../../../modules/ACL/facacl.inc.php");
+    require_once("../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
@@ -788,7 +788,7 @@ function getPatientPID($args)
     $filter = "";
 //////////////////facacl////
 if ( $GLOBALS['facility_acl']==1 ) {
-    require_once("../../../modules/ACL/facacl.inc.php");
+    require_once("../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
@@ -833,7 +833,7 @@ function getPatientDOB($DOB = "%", $given = "pid, id, lname, fname, mname", $ord
 
 //////////////////facacl////
 if ( $GLOBALS['facility_acl']==1 ) {
-    require_once("../../../modules/ACL/facacl.inc.php");
+    require_once("../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
@@ -860,7 +860,7 @@ function getPatientSSN($ss = "%", $given = "pid, id, lname, fname, mname, provid
     $where = "ss LIKE ?";
 //////////////////facacl////
 if ( $GLOBALS['facility_acl']==1 ) {
-    require_once("../../../modules/ACL/facacl.inc.php");
+    require_once("../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
@@ -887,7 +887,7 @@ function getPatientPhone($phone = "%", $given = "pid, id, lname, fname, mname, p
     $where = "REPLACE(REPLACE(phone_home, '-', ''), ' ', '') REGEXP ?";
 //////////////////facacl////
 if ( $GLOBALS['facility_acl']==1 ) {
-    require_once("../../../modules/ACL/facacl.inc.php");
+    require_once("../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
