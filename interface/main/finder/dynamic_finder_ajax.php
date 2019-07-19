@@ -58,7 +58,7 @@ if (isset($_GET['iSortCol_0'])) {
 //
 $where = "";
 //////////////////facacl////
-if ( $GLOBALS['facility_acl']==1 ) {if ( $GLOBALS['facility_acl']==1 ) {
+if ( $GLOBALS['facility_acl']==1 ) {
     require_once("../../../modules/ACL/facacl.inc.php");
     $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
