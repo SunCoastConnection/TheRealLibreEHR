@@ -4699,7 +4699,7 @@ CREATE TABLE `patient_data` (
   `homeless` varchar(255) NOT NULL default '',
   `financial_review` datetime default NULL,
   `pubpid` varchar(255) NOT NULL default '',
-  `pid` bigint(20) NOT NULL default '0',
+  `pid` bigint(20) NOT NULL auto_increment,
   `genericname1` varchar(255) NOT NULL default '',
   `genericval1` varchar(255) NOT NULL default '',
   `genericname2` varchar(255) NOT NULL default '',
