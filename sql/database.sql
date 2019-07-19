@@ -1476,6 +1476,7 @@ CREATE TABLE `forms` (
   `id` bigint(20) NOT NULL auto_increment,
   `date` datetime default NULL,
   `encounter` bigint(20) default NULL,
+  `case_number` int(20) NULL DEFAULT NULL,
   `form_name` longtext,
   `form_id` bigint(20) default NULL,
   `pid` bigint(20) default NULL,
