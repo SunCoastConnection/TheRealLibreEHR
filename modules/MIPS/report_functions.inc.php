@@ -18,7 +18,7 @@
 function listingReportDatabase($start_date='',$end_date='') {
 
   // set $end_date to today's date if empty
-  $end_date = ($end_date) ? $end_date : date('Y-m-d H:i:s'); 
+  $end_date = ($end_date) ? $end_date : date('Y-m-d H:i:s');
 
   // Collect pertinent information as a pivot table (ie. converting vertical to horizontal row)
   if (empty($start_date)) {
@@ -54,7 +54,7 @@ function listingReportDatabase($start_date='',$end_date='') {
                            GROUP BY `report_id`
                          ) AS pt
                          WHERE pt.date_report > ? AND pt.date_report < ?
-                         ORDER BY pt.report_id", array($start_date,$end_date));    
+                         ORDER BY pt.report_id", array($start_date,$end_date));
   }
 
   return $res;
@@ -190,7 +190,7 @@ function collectReportDatabase($report_id) {
 
   // Collect the rows of data
   $res = sqlStatement("SELECT * FROM `report_results` WHERE `report_id`=?", array($report_id));
-  
+
   // Convert data into an array
   $final_array = array();
   while ($row = sqlFetchArray($res)) {
@@ -237,13 +237,13 @@ function getStatusReportDatabase($report_id) {
  *
  * @param   integer  $report_id         Report id
  * @param   integer  $itemized_test_id  Itemized test id
- * @param   integer  $pass              0 is fail, 1 is pass, 2 is exclude
+ * @param   integer  $pass              0 is fail, 1 is pass, 2 is exclude, 5 is unreported
  * @param   integer  $patient_id        Patient pid
  * @param   integer  $$numerator_label  Numerator label (if applicable)
  */
 function insertItemReportTracker($report_id, $itemized_test_id, $pass, $patient_id, $numerator_label='') {
   $sqlParameters = array($report_id,$itemized_test_id,$numerator_label,$pass,$patient_id);
-  sqlStatementCdrEngine("INSERT INTO `report_itemized` (`report_id`,`itemized_test_id`,`numerator_label`,`pass`,`pid`) VALUES (?,?,?,?,?)", $sqlParameters);  
+  sqlStatementCdrEngine("INSERT INTO `report_itemized` (`report_id`,`itemized_test_id`,`numerator_label`,`pass`,`pid`) VALUES (?,?,?,?,?)", $sqlParameters);
 }
 
 /**
@@ -276,17 +276,17 @@ function collectItemizedRuleDisplayTitle($report_id, $itemized_test_id, $numerat
             }
 
           }
-	  
+
           if (!empty($tempCqmAmcString)) {
             $dispTitle .=  "(".$tempCqmAmcString.")";
           }
 
-        } 
+        }
         else { // isset($row['is_sub']
           $dispTitle .= " - " .  generate_display_field(array('data_type'=>'1','list_id'=>'rule_action_category'),$row['action_category']);
           $dispTitle .= ": " . generate_display_field(array('data_type'=>'1','list_id'=>'rule_action'),$row['action_item']);
         }
-        return $dispTitle;  
+        return $dispTitle;
       }
     }
   }
@@ -348,9 +348,9 @@ function collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass='al
     foreach($exludeResult as $exlResArr){
       $exlPidArr[] = $exlResArr['pid'];
     }
-	
+
     $sql_where = " WHERE `report_itemized`.`report_id` = ? AND `report_itemized`.`itemized_test_id` = ? AND `report_itemized`.`numerator_label` = ? AND `report_itemized`.`pass` = ? ";
-	
+
     if(count($exlPidArr) > 0){
       $exlPids = implode(",", $exlPidArr);
       $sql_where .= " AND patient_data.pid NOT IN(".add_escape_custom($exlPids).") ";
