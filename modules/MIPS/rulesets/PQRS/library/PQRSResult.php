@@ -3,14 +3,14 @@
  * PQRS Result
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
-  * 
+  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
- * See the Mozilla Public License for more details. 
+ * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
- * 
+ *
  * @author  Art Eaton <art@suncoastconnection.com>
  * @author  Bryan lee <bryan@suncoastconnection.com>
- * @package LibreEHR 
+ * @package LibreEHR
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
@@ -22,7 +22,7 @@ class PQRSResult implements RsResultIF
     public $rule;
     public $numeratorLabel;
     public $populationLabel;
-     
+
     public $totalPatients; // Total number of patients considered
     public $patientsInPopulation; // Number of patients that pass filter
     public $patientsExcluded; // Number of patients that are excluded
@@ -42,7 +42,7 @@ class PQRSResult implements RsResultIF
         $this->patientsNotMet = $patientsNotMet;
         $this->percentage = $percentage;
 
-        // If itemization is turned on, then record the itemized_test_id 
+        // If itemization is turned on, then record the itemized_test_id
         if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
             $this->itemized_test_id = array('itemized_test_id' => $GLOBALS['report_itemized_test_id_iterator']);
         }
@@ -65,8 +65,8 @@ class PQRSResult implements RsResultIF
 			$concatenated_label = $this->populationLabel;
 		}
 	}
-    	
-        $rowFormat = array( 
+
+        $rowFormat = array(
         	'is_main'=>TRUE, // TO DO: figure out way to do this when multiple groups.
             'population_label' => $this->populationLabel,
             'numerator_label' => $this->numeratorLabel,
@@ -75,15 +75,28 @@ class PQRSResult implements RsResultIF
             'excluded' => $this->patientsExcluded,
             'pass_filter' => $this->patientsInPopulation,
             'pass_target' => $this->patientsIncluded,
-            'pass_notmet' => $this->patientsNotMet,
+            'pass_notmet' => $this->patientsNotMet['NotMet'],
             'percentage' => $this->percentage );
-            $rowFormat = array_merge( $rowFormat, $this->rule );
 
-        // If itemization is turned on, then record the itemized_test_id 
+            $rowFormat = array_merge( $rowFormat, array($this->rule, 'unreported_items' => $this->calculateUnreported()));
+
+            error_log("UNREPORTED: ".$this->calculateUnreported());
+
+        // If itemization is turned on, then record the itemized_test_id
         if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
             $rowFormat = array_merge( $rowFormat, $this->itemized_test_id );
         }
-        
+
         return $rowFormat;
     }
+
+    /*
+     * Calculate the number of unreported patients here.
+     *
+     */
+     private function calculateUnreported()
+     {
+         $unreported = $this->patientsInPopulation - $this->patientsIncluded - $this->patientsExcluded - $this->patientsNotMet['NotMet'];
+         return $unreported;
+     }
 }
