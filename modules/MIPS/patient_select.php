@@ -43,7 +43,7 @@ $from_page = isset($_REQUEST['from_page']) ? $_REQUEST['from_page'] : "";
 <html>
 <head>
 <?php html_header_show();?>
-<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
+<script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>    
 
 <link rel=stylesheet href="<?php echo $css_header;?>" type="text/css">
 <style>
@@ -59,11 +59,11 @@ form {
     font-weight: bold;
     padding: 3px;
 }
-#searchResultsHeader {
+#searchResultsHeader { 
     width: 100%;
     background-color: lightgrey;
 }
-#searchResultsHeader table {
+#searchResultsHeader table { 
     width: 96%;  /* not 100% because the 'searchResults' table has a scrollbar */
     border-collapse: collapse;
 }
@@ -86,10 +86,10 @@ form {
 .srDateLast { width: 11%; }
 .srDateNext { width: 11%; }
 .srMisc { width: 10%; }
-.srAnswer {
+.srAnswer { 
     text-align: center;}
-.srUpdate {
-    width: 1%;
+.srUpdate { 
+    width: 1%; 
     text-align: right;}
 
 #searchResults table {
@@ -107,7 +107,7 @@ form {
 }
 .oneResult { }
 .billing { color: red; font-weight: bold; }
-.highlight {
+.highlight { 
     background-color: #336699;
     color: white;
 }
@@ -194,8 +194,8 @@ if ($from_page == "pqrs_report") {
 <?php if ($message) echo "<font color='red'><b>".htmlspecialchars( $message, ENT_NOQUOTES)."</b></font>\n"; ?>
   </td>
   <td>
-   <?php
-    if ($from_page == "pqrs_report") {
+   <?php 
+    if ($from_page == "pqrs_report") { 
      echo "<a href='patient_select.php?from_page=pqrs_report&pass_id=".attr($pass_id)."&report_id=".attr($report_id)."&itemized_test_id=".attr($itemized_test_id)."&numerator_label=".urlencode(attr($row['numerator_label']))."&print_patients=1' class='css_button' onclick='top.restoreSession()'><span>".xlt("Print Entire Listing")."</span></a>";
     }
      ?> &nbsp;
@@ -236,9 +236,6 @@ if ($fend > $count) $fend = $count;
      else if ($pass_id == "exclude") {
        echo xlt("Exceptions");
      }
-     else if($pass_id == "unreported") {
-         echo xlt("Unreported");
-     }
      else { // $pass_id == "all"
        echo xlt("All Patients");
      }
@@ -276,7 +273,7 @@ if ($fend > $count) $fend = $count;
                 "measure_number = '$measure_number' AND type = 'question'";
         $pqrs_result = SqlFetchArray(sqlStatement($query));
 	$measure_question=implode(" ",$pqrs_result);
-
+	
         $query = "SELECT COUNT(*) AS count FROM pqrs_direct_entry_lookup WHERE".
                 " measure_number = '$measure_number' AND type = 'answer'";
         $pqrs_result = SqlFetchArray(sqlStatement($query));
@@ -348,15 +345,15 @@ else {
         $pqrs_result = sqlStatement($query);
 //error_log("***** DEBUG *****  patient_select() -- Queried p_d_e_l with \"".$query."\" and got pqrs_result \"".$pqrs_result."\"" );
 	// Need to loop and write "short answer" for each answer here
-	for ($i = 1; $i <= $number_answers_of_measure; $i++) {
+	for ($i = 1; $i <= $number_answers_of_measure; $i++) { 
 ?>
 		<th class="srAnswer"><?php echo htmlspecialchars( xl('Answer'), ENT_NOQUOTES) . " $i" ;?></th>
 	<?php } ?>
 
-	<th class="srUpdate">Update</th>
+	<th class="srUpdate">Update</th>	
 </tr>
 </table>
-<?php
+<?php 
 }  ?>
 
 </div>
@@ -382,7 +379,7 @@ if ($result) {
 			$medicare_flag=$GLOBALS['webroot']."/images/CMS_logo0.png";}
 		else {
 			$medicare_flag="";}
-
+        
         	echo "		<tr>
 	<td>
 		<table id='".htmlspecialchars( $iter['pid'], ENT_QUOTES)."'>\n		<tr>\n";
@@ -400,7 +397,7 @@ if ($result) {
 		$myOrder=$explodedAnswer[0];
 		$myDesc=$explodedAnswer[1];
 		$myCode=$thisAnswer['status']."*".$explodedAnswer[2];
-
+	
  //error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode | $myPerformance");
         	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\" performance=\"$myPerformance\" >$myDesc</label></td>";
     }
@@ -470,7 +467,7 @@ $(document).ready(function(){
 });
 
 var SelectPatient = function (eObj) {
-<?php
+<?php 
 // The new layout loads just the demographics frame here, which in turn
 // will set the pid and load all the other frames.
     $newPage = "../../interface/patient_file/summary/demographics.php?set_pid=";
@@ -489,7 +486,7 @@ var SelectPatient = function (eObj) {
 	echo "	if(selected.length > 0) {\n";
 	echo "		var date = '".$report_date."';\n";
 	echo "		var code = selected.val();\n";
-	echo "		var performance = '".$myPerformance."';\n";
+	echo "		var performance = '".$myPerformance."';\n";	
 	echo "		var report_id = '".$report_id."';\n";
 	echo "		var itemized_test_id = '".$itemized_test_id."';\n\n";
 	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
@@ -503,7 +500,7 @@ var SelectPatient = function (eObj) {
 	echo "				CPT2codevalue: code,\n";
 	echo "				performance: performance,\n";
 	echo "				report_id: report_id,\n";
-	echo "				itemized_test_id: itemized_test_id\n";
+	echo "				itemized_test_id: itemized_test_id\n";		
 	echo "			},\n";
 	echo "			success: function(data, status, xHR) {\n";
 	echo "				if(data == 'SUCCESS') {\n";
