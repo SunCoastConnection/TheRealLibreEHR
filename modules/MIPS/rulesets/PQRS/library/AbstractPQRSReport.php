@@ -3,14 +3,14 @@
  * Abstract PQRS Report
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
-  * 
+  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
- * See the Mozilla Public License for more details. 
+ * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
- * 
+ *
  * @author  Art Eaton <art@suncoastconnection.com>
  * @author  Bryan lee <bryan@suncoastconnection.com>
- * @package LibreEHR 
+ * @package LibreEHR
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
@@ -115,7 +115,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                 foreach ( $numerators as $numerator ) {
                     $numerator->setReportOptions($this->_reportOptions);
                 }
-                
+
                 $notmet = $populationCriteria->createNotMet();
                 if ( !is_array( $notmet ) ) {
                     $notmet = array( $notmet );
@@ -214,8 +214,13 @@ abstract class AbstractPQRSReport implements RsReportIF
                     }
 /////May redo NotMet like Exclusion/Exception above with a value of 5
                     $percentage = calculate_percentage( $pass_filt, $exclude_filt, $pass_targ );
+
+                    $pass_notmet = $pass_not["NotMet"];
+
+                    error_log($pass_notmet);
+
                     $this->_resultsArray[]= new PQRSResult( $this->_rowRule, $title, $populationCriteria->getTitle(),
-                        $totalPatients, $pass_filt, $exclude_filt, $pass_targ, $pass_not, $percentage );
+                        $totalPatients, $pass_filt, $exclude_filt, $pass_targ, $pass_notmet, $percentage );
                 }
             }
         }
@@ -231,7 +236,7 @@ abstract class AbstractPQRSReport implements RsReportIF
         }
         return $numeratorPatientPopulations;
     }
-    
+
     private function initNotMetPopulations( array $notmets )
     {
         $notmetPatientPopulations = array();
@@ -267,7 +272,7 @@ abstract class AbstractPQRSReport implements RsReportIF
             throw new Exception( "Numerator must be an instance of PQRSFilterIF" );
         }
     }
-    
+
     private function testNotMet( $patient, $notmets, &$notmetPatientPopulations )
     {
         if ( $notmets instanceof PQRSFilterIF  )
@@ -278,6 +283,7 @@ abstract class AbstractPQRSReport implements RsReportIF
 
                 // If itemization is turned on, then record the "passed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
+                    updateNumeratorPass($patient->id);
                    insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $notmets->getTitle());
                 }
             }
@@ -294,5 +300,5 @@ abstract class AbstractPQRSReport implements RsReportIF
             throw new Exception( "NotMet must be an instance of PQRSFilterIF" );
         }
     }
-    
+
 }
