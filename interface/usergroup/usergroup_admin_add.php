@@ -30,7 +30,6 @@
  *
  */
 
-
 $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
@@ -44,30 +43,17 @@ require_once("$srcdir/headers.inc.php");
 require_once("$srcdir/role.php");
 
 $alertmsg = '';
-
 ?>
 <html>
 <head>
 
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 
-<?php call_required_libraries(array("jquery-min-3-1-1", "bootstrap-3-3-7", "common", "select2")); ?>
+<?php call_required_libraries(array("jquery-min-3-1-1", "bootstrap-3-3-7", "common", "select2", "iziModalToast", "font-awesome")); ?>
 
 <script src="checkpwd_validation.js" type="text/javascript"></script>
 
-<script language="JavaScript">
-function trimAll(sString)
-{
-    while (sString.substring(0,1) == ' ')
-    {
-        sString = sString.substring(1, sString.length);
-    }
-    while (sString.substring(sString.length-1, sString.length) == ' ')
-    {
-        sString = sString.substring(0,sString.length-1);
-    }
-    return sString;
-}
+<script language="JavaScript" type="text/javascript">
 
 function readURL(input) {
         if (input.files && input.files[0]) {
@@ -80,109 +66,118 @@ function readURL(input) {
         }
 }
 
-function submitform() {
-    console.log(document.forms[0]);
-    if (document.forms[0].rumple1.value.length>0 && document.forms[0].stiltskin.value.length>0 && document.getElementById('fname').value.length >0 && document.getElementById('lname').value.length >0) {
-       top.restoreSession();
+function submitFormNew() {
+    alert("about to submit");
+    let alertMsg = null;
+    let username = $("#rumple");
+    let password = $("#stiltskin");
+    let fname = $("#fname");
+    let lname = $("#lname");
 
-       //Checking if secure password is enabled or disabled.
-       //If it is enabled and entered password is a weak password, alert the user to enter strong password.
-       if(document.new_user.secure_pwd.value == 1){
-          var password = trim(document.new_user.stiltskin.value);
-          if(password != "") {
-             var pwdresult = passwordvalidate(password);
-             if(pwdresult == 0){
-                alert("<?php echo xl('The password must be at least eight characters, and should'); echo '\n'; echo xl('contain at least three of the four following items:'); echo '\n'; echo xl('A number'); echo '\n'; echo xl('A lowercase letter'); echo '\n'; echo xl('An uppercase letter'); echo '\n'; echo xl('A special character');echo '('; echo xl('not a letter or number'); echo ').'; echo '\n'; echo xl('For example:'); echo ' healthCare@09'; ?>");
-                return false;
-             }
-          }
-       } //secure_pwd if ends here
-
-       <?php if($GLOBALS['erx_enable']){ ?>
-       let alertMsg='';
-       f = document.forms[0];
-       for(i=0; i<f.length; i++){
-          if(f[i].type=='text' && f[i].value)
-          {
-             if(f[i].name == 'rumple')
-             {
-                alertMsg += checkLength(f[i].name,f[i].value,35);
-                alertMsg += checkUsername(f[i].name,f[i].value);
-             }
-             else if(f[i].name == 'fname' || f[i].name == 'mname' || f[i].name == 'lname')
-             {
-                alertMsg += checkLength(f[i].name,f[i].value,35);
-                alertMsg += checkUsername(f[i].name,f[i].value);
-             }
-             else if(f[i].name == 'federaltaxid')
-             {
-                alertMsg += checkLength(f[i].name,f[i].value,10);
-                alertMsg += checkFederalEin(f[i].name,f[i].value);
-             }
-             else if(f[i].name == 'state_license_number')
-             {
-                alertMsg += checkLength(f[i].name,f[i].value,10);
-                alertMsg += checkStateLicenseNumber(f[i].name,f[i].value);
-             }
-             else if(f[i].name == 'npi')
-             {
-                alertMsg += checkLength(f[i].name,f[i].value,35);
-                alertMsg += checkTaxNpiDea(f[i].name,f[i].value);
-             }
-             else if(f[i].name == 'federaldrugid')
-             {
-                alertMsg += checkLength(f[i].name,f[i].value,30);
-                alertMsg += checkAlphaNumeric(f[i].name,f[i].value);
-             }
-
-          }
-       }
-       if(alertMsg) {
-          alert(alertMsg);
-          return false;
-       }
-       <?php } // End erx_enable only include block ?>
-
-        document.forms[0].submit();
-        parent.$('#addUser-iframe').iziModal('close');
-
+    if (username.val().length > 0 && password.val().length > 0 && fname.val().length > 0 && lname.val().length > 0) {
+        // Checking if secure password is enabled or disabled in globals.
+        // If it is enabled and entered password is a weak password, alert the user to enter a strong password.
+        if($("input[name='secure_pwd']").val() === 1) {
+            if (password.val().trim() !== "" || password.val().trim() != null) {
+                if (!passwordvalidate(password)) {
+                    alertMsg = "<?php echo xl('The password must be at least eight characters, and should'); echo '\\n'; echo xl('contain at least three of the four following items:'); echo '\\n'; echo xl('A number'); echo '\\n'; echo xl('A lowercase letter'); echo '\\n'; echo xl('An uppercase letter'); echo '\\n'; echo xl('A special character');echo '('; echo xl('not a letter or number'); echo ').'; echo '\\n'; echo xl('For example:'); echo ' healthCare@09'; ?>";
+                    iziToast.warning({
+                        position : "topRight",
+                        icon : "fa fa-warning",
+                        message : alertMsg
+                    });
+                    return false;
+                }
+            }
+        }
+        // check if the erx_corp is enabled.
+        <?php if($GLOBALS['erx_enable']){ ?>
+        let form = $("#addNewUser").serializeArray();
+        $.each( form, function( i, field ) {
+            if(field.name === "rumple" || field.name === "fname" || field.name === "mname" || field.name === "lname"){
+                alertMsg += checkLength(field.name, field.value,35);
+                alertMsg += checkUsername(field.name, field.value);
+            }
+            else if(field.name === "federaltaxid"){
+                alertMsg += checkLength(field.name, field.value, 10);
+                alertMsg += checkFederalEin(field.name, field.value);
+            }
+            else if(field.name === "state_license_number"){
+                alertMsg += checkLength(field.name, field.value, 10);
+                alertMsg += checkStateLicenseNumber(field.name, field.value);
+            }
+            else if(field.name === "npi"){
+                alertMsg += checkLength(field.name, field.value, 35);
+                alertMsg += checkTaxNpiDea(field.name, field.value);
+            }
+            else if(field.name === "federaldrugid"){
+                alertMsg += checkLength(field.name, field.value, 30);
+                alertMsg += checkAlphaNumeric(field.name, field.value);
+            }
+        });
+        <?php } // End erx_enable only include block ?>
+        if(alertMsg) {
+            alert(alertMsg);
+            return false;
+        } else {
+            $("#addNewUser").submit();
+            parent.$('#addUser-iframe').iziModal('close');
+        }
     } else {
-       if (document.forms[0].rumple.value.length<=0)
-       {
-          document.forms[0].rumple.style.backgroundColor="red";
-          alert("<?php xl('Required field missing: Please enter the User Name','e');?>");
-          document.forms[0].rumple.focus();
-          return false;
-       }
-       if (document.forms[0].stiltskin.value.length<=0)
-       {
-          document.forms[0].stiltskin.style.backgroundColor="red";
-          alert("<?php echo xl('Please enter the pass phrase'); ?>");
-          document.forms[0].stiltskin.focus();
-          return false;
-       }
-       if(trimAll(document.getElementById('fname').value) == ""){
-          document.getElementById('fname').style.backgroundColor="red";
-          alert("<?php echo xl('Required field missing: Please enter the First name');?>");
-          document.getElementById('fname').focus();
-          return false;
-       }
-       if(trimAll(document.getElementById('lname').value) == ""){
-          document.getElementById('lname').style.backgroundColor="red";
-          alert("<?php echo xl('Required field missing: Please enter the Last name');?>");
-          document.getElementById('lname').focus();
-          return false;
-       }
-    }
-}
+        if (username.val().trim() <= 0) {
+            username.css({"border": "1px solid red"});
+            username.focus();
+            alertMsg = "<?php xl('Required field missing: Please enter the User Name', 'e');?>";
+            iziToast.warning({
+                position: "topRight",
+                icon: "fa fa-warning",
+                message: alertMsg
+            });
+            return false;
+        }
+        if (password.val().trim() <= 0) {
+            password.css({"border": "1px solid red"});
+            password.focus();
+            alertMsg = "<?php echo xl('Please mua enter the pass phrase'); ?>";
+            iziToast.warning({
+                position: "topRight",
+                icon: "fa fa-warning",
+                message: alertMsg
+            });
+            return false;
+        }
+        if (fname === "") {
+            fname.css({"border": "1px solid red"});
+            fname.focus();
+            alertMsg = "<?php echo xl('Required field missing: Please enter the First name');?>";
+            iziToast.warning({
+                position: "topRight",
+                icon: "fa fa-warning",
+                message: alertMsg
+            });
+            return false;        }
+        if (lname === "") {
+            lname.css({"border": "1px solid red"});
+            lname.focus();
+            alertMsg = "<?php echo xl('Required field missing: Please enter the Last name');?>";
+            iziToast.warning({
+                position: "topRight",
+                icon: "fa fa-warning",
+                message: alertMsg
+            });
+            return false;
+        }
 
+    }
+
+}
 </script>
 <style type="text/css">
   .physician_type_class{
     width: 120px !important;
   }
     input.form-control, select.form-control{
-        border-radius: 0px !important;
+        border-radius: 0 !important;
         height: 24px !important;
         font-size: 13px;
         border: 1px solid lightslategray;
@@ -203,7 +198,7 @@ function submitform() {
                     <div class="form-group">
                         <label for="username" class="col-sm-4"><?php echo xlt('Username'); ?> <sup class="text-danger">*</sup>:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="username">
+                            <input type="text" class="form-control" name="rumple" id="rumple">
                         </div>
                     </div>
                     <div class="form-group <?php if ($GLOBALS['disable_non_default_groups']) echo "hidden"; ?>">
@@ -323,7 +318,6 @@ function submitform() {
                             </select>
                         </div>
                     </div>
-                        <?php do_action( 'usergroup_admin_add' ); ?>
                     <?php } ?>
                 </div>
                 <div class="col-sm-6 form-horizontal">
@@ -492,7 +486,7 @@ function submitform() {
                                         </select>
                                     </td>
                                     <td><label class="bold" for="groupname"><?php echo xlt('Groupname'); ?>: </label>
-                                        <select name="groupname" id="groupname">
+                                        <select name="groupname" id="groupname2">
                                         <?php
                                         $res = sqlStatement("select distinct name from groups");
                                         $result2 = array();
@@ -534,7 +528,7 @@ function submitform() {
 
         <div class="row">
             <div class="container text-center">
-                <a class="css_button cp-submit" name='form_save' id='form_save' href='#' onclick="return submitform()">
+                <a class="css_button cp-submit" name='form_save' id='form_save' href='#' onclick="return submitFormNew()">
                     <span><?php echo xlt('Save');?></span></a>
                 <a class="css_button large_button cp-negative" id='cancel' href='#'>
                     <span class='css_button_span large_button_span'><?php echo xlt('Cancel');?></span>
@@ -546,12 +540,19 @@ function submitform() {
     <script language="JavaScript">
         <?php
         if ($alertmsg = trim($alertmsg)) {
-            echo "alert('$alertmsg');\n";
+            echo "
+            iziToast.warning({
+                        position : \"topRight\",
+                        icon : \"fa fa-warning\",
+                        message : ". $alertmsg . "
+                    });
+              ";
         }
         ?>
         $(document).ready(function(){
 
             $("#cancel").click(function() {
+                $("#addNewUser").off("submit");
                 parent.$('#addUser-iframe').iziModal('close');
             });
 
