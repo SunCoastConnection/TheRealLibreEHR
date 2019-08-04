@@ -54,123 +54,110 @@ $alertmsg = '';
 <script src="checkpwd_validation.js" type="text/javascript"></script>
 
 <script language="JavaScript" type="text/javascript">
+    function submitFormNew() {
+        let alertMsg = "";
+        let username = $("#rumple");
+        let password = $("#stiltskin");
+        let fname = $("#fname");
+        let lname = $("#lname");
 
-function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#prof_img').attr('src', e.target.result).width(64).height(64).css("display", "block");
-                $('#file_input_button').text("Edit Profile Picture");
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-}
-
-function submitFormNew() {
-    alert("about to submit");
-    let alertMsg = null;
-    let username = $("#rumple");
-    let password = $("#stiltskin");
-    let fname = $("#fname");
-    let lname = $("#lname");
-
-    if (username.val().length > 0 && password.val().length > 0 && fname.val().length > 0 && lname.val().length > 0) {
-        // Checking if secure password is enabled or disabled in globals.
-        // If it is enabled and entered password is a weak password, alert the user to enter a strong password.
-        if($("input[name='secure_pwd']").val() === 1) {
-            if (password.val().trim() !== "" || password.val().trim() != null) {
-                if (!passwordvalidate(password)) {
-                    alertMsg = "<?php echo xl('The password must be at least eight characters, and should'); echo '\\n'; echo xl('contain at least three of the four following items:'); echo '\\n'; echo xl('A number'); echo '\\n'; echo xl('A lowercase letter'); echo '\\n'; echo xl('An uppercase letter'); echo '\\n'; echo xl('A special character');echo '('; echo xl('not a letter or number'); echo ').'; echo '\\n'; echo xl('For example:'); echo ' healthCare@09'; ?>";
-                    iziToast.warning({
-                        position : "topRight",
-                        icon : "fa fa-warning",
-                        message : alertMsg
-                    });
-                    return false;
+        if (username.val().length > 0 && password.val().length > 0 && fname.val().length > 0 && lname.val().length > 0) {
+            // Checking if secure password is enabled or disabled in globals.
+            // If it is enabled and entered password is a weak password, alert the user to enter a strong password.
+            if($("input[name='secure_pwd']").val() === 1) {
+                if (password.val().trim() !== "" || password.val().trim() !== null) {
+                    if (!passwordvalidate(password)) {
+                        alertMsg = "<?php echo xl('The password must be at least eight characters, and should'); echo '\\n'; echo xl('contain at least three of the four following items:'); echo '\\n'; echo xl('A number'); echo '\\n'; echo xl('A lowercase letter'); echo '\\n'; echo xl('An uppercase letter'); echo '\\n'; echo xl('A special character');echo '('; echo xl('not a letter or number'); echo ').'; echo '\\n'; echo xl('For example:'); echo ' healthCare@09'; ?>";
+                        iziToast.warning({
+                            position : "topRight",
+                            icon : "fa fa-warning",
+                            message : alertMsg
+                        });
+                        return false;
+                    }
                 }
             }
-        }
-        // check if the erx_corp is enabled.
-        <?php if($GLOBALS['erx_enable']){ ?>
-        let form = $("#addNewUser").serializeArray();
-        $.each( form, function( i, field ) {
-            if(field.name === "rumple" || field.name === "fname" || field.name === "mname" || field.name === "lname"){
-                alertMsg += checkLength(field.name, field.value,35);
-                alertMsg += checkUsername(field.name, field.value);
+            // check if the erx_corp is enabled.
+            <?php if($GLOBALS['erx_enable']){ ?>
+            let form = $("#addNewUser").serializeArray();
+            $.each( form, function( i, field ) {
+                if(field.name === "rumple" || field.name === "fname" || field.name === "mname" || field.name === "lname"){
+                    alertMsg += checkLength(field.name, field.value,35);
+                    alertMsg += checkUsername(field.name, field.value);
+                }
+                else if(field.name === "federaltaxid"){
+                    alertMsg += checkLength(field.name, field.value, 10);
+                    alertMsg += checkFederalEin(field.name, field.value);
+                }
+                else if(field.name === "state_license_number"){
+                    alertMsg += checkLength(field.name, field.value, 10);
+                    alertMsg += checkStateLicenseNumber(field.name, field.value);
+                }
+                else if(field.name === "npi"){
+                    alertMsg += checkLength(field.name, field.value, 35);
+                    alertMsg += checkTaxNpiDea(field.name, field.value);
+                }
+                else if(field.name === "federaldrugid"){
+                    alertMsg += checkLength(field.name, field.value, 30);
+                    alertMsg += checkAlphaNumeric(field.name, field.value);
+                }
+            });
+            if(alertMsg) {
+                alert(alertMsg);
+                return false;
             }
-            else if(field.name === "federaltaxid"){
-                alertMsg += checkLength(field.name, field.value, 10);
-                alertMsg += checkFederalEin(field.name, field.value);
-            }
-            else if(field.name === "state_license_number"){
-                alertMsg += checkLength(field.name, field.value, 10);
-                alertMsg += checkStateLicenseNumber(field.name, field.value);
-            }
-            else if(field.name === "npi"){
-                alertMsg += checkLength(field.name, field.value, 35);
-                alertMsg += checkTaxNpiDea(field.name, field.value);
-            }
-            else if(field.name === "federaldrugid"){
-                alertMsg += checkLength(field.name, field.value, 30);
-                alertMsg += checkAlphaNumeric(field.name, field.value);
-            }
-        });
-        <?php } // End erx_enable only include block ?>
-        if(alertMsg) {
-            alert(alertMsg);
-            return false;
-        } else {
+            <?php } // End erx_enable only include block ?>
             $("#addNewUser").submit();
             parent.$('#addUser-iframe').iziModal('close');
-        }
-    } else {
-        if (username.val().trim() <= 0) {
-            username.css({"border": "1px solid red"});
-            username.focus();
-            alertMsg = "<?php xl('Required field missing: Please enter the User Name', 'e');?>";
-            iziToast.warning({
-                position: "topRight",
-                icon: "fa fa-warning",
-                message: alertMsg
-            });
-            return false;
-        }
-        if (password.val().trim() <= 0) {
-            password.css({"border": "1px solid red"});
-            password.focus();
-            alertMsg = "<?php echo xl('Please mua enter the pass phrase'); ?>";
-            iziToast.warning({
-                position: "topRight",
-                icon: "fa fa-warning",
-                message: alertMsg
-            });
-            return false;
-        }
-        if (fname === "") {
-            fname.css({"border": "1px solid red"});
-            fname.focus();
-            alertMsg = "<?php echo xl('Required field missing: Please enter the First name');?>";
-            iziToast.warning({
-                position: "topRight",
-                icon: "fa fa-warning",
-                message: alertMsg
-            });
-            return false;        }
-        if (lname === "") {
-            lname.css({"border": "1px solid red"});
-            lname.focus();
-            alertMsg = "<?php echo xl('Required field missing: Please enter the Last name');?>";
-            iziToast.warning({
-                position: "topRight",
-                icon: "fa fa-warning",
-                message: alertMsg
-            });
-            return false;
+
+        } else {
+            if (username.val().trim() <= 0) {
+                username.css({"border": "1px solid red"});
+                username.focus();
+                alertMsg = "<?php xl('Required field missing: Please enter the User Name', 'e');?>";
+                iziToast.warning({
+                    position: "topRight",
+                    icon: "fa fa-warning",
+                    message: alertMsg
+                });
+                return false;
+            }
+            if (password.val().trim() <= 0) {
+                password.css({"border": "1px solid red"});
+                password.focus();
+                alertMsg = "<?php echo xl('Please mua enter the pass phrase'); ?>";
+                iziToast.warning({
+                    position: "topRight",
+                    icon: "fa fa-warning",
+                    message: alertMsg
+                });
+                return false;
+            }
+            if (fname === "") {
+                fname.css({"border": "1px solid red"});
+                fname.focus();
+                alertMsg = "<?php echo xl('Required field missing: Please enter the First name');?>";
+                iziToast.warning({
+                    position: "topRight",
+                    icon: "fa fa-warning",
+                    message: alertMsg
+                });
+                return false;        }
+            if (lname === "") {
+                lname.css({"border": "1px solid red"});
+                lname.focus();
+                alertMsg = "<?php echo xl('Required field missing: Please enter the Last name');?>";
+                iziToast.warning({
+                    position: "topRight",
+                    icon: "fa fa-warning",
+                    message: alertMsg
+                });
+                return false;
+            }
+
         }
 
     }
-
-}
 </script>
 <style type="text/css">
   .physician_type_class{
@@ -188,6 +175,27 @@ function submitFormNew() {
         height: 22px !important;
     }
 
+  .iu-pics{
+      position: relative;
+      float: left;
+  }
+  span.pics-close{
+      position: absolute;
+      right: 0;
+      top: -5px;
+      color: red;
+      cursor: pointer;
+      font-size: 19px;
+  }
+
+  img.profile-pics{
+      width: 64px;
+      height: 64px;
+      border: 2px solid #fd5d00;
+      border-radius: 100%;
+      float: left;
+      margin: 2px 10px 1px 15px;
+  }
 </style>
 </head>
 <body class="body_top">
@@ -432,14 +440,17 @@ function submitFormNew() {
                         </div>
                     <?php } ?>
                     <div class="form-group">
-                        <label for="files" class="css_button cp-positive" id="file_input_button"><?php echo xlt('Add Profile Picture'); ?>
-                            <input type="file" name="profile_picture" id="files"  class="hidden" style="display: none;" onchange="readURL(this);" />
-                        </label>
-                        <div class="col-sm-8">
-                            <img id="prof_img" src="" class="hidden img-responsive img-circle" style="border-radius: 100%; border: 1px solid lightskyblue;">
+                        <div class="col-sm-6">
+                            <label for="profile_picture" class="css_button cp-positive" id="file_input_button"><?php echo xlt('Add Profile Picture'); ?></label>
+                            <input type="file" name="profile_picture" id="profile_picture" style="display: none;"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="iu-pics hidden">
+                                <span id="closePic" class="fa fa-times-circle-o pics-close"></span>
+                                <img src="" id="prof_img" class="img-responsive profile-pics" style="border-radius: 100%; border: 1px solid lightskyblue;"/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
                 <input type="hidden" name="newauthPass">
                 <input type='hidden' name='mode' value='new_user'>
@@ -540,13 +551,7 @@ function submitFormNew() {
     <script language="JavaScript">
         <?php
         if ($alertmsg = trim($alertmsg)) {
-            echo "
-            iziToast.warning({
-                        position : \"topRight\",
-                        icon : \"fa fa-warning\",
-                        message : ". $alertmsg . "
-                    });
-              ";
+            echo "alert('$alertmsg');\n";
         }
         ?>
         $(document).ready(function(){
@@ -566,6 +571,24 @@ function submitFormNew() {
                     "disabled": !$(this).is(':checked'),
                     "checked": $(this).is(':checked')
                 });
+            });
+
+            $("#profile_picture").change(function(){
+                var file = this.files[0];
+                console.log(file);
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#prof_img').attr('src', e.target.result).parent().removeClass("hidden").fadeIn(500);
+                    };
+                    reader.readAsDataURL(file);
+                }
+
+            });
+
+            $("#closePic").click(function () {
+                $("#profile_picture").val(null).clone(true);
+                $(this).parent().fadeOut(1000).addClass("hidden");
             });
 
             /*
