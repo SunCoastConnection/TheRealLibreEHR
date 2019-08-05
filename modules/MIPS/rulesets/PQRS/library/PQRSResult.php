@@ -28,9 +28,10 @@ class PQRSResult implements RsResultIF
     public $patientsExcluded; // Number of patients that are excluded
     public $patientsIncluded; // Number of patients that pass target
     public $patientsNotMet; // Number of patients that pass NotMet
+    public $patientsUnreported; // Number of unreporoted patients
     public $percentage; // Calculated percentage
 
-    public function __construct( $rowRule, $numeratorLabel, $populationLabel, $totalPatients, $patientsInPopulation, $patientsExcluded, $patientsIncluded, $patientsNotMet, $percentage )
+    public function __construct( $rowRule, $numeratorLabel, $populationLabel, $totalPatients, $patientsInPopulation, $patientsExcluded, $patientsIncluded, $patientsNotMet, $patientsUnreported, $percentage )
     {
         $this->rule = $rowRule;
         $this->numeratorLabel = $numeratorLabel;
@@ -40,6 +41,7 @@ class PQRSResult implements RsResultIF
         $this->patientsExcluded = $patientsExcluded;
         $this->patientsIncluded = $patientsIncluded;
         $this->patientsNotMet = $patientsNotMet;
+        $this->patientsUnreported = $patientsUnreported;
         $this->percentage = $percentage;
 
         // If itemization is turned on, then record the itemized_test_id
@@ -66,7 +68,7 @@ class PQRSResult implements RsResultIF
 		}
 	}
 
-    $unreported = $this->calculateUnreported($this->patientsInPopulation, $this->patientsIncluded, $this->patientsExcluded, $this->patientsNotMet);
+    // $unreported = $this->calculateUnreported($this->patientsInPopulation, $this->patientsIncluded, $this->patientsExcluded, $this->patientsNotMet);
 
         $rowFormat = array(
         	'is_main'=>TRUE, // TO DO: figure out way to do this when multiple groups.
@@ -78,7 +80,7 @@ class PQRSResult implements RsResultIF
             'pass_filter' => $this->patientsInPopulation,
             'pass_target' => $this->patientsIncluded,
             'pass_notmet' => $this->patientsNotMet,
-            'unreported_items' => $unreported,
+            'unreported_items' => $this->patientsUnreported,
             'percentage' => $this->percentage );
             $rowFormat = array_merge( $rowFormat, $this->rule);
 
@@ -95,9 +97,9 @@ class PQRSResult implements RsResultIF
      * Unreported = Denominator - NotMet - Excluded - Numerator
      *
      */
-     private function calculateUnreported($pass_filter, $pass_target, $excluded, $pass_notmet)
-     {
-         $unreported = $pass_filter - $pass_target - $excluded - $pass_notmet;
-         return $unreported;
-     }
+     // private function calculateUnreported($pass_filter, $pass_target, $excluded, $pass_notmet)
+     // {
+     //     $unreported = $pass_filter - $pass_target - $excluded - $pass_notmet;
+     //     return $unreported;
+     // }
 }

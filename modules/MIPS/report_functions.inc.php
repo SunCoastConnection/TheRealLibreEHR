@@ -234,12 +234,14 @@ function getStatusReportDatabase($report_id) {
 
 /**
  * Update the last report_itemized.pass field when NotMet.php class returns true.
+ * When NotMet returns true, this means there exist a FAIL code in billing.code
  *
  * @param   integer  $patient_id        Patient pid
+ * @param integer $pass report_itemized.pass value
  */
-function updateNumeratorPass($patient_id)
+function updateNumeratorPass($patient_id, $pass)
 {
-    sqlStatement("UPDATE report_itemized SET pass=5 WHERE pid=? AND numerator_label=? ORDER BY report_id DESC LIMIT 1", array($patient_id, "Numerator"));
+    sqlStatement("UPDATE report_itemized SET pass=? WHERE pid=? AND numerator_label=? ORDER BY report_id DESC LIMIT 1", array($pass, $patient_id, "Numerator"));
 }
 
 /**
