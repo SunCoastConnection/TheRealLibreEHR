@@ -34,6 +34,7 @@ require_once("$srcdir/formatting.inc.php");
 require_once("../../custom/code_types.inc.php");
 require_once("../../library/report_functions.php");
 
+
 $comarr = array('allow_sms'=>xl('Allow SMS'),'allow_voice'=>xl('Allow Voice Message'),'allow_mail'=>xl('Allow Mail Message'),'allow_email'=>xl('Allow Email'));
 $DateFormat = DateFormatRead(true);
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
@@ -56,6 +57,7 @@ function add_date($givendate, $day = 0, $mth = 0, $yr = 0)
  * @author: Ngai Elizabeth. <asobingai@gmail.com>
  * */
 function prepareResults() {
+    $DateFormat = DateFormatRead(true);
   $type = $_POST["type"];
   $facility = isset($_POST['facility']) ? $_POST['facility'] : '';
   if($_POST['form_from_date'] != "")
@@ -131,7 +133,7 @@ function prepareResults() {
                   hd.alcohol AS history_data_alcohol,
                   hd.recreational_drugs AS history_data_recreational_drugs   ";
     }
-
+    $mh_stmt = "";
     if($type == 'Service Codes') {
         $sqlstmt .= ", c.code as code,
                 c.code_text as code_text,
@@ -249,32 +251,32 @@ function prepareResults() {
         }
     }
 
-    if(strlen($patient_id) != 0) {
+    if(isset($patient_id) && $patient_id != null) {
         $whr_stmt = $whr_stmt."   and pd.pid = ?";
         array_push($sqlBindArray, $patient_id);
     }
 
-    if(strlen($age_from) != 0) {
-        $whr_stmt = $whr_stmt."   and DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(),pd.dob)), '%Y')+0 >= ?";
+    if(isset($age_from) && $age_from != null) {
+        $whr_stmt = $whr_stmt."   and  YEAR(CURDATE()) - YEAR(pd.dob) >= ?";
         array_push($sqlBindArray, $age_from);
     }
 
-    if(strlen($age_to) != 0) {
-        $whr_stmt = $whr_stmt."   and DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(),pd.dob)), '%Y')+0 <= ?";
+    if(isset($age_to) && $age_to != null) {
+        $whr_stmt = $whr_stmt."   and YEAR(CURDATE()) - YEAR(pd.dob) <= ?";
         array_push($sqlBindArray, $age_to);
     }
 
-    if(strlen($sql_gender) != 0) {
+    if(isset($sql_gender) && $sql_gender != null){
         $whr_stmt = $whr_stmt."   and pd.sex = ?";
         array_push($sqlBindArray, $sql_gender);
     }
 
-    if(strlen($sql_ethnicity) != 0) {
+    if(isset($sql_ethnicity) && $sql_ethnicity != null) {
         $whr_stmt = $whr_stmt."   and pd.ethnicity = ?";
         array_push($sqlBindArray, $sql_ethnicity);
     }
 
-    if(strlen($sql_race) != 0) {
+    if(isset($sql_race) && $sql_race != null) {
         $whr_stmt = $whr_stmt."   and pd.race = ?";
         array_push($sqlBindArray, $sql_race);
     }
@@ -310,11 +312,12 @@ function prepareResults() {
   }
 
   // order by
-    if ($_POST['form_pt_name'] == true){
-      $odrstmt=$odrstmt.",patient_name";
+    $odrstmt = "";
+    if ($_POST['form_pt_name']){
+      $odrstmt = $odrstmt.",patient_name";
     }
 
-    if ($_POST['form_pt_age'] == true) {
+    if ($_POST['form_pt_age']) {
         $odrstmt=$odrstmt.",patient_age";
     }
 
@@ -352,14 +355,24 @@ function prepareResults() {
       $sqlstmt=$sqlstmt." ".$whr_stmt." ".$odrstmt;
     }
 
-  $result = sqlStatement($sqlstmt,$sqlBindArray);
+   error_log("SQL: ". $sqlstmt);
+   error_log("GENDER: ". $sql_gender);
 
-  $row_id = 1.1;//given to each row to identify and toggle
+
+    $result = sqlStatement($sqlstmt,$sqlBindArray);
+//    while ($row = sqlFetchArray($result)) {
+//        var_dump("PATIENT: ". $row['patient_name']);
+//        error_log("PATIENT: ". $row['patient_name']);
+//    }
+//
+//    var_dump($sqlstmt);
+//    die();
+
+    $row_id = 1.1;//given to each row to identify and toggle
   $img_id = 1.2;
   $k=1.3;
 
   $answer = array('result' => $result, 'row_id' => $row_id, 'img_id' => $img_id, 'k' => $k );
-
   return $answer;
 }
 
