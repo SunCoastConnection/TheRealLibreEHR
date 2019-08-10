@@ -92,19 +92,19 @@ function prepareResults() {
                 concat(u.fname, ' ', u.lname)  AS users_provider,
                 REPLACE(REPLACE(concat_ws(',',IF(pd.hipaa_allowemail = 'YES', 'Allow Email','NO'),IF(pd.hipaa_allowsms = 'YES', 'Allow SMS','NO') , IF(pd.hipaa_mail = 'YES', 'Allow Mail Message','NO') , IF(pd.hipaa_voice = 'YES', 'Allow Voice Message','NO') ), ',NO',''), 'NO,','') as communications";
 
-  if(strlen($form_diagnosis) > 0 || $_POST['form_diagnosis_allergy'] == true
+  if((isset($form_diagnosis) && $form_diagnosis != null) > 0 || $_POST['form_diagnosis_allergy'] == true
       || $_POST['form_diagnosis_medprb'] == true)  {
       $sqlstmt=$sqlstmt.",li.date AS lists_date,
                   li.diagnosis AS lists_diagnosis,
                   li.title AS lists_title";
   }
 
-  if(strlen($form_drug_name) > 0 || $_POST['form_drug'] == true)  {
+  if((isset($form_drug_name) && $form_drug_name != null)  || $_POST['form_drug'] == true)  {
       $sqlstmt=$sqlstmt.",r.id as id, r.date_modified AS prescriptions_date_modified, r.dosage as dosage, r.route as route, r.interval as hinterval, r.refills as refills, r.drug as drug,
           r.form as hform, r.size as size, r.unit as hunit, d.name as name, d.ndc_number as ndc_number,r.quantity as quantity";
   }
 
-  if(strlen($form_lab_results) > 0 || $_POST['lab_results'] == true) {
+  if((isset($form_lab_results) && $form_lab_results != null) || $_POST['lab_results'] == true) {
       $sqlstmt = $sqlstmt.",pr.date AS procedure_result_date,
                       pr.facility AS procedure_result_facility,
                       pr.units AS procedure_result_units,
@@ -142,7 +142,7 @@ function prepareResults() {
         $mh_stmt = $mh_stmt.",code,code_text,encounter,date";
     }
 
-    if (strlen($form_immunization) > 0) {
+    if (isset($form_immunization) && $form_immunization != null) {
         $sqlstmt .= ", immc.code_text as imm_code, immc.code_text_short as imm_code_short, immc.id as cvx_code, imm.administered_date as imm_date, imm.amount_administered, imm.amount_administered_unit,  imm.administration_site, imm.note as notes ";
     }
 
@@ -150,7 +150,7 @@ function prepareResults() {
     $sqlstmt=$sqlstmt." from patient_data as pd left outer join users as u on u.id = pd.providerid
             left outer join facility as f on f.id = u.facility_id";
 
-    if(strlen($form_diagnosis) > 0 || ($_POST['form_diagnosis_allergy'] == true
+    if((isset($form_diagnosis) && $form_diagnosis !=null) || ($_POST['form_diagnosis_allergy'] == true
       && $_POST['form_diagnosis_medprb'] == true)){
         $sqlstmt = $sqlstmt." left outer join lists as li on (li.pid  = pd.pid AND (li.type='medical_problem' OR li.type='allergy')) ";
     }elseif($_POST['form_diagnosis_allergy'] == true){
@@ -159,7 +159,7 @@ function prepareResults() {
         $sqlstmt = $sqlstmt." left outer join lists as li on (li.pid  = pd.pid AND (li.type='medical_problem')) ";
     }
 
-  if ( $type == 'Procedure' ||( strlen($form_lab_results)!=0) || $_POST['lab_results'] == true) {
+  if ( $type == 'Procedure' || (isset($form_lab_results) && $form_lab_results != null) || $_POST['lab_results'] == true) {
     $sqlstmt = $sqlstmt." left outer join procedure_order as po on po.patient_id = pd.pid
           left outer join procedure_order_code as pc on pc.procedure_order_id = po.procedure_order_id
           left outer join procedure_report as pp on pp.procedure_order_id   = po.procedure_order_id
@@ -257,12 +257,12 @@ function prepareResults() {
     }
 
     if(isset($age_from) && $age_from != null) {
-        $whr_stmt = $whr_stmt."   and  YEAR(CURDATE()) - YEAR(pd.dob) >= ?";
+        $whr_stmt = $whr_stmt."  and  DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(pd.dob, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(pd.dob, '00-%m-%d')) >= ?";
         array_push($sqlBindArray, $age_from);
     }
 
     if(isset($age_to) && $age_to != null) {
-        $whr_stmt = $whr_stmt."   and YEAR(CURDATE()) - YEAR(pd.dob) <= ?";
+        $whr_stmt = $whr_stmt."  and DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(pd.dob, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(pd.dob, '00-%m-%d')) <= ?";
         array_push($sqlBindArray, $age_to);
     }
 
@@ -355,25 +355,13 @@ function prepareResults() {
       $sqlstmt=$sqlstmt." ".$whr_stmt." ".$odrstmt;
     }
 
-   error_log("SQL: ". $sqlstmt);
-   error_log("GENDER: ". $sql_gender);
-
-
     $result = sqlStatement($sqlstmt,$sqlBindArray);
-//    while ($row = sqlFetchArray($result)) {
-//        var_dump("PATIENT: ". $row['patient_name']);
-//        error_log("PATIENT: ". $row['patient_name']);
-//    }
-//
-//    var_dump($sqlstmt);
-//    die();
-
     $row_id = 1.1;//given to each row to identify and toggle
-  $img_id = 1.2;
-  $k=1.3;
+    $img_id = 1.2;
+    $k=1.3;
 
-  $answer = array('result' => $result, 'row_id' => $row_id, 'img_id' => $img_id, 'k' => $k );
-  return $answer;
+    $answer = array('result' => $result, 'row_id' => $row_id, 'img_id' => $img_id, 'k' => $k );
+    return $answer;
 }
 
 ?>

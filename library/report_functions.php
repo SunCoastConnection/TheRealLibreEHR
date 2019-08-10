@@ -98,7 +98,7 @@ function showFromAndToDates() {
         </td>
          <td>
             <input type='text' name='form_from_date' id='form_from_date' size='10'
-                value='"; if(isset($_POST["from_date"]) && $_POST["from_date"] != null) { echo htmlspecialchars(oeFormatShortDate(attr($_POST["from_date"]))); } ;
+                value='"; if(isset($_POST["form_from_date"]) && $_POST["form_from_date"] != null) { echo htmlspecialchars(oeFormatShortDate(attr($_POST["form_from_date"]))); } ;
     echo "' />
          </td>
          <td class='label'> ";
@@ -107,7 +107,7 @@ function showFromAndToDates() {
          </td>
          <td>
             <input type='text' name='form_to_date' id='form_to_date' size='10'
-                value=' "; if(isset($_POST["to_date"]) && $_POST["to_date"] != null) { echo htmlspecialchars(oeFormatShortDate(attr($_POST["to_date"]))); } ;
+                value=' "; if(isset($_POST["form_to_date"]) && $_POST["form_to_date"] != null) { echo htmlspecialchars(oeFormatShortDate(attr($_POST["form_to_date"]))); } ;
     echo "' />
          </td>";
 }
