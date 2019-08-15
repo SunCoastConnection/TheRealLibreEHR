@@ -2,15 +2,15 @@
 /**
  * Display Measures Engine Report Form
  * Copyright (C) 2015 - 2019      Suncoast Connection
- * 
+ *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
- * See the Mozilla Public License for more details. 
+ * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
- * 
+ *
  * @author  Art Eaton <art@suncoastconnection.com>
  * @author  Bryan lee <leebc 11 at acm dot org>
  * @author  Sam Likins <sam.likins@wsi-services.com>
- * @package LibreEHR 
+ * @package LibreEHR
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
@@ -52,13 +52,13 @@ if(!empty($report_id)) {
   $report_view = collectReportDatabase($report_id);
 
   $date_report = $report_view['date_report'];
- 
+
   $type_report = $report_view['type'];
 
   $rule_filter = $report_view['type'];
 
   $begin_date = $report_view['date_begin'];
-  
+
   if (isset($report_view['title'])) {
 
      $report_title=$report_view['title'];
@@ -86,7 +86,7 @@ if(!empty($report_id)) {
 
   //  Setting report type
   $type_report = 'pqrs_individual_2016';
-  
+
 
   // Collect form parameters (set defaults if empty)
 
@@ -391,8 +391,9 @@ function Form_Validate() {
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Performance Met'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Not Met'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Hard Fail'), ENT_NOQUOTES);  ?></th>
+            <th style="text-align:center"><?php echo htmlspecialchars(xl('Unreported'), ENT_NOQUOTES);  ?></th>
             <th style="text-align:center"><?php echo htmlspecialchars(xl('Performance Rate'), ENT_NOQUOTES); ?></th>
-            
+
           </thead>
           <tbody>  <!-- added for better print-ability -->
 <?php
@@ -418,9 +419,9 @@ $bgcolor = 0;
             $tempMeasuresString = '';
 
                 if(!empty($row['pqrs_code'])) {
-                  $tempMeasuresString .= ' '.preg_replace('/PQRS_/', 'MIPS ',$row['pqrs_code']).' ';              
+                  $tempMeasuresString .= ' '.preg_replace('/PQRS_/', 'MIPS ',$row['pqrs_code']).' ';
                 }
-  
+
 
             if(!empty($tempMeasuresString)) {
                 $patterns = array();
@@ -431,7 +432,7 @@ $bgcolor = 0;
                 ?>
                 <a href='<?php echo $measureURL;?>' target="_blank"><?php echo $tempMeasuresString;?></a>
                 <?php
-             
+
             }
 
             if(!(empty($row['concatenated_label']))) {  ///this condition can be removed...not sure which way yet.
@@ -501,7 +502,7 @@ $bgcolor = 0;
           if(isset($row['is_main'])) {
               $failed_items = $row['pass_filter'] - $row['pass_target'] - $row['excluded'];
 
-          } 
+          }
 
           if(isset($row['itemized_test_id']) && ($failed_items > 0) ) {
             $query = http_build_query(array(
@@ -519,8 +520,8 @@ $bgcolor = 0;
               <td style="text-align:center"><?php echo $failed_items; ?></td>
 <?php
           }
-          
- //////////// Implement NotMet        
+
+ //////////// Implement NotMet
            if(isset($row['itemized_test_id']) && $row['pass_notmet'] > 0) {
             $query = http_build_query(array(
               'from_page' => 'pqrs_report',
@@ -536,11 +537,24 @@ $bgcolor = 0;
 ?>
               <td style="text-align:center"><?php echo $row['pass_notmet']; ?></td>
 <?php
-          }         
-//////////////////Implement Unreported          
-          
-          
-          
+          }
+//////////////////Implement Unreported
+if(isset($row['itemized_test_id']) && ($row['unreported_items'] > 0) ) {
+              $query = http_build_query(array(
+                'from_page' => 'pqrs_report',
+                'pass_id' => 'unreported',
+                'report_id' => attr($report_id),
+                'itemized_test_id' => attr($row['itemized_test_id']),
+                'numerator_label' => attr($row['numerator_label']),
+              ));
+?>
+                <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['unreported_items']; ?></a></td>
+<?php
+            } else {
+?>
+                <td style="text-align:center"><?php echo $row['unreported_items']; ?></td>
+<?php
+            }
 //////////////////
 ?>
               <td style="text-align:center"><?php echo $row['percentage']; ?></td>
@@ -586,8 +600,8 @@ $bgcolor = 0;
         }
 ?>
             </tr>
-<?php 
- $bgcolor +=1; 
+<?php
+ $bgcolor +=1;
 
   } ?>
           </tbody>

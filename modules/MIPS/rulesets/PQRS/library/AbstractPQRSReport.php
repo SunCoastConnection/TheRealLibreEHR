@@ -3,14 +3,14 @@
  * Abstract PQRS Report
  *
  * Copyright (C) 2015 - 2017      Suncoast Connection
-  * 
+  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
- * See the Mozilla Public License for more details. 
+ * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
- * 
+ *
  * @author  Art Eaton <art@suncoastconnection.com>
  * @author  Bryan lee <bryan@suncoastconnection.com>
- * @package LibreEHR 
+ * @package LibreEHR
  * @link    http://suncoastconnection.com
  * @link    http://LibreEHR.org
  *
@@ -30,6 +30,10 @@ abstract class AbstractPQRSReport implements RsReportIF
     protected $_beginMeasurement;
     protected $_endMeasurement;
     public $_reportOptions;
+
+    protected $numerator_false = array();  // save patient_id => Numerator class return value
+    protected $exclusion_false = array();   // save patient_id => Exclusion class return value
+    protected $notmet_false = array();   // save patient_id => NotMet class return value
 
     public function __construct( array $rowRule, array $patientIdArray, $dateTarget, $options )
     {
@@ -115,7 +119,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                 foreach ( $numerators as $numerator ) {
                     $numerator->setReportOptions($this->_reportOptions);
                 }
-                
+
                 $notmet = $populationCriteria->createNotMet();
                 if ( !is_array( $notmet ) ) {
                     $notmet = array( $notmet );
@@ -145,6 +149,8 @@ abstract class AbstractPQRSReport implements RsReportIF
                 $patExceptArr = array();
                 $numeratorPatientPopulations = $this->initNumeratorPopulations( $numerators );
                 $notmetPatientPopulations = $this->initNotMetPopulations( $notmet );
+                $unreported = 0;
+
                 foreach ( $this->_pqrsPopulation as $patient )
                 {
                     if ( !$initialPatientPopulationFilter->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) )
@@ -170,6 +176,8 @@ abstract class AbstractPQRSReport implements RsReportIF
                     {
                         $exclusionsPatientPopulation++;
                         $patExclArr[] = $patient->id;
+                    } else {
+                        $this->exclusion_false = array_merge($this->exclusion_false, array('"'.$patient->id.'"' => 0));
                     }
 
                     //Denominator Exception added
@@ -183,10 +191,16 @@ abstract class AbstractPQRSReport implements RsReportIF
                     }
 
                     foreach ( $numerators as $numerator ) {
-                        $this->testNumerator( $patient, $numerator, $numeratorPatientPopulations );
+                        $test_numerator = $this->testNumerator( $patient, $numerator, $numeratorPatientPopulations );
+                        if ($test_numerator == FALSE) {
+                            $this->numerator_false = array_merge($this->numerator_false, array('"'.$patient->id.'"' => 0));
+                        }
                     }
                     foreach ( $notmet as $notmets ) {
-                        $this->testNotMet( $patient, $notmets, $notmetPatientPopulations );
+                        $test_notmet = $this->testNotMet( $patient, $notmets, $notmetPatientPopulations );
+                        if ($test_notmet == FALSE) {
+                            $this->notmet_false = array_merge($this->notmet_false, array('"'.$patient->id.'"' => 0));
+                        }
                     }
                 }
 
@@ -214,8 +228,15 @@ abstract class AbstractPQRSReport implements RsReportIF
                     }
 /////May redo NotMet like Exclusion/Exception above with a value of 5
                     $percentage = calculate_percentage( $pass_filt, $exclude_filt, $pass_targ );
+
+                    $pass_notmet = $pass_not["NotMet"];
+
+                    error_log("NUMERATOR: " . print_r($this->numerator_false, true) . " EXCLUSION: " . print_r($this->exclusion_false, true) . " NOTMET: " . print_r($this->notmet_false, true));
+
+                    $unreported = $this->countUnreported($this->numerator_false, $this->exclusion_false, $this->notmet_false);
+
                     $this->_resultsArray[]= new PQRSResult( $this->_rowRule, $title, $populationCriteria->getTitle(),
-                        $totalPatients, $pass_filt, $exclude_filt, $pass_targ, $pass_not, $percentage );
+                        $totalPatients, $pass_filt, $exclude_filt, $pass_targ, $pass_notmet, $unreported, $percentage );
                 }
             }
         }
@@ -231,7 +252,7 @@ abstract class AbstractPQRSReport implements RsReportIF
         }
         return $numeratorPatientPopulations;
     }
-    
+
     private function initNotMetPopulations( array $notmets )
     {
         $notmetPatientPopulations = array();
@@ -252,12 +273,14 @@ abstract class AbstractPQRSReport implements RsReportIF
                 // If itemization is turned on, then record the "passed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
                    insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $numerator->getTitle());
+                   return true;
                 }
             }
             else {
                 // If itemization is turned on, then record the "failed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
                    insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $numerator->getTitle());
+                   return false;
                 }
 
             }
@@ -267,7 +290,7 @@ abstract class AbstractPQRSReport implements RsReportIF
             throw new Exception( "Numerator must be an instance of PQRSFilterIF" );
         }
     }
-    
+
     private function testNotMet( $patient, $notmets, &$notmetPatientPopulations )
     {
         if ( $notmets instanceof PQRSFilterIF  )
@@ -278,13 +301,16 @@ abstract class AbstractPQRSReport implements RsReportIF
 
                 // If itemization is turned on, then record the "passed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
-                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $notmets->getTitle());
+                    updateNumeratorPass($patient->id, 5); //Save 5 as Numberator value when NotMet.php class returns true
+                    insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $notmets->getTitle());
+                    return true;
                 }
             }
             else {
                 // If itemization is turned on, then record the "failed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
                    insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $notmets->getTitle());
+                   return false;
                 }
 
             }
@@ -294,5 +320,20 @@ abstract class AbstractPQRSReport implements RsReportIF
             throw new Exception( "NotMet must be an instance of PQRSFilterIF" );
         }
     }
-    
+
+    // If there's a zero in all 3 arrays with same patient_id as key, then it's unreported
+    private function countUnreported($numerator_false, $exclusion_false, $notmet_false)
+    {
+        $unreported_items = 0;
+        foreach ($notmet_false as $key => $value) {
+            if ($numerator_false[$key] == 0 && $exclusion_false[$key] == 0 && $value == 0) {
+                $unreported_items++;
+            }
+                error_log("NUMERATOR: " . $key . " => " . $numerator_false[$key]);
+                error_log("EXCLUSION: " . $key . " => " . $exclusion_false[$key]);
+                error_log("NOTMET: " . $key . " => " . $notmet_false[$key]);
+        }
+        return $unreported_items;
+    }
+
 }
