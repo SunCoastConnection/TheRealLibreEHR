@@ -6116,6 +6116,7 @@ CREATE TABLE `ar_activity` (
   `ready_to_bill` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (sequence_no, pid, encounter),
   KEY session_id (session_id)
+  KEY payment (pid,pay_amount,adj_amount)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `users_facility`;
