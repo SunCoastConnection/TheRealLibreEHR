@@ -170,9 +170,7 @@ if ($_GET["mode"] == "update") {
   exit(0);
   */    echo '
 <script type="text/javascript">
-<!--
-parent.$.fn.fancybox.close();
-//-->
+     parent.$("#editUser-iframe").iziModal("close");
 </script>
 
     ';
@@ -187,9 +185,7 @@ $iter = $result[0];
 if (isset($_POST["mode"])) {
     echo '
 <script type="text/javascript">
-<!--
-parent.$.fn.fancybox.close();
-//-->
+     parent.$("#editUser-iframe").iziModal("close");
 </script>
 
     ';
@@ -648,10 +644,10 @@ Display red alert if entered password matched one of last three passwords/Displa
 </form>
 <script language="JavaScript">
 $(document).ready(function(){
-    $("#cancel").click(function() {
-          parent.$.fn.fancybox.close();
-     });
 
+    $("#cancel").click(function() {
+        parent.$("#editUser-iframe").iziModal("close");
+    });
 });
 
   function readURL(input) {

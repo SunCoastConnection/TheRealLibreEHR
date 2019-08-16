@@ -606,6 +606,9 @@ $(document).ready(function(){
             });
 
         });
+    $("#cancel").click(function() {
+        parent.$('#addUser-iframe').iziModal('close');
+    });
 
 </script>
 <script language="JavaScript">
