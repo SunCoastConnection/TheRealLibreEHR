@@ -101,7 +101,9 @@ CREATE TABLE IF NOT EXISTS `cases_to_documents` (
 #IfMissingColumn ar_activity billing_id
   ALTER TABLE `ar_activity` ADD COLUMN `billing_id` INT(11) NOT NULL AFTER `sequence_no`;
 #EndIf
-
+#IfNotIndex ar_activity payment
+  ALTER TABLE `ar_activity` ADD INDEX `payment` (pid,pay_amount,adj_amount);
+#EndIf
 #IfMissingColumn insurance_data family_deductible
   ALTER TABLE `insurance_data` ADD COLUMN `family_deductible` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 0 AFTER `inactive_time`;
 #EndIf
