@@ -157,6 +157,14 @@ INSERT INTO list_options (list_id,option_id,title,seq,is_default,option_value,ma
    ALTER TABLE `form_encounter`  ADD COLUMN `coding_complete` TINYINT(1) NOT NULL DEFAULT '0';
 #Endif
 
+#IfMissingColumn  form_encounter  case_number
+   ALTER TABLE `form_encounter`  ADD COLUMN `case_number` INT(20) NOT NULL AFTER `coding_complete`;
+#Endif
+
+#IfMissingColumn  form_encounter  case_body_part
+   ALTER TABLE `form_encounter`  ADD COLUMN `case_body_part` VARCHAR(25) NOT NULL AFTER `case_number`;
+#Endif
+
 #IfMissingColumn ar_activity date_closed
  ALTER TABLE `ar_activity` ADD COLUMN `date_closed` date COMMENT 'Date closed';
 #Endif
