@@ -1,6 +1,6 @@
 <?php
 /*
- * These functions are common functions used in the Appointments reports. They have pulled out 
+ * These functions are common functions used in the Appointments reports. They have pulled out
  * and placed in this file. This is done to prepare the for building a
  * report generator.
  *
@@ -34,7 +34,7 @@ $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
 # Clear the pidList session whenever load this page.
-# This session will hold array of patients that are listed in this 
+# This session will hold array of patients that are listed in this
 # report, which is then used by the 'Superbills' and 'Address Labels'
 # features on this report.
 unset($_SESSION['pidList']);
@@ -73,7 +73,7 @@ $form_orderby = getComparisonOrder( $_REQUEST['form_orderby'] ) ?  $_REQUEST['fo
 // Reminders related stuff
 $incl_reminders = isset($_POST['incl_reminders']) ? 1 : 0;
 
-/* Attribution: 2015-2017 Terry Hill <teryhill@yahoo.com> 
+/* Attribution: 2015-2017 Terry Hill <teryhill@yahoo.com>
  * and 2005-2010 Rod Roark <rod@sunsetsystems.com>*/
 function fetch_rule_txt ($list_id, $option_id) {
     $rs = sqlQuery('SELECT title, seq from list_options WHERE list_id=? AND option_id=?',
@@ -82,13 +82,14 @@ function fetch_rule_txt ($list_id, $option_id) {
     return $rs;
 }
 
-/* Attribution: 2015-2017 Terry Hill <teryhill@yahoo.com> 
+/* Attribution: 2015-2017 Terry Hill <teryhill@yahoo.com>
  * and 2005-2010 Rod Roark <rod@sunsetsystems.com>*/
 function fetch_reminders($pid, $appt_date) {
     $rems = test_rules_clinic('','passive_alert',$appt_date,'reminders-due',$pid);
     $seq_due = array();
     $seq_cat = array();
     $seq_act = array();
+    $rems_out = array();
     foreach ($rems as $ix => $rem) {
         $rem_out = array();
         $rule_txt = fetch_rule_txt ('rule_reminder_due_opt', $rem['due_status']);
