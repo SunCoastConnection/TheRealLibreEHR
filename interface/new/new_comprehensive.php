@@ -806,7 +806,7 @@ function allowOnlyDigits(elem_name){
                         <script>
                           $(function() {
                             $("#i<?php echo $i?>subscriber_DOB").datetimepicker({
-                                timepicker: false,
+                                timepicker: true,
                                 maxDate:0,
                                 format: "<?= $DateFormat; ?>"
                             });
@@ -941,8 +941,13 @@ function allowOnlyDigits(elem_name){
     if (f.form_phone_cell   ) phonekeyup(f.form_phone_cell   ,mypcc);
 
     <?php echo $date_init; ?>
-
-    // -=- jQuery makes life easier -=-
+    $('#form_DOB').datetimepicker({
+        timepicker: false,
+        format: "<?= $DateFormat; ?>",
+        changeYear: true,
+        yearStart : "1900",
+        yearEnd : "<?= (int) date('Y') + 1; ?>"
+    });
 
     // var matches = 0; // number of patients that match the demographic information being entered
     // var override = false; // flag that overrides the duplication warning
