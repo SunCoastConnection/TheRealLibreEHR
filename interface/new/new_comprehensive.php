@@ -806,7 +806,7 @@ function allowOnlyDigits(elem_name){
                         <script>
                           $(function() {
                             $("#i<?php echo $i?>subscriber_DOB").datetimepicker({
-                                timepicker: true,
+                                timepicker: false,
                                 maxDate:0,
                                 format: "<?= $DateFormat; ?>"
                             });
