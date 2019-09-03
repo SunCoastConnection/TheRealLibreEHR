@@ -56,7 +56,7 @@ class C_FormVitals extends Controller {
         return $echoed_content;
     }
 
-    function default_action($form_id) {
+    function default_action($form_id = '') {
 
         if (is_numeric($form_id)) {
             $vitals = new FormVitals($form_id);
