@@ -44,12 +44,12 @@
  * JSON EDITOR is included from:
  *   https://github.com/josdejong/jsoneditor
  *   Copyright (C) 2011-2015 Jos de Jong
- *   usage docs etc in js/jsoneditor/docs 
+ *   usage docs etc in js/jsoneditor/docs
  */
 
  /* Include our required headers */
 
-require_once('../../globals.php');
+//require_once('../../globals.php');
 require_once("$srcdir/acl.inc");
 require_once $GLOBALS['srcdir'].'/headers.inc.php';
 
@@ -84,7 +84,7 @@ if (!empty($_POST['menuEdits'])) {
     <link href="js/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
     <script src="js/jsoneditor/jsoneditor.js"></script>
 
-    <style>       
+    <style>
 
         #jsoneditor {
             width: 500px;

@@ -1,6 +1,6 @@
 <?php
-  include_once("../../globals.php");
-  include_once($GLOBALS['srcdir']."/api.inc");
+  include_once("../../../../globals.php");
+  include_once("$srcdir/api.inc");
   formHeader("Review of Systems");
 ?>
 <html>
@@ -10,7 +10,7 @@
       // Resizes the panels to be the height of the largest panel
       function resizePanel() {
         var h = $("#largest-panel").height();
-        // Hack to ensure panels do not
+        // Hack to ensure panels do not 
         $(".panel").height(h);
       }
 
@@ -288,7 +288,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="pain" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?> 
             </div>
             <div>
               <?php echo xlt("Vertigo");?>:
@@ -350,7 +350,7 @@
                 <?php }
               }?>
             </div>
-            <div>
+            <div>      
               <?php echo xlt("Nosebleed");?>:
               <?php foreach ($this->form->get_options() as $value) {
                 if($value==$this->form->get_nosebleed() ){?>
@@ -506,7 +506,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="copd" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?>          
             </div>
           </div>
         </div>
@@ -525,7 +525,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="chest_pain" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?> 
             </div>
             <div>
               <?php echo xlt("Palpitation");?>:
@@ -535,7 +535,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="palpitation" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?>           
             </div>
             <div>
               <?php echo xlt("Syncope");?>:
@@ -545,7 +545,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="syncope" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?>           
             </div>
             <div>
               <?php echo xlt("PND");?>:
@@ -555,7 +555,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="pnd" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?>           
             </div>
             <div>
               <?php echo xlt("DOE");?>:
@@ -565,7 +565,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="doe" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?>           
             </div>
             <div>
               <?php echo xlt("Orthopnea");?>:
@@ -575,7 +575,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="orthopnea" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?>           
             </div>
             <!-- The get_peripheal function is mispelled -->
             <div>
@@ -586,7 +586,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="peripheal" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?> 
             </div>
             <div>
               <?php echo xlt("Edema");?>:
@@ -596,7 +596,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="edema" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?> 
             </div>
             <div>
               <?php echo xlt("Leg Pain/Cramping");?>:
@@ -606,7 +606,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="legpain_cramping" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?> 
             </div>
             <div>
               <?php echo xlt("History of Heart Murmur");?>:
@@ -616,7 +616,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="history_murmur" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?> 
             </div>
             <div>
               <?php echo xlt("Arryhthmia");?>:
@@ -626,7 +626,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="arryhthmia" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>
+              }?> 
             </div>
             <div>
               <?php echo xlt("Heart Problem");?>:
