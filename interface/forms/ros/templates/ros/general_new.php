@@ -619,12 +619,12 @@
               }?>
             </div>
             <div>
-              <?php echo xlt("Arryhthmia");?>:
+              <?php echo xlt("Arrhythmia");?>:
               <?php foreach ($this->form->get_options() as $value) {
-                if($value==$this->form->get_arryhthmia() ){?>
-                  <label><input type="radio" name="arryhthmia" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
+                if($value==$this->form->get_arrhythmia() ){?>
+                  <label><input type="radio" name="arrhythmia" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
                 <?php } else {?>
-                  <label><input type="radio" name="arryhthmia" value="<?php echo $value;?>"/><?php echo $value;?></label>
+                  <label><input type="radio" name="arrhythmia" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
               }?>
             </div>
@@ -1059,9 +1059,9 @@
               <?php echo xlt("Frequency");?>:
               <?php foreach ($this->form->get_options() as $value) {
                 if($value==$this->form->get_f_frequency() ){?>
-                  <label><input type="radio" name="frequency" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
+                  <label><input type="radio" name="f_frequency" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
                 <?php } else {?>
-                  <label><input type="radio" name="frequency" value="<?php echo $value;?>"/><?php echo $value;?></label>
+                  <label><input type="radio" name="f_frequency" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
               }?>
             </div>
@@ -1555,7 +1555,7 @@
                 if($value==$this->form->get_hai_status() ){?>
                   <label><input type="radio" name="hai_status" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
                 <?php } else {?>
-                  <label><input type="radio" name="hai" value="<?php echo $value;?>"/><?php echo $value;?></label>
+                  <label><input type="radio" name="hai_status" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
               }?>
             </div>
@@ -1564,7 +1564,7 @@
       </div>
       <div>
         <!-- Save/Cancel buttons -->
-        <input type="button" id="save" class='btn btn-success' value="<?php echo xlt('Save'); ?>"> &nbsp;
+        <input type="submit" id="save" class='btn btn-success' value="<?php echo xlt('Save'); ?>"> &nbsp;
         <input type="button" id="dontsave" class="deleter btn btn-danger" value="<?php echo xlt('Cancel'); ?>"> &nbsp;
       </div>
   </body>
