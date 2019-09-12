@@ -1,8 +1,9 @@
+<div id="manage_roles" class="tab-pane fade">
 <?php
 /**
  *  Role Editor
  *
- *  This program displays the page that controls 
+ *  This program displays the page that controls
  *  everything related to roles and the menus based
  *  on them
  *
@@ -34,7 +35,7 @@
  *
  * See the Mozilla Public License for more details.
  *
- * @package Libre EHR 
+ * @package Libre EHR
  * @author Anirudh (anirudh.s.c.96@hotmail.com)
  * @link http://LibreEHR.org
  *
@@ -45,12 +46,12 @@
 
  /* Include our required headers */
 
-require_once('../../globals.php');
-require_once("$srcdir/acl.inc");
-require_once("$srcdir/headers.inc.php");
-require_once("$srcdir/role.php");
+//require_once('../../globals.php');
+// require_once("$srcdir/acl.inc");
+// require_once("$srcdir/headers.inc.php");
+// require_once("$srcdir/role.php");
 
-if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
+// if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
 
 $role = new Role();
 $role_list = $role->getRoleList();
@@ -63,94 +64,11 @@ $role_list = $role->getRoleList();
       resolveFancyboxCompatibility();
 ?>
     <title><?php echo xlt("Role Management") ?></title>
-    <link href="js/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
-    <script src="js/jsoneditor/jsoneditor.js"></script>
+    <link href="<?php echo $GLOBALS['webroot'] ?>/interface/main/tabs/js/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
+    <script src="<?php echo $GLOBALS['webroot'] ?>/interface/main/tabs/js/jsoneditor/jsoneditor.js"></script>
     <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/common.js"></script>
     <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-ui.js"></script>
-    <script type="text/javascript">
 
-    $(document).ready(function(){
-
-//initialization of iziModal
-    $(".addRole").click(function () {
-         $("#addRole-iframe").iziModal('open');
-     });
-
-
-    $(".editRole").click(function (e) {
-        e.preventDefault();
-       var link = $(this).attr("href");
-       console.log(link);
-       initIziLink(link);
-     });
-
-    function initIziLink(link) {
-         $("#editRole-iframe").iziModal({
-             title: 'Edit Role',
-             subtitle: 'Edit administrative roles',
-             headerColor: '#88A0B9',
-             closeOnEscape: true,
-             fullscreen:true,
-             overlayClose: false,
-             closeButton: true,
-             theme: 'light',  // light
-             iframe: true,
-             width:750,
-             focusInput: true,
-             padding:5,
-             iframeHeight: 600,
-             iframeURL:'../../roles/role_edit.php?title='+link,
-             onClosed:function () {
-                 location.reload();
-            }
-         });
- 
-         setTimeout(function () {
-             call_izi();
-         },200);
-     }
-
-
-  function call_izi() {
-           $("#editRole-iframe").iziModal('open');
-       }
-
-    $("#addRole-iframe").iziModal({
-        title: 'Add Roles',
-        subtitle: 'Mananage administrative roles',
-        headerColor: '#88A0B9',
-        closeOnEscape: true,
-        fullscreen:true,
-        overlayClose: false,
-        closeButton: true,
-        theme: 'light',  // light
-        iframe: true,
-        width:750,
-        focusInput: true,
-        padding:5,
-        iframeHeight: 600,
-        iframeURL: "../../roles/role_create.php",
-        onClosed:function () {
-            location.reload();
-        }
-      });
-       
-    });
-
-    </script>
-    <style>       
-        body {
-            font: 10.5pt arial;
-            color: #4d4d4d;
-            line-height: 150%;
-            width: 500px;
-        }
-
-        #jsoneditor {
-            width: 500px;
-            height: 500px;
-        }
-    </style>
 </head>
 <body>
       <!-- izi-frames to popup modals-->
@@ -165,22 +83,71 @@ $role_list = $role->getRoleList();
             <tr height="22">
                 <th><b>Role title</b></th>
             </tr>
-            <?php foreach($role_list as $role_title) { ?>
+            <?php foreach($role_list as $role_title) {?>
             <tr>
                 <td> <span class="text">  <?php echo $role_title; ?> </span> </td>
-                <td> <a href="<?php echo $role_title; ?>"  class="editRole" onclick="top.restoreSession()"> Edit  </a> </td>
-                <td> <a href="../../roles/role_delete.php?title=<?php echo $role_title; ?>"  class="iframe_medium" onclick="top.restoreSession()"> Delete </a> </td>
+                <td> <a href="../../interface/roles/role_edit.php?title=<?php echo $role_title; ?>"  class="editRole" onclick="top.restoreSession()"> Edit  </a> </td>
+                <!-- <?php $role_title = "'" . $role_title . "'"; ?>
+                <td> <a onclick="getRoleValues(<?php echo $role_title; ?>)" class="editRole"> Edit  </a> </td> -->
+                <td> <a href="../../interface/roles/role_delete.php?title=<?php echo $role_title; ?>"  class="iframe_medium" onclick="top.restoreSession()"> Delete </a> </td>
 
             </tr>
-            <?php 
+            <?php
             } ?>
     </tbody></table>
     </div>
-    <a href="#" class="css_button cp-positive addRole"><span><?php echo xlt('Add Role'); ?></span></a>
-    
+    <a href="../../interface/roles/role_create.php" class="css_button cp-positive addRole"><span><?php echo xlt('Add Role'); ?></span></a>
+
 
 </div>
 
 
 </body>
 </html>
+</div>
+
+
+<!--  Edit role modal
+<div class="modal fade" id="edit_role_modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><strong><?php echo xlt('Edit Role'); ?></strong></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px !important">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+
+    function getRoleValues(title) {
+        $.ajax({
+            url: "../../interface/roles/role_edit.php",
+            type: "get",
+            data: {
+                title: title
+            },
+            success: function(response) {
+                console.log(response);
+                $('.modal-body').append(response);
+                $('#edit_role_modal').modal('show');
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+</script> -->
+
+
+

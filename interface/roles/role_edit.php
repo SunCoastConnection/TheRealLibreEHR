@@ -3,7 +3,7 @@
 /**
  *  Role Editor
  *
- *  This program displays the page that controls 
+ *  This program displays the page that controls
  *  everything related to roles and the menus based
  *  on them
  *
@@ -35,7 +35,7 @@
  *
  * See the Mozilla Public License for more details.
  *
- * @package Libre EHR 
+ * @package Libre EHR
  * @author Anirudh (anirudh.s.c.96@hotmail.com)
  * @link http://LibreEHR.org
  *
@@ -73,10 +73,10 @@ if ($_POST) {
     $json_string = getMenuJSONString($_POST, $json_data);
     if($role->getRole($_GET['title']) != null) {
         $menu_item_list = explode(',', $_POST['checkedList']);
-        
+
         $result = $role->editRole($_GET['title'], $json_string, $menu_item_list);
         if($result) {
-            header("Location: ".$_SERVER['PHP_SELF']."?title=".$_GET['title']."&edited=true");
+            //header("Location: ".$_SERVER['PHP_SELF']."?title=".$_GET['title']."&edited=true");
         } else {
             echo " Unable to edit role ";
         }
@@ -86,7 +86,7 @@ if ($_POST) {
  ?>
 
 
- 
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -110,11 +110,11 @@ if ($_POST) {
             'frameWidth' : 660
         });
 
-       
+
     });
 
     </script>
-    <style>       
+    <style>
         body {
             font: 10.5pt arial;
             color: #4d4d4d;
@@ -132,7 +132,8 @@ if ($_POST) {
     ?> <h2><span class="text" style="color: green;"> Role edited successfully </span></h2> <?php
 }
 ?>
-<h1 style="padding-left: 10px;"><?php echo xlt("Edit a role") ?></h1>
+<h1 style="padding-left: 10px;"><?php echo xlt("Edit a role") ?></h1> <span style="float: right">
+    <a href="../../interface/super/edit_settings.php"  class="btn btn-primary editRole"> <?php echo xlt("GO BACK") ?> </a></span>
 <div style="padding-left: 10px;">
     <form method="POST" action="">
         <label> Role name:  </label>
@@ -170,7 +171,7 @@ if ($_POST) {
         <input type="hidden" name="checkedList" id="checkedList" value="<?php echo $roleData->item_list; ?>" />
         <input type="submit" name="edit" value="Edit role" />
     </form>
-    
+
 <script>
 $(document).ready(function()  {
 
@@ -179,7 +180,7 @@ $(document).ready(function()  {
         for (var i = 0; i < arr.length; ++i)
             if (arr[i] !== undefined) {
                 rv[arr[i]] = true;
-            } 
+            }
         return rv;
     }
 
