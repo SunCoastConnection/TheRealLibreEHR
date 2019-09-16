@@ -16,7 +16,7 @@
     transition: margin-top 0.3s ease, height 0.3s ease;
     transform: translateZ(0);
     box-sizing: border-box;
-    height: 400px !important;
+    height: 90% !important;
 }
 .iziModal *{
     box-sizing: border-box;
