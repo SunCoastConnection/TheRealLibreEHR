@@ -1,4 +1,3 @@
-<div id="manage_roles" class="tab-pane fade">
 <?php
 /**
  *  Role Editor
@@ -47,11 +46,11 @@
  /* Include our required headers */
 
 //require_once('../../globals.php');
-// require_once("$srcdir/acl.inc");
-// require_once("$srcdir/headers.inc.php");
-// require_once("$srcdir/role.php");
+require_once("$srcdir/acl.inc");
+require_once("$srcdir/headers.inc.php");
+require_once("$srcdir/role.php");
 
-// if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
+if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
 
 $role = new Role();
 $role_list = $role->getRoleList();
@@ -87,8 +86,6 @@ $role_list = $role->getRoleList();
             <tr>
                 <td> <span class="text">  <?php echo $role_title; ?> </span> </td>
                 <td> <a href="../../interface/roles/role_edit.php?title=<?php echo $role_title; ?>"  class="editRole" onclick="top.restoreSession()"> Edit  </a> </td>
-                <!-- <?php $role_title = "'" . $role_title . "'"; ?>
-                <td> <a onclick="getRoleValues(<?php echo $role_title; ?>)" class="editRole"> Edit  </a> </td> -->
                 <td> <a href="../../interface/roles/role_delete.php?title=<?php echo $role_title; ?>"  class="iframe_medium" onclick="top.restoreSession()"> Delete </a> </td>
 
             </tr>
@@ -104,7 +101,6 @@ $role_list = $role->getRoleList();
 
 </body>
 </html>
-</div>
 
 
 <!--  Edit role modal

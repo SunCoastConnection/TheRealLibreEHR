@@ -35,6 +35,7 @@ require_once("$srcdir/user.inc");
 require_once("$srcdir/classes/CouchDB.class.php");
 require_once("$srcdir/calendar.inc");
 require_once("$srcdir/role.php");
+require_once("load_edit_settings.php");
 
 if ($_GET['mode'] != "user") {
   // Check authorization.
@@ -53,6 +54,16 @@ if ($_GET['mode'] != "user") {
           resolveFancyboxCompatibility();
            include_js_library("jscolor-1-4-5/jscolor.js");
         ?>
+        <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
+        <link href="<?php echo $GLOBALS['webroot'] ?>/interface/main/tabs/js/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
+        <script src="<?php echo $GLOBALS['webroot'] ?>/interface/main/tabs/js/jsoneditor/jsoneditor.js"></script>
+
+        <style>
+            #jsoneditor {
+                width: 500px;
+                height: 500px;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -145,82 +156,11 @@ if ($_GET['mode'] != "user") {
             </ul>
 
             <div class="tab-content">
-                <div id="edit_menu" class="tab-pane fade in active">
+                <?php include "../../interface/main/tabs/edit_menu.php"; ?>
 
-
-                    <!-- <?php include "../../interface/main/tabs/edit_menu.php"; ?> -->
-                    <?php
-                        if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
-
-                            // Load Disk file
-                            require_once "../main/tabs/menu/menu_data.php";
-                            $menu_json_fixed = preg_replace("/\r|\n/", "", $menu_temp);
-
-                            // Process POST / Save changes
-                            if (!empty($_POST['menuEdits'])) {
-                                // save a backup copy
-                                $today = date('Y-m-d');
-                                $usermenubackup = $usermenufile . ".bkup-$today";
-                                copy($usermenufile, $usermenubackup);
-                                //Pretty up the output
-                                $menu_json_pretty =  json_encode(json_decode($_POST['menuEdits']), JSON_PRETTY_PRINT);
-                                // save the new file
-                                file_put_contents($usermenufile,$menu_json_pretty);
-
-                                echo "<script type='text/javascript'>alert('$usermenufile and $usermenubackup saved');</script>";
-                                $menu_json_fixed = preg_replace("/\r|\n/", "", $menu_json_pretty);
-                            }
-
-                            ?>
-
-                            <!DOCTYPE HTML>
-                            <html>
-                            <head>
-                                <title><?php echo xlt("Site Menu Editor") ?></title>
-                                <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
-                                <link href="../main/tabs/js/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
-                                <script src="../main/tabs/js/jsoneditor/jsoneditor.js"></script>
-
-                                <style>
-
-                                    #jsoneditor {
-                                        width: 500px;
-                                        height: 500px;
-                                    }
-                                </style>
-                            </head>
-                            <body class="body_top">
-                            <h1><?php echo xlt("Site Menu Editor") ?></h1>
-
-                            <form id="menuData" name="menuData" method="post" action="edit_settings.php">
-                                <input type="hidden" id="menuEdits" name="menuEdits" value="">
-                            </form>
-
-                            <?php echo xlt("Save Menu Changes for site ID") . ': ' . $_SESSION['site_id'];?> <input type="button" id="saveDocument" class='cp-submit' value="Save" />
-                            <p class="clearfix"></p>
-                            <div id="jsoneditor"></div>
-
-                            <script type="text/javascript">
-                                // create the editor
-                                var editor = new JSONEditor(document.getElementById('jsoneditor'));
-
-                                // Load a JSON document
-                                var menujson = '<?php echo $menu_json_fixed; ?>';
-                                editor.setText(menujson);
-
-                                // Save a JSON document
-                                document.getElementById('saveDocument').onclick = function () {
-                                    // Save Dialog
-                                    document.menuData.menuEdits.value = editor.getText();
-                                    document.forms["menuData"].submit();
-                                };
-                            </script>
-
-                            </body>
-                            </html>
+                <div id="manage_roles" class="tab-pane fade">
+                    <?php include "../../interface/main/tabs/edit_roles.php"; ?>
                 </div>
-
-                <?php include "../../interface/main/tabs/edit_roles.php"; ?>
 
                 <div id="menu2" class="tab-pane fade">
                     <h3>Menu 2</h3>
