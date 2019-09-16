@@ -533,7 +533,7 @@ if ($fake_register_globals) {
 }
 
 
-if (!empty($GLOBALS['calendar_timezone']) {
+if (!empty($GLOBALS['calendar_timezone'])) {
   // getting selected option (in globals)
   $timezone = $GLOBALS['calendar_timezone'];
   if (strpos($timezone, '!') !== false) {
