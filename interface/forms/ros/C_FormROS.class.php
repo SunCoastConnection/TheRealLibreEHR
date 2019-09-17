@@ -73,7 +73,7 @@ class C_FormROS extends Controller {
     }
 
     function save_ros_form() {
-        $_POST['activity'] = 1; // We need to know how to obtain the activity
+        $_POST['activity'] = 1; // We need to know how to obtain the activity.
         $set_ros_form_data =  "pid = '" . $_SESSION['pid'] . "',
             activity = '" . formData('activity') . "',
             date = '" . date('Y-m-d H:i:s') . "',
@@ -216,21 +216,10 @@ class C_FormROS extends Controller {
             hiv = '" . formData('hiv') . "',
             hai_status = '" . formData('hai_status') . "'";
 
-        $existing_form_ros = $this->get_existing_ros_form_entry($_SESSION['pid'], $_POST['activity']);
+        // insert into form_ros
+        sqlInsert("INSERT INTO form_ros SET $set_ros_form_data");
 
-        // update or insert form_ros
-        if (!empty($existing_form_ros)) {
-            sqlStatement("UPDATE form_ros SET $set_ros_form_data WHERE pid = ? AND activity = ?", array($_SESSION['pid'], $_POST['activity']));
-        } else {
-            sqlInsert("INSERT INTO form_ros SET $set_ros_form_data");
-        }
         return;
-    }
-
-    // Checking if we already have an entry
-    function get_existing_ros_form_entry($pid, $activity) {
-        $res = sqlQuery("SELECT `activity` FROM form_ros WHERE pid = ? AND activity = ?", array($pid, $activity));
-        return $res;
     }
 
 }
