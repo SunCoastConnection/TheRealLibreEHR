@@ -32,6 +32,10 @@
       action="<?php echo $this->form_action;?>/interface/forms/ros/save.php"
       onsubmit="return top.restoreSession()"
     >
+    <input type="hidden" name="id" id='id' value="<?php echo $this->form->get_id(); ?>" />
+    <input type="hidden" name="activity" id='activity' value="<?php echo $this->form->get_activity(); ?>">
+    <input type="hidden" name="pid" id='pid' value="<?php echo $this->form->get_pid(); ?>">
+    <input type="hidden" name="process" id='process' value="true">
       <a href="javascript:history.back()"><h4><i class="fa fa-chevron-left" id="backbutton" aria-hidden="true"></i> Back</h4></a>
       <div class="col-xs-12">
       <h4 class="title"><strong><?php echo xlt('Review of Systems'); ?></strong></h4>

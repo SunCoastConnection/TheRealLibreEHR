@@ -53,7 +53,6 @@ class C_FormROS extends Controller {
 
     function default_action_process() {
         if ($_POST['process'] != "true"){
-
             return;
         }
         $this->ros = new FormROS($_POST['id']);

@@ -26,6 +26,7 @@ class FormROS extends ORDataObject {
 	 */
 
 	var $id;
+	var $activity;
 	var $date;
 	var $pid;
 	var $weight_change = "N/A";
@@ -181,6 +182,8 @@ class FormROS extends ORDataObject {
 		$this->date = date("Y-m-d H:i:s");
 		$this->date_of_onset = date("Y-m-d");
 		$this->_table = "form_ros";
+		$this->activity = 1;
+		$this->pid = $GLOBALS['pid'];
 
 		$this->pid = $GLOBALS['pid'];
 		if ($id != "") {
@@ -199,6 +202,14 @@ class FormROS extends ORDataObject {
 	}
 	function get_id() {
 		return $this->id;
+	}
+	function set_activity($activity) {
+		if (!empty($activity) && is_numeric($activity)) {
+			$this->activity = $activity;
+		}
+	}
+	function get_activity() {
+		return $this->activity;
 	}
 	function set_pid($pid) {
 		if (!empty($pid) && is_numeric($pid)) {
