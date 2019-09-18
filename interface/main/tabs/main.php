@@ -329,7 +329,6 @@ $("#updater-settings-iframe").iziModal({
            width:900,
            focusInput: true,
            padding:5,
-           iframeHeight: 600,
            iframeURL: "<?php echo $GLOBALS['webroot']; ?>/updater/index.php"
 });
 
@@ -346,7 +345,6 @@ $("#developer-mode-iframe").iziModal({
            width:900,
            focusInput: true,
            padding:5,
-           iframeHeight: 600,
            onOpening: function () {
                 var imageURL = "../../../updater/updater_loading.gif";
                 $('.iziModal-content').css("background-image", "url("+imageURL+")");
@@ -366,7 +364,6 @@ $("#updater-iframe").iziModal({
            width:900,
            focusInput: true,
            padding:5,
-           iframeHeight: 600,
            iframeURL: "<?php echo $GLOBALS['webroot']; ?>/updater/updater.php",
            onOpening: function () {
                 var imageURL = "../../../updater/updater_loading.gif";

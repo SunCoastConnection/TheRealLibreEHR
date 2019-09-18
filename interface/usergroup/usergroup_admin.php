@@ -598,7 +598,6 @@ $(document).ready(function(){
                 width:900,
                 focusInput: true,
                 padding:5,
-                iframeHeight: 700,
                 iframeURL: "usergroup_admin_add.php",
                 onClosed:function () {
                     location.reload();
