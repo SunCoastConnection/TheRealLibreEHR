@@ -33,7 +33,7 @@
  *
  * See the Mozilla Public License for more details.
  *
- * @package Libre EHR 
+ * @package Libre EHR
  * @author Anirudh (anirudh.s.c.96@hotmail.com)
  * @link http://LibreEHR.org
  *
@@ -61,7 +61,7 @@ if (!isset($_GET['title']) || $_GET['title'] == '') {
 
 if ($role->getRole($_GET['title'])) {
     if ($role->deleteRole($_GET['title'])) {
-        echo " Role " . $_GET['title'] . " successfully deleted!";
+        echo "<script type='text/javascript'>alert('Role successfully deleted'); window.location.href= '../../interface/super/edit_settings.php';</script>";
     } else {
         echo " Role " . $_GET['title'] . " could not be deleted. ";
     }

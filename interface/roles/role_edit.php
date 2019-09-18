@@ -132,8 +132,12 @@ if ($_POST) {
     ?> <h2><span class="text" style="color: green;"> Role edited successfully </span></h2> <?php
 }
 ?>
-<h1 style="padding-left: 10px;"><?php echo xlt("Edit a role") ?></h1> <span style="float: right">
-    <a href="../../interface/super/edit_settings.php"  class="btn btn-primary editRole"> <?php echo xlt("GO BACK") ?> </a></span>
+<h1 style="padding-left: 10px;"><?php echo xlt("Edit a role") ?></h1>
+<span style="float: right">
+    <a href="../../interface/super/edit_settings.php" class="btn btn-primary editRole">
+        <?php echo xlt("GO BACK") ?>
+    </a>
+</span>
 <div style="padding-left: 10px;">
     <form method="POST" action="">
         <label> Role name:  </label>

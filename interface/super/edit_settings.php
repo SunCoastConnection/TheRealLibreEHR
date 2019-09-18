@@ -46,17 +46,19 @@ if ($_GET['mode'] != "user") {
 ?>
 <html>
     <head>
-        <title><?php  echo xlt('Edit Settings'); ?></title>
+        <title><?php echo xlt('Edit Settings'); ?></title>
         <!-- supporting javascript code -->
         <?php
            // Including Bootstrap and Fancybox.
-          call_required_libraries(array("jquery-min-3-1-1","bootstrap","fancybox"));
+          call_required_libraries(array("jquery-min-3-1-1","bootstrap","fancybox","font-awesome","iziModalToast"));
           resolveFancyboxCompatibility();
            include_js_library("jscolor-1-4-5/jscolor.js");
         ?>
         <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
         <link href="<?php echo $GLOBALS['webroot'] ?>/interface/main/tabs/js/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
         <script src="<?php echo $GLOBALS['webroot'] ?>/interface/main/tabs/js/jsoneditor/jsoneditor.js"></script>
+        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/common.js"></script>
+    <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-ui.js"></script>
 
         <style>
             #jsoneditor {
@@ -158,9 +160,7 @@ if ($_GET['mode'] != "user") {
             <div class="tab-content">
                 <?php include "../../interface/main/tabs/edit_menu.php"; ?>
 
-                <div id="manage_roles" class="tab-pane fade">
-                    <?php include "../../interface/main/tabs/edit_roles.php"; ?>
-                </div>
+                <?php include "../../interface/main/tabs/edit_roles.php"; ?>
 
                 <div id="menu2" class="tab-pane fade">
                     <h3>Menu 2</h3>
@@ -174,13 +174,3 @@ if ($_GET['mode'] != "user") {
         </div>
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
