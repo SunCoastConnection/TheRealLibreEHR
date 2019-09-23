@@ -27,11 +27,11 @@ class PQRSResult implements RsResultIF
     public $patientsInPopulation; // Number of patients that pass filter
     public $patientsExcluded; // Number of patients that are excluded
     public $patientsIncluded; // Number of patients that pass target
-    public $patientsNotMet; // Number of patients that pass NotMet
+    public $patientsHardFail; // Number of patients that pass HardFail
     public $patientsUnreported; // Number of unreporoted patients
     public $percentage; // Calculated percentage
 
-    public function __construct( $rowRule, $numeratorLabel, $populationLabel, $totalPatients, $patientsInPopulation, $patientsExcluded, $patientsIncluded, $patientsNotMet, $patientsUnreported, $percentage )
+    public function __construct( $rowRule, $numeratorLabel, $populationLabel, $totalPatients, $patientsInPopulation, $patientsExcluded, $patientsIncluded, $patientsHardFail, $patientsUnreported, $percentage )
     {
         $this->rule = $rowRule;
         $this->numeratorLabel = $numeratorLabel;
@@ -40,7 +40,7 @@ class PQRSResult implements RsResultIF
         $this->patientsInPopulation = $patientsInPopulation;
         $this->patientsExcluded = $patientsExcluded;
         $this->patientsIncluded = $patientsIncluded;
-        $this->patientsNotMet = $patientsNotMet;
+        $this->patientsHardFail = $patientsHardFail;
         $this->patientsUnreported = $patientsUnreported;
         $this->percentage = $percentage;
 
@@ -68,7 +68,7 @@ class PQRSResult implements RsResultIF
 		}
 	}
 
-    // $unreported = $this->calculateUnreported($this->patientsInPopulation, $this->patientsIncluded, $this->patientsExcluded, $this->patientsNotMet);
+    // $unreported = $this->calculateUnreported($this->patientsInPopulation, $this->patientsIncluded, $this->patientsExcluded, $this->patientsHardFail);
 
         $rowFormat = array(
         	'is_main'=>TRUE, // TO DO: figure out way to do this when multiple groups.
@@ -79,7 +79,7 @@ class PQRSResult implements RsResultIF
             'excluded' => $this->patientsExcluded,
             'pass_filter' => $this->patientsInPopulation,
             'pass_target' => $this->patientsIncluded,
-            'pass_notmet' => $this->patientsNotMet,
+            'pass_HardFail' => $this->patientsHardFail,
             'unreported_items' => $this->patientsUnreported,
             'percentage' => $this->percentage );
             $rowFormat = array_merge( $rowFormat, $this->rule);
@@ -94,12 +94,12 @@ class PQRSResult implements RsResultIF
 
     /*
      * Calculate the number of unreported patients here.
-     * Unreported = Denominator - NotMet - Excluded - Numerator
+     * Unreported = Denominator - HardFail - Excluded - Numerator
      *
      */
-     // private function calculateUnreported($pass_filter, $pass_target, $excluded, $pass_notmet)
+     // private function calculateUnreported($pass_filter, $pass_target, $excluded, $pass_HardFail)
      // {
-     //     $unreported = $pass_filter - $pass_target - $excluded - $pass_notmet;
+     //     $unreported = $pass_filter - $pass_target - $excluded - $pass_HardFail;
      //     return $unreported;
      // }
 }

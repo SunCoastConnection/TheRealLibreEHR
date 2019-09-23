@@ -521,8 +521,8 @@ $bgcolor = 0;
 <?php
           }
 
- //////////// Implement NotMet
-           if(isset($row['itemized_test_id']) && $row['pass_notmet'] > 0) {
+ //////////// Implement HardFail
+           if(isset($row['itemized_test_id']) && $row['pass_HardFail'] > 0) {
             $query = http_build_query(array(
               'from_page' => 'pqrs_report',
               'pass_id' => 'pass',
@@ -531,11 +531,11 @@ $bgcolor = 0;
               'numerator_label' => attr($row['numerator_label']),
             ));
 ?>
-              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['pass_notmet']; ?></a></td>
+              <td style="text-align:center"><a href='patient_select.php?<?php echo $query; ?>' onclick='top.restoreSession()'><?php echo $row['pass_HardFail']; ?></a></td>
 <?php
           } else {
 ?>
-              <td style="text-align:center"><?php echo $row['pass_notmet']; ?></td>
+              <td style="text-align:center"><?php echo $row['pass_HardFail']; ?></td>
 <?php
           }
 //////////////////Implement Unreported

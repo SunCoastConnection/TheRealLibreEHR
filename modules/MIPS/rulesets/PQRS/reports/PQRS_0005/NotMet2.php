@@ -1,6 +1,6 @@
 <?php
 /*
- * PQRS Measure 0005 -- NotMet
+ * PQRS Measure 0005 -- HardFail
  *
  * Copyright (C) 2018   Suncoast Connection
   * 
@@ -16,11 +16,11 @@
  * Please support this product by sharing your changes with the LibreEHR.org community.
  */
  
-class PQRS_0005_NotMet2 extends PQRSFilter
+class PQRS_0005_HardFail2 extends PQRSFilter
 {
     public function getTitle()
     {
-        return "NotMet2";
+        return "HardFail2";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )

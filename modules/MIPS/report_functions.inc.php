@@ -233,8 +233,8 @@ function getStatusReportDatabase($report_id) {
 }
 
 /**
- * Update the last report_itemized.pass field when NotMet.php class returns true.
- * When NotMet returns true, this means there exist a FAIL code in billing.code
+ * Update the last report_itemized.pass field when HardFail.php class returns true.
+ * When HardFail returns true, this means there exist a FAIL code in billing.code
  *
  * @param   integer  $patient_id        Patient pid
  * @param integer $pass report_itemized.pass value

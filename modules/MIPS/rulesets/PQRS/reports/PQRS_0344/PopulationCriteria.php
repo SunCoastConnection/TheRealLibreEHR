@@ -42,9 +42,9 @@ class PQRS_0344_PopulationCriteria implements PQRSPopulationCriteriaFactory
     public function createExclusion()
     {
         return new PQRS_0344_Exclusion();
-    }public function createNotMet()
+    }public function createHardFail()
     {
-        return new PQRS_0344_NotMet();
+        return new PQRS_0344_HardFail();
     }
 }
 ?>

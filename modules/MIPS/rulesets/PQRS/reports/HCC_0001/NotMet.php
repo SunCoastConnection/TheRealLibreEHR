@@ -1,6 +1,6 @@
 <?php
 /*
- * HCC Measure 00XX -- NotMet
+ * HCC Measure 00XX -- HardFail
  *
  * Copyright (C) 2019   Suncoast Connection
   * 
@@ -14,11 +14,11 @@
  *
  */
  
-class HCC_0001_NotMet extends PQRSFilter
+class HCC_0001_HardFail extends PQRSFilter
 {
     public function getTitle()
     {
-        return "NotMetHCC";
+        return "HardFailHCC";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )

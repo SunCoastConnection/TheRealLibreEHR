@@ -1,6 +1,6 @@
 <?php
 /*
- * PQRS Measure 0138 -- NotMet2
+ * PQRS Measure 0138 -- HardFail2
  *
  * Copyright (C) 2019   Suncoast Connection
   * 
@@ -14,11 +14,11 @@
  *
  */
  
-class PQRS_0138_NotMet2 extends PQRSFilter
+class PQRS_0138_HardFail2 extends PQRSFilter
 {
     public function getTitle()
     {
-        return "NotMet2";
+        return "HardFail2";
     }
 
     public function test( PQRSPatient $patient, $beginDate, $endDate )
