@@ -25,12 +25,18 @@
  *
  */
 
+$fake_register_globals=false;
+$sanitize_all_escapes=true;
+
 require_once ('../globals.php');
+require_once("$srcdir/sql.inc");
+require_once("$srcdir/formdata.inc.php");
 require_once $GLOBALS['srcdir'].'/headers.inc.php';
 require_once("../../custom/code_types.inc.php");
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/globals.inc.php");
+require_once("$srcdir/htmlspecialchars.inc.php");
 require_once("$srcdir/user.inc");
 require_once("$srcdir/classes/CouchDB.class.php");
 require_once("$srcdir/calendar.inc");
@@ -50,15 +56,15 @@ if ($_GET['mode'] != "user") {
         <!-- supporting javascript code -->
         <?php
            // Including Bootstrap and Fancybox.
-          call_required_libraries(array("jquery-min-3-1-1","bootstrap","fancybox","font-awesome","iziModalToast"));
+          call_required_libraries(array("jquery-min-3-1-1","bootstrap","fancybox","font-awesome","iziModalToast", "common", "jquery-ui"));
           resolveFancyboxCompatibility();
            include_js_library("jscolor-1-4-5/jscolor.js");
         ?>
         <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
         <link href="<?php echo $GLOBALS['webroot'] ?>/interface/main/tabs/js/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
         <script src="<?php echo $GLOBALS['webroot'] ?>/interface/main/tabs/js/jsoneditor/jsoneditor.js"></script>
-        <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/common.js"></script>
     <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-ui.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery.easydrag.handler.beta2.js"></script>
 
         <style>
             #jsoneditor {
@@ -70,17 +76,17 @@ if ($_GET['mode'] != "user") {
     <body>
         <div class="container">
             <ul class="nav nav-tabs">
-                <li class="active">
+                <li class="nav-item edit_menu active">
                     <a data-toggle="tab" href="#edit_menu"><?php echo xlt('Edit Menu');?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item manage_roles">
                     <a data-toggle="tab" href="#manage_roles"><?php echo xlt('Manage Roles'); ?></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../../interface/usergroup/facilities.php"><?php echo xlt('Facilities'); ?></a>
+                <li class="nav-item facilities">
+                    <a data-toggle="tab" href="#facilities"><?php echo xlt('Facilities'); ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="../../interface/usergroup/usergroup_admin.php"><?php echo xlt('Users'); ?></a>
+                    <a data-toggle="tab" href="#users"><?php echo xlt('Users'); ?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="../../interface/usergroup/addrbook_list.php"><?php echo xlt('Addr Book'); ?></a>
@@ -162,15 +168,28 @@ if ($_GET['mode'] != "user") {
 
                 <?php include "../../interface/main/tabs/edit_roles.php"; ?>
 
-                <div id="menu2" class="tab-pane fade">
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                </div>
-                <div id="menu3" class="tab-pane fade">
-                    <h3>Menu 3</h3>
-                    <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                </div>
+                <?php include "../../interface/usergroup/facilities.php"; ?>
+
+                <?php include "../../interface/usergroup/usergroup_admin.php"; ?>
             </div>
         </div>
+        <script type="text/javascript">
+
+            // Send the user back to the last active tab
+            var tab = "<?php echo $_GET['tab']; ?>";
+            if (tab == '' || tab == "edit_menu") {
+                $(".edit_menu").addClass("active");
+                $(".edit_menu").children().attr('aria-expanded', 'true');
+                $("#edit_menu").addClass("active in");
+            } else if(tab != "edit_menu") {
+                $('.edit_menu').removeClass("active");
+                $('.edit_menu').children().attr('aria-expanded');
+                $('#edit_menu').removeClass("active in");
+
+                $('.'+tab).addClass("active");
+                $('.'+tab).children().attr('aria-expanded', 'true');
+                $('#'+tab).addClass("active in");
+            }
+        </script>
     </body>
 </html>

@@ -44,7 +44,7 @@ if (isset($_POST["fid"])) {
             alertMsg += checkLength(f[i].name,f[i].value,10);
             alertMsg += checkFederalEin(f[i].name,f[i].value);
           }
-        }   
+        }
       }
       if (alertMsg) {
         alert(alertMsg);
@@ -61,7 +61,7 @@ if (isset($_POST["fid"])) {
           }
           else if (document.forms[0].ncolor.value == '') {
             document.forms[0].ncolor.style.backgroundColor="red";
-            document.forms[0].ncolor.focus(); 
+            document.forms[0].ncolor.focus();
           }
       }
     }
@@ -103,7 +103,7 @@ if (isset($_POST["fid"])) {
       </tr>
     </table>
 
-    <form name='facility' method='post' action="facilities.php" target="_parent">
+    <form name='facility' method='post' action="../super/save_edit_settings.php" target="_parent">
       <input type=hidden name=mode value="facility">
       <input type=hidden name=newmode value="admin_facility"> <!--  Diffrentiate Admin and add post backs -->
       <input type=hidden name=fid value="<?php echo $my_fid;?>">
@@ -196,7 +196,7 @@ if (isset($_POST["fid"])) {
               value="<?php echo htmlspecialchars($facility{"state"}, ENT_QUOTES) ?>"
             />
           </td>
-          <?php 
+          <?php
             $ssn='';
             $ein='';
             if($facility['tax_id_type']=='SY'){
@@ -205,7 +205,7 @@ if (isset($_POST["fid"])) {
             else{
             $ein='selected';
             }
-          ?>     
+          ?>
           <td>
             <span class=text><?php xl('Tax ID','e'); ?>: </span>
           </td>
@@ -238,7 +238,7 @@ if (isset($_POST["fid"])) {
             <span class=text><?php ($GLOBALS['simplified_demographics'] ? xl('Facility Code','e') : xl('Facility NPI','e')); ?>:</span>
           </td>
           <td>
-            <input 
+            <input
               type=entry
               size=20
               name=facility_npi

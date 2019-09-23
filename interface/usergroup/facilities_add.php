@@ -74,7 +74,7 @@ $alertmsg = '';
                             alertMsg += checkLength(f[i].name,f[i].value,10);
                             alertMsg += checkFederalEin(f[i].name,f[i].value);
                         }
-                    }       
+                    }
                 }
                 if (alertMsg) {
                     alert(alertMsg);
@@ -91,7 +91,7 @@ $alertmsg = '';
                     }
                     else if (document.forms[0].ncolor.value == '') {
                         document.forms[0].ncolor.style.backgroundColor="red";
-                        document.forms[0].ncolor.focus();   
+                        document.forms[0].ncolor.focus();
                     }
                 }
             }
@@ -156,7 +156,7 @@ $alertmsg = '';
 
         <br>
 
-        <form name='facility' method='post' action="facilities.php" target='_parent'>
+        <form name='facility' method='post' action="../super/save_edit_settings.php" target='_parent'>
             <input type=hidden name=mode value="facility">
             <table border=0 cellpadding=0 cellspacing=0>
                 <tr>
@@ -271,7 +271,7 @@ $alertmsg = '';
                         <span class='text'>
                             <?php echo xlt('Accepts Assignment'); ?>
                             <br/>
-                            (<?php echo xlt('only if billing location'); ?>): 
+                            (<?php echo xlt('only if billing location'); ?>):
                         </span>
                     </td>
                     <td>
