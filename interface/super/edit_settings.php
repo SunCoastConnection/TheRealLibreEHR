@@ -85,9 +85,11 @@ if ($_GET['mode'] != "user") {
                 <li class="nav-item facilities">
                     <a data-toggle="tab" href="#facilities"><?php echo xlt('Facilities'); ?></a>
                 </li>
+
                 <li class="nav-item">
-                    <a data-toggle="tab" href="#users"><?php echo xlt('Users'); ?></a>
+                    <a class="nav-link" href="../../interface/usergroup/usergroup_admin.php"><?php echo xlt('Users'); ?></a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link disabled" href="../../interface/usergroup/addrbook_list.php"><?php echo xlt('Addr Book'); ?></a>
                 </li>
@@ -170,14 +172,14 @@ if ($_GET['mode'] != "user") {
 
                 <?php include "../../interface/usergroup/facilities.php"; ?>
 
-                <?php include "../../interface/usergroup/usergroup_admin.php"; ?>
+
             </div>
         </div>
         <script type="text/javascript">
 
             // Send the user back to the last active tab
             var tab = "<?php echo $_GET['tab']; ?>";
-            if (tab == '' || tab == "edit_menu") {
+            if (tab == '' || tab == "edit_menu" || tab=="users") {
                 $(".edit_menu").addClass("active");
                 $(".edit_menu").children().attr('aria-expanded', 'true');
                 $("#edit_menu").addClass("active in");

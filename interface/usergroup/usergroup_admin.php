@@ -641,6 +641,11 @@ function authorized_clicked() {
     </table>
     </div>
 
+<span style="float: right">
+    <a href="../../interface/super/edit_settings.php?tab=users" class="btn btn-primary editRole">
+        <?php echo xlt("GO BACK") ?>
+    </a>
+</span>
 <form name='userlist' method='post' action='usergroup_admin.php' onsubmit='return top.restoreSession()'><br>
     <input type='checkbox' name='form_inactive' value='1' onclick='submit()' <?php if ($form_inactive) echo 'checked '; ?>/>
     <span class='text'> <?php echo xlt('Include inactive users'); ?> </span>
