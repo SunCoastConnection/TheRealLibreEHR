@@ -97,7 +97,7 @@ if($_POST) {
 ?>
 <h1 style="padding-left: 10px;"><?php echo xlt("Create a role") ?></h1>
 <span style="float: right">
-    <a href="../../interface/super/edit_settings.php?tab=manage_roles" class="btn btn-primary editRole">
+    <a href="../../interface/super/edit_settings.php?tab=manage_roles" class="btn btn-primary editRole" style="color: white">
         <?php echo xlt("GO BACK") ?>
     </a>
 </span>

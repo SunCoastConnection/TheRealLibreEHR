@@ -961,6 +961,11 @@ function cidChanged(lino, seq) {
 </head>
 
 <body class="body_top">
+  <span style="float: right">
+    <a href="edit_settings.php" class="btn btn-primary" style="color: white">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 
 <form method='post' name='theform' id='theform' action='edit_layout.php'>
 <input type="hidden" name="formaction" id="formaction" value="">

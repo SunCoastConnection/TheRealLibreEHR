@@ -71,7 +71,7 @@ if ($form_abook_type) {
 if ($form_external) {
  $query .= "AND u.username = '' ";
 }
-if ($form_lname) { 
+if ($form_lname) {
     $query .= "ORDER BY u.lname, u.fname, u.mname";
 } else if ($form_organization) {
     $query .= "ORDER BY u.organization";
@@ -127,7 +127,7 @@ $res = sqlStatement($query,$sqlBindArray);
  <?php
   echo xlt('Type') . ": ";
   // Generates a select list named form_abook_type:
-  echo generate_select_list("form_abook_type", "abook_type", $_REQUEST['form_abook_type'], '', 'All');  
+  echo generate_select_list("form_abook_type", "abook_type", $_REQUEST['form_abook_type'], '', 'All');
 ?>
   </td>
    <input type='checkbox' name='form_external' value='1'<?php if ($form_external) echo ' checked'; ?>
@@ -135,9 +135,14 @@ $res = sqlStatement($query,$sqlBindArray);
    <?php echo xlt('External Only')?>&nbsp;&nbsp;
    <input type='submit' title='<?php echo xla("Use % alone in a field to just sort on that column") ?>' class='cp-submit button' name='form_search' value='<?php echo xla("Search")?>' />
    <input type='button' class='cp-positive button' value='<?php echo xla("Add New"); ?>' onclick='doedclick_add(document.forms[0].form_abook_type.value)' />
+   <span style="float: right; margin-bottom: 5px">
+      <a href="../../interface/super/edit_settings.php" class="btn btn-primary" style="color: white">
+          <?php echo xlt("GO BACK") ?>
+      </a>
+  </span>
 </tr>
 </table>
-    
+
 <table class="table">
  <tr class='head'>
   <td title='<?php echo xla('Click to view or edit'); ?>'><?php echo xlt('Organization'); ?></td>
@@ -170,7 +175,7 @@ $res = sqlStatement($query,$sqlBindArray);
    // Allow edit, since have access or (no item type and not a local user)
    $trTitle = xl('Edit'). ' ' . $displayName;
    echo " <tr class='detail $bgclass' style='cursor:pointer' " .
-        "onclick='doedclick_edit(" . $row['id'] . ")' title='".attr($trTitle)."'>\n"; 
+        "onclick='doedclick_edit(" . $row['id'] . ")' title='".attr($trTitle)."'>\n";
   }
   else {
    // Do not allow edit, since no access and (item is a type or is a local user)
@@ -220,7 +225,7 @@ function refreshme() {
 
 // Process click to pop up the add window.
 function doedclick_add(type) {
- top.restoreSession(); 
+ top.restoreSession();
  dlgopen('addrbook_edit.php?type=' + type, '_blank', 700, 550);
 }
 

@@ -86,81 +86,81 @@ if ($_GET['mode'] != "user") {
                     <a data-toggle="tab" href="#facilities"><?php echo xlt('Facilities'); ?></a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item users">
                     <a class="nav-link" href="../../interface/usergroup/usergroup_admin.php"><?php echo xlt('Users'); ?></a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item address">
                     <a class="nav-link disabled" href="../../interface/usergroup/addrbook_list.php"><?php echo xlt('Addr Book'); ?></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="../../controller.php?practice_settings&pharmacy&action=list"><?php echo xlt('Practice'); ?></a>
+                <li class="nav-item practice">
+                    <a class="nav-link" href="../../controller.php?practice_settings&pharmacy&action=list"><?php echo xlt('Practice'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item codes">
                     <a class="nav-link disabled" href="../../interface/patient_file/encounter/superbill_custom_full.php"><?php echo xlt('Codes'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item layouts">
                     <a class="nav-link disabled" href="../../interface/super/edit_layout.php"><?php echo xlt('Layouts'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item lists">
                     <a class="nav-link disabled" href="../../interface/usergroup/adminacl.php"><?php echo xlt('Lists'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item files">
                     <a class="nav-link disabled" href="../../interface/super/manage_site_files.php"><?php echo xlt('Files'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item backup">
                     <a class="nav-link disabled" href="../../interface/main/backup.php"><?php echo xlt('Backup'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item backup">
                     <a class="nav-link disabled" href="../../interface/super/rules/index.php?action=browse!list"><?php echo xlt('Rules'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item alerts">
                     <a class="nav-link disabled" href="../../interface/super/rules/index.php?action=alerts!listactmgr"><?php echo xlt('Alerts'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item reminders">
                     <a class="nav-link disabled" href="../../interface/patient_file/reminder/patient_reminders.php?mode=admin&patient_id="><?php echo xlt('Patient Reminders'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item language">
                     <a class="nav-link disabled" href="../../interface/language/language.php"><?php echo xlt('Language'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item forms">
                     <a class="nav-link disabled" href="../../interface/forms_admin/forms_admin.php"><?php echo xlt('Forms'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item admin">
                     <a class="nav-link disabled" href="../../modules/calendar/admin.php"><?php echo xlt('Calendar Administration'); ?></a>
                 </li>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item logs">
                     <a class="nav-link disabled" href="../../interface/logview/logview.php"><?php echo xlt('Logs'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item activity_report">
                     <a class="nav-link disabled" href="../../interface/reports/username_report.php"><?php echo xlt('Users Activity Report'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item database">
                     <a class="nav-link disabled" href="##SQL_ADMIN##"><?php echo xlt('Database'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item erx_logview">
                     <a class="nav-link disabled" href="../../interface/logview/erx_logview.php"><?php echo xlt('eRx Logs'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item certificates">
                     <a class="nav-link disabled" href="../../interface/usergroup/ssl_certificates_admin.php"><?php echo xlt('Certificates'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item upgrade_db">
                     <a class="nav-link disabled" href="../../sql/sql_upgrade.php"><?php echo xlt('Upgrade Database'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item native_db_loads">
                     <a class="nav-link disabled" href="../../interface/super/load_codes.php"><?php echo xlt('Native Data Loads'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item external_data_loads">
                     <a class="nav-link disabled" href="../../interface/code_systems/dataloads_ajax.php"><?php echo xlt('External Data Loads'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item merge_encounters">
                     <a class="nav-link disabled" href="../../modules/merge_encounters/index.php"><?php echo xlt('Merge Encounters'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item merge_patients">
                     <a class="nav-link disabled" href="../../interface/patient_file/merge_patients.php"><?php echo xlt('Merge Patients'); ?></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item audit_log">
                     <a class="nav-link disabled" href="../../interface/reports/audit_log_tamper_report.php"><?php echo xlt('Audit Log Tamper'); ?></a>
                 </li>
             </ul>

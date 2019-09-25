@@ -642,7 +642,7 @@ function authorized_clicked() {
     </div>
 
 <span style="float: right">
-    <a href="../../interface/super/edit_settings.php?tab=users" class="btn btn-primary editRole">
+    <a href="../../interface/super/edit_settings.php?tab=users" class="btn btn-primary editRole" style="color: white">
         <?php echo xlt("GO BACK") ?>
     </a>
 </span>
