@@ -6,7 +6,7 @@
  // as published by the Free Software Foundation; either version 2
  // of the License, or (at your option) any later version.
 
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -39,6 +39,12 @@ abstract class BaseController {
     }
 
     public function set_view( $view, $template='' ) {
+        // Instantiating object if does not exist to avoid
+        // "creating default object from empty value" warning.
+        if (!isset($this->viewBean)) {
+            $this->viewBean = new stdClass();
+        }
+
         $this->viewBean->_view = $view;
         if ( $template ) {
             $this->viewBean->_template = $template;
