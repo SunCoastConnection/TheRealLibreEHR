@@ -52,10 +52,16 @@ abstract class BaseController {
     }
 
     public function forward( $forward ) {
+        if (!isset($this->viewBean)) {
+            $this->viewBean = new stdClass();
+        }
         $this->viewBean->_forward = $forward;
     }
 
     public function redirect( $redirect ) {
+        if (!isset($this->viewBean)) {
+            $this->viewBean = new stdClass();
+        }
         $this->viewBean->_redirect = $redirect;
     }
 

@@ -269,19 +269,6 @@ CREATE TABLE IF NOT EXISTS `transactions_log` (
   ALTER TABLE `patient_data` ADD `guardian_pid` int(11) default null  AFTER `guardian_email`;
 #EndIf
 
-#IfMissingColumn clinical_rules amc_flag
-  ALTER TABLE `clinical_rules` ADD `amc_flag` TINYINT(1) default null AFTER `active_alert_flag`;
-#EndIf
-#IfMissingColumn clinical_rules cqm_flag
-  ALTER TABLE `clinical_rules` ADD `cqm_flag` TINYINT(1) default null AFTER `amc_flag`;
-#EndIf
-#IfMissingColumn clinical_rules developer
-  ALTER TABLE `clinical_rules` ADD `developer` VARCHAR(255) default null AFTER `patient_reminder_flag`;
-#EndIf
-#IfMissingColumn clinical_rules fundind_source
-  ALTER TABLE `clinical_rules` ADD `funding_source` VARCHAR(255) default null AFTER `developer`;
-#EndIf
-
 #IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2019-10-01 load_filename 2020-ICD-10-CM-Codes.zip
 INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2019-10-01', '2020-ICD-10-CM-Codes.zip', '745546b3c94af3401e84003e1b143b9b');
 #EndIf
@@ -289,4 +276,3 @@ INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_re
 #IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2019-10-01 load_filename 2020-ICD-10-PCS-Order.zip
 INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2019-10-01', '2020-ICD-10-PCS-Order.zip', '8dc136d780ec60916e9e1fc999837bc8');
 #Endif
-#
