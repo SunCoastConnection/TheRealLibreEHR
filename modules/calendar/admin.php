@@ -52,6 +52,13 @@ if(isset($_SESSION['category']) && $_SESSION['category']!=NULL) {
 </head>
 <body>
   <div class="container-fluid">
+    <div class="row" style="margin-top: 5px">
+      <span style="float: right">
+        <a href="../../interface/super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+          <?php echo xlt("GO BACK") ?>
+        </a>
+      </span>
+    </div>
     <div class="row block cat-body">
 
       <form class="form-horizontal" id="cat-select-form" action="" method="POST">

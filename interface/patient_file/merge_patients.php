@@ -71,6 +71,11 @@ function sel_patient(ename, epid) {
 <body class="body_top">
 
 <center><h2><?php echo xlt('Merge Patients') ?></h2></center>
+  <span style="float: right">
+    <a href="../super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 
 <?php
 

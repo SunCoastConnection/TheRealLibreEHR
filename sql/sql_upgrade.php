@@ -49,6 +49,11 @@ ksort($versions);
 <span class='title'>Libre EHR Database Upgrade</span>
 <br>
 </center>
+  <span style="float: right">
+    <a href="../interface/super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 <?php
 if (!empty($_POST['form_submit'])) {
   $form_old_version = $_POST['form_old_version'];

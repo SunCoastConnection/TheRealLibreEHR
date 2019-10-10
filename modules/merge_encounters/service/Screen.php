@@ -1,20 +1,20 @@
 <?php
 /**
- * 
+ *
  * Copyright (c) 2016 Sam Likins WSI-Services
  * Copyright (c) 2016 SunCoast Connection
  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
- * See the Mozilla Public License for more details. 
+ * See the Mozilla Public License for more details.
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
- * 
- * @package Libre EHR 
+ *
+ * @package Libre EHR
  * @author Sam Likins <sam.likins@wsi-services.com>
  * @link http://suncoastconnection.com
  * @link http://LibreEHR.org
- *  
+ *
  * Please help the overall project by sending changes you make to the author and to the LibreEHR community.
- * 
+ *
  */
 if(!defined('MERGE_ENCOUNTERS') || MERGE_ENCOUNTERS !== true) {
 	die('Not authorized');
@@ -52,6 +52,11 @@ if(!defined('MERGE_ENCOUNTERS') || MERGE_ENCOUNTERS !== true) {
 		</script>
 	</head>
 	<body>
+  <span style="float: right">
+    <a href="../../interface/super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 		<div id="notices-box" data-bind="style: { display: notices.list().length == 0 ? 'none' : 'block' }, with: notices">
 			<ul data-bind="foreach: list">
 				<li>

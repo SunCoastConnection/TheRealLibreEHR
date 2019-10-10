@@ -73,7 +73,7 @@ function eventTypeChange(eventname)
     document.theform.type_event.disabled = true;
   } else {
     document.theform.type_event.disabled = false;
-  }              
+  }
 }
 
 // VicarePlus :: This invokes the find-patient popup.
@@ -94,6 +94,11 @@ function setpatient(pid, lname, fname, dob) {
 <font class="title"><?php echo xlt('Audit Log Tamper Report'); ?></font>
 <br>
 <br>
+  <span style="float: right">
+    <a href="../super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 <FORM METHOD="GET" name="theform" id="theform" onSubmit='top.restoreSession()'>
   <?php $sortby = $_GET['sortby']; ?>
   <input type="hidden" name="sortby" id="sortby" value="<?php echo attr($sortby); ?>">

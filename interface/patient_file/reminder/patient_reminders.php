@@ -84,7 +84,12 @@ if ($mode == "simple") {
 <div>
   <span class='title'><?php echo htmlspecialchars( xl('Patient Reminders'), ENT_NOQUOTES); ?></span>
 </div>
-<?php if ($mode == "simple") { ?> 
+  <span style="float: right">
+    <a href="../../super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
+<?php if ($mode == "simple") { ?>
   <div style='float:left;margin-right:10px'>
     <?php echo htmlspecialchars( xl('for'), ENT_NOQUOTES);?>&nbsp;
     <span class="title">
@@ -107,7 +112,7 @@ $sort = array("category, item", "lname, fname", "due_status", "date_created", "h
 if($sortby == "") {
   $sortby = $sort[0];
 }
-if($sortorder == "") { 
+if($sortorder == "") {
   $sortorder = "asc";
 }
 for($i = 0; $i < count($sort); $i++) {
@@ -159,7 +164,7 @@ if($end < $start) {
 if($prev >= 0) {
   $prevlink = "<a href=\"patient_reminders.php?patient_id=$patient_id&mode=$mode&sortby=$sortby&sortorder=$sortorder&begin=$prev\" onclick=\"top.restoreSession()\"><<</a>";
 }
-else { 
+else {
   $prevlink = "<<";
 }
 

@@ -84,6 +84,11 @@ if($filename) {
         <link rel="stylesheet" href="<?php echo $css_header; ?>" type="text/css">
     </head>
     <body class="body_top">
+  <span style="float: right">
+    <a href="../super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
         <form method="post">
         <font class="title"><?php echo xlt('eRx Logs'); ?></font><br><br>
         <table>
