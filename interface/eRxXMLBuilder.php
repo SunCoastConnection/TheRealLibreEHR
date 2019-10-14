@@ -458,6 +458,7 @@ class eRxXMLBuilder {
         $element->appendChild($this->createElementTextFieldEmpty('dea', $userDetails['federaldrugid'], xl('Midlevel Prescriber DEA')));
         if($userDetails['upin']) $element->appendChild($this->createElementText('upin', $userDetails['upin']));
         $element->appendChild($this->createElementText('licenseNumber', $userDetails['state_license_number']));
+        $element->appendChild($this->createElementTextFieldEmpty('npi', $userDetails['npi'], xl('Midlevel Prescriber NPI')));
 
         return $element;
     }
