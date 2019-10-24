@@ -52,6 +52,11 @@ $code_type = empty($_POST['form_code_type']) ? '' : $_POST['form_code_type'];
 </head>
 
 <body class="body_top">
+  <span style="float: right">
+    <a href="edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 
 <?php
 // Handle uploads.

@@ -31,7 +31,7 @@
  *
  * See the Mozilla Public License for more details.
  *
- * @package Libre EHR 
+ * @package Libre EHR
  * @author Anirudh (anirudh.s.c.96@hotmail.com)
  * @link http://LibreEHR.org
  *
@@ -61,13 +61,12 @@ if($_POST) {
         $menu_item_list = explode(',', $_POST['checkedList']);
         $result = $role->createNewRole($_POST['title'], $json_string, $menu_item_list);
         if($result) {
-
-           header("Location: ".$_SERVER['PHP_SELF']."?title=".$_GET['title']."&created=true");
+           echo "<script>location.href='".$_SERVER['PHP_SELF']."?title=".$_GET['title']."&created=true';</script>";
         } else {
             echo " Unable to create role ";
         }
     }
-    
+
 }
 ?>
 
@@ -78,7 +77,7 @@ if($_POST) {
       resolveFancyboxCompatibility();
 ?>
     <title><?php echo xlt("Role Management") ?></title>
-    <style>       
+    <style>
         body {
             font: 10.5pt arial;
             color: #4d4d4d;
@@ -97,6 +96,11 @@ if($_POST) {
 }
 ?>
 <h1 style="padding-left: 10px;"><?php echo xlt("Create a role") ?></h1>
+<span style="float: right">
+    <a href="../../interface/super/edit_settings.php?tab=manage_roles" class="btn btn-primary editRole" style="color: white">
+        <?php echo xlt("GO BACK") ?>
+    </a>
+</span>
 <div style="padding-left: 10px;">
     <form method="POST" action="" id="createRoleForm">
         <label> Role name:  </label>
@@ -134,7 +138,7 @@ if($_POST) {
         <input type="hidden" name="checkedList" id="checkedList" />
         <input type="submit" name="create" value="Create role" />
     </form>
-    
+
 <script>
 var checkedList = {};
 $(document).ready(function()  {
@@ -158,7 +162,7 @@ $(document).ready(function()  {
             //console.log(parentId);
             //$('[id="child2-repimg-Procedures"]').show();
             if($(this).is(':checked')){
-               
+
                 $('[id="child2-'+parentId+'"]').show();
                 checkedList["cb-child1-" + parentId] = true;
             } else {
@@ -180,7 +184,7 @@ $(document).ready(function()  {
             $('input[name="checkedList"]').val(array);
     });
 
-  
+
 
 });
 </script>

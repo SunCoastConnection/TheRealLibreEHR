@@ -11,6 +11,11 @@
 
 <div>
     <h5 style="padding:5px"><b><?php echo xlt("Practice Settings");?></b></h5>
+    <span style="float: right; margin-top:-35px">
+        <a href="interface/super/edit_settings.php" class="btn btn-primary" style="color: white">
+            <?php echo xlt("GO BACK") ?>
+        </a>
+    </span>
 </div>
 
 <div class="col-md-12 col-xs-12 col-lg-12">
@@ -34,19 +39,19 @@
             <li class="col-md-2 col-xs-4">
                 <a href="<?php echo $this->top_action;?>hl7&action=default"><?php echo "<h5>".xlt("HL7 Viewer")."</h5>";?></a>
             </li>
-        </ul>        
+        </ul>
     </div>
-    
+
     <div>
-        <h5><b><?php echo $this->action_name;?></b></h5>        
+        <h5><b><?php echo $this->action_name;?></b></h5>
     </div>
-    
+
     <div class="tab-content">
         <div class="tab-pane active">
             <?php echo $this->display_action;?>
         </div>
-    </div>    
-    
+    </div>
+
 </div>
 </body>
 </html>

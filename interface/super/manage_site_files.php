@@ -60,7 +60,7 @@ if (!empty($_POST['bn_save'])) {
   }
 
   $number_of_files = count($_FILES['form_image']['name']);
-  for ($i=0; $i <$number_of_files ; $i++) { 
+  for ($i=0; $i <$number_of_files ; $i++) {
   // Handle image uploads.
     if (is_uploaded_file($_FILES['form_image']['tmp_name'][$i]) && $_FILES['form_image']['size'][$i]) {
       $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -93,7 +93,7 @@ if (!empty($_POST['bn_save'])) {
 }
 
   $number_of_files = count($_FILES['form_education']['name']);
-  for ($i=0; $i <$number_of_files ; $i++) { 
+  for ($i=0; $i <$number_of_files ; $i++) {
     // Handle PDF uploads for patient education.
     if (is_uploaded_file($_FILES['form_education']['tmp_name'][$i]) && $_FILES['form_education']['size'][$i]) {
       $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -113,7 +113,7 @@ if (!empty($_POST['bn_save'])) {
         $tmp_name = $_FILES['form_education']['tmp_name'][$i];
         if (!move_uploaded_file($tmp_name, $educationpath)) {
           die(text(xl('Unable to create') . " '$educationpath'"));
-        } 
+        }
     }
   }
 
@@ -142,6 +142,11 @@ function msfFileChanged() {
 </head>
 
 <body class="body_top">
+  <span style="float: right">
+    <a href="edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 <form method='post' action='manage_site_files.php' enctype='multipart/form-data'
  onsubmit='return top.restoreSession()'>
 

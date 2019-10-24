@@ -283,6 +283,11 @@ function show_session_details()
 </script>
 </head>
 <body class="body_top formtable">&nbsp;&nbsp;
+  <span style="float: right">
+    <a href="../super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 <form action="./username_report.php" method="post">
 <label><input value="<?php echo htmlspecialchars(xl('Show Session Times')) ?> " type="submit" id="show_session_times_selector" name="show_session_times" ><?php ?></label>
 

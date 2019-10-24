@@ -53,7 +53,7 @@ function eventTypeChange(eventname)
           }
          else {
             document.theform.type_event.disabled = false;
-         }              
+         }
 }
 
 // VicarePlus :: This invokes the find-patient popup.
@@ -72,8 +72,13 @@ function eventTypeChange(eventname)
 </head>
 <body class="body_top">
 <font class="title"><?php  xl('Logs Viewer','e'); ?></font>
+  <span style="float: right">
+    <a href="../super/edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 <br>
-<?php 
+<?php
 $err_message=0;
 if ($_GET["start_date"])
 $start_date = formData('start_date','G');
@@ -91,8 +96,8 @@ if ($start_date && $end_date)
 {
     if($start_date > $end_date){
         echo "<table><tr class='alert'><td colspan=7>"; xl('Start Date should not be greater than End Date',e);
-        echo "</td></tr></table>"; 
-        $err_message=1; 
+        echo "</td></tr></table>";
+        $err_message=1;
     }
 }
 
@@ -173,7 +178,7 @@ echo "</select>\n";
 <span class='text'><?php  xl('Name of Events','e'); ?>: </span>
 </td>
 <td>
-<?php 
+<?php
 $res = sqlStatement("select distinct event from log order by event ASC");
 $ename_list=array(); $j=0;
 while ($erow = sqlFetchArray($res)) {
@@ -214,14 +219,14 @@ echo " <option value='" .$ename_list[$k]. "'";
   echo ">" . $ename_list[$k];
   echo "</option>\n";
 }
-echo "</select>\n"; 
+echo "</select>\n";
 ?>
 </td>
 <!-- type of events ends  -->
 <td>
 &nbsp;&nbsp;<span class='text'><?php  xl('Type of Events','e'); ?>: </span>
 </td><td>
-<?php 
+<?php
 $event_types=array("select", "update", "insert", "delete", "replace");
 $lcount=count($event_types);
 if($eventname=="disclosure"){
@@ -289,17 +294,17 @@ if($eventname != "" && $type_event != "")
 {
     $getevent=$eventname."-".$type_event;
 }
-      
+
     if(($eventname == "") && ($type_event != ""))
-    {   $tevent=$type_event;    
+    {   $tevent=$type_event;
     }
     else if($type_event =="" && $eventname != "")
     {$gev=$eventname;}
     else if ($eventname == "")
     {$gev = "";}
- else 
+ else
     {$gev = $getevent;}
-    
+
 if ($ret = getEvents(array('sdate' => $get_sdate,'edate' => $get_edate, 'user' => $form_user, 'patient' => $form_pid, 'sortby' => $_GET['sortby'], 'levent' =>$gev, 'tevent' =>$tevent))) {
 
 
@@ -307,21 +312,21 @@ if ($ret = getEvents(array('sdate' => $get_sdate,'edate' => $get_edate, 'user' =
     //translate comments
     $patterns = array ('/^success/','/^failure/','/ encounter/');
     $replace = array ( xl('success'), xl('failure'), xl('encounter','',' '));
-    
+
     $log_id = $iter['id'];
     $commentEncrStatus = "No";
     $logEncryptData = logCommentEncryptData($log_id);
     if(count($logEncryptData) > 0){
         $commentEncrStatus = $logEncryptData['encrypt'];
     }
-    
+
     //July 1, 2014: Ensoftek: Decrypt comment data if encrypted
     if($commentEncrStatus == "Yes"){
         $trans_comments = preg_replace($patterns, $replace, aes256Decrypt($iter["comments"]));
     }else{
         $trans_comments = preg_replace($patterns, $replace, $iter["comments"]);
     }
-    
+
 ?>
  <TR class="oneresult">
   <TD class="text"><?php echo oeFormatShortDate(substr($iter["date"], 0, 10)) . substr($iter["date"], 10) ?></TD>
@@ -338,7 +343,7 @@ if ($ret = getEvents(array('sdate' => $get_sdate,'edate' => $get_edate, 'user' =
  </TR>
 
 <?php
-      
+
     }
   }
 if (($eventname=="disclosure") || ($gev == ""))

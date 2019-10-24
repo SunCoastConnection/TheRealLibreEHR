@@ -16,6 +16,11 @@
 </head>
 
 <body class='body_top'>
+  <span style="float: right">
+    <a href="../edit_settings.php" class="btn btn-primary" style="color: white; background-color: blue">
+      <?php echo xlt("GO BACK") ?>
+    </a>
+  </span>
 <?php
 if ( file_exists($viewBean->_view_body) ) {
     require_once($viewBean->_view_body);

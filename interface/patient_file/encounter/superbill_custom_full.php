@@ -236,7 +236,7 @@ if ($fend > $count) $fend = $count;
 <head>
     <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
 <title><?php echo xlt("Codes"); ?></title>
-<?php 
+<?php
       html_header_show();
   call_required_libraries(array("jquery-min-3-1-1","bootstrap"));
 ?>
@@ -370,6 +370,11 @@ foreach ($code_types as $key => $value) {
 </head>
 <body class="body_top" >
 
+<span style="float: right">
+  <a href="../../super/edit_settings.php" class="btn btn-primary" style="color: white">
+    <?php echo xlt("GO BACK") ?>
+  </a>
+</span>
 
 <form method='post' action='superbill_custom_full.php' name='theform'>
 
@@ -413,7 +418,7 @@ foreach ($code_types as $key => $value) {
    <?php } ?>
    </td>
    <td>
-   <?php echo xlt('Code'); ?>:      
+   <?php echo xlt('Code'); ?>:
    <?php if ($mode == "modify") { ?>
      <input type='text' name='code' class="form-control input-sm" readonly='readonly' value='<?php echo attr($code) ?>' />
    <?php } else { ?>
@@ -471,7 +476,7 @@ generate_form_field(array('data_type'=>1,'field_id'=>'superbill','list_id'=>'sup
    </td>
    <td>
    <input type='checkbox' title='<?php echo xlt("Syndromic Surveillance Report") ?>' name='reportable' value='1'<?php if (!empty($reportable)) echo ' checked'; ?> />
-   <?php echo xlt('Diagnosis Reporting'); ?>   
+   <?php echo xlt('Diagnosis Reporting'); ?>
    </td>
    <td>
    <input type='checkbox' title='<?php echo xlt("Service Code Finance Reporting") ?>' name='financial_reporting' value='1'<?php if (!empty($financial_reporting)) echo ' checked'; ?> />
@@ -569,7 +574,7 @@ foreach ($code_types as $key => $value) {
 }
 ?>
    </select>
-  
+
 
   <input type="text" class="form-control input-sm" name="search" size="5" value="<?php echo attr($search) ?>"><br>
    <input type="submit" class="btn btn-primary cp-submit" name="go" value='<?php echo xla('Search'); ?>'>&nbsp;&nbsp;
@@ -671,7 +676,7 @@ if (!empty($all)) {
       $arel = explode(';', $iter['related_code']);
       foreach ($arel as $tmp) {
         list($reltype, $relcode) = explode(':', $tmp);
-        $code_description = lookup_code_descriptions($reltype.":".$relcode);        
+        $code_description = lookup_code_descriptions($reltype.":".$relcode);
         echo text($relcode) . ' ' . text(trim($code_description)) . '<br />';
       }
       echo "</td>\n";
