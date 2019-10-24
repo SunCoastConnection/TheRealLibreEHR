@@ -19,7 +19,7 @@
  * @package LibreEHR
  * @author  Rohit Kumar <pandit.rohit@netsity.com>
  * @author  (Mac) Kevin McAloon <mcaloon@patienthealthcareanalytics.com>
- 
+
  * @link    http://LibreEHR.org
  */
 
@@ -55,13 +55,18 @@ function temp_unarchive($filename,$type) {
     }
     else {
 
-	// let's uzip the file
-	// use checksums to determine the "version" 
-	//
+    // let's uzip the file
+    // use checksums to determine the "version"
+    //
         $zip = new ZipArchive;
-        if ($zip->open($filename) === TRUE) {
-            if (!($zip->extractTo($GLOBALS['temporary_files_dir']."/".$type))) {
+        if ($zip->open($filename, ZipArchive::CREATE) === true) {
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $full_file_name = $zip->getNameIndex($i);
+                $fileinfo = pathinfo($full_file_name);
+                if (!copy("zip://".$filename."#".$full_file_name, $GLOBALS['temporary_files_dir']."/".
+                    $type."/".$fileinfo['basename'])) {
                 return false;
+                };
             }
             $zip->close();
             return true;
@@ -134,9 +139,9 @@ function rxnorm_import($is_windows_flag) {
             $pattern='/'.$file_name.'/';
             if(strpos($val,$file_name) !== false) {
                 $val1 = str_replace($file_name,$replacement,$val);
-        	if(trim($val1)!='') {
-            	    sqlStatement($val1);
-        	}
+            if(trim($val1)!='') {
+                    sqlStatement($val1);
+            }
             }
         }
     }
@@ -214,7 +219,7 @@ function snomed_import($us_extension=FALSE) {
                             $file_replace=$path.$filename1;
                             if(strpos($filename1,"Concepts") !== false){
                                 $new_str=str_replace($array_replace,array($file_replace,"sct_concepts"),$load_script);
-                            }	
+                            }
                             if(strpos($filename1,"Descriptions") !== false){
                                 $new_str=str_replace($array_replace,array($file_replace,"sct_descriptions"),$load_script);
                             }
@@ -250,113 +255,113 @@ function icd_import($type) {
     // flat files. There are separate definitions for ICD 9 and 10 based on the type passed in
     $incoming = array();
     if ($type == 'ICD10') {
-        $incoming['icd10pcs_order_'] = array('#TABLENAME#' => "icd10_pcs_order_code", 
-		'#FLD1#' => "pcs_code", '#POS1#' => 7, '#LEN1#' => 7,
-		'#FLD2#' => "valid_for_coding", '#POS2#' => 15, '#LEN2#' => 1,
-		'#FLD3#' => "short_desc", '#POS3#' => 17, '#LEN3#' => 60,
-		'#FLD4#' => "long_desc", '#POS4#' => 78, '#LEN4#' => 300);
+        $incoming['icd10pcs_order_'] = array('#TABLENAME#' => "icd10_pcs_order_code",
+        '#FLD1#' => "pcs_code", '#POS1#' => 7, '#LEN1#' => 7,
+        '#FLD2#' => "valid_for_coding", '#POS2#' => 15, '#LEN2#' => 1,
+        '#FLD3#' => "short_desc", '#POS3#' => 17, '#LEN3#' => 60,
+        '#FLD4#' => "long_desc", '#POS4#' => 78, '#LEN4#' => 300);
         $incoming['icd10cm_order_'] = array('#TABLENAME#' => "icd10_dx_order_code",
-		'#FLD1#' => "dx_code", '#POS1#' =>7, '#LEN1#' => 7,
-		'#FLD2#' => "valid_for_coding", '#POS2#' => 15, '#LEN2#' => 1,
-		'#FLD3#' => "short_desc", '#POS3#' => 17, '#LEN3#' => 60,
-		'#FLD4#' => "long_desc", '#POS4#' => 78, '#LEN4#' => 300);
+        '#FLD1#' => "dx_code", '#POS1#' =>7, '#LEN1#' => 7,
+        '#FLD2#' => "valid_for_coding", '#POS2#' => 15, '#LEN2#' => 1,
+        '#FLD3#' => "short_desc", '#POS3#' => 17, '#LEN3#' => 60,
+        '#FLD4#' => "long_desc", '#POS4#' => 78, '#LEN4#' => 300);
         $incoming['reimb_map_pr_'] = array('#TABLENAME#' => "icd10_reimbr_pcs_9_10",
-		'#FLD1#' => "code", '#POS1#' => 1, '#LEN1#' => 7, 
-		'#FLD2#' => "code_cnt", '#POS2#' => 9, '#LEN2#' => 1,
-		'#FLD3#' => "ICD9_01", '#POS3#' => 11, '#LEN3#' => 5,
-		'#FLD4#' => "ICD9_02", '#POS4#' => 17, '#LEN4#' => 5,
-		'#FLD5#' => "ICD9_03", '#POS5#' => 23, '#LEN5#' => 5,
-		'#FLD6#' => "ICD9_04", '#POS6#' => 29, '#LEN6#' => 5,
-		'#FLD7#' => "ICD9_05", '#POS7#' => 35, '#LEN7#' => 5,
-		'#FLD8#' => "ICD9_06", '#POS8#' => 41, '#LEN8#' => 5);
+        '#FLD1#' => "code", '#POS1#' => 1, '#LEN1#' => 7,
+        '#FLD2#' => "code_cnt", '#POS2#' => 9, '#LEN2#' => 1,
+        '#FLD3#' => "ICD9_01", '#POS3#' => 11, '#LEN3#' => 5,
+        '#FLD4#' => "ICD9_02", '#POS4#' => 17, '#LEN4#' => 5,
+        '#FLD5#' => "ICD9_03", '#POS5#' => 23, '#LEN5#' => 5,
+        '#FLD6#' => "ICD9_04", '#POS6#' => 29, '#LEN6#' => 5,
+        '#FLD7#' => "ICD9_05", '#POS7#' => 35, '#LEN7#' => 5,
+        '#FLD8#' => "ICD9_06", '#POS8#' => 41, '#LEN8#' => 5);
         $incoming['reimb_map_dx_'] = array('#TABLENAME#' => "icd10_reimbr_dx_9_10",
-		'#FLD1#' => "code", '#POS1#' => 1, '#LEN1#' => 7, 
-		'#FLD2#' => "code_cnt", '#POS2#' => 9, '#LEN2#' => 1,
-		'#FLD3#' => "ICD9_01", '#POS3#' => 11, '#LEN3#' => 5,
-		'#FLD4#' => "ICD9_02", '#POS4#' => 17, '#LEN4#' => 5,
-		'#FLD5#' => "ICD9_03", '#POS5#' => 23, '#LEN5#' => 5,
-		'#FLD6#' => "ICD9_04", '#POS6#' => 29, '#LEN6#' => 5,
-		'#FLD7#' => "ICD9_05", '#POS7#' => 35, '#LEN7#' => 5,
-		'#FLD8#' => "ICD9_06", '#POS8#' => 41, '#LEN8#' => 5);
+        '#FLD1#' => "code", '#POS1#' => 1, '#LEN1#' => 7,
+        '#FLD2#' => "code_cnt", '#POS2#' => 9, '#LEN2#' => 1,
+        '#FLD3#' => "ICD9_01", '#POS3#' => 11, '#LEN3#' => 5,
+        '#FLD4#' => "ICD9_02", '#POS4#' => 17, '#LEN4#' => 5,
+        '#FLD5#' => "ICD9_03", '#POS5#' => 23, '#LEN5#' => 5,
+        '#FLD6#' => "ICD9_04", '#POS6#' => 29, '#LEN6#' => 5,
+        '#FLD7#' => "ICD9_05", '#POS7#' => 35, '#LEN7#' => 5,
+        '#FLD8#' => "ICD9_06", '#POS8#' => 41, '#LEN8#' => 5);
         $incoming['I10gem'] = array('#TABLENAME#' => "icd10_gem_dx_10_9",
-		'#FLD1#' => "dx_icd10_source", '#POS1#' => 1, '#LEN1#' => 7, 
-		'#FLD2#' => "dx_icd9_target", '#POS2#' => 9, '#LEN2#' => 5,
-		'#FLD3#' => "flags", '#POS3#' => 15, '#LEN3#' => 5);
+        '#FLD1#' => "dx_icd10_source", '#POS1#' => 1, '#LEN1#' => 7,
+        '#FLD2#' => "dx_icd9_target", '#POS2#' => 9, '#LEN2#' => 5,
+        '#FLD3#' => "flags", '#POS3#' => 15, '#LEN3#' => 5);
         $incoming['I9gem'] = array('#TABLENAME#' => "icd10_gem_dx_9_10",
-		'#FLD1#' => "dx_icd9_source", '#POS1#' => 1, '#LEN1#' => 5, 
-		'#FLD2#' => "dx_icd10_target", '#POS2#' => 7, '#LEN2#' => 7,
-		'#FLD3#' => "flags", '#POS3#' => 15, '#LEN3#' => 5);
+        '#FLD1#' => "dx_icd9_source", '#POS1#' => 1, '#LEN1#' => 5,
+        '#FLD2#' => "dx_icd10_target", '#POS2#' => 7, '#LEN2#' => 7,
+        '#FLD3#' => "flags", '#POS3#' => 15, '#LEN3#' => 5);
         $incoming['gem_pcsi9'] = array('#TABLENAME#' => "icd10_gem_pcs_10_9",
-		'#FLD1#' => "pcs_icd10_source", '#POS1#' => 1, '#LEN1#' => 7, 
-		'#FLD2#' => "pcs_icd9_target", '#POS2#' => 9, '#LEN2#' => 5,
-		'#FLD3#' => "flags", '#POS3#' => 15, '#LEN3#' => 5);
+        '#FLD1#' => "pcs_icd10_source", '#POS1#' => 1, '#LEN1#' => 7,
+        '#FLD2#' => "pcs_icd9_target", '#POS2#' => 9, '#LEN2#' => 5,
+        '#FLD3#' => "flags", '#POS3#' => 15, '#LEN3#' => 5);
         $incoming['gem_i9pcs'] = array('#TABLENAME#' => "icd10_gem_pcs_9_10",
-		'#FLD1#' => "pcs_icd9_source", '#POS1#' => 1, '#LEN1#' => 5, 
-		'#FLD2#' => "pcs_icd10_target", '#POS2#' => 7, '#LEN2#' => 7,
-		'#FLD3#' => "flags", '#POS3#' => 15, '#LEN3#' => 5);
+        '#FLD1#' => "pcs_icd9_source", '#POS1#' => 1, '#LEN1#' => 5,
+        '#FLD2#' => "pcs_icd10_target", '#POS2#' => 7, '#LEN2#' => 7,
+        '#FLD3#' => "flags", '#POS3#' => 15, '#LEN3#' => 5);
     }
 
-    // set up the start of the load script to be appended from the incoming array defined above where incoming 
-    // file matches 
+    // set up the start of the load script to be appended from the incoming array defined above where incoming
+    // file matches
     $db_load = "LOAD DATA LOCAL INFILE '#INFILE#' INTO TABLE #TABLENAME# FIELDS TERMINATED BY '\0' (@var) SET revision = 0, ";
     $col_template = "#FLD# = trim(Substring(@var, #POS#, #LEN#))";
 
     // load all data and set active revision
     if( is_dir($dir) && $handle = opendir($dir)) {
         while (false !== ($filename = readdir($handle))) {
-	    // bypass unwanted entries
-	    if (!stripos($filename, ".txt") || stripos($filename,"diff") || stripos($filename, "addenda")) {
-		continue;
-	    }
+        // bypass unwanted entries
+        if (!stripos($filename, ".txt") || stripos($filename,"diff") || stripos($filename, "addenda")) {
+        continue;
+        }
 
-	    // reset the sql load command and susbtitute the filename
-	    $run_sql = $db_load;
-	    $run_sql = str_replace("#INFILE#", $dir . $filename, $run_sql);
-	    $keys = array_keys($incoming);
-    	    while ($this_key = array_pop($keys)) {
-		if (stripos($filename, $this_key) !== false) {
+        // reset the sql load command and susbtitute the filename
+        $run_sql = $db_load;
+        $run_sql = str_replace("#INFILE#", $dir . $filename, $run_sql);
+        $keys = array_keys($incoming);
+            while ($this_key = array_pop($keys)) {
+        if (stripos($filename, $this_key) !== false) {
 
-		    // now substitute the tablename 
-	    	    $run_sql = str_replace("#TABLENAME#", $incoming[$this_key]['#TABLENAME#'], $run_sql);
-	
-		    // the range defines the maximum number of fields contained 
-		    // in any of the incoming files 
-    		    foreach(range(1, 8) as $field) {
-			$fld = "#FLD" . $field . "#";
-			$nxtfld = "#FLD" . ($field+1) . "#";
-			$pos = "#POS" . $field . "#";
-			$len = "#LEN" . $field . "#";
+            // now substitute the tablename
+                $run_sql = str_replace("#TABLENAME#", $incoming[$this_key]['#TABLENAME#'], $run_sql);
 
-			// concat this fields template in the sql string
-			$run_sql .= $col_template;
-		        $run_sql = str_replace("#FLD#", $incoming[$this_key][$fld], $run_sql);
-		        $run_sql = str_replace("#POS#", $incoming[$this_key][$pos], $run_sql);
-		        $run_sql = str_replace("#LEN#", $incoming[$this_key][$len], $run_sql);
-			// at the end of this table's field list
-			if (!array_key_exists($nxtfld, $incoming[$this_key])) {
-			    break;
-			}
-			$run_sql .= ",";
-    		    }
-            	    sqlStatement($run_sql);
+            // the range defines the maximum number of fields contained
+            // in any of the incoming files
+                foreach(range(1, 8) as $field) {
+            $fld = "#FLD" . $field . "#";
+            $nxtfld = "#FLD" . ($field+1) . "#";
+            $pos = "#POS" . $field . "#";
+            $len = "#LEN" . $field . "#";
 
-		    // now update the revision for this load
+            // concat this fields template in the sql string
+            $run_sql .= $col_template;
+                $run_sql = str_replace("#FLD#", $incoming[$this_key][$fld], $run_sql);
+                $run_sql = str_replace("#POS#", $incoming[$this_key][$pos], $run_sql);
+                $run_sql = str_replace("#LEN#", $incoming[$this_key][$len], $run_sql);
+            // at the end of this table's field list
+            if (!array_key_exists($nxtfld, $incoming[$this_key])) {
+                break;
+            }
+            $run_sql .= ",";
+                }
+                    sqlStatement($run_sql);
+
+            // now update the revision for this load
                     $res = sqlStatement("SELECT max(revision) rev FROM " . $incoming[$this_key]['#TABLENAME#']);
                     $row = sqlFetchArray($res);
                     $next_rev = $row['rev'] + 1;
-		    $run_sql = "UPDATE " . $incoming[$this_key]['#TABLENAME#'] . " SET active = 0"; 
+            $run_sql = "UPDATE " . $incoming[$this_key]['#TABLENAME#'] . " SET active = 0";
                     sqlQuery($run_sql);
-		    $run_sql = "UPDATE " . $incoming[$this_key]['#TABLENAME#'] . " SET active = 1, revision = ? WHERE revision = 0";
+            $run_sql = "UPDATE " . $incoming[$this_key]['#TABLENAME#'] . " SET active = 1, revision = ? WHERE revision = 0";
                     sqlQuery($run_sql, array($next_rev) );
-		    break;
-		}
-	    }
+            break;
+        }
+        }
         }
         closedir($handle);
     }
     else {
         echo htmlspecialchars( xl('ERROR: No ICD import directory.'), ENT_NOQUOTES)."<br>";
-	return;
+    return;
     }
 
     // now update the tables where necessary
@@ -387,7 +392,7 @@ function update_tracker_table($type,$revision,$version,$file_checksum) {
         sqlStatement("INSERT INTO `standardized_tables_track` (`imported_date`,`name`,`revision_date`, `revision_version`, `file_checksum`) VALUES (NOW(),'SNOMED',?,?,?)", array($revision, $version, $file_checksum) );
         return true;
     }
-    else { // $type == 'ICD10') 
+    else { // $type == 'ICD10')
         sqlStatement("INSERT INTO `standardized_tables_track` (`imported_date`,`name`,`revision_date`, `revision_version`, `file_checksum`) VALUES (NOW(),'ICD10',?,?,?)", array($revision, $version, $file_checksum) );
         return true;
     }
@@ -404,7 +409,7 @@ function rmdir_recursive($dir) {
         $file = $dir . '/' . $file;
         if (is_dir($file)) {
             rmdir_recursive($file);
-	    continue;
+        continue;
         }
         unlink($file);
     }
