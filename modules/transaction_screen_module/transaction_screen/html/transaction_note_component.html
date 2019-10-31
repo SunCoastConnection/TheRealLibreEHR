@@ -1,0 +1,44 @@
+<script type="text/x-template" id="transaction_note_component">
+	
+
+		  <div class="modal" ref="transaction_note_modal">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		      
+
+		        <div class="modal-header">
+		          <h4 class="modal-title">Transaction Notes</h4>
+		         
+
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        
+
+		        <div class="modal-body">
+		         		<textarea rows="5" cols="70"  :disabled="disable_transaction_note"
+		         		:autofocus="disable_transaction_note"
+		         		v-model="transaction_note"
+		         		class="form-control" ref="transaction_note_textarea"
+		         		onfocus="this.value = this.value;">
+		         		</textarea>
+		        </div>
+		        
+
+		        <div class="modal-footer">
+
+		          <button type="button" class="btn btn-primary" @click="editTransactionNote()">Edit</button>
+
+		          <button type="button" class="btn btn-success" @click="saveTransactionNote()">Save</button>
+
+
+		          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+		        </div>
+		        
+		      </div>
+		    </div>
+		  </div>	
+
+
+
+</script>
