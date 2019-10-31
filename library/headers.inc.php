@@ -102,6 +102,17 @@ function call_required_libraries($library_array){
         <?php
     }
 
+    if (in_array("nform-helper", $library_array)) { ?>
+        <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>nform-helper/index.js"></script>
+        <?php
+    }
+
+    if (in_array("vuejs", $library_array)) {   ?>
+      <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>vuejs/vue.js"></script>
+      <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>vuejs/vue-resource.js"></script>
+    <?php
+    }
+
     if (in_array("datepicker",$library_array)){   ?>
         <link rel="stylesheet" href="<?php echo $GLOBALS['css_path']; ?>jquery-datetimepicker/jquery.datetimepicker.css" media="screen" />
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
@@ -142,13 +153,13 @@ function call_required_libraries($library_array){
     <?php
     }
 
-	if(in_array("iziModalToast", $library_array)) { ?>
+    if(in_array("iziModalToast", $library_array)) { ?>
         <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['css_path']; ?>iziModalToast/iziModal.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['css_path']; ?>iziModalToast/iziToast.min.css">
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>iziModalToast/iziModal.min.js"></script>
         <script type="text/javascript" src="<?php echo $GLOBALS['standard_js_path']; ?>iziModalToast/iziToast.min.js"></script>
-		<?php
-	}
+        <?php
+    }
 
     if(in_array("datatables", $library_array)) { ?>
 

@@ -578,7 +578,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
         $where .= " AND ".$patient_filter;
     }
 }
-///////////////////////////        
+///////////////////////////
 
     $sql="SELECT $given FROM patient_data WHERE $where ORDER BY $orderby";
     if ($limit != "all") $sql .= " LIMIT $start, $limit";
@@ -632,6 +632,133 @@ function getPatientNameSplit($term) {
         $n[$key] = trim($val);
     }
     return $n; // associative array containing names
+}
+
+/**
+ * Allow the last name to be followed by a comma and some part of a first name(can
+ *   also place middle name after the first name with a space separating them)
+ * Allows comma alone followed by some part of a first name(can also place middle name
+ *   after the first name with a space separating them).
+ * Allows comma alone preceded by some part of a last name.
+ * If no comma or space, then will search both last name and first name.
+ * If the first letter of either name is capital, searches for name starting
+ *   with given substring (the expected behavior). If it is lower case, it
+ *   searches for the substring anywhere in the name. This applies to either
+ *   last name, first name, and middle name.
+ * Also allows first name followed by middle and/or last name when separated by spaces.
+ * @param string $term
+ * @param string $given
+ * @param string $orderby
+ * @param string $limit
+ * @param string $start
+ * @return array
+ */
+function getPatientLnamesTran($term = '%', $given = "pid, id, lname, fname, mname, providerID, DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS", $orderby = 'lname ASC, fname ASC', $limit = 'all', $start = '0')
+{
+    $names = getPatientNameSplit($term);
+
+    foreach ($names as $key => $val) {
+      if (!empty($val)) {
+        if ((strlen($val) > 1) && ($names[$key][0] != strtoupper($names[$key][0]))) {
+            $names[$key] = '%' . $val . '%';
+        } else {
+            $names[$key] = $val . '%';
+        }
+      }
+    }
+
+    // Debugging section below
+    //if(array_key_exists('first',$names)) {
+    //    error_log("first name search term :".$names['first']);
+    //}
+    //if(array_key_exists('middle',$names)) {
+    //    error_log("middle name search term :".$names['middle']);
+    //}
+    //if(array_key_exists('last',$names)) {
+    //    error_log("last name search term :".$names['last']);
+    //}
+    // Debugging section above
+
+    $where        = ' ( ';
+    $sqlBindArray = [];
+    if(array_key_exists('last',$names) && $names['last'] == '') {
+        // Do not search last name
+        $where .= 'fname LIKE ? ';
+        array_push($sqlBindArray, $names['first']);
+        if ($names['middle'] != '') {
+            $where .= 'AND mname LIKE ? ';
+            array_push($sqlBindArray, $names['middle']);
+        }
+    } elseif(array_key_exists('first',$names) && $names['first'] == '') {
+        // Do not search first name or middle name
+        $where .= 'lname LIKE ? ';
+        array_push($sqlBindArray, $names['last']);
+    } elseif($names['first'] == '' && $names['last'] != '') {
+        // Search both first name and last name with same term
+        $names['first'] = $names['last'];
+        $where .= 'lname LIKE ? OR fname LIKE ? ';
+        array_push($sqlBindArray, $names['last'], $names['first']);
+    } elseif ($names['middle'] != '') {
+        $where .= 'lname LIKE ? AND fname LIKE ? AND mname LIKE ? ';
+        array_push($sqlBindArray, $names['last'], $names['first'], $names['middle']);
+    } else {
+        $where .= 'lname LIKE ? AND fname LIKE ? ';
+        array_push($sqlBindArray, $names['last'], $names['first']);
+    }
+
+    $where .= ' ) ';
+
+
+
+        if (!empty($GLOBALS['pt_restrict_field'])) {
+        if ($_SESSION{'authUser'} != 'admin' || $GLOBALS['pt_restrict_admin']) {
+            $where .= ' AND ( patient_data.' . add_escape_custom($GLOBALS['pt_restrict_field']) .
+                            ' = ( SELECT facility_id FROM users WHERE username = ?) OR patient_data.' .
+                            add_escape_custom($GLOBALS['pt_restrict_field']) . " = '' ) ";
+            array_push($sqlBindArray, $_SESSION{'authUser'});
+                }
+        }
+
+//    $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
+//    if ( $patient_filter ) {
+//        $where .= " AND ".$patient_filter;
+//    }
+
+    $sql="SELECT
+            pid,
+            fname,
+            lname,
+            mname,
+            DOB
+            FROM patient_data
+            WHERE $where";
+
+    $sql_case_info = "SELECT
+                        pid,
+                        concat(case_body_part ,' (', case_number,')' ) as case_description,
+                        facility,
+                        encounter
+                        FROM form_encounter
+                        WHERE pid = ? GROUP BY pid, case_description";
+
+
+    if ($limit != 'all') {
+        $sql .= " LIMIT $start, $limit";
+    }
+
+    $rez = sqlStatement($sql, $sqlBindArray);
+
+    $returnval = [];
+
+    for($iter=0; $row=sqlFetchArray($rez); $iter++) {
+        $returnval[$iter] = $row;
+        $case_resp = sqlStatement($sql_case_info, $row['pid']);
+        for($casei=0; $caserow=sqlFetchArray($case_resp); $casei++) {
+            $returnval[$iter]['case'][$casei] = $caserow;
+        }
+    }
+    _set_patient_inc_count($limit, count($returnval), $where, $sqlBindArray);
+    return $returnval;
 }
 
 function getPatientId($pid = "%", $given = "pid, id, lname, fname, mname, providerID, DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS", $orderby = "lname ASC, fname ASC", $limit="all", $start="0")
