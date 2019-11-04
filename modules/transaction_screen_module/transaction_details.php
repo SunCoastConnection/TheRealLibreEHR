@@ -85,7 +85,7 @@ function getAllUnbilledEncounters($pid, $unbilled, $unbilled_encounters)
 function getAllArActivityRows($pid)
 {
     $ar_activity_rows = ORM::for_table('ar_activity')
-        ->join('ar_session', 
+        ->join('ar_session',
             array('ar_activity.session_id', '=', 'ar_session.session_id'))
         ->where('ar_activity.inactive', '0')
         ->where('ar_activity.pid', $pid)
@@ -168,7 +168,7 @@ function updateAccountCodeWhenEmpty($ar_activity_row) {
         // only update if the account code is empty
         updateArActivityRow(
                 $ar_activity_row['sequence_no'],
-                $billing_row['id'], 
+                $billing_row['id'],
                 $account_code);
     }
 }
@@ -180,7 +180,7 @@ function validateBillingId($ar_activity_row, $billing_row) {
     // check if billing id is empty or zero (the default value is empty)
     $isValid = true;
     $account_code = $ar_activity_row['account_code'];
-    if ($ar_activity_row['billing_id'] == "" || 
+    if ($ar_activity_row['billing_id'] == "" ||
         intval($ar_activity_row['billing_id']) == 0) {
         if ($account_code == "PP" || $account_code == "PCP") {
             // if patient payment row then compare only for pid and encounter
@@ -197,13 +197,13 @@ function validateBillingId($ar_activity_row, $billing_row) {
         if ($isValid) {
             updateAccountCodeWhenEmpty($ar_activity_row);
         }
-        
+
     }
     else {
         $isValid = ($ar_activity_row['billing_id'] == $billing_row['id']);
         updateAccountCodeWhenEmpty($ar_activity_row);
     }
-    
+
     return $isValid;
 
 }
@@ -246,6 +246,13 @@ if (isset($_REQUEST['pid'])) {
     $endresult = '';
     $pat_payment_details = '';
     $encs = [];
+
+    // filter by encounter here
+    if (isset($_REQUEST['filter_encounter']) && $_REQUEST['filter_encounter'] != "") {
+        $encounters = [$_REQUEST['filter_encounter']];
+    }
+
+
     foreach ($encounters as $value) {
         array_push($encs, sqlStatement("SELECT * FROM form_encounter WHERE pid = ? AND encounter = ?", array($pid, $value)));
     }
@@ -269,7 +276,7 @@ if (isset($_REQUEST['pid'])) {
             $endresult = getTableHeaderRow($endresult, $enc_row, $joined_case_description, $n, $therapist_name);
             $paymentTemplateLoader = new TemplateLoader(NULL);
 
-            $sequence_numbers = array();  
+            $sequence_numbers = array();
             // keep the sequence numbers so that we can use them to indentify distinct pat-payment entries
             foreach ($bills as $bill) {
                 if ($enc_row['encounter'] == $bill['encounter']) {
@@ -297,10 +304,10 @@ if (isset($_REQUEST['pid'])) {
                             // item
                             $current_sequence_number = $inrownew['sequence_no'];
                             if (validateBillingId($inrownew, $bill) && !in_array($current_sequence_number, $sequence_numbers)) {
-                                
+
                                 list($inrownew['account_code'],$is_account_code_empty) = findAccountCodeIfEmpty($inrownew);
                                 $adjustment_reason = $inrownew['memo'];
-                                
+
                                 # adjustment reason part
                                 if ($non_null_adjustment_reason == "" && $adjustment_reason != "")
                                 {
@@ -313,11 +320,11 @@ if (isset($_REQUEST['pid'])) {
                                     // Patient payment
                                     case 'PP':
                                         // push the patient payment sequence numbers
-                                        // in to a container since patient payment rows 
+                                        // in to a container since patient payment rows
                                         // cant be compared with column 'code' in billing table
                                         // since pid, encounter are multiple not doing this
                                         // will lead to duplication of column
-                                        
+
                                         if ($inrownew['inactive'] == 0) {
                                             // if patient payment is active then show it.
                                             if ($inrownew['unapplied'] == 1) {
@@ -325,7 +332,7 @@ if (isset($_REQUEST['pid'])) {
                                             }
                                             else {
                                                 $pat_pay_amt_applied += $inrownew['pay_amount'];
-                                            }                                                        
+                                            }
                                             $pat_pay_amt +=  $inrownew['pay_amount'];
                                             $ins_pay_amt += 0.00;
                                             $adj_amt += 0.00;
@@ -339,7 +346,7 @@ if (isset($_REQUEST['pid'])) {
                                             $paymentTemplateLoader->setTemplateDataManagerInstance($paymentRowDataManagerInstance);
                                             $pat_payment_details .= $paymentTemplateLoader->getOutput();
                                         }
-                                
+
                                         break;
                                         case 'IPP':
                                             // Insurance provider payment
@@ -349,15 +356,15 @@ if (isset($_REQUEST['pid'])) {
                                                   $s_RowBgColor = '#6c5bd64d';
                                                   $ins_item = "'primary'";
                                                   $primary_insurance_total += $inrownew['pay_amount'];
-                                            } 
+                                            }
                                             elseif ($inrownew['payer_type'] == 2 ) {
                                                  $secondary_insurance_total += $inrownew['pay_amount'];
                                                   $s_PaymentType = 'Secondary Insurance Payment';
                                                   $s_RowBgColor = '#ff95004d';
                                                   $ins_item = "'secondary'";
-                                            } 
+                                            }
                                             else{
-                                                $tertiary_insurance_total += $inrownew['pay_amount']; 
+                                                $tertiary_insurance_total += $inrownew['pay_amount'];
                                                   $s_PaymentType = 'Tertiary Insurance Payment';
                                                   $s_RowBgColor = '#ff95004d';
                                                   $ins_item = "'tertiary'";
@@ -449,7 +456,7 @@ if (isset($_REQUEST['pid'])) {
                 }
                 $bill_count++;
             }
-    
+
             $endresult = str_replace("{ADJUSTMENT_REASON}", $non_null_adjustment_reason, $endresult);
             $endresult .= $pat_payment_details; // keep payment details at the End
             $encounter_overview_data_json_string = json_encode($encounter_overview_data);

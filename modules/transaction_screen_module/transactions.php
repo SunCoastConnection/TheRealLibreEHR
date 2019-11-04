@@ -152,9 +152,7 @@
             <div class="col-sm-12" id="alert_col"></div>
             <div class="col-sm-12"><hr style="margin-right: 5px; min-width: 100%; margin-left: -15px">
                 <div class="row" id="first-row"><hr>
-                    <div class="col-sm-4">
-
-                          <div class="col-sm-12">
+                    <div class="col-sm-5">
 
                             <div id="search_component">
                                 <table class="table table-borderless">
@@ -171,23 +169,30 @@
                                              <?php echo xlt('Date of Birth'); ?>:
 
                                         </td>
+                                        <td>
+                                            &nbsp;
+                                        </td>
 
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="date" class="form-control" v-model="encounter_date" @keyup.enter="submitData">
+                                            <input type="date" class="form-control" v-model="encounter_date" @keyup.enter="submitData" />
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" placeholder="Patient Name" v-model="name" @keyup.enter="submitData">
+                                            <input type="text" class="form-control" placeholder="Patient Name" v-model="name" @keyup.enter="submitData" style="width: 200px;" />
 
                                         </td>
                                         <td>
-                                            <input type="date" name="dob" class="form-control" v-model="dob" @keyup.enter="submitData">
+                                            <input type="date" name="dob" class="form-control" v-model="dob" @keyup.enter="submitData" />
+
+                                        </td>
+                                        <td>
+                                            <button type="button" href="#" class="btn btn-primary btn-sm" @click="getPatientNames">Search </button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            
+
                                         </td>
                                     </tr>
                                 </table>
@@ -195,7 +200,7 @@
                                         <button style="display: none;" class="dropdown-toggle"
                                         data-toggle="dropdown"></button>
                                         <ul class="dropdown-menu">
-                            
+
                                                 <table class="table bg-light">
                                                     <tr>
                                                         <th>Name</th>
@@ -215,17 +220,16 @@
                                                         </tr>
                                                     </template>
                                                 </table>
-                                            
+
                                             </ul>
-                                </div>  
+                                </div>
                             </div>
 
 
 
 
                              </div>
-                    </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-5">
                         <div class="row">
                             <div class="col-sm-6" style="margin-top: 10px !important">
                                 <p id="in_collection" style="font-size:22px; font-weight:bold; color:red; word-wrap: break-word"></p>
@@ -238,14 +242,14 @@
                                         <label class= "Rectangle-Selected-Case" style="float: right"><b><?php echo xlt('Selected Encounter'); ?>: </b><br>
                                       <div id="select_case">
                                         <select class="form-control" v-model="selected_case_number" :disabled="drop_down_data.length == 0">
-                                            
+
                                             <template v-if="drop_down_data.length > 0">
 
-                                                <option value="">All Encounters</option>  
+                                                <option value="">All Encounters</option>
                                                 <template v-for="item in drop_down_data">
-                                                    <option :value="item">{{ item }}</option>
+                                                    <option :value="item.encounter">{{ item.encounter }}</option>
                                                 </template>
-                                            
+
                                             </template>
                                         </select>
                                       </div>
@@ -313,7 +317,7 @@
                             <div class="card-body" style="background-color: white !important">
                                 <h6 class="card-title"><strong><?php echo xlt('Recent Activity'); ?></strong></h6>
                                 <ul class="list-group list-group-flush" style="list-style: none;">
-                                    <li><?php echo xlt('Charges'); ?>: 
+                                    <li><?php echo xlt('Charges'); ?>:
                                         <span style="float: right">
                                             <strong>
                                                 {{ overview_section_data.charges | formatToCurrency}}
@@ -344,7 +348,7 @@
                                     <li><?php echo xlt('Case Collection %'); ?>: <span style="float: right">
                                         <strong>
                                             {{ overview_section_data.case_collection | twoDigitFormat }}
-                                        </strong>                                            
+                                        </strong>
                                         </span>
                                     </li>
                                 </ul><br>
@@ -420,7 +424,7 @@
                                 <table class="table">
 
                                     <thead class="bg-light">
-                               
+
                                             <th class="bg-light sticky-top expandCollapse collpaseButton">
                                                 +/-
                                             </th>
@@ -460,7 +464,7 @@
                                             <th class="bg-light sticky-top">
                                                 Balance
                                             </th>
-                                 
+
                                     </thead>
                                     <tbody class="details-body" id="details-body"></tbody>
                                 </table>
@@ -1055,7 +1059,7 @@
             $(document).on('change', '.billing_date_editable, .ar_activity_date_editable', function() {
                 const changed_date = $(this).val()
                 const data = $(this).data()
-                
+
                 // find charge row date or ar_activity_row date
                 if ($(this).hasClass('ar_activity_date_editable')) {
                     data["type"] = "ar_activity_row"
@@ -1226,18 +1230,24 @@
         }
 
         // This function shows the details of the particular patient clicked on after search
-        function showDetails(pid, case_number, case_description="", removeHeaderDataCache=false) {
+        function showDetails(pid, case_number, case_description="", removeHeaderDataCache=false, encounter="") {
 
             // removeheaderDataCache - checks if you need to override persistence of header data
+            const post_object = {
+                    pid: pid,
+                    case_number: case_number
+            }
+
+            if (encounter != "") {
+                console.log("encounter is " + encounter)
+                post_object["filter_encounter"] = encounter
+            }
 
             $.ajax({
                 dataType: 'json',
                 url: 'transaction_details.php',
                 type: 'POST',
-                data: ({
-                    pid: pid,
-                    case_number: case_number
-                }),
+                data: post_object,
                 success: function(data) {
                     $('#details-body').html('');
                     $('#details-body').append(data.result.renderHtml);
@@ -1722,7 +1732,7 @@
             $('.balance-detail-' + encCount).each(function(){
 
                 let balance = $(this).data("balance")
-               
+
                 if (balance != "") {
                     totalBalance += parseFloat(balance.toString().replace(",",""));
                 }
@@ -1857,7 +1867,7 @@
     });
 
     Vue.filter('twoDigitFormat', function(value) {
-        
+
         if (value == undefined || value == null || isNaN(value)) {
             return Number(0).toFixed(2)
         }
@@ -1887,9 +1897,10 @@
 
         watch: {
             selected_case_number: function(newValue, oldValue) {
-                const selected_case_number = newValue;
+                const encounter = newValue;
                 const pid = this.drop_down_data[0].pid
-                showDetails(pid, selected_case_number);
+                console.log(encounter)
+                showDetails(pid, "", "", false, encounter);
             }
         }
     })
@@ -1904,9 +1915,9 @@
     }
 
     function checkIfAllEncountersArePaid(paid_type) {
-        var is_all_encounters_paid_for_paid_type = false    
+        var is_all_encounters_paid_for_paid_type = false
 
-       
+
         $('.table-header-row-data').each(function(index, object) {
             const row_data = $(object).data()
             if (paid_type == PaidType.primary_paid && parseInt(row_data.tableHeaderRowPrimaryInsurancePaid) > 0) {
@@ -1929,9 +1940,9 @@
 
 
     new Vue({
-        
+
         created() {
-            // on created keep listening for the change 
+            // on created keep listening for the change
             // to the overview section data
             transaction_bus.$on("overview-object-changed", (overview_object)=> {
                 overview_object = this.processOverviewObject(overview_object)
@@ -1987,7 +1998,7 @@
                 else if (parsed_values.primary_paid != 0 && parsed_values.secondary_paid != 0) {
 
                         overview_object.patient_balance = parsed_values.charges - parsed_values.primary_paid - parsed_values.primary_adjustments - parsed_values.secondary_paid - parsed_values.secondary_adjustments - parsed_values.patient_paid
-                        
+
                 }
                 return overview_object
             },
@@ -1996,8 +2007,6 @@
                 const isPrimaryPaidPresentForAllEncounters = checkIfAllEncountersArePaid(PaidType.primary_paid)
                 const isSecondaryPaidPresentForAllEncounters = checkIfAllEncountersArePaid(PaidType.secondary_paid)
                 const parsed_values = this.getParsedValuesForOverviewObject(overview_object)
-                console.log("parsed values for overall ")
-                console.log(parsed_values)
                 if (isPrimaryPaidPresentForAllEncounters) {
 
                     if (isSecondaryPaidPresentForAllEncounters) {
@@ -2028,9 +2037,9 @@
                 overview_object.secondary_balance = 0
                 overview_object.patient_balance = 0
 
-                // there are currently 2 states, is overview object for single 
+                // there are currently 2 states, is overview object for single
                 // encounter, or for group of encounters
-                
+
                 if (overview_object.encounter != null) {
                     // single encounter
                     return this.processSingleEncounterOverviewObject(overview_object);
@@ -2055,7 +2064,7 @@
 
         }
     })
-    
+
 
     new Vue({
         el: "#search_component",
@@ -2066,16 +2075,7 @@
             patient_items:[],
         },
         watch: {
-            name: function(newValue) {
-                this.getPatientNames()
             },
-            dob: function(newValue) {
-                this.getPatientNames()
-            },
-            encounter_date:function(newValue) {
-                this.getPatientNames()
-            }
-        },
 
         methods: {
             getPatientNames() {
@@ -2117,7 +2117,21 @@
             },
 
             selectPatient(pid, encounter_list) {
-                transaction_bus.$emit('case_dropdown_data_changed', encounter_list)
+
+                const altered_encounter_list = []
+
+                for (item of encounter_list) {
+                    altered_encounter_list.push({
+                        encounter: item,
+                        pid: pid
+                    })
+                }
+
+                transaction_bus.$emit('case_dropdown_data_changed', altered_encounter_list)
+
+                this.name = ""
+                this.dob = ""
+                this.encounter_date = ""
                 showDetails(pid)
             }
         }
