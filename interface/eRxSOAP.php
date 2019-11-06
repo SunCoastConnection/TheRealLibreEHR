@@ -47,7 +47,7 @@ class eRxSOAP {
      * @return array|boolean      Array on success, false on failure
      */
     static public function htmlFixXmlToArray($xml) {
-        $xmltoarray = new xmltoarray_parser_htmlfix();                  //create instance of class
+        $xmltoarray = new xmltoarray_parser_htmlfix_class();                  //create instance of class
 
         $xmltoarray->xmlparser_setoption(XML_OPTION_SKIP_WHITE, 1);     //set options same as xml_parser_set_option
         $xmltoarray->xmlparser_setoption(XML_OPTION_CASE_FOLDING, 0);
