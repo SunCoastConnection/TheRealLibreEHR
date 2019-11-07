@@ -269,7 +269,7 @@ if (isset($_REQUEST['pid'])) {
             $the_case_description = $enc_row['case_body_part'].$enc_row['case_number'];
             $joined_case_description = str_replace(' ', '', $the_case_description);
             // get all billing records
-            $bills = sqlStatement("SELECT * FROM billing WHERE pid = ? AND encounter = ? AND activity = 1 AND code_type='CPT4' ORDER BY date DESC", array($pid, $enc_row['encounter']));
+            $bills = sqlStatement("SELECT * FROM billing INNER JOIN `code_types` ON billing.code_type = code_types.ct_key WHERE pid = ? AND encounter = ? AND activity = 1 AND code_types.ct_active='1' AND code_types.ct_diag != '1'  AND code_types.ct_claim='1'  ORDER BY date DESC", array($pid, $enc_row['encounter']));
             $bill_count = 0;
             $adjustment_reason = "";
             $non_null_adjustment_reason = "";

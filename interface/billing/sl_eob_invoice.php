@@ -4,9 +4,9 @@
  * sl_eob_search.php.  For automated (X12 835) remittance posting
  * see sl_eob_process.php.
  *
- * Copyright (C) 2014-2017 Terry Hill <teryhill@yahoo.com> 
+ * Copyright (C) 2014-2017 Terry Hill <teryhill@yahoo.com>
  * Copyright (C) 2005-2010 Rod Roark <rod@sunsetsystems.com>
- * 
+ *
  * LICENSE: This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -25,8 +25,8 @@
  * @link    http://LibreEHR.org
  */
 
- 
- 
+
+
   require_once("../globals.php");
   require_once("$srcdir/log.inc");
   require_once("$srcdir/patient.inc");
@@ -38,7 +38,7 @@
 
   $debug = 0; // set to 1 for debugging mode
 
- 
+
   // If we permit deletion of transactions.  Might change this later.
 
   if (substr($GLOBALS['payment_delete_begin_date'],0,1) == 'N') {
@@ -150,7 +150,7 @@ function validate(f) {
 
 <!-- Get current date -->
 
-function getFormattedToday() 
+function getFormattedToday()
 {
    var today = new Date();
    var dd = today.getDate();
@@ -170,7 +170,7 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
    var adjAmount = 0.0;
    var balAmount = 0.0;
    var coPayAmount = 0.0;
-   
+
    // coPayFiled will be null if there is no co-pay entry in the fee sheet
    if (coPayField)
       coPayAmount = coPayField.value;
@@ -190,7 +190,7 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
 
    adjAmount = balAmount - payAmount;
    <?php } ?>
-   
+
    // Assign rounded adjustment value back to TextField
    adjField.value = adjAmount = Math.round(adjAmount*100)/100;
 }
@@ -218,7 +218,7 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
     $form_deposit_date = fixDate($_POST['form_deposit_date'], $form_check_date);
     $form_document_image = $ferow['document_image'];
     $form_pay_total    = 0 + $_POST['form_pay_total'];
-    $form_seq_number  = $ferow['seq_number']; 
+    $form_seq_number  = $ferow['seq_number'];
 
   $payer_type = 0;
   if (preg_match('/^Ins(\d)/i', $_POST['form_insurance'], $matches)) {
@@ -255,6 +255,7 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
         $thisins  = trim($cdata['ins']);
         $thiscodetype = trim($cdata['code_type']);
         $reason   = strip_escape_custom($cdata['reason']);
+        $billing_id = ($cdata['id']);
 
         // Get the adjustment reason type.  Possible values are:
         // 1 = Charge adjustment
@@ -286,7 +287,7 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
 
         if ($thispay) {
             arPostPayment($patient_id, $encounter_id, $session_id,
-              $thispay, $code, $payer_type, '', $debug, '', $thiscodetype);
+              $thispay, $code, $payer_type, '', $debug, '', $thiscodetype, $billing_id);
           $paytotal += $thispay;
         }
 
@@ -319,7 +320,7 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
               $reason .= ' ' . $_POST['form_insurance'];
           }
             arPostAdjustment($patient_id, $encounter_id, $session_id,
-              $thisadj, $code, $payer_type, $reason, $debug, '', $thiscodetype);
+              $thisadj, $code, $payer_type, $reason, $debug, '', $thiscodetype, $billing_id);
         }
       }
 
@@ -628,11 +629,11 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
         $last_year = mktime(0,0,0,date('m'),date('d'),date('Y')-$payment_delete_time);
      }
      elseif (substr($GLOBALS['payment_delete_begin_date'],0,1) == 'M') {
-        $payment_delete_time = substr($GLOBALS['payment_delete_begin_date'],1,1); 
+        $payment_delete_time = substr($GLOBALS['payment_delete_begin_date'],1,1);
         $last_year = mktime(0,0,0,date('m')-$payment_delete_time ,date('d'),date('Y'));
      }
      elseif (substr($GLOBALS['payment_delete_begin_date'],0,1) == 'D') {
-        $payment_delete_time = substr($GLOBALS['payment_delete_begin_date'],1,1); 
+        $payment_delete_time = substr($GLOBALS['payment_delete_begin_date'],1,1);
         $last_year = mktime(0,0,0,date('m') ,date('d')-$payment_delete_time,date('Y'));
      }
      $payment_delete_from_date = date('Y-m-d', $last_year);
@@ -693,6 +694,7 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
    <input type="hidden" name="form_line[<?php echo $code ?>][bal]" value="<?php bucks($cdata['bal']) ?>">
    <input type="hidden" name="form_line[<?php echo $code ?>][ins]" value="<?php echo $cdata['ins'] ?>">
    <input type="hidden" name="form_line[<?php echo $code ?>][code_type]" value="<?php echo $cdata['code_type'] ?>">
+   <input type="hidden" name="form_line[<?php echo $code ?>][id]" value="<?php echo $cdata['id'] ?>">
    <?php printf("%.2f", $cdata['bal']) ?>&nbsp;
   </td>
   <td class="detail">
@@ -705,8 +707,8 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
   </td>
   <td class="detail">
    <input type="text" name="form_line[<?php echo $code ?>][pay]" size="10"
-    style="background-color:<?php echo $bgcolor ?>" 
-    onKeyUp="updateFields(document.forms[0]['form_line[<?php echo $code ?>][pay]'], 
+    style="background-color:<?php echo $bgcolor ?>"
+    onKeyUp="updateFields(document.forms[0]['form_line[<?php echo $code ?>][pay]'],
                           document.forms[0]['form_line[<?php echo $code ?>][adj]'],
                           document.forms[0]['form_line[<?php echo $code ?>][bal]'],
                           document.forms[0]['form_line[CO-PAY][bal]'],
@@ -714,7 +716,7 @@ function updateFields(payField, adjField, balField, coPayField, isFirstProcCode)
   </td>
   <td class="detail">
    <input type="text" name="form_line[<?php echo $code ?>][adj]" size="10"
-    value='<?php echo $totalAdjAmount ?>' 
+    value='<?php echo $totalAdjAmount ?>'
     style="background-color:<?php echo $bgcolor ?>" />
    &nbsp; <a href="" onclick="return writeoff('<?php echo $code ?>')">W</a>
   </td>
