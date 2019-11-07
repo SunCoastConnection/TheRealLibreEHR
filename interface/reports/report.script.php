@@ -1,5 +1,5 @@
 <?php
-// +-----------------------------------------------------------------------------+ 
+// +-----------------------------------------------------------------------------+
 // Copyright (C) 2011 Z&H Consultancy Services Private Limited <sam@zhservices.com>
 //
 //
@@ -19,9 +19,9 @@
 // libreehr/interface/login/GnuGPL.html
 // For more information write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// 
+//
 // Author:   Eldho Chacko <eldho@zhservices.com>
-//           Paul Simon K <paul@zhservices.com> 
+//           Paul Simon K <paul@zhservices.com>
 //
 // +------------------------------------------------------------------------------+
 ?>
@@ -29,7 +29,7 @@
 <script type="text/javascript">
 //Calendar Functions to set From and To dates
 function calendar_function(val,from,to){
-    
+
     var date = new Date();
     fromdate=document.getElementById(from);
     todate  =document.getElementById(to);
@@ -73,7 +73,7 @@ function calendar_function(val,from,to){
     fromdate.value='';
     todate.value='';
     }
-    
+
 }
 //Below functions are called in the above function
 function disp_date(dt,mt,yr){
@@ -90,7 +90,7 @@ function disp_date(dt,mt,yr){
 function daysInMonth(month,year) {
 var dd = new Date(year, month, 0);
 return dd.getDate();
-} 
+}
 function last_month(){
     var date = new Date();
     var yy=date.getYear();
@@ -148,7 +148,7 @@ function week_date(){
     month = (month < 10) ? '0' + month : month;
     day = (day < 10) ? '0' + day : day;
     week = year + "-" + month + "-" + day ;
-    return week;    
+    return week;
 }
 //================================================================================================================================
 //Search Functionality
@@ -176,7 +176,7 @@ function checkOptionExist(value0,seperator)//It returns the position of the opti
   }
   return -1;
  }
-function checkOptionExistDateCriteria(value0)//For Date Criteria.It returns the position of the option, if the value is found, 
+function checkOptionExistDateCriteria(value0)//For Date Criteria.It returns the position of the option, if the value is found,
  {//in the final criteria select box submitted.//If doesn't exist new insertion is done.If exist it is updated.
   var elSel = document.getElementById('final_this_page_criteria');
   var i;
@@ -225,6 +225,7 @@ function appendOptionRadioCriteria(text0,value0,text1,value1,seperator,Type)
     elSel.options[TheOptionIndex].value=elOptNew.value;
     elSel.options[TheOptionIndex].text=elOptNew.text;
    }
+   billing_report_bus.$emit('selected_criteria_changed')
 }
 function appendOptionTextCriteria(text0,value0,text1,value1,seperator,Type)
 {//If option doesn't exist new insertion is done.If exist it is updated in the select drop down.//Remove the item if the value is blank.
@@ -261,6 +262,7 @@ function appendOptionTextCriteria(text0,value0,text1,value1,seperator,Type)
     elSel.options[TheOptionIndex].value=elOptNew.value;
     elSel.options[TheOptionIndex].text=elOptNew.text;
    }
+   billing_report_bus.$emit('selected_criteria_changed')
 }
 function appendOptionDateCriteria(text0,value0,text1,value1,seperator,FromDate,ToDate,Type)//For Date drop down
 {//If option doesn't exist new insertion is done.If exist it is updated in the select drop down.//Remove the item if the drop down is All.
@@ -299,6 +301,7 @@ function appendOptionDateCriteria(text0,value0,text1,value1,seperator,FromDate,T
     elSel.options[TheOptionIndex].value=elOptNew.value;
     elSel.options[TheOptionIndex].text=elOptNew.text;
    }
+   billing_report_bus.$emit('selected_criteria_changed')
 }
 function CleanUpAjax(text0,value0,seperator)
  {//Cleans the values in the ajax (Insurance Company criteria)
@@ -327,6 +330,7 @@ function removeOptionSelected()
       OptionRemoved='yes';
     }
   }
+  billing_report_bus.$emit('selected_criteria_changed')
   if(OptionRemoved=='no')
    {
        alert("<?php echo htmlspecialchars( xl('Select Criteria to Remove'), ENT_QUOTES) ?>")
@@ -360,7 +364,7 @@ function ProcessBeforeSubmitting()//Validations and necessary actions are taken 
  }
 function selectAllOptions(selStr)
 {//Before submitting the multiselct drop downs are selected,then only they will be got in php.
-  var selObj = document.getElementById(selStr); 
+  var selObj = document.getElementById(selStr);
   for (var i=0; i<selObj.options.length; i++) {
    selObj.options[i].selected=true;
   }
@@ -372,7 +376,7 @@ function SetDateCriteriaCustom(ObjectPassed)
  }
 function ValidateDateCriteria(selStr)
  {//From date should not be greater than To date.
-  var selObj = document.getElementById(selStr); 
+  var selObj = document.getElementById(selStr);
   for (var i=0; i<selObj.options.length; i++) {
     if(selObj.options[i].value.indexOf('between') != -1)
      {
@@ -399,9 +403,9 @@ function getPosition(who,TopOrLeft){//Returns the top and left position of the p
         who= who.offsetParent;
     }
     if(TopOrLeft=='Top')
-        return T;    
+        return T;
     else if(TopOrLeft=='Left')
-        return L;    
+        return L;
 }
 //-------------------------------------------------------------------------------------------------------------------------
 //In Internet Explorer the ajax drop down of insurance was gettign hidden under the select drop down towards the right side.
@@ -410,22 +414,22 @@ function getPosition(who,TopOrLeft){//Returns the top and left position of the p
 function show_frame_to_hide() {//Show the iframe
 if(document.getElementById("AjaxContainerInsurance"))
  {
-    document.getElementById("frame_to_hide").style.top = getPosition(document.getElementById('ajax_div_insurance'),'Top') + "px";    
-    document.getElementById("frame_to_hide").style.left = getPosition(document.getElementById('final_this_page_criteria'),'Left') + "px";;    
-    document.getElementById("frame_to_hide").style.display = "inline";    
+    document.getElementById("frame_to_hide").style.top = getPosition(document.getElementById('ajax_div_insurance'),'Top') + "px";
+    document.getElementById("frame_to_hide").style.left = getPosition(document.getElementById('final_this_page_criteria'),'Left') + "px";;
+    document.getElementById("frame_to_hide").style.display = "inline";
  }
 }
 function hide_frame_to_hide() {//Hide the iframe
 if(!document.getElementById("AjaxContainerInsurance"))
  {
-    document.getElementById("frame_to_hide").style.display = "none";    
+    document.getElementById("frame_to_hide").style.display = "none";
  }
 }
 //-------------------------------------------------------------------------------------------------------------------------
 function TakeActionOnHide()//Action on clicking out side the ajax drop down of insurance.Hides the same.
  {
   HideTheAjaxDivs();
-  hide_frame_to_hide();
+  //hide_frame_to_hide();
  }
 //===================================================================================================================================
 </script>
