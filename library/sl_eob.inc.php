@@ -33,9 +33,10 @@
     }
     else if ($acount == 3) {
       $pid = $atmp[0];
-      $brow = sqlQuery("SELECT encounter FROM billing WHERE " .
+      $brow = sqlQuery("SELECT id, encounter FROM billing WHERE " .
         "pid = '$pid' AND encounter = '" . $atmp[1] . "' AND activity = 1");
-        
+      $billing_id = $brow['id'];
+
       $encounter = $brow['encounter'];
     }
     else if ($acount == 1) {
@@ -101,11 +102,16 @@ function arPostSession($payer_id,$check_number,$check_date,$pay_total,$post_to_d
     return $sessionId;
     }
   }
-  
+
   // Post a payment, new style.
   //
-  function arPostPayment($patient_id, $encounter_id, $session_id, $amount, $code, $payer_type, $memo, $debug, $time='', $codetype='') {
+  function arPostPayment($patient_id, $encounter_id, $session_id, $amount, $code, $payer_type, $memo, $debug, $time='', $codetype='', $billing_id) {
     $codeonly = $code;
+    if ($payer_type =='0') {
+        $pay_acc_code = 'PP';
+    }else{
+        $pay_acc_code = 'IPP';
+    }
     $modifier = '';
     $tmp = strpos($code, ':');
     if ($tmp) {
@@ -115,7 +121,7 @@ function arPostSession($payer_id,$check_number,$check_date,$pay_total,$post_to_d
     if (empty($time)) $time = date('Y-m-d H:i:s');
     $query = "INSERT INTO ar_activity ( " .
       "pid, encounter, code_type, code, modifier, payer_type, post_time, post_user, " .
-      "session_id, memo, pay_amount " .
+      "session_id, memo, account_code, pay_amount, billing_id " .
       ") VALUES ( " .
       "'$patient_id', " .
       "'$encounter_id', " .
@@ -127,7 +133,9 @@ function arPostSession($payer_id,$check_number,$check_date,$pay_total,$post_to_d
       "'" . $_SESSION['authUserID'] . "', " .
       "'$session_id', " .
       "'$memo', " .
-      "'$amount' " .
+      "'$pay_acc_code', " .
+      "'$amount', " .
+      "'$billing_id' " .
       ")";
     sqlStatement($query);
     return;
@@ -180,8 +188,9 @@ function arPostSession($payer_id,$check_number,$check_date,$pay_total,$post_to_d
 
   // Post an adjustment, new style.
   //
-  function arPostAdjustment($patient_id, $encounter_id, $session_id, $amount, $code, $payer_type, $reason, $debug, $time='', $codetype='') {
+  function arPostAdjustment($patient_id, $encounter_id, $session_id, $amount, $code, $payer_type, $reason, $debug, $time='', $codetype='' , $billing_id) {
     $codeonly = $code;
+    $adj_acc_code = 'ADJ';
     $modifier = '';
     $tmp = strpos($code, ':');
     if ($tmp) {
@@ -191,7 +200,7 @@ function arPostSession($payer_id,$check_number,$check_date,$pay_total,$post_to_d
     if (empty($time)) $time = date('Y-m-d H:i:s');
     $query = "INSERT INTO ar_activity ( " .
       "pid, encounter, code_type, code, modifier, payer_type, post_user, post_time, " .
-      "session_id, memo, adj_amount " .
+      "session_id, memo, account_code, adj_amount, billing_id " .
       ") VALUES ( " .
       "'$patient_id', " .
       "'$encounter_id', " .
@@ -203,7 +212,9 @@ function arPostSession($payer_id,$check_number,$check_date,$pay_total,$post_to_d
       "'$time', " .
       "'$session_id', " .
       "'$reason', " .
-      "'$amount' " .
+      "'$adj_acc_code', " .
+      "'$amount', " .
+      "'$billing_id' " .
       ")";
     sqlStatement($query);
     return;
@@ -225,13 +236,13 @@ function arPostSession($payer_id,$check_number,$check_date,$pay_total,$post_to_d
   //
   function arSetupSecondary($patient_id, $encounter_id, $debug,$crossover=0) {
     if ($crossover==1) {
-    //if claim forwarded setting a new status 
+    //if claim forwarded setting a new status
     $status=6;
-    
+
     } else {
-    
+
     $status=1;
-    
+
     }
     // Determine the next insurance level to be billed.
     $ferow = sqlQuery("SELECT date, last_level_billed " .
