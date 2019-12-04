@@ -1,0 +1,74 @@
+<script type="text/x-template" id="quick_pick_component_template">
+<div>
+	<div class="col-sm-12 text-right">
+			<a class="btn btn-outline-success">Apply {{ selected_codes.length }} selected codes</a>
+			<br/><br/>
+	</div>
+
+	<table class="table table-striped">
+		<tr>
+			<td>
+				<input type="text" class="form-control" placeholder="Code Type">
+			</td>
+			<td>
+				<input type="text" class="form-control" placeholder="Code">
+			</td>
+			<td>
+				<input type="text" class="form-control" placeholder="Modifiers">
+			</td>
+			<td>
+				<input type="text" class="form-control" placeholder="description">
+			</td>
+			<td>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Code Type
+			</th>
+			<th>
+				Code
+			</th>
+			<th>
+				Modifiers
+			</th>
+			<th>
+				Description
+			</th>
+			<th>
+				Pick
+			</th>
+		</tr>
+
+		<template v-for="(code,index) in codes">
+			<tr :class="{ 'bg-success text-white':code['is_selected']}">
+				<td>
+					{{ code.code_type }}
+				</td>
+				<td>
+					{{ code.code }}
+				</td>
+				<td>
+					{{ code.modifiers }}
+				</td>
+				<td>
+					{{ code.description }}
+				</td>
+				<td>
+					<a class='btn btn-outline-primary' @click="pickCode(index, code.code)">
+						<template v-if="code.is_selected">
+							Remove
+						</template>
+						<template v-else>	
+							Pick
+						</template>
+					
+					</a>
+				</td>				
+			</tr>
+		</template>
+
+	</table>
+</div>
+
+</script>

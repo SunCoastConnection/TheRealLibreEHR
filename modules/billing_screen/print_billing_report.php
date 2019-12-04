@@ -4,7 +4,7 @@
 $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
-include_once("../globals.php");
+require_once("../../interface/globals.php");
 
 include_once("$srcdir/patient.inc");
 include_once("$srcdir/../interface/reports/report.inc.php");

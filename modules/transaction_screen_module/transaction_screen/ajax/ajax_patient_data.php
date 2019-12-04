@@ -1,9 +1,10 @@
 <?php
-require_once("../../globals.php");
+require_once(__DIR__.DIRECTORY_SEPARATOR."../../../../interface/globals.php");
 require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/patient.inc");
 include_once("$srcdir/pid.inc");
-require_once("../Objects/Overview.php");
+require_once("$srcdir/classes/class.TransactionOverview.php");
+
 
 
 function setUpNullCheckFilter($array) {
@@ -24,56 +25,6 @@ class InsuranceClass {
   public $Date_Closed = "-";
 }
 
-class Overview {
-
-  public $recent_activity = array();
-  public $balance = array();
-  public $total_payments = array();
-  public $bindingArray = array();
-  public $extraQuery = "";
-
-  public function __construct($pid) {
-
-  }
-
-  public function initObj($pid) {
-
-    $chargesResult = sprintf("%0.2f", sqlFetchArray(sqlStatement("SELECT SUM(fee) FROM `billing` WHERE pid=? AND activity=1".$this->extraQuery, $this->bindingArray))["SUM(fee)"]);
-
-    # this is correct
-    $this->recent_activity['Charges'] = $chargesResult;
-    # this needs to be a sum of the fees in the billing table not a count
-    $this->recent_activity['Insurance_Unbilled'] = sprintf("%0.2f",sqlFetchArray(sqlStatement("SELECT SUM(fee) FROM `billing` WHERE code_type='CPT4' AND billed=0 AND activity = 1 AND pid=?".$this->extraQuery, $this->bindingArray))["SUM(fee)"]);
-    $this->recent_activity['Payments'] = sprintf("%0.2f",sqlFetchArray(sqlStatement("SELECT SUM(pay_amount) FROM `ar_activity` WHERE pid=? AND (payer_type=0 or payer_type=1 or payer_type=2 or payer_type=3) AND  (account_code = 'IPP' or account_code = 'PCP' or account_code = 'PP')".$this->extraQuery, $this->bindingArray))["SUM(pay_amount)"]);
-    $this->recent_activity['Adjustments'] = sprintf("%0.2f",sqlFetchArray(sqlStatement("SELECT SUM(adj_amount) FROM `ar_activity` WHERE pid = ?".$this->extraQuery, $this->bindingArray))["SUM(adj_amount)"]);
-    $this->recent_activity['Case_Collection'] = round(($this->recent_activity['Payments'] / $this->recent_activity['Charges']) * 100);
-
-    # PAYMENTS SECTION
-
-    $this->total_payments['Primary_Paid'] = sprintf("%0.2f",sqlFetchArray(sqlStatement("SELECT SUM(pay_amount) FROM `ar_activity` WHERE pid=? AND payer_type=1 AND account_code = 'IPP'".$this->extraQuery, $this->bindingArray))["SUM(pay_amount)"]);
-    $this->total_payments['Secondary_Paid'] = sprintf("%0.2f",sqlFetchArray(sqlStatement("SELECT SUM(pay_amount) FROM `ar_activity` WHERE pid=? AND (payer_type=2 or payer_type=3) AND  account_code = 'IPP'".$this->extraQuery, $this->bindingArray))["SUM(pay_amount)"]);
-    $this->total_payments['Patient_Paid'] = sprintf("%0.2f",sqlFetchArray(sqlStatement("SELECT SUM(pay_amount) FROM `ar_activity` WHERE pid=? AND payer_type=0".$this->extraQuery, $this->bindingArray))["SUM(pay_amount)"]);
-
-    # BALANCE SECTION
-
-    # this caculation should be fee's - payments to give the amounts.
-    # if bill_process is a zero then nothing has been processed,
-    # if bill_process is a 1 then the primary has been processed
-    # if bill_process is a 2 then the secondary has been processed
-    # if bill_process is a 3 then the tertiary has been processed
-    $this->balance['Primary_Balance'] = sprintf("%0.2f",sqlFetchArray(sqlStatement(" SELECT SUM(fee) FROM `billing` WHERE code_type='CPT4' AND bill_process = 2 AND activity = 1 AND pid=?".$this->extraQuery, $this->bindingArray))["SUM(fee)"] - $this->total_payments['Primary_Paid'] - $this->recent_activity['Insurance_Unbilled'] );
-
-    # This should be secondary and tertiary combined bill_process 1 and 2
-    $this->balance['Secondary_Balance'] =  sprintf("%0.2f",sqlFetchArray(sqlStatement(" SELECT SUM(fee) FROM `billing` WHERE code_type='CPT4' AND bill_process = 3 AND activity = 1 AND pid=?".$this->extraQuery, $this->bindingArray))["SUM(fee)"] - $this->total_payments['Secondary_Paid']);
-
-    # this should be a total of all fees - all payments
-    $this->balance['Patient_Balance'] =  sprintf("%0.2f",sqlFetchArray(sqlStatement(" SELECT SUM(fee) FROM `billing` WHERE code_type='CPT4' AND bill_process >=3  AND activity = 1 AND pid=?".$this->extraQuery, $this->bindingArray))["SUM(fee)"] - $this->total_payments['Primary_Balance'] - $this->total_payments['Secondary_Balance'] + $this->total_payments['Patient_Paid']);
-
-    # unapplied amount should be a sum of the ar_activity table where unapplied = 1
-    $this->balance['Unapplied_Amount'] = sprintf("%0.2f",sqlFetchArray(sqlStatement(" SELECT SUM(pay_amount) FROM `ar_activity` WHERE pid=? AND unapplied = 1".$this->extraQuery, $this->bindingArray))["SUM(pay_amount)"]);
-
-  }
-}
 
 
 function getSessionRowData($bindingArray) {
@@ -114,28 +65,22 @@ if (isset($_GET['pid']) && isset($_GET['action'])) {
         }
 
     if ($_GET['action'] == "get_overview_object") {
-      $overView = new Overview($pid);
-      # init binding array
-      $overView->bindingArray = array($pid);
 
-      # parent classs which needs to trigger all base class
-      if (isset($_GET['case_number'])) {
-        if (!empty($_GET['case_number'])) {
-          $encounter_number = sqlFetchArray(sqlStatement("SELECT encounter FROM `form_encounter` WHERE case_number=?", array($_GET['case_number'])))["encounter"];
-          #reset binding array with encounter_number
-          $overView->extraQuery = " AND encounter=?";
-          $overView->bindingArray = array($pid, $encounter_number);
-        }
+      $transaction_overview = new TransactionOverview($pid, $_GET['encounter']);
+
+
+      if (!empty($_GET['case_number'])) {
+        $transaction_overview = new TransactionOverview($pid, "", $_GET['case_number']);
       }
 
-        # class ends here
-        $overView->initObj($pid);
-        $overviewArray = array();
-        array_push($overviewArray, setUpNullCheckFilter($overView->recent_activity));
-        array_push($overviewArray, setUpNullCheckFilter($overView->balance));
-        array_push($overviewArray, setUpNullCheckFilter($overView->total_payments));
 
-        echo json_encode($overviewArray);
+      if (!empty($_GET['encounter'])) {
+        $transaction_overview = new TransactionOverview($pid, $_GET['encounter']);
+      }
+        // just replacing the unbilled and charges for now
+        
+        $transaction_overview_data = $transaction_overview->getData();
+        echo json_encode($transaction_overview_data);
       }
 
     if ($_GET['action'] == "get_summary_section") {

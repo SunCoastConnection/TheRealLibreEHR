@@ -1,0 +1,51 @@
+<!-- PATIENT_PAYMENT_ROW_TEMPLATE -->
+<!-- VARIABLES SUPPLIED TO THIS TEMPLATE SHOULD BE PLACED IN THE UPPER ROW FOR
+        BETTER READABILITY, IF YOU ADD A NEW VARIABLE TO TEMPLATE BE SURE TO ADD IT BELOW -->
+
+<!-- SEQUENCE_NO_ID -->
+<!-- SEQUENCE_NO -->
+<!-- BILLING_ID -->
+<!-- PAY_AMOUNT -->
+<!-- FORMATTED_PAY_AMOUNT -->
+<!-- PID -->
+<!-- ROW_COUNT -->
+<!-- ENCOUNTER -->
+<!-- ADJUSTMENT_AMOUNT -->
+<!-- FORMATTED_ADJUSTMENT_AMOUNT -->
+<!-- BILL_COUNT -->
+<!-- FORMATTED_POST_TIME -->
+<!-- ADJUSTMENT_REASON -->
+
+<tr id="{SEQUENCE_NO_ID}" class="table-detail-data collapse Patient-Payment x-rows-{ROW_COUNT}  {ROW_COUNT}" style="background-color: #FFC4C0">
+	<td></td>
+	<td class="date-detail payment-date-Patient-Payment" id="payment-date-row-{FORMATTED_POST_TIME}-{ROW_COUNT}-{BILL_COUNT}">
+        <input type="date" value="{UNFORMATTED_POST_TIME}" class="ar_activity_date_editable"
+        data-type="ar_activity_row" data-pid="{PID}" data-encounter="{ENCOUNTER}" data-sequence_no="{SEQUENCE_NO}" {SHOULD_DISABLE_PATIENT_PAYMENT_DATE_FIELD}>
+	</td>
+	<td colspan="6" class="description Patient-Payment payment-type" id="payment-type-Patient-Payment-{ROW_COUNT}-{BILL_COUNT}" data-pid="{PID}" data-sequence-no="{SEQUENCE_NO}" data-encounter="{ENCOUNTER}" onclick="showPaymentModal({ROW_COUNT},{PID},{ENCOUNTER},{SEQUENCE_NO},{PAY_AMOUNT},{BILLING_ID},{ADJUSTMENT_AMOUNT},{ADJUSTMENT_REASON} '')">
+		Patient Payment
+	</td>
+	<td class="amount payment-amount-Patient-Payment-{ROW_COUNT}" id="payment-amount-Patient-Payment-{ROW_COUNT}-{BILL_COUNT}" data-payment-paid="{PAY_AMOUNT}" data-unapplied="{UNAPPLIED}">
+		${FORMATTED_PAY_AMOUNT}
+	</td>
+	<td></td>
+	<td class="adj-amount-detail-{ROW_COUNT} adjusted" id="adj-amount-row-{ROW_COUNT}-{BILL_COUNT}" data-amount="{ADJUSTMENT_AMOUNT}">
+		${FORMATTED_ADJUSTMENT_AMOUNT}
+	</td>
+	<td class="adj-reason-detail-{ROW_COUNT} adj-reason" id="adj-reason-row-{ROW_COUNT}-{BILL_COUNT}">
+		{ADJUSTMENT_REASON}
+	</td>
+	<td colspan="5">&nbsp;</td>
+	<td class="sequence_no" style="display: none">
+		{SEQUENCE_NO}
+	</td>
+	<td style="display: none;" class="td-data-storage-row-{ROW_COUNT}"
+		data-billing-id="{BILLING_ID}"
+		data-pid="{PID}" data-encounter="{ENCOUNTER}"
+		data-date={FORMATTED_POST_TIME} data-description="Patient Payment"
+		data-code="" data-modifiers="" data-units="" data-facility="" data-amount=""
+		data-pat-paid="{PAY_AMOUNT}" data-ins-paid="" data-adjust="{ADJUSTMENT_AMOUNT}"
+		data-reason="" data-balance="" data-row-type="2" data-sequence-no="{SEQUENCE_NO}"
+		data-unapplied="{UNAPPLIED}">
+	</td>
+</tr>

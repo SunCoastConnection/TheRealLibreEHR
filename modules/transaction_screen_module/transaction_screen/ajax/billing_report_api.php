@@ -1,5 +1,5 @@
 <?php
-require_once("../../globals.php");
+require_once(__DIR__.DIRECTORY_SEPARATOR."../../../../interface/globals.php");
 require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/sql.inc");
 
