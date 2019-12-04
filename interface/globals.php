@@ -552,10 +552,11 @@ require_once 'idiorm.php';
 
 $host = $sqlconf["host"];
 $login = $sqlconf["login"];
+$port = $sqlconf["port"];
 $pass = $sqlconf["pass"];
 $dbase = $sqlconf["dbase"];
 
-ORM::configure("mysql:host=$host;dbname=$dbase");
+ORM::configure("mysql:host=$host;port=$port;dbname=$dbase");
 ORM::configure('username', $login);
 ORM::configure('password', $pass);
 // configure primary keys for table, once configured
