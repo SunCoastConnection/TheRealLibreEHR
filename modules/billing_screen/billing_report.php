@@ -20,7 +20,7 @@
 $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
-require_once("../globals.php");
+require_once("../../interface/globals.php");
 require_once("../../library/acl.inc");
 require_once("../../custom/code_types.inc.php");
 require_once("$srcdir/patient.inc");
@@ -34,7 +34,6 @@ require_once("$srcdir/options.inc.php");
 require_once("adjustment_reason_codes.php");
 require_once("$srcdir/global_functions.php");
 call_required_libraries(['jquery-min-3-3-1', 'bootstrap-4-0','font-awesome','vuejs', 'select2']);
-
 $EXPORT_INC = "$webserver_root/custom/BillingExport.php";
 //echo $GLOBALS['daysheet_provider_totals'];
 
@@ -181,7 +180,8 @@ input:checked + .slider:before {
 }
 .subbtn { margin-top:3px; margin-bottom:3px; margin-left:2px; margin-right:2px }
 </style>
-<script>
+
+ <script>
 function toggleCodingCompleteStatus(id, toggle) {
   $.post("ajax/billing_report_api.php", {form_encounter_id:id, toggle:toggle}, function(result){
   });

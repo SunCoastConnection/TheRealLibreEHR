@@ -136,7 +136,6 @@
         "children" : [ ],
         "requirement" : 0
     },{
-
         "label" : "Payment",
         "menu_id" : "pay1",
         "target" : "enc",
@@ -154,7 +153,7 @@
         "label" : "Billing",
         "menu_id" : "bil0",
         "target" : "pat",
-        "url" : "/interface/billing/billing_report.php",
+        "url" : "/modules/billing_screen/billing_report.php",
         "children" : [ ],
         "requirement" : 0,
         "global_req" : "!simplified_demographics"

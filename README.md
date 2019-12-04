@@ -1,6 +1,6 @@
 # Libre EHR
 
-[![pipeline status](https://gitlab.com/Libre/ehr/lh-ehr/badges/master/pipeline.svg)](https://gitlab.com/Libre/ehr/lh-ehr/commits/master)
+[![pipeline status](https://github.com/Libre/ehr/lh-ehr/badges/master/pipeline.svg)](https://github.com/Libre/ehr/lh-ehr/commits/master)
 
 Libre EHR is a free and open-source electronic health records and medical practice management application.
 
@@ -90,6 +90,6 @@ Note: Sometimes , installation may take more time than usual on some systems. In
 
 # License
 
-Libre EHR is primarily licensed under Mozilla Public License Version 2. The code inherited from OpenEMR is licensed under GPL 2 or higher. This project is a part of the [Software Freedom Conservancy](http://sfconservancy.org) family.
+Libre EHR is primarily licensed under Mozilla Public License Version 2. The code inherited from OpenEMR is licensed under GPL 2 or higher.
 
 ***Thank you for your support!***
