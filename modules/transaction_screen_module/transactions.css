@@ -1,0 +1,1156 @@
+
+.content-background {
+  width: 1900px;
+  height: 863px;
+  background-color: #f1f2f0;
+}
+.Last-Name-First-Name {
+  width: 144px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: rgba(151, 144, 153, 0.56);
+}
+.MM-DD-YY {
+  width: 68px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: rgba(151, 144, 153, 0.56);
+}
+.Effected-Body-Part {
+  width: 118px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: rgba(151, 144, 153, 0.56);
+}
+.Facility {
+  width: 43px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.Facility-Name {
+  width: 86px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: rgba(151, 144, 153, 0.56);
+}
+.search-2 {
+  width: 14px;
+  height: 14px;
+  background-color: #ffffff;
+}
+.Search-1 {
+  width: 44px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+.Right-Knee-10-10-18 {
+  width: 139px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Patient-Payment {
+  width: 105px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Insurance-Payment {
+  width: 122px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Open {
+  width: 33px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Overview {
+  width: 74px;
+  height: 24px;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+.badge {
+  border-radius: 0px !important;
+  width: 20px;
+  height: 10px;
+}
+.details {
+  width: 56px;
+  height: 24px;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+.Claim-History {
+  width: 110px;
+  height: 24px;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+.Recent-Activity {
+  width: 109px;
+  height: 21px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0b050d;
+}
+.Charges {
+  width: 55px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Insurance-Unbilled {
+  width: 121px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Payments {
+  width: 67px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Adjustments {
+  width: 84px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Case-Collection- {
+  width: 115px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Rectangle-208 {
+  width: 1260px;
+  height: 29px;
+  opacity: 0.3;
+  background-color: #53e7fa;
+}
+.Balance {
+  width: 58px;
+  height: 21px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0b050d;
+}
+.Primary-Balance {
+  width: 107px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.SecondaryTert-Balance {
+  width: 155px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Patient-Balance {
+  width: 103px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Unapplied-Insurance-Balance {
+  width: 187px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Payments {
+  width: 72px;
+  height: 21px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0b050d;
+}
+.Primary-Paid {
+  width: 84px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.SecondaryTert-Paid {
+  width: 133px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Patient-Paid {
+  width: 80px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Limitations {
+  width: 81px;
+  height: 21px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0b050d;
+}
+.Authorization-Exp-Date {
+  width: 148px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Authorized-Visits {
+  width: 111px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Remaining-Visits {
+  width: 110px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Max-Annual-Visits {
+  width: 117px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Charge-Limits {
+  width: 91px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Anthem-Federal-Blue-BS332 {
+  width: 212px;
+  height: 21px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0b050d;
+}
+.Date-Paid {
+  width: 64px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Amount-Paid {
+  width: 85px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Insurance-Check- {
+  width: 121px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Date-Billed {
+  width: 71px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Date-Closed {
+  width: 79px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Patient-Payment {
+  width: 120px;
+  height: 21px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.31;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0b050d;
+}
+.Payment-Type {
+  width: 93px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Payment-Method {
+  width: 111px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Ref- {
+  width: 37px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Transaction-Audit {
+  width: 143px;
+  height: 24px;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+.Charges-added-to-visit-superbill {
+  width: 280px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Adrian-Lee {
+  width: 67px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: right;
+  color: #0b050d;
+}
+.Jennifer-Smith {
+  width: 93px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: right;
+  color: #0b050d;
+}
+.expand {
+  width: 16px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Date {
+  width: 25px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Description {
+  width: 62px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Type {
+  width: 26px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.code {
+  width: 28px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Amount {
+  width: 43px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.Co-Pay {
+  width: 39px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.Ins-Paid {
+  width: 44px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.Pat-Paid {
+  width: 45px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.adj-reason {
+  width: 45px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.Adjusted {
+  width: 48px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.Balance {
+  width: 43px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.PT {
+  width: 15px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.Units {
+  width: 28px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.detail-Facility {
+  width: 39px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+}
+.Mod {
+  width: 24px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #4b454c;
+}
+.Rectangle-overview {
+  width: 300px;
+  height: 751px;
+  background-color: #ffffff;
+}
+.Rectangle-claim {
+  width: 300px;
+  height: 520px;
+  background-color: #ffffff;
+}
+.Rectangle-claim-head {
+  width: 300px;
+  height: 44px;
+  background-color: #4f7719;
+}
+.Rectangle-detail {
+  width: 1260px;
+  height: 751px;
+  background-color: #ffffff;
+}
+.Rectangle-search {
+  width: 1880px;
+  height: 80px;
+  background-color: #ffffff;
+}
+.content-background {
+  width: 1900px;
+  height: 863px;
+  background-color: #f1f2f0;
+}
+.date-detail {
+  width: 60px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0b050d;
+}
+.Rectangle-plus {
+  width: 26px;
+  height: 29px;
+  background-color: #e3e6e1;
+}
+.Rectangle-date {
+  width: 80px;
+  height: 29px;
+  background-color: #e3e6e1;
+}
+.Rectangle-description {
+  width: 260px;
+  height: 29px;
+  background-color: #e3e6e1;
+}
+.Rectangle-type {
+  width: 100px;
+  height: 29px;
+  background-color: #e3e6e1;
+}
+.Rectangle-pt {
+  width: 60px;
+  height: 29px;
+  background-color: #e3e6e1;
+}
+.Rectangle-units {
+  width: 50px;
+  height: 29px;
+  background-color: #e3e6e1;
+}
+.Rectangle-voided {
+  width: 90px;
+  height: 22px;
+  background-image: linear-gradient(to bottom, #dddddd, #999999);
+}
+.Show-Voided {
+  width: 70px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: center;
+  color: #0b050d;
+}
+.Name {
+  width: 180px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Rectangle-Name {
+  width: 180px;
+  height: 36px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0);
+}
+.Date-of-Birth {
+  width: 90px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Rectangle-Date-of-Birth {
+  width: 90px;
+  height: 36px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0);
+}
+.Case-Description {
+  width: 90px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Rectangle-Case-Description {
+  width: 90px;
+  height: 36px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0);
+}
+.Facility-main {
+  width: 210px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Rectangle-Facility {
+  width: 210px;
+  height: 36px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0);
+}
+.Selected-Case {
+  width: 93px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Rectangle-Selected-Case {
+  width: 200px;
+  height: 36px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0);
+}
+.Primary-Open {
+  width: 73px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Secondary-Open {
+  width: 89px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Charge {
+  width: 38px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Ins-Payment {
+  width: 67px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Closed {
+  width: 37px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Patient-Payment {
+  width: 90px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Affected-Area {
+  width: 89px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Clinician {
+  width: 58px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}
+.Service-Date {
+  width: 83px;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+  text-align: left;
+  color: #4b454c;
+}

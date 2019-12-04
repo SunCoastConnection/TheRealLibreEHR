@@ -1,0 +1,91 @@
+<style>
+    .do-not-display-this-column {
+        display: none;
+    }
+    .bg-light {
+        background-color: #eee !important
+    }
+
+    .primary-insurance-payment-row {
+        background-color: #6c5bd64d !important;
+    }
+
+    .secondary-insurance-payment-row {
+        background-color: rgba(255, 149, 0, 0.3) !important;
+    }
+
+    .tertiary-insurance-payment-row {
+        background-color: rgba(255, 149, 0, 0.3) !important;
+    }
+
+    .patient-payment-row {
+        background-color: rgb(255, 196, 192) !important;
+    }
+
+    .charges {
+
+    }
+
+    .custom-table {
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+    .bigger_width {
+
+    }
+
+    .clickable {
+        cursor: pointer;
+    }
+</style>
+
+<div class="col-sm-12 col-md-12 custom-table">
+    <table class="table table-striped" id="service-modal-table">
+        <h4>
+            <tr>
+                <td><b>Case</b></td>
+                <td>{CASE_NUMBER}</td>
+                <td><b>Charges</b></td>
+                <td>{CHARGES}</td>
+            </tr>
+            <tr>
+                <td><b>Description</b></td>
+                <td>{DESCRIPTION}</td>
+                <td><b>Unapplied</b></td>
+                <td id="service-modal-unapplied">{UNAPPLIED}</td>
+            </tr>
+            <tr>
+                <td><b>Facility</b></td>
+                <td>{FACILITY}</td>
+                <td><b>Balance</b></td>
+                <td id="service-modal-header-balance">{BALANCE}</td>
+                <td id="service-modal-header-real-balance" style="display: none;">{REAL_BALANCE}</td>
+            </tr>
+            <tr>
+                <td><b>Clinician</b></td>
+                <td>{CLINICIAN}</td>
+            </tr>
+        </h4>
+    </table>
+    <table class="table" id="service-modal-row-table">
+        <tr>
+            <th>Sel</th>
+            <th >Description</th>
+            <th>CPT Code</th>
+            <th>MOD 1</th>
+            <th>MOD 2</th>
+            <th>MOD 3</th>
+            <th>MOD 4</th>
+            <th>Amt</th>
+            <th class="{PRIMARY_PAID_VISIBILITY}">Primary Paid</th>
+            <th class="{SECONDARY_PAID_VISIBILITY}">Secondary Paid</th>
+            <th class="{TERTIARY_PAID_VISIBILITY}">Tertiary Paid</th>
+            <th>Adjustment Item</th>
+            <th>Adjustment Reason</th>
+            <th>Add</th>
+            <th>Balance</th>
+            <th style="display: none;">billing_id</th>
+        </tr>
+        {ROW_DATA}
+    </table>
+</div>

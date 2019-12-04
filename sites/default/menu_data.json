@@ -136,6 +136,7 @@
         "children" : [ ],
         "requirement" : 0
     },{
+
         "label" : "Payment",
         "menu_id" : "pay1",
         "target" : "enc",
@@ -906,6 +907,13 @@
         "menu_id" : "ped0",
         "target" : "msc",
         "url" : "/interface/reports/patient_edu_web_lookup.php",
+        "children" : [ ],
+        "requirement" : 0
+    }, {
+        "label" : "Transactions",
+        "menu_id" : "transactions",
+        "target" : "msc",
+        "url" : "/modules/transaction_screen_module/transactions.php",
         "children" : [ ],
         "requirement" : 0
     }, {

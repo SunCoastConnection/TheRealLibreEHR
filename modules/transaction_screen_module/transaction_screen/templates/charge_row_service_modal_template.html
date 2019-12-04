@@ -1,0 +1,38 @@
+<tr>
+	<td>{CHECK_BOX}</td>
+	<td class="service-modal-description">{DESCRIPTION}</td>
+	<td>{CODE}</td>
+	<td><input type="text" class="form-control" value="{MOD_1}"></td>
+	<td><input type="text" class="form-control" value="{MOD_2}"></td>
+	<td><input type="text" class="form-control" value="{MOD_3}"></td>
+	<td><input type="text" class="form-control" value="{MOD_4}"></td>
+	<td class="service-modal-amount">{BALANCE}</td>
+	<td class="{PRIMARY_PAID_VISIBILITY}">
+		<input type="number" class="form-control
+			service-modal-primary-payment" placeholder="0.00" {IS_PAYMENT_FIELDS_DISABLED}>
+	</td>
+	<td class="{SECONDARY_PAID_VISIBILITY}">
+		<input type="number" class="form-control
+			service-modal-secondary-payment " placeholder="0.00" {IS_PAYMENT_FIELDS_DISABLED}>
+	</td>
+	<td class="{TERTIARY_PAID_VISIBILITY}">
+		<input type="number" class="form-control
+			service-modal-tertiary-payment" placeholder="0.00" {IS_PAYMENT_FIELDS_DISABLED}>
+	</td>
+	<td class="service-modal-adjustment">
+		<input type="number" class="form-control"
+			placeholder="0.00" value="{ADJUST}" step=".01">
+	</td>
+	<td class="service-modal-adjustment-reason">
+		<select class="form-control">
+		{ADJUSTMENT_REASON_OPTION_TEXT}
+		</select>
+	</td>
+	<td class="service-modal-adjustment-add-column"><i class="fa fa-plus service-modal-adjustment-add clickable"></i></td>
+	<td class="service-modal-balance">{BALANCE}</td>
+	<td style="display: none;">{BILLINGID}</td>
+	<!-- data parent attribute is to track all the adjustment columns -->
+	<td class="service-modal-data-storage do-not-display-this-column service-modal-data-storage-{ROW_ID}-elements"
+		id="service-modal-data-storage-{ROW_ID}" data-className="service-modal-data-storage-{ROW_ID}-elements">
+	</td>
+</tr>

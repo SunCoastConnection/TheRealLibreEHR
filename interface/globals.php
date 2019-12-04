@@ -547,4 +547,29 @@ if (!empty($GLOBALS['calendar_timezone'])) {
  This should probably be implemented elsewhere as part of the above include. */
  if ($GLOBALS['facility_acl'] === true){
  include_once "$srcdir/fac_acl.inc.php";}
+
+require_once 'idiorm.php';
+
+$host = $sqlconf["host"];
+$login = $sqlconf["login"];
+$pass = $sqlconf["pass"];
+$dbase = $sqlconf["dbase"];
+
+ORM::configure("mysql:host=$host;dbname=$dbase");
+ORM::configure('username', $login);
+ORM::configure('password', $pass);
+// configure primary keys for table, once configured
+// no need to reconfigure again in all the scripts
+ORM::configure('id_column_overrides', array(
+    'ar_activity' => 'sequence_no',
+    'pt_evaluations' => 'pt_eval_id',
+    'form_encounter'=>'encounter',
+    'globals'=>'gl_name',
+    'pt_evaluation_form_subjective'=>'evaluation_id',
+    'pt_evaluation_form_objective'=>'evaluation_id',
+    'pt_evaluation_form_assessment'=>'evaluation_id',
+    'pt_evaluation_form_plan'=>'evaluation_id',
+));
+
+
 ?>
