@@ -258,7 +258,8 @@ if ($fend > $count) $fend = $count;
 	// echo "That thing:  ", collectItemizedRuleDisplayTitle($report_id,$itemized_test_id,$numerator_label), "<br>";
 	$report_view = collectReportDatabase($report_id);
 	$type_report = $report_view['type'];
-	$report_year = end(explode('_', $type_report));
+	$report_type_array = explode('_', $type_report);
+	$report_year = end($report_type_array);
 	$report_date = $GLOBALS['pqrs_attestation_date']." 23:59:59";
 	$dataSheet = json_decode($report_view['data'],TRUE);
 	foreach ($dataSheet as $row) {
@@ -390,7 +391,7 @@ if ($result) {
 		echo  "			<td class='oneresult srName' style=background-image:url(" . $medicare_flag . ");background-repeat:no-repeat;text-align:center; >" . htmlspecialchars($iter['lname'] . ", " . $iter['fname']) . "</td>\n";
         	echo  "			<td class='oneresult srGender'>" . text(getListItemTitle("sex",$iter['sex'])) . "</td>\n";
         	echo  "			<td class='oneresult srPID'>" . text(getListItemTitle("pubpid",$iter['pubpid'])) . "</td>\n";
-        if ($iter{"DOB"} != "0000-00-00 00:00:00") {
+        if ($iter["DOB"] != "0000-00-00 00:00:00") {
             	echo "			<td class='oneresult srDOB'>" . htmlspecialchars( $iter['DOB_TS'], ENT_NOQUOTES) . "</td>\n";
         } else {
             echo "<td class='srDOB'>&nbsp;</td>";
@@ -403,7 +404,7 @@ if ($result) {
 		$myCode=$thisAnswer['status']."*".$explodedAnswer[2];
 
  //error_log("***** DEBUG *****  foreach: $myOrder  |  $myDesc  |  $myCode | $myPerformance");
-        	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )." \"  value=\"$myCode\" performance=\"$myPerformance\" >$myDesc</label></td>";
+        	echo "<td class='srAnswer'><label><input type=\"radio\" name=\"pidi".htmlspecialchars( $iter['pid'] )."\"  value=\"$myCode\">$myDesc</label></td>";
     }
 		?>
         	<td class='srAnswer'><button type="button" onclick="updatePatient(<?php echo htmlspecialchars( $iter['pid'] ) ?>)">Update</button></td>
@@ -490,7 +491,6 @@ var SelectPatient = function (eObj) {
 	echo "	if(selected.length > 0) {\n";
 	echo "		var date = '".$report_date."';\n";
 	echo "		var code = selected.val();\n";
-	echo "		var performance = '".$myPerformance."';\n";
 	echo "		var report_id = '".$report_id."';\n";
 	echo "		var itemized_test_id = '".$itemized_test_id."';\n\n";
 	echo "		console.log('PID: ' + pid + ', Date: ' + date + ', Code: ' + code);\n\n";
@@ -502,7 +502,6 @@ var SelectPatient = function (eObj) {
 	echo "				pid: pid,\n";
 	echo "				date: date,\n";
 	echo "				CPT2codevalue: code,\n";
-	echo "				performance: performance,\n";
 	echo "				report_id: report_id,\n";
 	echo "				itemized_test_id: itemized_test_id\n";
 	echo "			},\n";

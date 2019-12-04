@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$mydate = $_POST['date'];
 	$mycodeRaw = $_POST['CPT2codevalue'];
 	$mycode = substr($mycodeRaw,2);
-	$myperformance = substr($mycodeRaw,0,1);
+	$pass = substr($mycodeRaw,0,1);
 	$myreport_id = $_POST['report_id'];
 	$myitemized_test_id = $_POST['itemized_test_id'];
 //error_log("DEBUG Main -- POSTed us with pid=".$mypid."  date=".$mydate."  code=".$mycode." performance=".$myperformance." report_id=".$myreport_id." itemized_test_id=".$myitemized_test_id);  //."  encounter=".$encounter."  user/provider=".$userID);
@@ -164,11 +164,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if ( $mypid !='' and $mydate!='' and $mycode!='') {
 
 		$result=AddCPT2CodeEncounter($mypid,$mydate,$mycode);
-        $result2 = update_itemized_report($myperformance, $myreport_id, $myitemized_test_id, $mypid);
+        $result2 = update_itemized_report($pass, $myreport_id, $myitemized_test_id, $mypid);
 //error_log("DEBUG Main -- Post result values: performance=".$myperformance." report_id=".$myreport_id." itemized_test_id=".$myitemized_test_id." pid= ".$mypid );  //."  encounter=".$encounter."  user/provider=".$userID);
-
         		echo 'SUCCESS';
-
 	}
 
 }
