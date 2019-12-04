@@ -1,0 +1,74 @@
+<!-- VARIABLES SUPPLIED TO THIS TEMPLATE SHOULD BE PLACED IN THE UPPER ROW FOR
+        BETTER READABILITY, IF YOU ADD A NEW VARIABLE TO THE TEMPLATE BE SURE TO ADD IT BELOW -->
+        <!-- ROW COUNT -->
+        <!-- INSURANCE TYPE -->
+        <!-- BILL_COUNT -->
+        <!-- BILLING_ID -->
+        <!-- BILLING_FORMATTED_DATE -->
+        <!-- BILLING_CODE -->
+        <!-- BILLING_MODIFIER -->
+        <!-- BILLING_UNITS -->
+        <!-- ENCOUNTER_FACILITY -->
+        <!-- BILLING_FEE -->
+        <!-- FORMATTED_BILLING_FEE -->
+        <!-- FORMATTED_PATIENT_PAID -->
+        <!-- UNFORMATTED_PATIENT_PAID -->
+        <!-- FORMATTED_INSURANCE_PAID -->
+        <!-- UNFORMATTED_PATIENT_PAID -->
+        <!-- FORMATTED ADJUSTMENT_AMOUNT -->
+        <!-- UNFORMATTED_ADJUSTMENT_AMOUNT -->
+        <!-- ADJUSTMENT REASON -->
+        <!-- FORMATTED_TOTAL_WITH_PATIENT_PAID -->
+        <!-- FORMATTED_TOTAL_WITHOUT_PATIENT_PAID -->
+
+<tr class="table-detail-data collapse x-rows-{ROW_COUNT} {ROW_COUNT} bg-white" >
+    <td></td>
+    <td class="billing_id" style="display:none">{BILLING_ID}</td>
+    <td class="date-detail" id="date-detail-row-{ROW_COUNT}-{BILL_COUNT}">
+       {BILLING_FORMATTED_DATE}
+       <!--  <input type="date" value="{BILLING_UNFORMATTED_DATE}" class="billing_date_editable"
+        data-type="billing_table_row" data-billing_id="{BILLING_ID}"> -->
+    </td>
+
+    <td onclick="showServiceDetails({ROW_COUNT})" class="desc-detail description" id="desc-detail-row-{ROW_COUNT}-{BILL_COUNT}">{BILLING_CODE_TEXT}</td>
+    <td class="code-detail code" id="code-detail-row-{ROW_COUNT}-{BILL_COUNT}">{BILLING_CODE}</td>
+    <td class="mode-detail amount" id="mode-detail-row-{ROW_COUNT}-{BILL_COUNT}">{BILLING_MODIFIER}</td>
+    <td class="units-detail-{ROW_COUNT} units" id="units-detail-row-{ROW_COUNT}-{BILL_COUNT}" data-units="{BILLING_UNITS}">
+        {BILLING_UNITS}
+    </td>
+    <td class="facility-detail facility" id="facility-detail-row-{ROW_COUNT}-{BILL_COUNT}">
+        {ENCOUNTER_FACILITY}
+    </td>
+    <td class="amount-detail-{ROW_COUNT} amount" id="amount-detail-row-{ROW_COUNT}-{BILL_COUNT}" data-amount="{FORMATTED_BILLING_FEE}">
+        ${FORMATTED_BILLING_FEE}
+    </td>
+    <td class="pat-paid-detail-{ROW_COUNT} pat-paid" id="pat-paid-detail-row-{ROW_COUNT}-{BILL_COUNT}" data-patient-paid="{UNFORMATTED_PATIENT_PAID}"  data-patient-payment-applied="{APPLIED_PP}">
+        ${APPLIED_PP}
+    </td>
+    <td class="ins-paid-detail-{ROW_COUNT} ins-paid" id="ins-paid-detail-row-{ROW_COUNT}-{BILL_COUNT}" data-ins-paid="{UNFORMATTED_INSURANCE_PAID}">
+        ${FORMATTED_INSURANCE_PAID}
+    </td>
+    <td class="adj-amount-detail-{ROW_COUNT} adjusted" id="adj-amount-row-{ROW_COUNT}-{BILL_COUNT}" data-amount="{UNFORMATTED_ADJUSTMENT_AMOUNT}">
+        ${FORMATTED_ADJUSTMENT_AMOUNT}
+    </td>
+    <td class="adj-reason-detail-{ROW_COUNT} adj-reason adjustment_reason_edit_dialog_trigger" id="adj-reason-row-{ROW_COUNT}-{BILL_COUNT}" data-adjustment-reason={ADJUSTMENT_REASON}>
+        {ADJUSTMENT_REASON}
+    </td>
+    <td class="balance-detail-{ROW_COUNT} balance" id="balance-detail-row-{ROW_COUNT}-{BILL_COUNT}" data-balance="{FORMATTED_TOTAL_WITH_PATIENT_PAID}" data-applied="{APPLIED_PP}" data-unapplied="{UNAPPLIED_PP}">
+        ${FORMATTED_TOTAL_WITHOUT_PATIENT_PAID}
+    </td>
+    <td class="charge_fee" style="display:none">
+        {FORMATTED_BILLING_FEE}
+    </td>
+    <td style="display: none;" class="td-data-storage-row-{ROW_COUNT}"
+        data-date="{BILLING_FORMATTED_DATE}" data-description="{BILLING_CODE_TEXT}"
+        data-code="{BILLING_CODE}" data-modifiers="{BILLING_MODIFIER}" data-units="{BILLING_UNITS}" data-billing-id="{BILLING_ID}"
+        data-facility="{ENCOUNTER_FACILITY}" data-amount="{BILLING_FEE}" data-pat-paid="{UNFORMATTED_PATIENT_PAID}"
+        data-ins-paid="{UNFORMATTED_INSURANCE_PAID}" data-adjust="{UNFORMATTED_ADJUSTMENT_AMOUNT}" data-reason="{ADJUSTMENT_REASON}"
+        data-balance="{FORMATTED_TOTAL_WITH_PATIENT_PAID}" data-row-type="0"
+
+        data-primary-insurance-total="{PRIMARY_INSURANCE_TOTAL}"
+        data-secondary-insurance-total="{SECONDARY_INSURANCE_TOTAL}"
+        data-tertiary-insurance-total="{TERTIARY_INSURANCE_TOTAL}">
+    </td>
+</tr>

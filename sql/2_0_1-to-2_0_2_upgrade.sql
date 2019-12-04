@@ -221,8 +221,20 @@ CREATE TABLE IF NOT EXISTS `transactions_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 #EndIf
 
+#IfMissingColumn patient_data guardian_fname
+  ALTER TABLE `patient_data` ADD `guardian_fname` TEXT  AFTER `guardiansname`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_mname
+  ALTER TABLE `patient_data` ADD `guardian_mname` TEXT  AFTER `guardian_fname`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_lname
+  ALTER TABLE `patient_data` ADD `guardian_lname` TEXT  AFTER `guardian_mname`;
+#EndIf
+
 #IfMissingColumn patient_data guardian_relationship
-  ALTER TABLE `patient_data` ADD `guardian_relationship` TEXT  AFTER `guardiansname`;
+  ALTER TABLE `patient_data` ADD `guardian_relationship` TEXT  AFTER `guardian_lname`;
 #EndIf
 
 #IfMissingColumn patient_data guardian_sex
