@@ -129,6 +129,14 @@
         "children" : [ ],
         "requirement" : 2
     }, {
+        "label" : "New Fee Sheet",
+        "menu_id" : "cod2",
+        "target" : "enc",
+        "url" : "/interface/forms/fee_sheet_new/view.php",
+        "children" : [ ],
+        "requirement" : 0
+    },{
+
         "label" : "Payment",
         "menu_id" : "pay1",
         "target" : "enc",
