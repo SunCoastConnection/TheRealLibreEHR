@@ -32,8 +32,6 @@ require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/headers.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("adjustment_reason_codes.php");
-require_once("$srcdir/global_functions.php");
-call_required_libraries(['jquery-min-3-3-1', 'bootstrap-4-0','font-awesome','vuejs', 'select2']);
 
 $EXPORT_INC = "$webserver_root/custom/BillingExport.php";
 //echo $GLOBALS['daysheet_provider_totals'];
@@ -53,12 +51,6 @@ if ($GLOBALS['use_custom_daysheet'] != 0) {
    $daysheet_total = false;
    $provider_run =  true;
   }
-}
-
-
-$billing_page_selected_criteria = getGlobalValue('billing_page_selected_criteria');
-if (!$billing_page_selected_criteria) {
-  $billing_page_selected_criteria = json_encode(array());
 }
 
 $alertmsg = '';
@@ -121,81 +113,10 @@ $oauthorized = $my_authorized;
 <head>
 <?php if (function_exists('html_header_show')) html_header_show(); ?>
 <link rel="stylesheet" href="<?php echo $css_header; ?>" type="text/css">
-<script type="text/javascript">
-  const billing_report_bus = new Vue()
-</script>
 <style>
-
-.switch {
-  position: absolute;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-}
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-input:checked + .slider {
-  background-color: green;
-}
-input:focus + .slider {
-  box-shadow: 0 0 1px green;
-}
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-/* Rounded sliders */
-.slider.round {
-  border-radius: 24px;
-}
-.slider.round:before {
-  border-radius: 50%;
-}
 .subbtn { margin-top:3px; margin-bottom:3px; margin-left:2px; margin-right:2px }
 </style>
 <script>
-function toggleCodingCompleteStatus(id, toggle) {
-  $.post("ajax/billing_report_api.php", {form_encounter_id:id, toggle:toggle}, function(result){
-  });
-}
-function toggleCodingDoneSwitch(encounter_id, ele) {
-  var toggle = $(ele).prop("checked")
-  if (toggle) {
-    toggle = "1";
-  }
-  else {
-    toggle = "0";
-  }
-  toggleCodingCompleteStatus(encounter_id, toggle)
-}
 
 function select_all() {
   for($i=0;$i < document.update_form.length;$i++) {
@@ -432,9 +353,10 @@ function MarkAsCleared(Type)
 <!-- =============Included for Insurance ajax criteria==== -->
 <!-- ================================================== -->
 <link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
-<!-- <script type="text/javascript" src="../../library/js/jquery-1.7.2.min.js"></script> -->
+<script type="text/javascript" src="../../library/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../library/js/jquery.datetimepicker.full.min.js"></script>
 <?php include_once("{$GLOBALS['srcdir']}/ajax/payment_ajax_jav.inc.php"); ?>
+<script type="text/javascript" src="../../library/js/blink/jquery.modern-blink.js"></script>
 <script type="text/javascript" src="../../library/js/common.js"></script>
 <style>
 #ajax_div_insurance {
@@ -444,16 +366,6 @@ function MarkAsCleared(Type)
     border: 1px solid #ccc;
     padding: 10px;
 }
-
-.js-blink-infinite {
-    animation:js-blink-infinite 1s infinite;
-}
-@keyframes js-blink-infinite {
-  0% { opacity: 1; }
-  75% { opacity: 1; }
-  90%{  opacity: 0; }
-  100%{ opacity: 1; }
-}`
 </style>
 <script language="javascript" type="text/javascript">
 document.onclick=TakeActionOnHide;
@@ -497,65 +409,24 @@ $ThisPageSearchCriteriaQueryDropDownMasterDefaultKey=array();
 $ThisPageSearchCriteriaIncludeMaster=array();
 
 if ($daysheet) {
-$ThisPageSearchCriteriaDisplayMaster= array(xl("Date of Service")
-                                            ,xl("Date of Entry")
-                                            ,xl("Date of Billing")
-                                            ,xl("Patient Name")
-                                            ,xl("Patient Id")
-                                            ,xl("Provider")
-                                            ,xl("Referring Provider")
-                                            ,xl("Insurance Company")
-                                            ,xl("Claim Type")
-                                            ,xl("Encounter")
-                                            ,xl("Whether Insured")
-                                            ,xl("Charge Coded")
-                                            ,xl("Billing Status")
-                                            ,xl("Authorization Status")
-                                            ,xl("Last Level Billed")
-                                            ,xl("X12 Partner")
-                                            ,xl("User")
-                                            ,xl("Ready For Billing")
-                                            ,xl("Account Type")
-                                            ,xl("Facility")
-                                            ,xl("Claims"));
+$ThisPageSearchCriteriaDisplayMaster= array( xl("Date of Service"),xl("Date of Entry"),xl("Date of Billing"),xl("Patient Name"),xl("Patient Id"),xl("Provider"),xl("Referring Provider"),xl("Insurance Company"),xl("Claim Type"),xl("Encounter"),xl("Whether Insured"),xl("Charge Coded"),xl("Billing Status"),xl("Authorization Status"),xl("Last Level Billed"),xl("X12 Partner"),xl("User") );
 $ThisPageSearchCriteriaKeyMaster="form_encounter.date,billing.date,claims.process_time,patient_data.fname,".
                                  "form_encounter.pid,form_encounter.provider_id,form_encounter.referring_physician,insurance_companies.id,claims.target,form_encounter.encounter,insurance_data.provider,billing.id,billing.billed,".
-                                 "billing.authorized,form_encounter.last_level_billed,billing.x12_partner_id,billing.user,form_encounter.coding_complete,insurance_companies.account_type,form_encounter.facility_id,insurance_data.type";
+                                 "billing.authorized,form_encounter.last_level_billed,billing.x12_partner_id,billing.user";
 $ThisPageSearchCriteriaDataTypeMaster="datetime,datetime,datetime,text_like,".
                                       "text,query_drop_down,query_drop_down,include,radio,text,radio,radio,radio,".
-                                      "radio_like,radio,query_drop_down,text,radio,include,include,include";
+                                      "radio_like,radio,query_drop_down,text";
 }
 else
 {
 
-$ThisPageSearchCriteriaDisplayMaster= array( xl("Date of Service")
-                                            ,xl("Date of Entry")
-                                            ,xl("Date of Billing")
-                                            ,xl("Patient Name")
-                                            ,xl("Patient Id")
-                                            ,xl("Provider")
-                                            ,xl("Referring Provider")
-                                            ,xl("Insurance Company")
-                                            ,xl("Claim Type")
-                                            ,xl("Encounter")
-                                            ,xl("Whether Insured")
-                                            ,xl("Charge Coded")
-                                            ,xl("Billing Status")
-                                            ,xl("Authorization Status")
-                                            ,xl("Last Level Billed")
-                                            ,xl("X12 Partner")
-                                            ,xl("Ready For Billing")
-                                            ,xl("Account Type")
-                                            ,xl("Facility")
-                                            ,xl("Claims"));
-
-$ThisPageSearchCriteriaKeyMaster="form_encounter.date,
-billing.date,claims.process_time,patient_data.fname,".
+$ThisPageSearchCriteriaDisplayMaster= array( xl("Date of Service"),xl("Date of Entry"),xl("Date of Billing"),xl("Patient Name"),xl("Patient Id"),xl("Provider"),xl("Referring Provider"),xl("Insurance Company"),xl("Claim Type"),xl("Encounter"),xl("Whether Insured"),xl("Charge Coded"),xl("Billing Status"),xl("Authorization Status"),xl("Last Level Billed"),xl("X12 Partner") );
+$ThisPageSearchCriteriaKeyMaster="form_encounter.date,billing.date,claims.process_time,patient_data.fname,".
                                  "form_encounter.pid,form_encounter.provider_id,form_encounter.referring_physician,insurance_companies.id,claims.target,form_encounter.encounter,insurance_data.provider,billing.id,billing.billed,".
-                                 "billing.authorized,form_encounter.last_level_billed,billing.x12_partner_id,form_encounter.coding_complete,insurance_companies.account_type,form_encounter.facility_id,insurance_data.type";
+                                 "billing.authorized,form_encounter.last_level_billed,billing.x12_partner_id";
 $ThisPageSearchCriteriaDataTypeMaster="datetime,datetime,datetime,text_like,".
                                       "text,query_drop_down,query_drop_down,include,radio,text,radio,radio,radio,".
-                                      "radio_like,radio,query_drop_down,radio,include,include,include";
+                                      "radio_like,radio,query_drop_down";
 
 
 
@@ -576,9 +447,6 @@ $ThisPageSearchCriteriaDisplayRadioMaster[5]= array( xl("All"),xl("Authorized"),
 $ThisPageSearchCriteriaRadioKeyMaster[5]="%,1,0";
 $ThisPageSearchCriteriaDisplayRadioMaster[6]= array( xl("All"),xl("None"),xl("Ins 1"),xl("Ins 2 or Ins 3") );
 $ThisPageSearchCriteriaRadioKeyMaster[6]="all,0,1,2";
-$ThisPageSearchCriteriaDisplayRadioMaster[7] = array( xl("Yes"), xl("No") );
-$ThisPageSearchCriteriaRadioKeyMaster[7]="1,0";
-
 //The below section is needed if there is any 'query_drop_down' type in the $ThisPageSearchCriteriaDataTypeMaster
 $ThisPageSearchCriteriaQueryDropDownMaster[1]="SELECT id, CONCAT(lname, ', ', fname) AS name FROM users WHERE authorized = 1 AND username != '' ORDER BY name ;";
 $ThisPageSearchCriteriaQueryDropDownMasterDefault[1]= xl("All");//Only one item will be here
@@ -589,23 +457,10 @@ $ThisPageSearchCriteriaQueryDropDownMasterDefaultKey[2]="all";//Only one item wi
 $ThisPageSearchCriteriaQueryDropDownMaster[3]="SELECT name,id FROM x12_partners;";
 $ThisPageSearchCriteriaQueryDropDownMasterDefault[3]= xl("All");//Only one item will be here
 $ThisPageSearchCriteriaQueryDropDownMasterDefaultKey[3]="all";//Only one item will be here
-$account_type_data = ORM::for_table('list_options')
-                     ->select('title')
-                     ->where('list_id', 'insurance_account_type')
-                     ->order_by_asc('title')
-                     ->find_array();
-$facility_data = ORM::for_table('facility')
-                 ->select('name')
-                 ->select('id')
-                 ->order_by_asc('name')
-                 ->find_array();
 //The below section is needed if there is any 'include' type in the $ThisPageSearchCriteriaDataTypeMaster
 //Function name is added here.Corresponding include files need to be included in the respective pages as done in this page.
 //It is labled(Included for Insurance ajax criteria)(Line:-279-299).
 $ThisPageSearchCriteriaIncludeMaster[1]="InsuranceCompanyDisplay";//This is php function defined in the file 'report.inc.php'
-$ThisPageSearchCriteriaIncludeMaster[2]="AccountTypeDisplay";
-$ThisPageSearchCriteriaIncludeMaster[3]="FacilityDisplay";
-$ThisPageSearchCriteriaIncludeMaster[4]="ClaimDisplay";
 
 if(!isset($_REQUEST['mode']))//default case
  {
@@ -616,20 +471,13 @@ if(!isset($_REQUEST['mode']))//default case
   $_REQUEST['final_this_page_criteria_text'][1]=xl("Billing Status = Unbilled");
 
   $_REQUEST['date_master_criteria_form_encounter_date']="today";
-  $_REQUEST['master_from_date_form_encounter_date']=(date($DateFormat));
-  $_REQUEST['master_to_date_form_encounter_date']=(date($DateFormat));
+  $_REQUEST['master_from_date_form_encounter_date']=date($DateFormat);
+  $_REQUEST['master_to_date_form_encounter_date']=date($DateFormat);
 
   $_REQUEST['radio_billing_billed']=0;
 
  }
-
-if (isset($_REQUEST['radio_form_encounter_coding_complete'])) {
-  $coding_complete_value = $_REQUEST['radio_form_encounter_coding_complete'];
-array_push($_REQUEST['final_this_page_criteria'], "form_encounter.coding_complete = '$coding_complete_value'");
-}
-
 ?>
-<div class="sticky-top" style="background-color: #fff;">
 <table width='100%' border="0" cellspacing="0" cellpadding="0">
         <tr>
       <td width="25%">&nbsp;</td>
@@ -831,7 +679,6 @@ $list = getBillsListBetween("%");
 ?>
 
 <input type='hidden' name='bill_list' value="<?php echo attr($list); ?>" />
-</div>
 
 
 <!-- new form for uploading -->
@@ -983,25 +830,12 @@ if(is_array($ret))
 
       $name = getPatientData($iter['enc_pid'], "fname, mname, lname, pid, billing_note, DATE_FORMAT(DOB,'%Y-%m-%d') as DOB_YMD");
 
-      # add count on encounter per year for medicare to try and determine if KX modifier is needed
-      #
-      $kx_time = mktime(0,0,0,date('m'),date('d'),date('Y')-1);
-      $kx_date = date($DateFormat, $kx_time);
-      $kxmodch = sqlQuery("select count(*) as count from form_encounter where " .
-        "pid = ? and date >= ? " , array($iter['enc_pid'], $kx_date) );
-
-       #error_log("kx_date: ".$kx_date, 0);
-       #error_log(print_r($kxmodch, true));
-
-       $kx_mod_number = $kxmodch['count'];
-       $kx_mod_message = " KX Modifier Might be needed number of visits = ";
-
       # Check if patient has primary insurance and a subscriber exists for it.
       # If not we will highlight their name in red.
       # TBD: more checking here.
       #
       $res = sqlQuery("select count(*) as count from insurance_data where " .
-        "pid = ? and case_number = ? and " .
+        "pid = ? and " .
         "type='primary' and " .
         "subscriber_relationship != '' and " .
         "subscriber_relationship is not null and " .
@@ -1019,7 +853,7 @@ if(is_array($ret))
         "subscriber_fname is not null and " .
         "subscriber_fname != '' and " .
         "subscriber_lname is not null and " .
-        "subscriber_lname != '' limit 1", array($iter['enc_pid'], $iter['form_enc_case_number']) );
+        "subscriber_lname != '' limit 1", array($iter['enc_pid']) );
       $namecolor = ($res['count'] > 0) ? "black" : "#ff7777";
 
       $bgcolor = "#" . (($encount & 1) ? "ddddff" : "ffdddd");
@@ -1037,16 +871,14 @@ if(is_array($ret))
       #error_log("Color: ".$namecolor, 0);
         $lhtml .= "&nbsp;<span class=js-blink-infinite><font color='$namecolor'>". text($ptname) .
           "</font></span><span class=small>&nbsp;(" . text($iter['enc_pid']) . "-" .
-          text($iter['enc_encounter']) . "-" .
-          text($iter['form_enc_case_number']) . ")</span>";
+          text($iter['enc_encounter']) . ")</span>";
       }else{
         $lhtml .= "&nbsp;<span class=bold><font color='$namecolor'>". text($ptname) .
           "</font></span><span class=small>&nbsp;(" . text($iter['enc_pid']) . "-" .
-          text($iter['enc_encounter']) . "-" .
-          text($iter['form_enc_case_number']) . ")</span>";
+          text($iter['enc_encounter']) . ")</span>";
       }
          //Encounter details are stored to javacript as array.
-        $result4 = sqlStatement("SELECT fe.encounter,fe.date,fe.case_number,fe.billing_note,libreehr_postcalendar_categories.pc_catname FROM form_encounter AS fe ".
+        $result4 = sqlStatement("SELECT fe.encounter,fe.date,fe.billing_note,libreehr_postcalendar_categories.pc_catname FROM form_encounter AS fe ".
             " left join libreehr_postcalendar_categories on fe.pc_catid=libreehr_postcalendar_categories.pc_catid  WHERE fe.pid = ? order by fe.date desc", array($iter['enc_pid']) );
            if(sqlNumRows($result4)>0)
             ?>
@@ -1086,26 +918,12 @@ if(is_array($ret))
         ",'" . addslashes($name['pid']) .
         "','" . addslashes($ptname) . "'," . $iter['enc_encounter'] .
         ",'" . oeFormatShortDate($raw_encounter_date) . "',' " .
-        xl('DOB') . ": " . oeFormatShortDate($name['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAge($name['DOB_YMD']) . "','" . $iter['form_enc_case_number'] . "');
+        xl('DOB') . ": " . oeFormatShortDate($name['DOB_YMD']) . " " . xl('Age') . ": " . getPatientAge($name['DOB_YMD']) . "');
                  top.window.parent.left_nav.setPatientEncounter(EncounterIdArray[" . $iter['enc_pid'] . "],EncounterDateArray[" . $iter['enc_pid'] .
                  "], CalendarCategoryArray[" . $iter['enc_pid'] . "])\">[" . xlt('To Dems') . "]</a>";
         $divnos=$divnos+1;
-
-      $coding_complete = $iter['form_enc_coding_done'];
-      $checkedOrNot = "";
-      if ($coding_complete == "1") {
-        $checkedOrNot = "checked";
-      }
-
       $lhtml .= "&nbsp;&nbsp;&nbsp;<a  onclick='divtoggle(\"spanid_$divnos\",\"divid_$divnos\");' class='small' id='aid_$divnos' href=\"JavaScript:void(0);".
-        "\">(<span id=spanid_$divnos class=\"indicator\">" . htmlspecialchars( xl('Expand'), ENT_QUOTES) . '</span>)</a>
-
-        <label class="switch">
-          <input type="checkbox"'. $checkedOrNot.' onclick="toggleCodingDoneSwitch('.$iter['form_enc_id'].', this);">
-          <span class="slider round"></span>
-        </label>
-
-        ';
+        "\">(<span id=spanid_$divnos class=\"indicator\">" . htmlspecialchars( xl('Expand'), ENT_QUOTES) . '</span>)<br></a>';
       if($GLOBALS['notes_to_display_in_Billing'] == 2 || $GLOBALS['notes_to_display_in_Billing'] == 3){
       $lhtml .= '<span style="margin-left: 20px; font-weight bold; color: red">'.text($billing_note).'</span>';
       }
@@ -1118,15 +936,14 @@ if(is_array($ret))
         $lhtml .= "<select name='claims[" . attr($this_encounter_id) . "][payer]' style='background-color:$bgcolor'>";
 
         $query = "SELECT id.provider AS id, id.type, id.date, " .
-          "ic.x12_default_partner_id AS ic_x12id, ic.name AS provider, ic.account_type AS acct_type " .
+          "ic.x12_default_partner_id AS ic_x12id, ic.name AS provider " .
           "FROM insurance_data AS id, insurance_companies AS ic WHERE " .
           "ic.id = id.provider AND " .
           "id.pid = ? AND " .
-          "id.case_number = ? AND " .
           "id.date <= ? " .
           "ORDER BY id.type ASC, id.date DESC";
 
-        $result = sqlStatement($query, array($iter['enc_pid'], $iter['form_enc_case_number'], $raw_encounter_date) );
+        $result = sqlStatement($query, array($iter['enc_pid'],$raw_encounter_date) );
         $count = 0;
         $default_x12_partner = $iter['ic_x12id'];
         $prevtype = '';
@@ -1134,9 +951,6 @@ if(is_array($ret))
         while ($row = sqlFetchArray($result)) {
           if (strcmp($row['type'], $prevtype) == 0) continue;
           $prevtype = $row['type'];
-          if($prevtype == 'primary') {
-            $kx_insco = $row['acct_type'];
-          }
           if (strlen($row['provider']) > 0) {
             // This preserves any existing insurance company selection, which is
             // important when EOB posting has re-queued for secondary billing.
@@ -1166,37 +980,7 @@ if(is_array($ret))
         $DivPut='yes';
 
         if($GLOBALS['notes_to_display_in_Billing'] == 1 || $GLOBALS['notes_to_display_in_Billing'] == 3) {
-            #if insurance company account type = medicare show kx message
-            # Terry $iter['modifier'] contains the modifiers
-            # error_log(print_r($iter, true));
-         if(strpos($kx_insco, 'MEDICARE') !== false) {
-             # Test the pt_case_info file for the referring phy and script date based on the case number $iter['form_enc_case_number']
-              $sql = "SELECT * FROM pt_case_info WHERE " .
-              "pci_case_number = '{$iter['form_enc_case_number']}' ";
-              //"case_number = '{$this->encounter['case_number']}' "
-              $referral_info = sqlQuery($sql);
-//           error_log(print_r($referral_info, true));
-              if (empty($referral_info['pci_physician_referral_id'])) {  $no_referrer = true; }
-              if (empty($referral_info['pci_physician_referral_date'])) {  $no_referral_date = true; }
-              //error_log("no_referrer: ".$no_referrer, 0);
-              //error_log("no_referral_date: ".$no_referral_date, 0);
-         }
-         if((strpos($kx_insco, 'MEDICARE') !== false) && ($no_referrer || $no_referral_date)) {
-              //error_log("no_referrer: ".$no_referrer, 0);
-              //error_log("no_referral_date: ".$no_referral_date, 0);
-              if($no_referrer && $no_referral_date) {
-                  $lhtml .= "<br><span style='margin-left: 20px; font-weight bold; color: Purple'>".xlt("Referring Physician AND Script Date Missing")."</span>";
-              } elseif($no_referrer) {
-                 $lhtml .= "<br><span style='margin-left: 20px; font-weight bold; color: Purple'>".xlt("Referring Physician Missing")."</span>";
-              } else {
-                 $lhtml .= "<br><span style='margin-left: 20px; font-weight bold; color: Purple'>".xlt("Script Date Missing")."</span>";
-              }
-         }
-         if((strpos($kx_insco, 'MEDICARE') !== false) && $kx_mod_number >= '17') {
-          $lhtml .= "<br><span style='margin-left: 20px; font-weight bold; color: green'>".text($iter['enc_billing_note']).text($kx_mod_message).text($kx_mod_number)."</span>";
-         }else{
           $lhtml .= "<br><span style='margin-left: 20px; font-weight bold; color: green'>".text($iter['enc_billing_note'])."</span>";
-        }
         }
           $lhtml .= "<br>\n&nbsp;<div   id='divid_$divnos' style='display:none'>" . text(oeFormatShortDate(substr($iter['date'], 0, 10)))
           . text(substr($iter['date'], 10, 6)) . " " . xlt("Encounter was coded");
@@ -1214,12 +998,11 @@ if(is_array($ret))
             "FROM insurance_data AS id, insurance_companies AS ic WHERE " .
             "id.pid = ? AND " .
             "id.provider = ? AND " .
-            "id.case_number = ? AND " .
             "id.date <= ? AND " .
             "ic.id = id.provider " .
             "ORDER BY id.type ASC, id.date DESC";
 
-          $irow= sqlQuery($query, array($iter['enc_pid'],$crow['payer_id'],$iter['form_enc_case_number'],$raw_encounter_date) );
+          $irow= sqlQuery($query, array($iter['enc_pid'],$crow['payer_id'],$raw_encounter_date) );
 
           if ($crow['bill_process']) {
             $lhtml .= "<br>\n&nbsp;" .
@@ -1516,278 +1299,8 @@ $(document).ready(function() {
     });
 
 
+          $('.js-blink-infinite').modernBlink();
 });
-</script>
-<?php
-  $insurance_companies_data = ORM::for_table('insurance_companies')
-                                   ->select('name')
-                                   ->select('id', 'value')
-                                   ->order_by_asc('name')
-                                   ->find_array();
-
-?>
-<style type="text/css">
-  .select2-search__field {
-    width: 100px !important;
-  }
-  .select2-selection__rendered {
-    height: 70px !important;
-    overflow-y: scroll !important;
-  }
-</style>
-<script type="text/javascript">
-Vue.directive('select2', {
-    inserted(el) {
-        $(el).on('select2:select', () => {
-            const event = new Event('change', { bubbles: true, cancelable: true });
-            el.dispatchEvent(event);
-        });
-
-        $(el).on('select2:unselect', () => {
-            const event = new Event('change', {bubbles: true, cancelable: true})
-            el.dispatchEvent(event)
-        })
-    },
-});
-
-$(document).ready(function() {
-  $('#insurance_companies_selection_box').select2()
-  $('#selected_account_type_selection_box').select2()
-  $('#facility_selection_box').select2()
-})
-
-    new Vue({
-      el: "#insurance_company_chooser",
-      created() {
-        this.setUpAddOptionReceiver()
-        billing_report_bus.$on('selected_criteria_changed', function() {
-          var criteria_selection_box = document.getElementById('final_this_page_criteria')
-          const options = criteria_selection_box.options;
-          const criteria_information = {}
-          for(option of options) {
-            criteria_information[option.text] = option.value
-          }
-          const post_object = {
-            'save_selected_criteria':"true",
-            'selected_criteria': criteria_information
-          }
-          this.$http.post('ajax/billing_report_api.php', post_object, {emulateJSON:true}).then(response=>{
-
-          })
-        })
-
-        if (this.saved_criteria_information != undefined && Object.keys(this.saved_criteria_information).length > 0) {
-          // clear out the defaults
-          $('#final_this_page_criteria').empty()
-        }
-
-        for (let key in this.saved_criteria_information) {
-          const value = this.saved_criteria_information[key]
-          billing_report_bus.$emit('add-option-to-selected-criteria', key, key, value)
-        }
-
-
-      },
-
-      data: {
-        insurance_companies_data: <?php echo json_encode($insurance_companies_data); ?>,
-        selected_insurance_companies: [],
-        is_companies_excluded: false,
-        saved_criteria_information: <?php echo $billing_page_selected_criteria; ?>
-      },
-      watch: {
-        is_companies_excluded: function(newValue) {
-          this.changeInsuranceCompanyQuery()
-        },
-
-        selected_insurance_companies: function(newValue) {
-          this.changeInsuranceCompanyQuery()
-        }
-      },
-
-      methods: {
-        changeInsuranceCompanyQuery() {
-
-          const identifier = "Insurance companies = "
-          const insurance_company_names = this.getInsuranceCompanyNamesString(this.selected_insurance_companies)
-          var text = identifier + insurance_company_names
-          if (this.is_companies_excluded) {
-            text += " (excluded)"
-          }
-          const value = this.getConstructedQuery()
-          billing_report_bus.$emit("add-option-to-selected-criteria", identifier, text, value)
-          billing_report_bus.$emit('selected_criteria_changed')
-
-        },
-
-        getInsuranceCompanyNamesString(selected_options) {
-          var insurance_company_names = ""
-          for (item of selected_options) {
-              insurance_company_names += item.name + ","
-          }
-          // remove last , from names
-          return insurance_company_names.slice(0, -1);
-        },
-
-        getConstructedQuery() {
-          var sql_query = ""
-          const selected_options = this.selected_insurance_companies
-          for (item of selected_options) {
-            if (this.is_companies_excluded) {
-              sql_query += " insurance_companies.id != " + item.value + " AND"
-            }
-            else {
-              sql_query += " insurance_companies.id = " + item.value + "  OR"
-            }
-          }
-
-          return sql_query.slice(0, -3);
-
-        },
-
-        setUpAddOptionReceiver() {
-              // identifier is used to identify if the option is present in the options or not
-                // it is usually a substring of the text, so every filter should have its own identifier in text
-                billing_report_bus.$on('add-option-to-selected-criteria', function(identifier, text, value) {
-                    var option_index = -1
-                    var criteria_selection_box = document.getElementById('final_this_page_criteria')
-                    const options = criteria_selection_box.options;
-                    var index = 0;
-                    for (option of options) {
-                        if (option.text.includes(identifier)) {
-                          option_index = index
-                          break;
-                        }
-                        index += 1
-                    }
-                    if (option_index == -1) {
-                      // no options found, so insert new option
-                      const new_option = new Option(text,value)
-                      if (value != "") {
-                         // non empty values are not allowed
-                        criteria_selection_box.add(new_option)
-                      }
-                    }
-                    else {
-                      criteria_selection_box.options[option_index].text = text
-                      criteria_selection_box.options[option_index].value = value
-                        if (value == "") {
-                            criteria_selection_box.remove(option_index)
-                        }
-                    }
-                })
-        }
-
-      }
-    })
-
-new Vue({
-  el: "#facility_chooser",
-  data: {
-    facility_data: <?php echo json_encode($facility_data); ?>,
-    selected_facilities:[],
-  },
-
-    watch: {
-        selected_facilities: function(newValue) {
-          this.changeFacilitySelectedCriteria()
-        }
-    },
-
-    methods: {
-
-      changeFacilitySelectedCriteria() {
-        const identifier = "Selected Facilities"
-        const text = identifier+" = " + this.constructFacilityText()
-        const value = this.constructFacilityQuery()
-        billing_report_bus.$emit("add-option-to-selected-criteria", identifier, text, value)
-        billing_report_bus.$emit('selected_criteria_changed')
-      },
-
-      constructFacilityText() {
-        var facility_text = ""
-        for (item of this.selected_facilities) {
-          facility_text += item.name + ","
-        }
-        return facility_text.slice(0, -1);
-      },
-
-      constructFacilityQuery() {
-        var sql_query = ""
-        for (item of this.selected_facilities) {
-          sql_query += " form_encounter.facility_id = '" + item.id + "'  OR"
-        }
-        return sql_query.slice(0, -2);
-      },
-
-    }
-
-})
-
-
-new Vue({
-  el: "#claim_chooser",
-  data: {
-    claim_data:["secondary", "tertiary"],
-    selected_claim_type:""
-  },
-  watch: {
-    selected_claim_type: function(newValue) {
-      const text = "Claim = " + newValue
-      const value = "insurance_data.type='" + newValue + "'"
-      const identifier = "Claim"
-      billing_report_bus.$emit("add-option-to-selected-criteria", identifier, text, value)
-      billing_report_bus.$emit('selected_criteria_changed')
-    }
-  }
-})
-
-
-  new Vue({
-    el:"#account_type_element",
-    data: {
-      account_type_data: <?php echo json_encode($account_type_data); ?>,
-      selected_account_types: [],
-    },
-
-    watch: {
-        selected_account_types: function(newValue) {
-          this.changeAccountTypeSelectedCriteria()
-        }
-    },
-
-    methods: {
-
-      changeAccountTypeSelectedCriteria() {
-        const identifier = "Account type"
-        const text = identifier+" = " + this.constructAccountTypeText()
-        const value = this.constructAccountTypeQuery()
-        billing_report_bus.$emit("add-option-to-selected-criteria", identifier, text, value)
-        billing_report_bus.$emit('selected_criteria_changed')
-      },
-
-      constructAccountTypeText() {
-        var account_type_text = ""
-        for (item of this.selected_account_types) {
-          account_type_text += item.title + ","
-        }
-        return account_type_text.slice(0, -1);
-      },
-
-      constructAccountTypeQuery() {
-        var sql_query = ""
-        for (item of this.selected_account_types) {
-          sql_query += " insurance_companies.account_type = '" + item.title + "'  OR"
-        }
-        return sql_query.slice(0, -2);
-      },
-
-    }
-
-
-  })
-
-
 </script>
 <input type="hidden" name="divnos"  id="divnos" value="<?php echo attr($divnos) ?>"/>
 <input type='hidden' name='ajax_mode' id='ajax_mode' value='' />
