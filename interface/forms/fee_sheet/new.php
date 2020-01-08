@@ -274,7 +274,7 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
   else { // not billed
     if (modifiers_are_used(true)) {
       if ($codetype != 'COPAY' && ($code_types[$codetype]['mod'] || $modifier)) {
-        echo "  <td class='billcell'><input type='text' name='bill[".attr($lino)."][mod]' " .
+        echo "  <td class='billcell'><input type='text' class='modifier_column' name='bill[".attr($lino)."][mod]' " .
              "value='" . attr($modifier) . "' " .
              "title='" . xla("Multiple modifiers can be separated by colons or spaces, maximum of 4 (M1:M2:M3:M4)") . "' " .
              "value='" . attr($modifier) . "' size='" . attr($code_types[$codetype]['mod']) . "'></td>\n";
@@ -733,7 +733,7 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
   }
   $bindingArray = array($main_provid,$main_supid,$main_order,$main_referr,$main_contract,$codingcomplete,$pid,$encounter);
 
-  $res = sqlStatement("UPDATE form_encounter SET provider_id = ?, supervisor_id = ?, ordering_physician = ?, referring_physician = ?, contract_physician = ?, coding_complete = ?  WHERE pid = ? AND encounter = ?",  $bindingArray);
+  $res = sqlStatement("UPDATE `form_encounter` SET provider_id = ?, supervisor_id = ?, ordering_physician = ?, referring_physician = ?, contract_physician = ?, coding_complete = ?  WHERE pid = ? AND encounter = ?",  $bindingArray);
 
   // Save-and-Close is currently IPPF-specific but might be more generally
   // useful.  It provides the ability to mark an encounter as billed
@@ -1210,12 +1210,23 @@ echo " </tr>\n";
   }
   $size_select = (count($nofs_code_types) < 5) ? count($nofs_code_types) : 5;
 ?>
-      <label id="CPT4">
-      <input type="radio" name="search_type" value="CPT4" checked />&nbsp;CPT4 Procedure/Service</label>
-      <br/>
-      <label id="ICD10">
-      <input type="radio" name="search_type" value="ICD10" />&nbsp;ICD10 Diagnosis</label>
-      <br/>
+  <?php
+
+
+    $active_codes = ORM::for_table('code_types')
+            ->select('ct_key', 'value')
+            ->select('ct_label', 'description')
+            ->where('ct_active',1)
+            ->find_array();
+
+    foreach ($active_codes as $code) {
+      $value = $code['value'];
+      $description = $code['description'];
+      echo '<input type="radio" name="search_type" value="'.$value.'"/>&nbsp;'.$description.'</label>
+            <br/>';
+    }
+
+  ?>
   </td>
   <td>
    <input type='text' name='search_term' value=''> &nbsp;
@@ -1677,6 +1688,23 @@ $('input:radio').change(function(){
   }
   let selectedArray = SPINNER_DATA_SORTED_ARRAY[index].categoryOptions;
   adjustSpinnerOptionsAccordingToRadioBox("#patient_selector", selectedArray)
+});
+
+
+$(document).on('keydown', '.modifier_column', function() {
+    var modifier_value = $(this).val().split(' ').join('');
+    const modifier_array = modifier_value.split("")
+    var new_modifier_value = ""
+    var index = 0
+    for (let value of modifier_array) {
+        //console.log(value)
+        if (index != 0 && index % 2 == 0) {
+          new_modifier_value += " "
+        }
+        new_modifier_value += value
+        index += 1
+    }
+    $(this).val(new_modifier_value.substr(0,10))
 });
 });
 </script>
