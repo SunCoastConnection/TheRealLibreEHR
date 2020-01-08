@@ -733,7 +733,7 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
   }
   $bindingArray = array($main_provid,$main_supid,$main_order,$main_referr,$main_contract,$codingcomplete,$pid,$encounter);
 
-  $res = sqlStatement("UPDATE `form_encounter` SET provider_id = ?, supervisor_id = ?, ordering_physician = ?, referring_physician = ?, contract_physician = ?, coding_complete = ?  WHERE pid = ? AND encounter = ?",  $bindingArray);
+  $res = sqlStatement("UPDATE form_encounter SET provider_id = ?, supervisor_id = ?, ordering_physician = ?, referring_physician = ?, contract_physician = ?, coding_complete = ?  WHERE pid = ? AND encounter = ?",  $bindingArray);
 
   // Save-and-Close is currently IPPF-specific but might be more generally
   // useful.  It provides the ability to mark an encounter as billed
