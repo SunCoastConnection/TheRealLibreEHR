@@ -1,6 +1,6 @@
 <?php
 /**
- * Functions to help search for codes on the fee sheet
+ * library to simplify processing code_types
  * 
  * Copyright (C) 2013 Kevin Yeh <kevin.y@integralemr.com> and OEMR <www.oemr.org>
  *
@@ -15,29 +15,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
-require_once("$srcdir/../custom/code_types.inc.php");
 
-/**
- * 
- * wrapper for sequential code set search
- * 
- * @param type $search_type_id      The integer ID used for code_type in codes (e.g. 2 for ICD9)
- * @param type $search_type         A string representing the code type to be searched on (e.g. ICD9, DSMIV)
- * @param type $search_query        The text to search on.
- * @return array
- */
-function diagnosis_search($search_type_id,$search_type,$search_query)
+
+function diag_code_types($format='json',$sqlEscape=false)
 {
-    $retval=array();
-    $search=main_code_set_search($search_type,$search_query,20);
-    while($code=sqlFetchArray($search))
+    global $code_types;
+    $diagCodes=array();
+    foreach($code_types as $key=>$ct)
     {
-        array_push($retval,new code_info($code['code'],$search_type,$code['code_text']));
+        if($ct['active'] && $ct['diag'] )
+        {
+            if($format=='json')
+            {
+                $entry=array("key"=>$key,"id"=>$ct['id']);
+            }
+            else if($format=='keylist')
+            {
+                $entry="'";
+                $entry.= $sqlEscape ? add_escape_custom($key) : $key;
+                $entry.="'";
+            }
+            array_push($diagCodes,$entry);
+        }
     }
-    return $retval;            
+    if($format=='json')
+    {
+        return json_encode($diagCodes);
+    }
+    if($format=='keylist')
+    {
+        return implode(",",$diagCodes);    
+    }
 }
 ?>

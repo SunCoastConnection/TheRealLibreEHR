@@ -1,6 +1,6 @@
 <?php
 /**
- * Controller for getting information about fee sheet options
+ * Controller for AJAX requests to search for codes from the fee sheet
  * 
  * Copyright (C) 2013 Kevin Yeh <kevin.y@integralemr.com> and OEMR <www.oemr.org>
  *
@@ -15,15 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
 $fake_register_globals=false;
 $sanitize_all_escapes=true;
-
 require_once("../../../globals.php");
-require_once("fee_sheet_options_queries.php");
+require_once("fee_sheet_classes.php");
+require_once("fee_sheet_search_queries.php");
 
 if(!acl_check('acct', 'bill'))
 {
@@ -31,18 +31,34 @@ if(!acl_check('acct', 'bill'))
     echo "Not authorized for billing";   
     return false;
 }
-if (isset($_REQUEST['pricelevel']))
+
+if(isset($_REQUEST['search_query']))
 {
-    $pricelevel=$_REQUEST['pricelevel'];
+    $search_query=$_REQUEST['search_query'];
 }
 else
 {
-    $pricelevel='standard';
+    header("HTTP/1.0 403 Forbidden");    
+    echo "No search parameter specified";   
+    return false;
 }
+if(isset($_REQUEST['search_type']))
+{
+    $search_type=$_REQUEST['search_type'];
+}
+else 
+{
+    $search_type='ICD9';
+}
+if(isset($_REQUEST['search_type_id']))
+{
+    $search_type_id=$_REQUEST['search_type_id'];
+}
+else
+{
+    $search_type_id=2;
+}
+$retval['codes']=diagnosis_search($search_type_id,$search_type,$search_query);
 
-$fso=load_fee_sheet_options($pricelevel);
-$retval=array();
-$retval['fee_sheet_options']=$fso;
-$retval['pricelevel']=$pricelevel;
 echo json_encode($retval);
 ?>

@@ -1,6 +1,7 @@
 <?php
 /**
- * Controller for getting information about fee sheet options
+ * knockoutjs template for rendering the procedure selector when reviewing
+ * old fee sheets
  * 
  * Copyright (C) 2013 Kevin Yeh <kevin.y@integralemr.com> and OEMR <www.oemr.org>
  *
@@ -15,34 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package LibreHealth EHR
+ * @package Libre EHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://librehealth.io
+ * @link    http://LibreEHR.org
  */
-$fake_register_globals=false;
-$sanitize_all_escapes=true;
-
-require_once("../../../globals.php");
-require_once("fee_sheet_options_queries.php");
-
-if(!acl_check('acct', 'bill'))
-{
-    header("HTTP/1.0 403 Forbidden");    
-    echo "Not authorized for billing";   
-    return false;
-}
-if (isset($_REQUEST['pricelevel']))
-{
-    $pricelevel=$_REQUEST['pricelevel'];
-}
-else
-{
-    $pricelevel='standard';
-}
-
-$fso=load_fee_sheet_options($pricelevel);
-$retval=array();
-$retval['fee_sheet_options']=$fso;
-$retval['pricelevel']=$pricelevel;
-echo json_encode($retval);
 ?>
+<script type="text/html" id="procedure-select">
+    <select data-bind="options: procedure_choices, optionsText: function(item){ return (item.code + ' ' + item.description);}, value:procedure_choice, event: {change: change_procedure}"></select>
+</script>
