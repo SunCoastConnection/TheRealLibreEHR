@@ -940,7 +940,7 @@ if(is_array($ret))
           "FROM insurance_data AS id, insurance_companies AS ic WHERE " .
           "ic.id = id.provider AND " .
           "id.pid = ? AND " .
-          "id.date >= ? AND (id.eDate <= ? OR id.eDate = '0000-00-00') " .
+          "id.date <= ? AND (id.eDate >= ? OR id.eDate = '0000-00-00') " .
           "ORDER BY id.type ASC, id.date DESC";
 
         $result = sqlStatement($query, array($iter['enc_pid'],$raw_encounter_date,$raw_encounter_date) );
