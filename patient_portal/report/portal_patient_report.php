@@ -455,7 +455,7 @@ while($result2 = sqlFetchArray($res2)) {
     array_push($registry_form_name,trim($result2['name']));
 }
 while($result = sqlFetchArray($res)) {
-    if ($result{"form_name"} == "New Patient Encounter") {
+    if ($result{"form_name"} == "Patient Encounter") {
         if ($isfirst == 0) {
             foreach($registry_form_name as $var) {
                 if ($toprint = $html_strings[$var]) {
