@@ -108,7 +108,7 @@ $USER_SPECIFIC_TABS = array('Appearance',
                             'Locale',
                             'Report',
                             'Encounter',
-                            'Claim',
+                            'Claims',
                             'Demographic',
                             'Calendar',
                             'Connectors',
@@ -1120,7 +1120,15 @@ $GLOBALS_METADATA = array(
       '0',                              // default
       xl('Require the Entry of the Primary Insurance in the New Patient Screen')
 
-  ),
+   ),
+
+   'account_in_collections' => array(
+      xl('Indicate that an Account is In Collections on the Patient Finder'),
+      'bool',
+      '0',                              // default
+      xl('Indicate that an Account is In Collections on the Patient Finder, Patient Name Displayed in Red')
+
+    ),
 
   ),
 
