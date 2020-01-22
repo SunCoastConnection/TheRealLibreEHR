@@ -18,7 +18,7 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
  * @package Libre EHR
- 
+
  * @author  Terry Hill <teryhill@yahoo.com>
  * @link    http://LibreEHR.org
  */
@@ -59,7 +59,7 @@ $ires = sqlStatement("SELECT id, type, title, begdate FROM lists WHERE " .
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<?php 
+<?php
   html_header_show();
   call_required_libraries(array("jquery-min-3-1-1","bootstrap","datepicker","fancybox"));
 ?>
@@ -170,7 +170,7 @@ function cancelClicked() {
     <textarea class="form-control input-sm" style="resize:none" name='reason' cols='40' rows='12' wrap='virtual'>
       <?php echo $viewmode ? text($result['reason']) : text($GLOBALS['default_chief_complaint']); ?>
     </textarea>
-    <hr>  
+    <hr>
   </div>
   <div class="col-xs-12 col-sm-4 col-lg-4 ">
    <table>
@@ -284,10 +284,10 @@ function cancelClicked() {
      </td>
     </tr>
 
-    <tr<?php if ($GLOBALS['ippf_specific']) echo " style='visibility:hidden;'"; ?>>
+    <tr<?php if (!$GLOBALS['display_onset_date_entry']) echo " style='visibility:hidden;'"; ?>>
      <td class='bold' ><?php echo xlt('Onset/hosp. date:'); ?></td>
      <td class='text' ><!-- default is blank so that while generating claim the date is blank. -->
-      <input type='text' size='10' name='form_onset_date' id='form_onset_date' 
+      <input type='text' size='10' name='form_onset_date' id='form_onset_date'
              value='<?php echo $viewmode && $result['onset_date']!='0000-00-00 00:00:00' ? oeFormatShortDate(substr($result['onset_date'], 0, 10)) : ''; ?>'
              title='<?php echo xla('Date of onset or hospitalization'); ?>'/>
      </td>
@@ -311,7 +311,7 @@ function cancelClicked() {
        onclick="top.restoreSession()"><span><?php echo xlt('Add'); ?></span></a>
     </div>
     <div>
-    <select multiple class="form-control input-sm" name='issues[]' size='8' 
+    <select multiple class="form-control input-sm" name='issues[]' size='8'
       title='<?php echo xla('Hold down [Ctrl] for multiple selections or to unselect'); ?>'>
         <?php
         while ($irow = sqlFetchArray($ires)) {
@@ -340,7 +340,7 @@ function cancelClicked() {
    . 'Hold down [Ctrl] button to select multiple issues.'); ?>
    </i></p>
 
- </div> 
+ </div>
 
 </div>
 
@@ -375,14 +375,14 @@ if (!$viewmode) { ?>
             return;
         }
         // otherwise just continue normally
-    }    
+    }
 <?php
 
   // Search for an encounter from today
   $erow = sqlQuery("SELECT fe.encounter, fe.date " .
     "FROM form_encounter AS fe, forms AS f WHERE " .
-    "fe.pid = ? " . 
-    " AND fe.date >= ? " . 
+    "fe.pid = ? " .
+    " AND fe.date >= ? " .
     " AND fe.date <= ? " .
     " AND " .
     "f.formdir = 'patient_encounter' AND f.form_id = fe.id AND f.deleted = 0 " .
@@ -396,7 +396,7 @@ if (!$viewmode) { ?>
 }
 ?>
 </script>
-<?php 
+<?php
   /*
    Making fancybox compatible with jquery 3.1.1 as $.browser is removed in jquery 1.9
   */
