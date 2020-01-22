@@ -228,7 +228,10 @@ foreach ($result as $iter) {
     // If billing note exists, then it gets special coloring and an extra line of output
     // in the 'name' column.
     $trClass = "oneresult";
-    if (!empty($iter['billing_note'])) { $trClass .= " billing"; }
+    // need to change this to show black for non collection billing notes.
+    if ( stristr($iter['billing_note'], 'IN COLLECTIONS') !== false ) {
+        $trClass .= " billing";
+    }
 
     echo " <tr class='".$trClass."' id='" .
         htmlspecialchars( $iterpid."~".$iterlname."~".$iterfname."~".$iterdob, ENT_QUOTES) . "'>";
