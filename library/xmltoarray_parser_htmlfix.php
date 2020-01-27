@@ -44,7 +44,7 @@ class xmltoarray_parser_htmlfix_class{
 	/**
 	 * Default constructor for xmltoarray_parser_htmlfix.
 	 */
-	function xmltoarray_parser_htmlfix(){
+	function __construct(){
 		$this->values = array(); 
 		$this->index  = array(); 
 		$this->thearray  = array(); 
