@@ -14,11 +14,11 @@ require_once 'components/quick_pick_component.html';
 
 <div id="fee_sheet_screen">
     <div class="col-sm-12 bg-light text-center" ref="button_area">
-        <button class="btn btn-lg" @click="buttonClicked('duplicate')">Duplicate</button>
-        <button class="btn btn-lg" @click="buttonClicked('quick_pick')">Quick Pick</button>
-        <button class="btn btn-lg" @click="buttonClicked('search')">Search</button>
-        <button class="btn btn-lg" @click="buttonClicked('authorise')">Authorise</button>
-        <button class="btn btn-lg" @click="buttonClicked('save')">Save</button>
+        <button class="btn btn-sm" @click="buttonClicked('duplicate')">Duplicate</button>
+        <button class="btn btn-sm" @click="buttonClicked('quick_pick')">Quick Pick</button>
+        <button class="btn btn-sm" @click="buttonClicked('search')">Search</button>
+        <button class="btn btn-sm" @click="buttonClicked('authorise')">Authorise</button>
+        <button class="btn btn-sm" @click="buttonClicked('save')">Save</button>
     </div>
 
 
