@@ -7,8 +7,9 @@
 
 // Pull in globals settings
 $usermenufile = $GLOBALS['OE_SITE_DIR'] . "/menu_data.json";
-$SQL_ADMIN = $GLOBALS['sql_admin_tool_url'];
-
+if (isset($GLOBALS['sql_admin_tool_url'])){
+    $SQL_ADMIN = $GLOBALS['sql_admin_tool_url'];
+}
 // Load JSON Menu file from sites directory
 $menu_temp = file_get_contents($usermenufile);
 
