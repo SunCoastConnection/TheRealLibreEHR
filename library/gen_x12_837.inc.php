@@ -192,7 +192,8 @@ $CMS_5010 = true;
 
   $HLBillingPayToProvider = $HLcount++;
 
-  // Situational PRV segment for provider taxonomy code for Medicaid.
+  //Need Facility Taxonomy in UI.  Facility taxonomy should belong to business, not the provider.
+  //Situational PRV segment for provider taxonomy code for Medicaid.
     if ($claim->claimType() == 'MC') {
         ++$edicount;
         $out .= "PRV*BI*ZZ" .
