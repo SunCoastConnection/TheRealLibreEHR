@@ -1055,6 +1055,13 @@ $GLOBALS_METADATA = array(
       xl('Allow User to Specify Coding Done in Fee Sheet.')
     ),
 
+    'display_onset_date_entry' => array(
+      xl('Display Onset Date on Encounter Screen'),
+      'bool',                           // data type
+      '0',                              // default = false
+      xl('Display Onset Date on Encounter Screen.')
+    ),
+
   ),
 
   // Billing Tab
