@@ -1725,12 +1725,11 @@ function generate_print_field($frow, $currvalue) {
 }
 
 function generate_display_field($frow, $currvalue) {
-  global $ISSUE_TYPES;
-
+  global $ISSUE_TYPES; 
   $data_type  = $frow['data_type'];
   $field_id   = isset($frow['field_id'])  ? $frow['field_id'] : null;
   $list_id    = $frow['list_id'];
-  $backup_list = $frow['list_backup_id'];
+  $backup_list = isset($frow['list_backup_id'])  ? $frow['list_backup_id'] : null;
 
   $s = '';
 
