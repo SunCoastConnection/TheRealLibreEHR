@@ -203,7 +203,7 @@ include_once("$srcdir/headers.inc.php");
                                                         if (!$GLOBALS['allow_debug_language'] && $iter[lang_description] == 'dummy') continue; // skip the dummy language
                                                         echo "<option value='" . attr($iter['lang_id']) . "'>" . text($iter['trans_lang_description']) . "</option>\n";
                                                     } else {
-                                                        if (in_array($iter[lang_description], $GLOBALS['language_menu_show'])) {
+                                                        if (in_array($iter['lang_description'], $GLOBALS['language_menu_show'])) {
                                                             if (!$GLOBALS['allow_debug_language'] && $iter['lang_description'] == 'dummy') continue; // skip the dummy language
                                                             echo "<option value='" . attr($iter['lang_id']) . "'>" . text($iter['trans_lang_description']) . "</option>\n";
                                                         }
