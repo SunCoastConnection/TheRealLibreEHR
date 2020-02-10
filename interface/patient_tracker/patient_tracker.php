@@ -6,7 +6,7 @@
  *  allowing the user to change status and view those changed here and in the Calendar
  *  Will allow the collection of length of time spent in each status
  *
- * Copyright (C) 2015-2017  Terry Hill <teryhill@yahoo.com>
+ * Copyright (C) 2015-2020  Terry Hill <teryhill@yahoo.com>
  *
  * LICENSE: This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0
  * See the Mozilla Public License for more details.
@@ -62,6 +62,21 @@ elseif (substr($GLOBALS['ptkr_end_date'],0,1) == 'D') {
 }
 
 $form_to_date = date($DateFormat, $ptkr_future_time);
+
+if (substr($GLOBALS['ptkr_begin_date'],0,1) == 'M') {
+   $ptkr_time = substr($GLOBALS['ptkr_begin_date'],1,1);
+   $ptkr_past_time = mktime(0,0,0,date('m')-$ptkr_time ,date('d'),date('Y'));
+}
+elseif (substr($GLOBALS['ptkr_begin_date'],0,1) == 'W') {
+   $ptkr_time = substr($GLOBALS['ptkr_begin_date'],1,1) * 7;
+   $ptkr_past_time = mktime(0,0,0,date('m') ,date('d')-$ptkr_time,date('Y'));
+}
+elseif (substr($GLOBALS['ptkr_begin_date'],0,1) == 'D') {
+   $ptkr_time = substr($GLOBALS['ptkr_begin_date'],1,1);
+   $ptkr_past_time = mktime(0,0,0,date('m') ,date('d')-$ptkr_time,date('Y'));
+}
+$form_from_date = date($DateFormat, $ptkr_past_time);
+
 # This needs some more thought.
 if ($GLOBALS['status_default']) {
     $stat_default = substr($GLOBALS['status_default'],0,1);
@@ -72,11 +87,13 @@ If ($GLOBALS['status_default'] == 'All') {
 $facility  = !is_null($_POST['form_facility']) ? $_POST['form_facility'] : null;
 $form_apptstatus = !is_null($_POST['form_apptstatus']) ? $_POST['form_apptstatus'] : $stat_default;
 $form_apptcat=null;
-$form_from_date = !is_null($_POST['form_from_date']) ? $_POST['form_from_date'] : date($DateFormat);
+//$form_from_date = !is_null($_POST['form_from_date']) ? $_POST['form_from_date'] : date($DateFormat);
 if($GLOBALS['ptkr_date_range']) {
    $form_to_date = !is_null($_POST['form_to_date']) ? $_POST['form_to_date'] : $form_to_date;
+   $form_from_date = !is_null($_POST['form_from_date']) ? $_POST['form_from_date'] : $form_from_date;
 } else {
    $form_to_date = !is_null($_POST['form_from_date']) ? $_POST['form_from_date'] : date($DateFormat);
+   $form_from_date = !is_null($_POST['form_from_date']) ? $_POST['form_from_date'] : date($DateFormat);
 }
 if(isset($_POST['form_apptcat']))
 {
@@ -171,9 +188,8 @@ function calendarpopup(eid,date_squash) {
 // auto refresh screen pat_trkr_timer is the timer variable AND IF settings aren't opened
 function refreshbegin(first){
   <?php if ($GLOBALS['pat_trkr_timer'] != '0') { ?>
-    var reftime="<?php echo attr($GLOBALS['pat_trkr_timer']); ?>";
-    var parsetime=reftime.split(":");
-    parsetime=(parsetime[0]*60)+(parsetime[1]*1)*1000;
+    var parsetime="<?php echo attr($GLOBALS['pat_trkr_timer']); ?>";
+    parsetime=(parsetime*1)*1000;
 
     // contingency for fullscreen mode. settings toggle does not exist
     var pat_settings_toggle = document.getElementById("pat_settings_toggle");
@@ -198,7 +214,7 @@ function refreshbegin(first){
 
 // used to display the patient demographic and encounter screens
 function topatient(newpid, enc) {
- 
+
    top.restoreSession();
      if (enc > 0) {
        top.RTop.location= "<?php echo $GLOBALS['webroot']; ?>/interface/patient_file/summary/demographics.php?set_pid=" + newpid + "&set_encounterid=" + enc;
@@ -251,24 +267,42 @@ function topatient(newpid, enc) {
         <div class="checkbox">
         <label><input type="checkbox" name="ptkr_date_range" value="1" <?php if($GLOBALS['ptkr_date_range']=='1') echo "checked"; ?>><?php echo xlt("Allow Date Range in Patient Flow Board"); ?></label>
         </div>
+        <?php echo xlt("Beginning Date for Patient Flow Board"); ?>
+        <select class="form-control input-sm" name="ptkr_begin_date" id="ptkr_begin_date">
+            <option value="M1" <?php if($GLOBALS['ptkr_begin_date']=='M1') echo "selected";?>><?php echo xlt("One Month Behind"); ?></option>
+            <option value="W3" <?php if($GLOBALS['ptkr_begin_date']=='W3') echo "selected";?>><?php echo xlt("Three Weeks Behind"); ?></option>
+            <option value="W2" <?php if($GLOBALS['ptkr_begin_date']=='W2') echo "selected";?>><?php echo xlt("Two Weeks Behind"); ?></option>
+            <option value="W1" <?php if($GLOBALS['ptkr_begin_date']=='W1') echo "selected";?>><?php echo xlt("One Week Behind"); ?></option>
+            <option value="D6" <?php if($GLOBALS['ptkr_begin_date']=='D6') echo "selected";?>><?php echo xlt("Six Days Behind"); ?></option>
+            <option value="D5" <?php if($GLOBALS['ptkr_begin_date']=='D5') echo "selected";?>><?php echo xlt("Five Days Behind"); ?></option>
+            <option value="D4" <?php if($GLOBALS['ptkr_begin_date']=='D4') echo "selected";?>><?php echo xlt("Four Days Behind"); ?></option>
+            <option value="D3" <?php if($GLOBALS['ptkr_begin_date']=='D3') echo "selected";?>><?php echo xlt("Three Days Behind"); ?></option>
+            <option value="D2" <?php if($GLOBALS['ptkr_begin_date']=='D2') echo "selected";?>><?php echo xlt("Two Days Behind"); ?></option>
+            <option value="D1" <?php if($GLOBALS['ptkr_begin_date']=='D1') echo "selected";?>><?php echo xlt("One Day Behind"); ?></option>
+        </select>
         <?php echo xlt("Ending Date for Patient Flow Board"); ?>
         <select class="form-control input-sm" name="ptkr_end_date" id="ptkr_end_date">
             <option value="Y1" <?php if($GLOBALS['ptkr_end_date']=='Y1') echo "selected";?>><?php echo xlt("One Year Ahead"); ?></option>
             <option value="Y2" <?php if($GLOBALS['ptkr_end_date']=='Y2') echo "selected";?>><?php echo xlt("Two Years Ahead"); ?></option>
             <option value="M6" <?php if($GLOBALS['ptkr_end_date']=='M6') echo "selected";?>><?php echo xlt("Six Months Ahead"); ?></option>
-            <option value="M3" <?php if($GLOBALS['ptkr_end_date']=='M3') echo "selected";?>><?php echo xlt("Three Months Ahead"); ?>Three Months Ahead</option>
+            <option value="M3" <?php if($GLOBALS['ptkr_end_date']=='M3') echo "selected";?>><?php echo xlt("Three Months Ahead"); ?></option>
             <option value="M1" <?php if($GLOBALS['ptkr_end_date']=='M1') echo "selected";?>><?php echo xlt("One Month Ahead"); ?></option>
             <option value="D1" <?php if($GLOBALS['ptkr_end_date']=='D1') echo "selected";?>><?php echo xlt("One Day Ahead"); ?></option>
         </select>
         <?php echo xlt("Patient Flow Board Timer Interval"); ?>
         <select class="form-control input-sm" name="pat_trkr_timer" id="pat_trkr_timer">
             <option value="0" <?php if($GLOBALS['pat_trkr_timer']=='0') echo "selected";?>><?php echo xlt("No automatic refresh"); ?></option>
-            <option value="0:10" <?php if($GLOBALS['pat_trkr_timer']=='0:10') echo "selected";?>>10</option>
-            <option value="0:20" <?php if($GLOBALS['pat_trkr_timer']=='0:20') echo "selected";?>>20</option>
-            <option value="0:30" <?php if($GLOBALS['pat_trkr_timer']=='0:30') echo "selected";?>>30</option>
-            <option value="0:40" <?php if($GLOBALS['pat_trkr_timer']=='0:40') echo "selected";?>>40</option>
-            <option value="0:50"> <?php if($GLOBALS['pat_trkr_timer']=='0:50') echo "selected";?>50</option>
-            <option value="0:59" <?php if($GLOBALS['pat_trkr_timer']=='0:59') echo "selected";?>>60</option>
+            <option value="10" <?php if($GLOBALS['pat_trkr_timer']=='10') echo "selected";?>><?php echo xlt("10 Seconds"); ?></option>
+            <option value="20" <?php if($GLOBALS['pat_trkr_timer']=='20') echo "selected";?>><?php echo xlt("20 Seconds"); ?></option>
+            <option value="30" <?php if($GLOBALS['pat_trkr_timer']=='30') echo "selected";?>><?php echo xlt("30 Seconds"); ?></option>
+            <option value="40" <?php if($GLOBALS['pat_trkr_timer']=='40') echo "selected";?>><?php echo xlt("40 Seconds"); ?></option>
+            <option value="50" <?php if($GLOBALS['pat_trkr_timer']=='50') echo "selected";?>><?php echo xlt("50 Seconds"); ?></option>
+            <option value="60" <?php if($GLOBALS['pat_trkr_timer']=='60') echo "selected";?>><?php echo xlt("60 Seconds"); ?></option>
+            <option value="90" <?php if($GLOBALS['pat_trkr_timer']=='90') echo "selected";?>><?php echo xlt("90 Seconds"); ?></option>
+            <option value="120" <?php if($GLOBALS['pat_trkr_timer']=='120') echo "selected";?>><?php echo xlt("2 Minutes"); ?></option>
+            <option value="180" <?php if($GLOBALS['pat_trkr_timer']=='180') echo "selected";?>><?php echo xlt("3 Minutes"); ?></option>
+            <option value="240" <?php if($GLOBALS['pat_trkr_timer']=='240') echo "selected";?>><?php echo xlt("4 Minutes"); ?></option>
+            <option value="300" <?php if($GLOBALS['pat_trkr_timer']=='300') echo "selected";?>><?php echo xlt("5 Minutes"); ?></option>
         </select>
 
         <div>
@@ -288,6 +322,7 @@ function topatient(newpid, enc) {
             'ptkr_show_encounter',
             'ptkr_flag_dblbook',
             'ptkr_date_range',
+            'ptkr_begin_date',
             'ptkr_end_date',
             'pat_trkr_timer'
         ];
@@ -382,7 +417,7 @@ function topatient(newpid, enc) {
                 <tr>
                     <td>
                         <a href='#' class='css_button cp-submit' onclick='$("#form_refresh").attr("value","true"); $("#theform").submit();'>
-                            <span> <?php echo xlt('Submit'); ?> </span> </a>
+                            <span> <?php echo xlt('Apply'); ?> </span> </a>
                         <?php if ($_POST['form_refresh'] || $_POST['form_orderby'] ) { ?>
                             <a href='#' class='css_button' id='printbutton'>
                                 <span> <?php echo xlt('Print'); ?> </span> </a>
