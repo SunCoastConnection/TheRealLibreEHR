@@ -15,11 +15,16 @@ Vue.component("quick-pick-component", {
           serviceCategory: "foo"
         }
       ],
-      selectedCodes: []
+      selectedCodes: [],
+      selectedServiceCategory: "",
     };
                     },
 
   methods: {
+    getServiceCategories() {
+      const serviceCategories =  this.codes.map( e => e.serviceCategory )
+      return Array.from(new Set(serviceCategories))
+    },
     extractCodesAndAddServiceCategory(codes, serviceCategory) {
       return codes.map(e => ({
         ...e,

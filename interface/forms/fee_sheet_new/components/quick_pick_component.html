@@ -1,7 +1,17 @@
 <script type="text/x-template" id="quick_pick_component_template">
 <div>
-    <div class="col-sm-12 text-right">
+    <div class="col-sm-12 text-right" style="display: flex;">
+        <div style="margin-left: 0%;">
             <a class="btn btn-outline-success btn-sm">Apply {{ selectedCodes.length }} selected codes</a>
+        &nbsp;&nbsp;&nbsp;
+    </div>
+        <div>
+        <select v-model="selectedServiceCategory" class="form-control form-control-sm" style="width: 250px;">
+                    <template v-for="item in getServiceCategories()">
+                        <option :value="item">{{ item }}</option>
+                    </template>
+                </select>
+        </div>
     </div>
 
     <table class="table table-striped table-sm">
@@ -43,6 +53,7 @@
         </tr>
 
         <template v-for="(code,index) in codes">
+            <template v-if="selectedServiceCategory === '' || code.serviceCategory === selectedServiceCategory">
             <tr :class="{ 'bg-success text-white':code['isSelected']}">
                 <td>
                     {{ code.codeType }}
@@ -71,6 +82,7 @@
                     </a>
                 </td>
             </tr>
+        </template>
         </template>
 
     </table>
