@@ -279,6 +279,7 @@ function topatient(newpid, enc) {
             <option value="D3" <?php if($GLOBALS['ptkr_begin_date']=='D3') echo "selected";?>><?php echo xlt("Three Days Behind"); ?></option>
             <option value="D2" <?php if($GLOBALS['ptkr_begin_date']=='D2') echo "selected";?>><?php echo xlt("Two Days Behind"); ?></option>
             <option value="D1" <?php if($GLOBALS['ptkr_begin_date']=='D1') echo "selected";?>><?php echo xlt("One Day Behind"); ?></option>
+            <option value="D0" <?php if($GLOBALS['ptkr_begin_date']=='D0') echo "selected";?>><?php echo xlt("Today"); ?></option>
         </select>
         <?php echo xlt("Ending Date for Patient Flow Board"); ?>
         <select class="form-control input-sm" name="ptkr_end_date" id="ptkr_end_date">

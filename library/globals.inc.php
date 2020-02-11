@@ -1887,6 +1887,7 @@ $GLOBALS_METADATA = array(
         'D3' => xl('Three Days Behind'),
         'D2' => xl('Two Days Behind'),
         'D1' => xl('One Day Behind'),
+        'D0' => xl('Today'),
       ),
       'D1',                     // default = One Day Behind
       xl('This is the Beginning date for the Patient Flow Board Date Range. (only applicable if Allow Date Range in option above is Enabled)')
