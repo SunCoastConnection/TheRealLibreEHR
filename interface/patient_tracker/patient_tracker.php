@@ -359,7 +359,7 @@ function topatient(newpid, enc) {
 
                     $ures = sqlStatement($query);
 
-                    echo "   <select name='form_provider' class='form-control input-sm'>\n";
+                    echo "   <select name='form_provider[]' class='form-control input-sm' multiple>\n";
                     if ($GLOBALS['docs_see_entire_calendar'] =='1' || $_SESSION['userauthorized'] =='0') {
                     echo "    <option value='ALL'>-- " . xlt('All') . " --\n";
                     }
@@ -367,7 +367,7 @@ function topatient(newpid, enc) {
                     while ($urow = sqlFetchArray($ures)) {
                         $provid = $urow['id'];
                         echo "    <option value='" . attr($provid) . "'";
-                        if (isset($_POST['form_provider']) && $provid == $_POST['form_provider']){
+                        if (isset($_POST['form_provider']) && in_array($provid, $_POST['form_provider'])){
                             echo " selected";
                         } elseif(!isset($_POST['form_provider'])&& $_SESSION['userauthorized'] && $provid == $_SESSION['authUserID']){
                             echo " selected";
