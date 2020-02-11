@@ -1875,7 +1875,7 @@ $GLOBALS_METADATA = array(
       xl('This Allows a Date Range to be Selected in Patient Flow Board.')
     ),
     'ptkr_begin_date' => array(
-      xl('Patient Flow Board: Ending Date'),
+      xl('Patient Flow Board: Beginning Date'),
       array(
         'M1' => xl('One Month Behind'),
         'W3' => xl('Three Weeks Behind'),
@@ -1889,7 +1889,7 @@ $GLOBALS_METADATA = array(
         'D1' => xl('One Day Behind'),
       ),
       'D1',                     // default = One Day Behind
-      xl('This is the Ending date for the Patient Flow Board Date Range. (only applicable if Allow Date Range in option above is Enabled)')
+      xl('This is the Beginning date for the Patient Flow Board Date Range. (only applicable if Allow Date Range in option above is Enabled)')
     ),
     'ptkr_end_date' => array(
       xl('Patient Flow Board: Ending Date'),
