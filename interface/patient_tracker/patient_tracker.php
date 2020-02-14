@@ -25,14 +25,51 @@ $sanitize_all_escapes=true;
 
 require_once("../globals.php");
 require_once("$srcdir/patient.inc");
+require_once("$srcdir/global_functions.php");
 require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/patient_tracker.inc.php");
 require_once("$srcdir/user.inc");
+
+/**
+ * Key used for storing the search settings in the DB
+ */
+$FLOW_BOARD_SETTINGS = "FLOW_BOARD_SETTINGS";
+
+/**
+ * To save the settings value when changed by user.
+ */
+if ( isset($_POST['search_field_key']) && isset( $_POST['search_field_value'])) {
+    $search_field_key = $_POST['search_field_key'];
+    $search_field_value = $_POST['search_field_value'];
+    $search_field_key = str_replace("[]", "", $search_field_key);
+    $decoded_array = json_decode( getGlobalValue($FLOW_BOARD_SETTINGS), true );
+    if ( $decoded_array === false ) {
+        // if the key doesnt exist in db or the decoded array is false because of the
+        // invalid json content, then reinitailze the array
+        $decoded_array = array();
+    }
+    $decoded_array[$search_field_key] = $search_field_value;
+    insert_or_update_global( $FLOW_BOARD_SETTINGS, json_encode( $decoded_array ) );
+    echo "Settings saved";
+    exit();
+}
+
+
 require_once("$srcdir/headers.inc.php");
 
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
+/**
+ * Loop through the post array, store the field names with global values on it.
+ * so the ui will persist the changes that the user made.
+ */
+$search_settings_value = json_decode( getGlobalValue( $FLOW_BOARD_SETTINGS ), true );
+if ( $search_settings_value !== false ) {
+   foreach ( $search_settings_value as $key => $value ) {
+        $_POST[$key] = $value;
+   }
+}
 
 if (!is_null($_POST['form_provider']) && ($GLOBALS['docs_see_entire_calendar'] =='1' || $_SESSION['userauthorized'] =='0' )) {
   $provider = $_POST['form_provider'];
@@ -735,27 +772,6 @@ function topatient(newpid, enc) {
     } //end for
 ?>
 
-<?php
-//saving the filter for auto refresh
-if(!is_null($_POST['form_provider']) ){
-    echo "<input type='hidden' name='form_provider' value='" . attr($_POST['form_provider']) . "'>";
-}
-if(!is_null($_POST['form_facility']) ){
-    echo "<input type='hidden' name='form_facility' value='" . attr($_POST['form_facility']) . "'>";
-}
-if(!is_null($_POST['form_apptstatus']) ){
-    echo "<input type='hidden' name='form_apptstatus' value='" . attr($_POST['form_apptstatus']) . "'>";
-}
-if(!is_null($_POST['form_apptcat']) ){
-    echo "<input type='hidden' name='form_apptcat' value='" . attr($_POST['form_apptcat']) . "'>";
-}
-if(!is_null($_POST['form_from_date']) ){
-    echo "<input type='hidden' name='form_from_date' value='" . attr($_POST['form_from_date']) . "'>";
-}
-if(!is_null($_POST['form_to_date']) ){
-    echo "<input type='hidden' name='form_to_date' value='" . attr($_POST['form_to_date']) . "'>";
-}
-?>
 
 </table>
 </div>
@@ -763,6 +779,31 @@ if(!is_null($_POST['form_to_date']) ){
 
 
 <script type="text/javascript">
+    function save_flowboard_settings( field, value ) {
+        $.post( "patient_tracker.php", {
+            search_field_key: field,
+            search_field_value: value
+        });
+
+}
+    window.addEventListener( "load" ,e => {
+        const fields_to_be_saved_in_globals = ['form_provider[]', 'form_facility', 'form_apptstatus',
+            'form_apptcat', 'form_from_date', 'form_to_date'];
+        for ( let field of fields_to_be_saved_in_globals ) {
+            const el = document.getElementsByName(field)
+                if ( el.length > 0 ) {
+                    $(el).on("change",function (event){
+                        let value = event.target.value
+                        // is this a multiple select?
+                        if ( event.target.multiple ) {
+                            value = Array.apply(null, event.target.options).filter(el => el.selected === true).map(el=>el.value)
+}
+                        save_flowboard_settings( field, value )
+                    })
+}
+}
+    })
+
   $(document).ready(function() {
       $('#settings').css("display","none");
       refreshbegin('1');
