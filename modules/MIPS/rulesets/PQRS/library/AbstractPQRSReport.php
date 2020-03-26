@@ -231,7 +231,7 @@ abstract class AbstractPQRSReport implements RsReportIF
 
                     $pass_HardFail = $pass_hard["HardFail"];
 
-                    error_log("NUMERATOR: " . print_r($this->numerator_false, true) . " EXCLUSION: " . print_r($this->exclusion_false, true) . " NOTMET: " . print_r($this->notmet_false, true));
+                    error_log("NUMERATOR: " . print_r($this->numerator_false, true) . " EXCLUSION: " . print_r($this->exclusion_false, true) . " HardFail: " . print_r($this->HardFail_false, true));
 
 
                     $unreported = $this->countUnreported($this->numerator_false, $this->exclusion_false, $this->HardFail_false);
