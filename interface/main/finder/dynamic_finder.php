@@ -32,6 +32,11 @@ $header  = "";
 $coljson = "";
 $res = sqlStatement("SELECT option_id, title FROM list_options WHERE " .
   "list_id = 'ptlistcols' and activity = '1' ORDER BY seq, title");
+
+// Index for first name and last name
+$first_name_index = -1;
+$last_name_index = -1;
+
 while ($row = sqlFetchArray($res)) {
   $colname = $row['option_id'];
   $title = xl_list_label($row['title']);
@@ -47,6 +52,16 @@ while ($row = sqlFetchArray($res)) {
   $header0 .= "value='$headerValue' class='form-control form-rounded' /></td>\n";
   if ($coljson) $coljson .= ", ";
   $coljson .= "{\"sName\": \"" . addcslashes($colname, "\t\r\n\"\\") . "\"}";
+
+  if ( $colname === 'fname' || $colname === 'lname' ) {
+      if ( $colname === 'fname' ) {
+          $first_name_index = $colcount;
+      }
+      else {
+          $last_name_index = $colcount;
+      }
+  }
+
   ++$colcount;
 }
 ?>
@@ -74,6 +89,20 @@ $(document).ready(function() {
  //
  var oTable = $('#pt_table').dataTable( {
   "bProcessing": true,
+  "fnCreatedRow": function( row, data, index ) {
+     if ( data['is_billing_note_in_collection'] !== undefined ) {
+         // this code will be activated only if the global is set, because if the global is not
+         // set the varaible "is_billing_note_in_collection" will not be set in the ajax, we check the key exists.
+         const first_name_index = parseInt( "<?php echo $first_name_index; ?>" )
+         const last_name_index = parseInt( "<?php echo $last_name_index; ?>" )
+         const is_billing_note_in_collection = data['is_billing_note_in_collection']
+         console.log(is_billing_note_in_collection)
+         if ( is_billing_note_in_collection ) {
+             $( $(row).find('td')[first_name_index] ).css( { 'background-color' : 'red', 'color': 'white' } )
+             $( $(row).find('td')[last_name_index] ).css( { 'background-color' : 'red', 'color': 'white' } )
+         }
+     }
+  },
   // next 2 lines invoke server side processing
   "bServerSide": true,
   "sAjaxSource": "dynamic_finder_ajax.php",
@@ -119,7 +148,7 @@ $(document).ready(function() {
  $('#pt_table tbody tr').live('click', function () {
   // ID of a row element is pid_{value}
   var newpid = this.id.substring(4);
-  // If the pid is invalid, then don't attempt to set 
+  // If the pid is invalid, then don't attempt to set
   // The row display for "No matching records found" has no valid ID, but is
   // otherwise clickable. (Matches this CSS selector).  This prevents an invalid
   // state for the PID to be set.

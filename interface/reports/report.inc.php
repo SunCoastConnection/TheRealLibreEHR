@@ -2,7 +2,7 @@
 // +-----------------------------------------------------------------------------+
 //
 // Common php functions are stored in this page.
-// 
+//
 // Copyright (C) 2011 Z&H Consultancy Services Private Limited <sam@zhservices.com>
 //
 //
@@ -22,9 +22,9 @@
 // libreehr/interface/login/GnuGPL.html
 // For more information write to the Free Software
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-// 
+//
 // Author:   Eldho Chacko <eldho@zhservices.com>
-//           Paul Simon K <paul@zhservices.com> 
+//           Paul Simon K <paul@zhservices.com>
 //
 // +------------------------------------------------------------------------------+
 
@@ -40,8 +40,8 @@ function PrepareSearchItem($SearchItem)
   $SplitArray=explode(' like ',$SearchItem);
   if(isset($SplitArray[1]))
    {
-    $SplitArray[1] = substr($SplitArray[1], 0, -1); 
-    $SplitArray[1] = substr($SplitArray[1], 1); 
+    $SplitArray[1] = substr($SplitArray[1], 0, -1);
+    $SplitArray[1] = substr($SplitArray[1], 1);
     $SearchItem=$SplitArray[0].' like '."'".add_escape_custom($SplitArray[1])."'";
    }
   else
@@ -49,8 +49,8 @@ function PrepareSearchItem($SearchItem)
       $SplitArray=explode(' = ',$SearchItem);
       if(isset($SplitArray[1]))
        {
-        $SplitArray[1] = substr($SplitArray[1], 0, -1); 
-        $SplitArray[1] = substr($SplitArray[1], 1); 
+        $SplitArray[1] = substr($SplitArray[1], 0, -1);
+        $SplitArray[1] = substr($SplitArray[1], 1);
         $SearchItem=$SplitArray[0].' = '."'".add_escape_custom($SplitArray[1])."'";
        }
    }
@@ -69,37 +69,91 @@ function BuildArrayForReport($Query)
   return $array_data;
  }
 
+ function AccountTypeDisplay() {
+
+
+    echo '<table class="table table-responsive" id="account_type_element">
+
+        <tr>
+          <td>
+            <div class="form-group">
+              <select v-model="selected_account_types" multiple id="selected_account_type_selection_box" v-select2>
+                  <template v-for="item in account_type_data">
+                      <option :value="item">{{ item.title }}</option>
+                  </template>
+              </select>
+            </div>
+          </td>
+        </tr>
+    </table>';
+
+ }
+
 //The criteria  "Insurance Company" is coded here.The ajax one
 function InsuranceCompanyDisplay()
  {
   global $ThisPageSearchCriteriaDisplay,$ThisPageSearchCriteriaKey,$ThisPageSearchCriteriaIndex,$web_root;
 
-  echo '<table width="140" border="0" cellspacing="0" cellpadding="0">'.
-      '<tr>'.
-        '<td width="140" colspan="2">'.
-            '<iframe id="frame_to_hide" style="position:absolute;display:none; width:240px; height:100px" frameborder=0'.
-                'scrolling=no marginwidth=0 src="" marginheight=0>hello</iframe>'.
-        '<input type="hidden" id="hidden_ajax_close_value" value="'.attr($_POST['type_code']).'" /><input name="type_code"  id="type_code" class="text "'.
-        'style=" width:140px;"  title="'.xla("Type Id or Name.3 characters minimum (including spaces).").'"'.
-        'onfocus="hide_frame_to_hide();appendOptionTextCriteria(\''.$ThisPageSearchCriteriaDisplay[$ThisPageSearchCriteriaIndex].'\','.
-                                    '\''.$ThisPageSearchCriteriaKey[$ThisPageSearchCriteriaIndex].'\','.
-                                    'document.getElementById(\'type_code\').value,document.getElementById(\'div_insurance_or_patient\').innerHTML,'.
-                                    '\' = \','.
-                                    '\'text\')" onblur="show_frame_to_hide()" onKeyDown="PreventIt(event)" value="'.attr($_POST['type_code']).'"  autocomplete="off"   /><br>'.
-        '<!--onKeyUp="ajaxFunction(event,\'non\',\'search_payments.php\');"-->'.
-            '<div id="ajax_div_insurance_section">'.
-            '<div id="ajax_div_insurance_error">            </div>'.
-            '<div id="ajax_div_insurance" style="display:none;"></div>'.
-            '</div>'.
-            '</div>        </td>'.
-      '</tr>'.
-      '<tr height="5"><td colspan="2"></td></tr>'.
-      '<tr>'.
-        '<td><div  name="div_insurance_or_patient" id="div_insurance_or_patient" class="text"  style="border:1px solid black; padding-left:5px; width:50px; height:17px;">'.attr($_POST['hidden_type_code']).'</div><input type="hidden" name="description"  id="description" /></td>'.
-        '<td><a href="#" onClick="CleanUpAjax(\''.$ThisPageSearchCriteriaDisplay[$ThisPageSearchCriteriaIndex].'\','.
-                                    '\''.$ThisPageSearchCriteriaKey[$ThisPageSearchCriteriaIndex].'\',\' = \')"><img src="'.$web_root.'/interface/pic/Clear.gif" border="0" /></a></td>'.
-      '</tr>'.
-    '</table>'.
-'<input type="hidden" name="hidden_type_code" id="hidden_type_code" value="'.attr($_POST['hidden_type_code']).'"/>';
+    // below is a vue template, the handler code is in billing_report.php
+    // it is rendered based on that code
+
+    echo '<table class="table table-responsive" id="insurance_company_chooser">
+
+        <tr>
+          <td>
+            <div class="form-group">
+              <select v-model="selected_insurance_companies" multiple id="insurance_companies_selection_box" v-select2>
+                  <template v-for="item in insurance_companies_data">
+                      <option :value="item">{{ item.name }}</option>
+                  </template>
+              </select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <small><input type="checkbox" v-model="is_companies_excluded"> Exclude these companies</small>
+          </td>
+        </tr>
+
+    </table>';
+
+ }
+
+
+
+ function FacilityDisplay() {
+
+    echo '<table class="table table-responsive" id="facility_chooser">
+
+        <tr>
+          <td>
+            <div class="form-group">
+              <select v-model="selected_facilities" multiple id="facility_selection_box" v-select2>
+                  <template v-for="item in facility_data">
+                      <option :value="item">{{ item.name }}</option>
+                  </template>
+              </select>
+            </div>
+          </td>
+        </tr>
+    </table>';
+ }
+
+function ClaimDisplay() {
+
+    echo '<table class="table table-responsive" id="claim_chooser">
+
+        <tr>
+          <td>
+            <div class="form-group">
+              <template v-for="item in claim_data">
+                <input type="radio" :value="item" v-model="selected_claim_type"> {{ item }}<br/>
+              </template>
+            </div>
+          </td>
+        </tr>
+    </table>';
+
  }
 ?>

@@ -1,0 +1,55 @@
+<!-- VARIABLES SUPPLIED TO THIS TEMPLATE SHOULD BE PLACED IN THE UPPER ROW FOR
+    BETTER READABILITY, IF YOU ADD A NEW VARIABLE TO TEMPLATE BE SURE TO ADD IT BELOW -->
+
+<!-- THERAPIST_NAME -->
+<!-- JOINED_CASE_DESCRIPTION -->
+<!-- ROW_COUNT -->
+<!-- ENCOUNTER_PID -->
+<!-- ENCOUNTER_CASE_NUMBER -->
+<!-- ENCOUNTER_CASE_BODY_PART -->
+<!-- ENCOUNTER_FORMATTED_DATE -->
+<!-- ENCOUNTER_REASON -->
+<!-- ENCOUNTER_ENCOUNTER -->
+<!-- ENCOUNTER_FACILITY -->
+
+<tr class="all detail_row  {ENCOUNTER_CASE_NUMBER}  {JOINED_CASE_DESCRIPTION}  first_{ROW_COUNT}"  id="header-row-identifier-{ROW_COUNT}">
+    <td class="clickable expandRow" data-toggle="collapse" data-target=".x-rows-{ROW_COUNT}"  id="{ROW_COUNT}" onclick="getTabsInfo(this, {ROW_COUNT},{ENCOUNTER_PID},{ENCOUNTER_ENCOUNTER})">+</td>
+    <td class="date-detail">
+        <!-- <input type="date" value="{ENCOUNTER_FORMATTED_DATE}" class="billing_date_editable"> -->
+        {ENCOUNTER_FORMATTED_DATE}
+    </td>
+    <td class="description in-selected-case  {ENCOUNTER_CASE_NUMBER} ">
+        {ENCOUNTER_ENCOUNTER}
+    </td>
+    <td class="code"></td>
+    <td class="mode"></td>
+    <td class="units-total units" id="units-total-{ROW_COUNT}" data-total-units="0">0</td>
+    <td class="ENCOUNTER_FACILITY facility">{ENCOUNTER_FACILITY} </td>
+    <td class="amount-total amount" id="amount-total-{ROW_COUNT}" data-total-amount="0.00">$0.00</td>
+    <td class="pat-paid-total pat-paid" id="patient-paid-total-{ROW_COUNT}" data-total-patient-paid="0.00">$0.00</td>
+    <td class="ins-paid-total ins-paid" id="insurance-total-{ROW_COUNT}" data-total-insurance-paid="0.00">$0.00</td>
+    <td class="adjusted-total adjusted" id="adj-total-{ROW_COUNT}" data-total-adjusted="0.00">$0.00</td>
+    <td class="table-header-row-adjustment-reason balance">{ADJUSTMENT_REASON}</td>
+    <td class="balance-total balance" id="total-balance-{ROW_COUNT}" data-total-balance="0.00">$0.00</td>
+    <td class="send_n" style="display:none"> {ROW_COUNT} </td>
+    <td class="enc_pid" style="display:none"> {ENCOUNTER_PID} </td>
+    <td class="enc_encounter" style="display:none">{ENCOUNTER_ENCOUNTER}</td>
+    <td class="ENCOUNTER_CASE_BODY_PART" style="display:none">      {ENCOUNTER_CASE_BODY_PART}</td>
+    <td class="table-header-row-data" id="table-header-row-data-{ROW_COUNT}" style="display: none;"
+        data-table-header-child-row-count="{ROW_COUNT}"
+        data-table-header-row-pid = "{ENCOUNTER_PID}"
+        data-table-header-row-date = "{ENCOUNTER_FORMATTED_DATE}"
+        data-table-header-row-case-body-part="{ENCOUNTER_CASE_BODY_PART}"
+        data-table-header-row-description = "{ENCOUNTER_CASE_NUMBER}:{ENCOUNTER_REASON}/{ENCOUNTER_CASE_BODY_PART}"
+        data-table-header-row-facility = "{ENCOUNTER_FACILITY}"
+        data-table-header-row-clinician = ""
+        data-table-header-row-case-number="{ENCOUNTER_CASE_NUMBER}"
+        data-table-header-row-encounter="{ENCOUNTER_ENCOUNTER}"
+        data-table-header-row-therapist-name="{THERAPIST_NAME}"
+        data-table-header-row-case-description="{ENCOUNTER_REASON}"
+        data-table-header-row-facility="{ENCOUNTER_FACILITY}"
+        data-table-header-row-primary-claim="Not Submitted"
+        data-table-header-row-secondary-claim="Not Submitted"
+        data-table-header-row-tertiary-claim="Not Submitted">
+    </td>
+</tr>

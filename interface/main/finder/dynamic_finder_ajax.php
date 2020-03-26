@@ -160,9 +160,13 @@ $out = array(
   "iTotalDisplayRecords" => $iFilteredTotal,
   "aaData"               => array()
 );
+// Add Billing note to query, use it always for querying because we are using it for feature.
+$sellist = $sellist.', `billing_note`';
 $query = "SELECT $sellist FROM patient_data $where $orderby $limit";
 $res = sqlStatement($query);
 while ($row = sqlFetchArray($res)) {
+  $billing_note = $row['billing_note'];
+
   // Each <tr> will have an ID identifying the patient.
   $arow = array('DT_RowId' => 'pid_' . $row['pid']);
   foreach ($aColumns as $colname) {
@@ -180,6 +184,15 @@ while ($row = sqlFetchArray($res)) {
       $arow[] = $row[$colname];
     }
   }
+  // wrap this in to a global.
+ if (!empty($GLOBALS['account_in_collections'])) {
+  if ( stristr($billing_note, 'IN COLLECTIONS') !== false ) {
+    $arow['is_billing_note_in_collection'] = true;
+  }
+  else {
+    $arow['is_billing_note_in_collection'] = false;
+  }
+}
   $out['aaData'][] = $arow;
 }
 

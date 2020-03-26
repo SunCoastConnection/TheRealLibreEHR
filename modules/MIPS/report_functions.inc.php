@@ -360,8 +360,10 @@ function collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass='al
     $exlPidArr = array();
     $exludeResult = collectItemizedPatientsCdrReport($report_id,$itemized_test_id,'exclude',$numerator_label,false,$sqllimit,$fstart);
  //if(!is_array($excludeResult)) { var_dump(debug_backtrace()); }
-    foreach($exludeResult as $exlResArr){
-      $exlPidArr[] = $exlResArr['pid'];
+    if(is_array($exludeResult)){
+      foreach($exludeResult as $exlResArr){
+        $exlPidArr[] = $exlResArr['pid'];
+      }
     }
 
     $sql_where = " WHERE `report_itemized`.`report_id` = ? AND `report_itemized`.`itemized_test_id` = ? AND `report_itemized`.`numerator_label` = ? AND `report_itemized`.`pass` = ? ";
@@ -386,9 +388,10 @@ function collectItemizedPatientsCdrReport($report_id,$itemized_test_id,$pass='al
   }
   else {
     $rez = sqlStatementCdrEngine($sql_query,$sqlParameters);
+    $returnval = null;
     // create array of listing for return
     for($iter=0; $row=sqlFetchArray($rez); $iter++) {
-      $returnval[$iter]=$row;
+      $returnval[$iter] = $row;
     }
     return $returnval;
   }

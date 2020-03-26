@@ -221,8 +221,20 @@ CREATE TABLE IF NOT EXISTS `transactions_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 #EndIf
 
+#IfMissingColumn patient_data guardian_fname
+  ALTER TABLE `patient_data` ADD `guardian_fname` TEXT  AFTER `guardiansname`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_mname
+  ALTER TABLE `patient_data` ADD `guardian_mname` TEXT  AFTER `guardian_fname`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_lname
+  ALTER TABLE `patient_data` ADD `guardian_lname` TEXT  AFTER `guardian_mname`;
+#EndIf
+
 #IfMissingColumn patient_data guardian_relationship
-  ALTER TABLE `patient_data` ADD `guardian_relationship` TEXT  AFTER `guardiansname`;
+  ALTER TABLE `patient_data` ADD `guardian_relationship` TEXT  AFTER `guardian_lname`;
 #EndIf
 
 #IfMissingColumn patient_data guardian_sex
@@ -275,3 +287,11 @@ INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_re
 #IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2019-10-01 load_filename 2020-ICD-10-PCS-Order.zip
 INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2019-10-01', '2020-ICD-10-PCS-Order.zip', '8dc136d780ec60916e9e1fc999837bc8');
 #Endif
+
+#IfMissingColumn ar_activity inactive
+ALTER TABLE `ar_activity` ADD `inactive` BOOLEAN NOT NULL DEFAULT FALSE AFTER `date_closed`;
+#EndIf
+
+#IfMissingColumn patient_data transaction_billing_note
+  ALTER TABLE `patient_data` ADD COLUMN `transaction_billing_note` TEXT  COMMENT 'Transaction Screen Notes' AFTER `billing_note`;
+#EndIf

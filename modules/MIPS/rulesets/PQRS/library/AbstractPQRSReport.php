@@ -231,7 +231,8 @@ abstract class AbstractPQRSReport implements RsReportIF
 
                     $pass_HardFail = $pass_hard["HardFail"];
 
-                    error_log("NUMERATOR: " . print_r($this->numerator_false, true) . " EXCLUSION: " . print_r($this->exclusion_false, true) . " HardFail: " . print_r($this->HardFail_false, true));
+                    error_log("NUMERATOR: " . print_r($this->numerator_false, true) . " EXCLUSION: " . print_r($this->exclusion_false, true) . " NOTMET: " . print_r($this->notmet_false, true));
+
 
                     $unreported = $this->countUnreported($this->numerator_false, $this->exclusion_false, $this->HardFail_false);
 
@@ -329,9 +330,10 @@ abstract class AbstractPQRSReport implements RsReportIF
             if ($numerator_false[$key] == 0 && $exclusion_false[$key] == 0 && $value == 0) {
                 $unreported_items++;
             }
-                error_log("NUMERATOR: " . $key . " => " . $numerator_false[$key]);
-                error_log("EXCLUSION: " . $key . " => " . $exclusion_false[$key]);
-                error_log("HardFail: " . $key . " => " . $HardFail_false[$key]);
+            error_log("NUMERATOR: " . $key . " => " . $numerator_false[$key]);
+            error_log("EXCLUSION: " . $key . " => " . $exclusion_false[$key]);
+            error_log("HardFail: " . $key . " => " . $HardFail_false[$key]);
+
         }
         return $unreported_items;
     }
