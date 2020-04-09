@@ -140,6 +140,7 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'ptkr_show_room',
                                'ptkr_show_facility',
                                'ptkr_date_range',
+                               'ptkr_begin_date',
                                'ptkr_end_date',
                                'ptkr_show_visit_type',
                                'ptkr_show_encounter',
@@ -1873,6 +1874,24 @@ $GLOBALS_METADATA = array(
        '0',                             // default = false
       xl('This Allows a Date Range to be Selected in Patient Flow Board.')
     ),
+    'ptkr_begin_date' => array(
+      xl('Patient Flow Board: Beginning Date'),
+      array(
+        'M1' => xl('One Month Behind'),
+        'W3' => xl('Three Weeks Behind'),
+        'W2' => xl('Two Weeks Behind'),
+        'W1' => xl('One Week Behind'),
+        'D6' => xl('Six Days Behind'),
+        'D5' => xl('Five Days Behind'),
+        'D4' => xl('Four Days Behind'),
+        'D3' => xl('Three Days Behind'),
+        'D2' => xl('Two Days Behind'),
+        'D1' => xl('One Day Behind'),
+        'D0' => xl('Today'),
+      ),
+      'D1',                     // default = One Day Behind
+      xl('This is the Beginning date for the Patient Flow Board Date Range. (only applicable if Allow Date Range in option above is Enabled)')
+    ),
     'ptkr_end_date' => array(
       xl('Patient Flow Board: Ending Date'),
       array(
@@ -1893,14 +1912,19 @@ $GLOBALS_METADATA = array(
       xl('Patient Flow Board: Timer Interval'),
       array(
        '0' => xl('No automatic refresh'),
-       '0:10' => '10',
-       '0:20' => '20',
-       '0:30' => '30',
-       '0:40' => '40',
-       '0:50' => '50',
-       '0:59' => '60',
+       '10' => '10 Seconds',
+       '20' => '20 Seconds',
+       '30' => '30 Seconds',
+       '40' => '40 Seconds',
+       '50' => '50 Seconds',
+       '60' => '60 Seconds',
+       '90' => '90 Seconds',
+       '120' => '2 Minutes',
+       '180' => '3 Minutes',
+       '240' => '4 Minutes',
+       '300' => '5 Minutes',
       ),
-       '0:20',                          // default
+       '20',                          // default
       xl('The screen refresh time in Seconds for the Patient Flow Board Screen.')
     ),
 
