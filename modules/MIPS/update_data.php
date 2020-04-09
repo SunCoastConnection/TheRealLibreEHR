@@ -68,6 +68,18 @@ if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Updates/7.sql")) {
 	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Updates/7.sql");
 	sqlStatementNoLog($query);
 }
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Updates/8.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Updates/8.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Updates/9.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Updates/9.sql");
+	sqlStatementNoLog($query);
+}
+if ( file_exists($GLOBALS['OE_SITE_DIR']."/filemanager/files/Updates/10.sql")) {
+	$query = file_get_contents($GLOBALS['OE_SITE_DIR']."/filemanager/files/Updates/10.sql");
+	sqlStatementNoLog($query);
+}
 
 echo "Database updated!";
 }else{
