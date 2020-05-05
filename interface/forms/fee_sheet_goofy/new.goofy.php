@@ -153,7 +153,7 @@ function findProvider() {
 //
 function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
   $auth = TRUE, $del = FALSE, $units = NULL, $fee = NULL, $id = NULL,
-  $billed = FALSE, $code_text = NULL, $justify = NULL, $provider_id = 0, $notecodes='', $exclude ="0",
+  $billed = FALSE, $code_text = NULL, $justify = NULL, $provider_id = 0, $notecodes='', $exclude ="0")
 //  $cptCode_invalid_is                    =NULL, /* Chi Wah added on 2017-10-13. */
 //  $cptCode_invalidBecauseOfAnotherCptCode=NULL, /* Chi Wah added on 2017-10-13. */
 //  $icd10Code_invalid_is                  =NULL, /* Chi Wah added on 2017-10-16. */
@@ -1211,7 +1211,7 @@ if ($billresult) {
     echoLine($bill_lino, $iter["code_type"], trim($iter["code"]),
       $modifier, $ndc_info,  $authorized,
       $del, $units, $fee, $iter["id"], $iter["billed"],
-      $iter["code_text"], $justify, $provider_id, $notecodes, $exclude,
+      $iter["code_text"], $justify, $provider_id, $notecodes, $exclude);
 //      $iter['cpt_code_invalid_is'],                          /* Chi Wah added on 2017-10-13. */
 //      $iter['cpt_code_invalid_because_of_another_cpt_code'], /* Chi Wah added on 2017-10-13. */
 //      $iter['icd10_code_invalid_is'],                        /* Chi Wah added on 2017-10-16. */

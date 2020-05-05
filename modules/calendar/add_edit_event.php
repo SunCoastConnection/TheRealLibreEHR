@@ -1625,7 +1625,7 @@ $classpati='';
         $ufid[] = $uf['id'];
       }
 
-      $qsql = sqlStatement("SELECT id, name FROM facility WHERE service_location != 0");
+      $qsql = sqlStatement("SELECT id, name FROM facility WHERE service_location != 0 ORDER BY name");
       /**************************************************************/
       while ($facrow = sqlFetchArray($qsql)) {
         /*************************************************************
