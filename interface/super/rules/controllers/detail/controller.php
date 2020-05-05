@@ -14,6 +14,12 @@ class Controller_detail extends BaseController {
         if ( is_null( $rule ) ) {
             $this->redirect("index.php?action=browse!list");
         } else {
+            // Instantiating object if does not exist to avoid
+            // "creating default object from empty value" warning.
+            if (!isset($this->viewBean)) {
+                $this->viewBean = new stdClass();
+            }
+
             $this->viewBean->rule = $rule;
             $this->set_view( "view.php" );
         }

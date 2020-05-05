@@ -42,7 +42,7 @@ class RuleManager {
     const SQL_RULE_FILTER_BY_GUID =
     "SELECT * FROM rule_filter
      WHERE PASSWORD(CONCAT( id, include_flag, required_flag, method, method_detail, value )) = ?";
-    
+
     const SQL_RULE_TARGET_BY_GUID =
     "SELECT * FROM rule_target
      WHERE PASSWORD(CONCAT( id, group_id, include_flag, required_flag, method, value, rule_target.interval )) = ?";
@@ -67,18 +67,14 @@ class RuleManager {
     "UPDATE clinical_rules
         SET active_alert_flag = ?,
             passive_alert_flag = ?,
-            cqm_flag = ?,
-            amc_flag = ?,
             patient_reminder_flag = ?,
-			developer = ?, 
-			funding_source = ?, 
 			release_version = ?,
                         web_reference = ?
       WHERE id = ? AND pid = 0";
 
     const SQL_UPDATE_TITLE =
     "UPDATE list_options
-        SET title = ?       
+        SET title = ?
       WHERE list_id = 'clinical_rules' AND option_id = ?";
 
     const SQL_REMOVE_INTERVALS =
@@ -125,7 +121,7 @@ class RuleManager {
      * @return Rule
      */
     function getRule($id, $pid = 0) {
-        $ruleResult = sqlQuery( 
+        $ruleResult = sqlQuery(
             self::SQL_RULE_DETAIL . " WHERE id = ? AND pid = ?", array($id, $pid)
         );
 
@@ -135,8 +131,6 @@ class RuleManager {
 
         $rule = new Rule($id, $ruleResult['title']);
 
-        $rule->setDeveloper($ruleResult['developer']);
-        $rule->setFunding($ruleResult['funding_source']);
         $rule->setRelease($ruleResult['release_version']);
         $rule->setWeb_ref($ruleResult['web_reference']);
 
@@ -166,13 +160,6 @@ class RuleManager {
             $rule->addRuleType(RuleType::from(RuleType::PassiveAlert));
         }
 
-        // not yet supported
-        if ($ruleResult['cqm_flag'] == 1) {
-            $rule->addRuleType(RuleType::from(RuleType::CQM));
-        }
-        if ($ruleResult['amc_flag'] == 1) {
-            $rule->addRuleType(RuleType::from(RuleType::AMC));
-        }
         if ($ruleResult['patient_reminder_flag'] == 1) {
             $rule->addRuleType(RuleType::from(RuleType::PatientReminder));
         }
@@ -195,34 +182,34 @@ class RuleManager {
             }
         }
     }
-    
+
     private function fillRuleTargetActionGroups( $rule ) {
         $stmt = sqlStatement( self::SQL_RULE_TARGET, array( $rule->id ) );
         $criterion = $this->gatherCriteria($rule, $stmt, $this->targetCriteriaFactory);
-                
+
         $ruleTargetGroups = $this->fetchRuleTargetCriteria( $rule );
         $ruleActionGroups = $this->fetchRuleActions( $rule );
         $groups = array();
         $groupCount = max( end(array_keys($ruleTargetGroups)), end(array_keys($ruleActionGroups)) );
         for ( $groupId = 0; $groupId <= $groupCount; $groupId++ ) {
-            
+
             $group = new RuleTargetActionGroup( $groupId );
             $addGroup = false;
             if ( isset( $ruleTargetGroups[$groupId] ) ) {
                 $group->setRuleTargets( $ruleTargetGroups[$groupId] );
                 $addGroup = true;
             }
-            
+
             if ( isset( $ruleActionGroups[$groupId] ) ) {
                 $group->setRuleActions( $ruleActionGroups[$groupId] );
                 $addGroup = true;
             }
-            
+
             if ( $addGroup == true ) {
                 $groups[$groupId]= $group;
             }
         }
-        
+
         $rule->setGroups( $groups );
     }
 
@@ -237,15 +224,15 @@ class RuleManager {
         if ( sizeof( $criterion ) > 0 ) {
             foreach( $criterion as $criteria ) {
                 if ( !isset( $ruleTargetGroups[$criteria->groupId] ) ) {
-                    $ruleTargetGroups[$criteria->groupId] = new RuleTargets();        
+                    $ruleTargetGroups[$criteria->groupId] = new RuleTargets();
                 }
                 $ruleTargetGroups[$criteria->groupId]->add( $criteria );
-            }    
+            }
         }
         ksort($ruleTargetGroups);
         return $ruleTargetGroups;
     }
-    
+
 	/**
      * @param Rule $rule
      */
@@ -283,7 +270,7 @@ class RuleManager {
 
         return null;
     }
-    
+
 	/**
      * @param string $guid
      * @return array of RuleTargetActionGroup
@@ -439,25 +426,21 @@ class RuleManager {
         sqlStatement( "DELETE FROM rule_filter WHERE PASSWORD(CONCAT( id, include_flag, required_flag, method, method_detail, value )) = '". $guid . "'" );
     }
 
-    function updateSummary( $ruleId, $types, $title, $developer, $funding, $release, $web_ref  ) {
+    function updateSummary( $ruleId, $types, $title, $release, $web_ref  ) {
         $rule = $this->getRule( $ruleId );
 
         if ( is_null($rule) ) {
             // add
             $result = sqlQuery( "select count(*)+1 AS id from clinical_rules" );
             $ruleId = "rule_" . $result['id'];
-            sqlStatement( "INSERT INTO clinical_rules (id, pid, active_alert_flag, passive_alert_flag, cqm_flag, amc_flag, patient_reminder_flag, developer, funding_source, release_version, web_reference ) " . 
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?) ",
+            sqlStatement( "INSERT INTO clinical_rules (id, pid, active_alert_flag, passive_alert_flag, patient_reminder_flag, release_version, web_reference ) " .
+                    "VALUES (?,?,?,?,?,?,?) ",
                     array(
                         $ruleId,
                         0,
                         in_array(RuleType::ActiveAlert, $types) ? 1 : 0,
                         in_array(RuleType::PassiveAlert, $types) ? 1 : 0,
-                        in_array(RuleType::CQM, $types) ? 1 : 0,
-                        in_array(RuleType::AMC, $types) ? 1 : 0,
                         in_array(RuleType::PatientReminder, $types) ? 1 : 0,
-						$developer,
-						$funding,
 						$release,
                                                 $web_ref
                     )
@@ -472,11 +455,7 @@ class RuleManager {
             sqlStatement( self::SQL_UPDATE_FLAGS, array(
                 in_array(RuleType::ActiveAlert, $types) ? 1 : 0,
                 in_array(RuleType::PassiveAlert, $types) ? 1 : 0,
-                in_array(RuleType::CQM, $types) ? 1 : 0,
-                in_array(RuleType::AMC, $types) ? 1 : 0,
                 in_array(RuleType::PatientReminder, $types) ? 1 : 0,
-                $developer,
-                $funding,
                 $release,
                 $web_ref,
                 $rule->id )
@@ -567,7 +546,7 @@ class RuleManager {
                     $group_id = $result['group_id'] ? $result['group_id'] + 1 : 1;
                 }
             }
-            
+
             sqlStatement( self::SQL_INSERT_TARGET, array(
                 $rule->id,
                 $dbView->inclusion ? 1 : 0,
