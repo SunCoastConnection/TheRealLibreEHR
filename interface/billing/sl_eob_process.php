@@ -29,7 +29,7 @@ require_once("$srcdir/billing.inc");
     $last_invnumber = '';
     $last_code = '';
     $invoice_total = 0.00;
-    $InsertionId;//last inserted ID of
+    $InsertionId;//last inserted ID of 
 
 ///////////////////////// Assorted Functions /////////////////////////
 
@@ -100,11 +100,11 @@ require_once("$srcdir/billing.inc");
     // This is called back by parse_era() once per claim.
     //
     function era_callback_check(&$out)
-
+    
     {
-    global $InsertionId;//last inserted ID of
+    global $InsertionId;//last inserted ID of 
         global $StringToEcho,$debug;
-
+        
         if($_GET['original']=='original')
         {
         $StringToEcho="<br/><br/><br/><br/><br/><br/>";
@@ -112,7 +112,7 @@ require_once("$srcdir/billing.inc");
         $StringToEcho.="<tr bgcolor='#cccccc'><td width='50'></td><td class='dehead' width='150' align='center'>".htmlspecialchars( xl('Check Number'), ENT_QUOTES)."</td><td class='dehead' width='400'  align='center'>".htmlspecialchars( xl('Payee Name'), ENT_QUOTES)."</td><td class='dehead'  width='150' align='center'>".htmlspecialchars( xl('Check Amount'), ENT_QUOTES)."</td></tr>";
         $WarningFlag=false;
         for ($check_count=1;$check_count<=$out['check_count'];$check_count++)
-         {
+         { 
             if($check_count%2==1)
              {
                 $bgcolor='#ddddff';
@@ -142,7 +142,7 @@ require_once("$srcdir/billing.inc");
         else
         {
         for ($check_count=1;$check_count<=$out['check_count'];$check_count++)
-         {
+         { 
         $chk_num=$out['check_number'.$check_count];
         $chk_num=str_replace(' ','_',$chk_num);
         if(isset($_REQUEST['chk'.$chk_num]))
@@ -151,8 +151,8 @@ require_once("$srcdir/billing.inc");
         $post_to_date=$_REQUEST['post_to_date']!=''?$_REQUEST['post_to_date']:date('Y-m-d');
         $deposit_date=$_REQUEST['deposit_date']!=''?$_REQUEST['deposit_date']:date('Y-m-d');
         $InsertionId[$out['check_number'.$check_count]]=arPostSession($_REQUEST['InsId'],$out['check_number'.$check_count],$out['check_date'.$check_count],$out['check_amount'.$check_count],$post_to_date,$deposit_date,$debug);
-
-
+        
+        
         }
         }
         }
@@ -161,8 +161,8 @@ require_once("$srcdir/billing.inc");
         global $encount, $debug, $claim_status_codes, $adjustment_reasons, $remark_codes;
         global $invoice_total, $last_code, $paydate;
          global $InsertionId;//last inserted ID of
-
-
+         
+        
         // Some heading information.
         $chk_123=$out['check_number'];
         $chk_123=str_replace(' ','_',$chk_123);
@@ -278,7 +278,6 @@ require_once("$srcdir/billing.inc");
       if ($svc['mod']) $codekey .= ':' . $svc['mod'];
       $prev = $codes[$codekey];
       $codetype = ''; //will hold code type, if exists
-      $billing_id = $codes[$codekey]['id'];
 
             // This reports detail lines already on file for this service item.
             if ($prev) {
@@ -361,7 +360,7 @@ require_once("$srcdir/billing.inc");
             if ($svc['paid']) {
                 if (!$error && !$debug) {
             arPostPayment($pid, $encounter,$InsertionId[$out['check_number']], $svc['paid'],//$InsertionId[$out['check_number']] gives the session id
-              $codekey, substr($inslabel,3), $out['check_number'], $debug,'',$codetype,$billing_id);
+              $codekey, substr($inslabel,3), $out['check_number'], $debug,'',$codetype);
                     $invoice_total -= $svc['paid'];
                 }
                 $description = "$inslabel/" . $out['check_number'] . ' payment';
@@ -403,7 +402,7 @@ require_once("$srcdir/billing.inc");
                     // Post a zero-dollar adjustment just to save it as a comment.
                     if (!$error && !$debug) {
               arPostAdjustment($pid, $encounter, $InsertionId[$out['check_number']], 0, $codekey,//$InsertionId[$out['check_number']] gives the session id
-                substr($inslabel,3), $reason, $debug, '', $codetype,$billing_id);
+                substr($inslabel,3), $reason, $debug, '', $codetype);
                     }
                     writeMessageLine($bgcolor, $class, $description . ' ' .
                         sprintf("%.2f", $adj['amount']));
@@ -413,7 +412,7 @@ require_once("$srcdir/billing.inc");
                     if (!$error && !$debug) {
               arPostAdjustment($pid, $encounter, $InsertionId[$out['check_number']], $adj['amount'],//$InsertionId[$out['check_number']] gives the session id
                 $codekey, substr($inslabel,3),
-                "Adjust code " . $adj['reason_code'], $debug, '', $codetype,$billing_id);
+                "Adjust code " . $adj['reason_code'], $debug, '', $codetype);
                         $invoice_total -= $adj['amount'];
                     }
                     writeDetailLine($bgcolor, $class, $patient_name, $invnumber,
@@ -458,7 +457,7 @@ require_once("$srcdir/billing.inc");
             // Check for secondary insurance.
             if ($primary && arGetPayerID($pid, $service_date, 2)) {
               arSetupSecondary($pid, $encounter, $debug,$out['crossover']);
-
+              
               if($out['crossover']<>1)
               {
                 writeMessageLine($bgcolor, 'infdetail',
@@ -521,7 +520,7 @@ require_once("$srcdir/billing.inc");
     {
     ?>
         <table border='0' cellpadding='2' cellspacing='0' width='100%'>
-
+        
          <tr bgcolor="#cccccc">
           <td class="dehead">
            <?php echo htmlspecialchars( xl('Patient'), ENT_QUOTES) ?>
@@ -545,10 +544,10 @@ require_once("$srcdir/billing.inc");
            <?php echo htmlspecialchars( xl('Balance'), ENT_QUOTES) ?>&nbsp;
           </td>
          </tr>
-
+        
         <?php
         global $InsertionId;
-
+        
           $eraname=$_REQUEST['eraname'];
           $alertmsg = parse_era_for_check($GLOBALS['OE_SITE_DIR'] . "/era/$eraname.edi");
           $alertmsg = parse_era($GLOBALS['OE_SITE_DIR'] . "/era/$eraname.edi", 'era_callback');
@@ -564,7 +563,7 @@ require_once("$srcdir/billing.inc");
                     $rs= sqlQ("select sum(pay_amount) sum_pay_amount from ar_activity where session_id='$value'");
                     $row=sqlFetchArray($rs);
                     $pay_amount=$row['sum_pay_amount'];
-
+                    
                     if(($pay_total-$pay_amount)<>0)
                     {
                     $StringIssue.=$key.' ';
@@ -575,7 +574,7 @@ require_once("$srcdir/billing.inc");
                 echo "<script>alert('$StringIssue')</script>";
          }
 
-
+         
         ?>
         </table>
 <?php

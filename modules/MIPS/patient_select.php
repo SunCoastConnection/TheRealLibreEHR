@@ -145,8 +145,9 @@ $MAXSHOW = 100; // maximum number of results to display at once
 $sqllimit = $MAXSHOW;
 $given = "*, DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS";
 $orderby = "lname ASC, fname ASC";
-
+if (isset($_POST['search_service_code'])){
 $search_service_code = trim($_POST['search_service_code']);
+}
 echo "<input type='hidden' name='search_service_code' value='" .
   htmlspecialchars($search_service_code, ENT_QUOTES) . "' />\n";
 
@@ -314,9 +315,11 @@ if ($fend > $count) $fend = $count;
 <?php if (empty($GLOBALS['patient_search_results_style'])) { ?>
 <?php
 $add_days = 90;
-if (!$popup && preg_match('/^(\d+)\s*(.*)/',$patient,$matches) > 0) {
-  $add_days = $matches[1];
-  $patient = $matches[2];
+if (isset($patient)){
+    if (!$popup && preg_match('/^(\d+)\s*(.*)/',$patient,$matches) > 0) {
+      $add_days = $matches[1];
+      $patient = $matches[2];
+    }
 }
 }
 else {

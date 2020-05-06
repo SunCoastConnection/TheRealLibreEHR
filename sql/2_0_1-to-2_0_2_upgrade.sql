@@ -280,6 +280,7 @@ CREATE TABLE IF NOT EXISTS `transactions_log` (
 #IfMissingColumn patient_data guardian_pid
   ALTER TABLE `patient_data` ADD `guardian_pid` int(11) default null  AFTER `guardian_email`;
 #EndIf
+
 #IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2019-10-01 load_filename 2020-ICD-10-CM-Codes.zip
 INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2019-10-01', '2020-ICD-10-CM-Codes.zip', '745546b3c94af3401e84003e1b143b9b');
 #EndIf

@@ -8,7 +8,8 @@
 
  require_once(dirname(__FILE__)."/../../../../../globals.php");
  require_once($GLOBALS['srcdir']."/headers.inc.php");
-?>
+
+ $rules = sqlStatement("SELECT * FROM list_options WHERE list_id='clinical_rules' ORDER BY title");?>
 
 <script language="javascript" src="<?php js_src('list.js') ?>"></script>
 <script language="javascript" src="<?php js_src('jQuery.fn.sortElements.js') ?>"></script>
@@ -26,7 +27,7 @@
                 <span><?php echo out( xl( 'Go' ) ); ?></span>
             </a>
         </td>
-  </tr> 
+  </tr>
   <tr>
         <td class="title"><?php echo out( xl( 'Rules Configuration' ) ); ?></td>
         <td>
@@ -34,19 +35,26 @@
                 <span><?php echo out( xl( 'Add new' ) ); ?></span>
             </a>
         </td>
-  </tr> 
+  </tr>
 </table>
 
-<div class="rule_container text">
-    <div class="rule_row header">
-        <span class="rule_title header_title"><?php echo out( xl( 'Name' ) ); ?></span>
-        <span class="rule_type header_type"><?php echo out( xl( 'Type' ) ); ?></span>
-    </div>
-</div>
 
-<!-- template -->
-<div class="rule_row data template">
-    <span class="rule_title"><a href="index.php?action=detail!view" onclick="top.restoreSession()"></a></span>
-    <span class="rule_type"><a href="index.php?action=detail!view" onclick="top.restoreSession()"></a></span>
-</div>
-
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+            foreach($rules as $i => $rule) { ?>
+                <tr>
+                    <th scope="row"><?php echo $i; ?></th>
+                    <td class="rule_title"><a href="index.php?action=detail!view" id="<?php echo $rule['option_id']; ?>"> <?php echo xlt($rule["title"]); ?></a></td>
+                    <td class="rule_type"><a href="index.php?action=detail!view"><?php echo xlt('Clinical Rule'); ?></a></td>
+                </tr>
+            <?php } ?>
+    </tbody>
+</table>

@@ -35,7 +35,7 @@
     <span class="left_col colhead req" data-fld="fld_title"><?php echo out( xl( 'Title' ) ); ?></span>
     <span class="end_col"><input type="text" name="fld_title" class="field" id="fld_title" value="<?php echo out( $rule->title ); ?>"></span>
     </p>
-    
+
     <p class="row">
     <span class="left_col colhead" data-fld="fld_ruleTypes[]"><?php echo out( xl( 'Type' ) ); ?></span>
     <span class="end_col">
@@ -46,16 +46,6 @@
         <?php echo out( RuleType::from($type)->lbl ); ?>
         <?php } ?>
     </span>
-    </p>
-
-    <p class="row"> 
-    <span class="left_col colhead" data-fld="fld_developer"><?php echo out( xl( 'Developer' ) ); ?></span>
-    <span class="end_col"><input type="text" name="fld_developer" class="field" id="fld_developer" value="<?php echo out( $rule->developer ); ?>" maxlength="255"></span>
-    </p>
-
-    <p class="row">
-    <span class="left_col colhead" data-fld="fld_funding_source"><?php echo out( xl( 'Funding Source' ) ); ?></span>
-    <span class="end_col"><input type="text" name="fld_funding_source" class="field" id="fld_funding_source" value="<?php echo out( $rule->funding_source ); ?>" maxlength="255"></span>
     </p>
 
     <p class="row">
@@ -69,7 +59,7 @@
     </p>
 
     </form>
-    
+
 </div>
 
 <div id="required_msg" class="small">

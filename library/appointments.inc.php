@@ -311,7 +311,19 @@ function fetchAllEvents( $from_date, $to_date, $provider_id = null, $facility_id
 function fetchAppointments( $from_date, $to_date, $patient_id = null, $provider_id = null, $facility_id = null, $pc_appstatus = null, $with_out_provider = null, $with_out_facility = null, $pc_catid = null, $tracker_board = false, $nextX = 0 )
 {
     $where = "";
-    if ( $provider_id ) $where .= " AND e.pc_aid = '$provider_id'";
+    if ( $provider_id ) {
+        if ( is_array( $provider_id ) ) {
+            $where .= " AND (";
+            foreach ( $provider_id as $provider ) {
+                $where .= " e.pc_aid = '$provider' OR";
+            }
+            $where = substr($where, 0, -3);
+            $where .= " )";
+        } else {
+            $where .= " AND e.pc_aid = '$provider_id'";
+        }
+    }
+
     if ( $patient_id ) {
         $where .= " AND e.pc_pid = '$patient_id'";
     } else {

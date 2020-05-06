@@ -13,7 +13,6 @@
          {
             foreach($_REQUEST['final_this_page_criteria'] as $criteria_key => $criteria_value)
              {
-              $original_criteria_value = $criteria_value;
               $criteria_value=PrepareSearchItem($criteria_value); // this escapes for sql
               $SplitArray=array();
               //---------------------------------------------------------
@@ -21,15 +20,6 @@
                {
                 $billstring .= ' AND '.$criteria_value;
                }
-              else if (strpos($criteria_value, "insurance_companies.id") !== false) {
-                $billstring .= ' AND ('.$original_criteria_value.')';
-              }
-              else if (strpos($criteria_value, "form_encounter.facility_id") !== false) {
-                $billstring .= ' AND ('.$original_criteria_value.')';
-              }
-              else if (strpos($criteria_value, "insurance_companies.account_type") !== false) {
-                $billstring .= ' AND ('.$original_criteria_value.')';
-              }
               elseif(strpos($criteria_value,"billing.billed = '0'")!== false)
                {
                 //3 is an error condition
@@ -84,10 +74,6 @@
                {
                 $query_part .= ' AND '."(insurance_data.provider = '0' or insurance_data.date > form_encounter.date)";
                }
-               elseif (strpos($criteria_value, "claims.payer_id") !== false) {
-                //OR condition for insurance companies
-                $query_part  .= ' OR '.$criteria_value;
-               }
               //---------------------------------------------------------
               else
                {
@@ -102,32 +88,22 @@
     {
         GenerateTheQueryPart();
         global $query_part,$billstring,$auth;
-        if (!strpos($query_part, "insurance_data.type") !== false) {
-          $query_part .= " AND insurance_data.type='primary'";
-        }
         // Selecting by the date in the billing table is wrong, because that is
         // just the data entry date; instead we want to go by the encounter date
         // which is the date in the form_encounter table.
         //
-        $sql = "SELECT distinct
-        form_encounter.id as form_enc_id,
-        form_encounter.case_number as form_enc_case_number,
-        form_encounter.coding_complete as form_enc_coding_done,
-        form_encounter.date AS enc_date,
-        form_encounter.pid AS enc_pid,
-        form_encounter.billing_note AS enc_billing_note,
-        form_encounter.encounter AS enc_encounter,
-        form_encounter.provider_id AS enc_provider_id, billing.*
-        FROM form_encounter
-        LEFT OUTER JOIN billing ON " .
+        $sql = "SELECT distinct form_encounter.id as form_enc_id, form_encounter.coding_complete as form_enc_coding_done, form_encounter.date AS enc_date, form_encounter.pid AS enc_pid, form_encounter.billing_note AS enc_billing_note, " .
+            "form_encounter.encounter AS enc_encounter, form_encounter.provider_id AS enc_provider_id, billing.* " .
+            "FROM form_encounter " .
+            "LEFT OUTER JOIN billing ON " .
             "billing.encounter = form_encounter.encounter AND " .
             "billing.pid = form_encounter.pid AND " .
             "billing.code_type LIKE ? AND " .
             "billing.activity = 1 " .
             "LEFT OUTER JOIN patient_data on patient_data.pid = form_encounter.pid " .
             "LEFT OUTER JOIN claims on claims.patient_id = form_encounter.pid and claims.encounter_id = form_encounter.encounter " .
-        "INNER JOIN insurance_data on insurance_data.pid = form_encounter.pid AND insurance_data.case_number=form_encounter.case_number ".
-        "INNER JOIN insurance_companies on insurance_companies.id = insurance_data.provider ".
+            "LEFT OUTER JOIN insurance_data on insurance_data.pid = form_encounter.pid and insurance_data.type = 'primary' ".
+            "LEFT OUTER JOIN insurance_companies on insurance_companies.id = insurance_data.provider ".
             "WHERE 1=1 $query_part  " . " $auth " ." $billstring " .
             "ORDER BY form_encounter.encounter, form_encounter.pid, billing.code_type, billing.code ASC";
             //echo $sql;
@@ -149,7 +125,7 @@
         // just the data entry date; instead we want to go by the encounter date
         // which is the date in the form_encounter table.
         //
-        $sql = "SELECT distinct form_encounter.date AS enc_date, form_encounter.case_number as form_enc_case_number, form_encounter.coding_complete as form_enc_coding_done, form_encounter.pid AS enc_pid, " .
+        $sql = "SELECT distinct form_encounter.date AS enc_date, form_encounter.pid AS enc_pid, " .
             "form_encounter.encounter AS enc_encounter, form_encounter.provider_id AS enc_provider_id, billing.* " .
             "FROM form_encounter " .
             "LEFT OUTER JOIN billing ON " .

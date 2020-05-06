@@ -22,7 +22,7 @@
  * @param
  *          wrapper class for moving some care coordination zend product
  */
-require_once ( dirname( __FILE__ ) . '/../../library/sql.inc' );
+/* require_once ( dirname( __FILE__ ) . '/../../library/sql.inc' ); #breaking login and document function */
 class ApplicationTable
 {
 
