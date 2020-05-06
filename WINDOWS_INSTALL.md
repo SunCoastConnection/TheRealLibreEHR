@@ -84,9 +84,7 @@ error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE
 
 #### Setting up Access Control
 
-phpGACL access controls are installed and configured automatically during Libre EHR setup. It can be administered within Libre EHR in the `admin` -> `acl` menu. This is a very powerful access control software.
-
-Learn more about phpGACL [here](http://phpgacl.sourceforge.net/). It is recommended to read the phpGACL manual in the `/lh-ehr/Documentation/README.phpgacl.md` file, the online documentation at [Libre](http://LibreEHR.org/), and the comments in the `/lh-ehr/library/acl.inc` file.
+Access Control documentation is in process.
 
 #### Patient Documents Capability
 
