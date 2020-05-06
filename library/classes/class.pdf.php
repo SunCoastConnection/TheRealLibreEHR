@@ -1915,20 +1915,15 @@ function stream($options=''){
     $tmp = $this->output();
   }
 
-  // Rod's mods below are based on this tip:
-  // http://sourceforge.net/forum/forum.php?thread_id=1420028&forum_id=147987
-  header('Cache-Control:'); // added by Rod
-  header('Pragma:');        // added by Rod
+  header('Cache-Control:'); 
+  header('Pragma:');
   header("Content-type: application/pdf");
   header("Content-Length: ".strlen(ltrim($tmp)));
   $fileName = (isset($options['Content-Disposition'])?$options['Content-Disposition']:'file.pdf');
-  // header("Content-Disposition: inline; filename=".$fileName);
-  // This supports a new "inline" keyword in the options array.  If true, the
-  // Content-Disposition header is set to indicate an inline document:
+
   header("Content-Disposition: " .
     (empty($options['inline']) ? "attachment" : "inline") .
     "; filename=" . $fileName);
-  // End of Rod's mods.
 
   if (isset($options['Accept-Ranges']) && $options['Accept-Ranges']==1){
     header("Accept-Ranges: ".strlen(ltrim($tmp)));

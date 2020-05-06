@@ -84,7 +84,7 @@ class C_Document extends Controller {
         $this->hide_encryption = $GLOBALS['hide_document_encryption'];
         $this->patient_id = $patient_id;
 
-        // Added by Rod to support document template download from general_upload.html.
+        // Support document template download from general_upload.html.
         // Cloned from similar stuff in manage_document_templates.php.
         $templatedir = $GLOBALS['OE_SITE_DIR'] . '/documents/doctemplates';
         $templates_options = "<option value=''>-- " . xl('Select Template') . " --</option>";
@@ -303,7 +303,7 @@ class C_Document extends Controller {
     }
 
     function view_action($patient_id = "", $doc_id) {
-        // Added by Rod to support document delete:
+        // Document delete:
         global $gacl_object, $phpgacl_location;
         global $ISSUE_TYPES;
 
@@ -915,7 +915,7 @@ class C_Document extends Controller {
         return $this->view_action($patient_id, $document_id);
     }
 
-    // Added by Rod for metadata update.
+    // Metadata update.
     //
 	function update_action_process($patient_id = "", $document_id) {
 

@@ -239,10 +239,6 @@ require_once (dirname(__FILE__) . "/../library/sanitize.inc.php");
 // Includes functions for date internationalization
 include_once (dirname(__FILE__) . "/../library/date_functions.php");
 
-// Defaults for specific applications.
-$GLOBALS['weight_loss_clinic'] = false;
-$GLOBALS['ippf_specific'] = false;
-$GLOBALS['cene_specific'] = false;
 $GLOBALS['facility_acl'] = false;
 
 // Defaults for drugs and products.
@@ -295,10 +291,6 @@ if (!empty($glrow)) {
     }
     else if ($gl_name == 'weekend_days') {
         $GLOBALS[$gl_name] = explode(',', $gl_value);
-    }
-    else if ($gl_name == 'specific_application') {
-      if ($gl_value == '2') $GLOBALS['ippf_specific'] = true;
-      else if ($gl_value == '3') $GLOBALS['weight_loss_clinic'] = true;
     }
     else if ($gl_name == 'inhouse_pharmacy') {
       if ($gl_value) $GLOBALS['inhouse_pharmacy'] = true;
@@ -394,7 +386,6 @@ else {
   $GLOBALS['calendar_interval'] = 15;
   $GLOBALS['phone_country_code'] = '1';
   $GLOBALS['disable_non_default_groups'] = true;
-  $GLOBALS['ippf_specific'] = false;
   $GLOBALS['facility_acl'] = false;
   $GLOBALS['default_tab_1'] = "/interface/main/finder/dynamic_finder.php";
   $GLOBALS['default_tab_2'] = "/interface/patient_tracker/patient_tracker.php?skip_timeout_reset=1";

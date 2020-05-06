@@ -38,7 +38,6 @@ class C_Prescription extends Controller {
     var $form_action;
     var $top_action;
     var $style;
-    var $weight_loss_clinic;
     var $simplified_prescriptions;
     var $css_header;
     var $web_root;
@@ -65,7 +64,6 @@ class C_Prescription extends Controller {
         $this->form_action = $GLOBALS['webroot']."/controller.php?" . $_SERVER['QUERY_STRING'];
         $this->top_action = $GLOBALS['webroot']."/controller.php?" . "prescription" . "&";
         $this->style = $GLOBALS['style'];
-        $this->weight_loss_clinic = $GLOBALS['weight_loss_clinic'];
         $this->simplified_prescriptions = $GLOBALS['simplified_prescriptions'];
         $this->css_header = $GLOBALS['css_header'];
         $this->web_root = $GLOBALS['webroot'];
@@ -629,7 +627,7 @@ class C_Prescription extends Controller {
         $on_this_page = 0;
 
         //print prescriptions body
-        $this->_state = false; // Added by Rod - see Controller.class.php
+        $this->_state = false; //- see Controller.class.php
         $ids = preg_split('/::/', substr($id,1,strlen($id) - 2), -1, PREG_SPLIT_NO_EMPTY);
         foreach ($ids as $id) {
             $p = new Prescription($id);
@@ -661,7 +659,7 @@ class C_Prescription extends Controller {
 
             $this->multiprintcss_preheader();
 
-                $this->_state = false; // Added by Rod - see Controller.class.php
+                $this->_state = false; //- see Controller.class.php
                 $ids = preg_split('/::/', substr($id,1,strlen($id) - 2), -1, PREG_SPLIT_NO_EMPTY);
 
                 $on_this_page = 0;
@@ -683,7 +681,7 @@ class C_Prescription extends Controller {
         }
 
     function send_action_process($id) {
-        $dummy = ""; // Added by Rod to avoid run-time warnings
+        $dummy = ""; // Avoid run-time warnings
         if ($_POST['process'] != "true")
             return;
         if(empty($id)) {
@@ -693,10 +691,9 @@ class C_Prescription extends Controller {
         switch ($_POST['submit']) {
 
         case (xl("Print")." (".xl("PDF").")"):
-                // The following statement added by Rod.
                 // Looking at Controller.class.php, it appears that _state is set to false
                 // to indicate that no further HTML is to be generated.
-                $this->_state = false; // Added by Rod - see Controller.class.php
+                $this->_state = false; // - see Controller.class.php
                 return $this->_print_prescription($p, $dummy);
                 break;
         case (xl("Print")." (".xl("HTML").")"):

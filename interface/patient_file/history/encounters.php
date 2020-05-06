@@ -364,9 +364,7 @@ $getStringForPage="&pagesize=".attr($pagesize)."&pagestart=".attr($pagestart);
   <th colspan='5'><?php echo htmlspecialchars( (($GLOBALS['phone_country_code'] == '1') ? xl('Billing') : xl('Coding')), ENT_NOQUOTES); ?></th>
 <?php } ?>
 
-<?php if (!$GLOBALS['ippf_specific']) { ?>
-  <th>&nbsp;<?php echo htmlspecialchars( (($GLOBALS['weight_loss_clinic']) ? xl('Payment') : xl('Insurance')), ENT_NOQUOTES); ?></th>
-<?php } ?>
+  <th>&nbsp;<?php echo htmlspecialchars(( xl('Insurance')), ENT_NOQUOTES); ?></th>
 
  </tr>
 

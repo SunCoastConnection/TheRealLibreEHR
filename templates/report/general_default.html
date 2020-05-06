@@ -96,7 +96,6 @@ if (is_dir($reportsdir)) {
 </li><li>
 <a href="appt_encounter_report.php" target="_blank" onclick="top.restoreSession()">{xl t='Appointments-Encounters Report'}</a>
 </li>
-{php} if (! $GLOBALS['simplified_demographics']) { {/php}
 <li>
 <a href="insurance_allocation_report.php" target="_blank" onclick="top.restoreSession()">{xl t='Patient Insurance Distribution Report'}</a>
 </li><li>
@@ -106,13 +105,10 @@ if (is_dir($reportsdir)) {
 </li><li>
 <a href="patient_list.php" target="_blank" onclick="top.restoreSession()">{xl t='Patient List'}</a>
 </li>
-{php} } {/php}
 
-{php} if (! $GLOBALS['weight_loss_clinic']) { {/php}
 <li>
 <a href="front_receipts_report.php" target="_blank" onclick="top.restoreSession()">{xl t='Front Office Receipts Report'}</a>
 </li>
-{php} } {/php}
 
 <li>
 <a href="prescriptions_report.php" target="_blank" onclick="top.restoreSession()">{xl t='Prescriptions Report'}</a>

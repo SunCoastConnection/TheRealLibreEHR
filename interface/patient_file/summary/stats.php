@@ -285,7 +285,6 @@ foreach (array('treatment_protocols','injury_log') as $formname) {
 ?>
 </table> <!-- end patient_stats_spreadsheets -->
 
-<?php if (!$GLOBALS['disable_immunizations'] && !$GLOBALS['weight_loss_clinic']) { ?>
 <div>
 <table id="patient_stats_imm">
 <tr>
@@ -361,7 +360,6 @@ else { ?>
 </tr>
 </table> <!-- end patient_stats_imm-->
 </div>
-<?php } ?>
 
 <?php if (!$GLOBALS['disable_prescriptions']) { ?>
 <div>

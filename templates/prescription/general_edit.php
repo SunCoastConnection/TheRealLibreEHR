@@ -325,22 +325,6 @@
   </td>
 </tr>
 <tr>
-<?php if($this->weight_loss_clinic){?>
-  <td COLSPAN="1" class="text" ALIGN="right" VALIGN="MIDDLE" ><?php echo xl('Substitution');?></td>
-  <td COLSPAN="2" ALIGN="LEFT" VALIGN="MIDDLE" >    
-    <select name="substitute">
-    <?php foreach ($this->prescription->substitute_array as $key => $value)
-        { 
-            if($key==$this->prescription->substitute) { ?>
-            <option label="<?php echo $value;?>" value="<?php echo $key;?>" selected="selected" ><?php echo $value;?></option>
-            <?php } else { ?>
-            <option label="<?php echo $value;?>" value="<?php echo $key;?>" ><?php echo $value;?></option>
-            <?php }                
-        }
-        ?>
-    </select>
-  </td>
-<?php }else {?>
   <td COLSPAN="1" class="text" ALIGN="right" VALIGN="MIDDLE" ><?php echo xl('Add to Medication List');?></td>
   <td COLSPAN="2" class="text" ALIGN="LEFT" VALIGN="MIDDLE" >    
     <?php foreach ($this->prescription->medication_array as $value) {
@@ -363,7 +347,6 @@
     ?>
     </select>
   </td>
-<?php }?>
 </tr>
 </table>
 <input type="hidden" name="id" value="<?php echo $this->prescription->id;?>" />

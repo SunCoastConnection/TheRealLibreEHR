@@ -52,7 +52,7 @@ require_once("$srcdir/headers.inc.php");
 define('CHECKSUM_LOGGING', true);
 
 // Some table cells will not be displayed unless insurance billing is used.
-$usbillstyle = $GLOBALS['ippf_specific'] ? " style='display:none'" : "";
+$usbillstyle =  "";
 
 // This may be an error message or warning that pops up when the form is loaded.
 $alertmsg = '';
@@ -85,32 +85,7 @@ function genDiagJS($code_type, $code) {
   }
 }
 
-// For IPPF only.  Returns 0 = none, 1 = nonsurgical, 2 = surgical.
-//
-function contraceptionClass($code_type, $code) {
-  global $code_types;
-  if (!$GLOBALS['ippf_specific']) return 0;
-  $contra = 0;
-  // Get the related service codes.
-  $codesrow = sqlQuery("SELECT related_code FROM codes WHERE " .
-    "code_type = ? " .
-    " AND code = ? LIMIT 1", array($code_types[$code_type]['id'],$code) );
-  if (!empty($codesrow['related_code']) && $code_type == 'MA') {
-    $relcodes = explode(';', $codesrow['related_code']);
-    foreach ($relcodes as $relstring) {
-      if ($relstring === '') continue;
-      list($reltype, $relcode) = explode(':', $relstring);
-      if ($reltype !== 'IPPF') continue;
-      if      (preg_match('/^11....110/'    , $relcode)) $contra |= 1;
-      else if (preg_match('/^11....999/'    , $relcode)) $contra |= 1;
-      else if (preg_match('/^112152010/'    , $relcode)) $contra |= 1;
-      else if (preg_match('/^11317[1-2]111/', $relcode)) $contra |= 1;
-      else if (preg_match('/^12118[1-2].13/', $relcode)) $contra |= 2;
-      else if (preg_match('/^12118[1-2]999/', $relcode)) $contra |= 2;
-    }
-  }
-  return $contra;
-}
+
 # gets the provider from the encounter file , or from the logged on user or from the patient file
 function findProvider() {
   global $encounter, $pid;
@@ -139,7 +114,7 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
   $billed = FALSE, $code_text = NULL, $justify = NULL, $provider_id = 0, $notecodes='', $exclude ="0")
 {
   global $code_types, $ndc_applies, $ndc_uom_choices, $justinit, $pid;
-  global $contraception, $usbillstyle, $hasCharges;
+  global $usbillstyle, $hasCharges;
 
   // If using line item billing and user wishes to default to a selected provider, then do so.
   if($GLOBALS['default_fee_sheet_line_item_provider'] == 1 && $GLOBALS['support_fee_sheet_line_item_provider'] ==1 ) {
@@ -366,8 +341,6 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
     echo " </tr>\n";
   }
 
-  // For IPPF.  Track contraceptive services.
-  if (!$del) $contraception |= contraceptionClass($codetype, $code);
 
   if ($fee != 0) $hasCharges = true;
 }
@@ -472,8 +445,6 @@ function visitChecksum($pid, $encounter, $saved=false) {
   return $ret;
 }
 
-// This is just for IPPF, to indicate if the visit includes contraceptive services.
-$contraception = 0;
 
 // Possible units of measure for NDC drug quantities.
 //
@@ -725,12 +696,6 @@ if (!$alertmsg && ($_POST['bn_save'] || $_POST['bn_save_close'])) {
     }
   }
 
-  // More IPPF stuff.
-  if (!empty($_POST['contrastart'])) {
-    $contrastart = $_POST['contrastart'];
-    sqlStatement("UPDATE patient_data SET contrastart = ?" .
-      " WHERE pid = ?", array($contrastart,$pid) );
-  }
 
   // Note: Taxes are computed at checkout time (in pos_checkout.php which
   // also posts to SL).  Currently taxes with insurance claims make no sense,
@@ -1359,33 +1324,6 @@ echo "</b></span>\n";
 &nbsp;
 
 <?php
-// If applicable, ask for the contraceptive services start date.
-$trow = sqlQuery("SELECT count(*) AS count FROM layout_options WHERE " .
-  "form_id = 'DEM' AND field_id = 'contrastart' AND uor > 0");
-if ($trow['count'] && $contraception && !$isBilled) {
-  $date1 = substr($visit_row['date'], 0, 10);
-  // If admission or surgical, then force contrastart.
-  if ($contraception > 1 ||
-    strpos(strtolower($visit_row['pc_catname']), 'admission') !== false)
-  {
-    echo "   <input type='hidden' name='contrastart' value='" . attr($date1) . "' />\n";
-  }
-  else {
-    // echo "<!-- contraception = $contraception -->\n"; // debugging
-    $trow = sqlQuery("SELECT contrastart " .
-      "FROM patient_data WHERE " .
-      "pid = ? LIMIT 1", array($pid) );
-    if (empty($trow['contrastart']) || substr($trow['contrastart'], 0, 4) == '0000') {
-      $date0 = date('Y-m-d', strtotime($date1) - (60 * 60 * 24));
-      echo "   <select name='contrastart'>\n";
-      echo "    <option value='" . attr($date1) . "'>" . xlt('This visit begins new contraceptive use') . "</option>\n";
-      echo "    <option value='" . attr($date0) . "'>" . xlt('Contraceptive services previously started') . "</option>\n";
-      echo "    <option value=''>" . xlt('None of the above') . "</option>\n";
-      echo "   </select>\n";
-      echo "&nbsp; &nbsp; &nbsp;\n";
-    }
-  }
-}
 
 // If there is a choice of warehouses, allow override of user default.
 if ($prod_lino > 0) { // if any products are in this form

@@ -101,12 +101,6 @@ td { font-size:10pt; }
 .drugsonly { }
 <?php } ?>
 
-<?php if (empty($GLOBALS['ippf_specific'])) { ?>
-.ippfonly { display:none; }
-<?php } else { ?>
-.ippfonly { }
-<?php } ?>
-
 </style>
 
 <script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>

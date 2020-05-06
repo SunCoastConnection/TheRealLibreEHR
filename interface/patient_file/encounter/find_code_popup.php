@@ -68,7 +68,6 @@ td { font-size:10pt; }
 
  // TBD: The following function is not necessary. See
  // interface/forms/LBF/new.php for an alternative method that does not require it.
- // Rod 2014-04-15
 
  // Standard function with additional parameter to select which
  // element on the target page to place the selected code into.

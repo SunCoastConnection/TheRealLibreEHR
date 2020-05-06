@@ -204,10 +204,8 @@ if( !empty( $_GET["back"] ) || !empty( $_POST["back"] ) ){
     print "<input type=\"hidden\" name=\"back\" value=\"1\">";
 }
 ?>
-<?php if (!$GLOBALS['weight_loss_clinic']) { ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <input type="submit" name="justify" value="<?php xl('Justify/Save','e');?>">
-<?php } ?>
 </dt>
 </dl>
 

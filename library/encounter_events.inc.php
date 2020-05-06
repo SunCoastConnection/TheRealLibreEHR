@@ -98,7 +98,7 @@ function calendar_arrived($form_pid) {
                  break;
                  }
 
-        // Added by Rod to handle repeats on nth or last given weekday of a month:
+        // Handle repeats on nth or last given weekday of a month:
         if ($row_event['pc_recurrtype'] == 2) {
           $my_repeat_on_day = $pc_recurrspec_array['event_repeat_on_day'];
           $my_repeat_on_num = $pc_recurrspec_array['event_repeat_on_num'];
