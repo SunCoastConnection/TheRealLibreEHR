@@ -37,7 +37,7 @@ require_once("../../interface/globals.php");
 require_once("$srcdir/acl.inc");
 
 // Control access
-if (!acl_check('admin', 'super')) {
+if (!acl_check('code_systems')) {
     echo xlt('Not Authorized');
     exit;
 }

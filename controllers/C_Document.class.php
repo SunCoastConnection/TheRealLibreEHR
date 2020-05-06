@@ -321,9 +321,9 @@ class C_Document extends Controller {
         $this->move_action = $this->_link("move") . "document_id=" . $d->get_id() . "&process=true";
         $this->hide_encryption = $GLOBALS['hide_document_encryption'];
 
-        // Added by Rod to support document delete:
+        // For document delete:
         $delete_string = '';
-        if (acl_check('admin', 'super')) {
+        if (acl_check('document_delete')) {
             $delete_string = "<a href='' class='css_button' onclick='return deleteme(" . $d->get_id() .
                     ")'><span><font color='red'>" . xl('Delete') . "</font></span></a>";
         }
@@ -333,12 +333,12 @@ class C_Document extends Controller {
 
         $this->validate_action = $this->_link("validate") . "document_id=" . $d->get_id() . "&process=true";
 
-        // Added by Rod to support document date update:
+        // For document date update:
 
         $this->docdate = $d->get_docdate();
         $this->update_action = $this->_link("update") . "document_id=" . $d->get_id() . "&process=true";
 
-        // Added by Rod to support document issue update:
+        // To support document issue update:
         $issues_options = "<option value='0'>-- " . xl('Select Issue') . " --</option>";
         $ires = sqlStatement("SELECT id, type, title, begdate FROM lists WHERE " .
                 "pid = ? " . // AND enddate IS NULL " .

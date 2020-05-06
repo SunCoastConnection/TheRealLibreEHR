@@ -6,8 +6,7 @@ include_once("$srcdir/sql.inc");
 include_once("../../library/acl.inc");
 include_once("batchcom.inc.php");
 
-// gacl control
-$thisauth = acl_check('admin', 'notification');
+$thisauth = acl_check('batchcom_notification');
 
 if (!$thisauth) {
   echo "<html>\n<body>\n";

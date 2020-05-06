@@ -17,7 +17,7 @@
  require_once("$srcdir/htmlspecialchars.inc.php");
 
  // Check authorization.
- $thisauth = acl_check('admin', 'drugs');
+ $thisauth = acl_check('drug_warehouse');
  if (!$thisauth) die(xlt('Not authorized'));
 
 // For each sorting option, specify the ORDER BY argument.

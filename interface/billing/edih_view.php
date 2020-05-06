@@ -27,11 +27,9 @@ $sanitize_all_escapes=true;
 $fake_register_globals=false;
 require_once(dirname(__FILE__) . "/../globals.php");
 require_once("$srcdir/headers.inc.php");
-//
-if (!acl_check('acct', 'eob')) die(xlt("Access Not Authorized"));
-//
-//include_once("{$GLOBALS['srcdir']}/dynarch_calendar_en.inc.php");
-//
+
+if (!acl_check('edihistory')) die(xlt("Access Not Authorized"));
+
 require_once($GLOBALS['srcdir']."/formatting.inc.php");
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);

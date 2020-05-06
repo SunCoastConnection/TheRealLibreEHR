@@ -43,7 +43,7 @@
  $fee             = $_REQUEST['fee'];
  $user            = $_SESSION['authUser'];
 
- if (!acl_check('admin', 'drugs')) die(xl('Not authorized'));
+ if (!acl_check('drug_warehouse')) die(xl('Not authorized'));
 
  if (!$drug_id        ) $drug_id = 0;
  if (!$prescription_id) $prescription_id = 0;

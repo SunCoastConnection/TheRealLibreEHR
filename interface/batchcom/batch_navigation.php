@@ -1,13 +1,13 @@
 <table border="0" align="center" cellspacing="0" cellpadding="0" width="100%" height="22">
 <tr bgcolor="#00ffff">
-<?php if (acl_check('admin', 'batchcom')) { ?>
+<?php if (acl_check('batchcom')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="../batchcom/batchcom.php"
  onclick="top.restoreSession()"
  title="Batch Communication and Export"><?xl('BatchCom','e');?></a>&nbsp;
 </td>
 <?php } ?>
-<?php if (acl_check('admin', 'notification')) { ?>
+<?php if (acl_check('batchcom_notification')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="../batchcom/smsnotification.php"
  onclick="top.restoreSession()"

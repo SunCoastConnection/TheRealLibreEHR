@@ -417,7 +417,7 @@ function echoProdLine($lino, $drug_id, $del = FALSE, $units = NULL,
       echo "  <td class='billcell' align='right'>" .
         "<input type='text' name='prod[".attr($lino)."][price]' " .
         "value='" . attr($price) . "' size='6'";
-      if (acl_check('acct','disc'))
+      if (acl_check('discount_fees'))
         echo " style='text-align:right'";
       else
         echo " style='text-align:right;background-color:transparent' readonly";

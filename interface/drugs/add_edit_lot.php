@@ -114,7 +114,7 @@ $info_msg = "";
 
 $form_trans_type = isset($_POST['form_trans_type']) ? $_POST['form_trans_type'] : '0';
 
-if (!acl_check('admin', 'drugs')) die(xlt('Not authorized'));
+if (!acl_check('drug_warehouse')) die(xlt('Not authorized'));
 if (!$drug_id) die(xlt('Drug ID missing!'));
 ?>
 <html>

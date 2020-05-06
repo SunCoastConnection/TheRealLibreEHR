@@ -26,7 +26,7 @@ require_once("../../../globals.php");
 
 require_once("fee_sheet_queries.php");
 
-if(!acl_check('acct', 'bill'))
+if(!acl_check('fee_sheet'))
 {
     header("HTTP/1.0 403 Forbidden");    
     echo "Not authorized for billing";   
