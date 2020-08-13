@@ -45,10 +45,12 @@ require_once("../../library/patient.inc");
 
 function make_statement($stmt) {
   if ($GLOBALS['statement_appearance'] == "1") {
-    if(is_auth_portal($stmt['pid']) && $_POST['form_portalnotify'])
-        return osp_create_HTML_statement($stmt);
-    else
-    return create_HTML_statement($stmt);
+    if ( function_exists('is_auth_portal')){
+      if(is_auth_portal($stmt['pid']) && $_POST['form_portalnotify'])
+          return osp_create_HTML_statement($stmt);
+      else
+      return create_HTML_statement($stmt);
+    }
   } else {
     return create_statement($stmt);
   }
