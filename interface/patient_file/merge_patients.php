@@ -34,7 +34,7 @@ require_once("$srcdir/headers.inc.php");
 // Set this to true for production use. If false you will get a "dry run" with no updates.
 $PRODUCTION = true;
 
-if (!acl_check('admin', 'super')) die(xlt('Not authorized'));
+if (!acl_check('super')) die(xlt('Not authorized'));
 ?>
 <html>
 

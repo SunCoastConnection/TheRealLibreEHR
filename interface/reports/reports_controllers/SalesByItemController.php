@@ -210,7 +210,7 @@
    $grandqty     += $qty;
  } // end function
 
-   if (! acl_check('acct', 'rep')) die(xl("Unauthorized access."));
+   if (! acl_check('billing_reports')) die(xl("Unauthorized access."));
 
 
      if (isset($_POST['form_from_date']) && isset($_POST['form_to_date']) && !empty($_POST['form_to_date']) && $_POST['form_from_date']) {

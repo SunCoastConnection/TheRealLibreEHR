@@ -45,7 +45,7 @@ $library_array = array('iziModalToast');
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
  //Check access control
-if (!acl_check('patients', 'appt', '', array('write' , 'wsome'))) {
+if (!acl_check('calendar_add')) {
    die(xl('Access not allowed'));
 }
 

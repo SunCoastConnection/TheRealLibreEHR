@@ -35,7 +35,7 @@ require_once("$srcdir/options.inc.php");
 $list_id = empty($_REQUEST['list_id']) ? ' ' : $_REQUEST['list_id'];
 
 // Check authorization.
-$thisauth = acl_check('admin', 'super');
+$thisauth = acl_check('super');
 if (!$thisauth) die(xl('Not authorized'));
 
 // If we are saving, then save.

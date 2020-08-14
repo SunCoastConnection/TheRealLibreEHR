@@ -36,7 +36,7 @@ $(document).ready(function(){
 <body class="body_top">
 
 <?php
- if (! acl_check('patients','med')) { 
+ if (! acl_check('orders_procedures')) { 
   echo "<p>(".htmlspecialchars(xl('History not authorized'),ENT_NOQUOTES).")</p>\n";
   echo "</body>\n</html>\n";
   exit();
@@ -49,7 +49,7 @@ $(document).ready(function(){
  }
 ?>
 
-<?php if (acl_check('patients','med','',array('write','addonly') )) { ?>
+<?php if (acl_check('orders_procedures' )) { ?>
 <div>
     <span class="title"><?php echo htmlspecialchars(xl('Patient History / Lifestyle'),ENT_NOQUOTES); ?></span>
 </div>

@@ -304,7 +304,7 @@ function generate_order_summary($orderid) {
 } // end function generate_order_summary
 
 // Check authorization.
-$thisauth = acl_check('patients', 'med');
+$thisauth = acl_check('orders_procedures');
 if (!$thisauth) die(xl('Not authorized'));
 
 $orderid = intval($_GET['orderid']);

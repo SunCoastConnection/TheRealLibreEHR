@@ -2,9 +2,9 @@
  include_once("../globals.php");
  include_once("$srcdir/acl.inc");
 
- $ie_auth = ((acl_check('encounters','notes','','write') ||
-              acl_check('encounters','notes_a','','write')) &&
-             acl_check('patients','med','','write'));
+ $ie_auth = ((acl_check('encounter_notes') ||
+              acl_check('anyones_encounter')) &&
+             acl_check('orders_procedures'));
 ?>
 <html>
 <head>

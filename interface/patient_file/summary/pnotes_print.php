@@ -35,7 +35,7 @@ $fake_register_globals=false;
  $prow = getPatientData($pid, "title, fname, mname, lname");
 
  // Check authorization.
- $thisauth = acl_check('patients', 'notes');
+ $thisauth = acl_check('orders_procedures');
  if (!$thisauth)
   die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES));
 

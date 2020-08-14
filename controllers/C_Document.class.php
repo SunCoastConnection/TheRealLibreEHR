@@ -321,7 +321,7 @@ class C_Document extends Controller {
         $this->hide_encryption = $GLOBALS['hide_document_encryption'];
 
         $delete_string = '';
-        if (acl_check('admin', 'super')) {
+        if (acl_check('deletedocuments')) {
             $delete_string = "<a href='' class='css_button' onclick='return deleteme(" . $d->get_id() .
                     ")'><span><font color='red'>" . xl('Delete') . "</font></span></a>";
         }

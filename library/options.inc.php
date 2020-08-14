@@ -926,14 +926,8 @@ function generate_form_field($frow, $currvalue) {
     $inputValue = htmlspecialchars( xl('Add'), ENT_QUOTES);
     $outputAddButton = "<input type='button' id='addtolistid_" . $list_id_esc . "' fieldid='form_" .
       $field_id_esc . "' class='addtolist' value='$inputValue' $disabled />";
-    if (aco_exist('lists', $list_id)) {
-     // a specific aco exist for this list, so ensure access
-     if (acl_check('lists', $list_id)) echo $outputAddButton;
-    }
-    else {
-     // no specific aco exist for this list, so check for access to 'default' list
-     if (acl_check('lists', 'default')) echo $outputAddButton;
-    }
+    echo $outputAddButton;
+   
   }
 
   // a set of labeled radio buttons
@@ -3895,14 +3889,9 @@ function generate_form_field_with_class($frow, $currvalue, $class) {
     $inputValue = htmlspecialchars( xl('Add'), ENT_QUOTES);
     $outputAddButton = "<input type='button' id='addtolistid_" . $list_id_esc . "' fieldid='form_" .
       $field_id_esc . "' class='addtolist' value='$inputValue' $disabled />";
-    if (aco_exist('lists', $list_id)) {
-     // a specific aco exist for this list, so ensure access
-     if (acl_check('lists', $list_id)) echo $outputAddButton;
+     echo $outputAddButton;
     }
-    else {
-     // no specific aco exist for this list, so check for access to 'default' list
-     if (acl_check('lists', 'default')) echo $outputAddButton;
-    }
+  
   }
 
   // a set of labeled radio buttons

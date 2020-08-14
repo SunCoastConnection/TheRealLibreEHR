@@ -280,7 +280,6 @@ function doSubs($s) {
   return $s;
 }
 
-// if (!acl_check('admin', 'super')) die(htmlspecialchars(xl('Not authorized')));
 
 // Get patient demographic info.
 $ptrow = sqlQuery("SELECT pd.*, " .

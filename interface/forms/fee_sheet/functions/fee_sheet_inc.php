@@ -188,7 +188,7 @@ function echoLine($lino, $codetype, $code, $modifier, $ndc_info='',
         echo "  <td class='billcell' align='right'>" .
           "<input type='text' name='bill[".attr($lino)."][price]' " .
           "value='" . attr($price) . "' size='6'";
-        if (acl_check('acct','disc'))
+        if (acl_check('prices'))
           echo " style='text-align:right'";
         else
           echo " style='text-align:right;background-color:transparent' readonly";
@@ -332,7 +332,7 @@ function echoProdLine($lino, $drug_id, $del = FALSE, $units = NULL,
       echo "  <td class='billcell' align='right'>" .
         "<input type='text' name='prod[".attr($lino)."][price]' " .
         "value='" . attr($price) . "' size='6'";
-      if (acl_check('acct','disc'))
+      if (acl_check('prices'))
         echo " style='text-align:right'";
       else
         echo " style='text-align:right;background-color:transparent' readonly";

@@ -55,7 +55,7 @@ $fake_register_globals=false;
     <?php
 
      $has_note = 0;
-     $thisauth = acl_check('patients', 'notes');
+     $thisauth = acl_check('orders_procedures');
      if (!$thisauth) {
       echo "<p>(" . htmlspecialchars(xl('Notes not authorized'),ENT_NOQUOTES) . ")</p>\n";
      } else { ?>

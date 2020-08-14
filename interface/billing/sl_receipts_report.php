@@ -55,7 +55,7 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
     if ($amount) echo attr(oeFormatMoney($amount));
   }
 
-  if (! acl_check('acct', 'rep')) die(xlt("Unauthorized access."));
+  if (! acl_check('billing_reports')) die(xlt("Unauthorized access."));
 
 
   $form_use_edate  = $_POST['form_use_edate'];
@@ -172,7 +172,7 @@ function sel_diagnosis() {
             </td>
             <td>
                 <?php
-                if (acl_check('acct', 'rep_a')) {
+                if (acl_check('report_select_any_provider')) {
                     // Build a drop-down list of providers.
                     //
                     $query = "select id, lname, fname from users where " .

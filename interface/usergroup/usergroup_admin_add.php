@@ -276,7 +276,7 @@ $alertmsg = '';
                     </div>
                     <?php } ?>
                     <?php // List the access control groups if phpgacl installed
-                    if ( acl_check('admin', 'acl')) { ?>
+                    if ( acl_check('super')) { ?>
                     <div class="form-group">
                         <label for="menu_role" class="col-sm-4"><?php echo xlt('Menu Role'); ?>:</label>
                         <div class="col-sm-8">

@@ -50,8 +50,8 @@ $thisenc = 0 + (empty($_REQUEST['thisenc']) ? 0 : $_REQUEST['thisenc']);
 // A nonempty thistype is an issue type to be forced for a new issue.
 $thistype = empty($_REQUEST['thistype']) ? '' : $_REQUEST['thistype'];
 
-if ($issue && !acl_check('patients','med','','write') ) die(xlt("Edit is not authorized!"));
-if ( !acl_check('patients','med','',array('write','addonly') )) die(xlt("Add is not authorized!"));
+if ($issue && !acl_check('Dx_edit') ) die(xlt("Edit is not authorized!"));
+if ( !acl_check('Dx_edit')) die(xlt("Add is not authorized!"));
 
 function QuotedOrNull($fld) {
   if ($fld) return "'".add_escape_custom($fld)."'";
@@ -834,7 +834,7 @@ function divclick(cb, divid) {
 
 <input type='submit' name='form_save' value='<?php echo xla('Save'); ?>' />
 
-<?php if ($issue && acl_check('admin', 'super')) { ?>
+<?php if ($issue && acl_check('super')) { ?>
 &nbsp;
 <input type='button' value='<?php echo xla('Delete'); ?>' style='color:red' onclick='deleteme()' />
 <?php } ?>

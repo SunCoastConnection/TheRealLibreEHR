@@ -71,7 +71,7 @@ function myCellText($s) {
 }
 
 // Check authorization.
-$thisauth = acl_check('patients', 'med');
+$thisauth = acl_check('orders_procedures');
 if (!$thisauth) die(xlt('Not authorized'));
 
 $errmsg = '';

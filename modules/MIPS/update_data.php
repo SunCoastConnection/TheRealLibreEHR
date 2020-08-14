@@ -26,7 +26,7 @@ include_once("$srcdir/acl.inc");
 </head>
 <body class="body_top">
 
-<?php if (acl_check('admin', 'practice' )) { ?>
+<?php if (acl_check('super')) { ?>
 <span class='title' visibility: hidden>Import Updates</span>
 <h1>Import Processed x12 837 file data</h1>
 <b>This tool simply runs update query files.</b>

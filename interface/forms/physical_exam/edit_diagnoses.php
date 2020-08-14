@@ -12,7 +12,7 @@
  $line_id = $_REQUEST['lineid'];
  $info_msg = "";
 
- if ($issue && !acl_check('patients', 'med','','write')) die("Edit is not authorized!");
+ if ($issue && !acl_check('Dx_edit')) die("Edit is not authorized!");
 ?>
 <html>
 <head>

@@ -360,7 +360,7 @@ function create_and_download_certificates()
 
 
 
-if (!acl_check('admin', 'users')) {
+if (!acl_check('super')) {
   exit();
 }
 

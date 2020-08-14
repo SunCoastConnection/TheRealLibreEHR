@@ -33,7 +33,7 @@
   $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
   
   
-  $isAdmin =acl_check('admin', 'users'); 
+  $isAdmin =acl_check('super'); 
 ?>
 <?php
   /*

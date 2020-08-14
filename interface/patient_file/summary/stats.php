@@ -44,7 +44,7 @@ require_once("$srcdir/formatting.inc.php");
 <div id="patient_stats_summary">
 
 <?php
-$thisauth = acl_check('patients', 'med');
+$thisauth = acl_check('orders_procedures');
 
 if (!$thisauth) {
     echo "<p>(".htmlspecialchars(xl('Issues not authorized'),ENT_NOQUOTES).")</p>\n";

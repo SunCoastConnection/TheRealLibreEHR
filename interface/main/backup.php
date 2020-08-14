@@ -46,7 +46,7 @@ if (!function_exists('gzopen') && function_exists('gzopen64'))
     }
     
     
-if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
+if (!acl_check('super')) die(xl('Not authorized','','','!'));
 
 include_once("Archive/Tar.php");
 

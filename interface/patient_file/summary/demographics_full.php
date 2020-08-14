@@ -64,10 +64,10 @@
              demographics_check_auth($args = array( 'username' => $_SESSION['authUser'], 'pid' => $pid ) );
         }
 ///////////////////endfacacl//////
-    if (!acl_check('patients', 'demo', '', 'write'))
+    if (!acl_check('patients_edit_dems'))
      die(xl('Updating demographics is not authorized.'));
    } else {
-    if (!acl_check('patients', 'demo', '', array('write','addonly') ))
+    if (!acl_check('patients_edit_dems'))
      die(xl('Adding demographics is not authorized.'));
    }
   

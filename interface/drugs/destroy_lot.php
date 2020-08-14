@@ -46,7 +46,7 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
  $lot_id  = $_REQUEST['lot'];
  $info_msg = "";
 
- if (!acl_check('admin', 'drugs')) die(xlt('Not authorized'));
+ if (!acl_check('edit_drugs')) die(xlt('Not authorized'));
  if (!$drug_id) die(xlt('Drug ID missing!'));
  if (!$lot_id ) die(xlt('Lot ID missing!'));
 ?>

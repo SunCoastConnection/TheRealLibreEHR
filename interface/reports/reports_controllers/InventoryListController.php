@@ -32,7 +32,7 @@ $fake_register_globals=false;
  require_once("$include_root/drugs/drugs.inc.php");
 
  // Check authorization.
- $thisauth = acl_check('admin', 'drugs');
+ $thisauth = acl_check('edit_drugs');
  if (!$thisauth) die(xl('Not authorized'));
 
 function addWarning($msg) {

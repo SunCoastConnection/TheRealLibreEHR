@@ -135,7 +135,7 @@ function thisLineItem($row, $xfer=false) {
 
 } // end function
 
-if (! acl_check('acct', 'rep')) die(htmlspecialchars(xl("Unauthorized access."), ENT_NOQUOTES));
+if (! acl_check('billing_reports')) die(htmlspecialchars(xl("Unauthorized access."), ENT_NOQUOTES));
 
 // this is "" or "submit" or "export".
 $form_action = $_POST['form_action'];

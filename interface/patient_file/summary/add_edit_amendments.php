@@ -113,7 +113,7 @@ if ( $amendment_id ) {
     $resultSet = sqlStatement($query,array($amendment_id));
 }
 // Check the ACL
-$haveAccess = acl_check('patients', 'trans');
+$haveAccess = acl_check('chart_amendments');
 $onlyRead = ( $haveAccess ) ? 0 : 1;
 $onlyRead = ( $onlyRead || $amendment_status ) ? 1 : 0;
 $customAttributes = ( $onlyRead ) ? array("disabled" => "true") : null;

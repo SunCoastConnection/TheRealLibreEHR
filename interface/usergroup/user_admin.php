@@ -43,7 +43,7 @@ require_once("$srcdir/erx_javascript.inc.php");
 require_once("$srcdir/headers.inc.php");
 require_once("$srcdir/role.php");
 
-if (!$_GET["id"] || !acl_check('admin', 'users'))
+if (!$_GET["id"] || !acl_check('super'))
   exit();
 
 if ($_GET["mode"] == "update") {
@@ -560,7 +560,7 @@ echo generate_select_list('irnpool', 'irnpool', $iter['irnpool'],
 
 <?php
  // Collect the access control group of user
- if (acl_check('admin', 'acl')) {
+ if (acl_check('super')) {
 
   ?>
   </select></td>

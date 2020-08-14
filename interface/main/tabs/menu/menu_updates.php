@@ -87,10 +87,14 @@ function menu_apply_restrictions(&$menu_list_src,&$menu_list_updated)
         $srcEntry=$menu_list_src[$idx];
         $includeEntry=true;
         
-        // If the entry has an ACL Requirement, then test
+        // If the entry has an ACL Requirement, then test. 
+        //This used to take a section/value/user field, now only
+        //one value is passed, so menu acl requirements
+        //need updating to new stuff.
+        //maybe only view_menu values vs. normal access values
         if(isset($srcEntry->acl_req))
         {
-            if(!acl_check($srcEntry->acl_req[0],$srcEntry->acl_req[1]))
+            if(!acl_check($srcEntry->acl_req[0]))
             {
                 $includeEntry=false;
             }

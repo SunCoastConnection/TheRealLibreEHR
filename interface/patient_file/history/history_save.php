@@ -15,7 +15,7 @@ $fake_register_globals=false;
  include_once("$srcdir/options.inc.php");
 
  // Check authorization.
- if ( !acl_check('patients','med','',array('write','addonly') ))
+ if ( !acl_check('orders_procedures'))
   die(htmlspecialchars(xl("Not authorized"),ENT_NOQUOTES));
 
 foreach ($_POST as $key => $val) {

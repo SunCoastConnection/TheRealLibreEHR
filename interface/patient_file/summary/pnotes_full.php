@@ -57,7 +57,7 @@ else if ($orderid) {
 }
 
 // Check authorization.
-if (!acl_check('patients','notes','',array('write','addonly') ))
+if (!acl_check('orders_procedures'))
     die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES));
 
 //the number of records to display per screen
@@ -414,7 +414,7 @@ if ($result != "") {
 
     // display, or not, a button to delete the note
     // if the user is an admin or if they are the author of the note, they can delete it
-    if (($iter['user'] == $_SESSION['authUser']) || (acl_check('admin','super','','write'))) {
+    if (($iter['user'] == $_SESSION['authUser']) || (acl_check('super'))) {
       echo " <a href='#' class='deletenote css_button_small' id='del" . htmlspecialchars( $row_note_id, ENT_QUOTES) .
         "' title='" . htmlspecialchars( xl('Delete this note'), ENT_QUOTES) . "' onclick='top.restoreSession()'><span>" .
         htmlspecialchars( xl('Delete'), ENT_NOQUOTES) . "</span>\n";

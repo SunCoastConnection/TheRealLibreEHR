@@ -42,7 +42,7 @@ require_once($GLOBALS['srcdir'].'/headers.inc.php');
 
 
  // Check authorization.
- if (! acl_check('patients','med')) {
+ if (! acl_check('orders_procedures')) {
   die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES) );
  }
 
@@ -83,7 +83,7 @@ function refreshIssue(issue, title) {
 
     //takes 3 parameters, the id of issue to be edited, the category(allergy, mediacal etc) and type(whether new or edit)
     function dopclick(id, category , type) {
-    <?php if (acl_check('patients','med','','write')): ?>
+    <?php if (acl_check('Dx_edit')): ?>
     if (category == 0) category = '';
         iziTitle = "<?php echo xlt('Add New Issue'); ?>";
         iziSubTitle = "<?php echo xlt('Add Relevant Patient Issues'); ?>";

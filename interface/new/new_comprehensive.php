@@ -14,7 +14,7 @@
   require_once("$srcdir/headers.inc.php");
 
   // Check authorization.
-  if (!acl_check('patients','demo','',array('write','addonly') ))
+  if (!acl_check('patients_edit_dems') ))
     die("Adding demographics is not authorized.");
 
   $CPR = 4; // cells per row

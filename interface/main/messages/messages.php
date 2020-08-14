@@ -95,7 +95,7 @@ else {
 //collect the task setting
 $task= isset($_REQUEST['task']) ? $_REQUEST['task'] : "";
 
-if (acl_check('admin', 'super'    )) {
+if (acl_check('super')) {
     if ($show_all=='yes') {
         $showall = "yes";
         $lnkvar="<a class='more' href='messages.php?show_all=no&$activity_string_html' name='Just Mine' onclick=\"top.restoreSession()\"> (".htmlspecialchars( xl('Just Mine'), ENT_NOQUOTES).")</a>";

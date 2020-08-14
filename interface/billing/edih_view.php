@@ -28,7 +28,7 @@ $fake_register_globals=false;
 require_once(dirname(__FILE__) . "/../globals.php");
 require_once("$srcdir/headers.inc.php");
 //
-if (!acl_check('acct', 'eob')) die(xlt("Access Not Authorized"));
+if (!acl_check('eob')) die(xlt("Access Not Authorized"));
 //
 //include_once("{$GLOBALS['srcdir']}/dynarch_calendar_en.inc.php");
 //

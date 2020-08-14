@@ -41,11 +41,11 @@ $form_batch = empty($_GET['batch']) ? 0 : 1;
 $form_review = empty($_GET['review']) ? 0 : 1;
 
 // Check authorization.
-$thisauth = acl_check('patients', 'med');
+$thisauth = acl_check('orders_procedures');
 if (!$thisauth) die(xl('Not authorized'));
 
 // Check authorization for pending review.
-$reviewauth = acl_check('patients', 'sign');
+$reviewauth = acl_check('sign_orders');
 if ($form_review and !$reviewauth and !$thisauth) die(xl('Not authorized'));
 
 // Set pid for pending review.

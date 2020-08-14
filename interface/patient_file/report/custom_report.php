@@ -63,13 +63,13 @@ if ($PDF_OUTPUT) {
 }
 
 // get various authorization levels
-$auth_notes_a  = acl_check('encounters', 'notes_a');
-$auth_notes    = acl_check('encounters', 'notes');
-$auth_coding_a = acl_check('encounters', 'coding_a');
-$auth_coding   = acl_check('encounters', 'coding');
-$auth_relaxed  = acl_check('encounters', 'relaxed');
-$auth_med      = acl_check('patients'  , 'med');
-$auth_demo     = acl_check('patients'  , 'demo');
+$auth_notes_a  = acl_check('anyones_encounter');
+$auth_notes    = acl_check('encounter_notes');
+$auth_coding_a = acl_check('fee_sheet_any');
+$auth_coding   = acl_check('fee_sheet');
+$auth_relaxed  = acl_check('encounter_notes');
+$auth_med      = acl_check('orders_procedures');
+$auth_demo     = acl_check('patients_edit_dems');
 
 $esignApi = new Api();
 
@@ -611,7 +611,7 @@ foreach ($ar as $key => $val) {
 
             echo "<hr />";
             echo "<div class='text history' id='HIS'>\n";
-            if (acl_check('patients', 'med')) {
+            if (acl_check('orders_procedures')) {
                 print "<h1>".xl('History Data').":</h1>";
                 // printRecDataOne($history_data_array, getRecHistoryData ($pid), $N);
                 $result1 = getHistoryData($pid);
@@ -711,7 +711,7 @@ foreach ($ar as $key => $val) {
 
         } elseif ($val == "immunizations") {
 
-            if (acl_check('patients', 'med')) {
+            if (acl_check('orders_procedures')) {
                 echo "<hr />";
                 echo "<div class='text immunizations'>\n";
                 print "<h1>".xl('Patient Immunization').":</h1>";

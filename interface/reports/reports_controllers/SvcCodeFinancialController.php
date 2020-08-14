@@ -39,7 +39,7 @@
  $grand_total_amt_adjustment  = 0;
  $grand_total_amt_balance  = 0;
 
-if (! acl_check('acct', 'rep')) die(xlt("Unauthorized access."));
+if (! acl_check('billing_reports')) die(xlt("Unauthorized access."));
 
 if (isset($_POST['form_from_date']) && isset($_POST['form_to_date']) && !empty($_POST['form_to_date']) && $_POST['form_from_date']) {
      $from_date = fixDate($_POST['form_from_date'], date(DateFormatRead(true)));

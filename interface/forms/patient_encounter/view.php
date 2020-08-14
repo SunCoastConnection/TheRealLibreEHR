@@ -32,7 +32,7 @@ include_once("$srcdir/lists.inc");
 $disabled = "disabled";
 
 // If we are allowed to change encounter dates...
-if (acl_check('encounters', 'date_a')) {
+if (acl_check('encounter_date_edit')) {
   $disabled = "";
 }
 

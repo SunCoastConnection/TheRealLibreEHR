@@ -78,7 +78,7 @@ $(document).ready(function(){
 <?php
 
 // Ensure user is authorized
-if (!acl_check('patients', 'med')) {
+if (!acl_check('orders_procedures')) {
   echo "<p>(" . htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES) . ")</p>\n";
   echo "</body>\n</html>\n";
   exit();

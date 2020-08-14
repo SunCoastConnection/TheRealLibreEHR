@@ -359,7 +359,7 @@ table.pad td {
 <a href='summary/demographics.php' onclick='top.restoreSession()'><button class='btn btn-primary'><?php echo htmlspecialchars( xl('Back To Patient'), ENT_NOQUOTES);?></button></a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#' id='printbutton'><button class='btn btn-primary'><?php echo xlt('Print'); ?></button></a>
-<?php if (acl_check('acct','disc')) { ?>
+<?php if (acl_check('prices')) { ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#' onclick='return deleteme();'><button class='btn btn-primary'><?php echo xlt('Undo Checkout'); ?></button></a>
 <?php } ?>
@@ -403,8 +403,6 @@ function write_form_line($code_type, $code, $id, $date, $description,
   echo "  <td align='right'>" . text($units) . "</td>";
   echo "  <td align='right'><input type='text' name='line[$lino][amount]' " .
        "value='" . attr($amount) . "' size='6' maxlength='8'";
-  // Modifying prices requires the acct/disc permission.
-  // if ($code_type == 'TAX' || ($code_type != 'COPAY' && !acl_check('acct','disc')))
   echo " style='text-align:right;background-color:transparent' readonly";
   // else echo " style='text-align:right' onkeyup='computeTotals()'";
   echo "></td>\n";

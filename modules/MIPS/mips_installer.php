@@ -24,7 +24,7 @@ include_once("$srcdir/acl.inc");
         <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
     </head>
 <body class="body_top">
-<?php if (acl_check('admin', 'practice' )) { ?>
+<?php if (acl_check('super')) { ?>
 <span class='title' visibility: hidden>Install MIPS Module</span>
 <h1>Install/Update MIPS reporting database tables</h1>
 <b>This tool truncates all data from previous versions and installs the current database tables required for accurate MIPS reporting.</b>

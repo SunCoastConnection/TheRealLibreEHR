@@ -41,7 +41,7 @@ require_once("$srcdir/headers.inc.php");
 require_once("$srcdir/acl.inc");
 
 // Ensure authorized
-if (!acl_check('admin', 'users')) {
+if (!acl_check('super')) {
   die(xlt("Unauthorized"));
 }
 

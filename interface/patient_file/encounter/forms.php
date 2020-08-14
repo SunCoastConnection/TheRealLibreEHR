@@ -325,15 +325,15 @@ $providerNameRes = getProviderName($providerIDres);
 <div>
 <span class="title"><?php echo oeFormatShortDate($encounter_date) . " " . xl("Encounter"); ?> </span>
 <?php
-$auth_notes_a  = acl_check('encounters', 'notes_a');
-$auth_notes    = acl_check('encounters', 'notes');
-$auth_relaxed  = acl_check('encounters', 'relaxed');
+$auth_notes_a  = acl_check('anyones_encounter');
+$auth_notes    = acl_check('encounter_notes');
+$auth_relaxed  = acl_check('encounter_notes');
 
 
     // Check for no access to the encounter's sensitivity level.
     $result = sqlQuery("SELECT sensitivity FROM form_encounter WHERE " .
                         "pid = '$pid' AND encounter = '$encounter' LIMIT 1");
-    if ($result['sensitivity'] && !acl_check('sensitivities', $result['sensitivity'])) {
+    if ($result['sensitivity'] && !acl_check('sensitive')) {
         $auth_notes_a = $auth_notes = $auth_relaxed = 0;
     }
 }
@@ -347,7 +347,7 @@ if ( $esign->isButtonViewable() ) {
     echo $esign->buttonHtml();
 }
 ?>
-<?php if (acl_check('admin', 'super')) { ?>
+<?php if (acl_check('super')) { ?>
     <a href='toggledivs(this.id,this.id);' class='css_button cp-negative' onclick='return deleteme()'><span><?php echo xl('Delete') ?></span></a>
 <?php } ?>
 &nbsp;&nbsp;&nbsp;<a href="#" onClick='expandcollapse("expand");' style="font-size:80%;"><?php echo xlt('Expand All'); ?></a>
@@ -527,7 +527,7 @@ if ( $esign->isButtonViewable() ) {
             echo $esign->buttonHtml();
         }
 
-        if (acl_check('admin', 'super') ) {
+        if (acl_check('super') ) {
             if ( $formdir != 'patient_encounter') {
                 // a link to delete the form from the encounter
                 echo "<a target='_parent'" .

@@ -23,7 +23,7 @@ $fake_register_globals = false;
 require_once('../../interface/globals.php');
 require_once($srcdir.'/acl.inc');
 
-if(!acl_check('admin', 'super')) {
+if(!acl_check('super')) {
 	die(xlt('Not authorized'));
 } else {
 	define('MERGE_ENCOUNTERS', true);

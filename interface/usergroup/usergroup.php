@@ -21,15 +21,15 @@ if (/*$userauthorized*/ true) {
   <frame src="usergroup_navigation.php" name="Navigation" scrolling="no" noresize frameborder="NO">
   <frame src="usergroup_title.php" name="Title" scrolling="no" noresize frameborder="NO">
   <frame
-<?php if (acl_check('admin', 'users')) { ?>
+<?php if (acl_check('super')) { ?>
    src="usergroup_admin.php"
-<?php } else if (acl_check('admin', 'forms')) { ?>
+<?php } else if (acl_check('super')) { ?>
    src="../forms_admin/forms_admin.php"
-<?php } else if (acl_check('admin', 'practice')) { ?>
+<?php } else if (acl_check('super')) { ?>
    src="<?php echo $GLOBALS['webroot']?>/controller.php?practice_settings"
-<?php } else if (acl_check('admin', 'calendar')) { ?>
+<?php } else if (acl_check('super')) { ?>
    src="../../modules/calendar/admin.php"
-<?php } else if ( (!$GLOBALS['disable_phpmyadmin_link']) && (acl_check('admin', 'database')) ) { ?>
+<?php } else if ( (!$GLOBALS['disable_phpmyadmin_link']) && (acl_check('super')) ) { ?>
    src="../../phpmyadmin/index.php"
 <?php } else { ?>
    src="<?php echo $rootdir?>/logview/logview.php"

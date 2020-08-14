@@ -28,7 +28,7 @@ $form_doctor = "";
 
 </head>
 <body class="body_top">
-<?php if (acl_check('admin', 'practice' )) { ?>
+<?php if (acl_check('super')) { ?>
 
 
     <span class='title'><?php echo htmlspecialchars( xl('Reset Providers'), ENT_NOQUOTES); ?></span>

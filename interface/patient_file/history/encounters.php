@@ -54,13 +54,13 @@ $issue = empty($_GET['issue']) ? 0 : 0 + $_GET['issue'];
  $default_encounter = $GLOBALS['default_encounter_view']; //'0'=clinical, '1' = billing
 
  // Get relevant ACL info.
- $auth_notes_a  = acl_check('encounters', 'notes_a');
- $auth_notes    = acl_check('encounters', 'notes');
- $auth_coding_a = acl_check('encounters', 'coding_a');
- $auth_coding   = acl_check('encounters', 'coding');
- $auth_relaxed  = acl_check('encounters', 'relaxed');
- $auth_med      = acl_check('patients'  , 'med');
- $auth_demo     = acl_check('patients'  , 'demo');
+ $auth_notes_a  = acl_check('anyones_encounter');
+ $auth_notes    = acl_check('encounter_notes');
+ $auth_coding_a = acl_check('fee_sheet_any');
+ $auth_coding   = acl_check('fee_sheet');
+ $auth_relaxed  = acl_check('encounter_notes');
+ $auth_med      = acl_check('orders_procedures');
+ $auth_demo     = acl_check('patients_edit_dems');
  
  
  
@@ -453,7 +453,7 @@ while ($result4 = sqlFetchArray($res4)) {
         //   $reason_string = "(No access)";
 
         if ($result4['sensitivity']) {
-            $auth_sensitivity = acl_check('sensitivities', $result4['sensitivity']);
+            $auth_sensitivity = acl_check('sensitive');
             if (!$auth_sensitivity) {
                 $reason_string = "(".htmlspecialchars( xl("No access"), ENT_NOQUOTES).")";
             }

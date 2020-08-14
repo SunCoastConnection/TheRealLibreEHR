@@ -380,7 +380,7 @@
             $("#patient_reminders_ps_expand").load("patient_reminders_fragment.php");
           <?php } // end prw?>
 
-      <?php if ($vitals_is_registered && acl_check('patients', 'med')) { ?>
+      <?php if ($vitals_is_registered && acl_check('orders_procedures')) { ?>
           // Initialize the Vitals form if it is registered and user is authorized.
           $("#vitals_ps_expand").load("vitals_fragment.php");
       <?php } ?>
@@ -514,7 +514,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
      demographics_check_auth($args = array( 'username' => $_SESSION['authUser'], 'pid' => $pid ) );
 }
 ///////////////////endfacacl//////
-      $thisauth = acl_check('patients', 'demo');
+      $thisauth = acl_check('patient_dems');
       
       if (!$thisauth) {
        echo "<p>(" . htmlspecialchars(xl('Demographics not authorized'),ENT_NOQUOTES) . ")</p>\n";
@@ -553,7 +553,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
       }
 
 
-       if (acl_check('admin', 'super') && $GLOBALS['allow_pat_delete']) {
+       if (acl_check('super') && $GLOBALS['allow_pat_delete']) {
         echo "<td style='padding-left:1em;'><a class='css_button iframe cp-negative' href='../deleter.php?patient=" .
          htmlspecialchars($pid,ENT_QUOTES) . "' onclick='top.restoreSession()'>" .
          "<span>".htmlspecialchars(xl('Delete'),ENT_NOQUOTES).
@@ -763,7 +763,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
               $widgetButtonClass = "";
               $linkMethod = "html";
               $bodyClass = "";
-              $widgetAuth = acl_check('patients', 'demo', '', 'write');
+              $widgetAuth = acl_check('patients_edit_dems');
               $fixedWidth = true;
               expand_collapse_widget($widgetTitle, $widgetLabel, $widgetButtonLabel,
                 $widgetButtonLink, $widgetButtonClass, $linkMethod, $bodyClass,
@@ -805,7 +805,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
         $widgetButtonClass = "";
         $linkMethod = "html";
         $bodyClass = "";
-        $widgetAuth = acl_check('patients', 'demo', '', 'write');
+        $widgetAuth = acl_check('patients_edit_dems');
         $fixedWidth = true;
         expand_collapse_widget($widgetTitle, $widgetLabel, $widgetButtonLabel,
           $widgetButtonLink, $widgetButtonClass, $linkMethod, $bodyClass,
@@ -1124,7 +1124,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
     </div>
     </td>
     </tr>
-    <?php if ( (acl_check('patients', 'med')) && ($GLOBALS['enable_cdr'] && $GLOBALS['enable_cdr_prw']) ) {
+    <?php if ( (acl_check('orders_procedures')) && ($GLOBALS['enable_cdr'] && $GLOBALS['enable_cdr_prw']) ) {
       echo "<tr id='patient_reminders_widget_row'><td width='650px'>";
       // patient reminders collapse widget
       $widgetTitle = xl("Patient Reminders");
@@ -1233,7 +1233,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
     </td>
     </tr>
     <?php  // end labdata ?>
-    <?php if ($vitals_is_registered && acl_check('patients', 'med')) { ?>
+    <?php if ($vitals_is_registered && acl_check('orders_procedures')) { ?>
     <tr id="vitals_widget_row">
     <td width='650px'>
     <?php // vitals expand collapse widget

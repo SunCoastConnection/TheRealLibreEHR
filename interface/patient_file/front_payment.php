@@ -463,7 +463,7 @@ $(document).ready(function() {
   }
 ?>
 
-<?php if (acl_check('admin', 'super')) { ?>
+<?php if (acl_check('super')) { ?>
 &nbsp;
 <input type='button' value='<?php xl('Delete','e'); ?>' style='color:red' onclick='deleteme()' />
 <?php } ?>

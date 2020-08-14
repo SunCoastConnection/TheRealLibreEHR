@@ -102,7 +102,7 @@ function doedclick_edit(ppid) {
   ++$encount;
   $bgclass = (($encount & 1) ? "evenrow" : "oddrow");
 
-  if (acl_check('admin', 'practice' )) {
+  if (acl_check('practice_admin')) {
    $trTitle = xl('Edit') . ' ' . $row['name'];
    echo " <tr class='detail $bgclass' style='cursor:pointer' " .
         "onclick='doedclick_edit(" . $row['ppid'] . ")' title='" . attr($trTitle) . "'>\n"; 

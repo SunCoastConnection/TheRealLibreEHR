@@ -20,7 +20,7 @@ require_once($GLOBALS['srcdir'].'/htmlspecialchars.inc.php');
 require_once($GLOBALS['srcdir'].'/formdata.inc.php');
 require_once("$srcdir/headers.inc.php");
 
-if (!acl_check('admin', 'super')) die(htmlspecialchars(xl('Not authorized')));
+if (!acl_check('super')) die(htmlspecialchars(xl('Not authorized')));
 
 // Prepare array of names of editable files, relative to the site directory.
 $my_files = array(

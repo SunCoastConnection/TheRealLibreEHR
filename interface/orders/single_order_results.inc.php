@@ -251,7 +251,7 @@ function generate_order_report($orderid, $input_form=false, $genstyles=true, $fi
   global $aNotes;
 
   // Check authorization.
-  $thisauth = acl_check('patients', 'med');
+  $thisauth = acl_check('orders_procedures');
   if (!$thisauth) return xl('Not authorized');
 
   $orow = sqlQuery("SELECT " .

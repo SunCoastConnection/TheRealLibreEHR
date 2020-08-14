@@ -42,7 +42,7 @@ $orow = 0;
 $pat_pid = $_GET['patient_id'];
 $type_form = $_GET['form'];
 
-if (! acl_check('acct', 'rep')) die(xlt("Unauthorized access."));
+if (! acl_check('billing_reports')) die(xlt("Unauthorized access."));
 
 function GetAllUnapplied($pat='',$from_dt='',$to_dt='') {
   $all = array();

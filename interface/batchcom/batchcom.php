@@ -37,7 +37,7 @@ require_once("$srcdir/headers.inc.php");
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
-$thisauth = acl_check('admin', 'batchcom');
+$thisauth = acl_check('batchcom');
 
 if (!$thisauth) {
   echo "<html>\n<body>\n";
