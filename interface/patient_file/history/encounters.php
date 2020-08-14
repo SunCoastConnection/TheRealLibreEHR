@@ -71,10 +71,6 @@ if ( $GLOBALS['facility_acl']==1 ) {
 } 
 ///////////////////endfacacl//////
 
- $tmp = getPatientData($pid, "squad");
- if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-  $auth_notes_a = $auth_notes = $auth_coding_a = $auth_coding = $auth_med = $auth_demo = $auth_relaxed = 0;
-
  if (!($auth_notes_a || $auth_notes || $auth_coding_a || $auth_coding || $auth_med || $auth_relaxed)) {
   echo "<body>\n<html>\n";
   echo "<p>(".htmlspecialchars( xl('Encounters not authorized'), ENT_NOQUOTES).")</p>\n";
@@ -551,7 +547,7 @@ while ($result4 = sqlFetchArray($res4)) {
                 $formdir = $enc['formdir'];
                 if (($auth_notes_a) ||
                     ($auth_notes && $enc['user'] == $_SESSION['authUser']) ||
-                    ($auth_relaxed && ($formdir == 'sports_fitness' || $formdir == 'podiatry'))) ;
+                    ($auth_relaxed && ($formdir == 'podiatry'))) ;
                 else continue;
 
                 // Show the form name.  In addition, for the specific-issue case show

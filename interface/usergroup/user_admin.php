@@ -156,12 +156,6 @@ if ($_GET["mode"] == "update") {
     sqlStatement("update users set info = '$tqvar' where id = ?", array($_GET["id"]));
   }
 
-  if (isset($phpgacl_location) && acl_check('admin', 'acl')) {
-    // Set the access control group of user
-    $user_data = sqlFetchArray(sqlStatement("select username from users where id = ?", array($_GET["id"])));
-    set_user_aro($_GET['access_group'], $user_data["username"],
-      formData('fname','G'), formData('mname','G'), formData('lname','G'));
-  }
 
 
   /*Dont move usergroup_admin (1).php just close window
@@ -566,24 +560,8 @@ echo generate_select_list('irnpool', 'irnpool', $iter['irnpool'],
 
 <?php
  // Collect the access control group of user
- if (isset($phpgacl_location) && acl_check('admin', 'acl')) {
-?>
-  <tr>
-  <td class='text'><?php echo xlt('Access Control'); ?>:</td>
-  <td><select id="access_group_id" name="access_group[]" multiple style="width:150px;" >
-  <?php
-   $list_acl_groups = acl_get_group_title_list();
-   $username_acl_groups = acl_get_group_titles($iter["username"]);
-   foreach ($list_acl_groups as $value) {
-    if (($username_acl_groups) && in_array($value,$username_acl_groups)) {
-     // Modified 6-2009 by BM - Translate group name if applicable
-     echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
-    }
-    else {
-     // Modified 6-2009 by BM - Translate group name if applicable
-     echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
-    }
-   }
+ if (acl_check('admin', 'acl')) {
+
   ?>
   </select></td>
   <td><span class=text><?php echo xlt('Additional Info'); ?>:</span></td>

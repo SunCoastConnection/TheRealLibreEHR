@@ -515,10 +515,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
 }
 ///////////////////endfacacl//////
       $thisauth = acl_check('patients', 'demo');
-      if ($thisauth) {
-       if ($result['squad'] && ! acl_check('squads', $result['squad']))
-        $thisauth = 0;
-      }
+      
       if (!$thisauth) {
        echo "<p>(" . htmlspecialchars(xl('Demographics not authorized'),ENT_NOQUOTES) . ")</p>\n";
        echo "</body>\n</html>\n";

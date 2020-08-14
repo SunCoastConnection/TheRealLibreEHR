@@ -66,7 +66,6 @@ $billingDirectory2 = "$OE_SITE_DIR/era";
 
 $billingLogDirectory = "$OE_SITE_DIR/logs";
 $lettersDirectory = "$OE_SITE_DIR/letter_templates";
-$gaclWritableDirectory = dirname(__FILE__)."/gacl/admin/templates_c";
 
 //$Libre_Get_Modules = dirname(__FILE__)."/modules/modules.config.php";  //TODO stub
 
@@ -75,11 +74,11 @@ $gaclWritableDirectory = dirname(__FILE__)."/gacl/admin/templates_c";
 if (is_dir($OE_SITE_DIR)) {
   //$Libre_Get_Modules could be added to the 'writable' array. Remove if unneeded when module registry methods are finalized
   $writableFileList = array($installer->conffile);  
-  $writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory, $gaclWritableDirectory);
+  $writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory);
 }
 else {
   $writableFileList = array();
-  $writableDirList = array($OE_SITES_BASE, $gaclWritableDirectory);
+  $writableDirList = array($OE_SITES_BASE);
 }
 
 // Include the sqlconf file if it exists yet.
@@ -480,33 +479,6 @@ else {
 <INPUT TYPE='HIDDEN' NAME='iuname' VALUE='$installer->iuname'>
 <INPUT TYPE='HIDDEN' NAME='iufname' VALUE='$installer->iufname'>
 <INPUT TYPE='HIDDEN' NAME='clone_database' VALUE='$installer->clone_database'>
-<br>\n
-<INPUT TYPE='SUBMIT' VALUE='Continue'><br></FORM><br>\n";
-
-    break;
-  case 4:
-    echo "<b>Step $state</b><br><br>\n";
-    echo "Installing and Configuring Access Controls (php-GACL)...<br><br>";
-    
-    if ( ! $installer->install_gacl() ) {
-      echo $installer->error_message;
-      break;
-    }
-    else {
-      // display the status information for gacl setup
-      echo $installer->debug_message;
-    }
-
-    echo "Gave the '$installer->iuser' user (password is '$installer->iuserpass') administrator access.<br><br>";
-    
-    echo "Done installing and configuring access controls (php-GACL).<br>";
-    echo "Next step will configure PHP.";
-    
-    echo "<br><FORM METHOD='POST'>\n
-<INPUT TYPE='HIDDEN' NAME='state' VALUE='5'>\n
-<INPUT TYPE='HIDDEN' NAME='site' VALUE='$site_id'>\n
-<INPUT TYPE='HIDDEN' NAME='iuser' VALUE='$installer->iuser'>\n
-<INPUT TYPE='HIDDEN' NAME='iuserpass' VALUE='$installer->iuserpass'>\n	
 <br>\n
 <INPUT TYPE='SUBMIT' VALUE='Continue'><br></FORM><br>\n";
 

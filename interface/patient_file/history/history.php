@@ -36,15 +36,7 @@ $(document).ready(function(){
 <body class="body_top">
 
 <?php
- if (acl_check('patients','med')) {
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad'])) {
-   echo "<p>(".htmlspecialchars(xl('History not authorized'),ENT_NOQUOTES).")</p>\n";
-   echo "</body>\n</html>\n";
-   exit();
-  }
- }
- else {  
+ if (! acl_check('patients','med')) { 
   echo "<p>(".htmlspecialchars(xl('History not authorized'),ENT_NOQUOTES).")</p>\n";
   echo "</body>\n</html>\n";
   exit();

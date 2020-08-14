@@ -380,7 +380,6 @@ else {
   $GLOBALS['language_default'] = "English (Standard)";
   $GLOBALS['translate_layout'] = true;
   $GLOBALS['translate_lists'] = true;
-  $GLOBALS['translate_gacl_groups'] = true;
   $GLOBALS['translate_form_titles'] = true;
   $GLOBALS['translate_document_categories'] = true;
   $GLOBALS['translate_appt_categories'] = true;

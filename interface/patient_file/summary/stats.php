@@ -45,11 +45,7 @@ require_once("$srcdir/formatting.inc.php");
 
 <?php
 $thisauth = acl_check('patients', 'med');
-if ($thisauth) {
-    $tmp = getPatientData($pid, "squad");
-    if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-        $thisauth = 0;
-}
+
 if (!$thisauth) {
     echo "<p>(".htmlspecialchars(xl('Issues not authorized'),ENT_NOQUOTES).")</p>\n";
     echo "</body>\n</html>\n";

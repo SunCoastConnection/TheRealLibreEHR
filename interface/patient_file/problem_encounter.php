@@ -33,14 +33,11 @@
  include_once("$srcdir/lists.inc");
  require_once("$srcdir/headers.inc.php");
 
- $patdata = getPatientData($pid, "fname,lname,squad");
+ $patdata = getPatientData($pid, "fname,lname");
 
  $thisauth = ((acl_check('encounters','notes','','write') ||
                acl_check('encounters','notes_a','','write')) &&
               acl_check('patients','med','','write'));
-
- if ($patdata['squad'] && ! acl_check('squads', $patdata['squad']))
-  $thisauth = 0;
 
  if (!$thisauth) {
   echo "<html>\n<body>\n";

@@ -303,8 +303,7 @@ class C_Document extends Controller {
     }
 
     function view_action($patient_id = "", $doc_id) {
-        // Added by Rod to support document delete:
-        global $gacl_object, $phpgacl_location;
+ 
         global $ISSUE_TYPES;
 
         require_once(dirname(__FILE__) . "/../library/acl.inc");
@@ -321,7 +320,6 @@ class C_Document extends Controller {
         $this->move_action = $this->_link("move") . "document_id=" . $d->get_id() . "&process=true";
         $this->hide_encryption = $GLOBALS['hide_document_encryption'];
 
-        // Added by Rod to support document delete:
         $delete_string = '';
         if (acl_check('admin', 'super')) {
             $delete_string = "<a href='' class='css_button' onclick='return deleteme(" . $d->get_id() .

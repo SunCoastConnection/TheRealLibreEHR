@@ -42,12 +42,7 @@ require_once($GLOBALS['srcdir'].'/headers.inc.php');
 
 
  // Check authorization.
- if (acl_check('patients','med')) {
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-   die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES) );
- }
- else {
+ if (! acl_check('patients','med')) {
   die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES) );
  }
 

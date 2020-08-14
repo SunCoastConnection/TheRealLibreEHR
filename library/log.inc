@@ -147,11 +147,6 @@ function sql_checksum_of_modified_row($statement)
         $rid = generic_sql_insert_id();
     /* For handling the table that doesn't have auto-increment column */
         if ($rid === 0 || $rid === FALSE) {
-          if($table == "gacl_aco_map" || $table == "gacl_aro_groups_map" || $table == "gacl_aro_map" || $table == "gacl_axo_groups_map" || $table == "gacl_axo_map")
-           $id="acl_id";
-          else if($table == "gacl_groups_aro_map" || $table == "gacl_groups_axo_map")
-          $id="group_id";
-          else
            $id="id";
       /* To handle insert statements */
           if($tokens[3] == $id){
@@ -197,12 +192,6 @@ function sql_checksum_of_modified_row($statement)
      else if ($table == "libreehr_postcalendar_categories"){
             $id = "pc_catid";
      }
-         else if($table == "gacl_aco_map" || $table == "gacl_aro_groups_map" || $table == "gacl_aro_map" || $table == "gacl_axo_groups_map" || $table == "gacl_axo_map"){
-           $id="acl_id";
-          }
-          else if($table == "gacl_groups_aro_map" || $table == "gacl_groups_axo_map"){
-          $id="group_id";
-          }
        else {
             $id = "id";
            }
@@ -266,12 +255,6 @@ function sql_checksum_of_modified_row($statement)
     else if ($table == "libreehr_postcalendar_limits"){
            $sql = "select * from $table where pc_limitid = $rid";
      }
-    else if ($table ==  "gacl_aco_map" || $table == "gacl_aro_groups_map" || $table == "gacl_aro_map" || $table == "gacl_axo_groups_map" || $table == "gacl_axo_map"){
-           $sql = "select * from $table where acl_id = $rid";
-         }
-     else if($table == "gacl_groups_aro_map" || $table == "gacl_groups_axo_map"){
-       $sql = "select * from $table where group_id = $rid";
-      }
      else {
         $sql = "select * from $table where id = $rid";
     }
@@ -614,31 +597,7 @@ function auditSQLEvent($statement, $outcome, $binds=NULL)
                     "libreehr_postcalendar_events" => "scheduling",
                     "libreehr_postcalendar_categories" => "security-administration",
                     "libreehr_postcalendar_limits" => "security-administration",
-                    "libreehr_postcalendar_topics" => "security-administration",
-                    "gacl_acl" => "security-administration",
-                    "gacl_acl_sections" => "security-administration",
-                    "gacl_acl_seq" => "security-administration",
-                    "gacl_aco" => "security-administration",
-                    "gacl_aco_map" => "security-administration",
-                    "gacl_aco_sections" => "security-administration",
-                    "gacl_aco_sections_seq" => "security-administration",
-                    "gacl_aco_seq" => "security-administration",
-                    "gacl_aro" => "security-administration",
-                    "gacl_aro_groups" => "security-administration",
-                    "gacl_aro_groups_id_seq" => "security-administration",
-                    "gacl_aro_groups_map" => "security-administration",
-                    "gacl_aro_map" => "security-administration",
-                    "gacl_aro_sections" => "security-administration",
-                    "gacl_aro_sections_seq" => "security-administration",
-                    "gacl_aro_seq" => "security-administration",
-                    "gacl_axo" => "security-administration",
-                    "gacl_axo_groups" => "security-administration",
-                    "gacl_axo_groups_map" => "security-administration",
-                    "gacl_axo_map" => "security-administration",
-                    "gacl_axo_sections" => "security-administration",
-                    "gacl_groups_aro_map" => "security-administration",
-                    "gacl_groups_axo_map" => "security-administration",
-                    "gacl_phpgacl" => "security-administration"
+                    "libreehr_postcalendar_topics" => "security-administration"
                   );
 
     /* When searching for table names, truncate the SQL statement,

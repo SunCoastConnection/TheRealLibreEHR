@@ -329,13 +329,7 @@ $auth_notes_a  = acl_check('encounters', 'notes_a');
 $auth_notes    = acl_check('encounters', 'notes');
 $auth_relaxed  = acl_check('encounters', 'relaxed');
 
-if (is_numeric($pid)) {
-    // Check for no access to the patient's squad.
-    $result = getPatientData($pid, "fname,lname,squad");
-    echo htmlspecialchars( xl('for','',' ',' ') . $result['fname'] . " " . $result['lname'] );
-    if ($result['squad'] && ! acl_check('squads', $result['squad'])) {
-        $auth_notes_a = $auth_notes = $auth_relaxed = 0;
-    }
+
     // Check for no access to the encounter's sensitivity level.
     $result = sqlQuery("SELECT sensitivity FROM form_encounter WHERE " .
                         "pid = '$pid' AND encounter = '$encounter' LIMIT 1");
@@ -501,7 +495,7 @@ if ( $esign->isButtonViewable() ) {
         // Skip forms that we are not authorized to see.
         if (($auth_notes_a) ||
             ($auth_notes && $iter['user'] == $_SESSION['authUser']) ||
-            ($auth_relaxed && ($formdir == 'sports_fitness' || $formdir == 'podiatry'))) ;
+            ($auth_relaxed && ($formdir == 'podiatry'))) ;
         else continue;
 
             echo '<tr title="' . xl('Edit form') . '" '.

@@ -604,20 +604,6 @@ body{
                         <span class="help-inline"></span>
                     </div>
                 </div> -->
-                <!-- <div class="form-group inline" id="squadInputContainer">
-                    <label class="control-label" for="squad"><?php //echo xlt('Squad')?></label>
-                    <div class="controls inline-inputs">
-                        <input type="text" class="form-control" id="squad" placeholder="<?php //echo xla('Squad')?>" value="<%= _.escape(item.get('squad') || '') %>">
-                        <span class="help-inline"></span>
-                    </div>
-                </div>
-                <div class="form-group inline" id="fitnessInputContainer">
-                    <label class="control-label" for="fitness"><?php //echo xlt('Fitness')?></label>
-                    <div class="controls inline-inputs">
-                        <input type="text" class="form-control" id="fitness" placeholder="<?php //echo xla('Fitness')?>" value="<%= _.escape(item.get('fitness') || '') %>">
-                        <span class="help-inline"></span>
-                    </div>
-                </div> -->
                                 <!-- <div class="form-group inline" id="allowPatientPortalInputContainer">
                     <label class="control-label" for="allowPatientPortal"><?php //echo xlt('Allow Patient Portal')?></label>
                     <div class="controls inline-inputs">

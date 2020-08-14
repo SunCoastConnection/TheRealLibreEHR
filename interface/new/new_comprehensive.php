@@ -46,7 +46,6 @@
       case 10: // local provider list
       case 11: // provider list
       case 12: // pharmacy list
-      case 13: // squads
       case 14: // address book list
       case 26: // single-selection list with add
       case 35: // facilities

@@ -32,14 +32,12 @@ $fake_register_globals=false;
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/pnotes.inc");
 
- $prow = getPatientData($pid, "squad, title, fname, mname, lname");
+ $prow = getPatientData($pid, "title, fname, mname, lname");
 
  // Check authorization.
  $thisauth = acl_check('patients', 'notes');
  if (!$thisauth)
   die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES));
- if ($prow['squad'] && ! acl_check('squads', $prow['squad']))
-  die(htmlspecialchars( xl('Not authorized for this squad.'), ENT_NOQUOTES));
 
 $noteid = $_REQUEST['noteid'];
 

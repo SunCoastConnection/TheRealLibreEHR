@@ -4713,8 +4713,6 @@ CREATE TABLE `patient_data` (
   `hipaa_message` varchar(20) NOT NULL default '',
   `hipaa_allowsms` VARCHAR(3) NOT NULL DEFAULT 'NO',
   `hipaa_allowemail` VARCHAR(3) NOT NULL DEFAULT 'NO',
-  `squad` varchar(32) NOT NULL default '',
-  `fitness` int(11) NOT NULL default '0',
   `referral_source` varchar(30) NOT NULL default '',
   `pricelevel` varchar(255) NOT NULL default 'standard',
   `regdate`     date DEFAULT NULL COMMENT 'Registration Date',
@@ -5955,8 +5953,6 @@ INSERT INTO user_settings ( setting_user, setting_label, setting_value ) VALUES 
 INSERT INTO user_settings ( setting_user, setting_label, setting_value ) VALUES (0, 'prescriptions_ps_expand', '1');
 INSERT INTO user_settings ( setting_user, setting_label, setting_value ) VALUES (0, 'surgery_ps_expand', '1');
 INSERT INTO user_settings ( setting_user, setting_label, setting_value ) VALUES (0, 'vitals_ps_expand', '1');
-INSERT INTO user_settings ( setting_user, setting_label, setting_value ) VALUES (0, 'gacl_protect', '0');
-INSERT INTO user_settings ( setting_user, setting_label, setting_value ) VALUES (1, 'gacl_protect', '1');
 
 
 --

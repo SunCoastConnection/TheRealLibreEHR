@@ -276,28 +276,7 @@ $alertmsg = '';
                     </div>
                     <?php } ?>
                     <?php // List the access control groups if phpgacl installed
-                    if (isset($phpgacl_location) && acl_check('admin', 'acl')) { ?>
-                    <div class="form-group">
-                        <label for="access_group" class="col-sm-4"><?php echo xlt('Access Control'); ?>:</label>
-                        <div class="col-sm-8">
-                            <select name="access_group[]" id="access_group" multiple class="form-control">
-                                <?php
-                                $list_acl_groups = acl_get_group_title_list();
-                                $default_acl_group = 'Administrators';
-                                foreach ($list_acl_groups as $value) {
-                                    if ($default_acl_group == $value) {
-                                        // Modified 6-2009 by BM - Translate group name if applicable
-                                        echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
-                                    }
-                                    else {
-                                        // Modified 6-2009 by BM - Translate group name if applicable
-                                        echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
+                    if ( acl_check('admin', 'acl')) { ?>
                     <div class="form-group">
                         <label for="menu_role" class="col-sm-4"><?php echo xlt('Menu Role'); ?>:</label>
                         <div class="col-sm-8">
@@ -427,15 +406,6 @@ $alertmsg = '';
                             <label for="newcrop_erx_role" class="col-sm-4"><?php echo xlt('NewCrop eRX Role'); ?>:</label>
                             <div class="col-sm-8">
                                 <?php echo generate_select_list("erxrole", "newcrop_erx_role", '','','--Select Role--','form-control','','',array('style'=>'width:100%;display:block;')); ?>
-                            </div>
-                        </div>
-                    <?php } ?>
-                    <?php // List the access control groups if phpgacl installed
-                    if (isset($phpgacl_location) && acl_check('admin', 'acl')) { ?>
-                        <div class="form-group">
-                            <label for="info" class="col-sm-4">Additional Info:</label>
-                            <div class="col-sm-8">
-                                <textarea rows="6" class="form-control" name="info" id="info" wrap="hard"></textarea>
                             </div>
                         </div>
                     <?php } ?>

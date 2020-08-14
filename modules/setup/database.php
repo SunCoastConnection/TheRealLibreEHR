@@ -418,7 +418,7 @@
 
 
         if (!empty($installer->clone_database) ) {
-            // Database was cloned, skip ACL setup.
+            // Database was cloned, or we are finished because the old ACL setup has been removed here.
             sleep(1);
             $messageArray["message"]  = "Click 'continue' for further instructions.";
             $messageArray["status"]   = 200;
@@ -428,15 +428,4 @@
             file_put_contents("tmp/ajaxprocess.txt" , json_encode($messageArray));
             sleep(1);
         }
-        else {
-            sleep(1);
-            $messageArray["message"]  = "Next step will install and configure access controls. <span style='color: black;text-decoration: underline;'>(php-GACL).</span>";
-            $messageArray["status"]   = 200;
-            $messageArray["percentage"] = 100;
-            //tract the next action to do
-            $messageArray["next_state"] = "php_gacl";
-            file_put_contents("tmp/ajaxprocess.txt" , json_encode($messageArray));
-            sleep(1);
-        }
-
 ?>

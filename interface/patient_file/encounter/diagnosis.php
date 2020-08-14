@@ -172,11 +172,7 @@ function validate(f) {
   if ($erow['user'] == $_SESSION['authUser'])
    $thisauth = acl_check('encounters', 'coding');
  }
- if ($thisauth) {
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-   $thisauth = 0;
- }
+
  if (!$thisauth) {
   echo "<p>(".xl('Coding not authorized').")</p>\n";
   echo "</body>\n</html>\n";

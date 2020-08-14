@@ -1,6 +1,5 @@
 <?php
 
-// gacl control
 $thisauth = acl_check('admin', 'language');
 
 if (!$thisauth) {

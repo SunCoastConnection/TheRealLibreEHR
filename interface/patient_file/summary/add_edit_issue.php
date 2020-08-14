@@ -38,20 +38,7 @@ require_once($GLOBALS['srcdir']."/formatting.inc.php");
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
-if (isset($ISSUE_TYPES['football_injury'])) {
-  if ($ISSUE_TYPES['football_injury']) {
-    // Most of the logic for the "football injury" issue type comes from this
-    // included script.  We might eventually refine this approach to support
-    // a plug-in architecture for custom issue types.
-    require_once($GLOBALS['srcdir'].'/football_injury.inc.php');
-  }
-}
-if (isset($ISSUE_TYPES['ippf_gcac'])) {
-  if ($ISSUE_TYPES['ippf_gcac']) {
-    // Similarly for IPPF issues.
-    require_once($GLOBALS['srcdir'].'/ippf_issues.inc.php');
-  }
-}
+
 
 $issue = $_REQUEST['issue'];
 $thispid = 0 + (empty($_REQUEST['thispid']) ? $pid : $_REQUEST['thispid']);
@@ -65,10 +52,6 @@ $thistype = empty($_REQUEST['thistype']) ? '' : $_REQUEST['thistype'];
 
 if ($issue && !acl_check('patients','med','','write') ) die(xlt("Edit is not authorized!"));
 if ( !acl_check('patients','med','',array('write','addonly') )) die(xlt("Add is not authorized!"));
-
-$tmp = getPatientData($thispid, "squad");
-if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-  die(xlt("Not authorized for this squad!"));
 
 function QuotedOrNull($fld) {
   if ($fld) return "'".add_escape_custom($fld)."'";

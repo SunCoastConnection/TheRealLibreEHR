@@ -223,8 +223,6 @@ class PatientController extends AppBaseController{
             $patient->HipaaMessage = $this->SafeGetVal( $json, 'hipaaMessage', $patient->HipaaMessage );
             $patient->HipaaAllowsms = $this->SafeGetVal( $json, 'hipaaAllowsms', $patient->HipaaAllowsms );
             $patient->HipaaAllowemail = $this->SafeGetVal( $json, 'hipaaAllowemail', $patient->HipaaAllowemail );
-            $patient->Squad = $this->SafeGetVal( $json, 'squad', $patient->Squad );
-            $patient->Fitness = $this->SafeGetVal( $json, 'fitness', $patient->Fitness );
             $patient->ReferralSource = $this->SafeGetVal( $json, 'referralSource', $patient->ReferralSource );
             $patient->Pricelevel = $this->SafeGetVal( $json, 'pricelevel', $patient->Pricelevel );
             $patient->Regdate = date( 'Y-m-d', strtotime( $this->SafeGetVal( $json, 'regdate', $patient->Regdate ) ) );

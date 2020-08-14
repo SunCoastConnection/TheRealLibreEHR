@@ -45,9 +45,6 @@ class Database
         $this->additional_users = dirname(__FILE__) . "/../../../sql/official_additional_users.sql";
         $this->menu_def = dirname(__FILE__) . "/../../../sql/menu_definitions.sql";  //REVIEW
 
-        // Record name of php-gacl installation files
-        $this->gaclSetupScript1 = dirname(__FILE__) . "/../../../gacl/setup.php";
-        $this->gaclSetupScript2 = dirname(__FILE__) . "/../../../acl_setup.php";
 
         // Prepare the dumpfile list
         $this->initialize_dumpfile_list();
@@ -373,22 +370,6 @@ $config = '.$flag.'; /////
         return TRUE;
     }
 
-    public function install_gacl()
-    {
-        $install_results_1 = $this->get_require_contents($this->gaclSetupScript1);
-        if (! $install_results_1 ) {
-            $this->error_message = "install_gacl failed: unable to require gacl script 1";
-            return false;
-        }
-
-        $install_results_2 = $this->get_require_contents($this->gaclSetupScript2);
-        if (! $install_results_2 ) {
-            $this->error_message = "install_gacl failed: unable to require gacl script 2";
-            return false;
-        }
-        $this->debug_message .= $install_results_1 . $install_results_2;
-        return true;
-    }
 
     public function quick_install() {
         // Validation of LibreEHR user settings
@@ -457,7 +438,7 @@ $config = '.$flag.'; /////
             return False;
         }
         // Load the version information, globals settings,
-        // initial user, and set up gacl access controls.
+        //  and initial user.
         //  (applicable if not cloning from another database)
         if (empty($this->clone_database)) {
             if ( ! $this->add_version_info() ) {
@@ -467,9 +448,6 @@ $config = '.$flag.'; /////
                 return False;
             }
             if ( ! $this->add_initial_user() ) {
-                return False;
-            }
-            if ( ! $this->install_gacl()) {
                 return False;
             }
         }

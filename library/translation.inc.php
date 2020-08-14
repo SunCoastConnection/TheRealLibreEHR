@@ -60,12 +60,10 @@ function xl($constant,$mode='r',$prepend='',$append='') {
 //  Wrappers:
 //    xl_list_label()
 //    xl_layout_label()
-//    xl_gacl_group()
 //    xl_form_title()
 //    xl_document_category()
 //    xl_appt_category()
 //
-// Added 5-09 by BM for translation of list labels (when applicable)
 // Only translates if the $GLOBALS['translate_lists'] is set to true.
 function xl_list_label($constant,$mode='r',$prepend='',$append='') {
   if ($GLOBALS['translate_lists']) {
@@ -109,31 +107,7 @@ function xl_layout_label($constant,$mode='r',$prepend='',$append='') {
     }
   }
 }
-// Added 6-2009 by BM for translation of access control group labels 
-//  (when applicable)
-// Only translates if the $GLOBALS['translate_gacl_groups'] is set to true.
-function xl_gacl_group($constant,$mode='r',$prepend='',$append='') {
-  if ($GLOBALS['translate_gacl_groups']) {
-    // TRANSLATE
-    if ($mode == "e") {
-      xl($constant,$mode,$prepend,$append);
-    }
-    else {
-      return xl($constant,$mode,$prepend,$append);
-    }
-  }
-  else {
-    // DO NOT TRANSLATE
-    if ($mode == "e") {
-      echo $prepend.$constant.$append;
-    }
-    else {
-      return $prepend.$constant.$append;
-    }
-  }
-}
-// Added 6-2009 by BM for translation of patient form (notes) titles
-//  (when applicable)
+
 // Only translates if the $GLOBALS['translate_form_titles'] is set to true.
 function xl_form_title($constant,$mode='r',$prepend='',$append='') {
   if ($GLOBALS['translate_form_titles']) {

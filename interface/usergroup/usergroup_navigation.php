@@ -47,14 +47,6 @@ include_once("../../library/acl.inc");
  title="Practice Settings"><?php xl('Practice','e');?></a>&nbsp;
 </td>
 <?php } ?>
-
-<?php if (acl_check('admin', 'acl') && isset($phpgacl_location)) { ?>
-<td valign="middle" nowrap>
-&nbsp;<a class=menu target=Main href="adminacl.php"
- onclick="top.restoreSession()"
- title="Access Control List Administration"><?php xl('ACL','e');?></a>&nbsp;
-</td>
-<?php } ?>
     
 <?php if (acl_check('admin', 'calendar')) { ?>
 <td valign="middle" nowrap>

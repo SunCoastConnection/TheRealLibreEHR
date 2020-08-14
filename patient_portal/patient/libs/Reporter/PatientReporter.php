@@ -188,8 +188,6 @@ class PatientReporter extends Reporter
             ,`patient_data`.`hipaa_message` as HipaaMessage
             ,`patient_data`.`hipaa_allowsms` as HipaaAllowsms
             ,`patient_data`.`hipaa_allowemail` as HipaaAllowemail
-            ,`patient_data`.`squad` as Squad
-            ,`patient_data`.`fitness` as Fitness
             ,`patient_data`.`referral_source` as ReferralSource
             ,`patient_data`.`usertext1` as Usertext1
             ,`patient_data`.`usertext2` as Usertext2

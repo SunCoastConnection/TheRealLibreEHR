@@ -956,7 +956,6 @@ function newPatientData(    $db_id="",
                 $phone_cell = "",
                 $hipaa_mail = "",
                 $hipaa_voice = "",
-                $squad = 0,
                 $pharmacy_id = 0,
                 $drivers_license = "",
                 $hipaa_notice = "",
@@ -967,17 +966,15 @@ function newPatientData(    $db_id="",
     $DOB = fixDOB($DOB);
     $regdate = fixDate($regdate);
 
-    $fitness = 0;
     $referral_source = '';
     if ($pid) {
-        $rez = sqlQuery("select id, fitness, referral_source from patient_data where pid = $pid");
+        $rez = sqlQuery("select id, referral_source from patient_data where pid = $pid");
         // Check for brain damage:
         if ($db_id != $rez['id']) {
             $errmsg = "Internal error: Attempt to change patient_data.id from '" .
               $rez['id'] . "' to '$db_id' for pid '$pid'";
             die($errmsg);
         }
-        $fitness = $rez['fitness'];
         $referral_source = $rez['referral_source'];
     }
 
@@ -1032,8 +1029,6 @@ function newPatientData(    $db_id="",
         hipaa_voice = '$hipaa_voice',
         hipaa_notice = '$hipaa_notice',
         hipaa_message = '$hipaa_message',
-        squad = '$squad',
-        fitness='$fitness',
         referral_source='$referral_source',
         regdate='$regdate',
         pricelevel='$pricelevel',

@@ -56,11 +56,6 @@ $fake_register_globals=false;
 
      $has_note = 0;
      $thisauth = acl_check('patients', 'notes');
-     if ($thisauth) {
-      $tmp = getPatientData($pid, "squad");
-      if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-       $thisauth = 0;
-     }
      if (!$thisauth) {
       echo "<p>(" . htmlspecialchars(xl('Notes not authorized'),ENT_NOQUOTES) . ")</p>\n";
      } else { ?>
