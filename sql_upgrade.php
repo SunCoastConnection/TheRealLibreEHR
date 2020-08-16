@@ -80,8 +80,6 @@ if (!empty($_POST['form_submit'])) {
     }
   }
 
-  echo "<font color='green'>Updating Access Controls...</font><br />\n";
-  require("acl_upgrade.php");
   echo "<br />\n";
 
   echo "<font color='green'>Updating version indicators...</font><br />\n";
@@ -94,7 +92,7 @@ if (!empty($_POST['form_submit'])) {
     sqlStatement("UPDATE version SET v_realpatch = '$v_realpatch'");
   }
 
-  echo "<p><font color='green'>Database and Access Control upgrade finished.</font></p>\n";
+  echo "<p><font color='green'>Database upgrade finished.</font></p>\n";
   echo "</body></html>\n";
   exit();
 }
@@ -114,10 +112,7 @@ foreach ($versions as $version => $filename) {
 ?>
 </select>
 </p>
-<!--<p>If you are unsure or were using a development version between two
-releases, then choose the older of possible releases.</p>
-<p style="color:red">If you are upgrading from a version below 5.0.0 to version 5.0.0 or greater, do note that this upgrade can take anywhere from several minutes to several hours (you will only see a whitescreen until it is complete; do not stop the script before it is complete or you risk corrupting your data).</p>
--->
+
 <p><input type='submit' name='form_submit' value='Upgrade Database' /></p>
 </form>
 </center>
