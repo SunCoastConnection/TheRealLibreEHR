@@ -20,7 +20,6 @@
   $CPR = 4; // cells per row
   $DateFormat = DateFormatRead();
   $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
-
   $searchcolor = empty($GLOBALS['layout_search_color']) ?
     '#ffff55' : $GLOBALS['layout_search_color'];
 

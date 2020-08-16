@@ -38,10 +38,6 @@
 // 1 = Write Once (not editable when not empty) (text fields)
 // 2 = Show descriptions instead of codes for billing code input
 require_once(dirname(dirname(__FILE__)) ."/interface/globals.php");
-if ($GLOBALS['mod_nn'] == true){
-        require_once(dirname(dirname(__FILE__)) . "/modules/nation_notes/nn_library_options.inc");}
-else{
-  
 require_once("formdata.inc.php");
 require_once("formatting.inc.php");
 require_once("user.inc");
@@ -50,6 +46,8 @@ require_once("lists.inc");
 require_once(dirname(dirname(__FILE__)) . "/custom/code_types.inc.php");
 
 $date_init = "";
+$condition_str ="";
+$group_fields = [];
 
 function get_pharmacies() {
   return sqlStatement("SELECT d.id, d.name, a.line1, a.city, " .
@@ -4084,6 +4082,5 @@ function generate_form_field_with_class($frow, $currvalue, $class) {
       $description, $showEmpty ? $empty_title : '', '', $onchange, '', null, true, $backup_list);
 
   }
-}
 }
 ?>
