@@ -3890,7 +3890,7 @@ function generate_form_field_with_class($frow, $currvalue, $class) {
     $outputAddButton = "<input type='button' id='addtolistid_" . $list_id_esc . "' fieldid='form_" .
       $field_id_esc . "' class='addtolist' value='$inputValue' $disabled />";
      echo $outputAddButton;
-    }
+
   
   }
 
