@@ -466,8 +466,8 @@ else {
       $next_state = 7;
     }
     else {
-      echo "\n<br>Next step will install and configure access controls (php-GACL).<br>\n";
-      $next_state = 4; 
+      echo "\n<br>Next step will Configuration of PHP.<br>\n";
+      $next_state = 5; 
     }
     
     echo "
@@ -483,6 +483,7 @@ else {
 <INPUT TYPE='SUBMIT' VALUE='Continue'><br></FORM><br>\n";
 
     break;
+    
     
   case 5:
     echo "<b>Step $state</b><br><br>\n";
@@ -519,7 +520,7 @@ echo "
 
 echo "<li>To ensure proper functioning of Libre EHR you must make sure that settings in MYSQL /etc/mysql/my.cnf file include:
 <ul>
-<li>\"key_buffer_size\" set to 2% of your system's RAM (Less thatn 2% recommended) </li>
+<li>\"key_buffer_size\" set to 2% of your system's RAM (Less than 2% recommended) </li>
 <li>\"innodb_buffer_pool_size\" set to 70% of available RAM.</li>
 </ul>";
 
@@ -586,7 +587,7 @@ echo "<ul><li>Before proceeding, be sure that you have a properly installed and 
 
 echo "<li>Detailed installation instructions can be found in the <a href='https://github.com/LibreIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.</li>\n";
 
-Echo "<li>If you are upgrading from a previous version, do NOT use this script.  Please read the 'Upgrading' section found in the <a href='https://github.com/LibreIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.</li></ul>";
+Echo "<li>If you are upgrading from a previous version, do NOT use this script.  Please read the 'Upgrading' section found in the included Documentation file.</li></ul>";
 
 if ($checkPermissions) {
 	echo "<p>We will now ensure correct file and directory permissions before starting installation:</p>\n";
