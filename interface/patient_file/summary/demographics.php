@@ -1184,7 +1184,7 @@ if ( $GLOBALS['facility_acl']==1 ) {
 
       if (sqlNumRows($result) == 0) {
       echo " <table><tr>\n";
-      echo "  <td colspan='$numcols' class='text'>&nbsp;&nbsp;" . xlt('None') . "</td>\n";
+      echo "  <td colspan='1' class='text'>&nbsp;&nbsp;" . xlt('None') . "</td>\n";
       echo " </tr></table>\n";
       }
 
@@ -1758,7 +1758,7 @@ if (isset($_FILES["profile_picture"])) {
   }
 }
 
-if ($picture_url) {
+if (isset($picture_url)) {
   //show success message and update the value in db and also refresh the page.
   if (sqlQ("UPDATE patient_data SET picture_url='$picture_url' WHERE pid='$pid'")) {
         echo "<script>

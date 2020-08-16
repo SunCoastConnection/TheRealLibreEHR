@@ -31,7 +31,7 @@ include_once("$srcdir/lists.inc");
 
 // Check permission to create encounters.
 $tmp = getPatientData($pid);
-if !   (acl_check('create_encounters') )
+if (acl_check('create_encounters') ==FALSE)
 {
   echo "<body>\n<html>\n";
   echo "<p>(" . xlt('New encounters not authorized'). ")</p>\n";

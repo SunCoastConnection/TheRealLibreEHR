@@ -236,9 +236,7 @@ function cancelClicked() {
     <tr>
 
      <td colspan='2'><!-- sensitivities not used --></td>
-<?php
- }
-?>
+
     </tr>
 
     <tr<?php if (!$GLOBALS['gbl_visit_referral_source']) echo " style='visibility:hidden;'"; ?>>

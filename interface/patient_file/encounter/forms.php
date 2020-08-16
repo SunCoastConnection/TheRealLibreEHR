@@ -336,7 +336,6 @@ $auth_relaxed  = acl_check('encounter_notes');
     if ($result['sensitivity'] && !acl_check('sensitive')) {
         $auth_notes_a = $auth_notes = $auth_relaxed = 0;
     }
-}
 ?>
 </div>
 <div style='margin-top:8px;'>
@@ -454,7 +453,7 @@ if ( $esign->isButtonViewable() ) {
 <!-- Get the documents tagged to this encounter and display the links and notes as the tooltip -->
 <?php
     $docs_list = getDocumentsByEncounter($pid,$_SESSION['encounter']);
-    if(count($docs_list) > 0 ) {
+    if(!empty($docs_list)) {
 ?>
 <div class='enc_docs'>
 <span class="bold"><?php echo xlt("Document(s)"); ?>:</span>
