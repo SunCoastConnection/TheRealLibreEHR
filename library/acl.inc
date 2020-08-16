@@ -5,7 +5,7 @@
  */
 
   function acl_check($feature) {
-    if (! $user) $user = $_SESSION['authUser'];
+    if (!isset($user)){ $user = $_SESSION['authUser'];}
 
 return TRUE;
 

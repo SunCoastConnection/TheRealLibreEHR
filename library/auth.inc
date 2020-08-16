@@ -292,52 +292,6 @@ function delGroup ($group_id)
     return sqlQuery("delete from groups where id = ? limit 0,1", array($group_id));
 }
 
-/***************************************************************
-//pennfirm
-//Function currently user by new post calendar code to determine
-//if a given user is in a group with another user
-//and if so to allow editing of that users events
-//
-//*************************************************************/
-
-function validateGroupStatus ($user_to_be_checked, $group_user) {
-    if (isset($user_to_be_checked) && isset($group_user)) {
-        if ($user_to_be_checked == $group_user) {
-
-            return true;
-        }
-        elseif ($_SESSION['authorizeduser'] == 1)
-            return true;
-
-        $query = "SELECT groups.name FROM users,groups WHERE users.username = ? " .
-                 "AND users.username = groups.user group by groups.name";
-        $result = sqlStatement($query, array($user_to_be_checked));
-
-        $usertbcGroups = array();
-
-        while ($row = sqlFetchArray($result)) {
-            $usertbcGroups[] = $row[0];
-        }
-
-        $query = "SELECT groups.name FROM users,groups WHERE users.username =  ? " .
-                 "AND users.username = groups.user group by groups.name";
-        $result = sqlStatement($query, array($group_user));
-
-        $usergGroups = array();
-
-        while ($row = sqlFetchArray($result)) {
-            $usergGroups[] = $row[0];
-        }
-        foreach ($usertbcGroups as $group) {
-              if(in_array($group,$usergGroups)) {
-              return true;
-            }
-        }
-
-    }
-
-    return false;
-}
 
 
 // Attempt to update the user's password, password history, and password expiration.

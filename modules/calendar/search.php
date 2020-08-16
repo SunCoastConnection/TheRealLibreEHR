@@ -8,11 +8,7 @@ require_once("$srcdir/headers.inc.php");
 
 $dateFormat = DateFormatRead();
 
-if ($_SESSION['authorizeduser'] == 1) {
-  $facilities = getFacilities();
-} else {
   $facilities = getUserFacilities($_SESSION['authId']);
-}
 
 $providers = getProviderInfo();
 

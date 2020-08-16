@@ -102,15 +102,10 @@ require('includes/session.php');
         array($_SESSION['language_choice'])
     );
 
-      // lemonsoftware
-      if ($_SESSION['authorizeduser'] == 1) {
-        $facilities = getFacilities();
-      } else {
         $facilities = getUserFacilities($_SESSION['authId']); // from users_facility
         if (count($facilities) == 1) {
           $_SESSION['pc_facility'] = key($facilities);
       }
-    }
 
       if (count($facilities) > 1) {
         echo "   <select name='pc_facility' id='pc_facility' >\n";
