@@ -37,7 +37,7 @@ if ($_POST['form_csvexport']) {
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php xl('Patient List','e'); ?></title>
 <script type="text/javascript" src="../../library/overlib_mini.js"></script>
 <script type="text/javascript" src="../../library/textformat.js"></script>

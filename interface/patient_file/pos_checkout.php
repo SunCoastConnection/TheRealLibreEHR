@@ -186,7 +186,7 @@ function generate_receipt($patient_id, $encounter=0) {
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
 <?php call_required_libraries(['bootstrap', 'jquery-min-3-3-1']); ?>
 <style>

@@ -11,7 +11,7 @@ require_once "reports_controllers/Edi271Controller.php";
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php echo htmlspecialchars( xl('EDI-271 Response File Upload'), ENT_NOQUOTES); ?></title>
 <link rel=stylesheet href="<?php echo $css_header;?>" type="text/css">
 <style type="text/css">

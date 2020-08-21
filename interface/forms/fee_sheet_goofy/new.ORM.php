@@ -787,15 +787,13 @@ $billresult = getBillingByEncounter($pid, $encounter, "*");
 <head>
 <?php
 // The following code was commented out by Terry on 12/14/18. This was removed because of an error
-
-  //html_header_show();
   // Include Bootstrap
   //call_required_libraries(array("jquery-min-3-1-1","bootstrap", "select2"));
 
 // and replaced by the code below.
 
 ?>
-<?php html_header_show(); ?>
+
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <link rel="stylesheet" href="<?php echo $GLOBALS['standard_js_path']; ?>bootstrap-3-3-4/dist/css/bootstrap.min.css" type="text/css">
 <!--<link rel="stylesheet" type="text/css" href="<?php echo $GLOBALS['css_path']; ?>jquery-editable-select.min.css">-->

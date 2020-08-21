@@ -11,7 +11,6 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 <html>
 <head>
 <?php
-  html_header_show();
   call_required_libraries(array('jquery-min-3-1-1', 'datepicker'));
 ?>
 

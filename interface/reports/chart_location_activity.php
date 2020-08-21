@@ -11,7 +11,7 @@ require_once "reports_controllers/ChartLocationActivityController.php";
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <title><?php echo xlt('Chart Location Activity'); ?></title>
 
 <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>

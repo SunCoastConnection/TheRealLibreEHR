@@ -4,9 +4,6 @@
 
 <html>
     <head>
-    <?php
-    html_header_show();
-    ?>
     <?php call_required_libraries(array('bootstrap', 'jquery-min-1-9-1')); ?>
         <link rel='stylesheet' href='<?php echo($this->style);?>' type='text/css'>
 

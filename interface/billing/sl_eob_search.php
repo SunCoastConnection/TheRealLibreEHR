@@ -483,7 +483,6 @@ if ($_POST['form_portalnotify']) {
 <html>
 <head>
 <?php
-html_header_show();
 require_once("$srcdir/headers.inc.php");
 ?>
 <link rel=stylesheet href="<?php echo $css_header;?>" type="text/css">

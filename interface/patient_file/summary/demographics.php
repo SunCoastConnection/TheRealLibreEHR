@@ -196,7 +196,7 @@
       <!-- Dynamically required libraries -->
       <?php call_required_libraries(array('jquery-min-3-3-1', 'fancybox', 'common', 'gritter', 'iziModalToast')); ?>
 
-    <?php html_header_show(); ?>
+    
 
     <!-- Styles -->
     <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">

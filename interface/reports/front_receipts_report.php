@@ -39,7 +39,7 @@ $to_date = fixDate($_POST['form_to_date'], date(DateFormatRead(true)));
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php xl('Front Office Receipts','e'); ?></title>
 <script type="text/javascript" src="../../library/overlib_mini.js"></script>
 <script type="text/javascript" src="../../library/textformat.js"></script>

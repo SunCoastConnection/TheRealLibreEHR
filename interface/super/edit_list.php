@@ -613,7 +613,7 @@ function writeITLine($it_array) {
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <!-- supporting javascript code -->
 

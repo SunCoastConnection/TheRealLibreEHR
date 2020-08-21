@@ -64,7 +64,6 @@
   ?>
 <html>
   <head>
-    <?php html_header_show();
       //  Include Bootstrap, Fancybox, date-time-picker
   call_required_libraries(array("font-awesome","iziModalToast","jquery-min-3-1-1","bootstrap","datepicker","fancybox-addpatient"));
 ?>

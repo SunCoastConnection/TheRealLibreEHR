@@ -476,7 +476,7 @@ $DateFormat=DateFormatRead();
 
 <html>
 <head>
-<?php if (function_exists('html_header_show')) html_header_show(); ?>
+
 
 <?php
    include_css_library("jquery-datetimepicker/jquery.datetimepicker.css");

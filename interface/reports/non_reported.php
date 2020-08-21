@@ -39,7 +39,7 @@ require_once "reports_controllers/NonReportedController.php";
 
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php xl('Syndromic Surveillance - Non Reported Issues','e'); ?></title>
 <link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
 <script type="text/javascript" src="../../library/dialog.js"></script>

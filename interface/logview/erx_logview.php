@@ -78,7 +78,6 @@ if($filename) {
 <html>
     <head>
         <?php
-            html_header_show();
             call_required_libraries(array('jquery-min-1-7-2', 'datepicker'));
         ?>
         <link rel="stylesheet" href="<?php echo $css_header; ?>" type="text/css">

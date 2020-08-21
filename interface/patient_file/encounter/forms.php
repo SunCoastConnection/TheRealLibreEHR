@@ -18,10 +18,10 @@ require_once("$srcdir/../controllers/C_Document.class.php");
 require_once("forms_review_header.php");
 require_once("$srcdir/headers.inc.php");
 ?>
+<!DOCTYPE html>
 <html>
 
 <head>
-<?php html_header_show();
 //  Include Bootstrap and datepicker Library
   call_required_libraries(array("jquery-min-3-1-1","bootstrap","datepicker","fancybox"));
 resolveFancyboxCompatibility();

@@ -43,7 +43,7 @@ require_once "reports_controllers/Edi270Controller.php";
 
     <head>
 
-        <?php html_header_show();?>
+        
 
         <title><?php echo htmlspecialchars( xl('Eligibility 270 Inquiry Batch'), ENT_NOQUOTES); ?></title>
 

@@ -60,7 +60,6 @@ $ires = sqlStatement("SELECT id, type, title, begdate FROM lists WHERE " .
 <html>
 <head>
 <?php
-  html_header_show();
   call_required_libraries(array("jquery-min-3-1-1","bootstrap","datepicker","fancybox"));
 ?>
 <title><?php echo xlt('Patient Encounter'); ?></title>

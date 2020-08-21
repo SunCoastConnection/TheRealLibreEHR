@@ -43,7 +43,6 @@ if ( !acl_check('patients','med','',array('write','addonly') ))
 <html>
 <head>
 <?php 
-    html_header_show();
     //  Include datepicker library
   call_required_libraries(array ("jquery-min-1-3-2","datepicker"));
 ?>

@@ -50,7 +50,6 @@ $auth_demo     = acl_check('patients_edit_dems');
 <html>
   <head>
     <?php
-      html_header_show();
       call_required_libraries(array('jquery-min-3-1-1', 'datepicker','jquery-ui'));
     ?>
 

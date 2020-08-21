@@ -32,7 +32,7 @@ require_once "reports_controllers/CustomReportRangeController.php";
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">

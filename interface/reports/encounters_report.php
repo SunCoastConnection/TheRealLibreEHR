@@ -32,7 +32,7 @@ require_once "reports_controllers/EncountersController.php";
 ?>
 <html>
 <head>
-  <?php html_header_show();?>
+  
 
   <title><?php echo xlt('Encounters Report'); ?></title>
 

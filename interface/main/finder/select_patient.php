@@ -59,7 +59,7 @@ while ($row = sqlFetchArray($res)) {
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <title><?php echo "Select Patient"; ?></title>
 
 <style type="text/css">

@@ -112,7 +112,7 @@ $oauthorized = $my_authorized;
 
 <html>
 <head>
-<?php if (function_exists('html_header_show')) html_header_show();
+
 ?>
 
 <?php

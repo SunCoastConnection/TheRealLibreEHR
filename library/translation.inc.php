@@ -222,26 +222,6 @@ function getLanguageDir($lang_id) {
 
 //----------------------------------
 
-// ----------------------------------------------------------------------------
-/**
-HEADER HTML
-
-shows some informations for pages html header 
-
-@param none
-@return void
-*/
-function html_header_show() {
-    
-    // Below line was commented by the UTF-8 project on 05-2009 by BM.
-    //  We commented this out since we are now standardizing encoding
-    //  in the globals.php file.
-    // echo '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> '."\n";
-}
-
-
-// ----------------------------------------------------------------------------
-/**
 * Returns a string padded to a certain length with another string.
 *
 * This method behaves exactly like str_pad but is multibyte safe.

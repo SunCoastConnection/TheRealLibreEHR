@@ -82,7 +82,7 @@ function availablePages($totalRows, $interval) {
 
 ?>
 <head>
-    <?php html_header_show();?>
+    
     <title><?php xl('Lab Stats by Demographics','e'); ?></title>
     <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
     <?php call_required_libraries($library_array) ?>

@@ -118,7 +118,7 @@ $oauthorized = $my_authorized;
 
 <html>
 <head>
-<?php if (function_exists('html_header_show')) html_header_show(); ?>
+
 <link rel="stylesheet" href="<?php echo $css_header; ?>" type="text/css">
 <script type="text/javascript">
   const billing_report_bus = new Vue()

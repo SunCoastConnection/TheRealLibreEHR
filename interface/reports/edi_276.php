@@ -38,7 +38,7 @@ require_once "reports_controllers/Edi276Controller.php";
 
     <head>
 
-        <?php html_header_show();?>
+        
 
         <title><?php echo xlt('276 Claim Status Request Batch'); ?></title>
 
