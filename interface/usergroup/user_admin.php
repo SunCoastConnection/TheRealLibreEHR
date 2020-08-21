@@ -363,8 +363,9 @@ if($password_exp != "0000-00-00")
 ?>
 <input type=hidden name="current_date" value="<?php echo strtotime($current_date); ?>" >
 <input type=hidden name="grace_time" value="<?php echo strtotime($grace_time1); ?>" >
-<!--  Get the list ACL for the user -->
+
 <?php
+/*
 $acl_name=acl_get_group_titles($iter["username"]);
 $bg_name='';
 $bg_count=count($acl_name);
@@ -374,7 +375,7 @@ $bg_count=count($acl_name);
       }
 ?>
 <input type=hidden name="user_type" value="<?php echo $bg_name; ?>" >
-
+*/?>
 <table border=0 cellpadding=0 cellspacing=0>
 <tr>
   <?php

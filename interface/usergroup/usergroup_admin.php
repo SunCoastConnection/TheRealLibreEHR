@@ -36,6 +36,7 @@ $show_message=0;
 
 
 /* Sending a mail to the admin when the breakglass user is activated only if $GLOBALS['Emergency_Login_email'] is set to 1 */
+/* /Commented out for GACL refactor
 $bg_count = sizeof($access_group);
 $mail_id = explode(".",$SMTP_HOST);
 for($i=0;$i<$bg_count;$i++){
@@ -57,6 +58,7 @@ if(($_GET['access_group'][$i] == "Emergency Login") && ($_GET['active'] == 'on')
 }
 }
 }
+*/
 /* To refresh and save variables in mail frame */
 if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
     if ($_POST["mode"] == "update") {
@@ -150,7 +152,7 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
               $tqvar = formData('suffix','P');
               sqlStatement("update users set suffix='$tqvar' where id= ? ", array($_POST["id"]));
       }
-      if ($_FILES["profile_picture"]) {
+      if (isset($_FILES["profile_picture"])) {
         $res = sqlStatement("SELECT username, picture_url FROM users where id= ? ", $_POST["id"]);
         $row = sqlFetchArray($res);
         if ($_POST["username"]) {
@@ -167,8 +169,9 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         $bool = 0;
         $target_file =  basename($_FILES["profile_picture"]["name"]);
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
         $verify_image = getimagesize($_FILES["profile_picture"]["tmp_name"]);
-        if($verify_image) {
+        if(isset($verify_image)) {
           $mime = $verify_image["mime"];
           $mime_types = array('image/png',
                                   'image/jpeg',
@@ -198,7 +201,7 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         $picture_url = "";
         //begin file uploading
         $destination_directory = $GLOBALS['OE_SITES_BASE']."/".$_SESSION['site_id']."/profile_pictures/";
-        if ($bool) {
+        if ($bool==1) {
           if (file_exists($destination_directory.$row['picture_url'])){
             unlink($destination_directory.$row['picture_url']);
           }
@@ -264,7 +267,8 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
       sqlStatement("UPDATE users SET authorized = $tqvar, active = $actvar, " .
         "calendar = $calvar, locked = $lockvar, see_auth = ? WHERE " .
         "id = ? ", array($_POST['see_auth'], $_POST["id"]));
-      //Display message when Emergency Login user was activated
+      /* REmoved section for GACL refactor
+      /Display message when Emergency Login user was activated
       $bg_count=count($_POST['access_group']);
       for($i=0;$i<$bg_count;$i++){
         if(($_POST['access_group'][$i] == "Emergency Login") && ($_POST['pre_active'] == 0) && ($actvar == 1)){
@@ -278,6 +282,7 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         }
       }
     }
+    */
       if ($_POST["comments"]) {
         $tqvar = formData('comments','P');
         sqlStatement("update users set info = '$tqvar' where id = ? ", array($_POST["id"]));

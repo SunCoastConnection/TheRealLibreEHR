@@ -220,7 +220,7 @@ function getLanguageDir($lang_id) {
     return !empty($row['lang_is_rtl']) ? 'rtl' : 'ltr';
 }
 
-//----------------------------------
+/*/----------------------------------
 
 * Returns a string padded to a certain length with another string.
 *
