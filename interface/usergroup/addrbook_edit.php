@@ -38,7 +38,7 @@
  //
 
  include_once("../globals.php");
- include_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/formdata.inc.php");
  require_once("$srcdir/htmlspecialchars.inc.php");
@@ -170,7 +170,6 @@ td { font-size:10pt; }
     "valedictory = "  . invalue('form_valedictory')  . ", " .
     "assistant = "    . invalue('form_assistant')    . ", " .
     "federaltaxid = " . invalue('form_federaltaxid') . ", " .
-    "upin = "         . invalue('form_upin')         . ", " .
     "npi = "          . invalue('form_npi')          . ", " .
     "taxonomy = "     . invalue('form_taxonomy')     . ", " .
     "cpoe = "         . invalue('form_cpoe')         . ", " .    
@@ -201,7 +200,7 @@ td { font-size:10pt; }
    $userid = sqlInsert("INSERT INTO users ( " .
     "username, password, authorized, info, source, " .
     "title, fname, lname, mname, suffix,  " .
-    "federaltaxid, federaldrugid, upin, facility, see_auth, active, npi, taxonomy, cpoe, " .
+    "federaltaxid, federaldrugid, facility, see_auth, active, npi, taxonomy, cpoe, " .
     "specialty, organization, valedictory, assistant, billname, email, email_direct, url, " .
     "street, streetb, city, state, zip, " .
     "street2, streetb2, city2, state2, zip2, " .
@@ -219,7 +218,6 @@ td { font-size:10pt; }
     $form_suffix                   . ", " .
     invalue('form_federaltaxid')  . ", " .
     "'', "                               . // federaldrugid
-    invalue('form_upin')          . ", " .
     "'', "                               . // facility
     "0, "                                . // see_auth
     "1, "                                . // active
@@ -302,7 +300,7 @@ td { font-size:10pt; }
 
 <table border='0' width='100%'>
 
-<?php if (acl_check('admin', 'practice' )) { // allow choose type option if have admin access ?>
+<?php if (acl_check('practice_admin')) { // allow choose type option if have admin access ?>
  <tr>
   <td width='1%' nowrap><b><?php echo xlt('Type'); ?>:</b></td>
   <td>

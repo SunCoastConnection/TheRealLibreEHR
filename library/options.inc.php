@@ -38,10 +38,6 @@
 // 1 = Write Once (not editable when not empty) (text fields)
 // 2 = Show descriptions instead of codes for billing code input
 require_once(dirname(dirname(__FILE__)) ."/interface/globals.php");
-if ($GLOBALS['mod_nn'] == true){
-        require_once(dirname(dirname(__FILE__)) . "/modules/nation_notes/nn_library_options.inc");}
-else{
-  
 require_once("formdata.inc.php");
 require_once("formatting.inc.php");
 require_once("user.inc");
@@ -50,6 +46,8 @@ require_once("lists.inc");
 require_once(dirname(dirname(__FILE__)) . "/custom/code_types.inc.php");
 
 $date_init = "";
+$condition_str ="";
+$group_fields = [];
 
 function get_pharmacies() {
   return sqlStatement("SELECT d.id, d.name, a.line1, a.city, " .
@@ -539,24 +537,6 @@ function generate_form_field($frow, $currvalue) {
     }
   }
 
-  // squads
-  else if ($data_type == 13) {
-    echo "<select name='form_$field_id_esc' id='form_$field_id_esc' title='$description'";
-    echo " $lbfonchange $disabled>";
-    echo "<option value=''>&nbsp;</option>";
-    $squads = acl_get_squads();
-    if ($squads) {
-      foreach ($squads as $key => $value) {
-    $optionValue = htmlspecialchars( $key, ENT_QUOTES);
-    $optionLabel = htmlspecialchars( $value[3], ENT_NOQUOTES);
-        echo "<option value='$optionValue'";
-        if ($currvalue == $key) echo " selected";
-        echo ">$optionLabel</option>\n";
-      }
-    }
-    echo "</select>";
-  }
-
   // Address book, preferring organization name if it exists and is not in
   // parentheses, and excluding local users who are not providers.
   // Supports "referred to" practitioners and facilities.
@@ -944,14 +924,8 @@ function generate_form_field($frow, $currvalue) {
     $inputValue = htmlspecialchars( xl('Add'), ENT_QUOTES);
     $outputAddButton = "<input type='button' id='addtolistid_" . $list_id_esc . "' fieldid='form_" .
       $field_id_esc . "' class='addtolist' value='$inputValue' $disabled />";
-    if (aco_exist('lists', $list_id)) {
-     // a specific aco exist for this list, so ensure access
-     if (acl_check('lists', $list_id)) echo $outputAddButton;
-    }
-    else {
-     // no specific aco exist for this list, so check for access to 'default' list
-     if (acl_check('lists', 'default')) echo $outputAddButton;
-    }
+    echo $outputAddButton;
+   
   }
 
   // a set of labeled radio buttons
@@ -1290,32 +1264,6 @@ function generate_print_field($frow, $currvalue) {
           $tmp = $prow['name'] . ' ' . $prow['area_code'] . '-' .
             $prow['prefix'] . '-' . $prow['number'] . ' / ' .
             $prow['line1'] . ' / ' . $prow['city'];
-        }
-      }
-      if (empty($tmp)) $tmp = "($currvalue)";
-    }
-    /*****************************************************************
-    echo "<input type='text'" .
-      " size='$fld_length'" .
-      " value='$tmp'" .
-      " class='under'" .
-      " />";
-    *****************************************************************/
-    if ($tmp === '') { $tmp = '&nbsp;'; }
-    else { $tmp = htmlspecialchars( $tmp, ENT_QUOTES); }
-    echo $tmp;
-  }
-
-  // squads
-  else if ($data_type == 13) {
-    $tmp = '';
-    if ($currvalue) {
-      $squads = acl_get_squads();
-      if ($squads) {
-        foreach ($squads as $key => $value) {
-          if ($currvalue == $key) {
-            $tmp = $value[3];
-          }
         }
       }
       if (empty($tmp)) $tmp = "($currvalue)";
@@ -1812,18 +1760,6 @@ function generate_display_field($frow, $currvalue) {
         $s .= htmlspecialchars($prow['name'] . ' ' . $prow['area_code'] . '-' .
           $prow['prefix'] . '-' . $prow['number'] . ' / ' .
           $prow['line1'] . ' / ' . $prow['city'],ENT_NOQUOTES);
-      }
-    }
-  }
-
-  // squads
-  else if ($data_type == 13) {
-    $squads = acl_get_squads();
-    if ($squads) {
-      foreach ($squads as $key => $value) {
-        if ($currvalue == $key) {
-          $s .= htmlspecialchars($value[3],ENT_NOQUOTES);
-        }
       }
     }
   }
@@ -3563,23 +3499,6 @@ function generate_form_field_with_class($frow, $currvalue, $class) {
     }
   }
 
-  // squads
-  else if ($data_type == 13) {
-    echo "<select name='form_$field_id_esc' id='form_$field_id_esc' title='$description'";
-    echo " $lbfonchange $disabled>";
-    echo "<option value=''>&nbsp;</option>";
-    $squads = acl_get_squads();
-    if ($squads) {
-      foreach ($squads as $key => $value) {
-    $optionValue = htmlspecialchars( $key, ENT_QUOTES);
-    $optionLabel = htmlspecialchars( $value[3], ENT_NOQUOTES);
-        echo "<option value='$optionValue'";
-        if ($currvalue == $key) echo " selected";
-        echo ">$optionLabel</option>\n";
-      }
-    }
-    echo "</select>";
-  }
 
   // Address book, preferring organization name if it exists and is not in
   // parentheses, and excluding local users who are not providers.
@@ -3968,14 +3887,9 @@ function generate_form_field_with_class($frow, $currvalue, $class) {
     $inputValue = htmlspecialchars( xl('Add'), ENT_QUOTES);
     $outputAddButton = "<input type='button' id='addtolistid_" . $list_id_esc . "' fieldid='form_" .
       $field_id_esc . "' class='addtolist' value='$inputValue' $disabled />";
-    if (aco_exist('lists', $list_id)) {
-     // a specific aco exist for this list, so ensure access
-     if (acl_check('lists', $list_id)) echo $outputAddButton;
-    }
-    else {
-     // no specific aco exist for this list, so check for access to 'default' list
-     if (acl_check('lists', 'default')) echo $outputAddButton;
-    }
+     echo $outputAddButton;
+
+  
   }
 
   // a set of labeled radio buttons
@@ -4168,6 +4082,5 @@ function generate_form_field_with_class($frow, $currvalue, $class) {
       $description, $showEmpty ? $empty_title : '', '', $onchange, '', null, true, $backup_list);
 
   }
-}
 }
 ?>

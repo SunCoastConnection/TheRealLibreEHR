@@ -67,11 +67,11 @@ require_once("includes/header.inc.php");
         if (is_dir($LIBRE_SITE_DIR)) {
             //$Libre_Get_Modules could be added to the 'writable' array.
             $writableFileList = array($conffile);
-            $writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory, $gaclWritableDirectory);
+            $writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory);
         }
         else {
             $writableFileList = array();
-            $writableDirList = array($LIBRE_SITES_BASE, $gaclWritableDirectory);
+            $writableDirList = array($LIBRE_SITES_BASE);
         }
 
 ?>

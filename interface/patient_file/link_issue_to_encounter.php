@@ -11,13 +11,13 @@
 
 require_once("../globals.php");
 require_once("$srcdir/lists.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 
 $issue   = 0 + (empty($_REQUEST['issue']) ? 0 : $_REQUEST['issue']);
 $thispid = 0 + (empty($_REQUEST['thispid']) ? $pid : $_REQUEST['thispid']);
 $thisenc = 0 + (empty($_REQUEST['thisenc']) ? 0 : $_REQUEST['thisenc']);
 
-if (!acl_check('patients', 'med')) {
+if (!acl_check('link_issue_encounter')) {
   echo "alert('" . xl('Not authorized') . ".');\n";
   exit();
 }

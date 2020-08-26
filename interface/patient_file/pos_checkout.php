@@ -56,7 +56,7 @@ $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
 require_once("../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/billing.inc");
 require_once("$srcdir/formatting.inc.php");
@@ -186,7 +186,7 @@ function generate_receipt($patient_id, $encounter=0) {
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
 <?php call_required_libraries(['bootstrap', 'jquery-min-3-3-1']); ?>
 <style>
@@ -359,7 +359,7 @@ table.pad td {
 <a href='summary/demographics.php' onclick='top.restoreSession()'><button class='btn btn-primary'><?php echo htmlspecialchars( xl('Back To Patient'), ENT_NOQUOTES);?></button></a>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#' id='printbutton'><button class='btn btn-primary'><?php echo xlt('Print'); ?></button></a>
-<?php if (acl_check('acct','disc')) { ?>
+<?php if (acl_check('prices')) { ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href='#' onclick='return deleteme();'><button class='btn btn-primary'><?php echo xlt('Undo Checkout'); ?></button></a>
 <?php } ?>
@@ -403,8 +403,6 @@ function write_form_line($code_type, $code, $id, $date, $description,
   echo "  <td align='right'>" . text($units) . "</td>";
   echo "  <td align='right'><input type='text' name='line[$lino][amount]' " .
        "value='" . attr($amount) . "' size='6' maxlength='8'";
-  // Modifying prices requires the acct/disc permission.
-  // if ($code_type == 'TAX' || ($code_type != 'COPAY' && !acl_check('acct','disc')))
   echo " style='text-align:right;background-color:transparent' readonly";
   // else echo " style='text-align:right' onkeyup='computeTotals()'";
   echo "></td>\n";

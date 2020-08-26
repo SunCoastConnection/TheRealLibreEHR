@@ -23,7 +23,7 @@ $sanitize_all_escapes = true;
 $fake_register_globals = false;
 
 require_once("../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/formatting.inc.php");
@@ -304,14 +304,14 @@ function generate_order_summary($orderid) {
 } // end function generate_order_summary
 
 // Check authorization.
-$thisauth = acl_check('patients', 'med');
+$thisauth = acl_check('orders_procedures');
 if (!$thisauth) die(xl('Not authorized'));
 
 $orderid = intval($_GET['orderid']);
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <link rel="stylesheet" href='<?php echo $css_header; ?>' type='text/css'>
 <title><?php echo xlt('Order Summary'); ?></title>
 <style>

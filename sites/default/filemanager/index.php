@@ -16,7 +16,7 @@
  * Please support this product by sharing your changes with the LibreEHR.org community.
  */
 require_once '../../../interface/globals.php';
-require_once($GLOBALS['srcdir'].'/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 ?>
 <html>
  

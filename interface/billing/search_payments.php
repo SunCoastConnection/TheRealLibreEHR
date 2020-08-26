@@ -30,7 +30,7 @@
 //===============================================================================
 require_once("../globals.php");
 require_once("$srcdir/log.inc");
-require_once("../../library/acl.inc");
+require_once("../../modules/ACL/acl.inc.php");
 require_once("../../custom/code_types.inc.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/billrep.inc");
@@ -222,7 +222,7 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 ?>
 <html>
 <head>
-<?php if (function_exists('html_header_show')) html_header_show(); ?>
+
 
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 
@@ -591,7 +591,7 @@ document.onclick=HideTheAjaxDivs;
                                      $payment_delete_from_date = date('Y-m-d', $last_year);
                                 ?>
                               <tr class="text"  bgcolor='<?php echo $bgcolor; ?>'>
-                                <td class="<?php echo $StringClass; ?>" ><?php if ((acl_check('acct', 'bill') && (strtotime($payment_delete_from_date) < strtotime($RowSearch['check_date']))) || (substr($GLOBALS['payment_delete_begin_date'],0,1) == 'N')){?><a href="#" onClick="javascript:return DeletePayments(<?php echo htmlspecialchars($RowSearch['session_id']); ?>);" ><img src="../pic/Delete.gif" border="0"/></a><?php }?></td>
+                                <td class="<?php echo $StringClass; ?>" ><?php if ((acl_check('bill') && (strtotime($payment_delete_from_date) < strtotime($RowSearch['check_date']))) || (substr($GLOBALS['payment_delete_begin_date'],0,1) == 'N')){?><a href="#" onClick="javascript:return DeletePayments(<?php echo htmlspecialchars($RowSearch['session_id']); ?>);" ><img src="../pic/Delete.gif" border="0"/></a><?php }?></td>
                                 <td class="<?php echo $StringClass; ?>" ><a href="edit_payment.php?payment_id=<?php echo htmlspecialchars($RowSearch['session_id']); ?>"  class='iframe medium_modal' ><?php echo htmlspecialchars($RowSearch['session_id']); ?></a></td>
                                 <td class="<?php echo $StringClass; ?>" ><a href="edit_payment.php?payment_id=<?php echo htmlspecialchars($RowSearch['session_id']); ?>"  class='iframe medium_modal' ><?php echo $RowSearch['check_date']=='0000-00-00' ? '&nbsp;' : htmlspecialchars(oeFormatShortDate($RowSearch['check_date'])); ?></a></td>
                                 <td class="<?php echo $StringClass; ?>" ><a href="edit_payment.php?payment_id=<?php echo htmlspecialchars($RowSearch['session_id']); ?>"  class='iframe medium_modal'  ><?php

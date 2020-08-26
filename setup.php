@@ -66,7 +66,6 @@ $billingDirectory2 = "$OE_SITE_DIR/era";
 
 $billingLogDirectory = "$OE_SITE_DIR/logs";
 $lettersDirectory = "$OE_SITE_DIR/letter_templates";
-$gaclWritableDirectory = dirname(__FILE__)."/gacl/admin/templates_c";
 
 //$Libre_Get_Modules = dirname(__FILE__)."/modules/modules.config.php";  //TODO stub
 
@@ -75,11 +74,11 @@ $gaclWritableDirectory = dirname(__FILE__)."/gacl/admin/templates_c";
 if (is_dir($OE_SITE_DIR)) {
   //$Libre_Get_Modules could be added to the 'writable' array. Remove if unneeded when module registry methods are finalized
   $writableFileList = array($installer->conffile);  
-  $writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory, $gaclWritableDirectory);
+  $writableDirList = array($docsDirectory, $billingDirectory, $billingDirectory2, $lettersDirectory);
 }
 else {
   $writableFileList = array();
-  $writableDirList = array($OE_SITES_BASE, $gaclWritableDirectory);
+  $writableDirList = array($OE_SITES_BASE);
 }
 
 // Include the sqlconf file if it exists yet.
@@ -467,8 +466,8 @@ else {
       $next_state = 7;
     }
     else {
-      echo "\n<br>Next step will install and configure access controls (php-GACL).<br>\n";
-      $next_state = 4; 
+      echo "\n<br>Next step will Configuration of PHP.<br>\n";
+      $next_state = 5; 
     }
     
     echo "
@@ -484,33 +483,7 @@ else {
 <INPUT TYPE='SUBMIT' VALUE='Continue'><br></FORM><br>\n";
 
     break;
-  case 4:
-    echo "<b>Step $state</b><br><br>\n";
-    echo "Installing and Configuring Access Controls (php-GACL)...<br><br>";
     
-    if ( ! $installer->install_gacl() ) {
-      echo $installer->error_message;
-      break;
-    }
-    else {
-      // display the status information for gacl setup
-      echo $installer->debug_message;
-    }
-
-    echo "Gave the '$installer->iuser' user (password is '$installer->iuserpass') administrator access.<br><br>";
-    
-    echo "Done installing and configuring access controls (php-GACL).<br>";
-    echo "Next step will configure PHP.";
-    
-    echo "<br><FORM METHOD='POST'>\n
-<INPUT TYPE='HIDDEN' NAME='state' VALUE='5'>\n
-<INPUT TYPE='HIDDEN' NAME='site' VALUE='$site_id'>\n
-<INPUT TYPE='HIDDEN' NAME='iuser' VALUE='$installer->iuser'>\n
-<INPUT TYPE='HIDDEN' NAME='iuserpass' VALUE='$installer->iuserpass'>\n	
-<br>\n
-<INPUT TYPE='SUBMIT' VALUE='Continue'><br></FORM><br>\n";
-
-    break;
     
   case 5:
     echo "<b>Step $state</b><br><br>\n";
@@ -547,7 +520,7 @@ echo "
 
 echo "<li>To ensure proper functioning of Libre EHR you must make sure that settings in MYSQL /etc/mysql/my.cnf file include:
 <ul>
-<li>\"key_buffer_size\" set to 2% of your system's RAM (Less thatn 2% recommended) </li>
+<li>\"key_buffer_size\" set to 2% of your system's RAM (Less than 2% recommended) </li>
 <li>\"innodb_buffer_pool_size\" set to 70% of available RAM.</li>
 </ul>";
 
@@ -614,7 +587,7 @@ echo "<ul><li>Before proceeding, be sure that you have a properly installed and 
 
 echo "<li>Detailed installation instructions can be found in the <a href='https://github.com/LibreIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.</li>\n";
 
-Echo "<li>If you are upgrading from a previous version, do NOT use this script.  Please read the 'Upgrading' section found in the <a href='https://github.com/LibreIO/LibreEHR/blob/master/INSTALL.md' target='_blank'><span STYLE='text-decoration: underline;'>'Installation'</span></a> manual file.</li></ul>";
+Echo "<li>If you are upgrading from a previous version, do NOT use this script.  Please read the 'Upgrading' section found in the included Documentation file.</li></ul>";
 
 if ($checkPermissions) {
 	echo "<p>We will now ensure correct file and directory permissions before starting installation:</p>\n";

@@ -15,7 +15,7 @@ require_once("$srcdir/options.inc.php");
 
 <html>
 <head>
-<?php html_header_show();?>
+
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <script language="javascript">
 // Called by the deleteme.php window on a successful delete.
@@ -66,7 +66,7 @@ if ($result = getTransByPid($pid)) {
 			"&inmode=edit' onclick='top.restoreSession()' class='css_button_small'><span>".
 			htmlspecialchars( xl('Edit'), ENT_NOQUOTES)."</span></a>";
 		echo "</td><td>";
-		if (acl_check('admin', 'super')) {
+		if (acl_check('super')) {
 			echo "<a href='../deleter.php?transaction=".
 				htmlspecialchars( $iter{"id"}, ENT_QUOTES).
 				"' onclick='top.restoreSession()' class='css_button_small'><span>".

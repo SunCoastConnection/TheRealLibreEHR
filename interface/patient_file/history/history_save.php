@@ -11,16 +11,11 @@ $fake_register_globals=false;
  include_once("../../globals.php");
  include_once("$srcdir/patient.inc");
  include_once("history.inc.php");
- include_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  include_once("$srcdir/options.inc.php");
 
  // Check authorization.
- if (acl_check('patients','med')) {
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-   die(htmlspecialchars(xl("Not authorized for this squad."),ENT_NOQUOTES));
- }
- if ( !acl_check('patients','med','',array('write','addonly') ))
+ if ( !acl_check('orders_procedures'))
   die(htmlspecialchars(xl("Not authorized"),ENT_NOQUOTES));
 
 foreach ($_POST as $key => $val) {

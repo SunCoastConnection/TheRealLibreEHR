@@ -32,7 +32,7 @@ require_once "reports_controllers/RAF_HCC_Controller.php";
 ?>
 <html>
 <head>
-  <?php html_header_show();?>
+  
 
   <title><?php echo xlt('Encounter/Provider RAF Report'); ?></title>
 

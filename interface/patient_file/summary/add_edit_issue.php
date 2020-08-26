@@ -25,7 +25,7 @@ $fake_register_globals=false;
 require_once('../../globals.php');
 require_once($GLOBALS['srcdir'].'/lists.inc');
 require_once($GLOBALS['srcdir'].'/patient.inc');
-require_once($GLOBALS['srcdir'].'/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 require_once($GLOBALS['srcdir'].'/options.inc.php');
 require_once($GLOBALS['fileroot'].'/custom/code_types.inc.php');
 require_once($GLOBALS['srcdir'].'/csv_like_join.php');
@@ -38,20 +38,7 @@ require_once($GLOBALS['srcdir']."/formatting.inc.php");
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
-if (isset($ISSUE_TYPES['football_injury'])) {
-  if ($ISSUE_TYPES['football_injury']) {
-    // Most of the logic for the "football injury" issue type comes from this
-    // included script.  We might eventually refine this approach to support
-    // a plug-in architecture for custom issue types.
-    require_once($GLOBALS['srcdir'].'/football_injury.inc.php');
-  }
-}
-if (isset($ISSUE_TYPES['ippf_gcac'])) {
-  if ($ISSUE_TYPES['ippf_gcac']) {
-    // Similarly for IPPF issues.
-    require_once($GLOBALS['srcdir'].'/ippf_issues.inc.php');
-  }
-}
+
 
 $issue = $_REQUEST['issue'];
 $thispid = 0 + (empty($_REQUEST['thispid']) ? $pid : $_REQUEST['thispid']);
@@ -63,12 +50,8 @@ $thisenc = 0 + (empty($_REQUEST['thisenc']) ? 0 : $_REQUEST['thisenc']);
 // A nonempty thistype is an issue type to be forced for a new issue.
 $thistype = empty($_REQUEST['thistype']) ? '' : $_REQUEST['thistype'];
 
-if ($issue && !acl_check('patients','med','','write') ) die(xlt("Edit is not authorized!"));
-if ( !acl_check('patients','med','',array('write','addonly') )) die(xlt("Add is not authorized!"));
-
-$tmp = getPatientData($thispid, "squad");
-if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-  die(xlt("Not authorized for this squad!"));
+if ($issue && !acl_check('Dx_edit') ) die(xlt("Edit is not authorized!"));
+if ( !acl_check('Dx_edit')) die(xlt("Add is not authorized!"));
 
 function QuotedOrNull($fld) {
   if ($fld) return "'".add_escape_custom($fld)."'";
@@ -379,7 +362,7 @@ if (!empty($irow['type'])) {
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php echo $issue ? xlt('Edit') : xlt('Add New'); ?><?php echo " ".xlt('Issue'); ?></title>
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
 
@@ -851,7 +834,7 @@ function divclick(cb, divid) {
 
 <input type='submit' name='form_save' value='<?php echo xla('Save'); ?>' />
 
-<?php if ($issue && acl_check('admin', 'super')) { ?>
+<?php if ($issue && acl_check('super')) { ?>
 &nbsp;
 <input type='button' value='<?php echo xla('Delete'); ?>' style='color:red' onclick='deleteme()' />
 <?php } ?>

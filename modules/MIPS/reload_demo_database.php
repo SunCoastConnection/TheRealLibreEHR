@@ -18,11 +18,11 @@
  */
 require_once '../../interface/globals.php';
 include_once("$srcdir/api.inc");
-include_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 
 ?>	
 <html>
-<?php if (acl_check('admin', 'practice' )) { ?>
+<?php if (acl_check('super')) { ?>
 <span class='title' visibility: hidden><?php echo htmlspecialchars( xl('Demo Data Loading'), ENT_NOQUOTES); ?></span>
 <form action="reload_demo_database.php" method="post">	
 <?php

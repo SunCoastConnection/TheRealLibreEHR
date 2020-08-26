@@ -26,7 +26,7 @@ require_once(dirname(__FILE__) . '/../globals.php');
 require_once($GLOBALS["include_root"] . "/orders/single_order_results.inc.php");
 
 // Check authorization.
-$thisauth = acl_check('patients', 'med');
+$thisauth = acl_check('orders_procedures');
 if (!$thisauth) die(xl('Not authorized'));
 
 $orderid = intval($_GET['orderid']);
@@ -34,7 +34,7 @@ $orderid = intval($_GET['orderid']);
 $finals_only = empty($_POST['form_showall']);
 
 if (!empty($_POST['form_sign']) && !empty($_POST['form_sign_list'])) {
-  if (!acl_check('patients', 'sign')) {
+  if (!acl_check('sign_orders')) {
     die(xl('Not authorized to sign results'));
   }
   // When signing results we are careful to sign only those reports that were
@@ -52,7 +52,7 @@ if (!empty($_POST['form_sign']) && !empty($_POST['form_sign_list'])) {
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <link rel="stylesheet" href='<?php echo $css_header; ?>' type='text/css'>
 <title><?php echo xlt('Order Results'); ?></title>
 <style>

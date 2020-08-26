@@ -76,10 +76,6 @@ class PatientReporter extends Reporter
     public $FinancialReview;
     public $Pubpid;
     public $Pid;
-    public $Genericname1;
-    public $Genericval1;
-    public $Genericname2;
-    public $Genericval2;
     public $HipaaMail;
     public $HipaaVoice;
     public $HipaaNotice;
@@ -178,18 +174,12 @@ class PatientReporter extends Reporter
             ,`patient_data`.`financial_review` as FinancialReview
             ,`patient_data`.`pubpid` as Pubpid
             ,`patient_data`.`pid` as Pid
-            ,`patient_data`.`genericname1` as Genericname1
-            ,`patient_data`.`genericval1` as Genericval1
-            ,`patient_data`.`genericname2` as Genericname2
-            ,`patient_data`.`genericval2` as Genericval2
             ,`patient_data`.`hipaa_mail` as HipaaMail
             ,`patient_data`.`hipaa_voice` as HipaaVoice
             ,`patient_data`.`hipaa_notice` as HipaaNotice
             ,`patient_data`.`hipaa_message` as HipaaMessage
             ,`patient_data`.`hipaa_allowsms` as HipaaAllowsms
             ,`patient_data`.`hipaa_allowemail` as HipaaAllowemail
-            ,`patient_data`.`squad` as Squad
-            ,`patient_data`.`fitness` as Fitness
             ,`patient_data`.`referral_source` as ReferralSource
             ,`patient_data`.`usertext1` as Usertext1
             ,`patient_data`.`usertext2` as Usertext2

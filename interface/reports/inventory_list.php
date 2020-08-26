@@ -12,7 +12,7 @@ require_once "reports_controllers/InventoryListController.php";
 <html>
 
 <head>
-<?php html_header_show(); ?>
+
 
 <link rel="stylesheet" href='<?php  echo $css_header ?>' type='text/css'>
 <title><?php  xl('Inventory List','e'); ?></title>

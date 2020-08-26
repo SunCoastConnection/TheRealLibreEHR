@@ -30,7 +30,7 @@ $fake_register_globals = false;
 
 require_once("../globals.php");
 require_once("$srcdir/log.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/options.inc.php");
@@ -71,7 +71,7 @@ function myCellText($s) {
 }
 
 // Check authorization.
-$thisauth = acl_check('patients', 'med');
+$thisauth = acl_check('orders_procedures');
 if (!$thisauth) die(xlt('Not authorized'));
 
 $errmsg = '';
@@ -96,7 +96,7 @@ if ($_POST['form_xmit']) {
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 
 <link rel="stylesheet" href='<?php  echo $css_header ?>' type='text/css'>
 <title><?php echo xlt('Procedure Orders and Reports'); ?></title>

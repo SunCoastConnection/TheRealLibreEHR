@@ -52,7 +52,7 @@ $obj = $formid ? formFetch("form_aftercare_plan", $formid) : array();
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <script type="text/javascript" src="../../../library/dialog.js"></script>
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/textformat.js"></script>
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/dialog.js"></script>
@@ -80,7 +80,7 @@ echo "<form method='post' name='my_form' " .
         <td class="forms">
             <label class="forms-data"> <?php if (is_numeric($pid)) {
     
-    $result = getPatientData($pid, "fname,lname,squad");
+    $result = getPatientData($pid, "fname,lname");
    echo htmlspecialchars(text($result['fname'])." ".text($result['lname']));}
    $patient_name=($result['fname'])." ".($result['lname']);
    ?>

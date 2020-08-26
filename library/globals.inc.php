@@ -387,13 +387,6 @@ $GLOBALS_METADATA = array(
       xl('Is text from lists to be translated?')
     ),
 
-    'translate_gacl_groups' => array(
-      xl('Translate Access Control Groups'),
-       'bool',                          // data type
-       '1',                             // default = true
-      xl('Are access control group names to be translated?')
-    ),
-
     'translate_form_titles' => array(
       xl('Translate Patient Note Titles'),
        'bool',                          // data type

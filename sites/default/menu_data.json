@@ -178,15 +178,6 @@
         "url" : "/interface/reports/pre_billing_issues.php",
         "children" : [ ],
         "requirement" : 0
-    }, {
-        "label" : "EDI History",
-        "menu_id" : "edi0",
-        "target" : "pat",
-        "url" : "/interface/billing/edih_view.php",
-        "children" : [ ],
-        "requirement" : 0,
-        "acl_req" : [ "acct", "eob" ],
-        "global_req" : "enable_edihistory_in_menu"
     } ],
     "requirement" : 0,
     "global_req" : "enable_fees_in_menu"

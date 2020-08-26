@@ -29,7 +29,7 @@
  $fake_register_globals = false;
 
  require_once("../globals.php");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("drugs.inc.php");
  require_once("$srcdir/formdata.inc.php");
  require_once("$srcdir/htmlspecialchars.inc.php");
@@ -46,13 +46,13 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
  $lot_id  = $_REQUEST['lot'];
  $info_msg = "";
 
- if (!acl_check('admin', 'drugs')) die(xlt('Not authorized'));
+ if (!acl_check('edit_drugs')) die(xlt('Not authorized'));
  if (!$drug_id) die(xlt('Drug ID missing!'));
  if (!$lot_id ) die(xlt('Lot ID missing!'));
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php echo xlt('Destroy Lot') ?></title>
 <link rel="stylesheet" href='<?php  echo $css_header ?>' type='text/css'>
 <link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">

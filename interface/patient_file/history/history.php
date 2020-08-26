@@ -12,13 +12,13 @@ $fake_register_globals=false;
  require_once("$srcdir/patient.inc");
  require_once("history.inc.php");
  require_once("$srcdir/options.inc.php");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("$srcdir/options.js.php");
 
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <script type="text/javascript" src="../../../library/js/jquery.1.3.2.js"></script>
 <script type="text/javascript" src="../../../library/js/common.js"></script>
@@ -36,15 +36,7 @@ $(document).ready(function(){
 <body class="body_top">
 
 <?php
- if (acl_check('patients','med')) {
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad'])) {
-   echo "<p>(".htmlspecialchars(xl('History not authorized'),ENT_NOQUOTES).")</p>\n";
-   echo "</body>\n</html>\n";
-   exit();
-  }
- }
- else {  
+ if (! acl_check('orders_procedures')) { 
   echo "<p>(".htmlspecialchars(xl('History not authorized'),ENT_NOQUOTES).")</p>\n";
   echo "</body>\n</html>\n";
   exit();
@@ -57,7 +49,7 @@ $(document).ready(function(){
  }
 ?>
 
-<?php if (acl_check('patients','med','',array('write','addonly') )) { ?>
+<?php if (acl_check('orders_procedures' )) { ?>
 <div>
     <span class="title"><?php echo htmlspecialchars(xl('Patient History / Lifestyle'),ENT_NOQUOTES); ?></span>
 </div>

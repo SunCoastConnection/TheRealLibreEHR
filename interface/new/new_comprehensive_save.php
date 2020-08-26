@@ -17,7 +17,7 @@
       "pubpid = '" . formDataCore($form_pubpid) . "'");
     if ($result['count']) {
       // Error, not unique.
-      $alertmsg = xl('Warning: Patient ID is not unique!');
+      $alertmsg = xl('Warning: Patient Public ID is not unique!');
     }
   }
   

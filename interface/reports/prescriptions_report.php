@@ -47,7 +47,7 @@ require_once "reports_controllers/PrescriptionsController.php";
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php xl('Prescriptions and Dispensations','e'); ?></title>
 <link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">
 <script type="text/javascript" src="../../library/overlib_mini.js"></script>

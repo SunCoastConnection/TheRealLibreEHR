@@ -26,8 +26,7 @@
 
 require_once("{$GLOBALS['srcdir']}/log.inc");
 require_once("{$GLOBALS['srcdir']}/sql.inc");
-// added for the phpGACL group check -- JRM
-require_once("{$GLOBALS['srcdir']}/acl.inc");
+require_once("{$GLOBALS['modules_dir']}ACL/acl.inc.php");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/authentication/login_operations.php");
 
@@ -54,7 +53,7 @@ if (isset($_GET['auth']) && ($_GET['auth'] == "login") && isset($_POST['authUser
     // set language direction according to language choice. Later in globals.php we'll override main theme name if needed.
     $_SESSION['language_direction'] = getLanguageDir($_SESSION['language_choice']  ); 
     
-    if(!validate_user_password($_POST['authUser'],$clearPass,$_POST['authProvider']) ||  !verify_user_gacl_group($_POST['authUser']))
+    if(!validate_user_password($_POST['authUser'],$clearPass,$_POST['authProvider']) )
     {
 
 
@@ -292,52 +291,6 @@ function delGroup ($group_id)
     return sqlQuery("delete from groups where id = ? limit 0,1", array($group_id));
 }
 
-/***************************************************************
-//pennfirm
-//Function currently user by new post calendar code to determine
-//if a given user is in a group with another user
-//and if so to allow editing of that users events
-//
-//*************************************************************/
-
-function validateGroupStatus ($user_to_be_checked, $group_user) {
-    if (isset($user_to_be_checked) && isset($group_user)) {
-        if ($user_to_be_checked == $group_user) {
-
-            return true;
-        }
-        elseif ($_SESSION['authorizeduser'] == 1)
-            return true;
-
-        $query = "SELECT groups.name FROM users,groups WHERE users.username = ? " .
-                 "AND users.username = groups.user group by groups.name";
-        $result = sqlStatement($query, array($user_to_be_checked));
-
-        $usertbcGroups = array();
-
-        while ($row = sqlFetchArray($result)) {
-            $usertbcGroups[] = $row[0];
-        }
-
-        $query = "SELECT groups.name FROM users,groups WHERE users.username =  ? " .
-                 "AND users.username = groups.user group by groups.name";
-        $result = sqlStatement($query, array($group_user));
-
-        $usergGroups = array();
-
-        while ($row = sqlFetchArray($result)) {
-            $usergGroups[] = $row[0];
-        }
-        foreach ($usertbcGroups as $group) {
-              if(in_array($group,$usergGroups)) {
-              return true;
-            }
-        }
-
-    }
-
-    return false;
-}
 
 
 // Attempt to update the user's password, password history, and password expiration.

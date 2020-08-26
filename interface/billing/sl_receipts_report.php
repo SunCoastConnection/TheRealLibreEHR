@@ -26,7 +26,7 @@ $fake_register_globals=false;
 
 require_once('../globals.php');
 require_once($GLOBALS['srcdir'].'/patient.inc');
-require_once($GLOBALS['srcdir'].'/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 require_once("$srcdir/headers.inc.php");
 require_once($GLOBALS['srcdir'].'/formatting.inc.php');
 require_once($GLOBALS['srcdir'].'/options.inc.php');
@@ -55,7 +55,7 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
     if ($amount) echo attr(oeFormatMoney($amount));
   }
 
-  if (! acl_check('acct', 'rep')) die(xlt("Unauthorized access."));
+  if (! acl_check('billing_reports')) die(xlt("Unauthorized access."));
 
 
   $form_use_edate  = $_POST['form_use_edate'];
@@ -79,7 +79,7 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 ?>
 <html>
 <head>
-<?php if (function_exists('html_header_show')) html_header_show(); ?>
+
 <style type="text/css">
 /* specifically include & exclude from printing */
 @media print {
@@ -172,7 +172,7 @@ function sel_diagnosis() {
             </td>
             <td>
                 <?php
-                if (acl_check('acct', 'rep_a')) {
+                if (acl_check('report_select_any_provider')) {
                     // Build a drop-down list of providers.
                     //
                     $query = "select id, lname, fname from users where " .

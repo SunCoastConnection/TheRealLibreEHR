@@ -11,24 +11,11 @@
 // data for a specified patient.
 
 require_once("../../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/patient.inc");
 
 $CPR = 4; // cells per row
-
-/*********************************************************************
-$result = getPatientData($pid, "*, DATE_FORMAT(DOB,'%Y-%m-%d') as DOB_YMD"); 
-$result2 = getEmployerData($pid);
-// Check authorization.
-if ($pid) {
-  if (!acl_check('patients','demo','','write'))
-    die(xl('Demographics not authorized.'));
-  if ($result['squad'] && ! acl_check('squads', $result['squad']))
-    die(xl('You are not authorized to access this squad.'));
-}
-$insurancei = getInsuranceProviders();
-*********************************************************************/
 
 $fres = sqlStatement("SELECT * FROM layout_options " .
   "WHERE form_id = 'DEM' AND uor > 0 " .
@@ -36,7 +23,7 @@ $fres = sqlStatement("SELECT * FROM layout_options " .
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 
 <style>
 body, td {

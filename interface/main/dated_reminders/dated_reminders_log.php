@@ -25,7 +25,7 @@
 
   require_once("../../globals.php");
   require_once("$srcdir/htmlspecialchars.inc.php");
-  require_once("$srcdir/acl.inc");    
+  require_once($modules_dir.'ACL/acl.inc');    
   require_once("$srcdir/dated_reminder_functions.php"); 
   require_once("$srcdir/formatting.inc.php");
   require_once("$srcdir/headers.inc.php");
@@ -33,7 +33,7 @@
   $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
   
   
-  $isAdmin =acl_check('admin', 'users'); 
+  $isAdmin =acl_check('super'); 
 ?>
 <?php
   /*

@@ -30,25 +30,19 @@ $fake_register_globals=false;
 require_once("../../globals.php");
 require_once("$srcdir/patient.inc");
 require_once("history.inc.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/options.js.php");
 require_once("$srcdir/headers.inc.php");
 $CPR = 4; // cells per row
 
 // Check authorization.
-if (acl_check('patients','med')) {
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-   die(htmlspecialchars(xl("Not authorized for this squad."),ENT_NOQUOTES));
-}
 if ( !acl_check('patients','med','',array('write','addonly') ))
   die(htmlspecialchars(xl("Not authorized"),ENT_NOQUOTES));
 ?>
 <html>
 <head>
 <?php 
-    html_header_show();
     //  Include datepicker library
   call_required_libraries(array ("jquery-min-1-3-2","datepicker"));
 ?>

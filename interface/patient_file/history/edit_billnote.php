@@ -31,17 +31,17 @@ $fake_register_globals=false;
 
  include_once("../../globals.php");
  include_once("$srcdir/log.inc");
- include_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
 
  $feid = $_GET['feid'] + 0; // id from form_encounter table
 
  $info_msg = "";
 
- if (!acl_check('acct', 'bill','','write')) die(htmlspecialchars(xl('Not authorized'),ENT_NOQUOTES));
+ if (!acl_check('bill')) die(htmlspecialchars(xl('Not authorized'),ENT_NOQUOTES));
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <link rel=stylesheet href='<?php echo $css_header ?>' type='text/css'>
 
 <style>

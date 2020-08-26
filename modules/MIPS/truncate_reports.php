@@ -18,13 +18,13 @@
  */
 require_once '../../interface/globals.php';
 include_once("$srcdir/api.inc");
- include_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
 ?>	
 <html>
 <span class='title' visibility: hidden><?php echo htmlspecialchars( xl('Delete all QA Reports'), ENT_NOQUOTES); ?></span>
 <b>This will delete all old reports!</b>
 <BR>
-<?php if (acl_check('admin', 'practice' )) { ?>
+<?php if (acl_check('super')) { ?>
 
 <input type="submit" name="formSubmit" value="Submit" />
 <form action="truncate_reports.php" method="post">	

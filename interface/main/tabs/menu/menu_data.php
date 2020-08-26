@@ -14,4 +14,8 @@ if (isset($GLOBALS['sql_admin_tool_url'])){
 $menu_temp = file_get_contents($usermenufile);
 
 // replace ##TAGS## with globals data
-$menu_json = str_replace('##SQL_ADMIN##',$SQL_ADMIN, $menu_temp);
+if(isset($SQL_ADMIN)){
+    $menu_json = str_replace('##SQL_ADMIN##',$SQL_ADMIN, $menu_temp);}
+    else{ $menu_json = $menu_temp;}
+
+?>

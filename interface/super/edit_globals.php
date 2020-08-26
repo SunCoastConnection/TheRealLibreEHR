@@ -30,7 +30,7 @@
 require_once ('../globals.php');
 require_once $GLOBALS['srcdir'].'/headers.inc.php';
 require_once("../../custom/code_types.inc.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/globals.inc.php");
 require_once("$srcdir/user.inc");
@@ -118,7 +118,6 @@ function checkBackgroundServices(){
 
 <?php
 
-html_header_show();
 
 // If we are saving user_specific globals.
 //

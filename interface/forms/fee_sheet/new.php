@@ -37,7 +37,7 @@ $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
 require_once("../../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/api.inc");
 require_once("codes.php");
 require_once("../../../custom/code_types.inc.php");
@@ -338,7 +338,6 @@ $billresult = getBillingByEncounter($pid, $encounter, "*");
 <html>
 <head>
 <?php
-  html_header_show();
   // Include Bootstrap
   call_required_libraries(array("jquery-min-3-1-1","bootstrap"));
 ?>

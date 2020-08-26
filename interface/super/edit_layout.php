@@ -23,7 +23,7 @@ require_once("../globals.php");
 if ($GLOBALS['mod_nn'] == true){
         require_once(dirname(dirname(__FILE__)) . "/modules/nation_notes/nn_super_edit_layout.inc");}
 else{
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/log.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/headers.inc.php");
@@ -726,7 +726,7 @@ function writeFieldLine($linedata) {
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <!-- supporting javascript code -->
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery.js"></script>

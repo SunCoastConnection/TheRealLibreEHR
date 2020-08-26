@@ -12,7 +12,7 @@
 // from adminacl_ajax.php
 //
 include_once("../globals.php");
-include_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 include_once("$srcdir/headers.inc.php");
 
 //ensure user has proper access
@@ -20,11 +20,7 @@ if (!acl_check('admin', 'acl')) {
  echo "(" . xl('ACL Administration Not Authorized') . ")";
  exit;
 }   
-//ensure phpgacl is installed
-if (!isset($phpgacl_location)) {
- echo "(" . xl('PHP-gacl is not installed') . ")";
- exit;
-}   
+   
 ?>
         
 <html>

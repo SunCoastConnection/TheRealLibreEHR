@@ -1,7 +1,6 @@
 <?php
 
-// gacl control
-$thisauth = acl_check('admin', 'language');
+$thisauth = acl_check('language');
 
 if (!$thisauth) {
   echo "<html>\n<body>\n";

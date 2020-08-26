@@ -26,7 +26,7 @@ $fake_register_globals = false;
 require_once("../../globals.php");
 require_once("$srcdir/api.inc");
 require_once("$srcdir/forms.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 formHeader("Form: Track anything");
 
 
@@ -98,7 +98,7 @@ if($dbaction == 'edit'){
 // end edit -----------------------------
 
 //-----------------------------
-if($dbaction == 'delete' && acl_check('admin', 'super')){
+if($dbaction == 'delete' && acl_check('super')){
         
         $the_item   = $_POST['itemid'];
         $deletespell  = "DELETE FROM form_track_anything_type ";
@@ -307,7 +307,7 @@ while($myrow = sqlFetchArray($result)){
     } elseif($type_active == '0'){
         echo "<input type='submit' class='ta_button' name='act' value='" . xla('Enable') . "'>\n";
     }
-    if(acl_check('admin', 'super')){
+    if(acl_check('super')){
         echo "<input type='submit' class='delete_button' name='delete' value='" . xla('Delete') . "'>\n";
     }
     echo "<input type='hidden' name='typeid' value='" . attr($type_id) . "'>";
@@ -341,7 +341,7 @@ while($myrow = sqlFetchArray($result)){
         } elseif($item_active == '0'){
             echo "<input type='submit' class='ta_button' name='act' value='" . xla('Enable') . "'>\n";
         }
-        if(acl_check('admin', 'super')){
+        if(acl_check('super')){
             echo "<input type='submit' class='delete_button' name='delete' value='" . xla('Delete') . "'>\n";
         }
         echo "<input type='hidden' name='typeid' value='" . attr($item_id) . "'>\n";

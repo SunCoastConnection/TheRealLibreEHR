@@ -26,7 +26,7 @@
 
 require_once("../globals.php");
 require_once("../../library/patient.inc");
-require_once("../../library/acl.inc");
+require_once("../../modules/ACL/acl.inc.php");
 require_once("../../custom/code_types.inc.php");
 require_once($GLOBALS['srcdir']."/formatting.inc.php");
 $DateFormat = DateFormatRead();
@@ -72,7 +72,7 @@ function thisLineItem($row, $codetype, $code) {
   } // End not csv export
 }
 
-if (! acl_check('acct', 'rep')) die(xl("Unauthorized access."));
+if (! acl_check('orders_procedures')) die(xl("Unauthorized access."));
 
 $form_from_date = fixDate($_POST['form_from_date'], date('Y-m-d'));
 $form_to_date   = fixDate($_POST['form_to_date']  , date('Y-m-d'));
@@ -98,7 +98,7 @@ else { // not export
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php xl('Pending Followup from Results','e') ?></title>
 
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-1.9.1.min.js"></script>

@@ -34,10 +34,10 @@ $fake_register_globals=false;
 //
 
 require_once("../../interface/globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 
 // Control access
-if (!acl_check('admin', 'super')) {
+if (!acl_check('super')) {
     echo xlt('Not Authorized');
     exit;
 }

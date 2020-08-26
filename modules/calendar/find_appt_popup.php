@@ -36,7 +36,7 @@ require_once($GLOBALS['srcdir']."/formatting.inc.php");
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
  // check access controls
- if (!acl_check('patients','appt','',array('write','wsome') ))
+ if (!acl_check('calendar_add'))
   die(xlt('Access not allowed'));
 
  // If the caller is updating an existing event, then get its ID so
@@ -317,7 +317,7 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <title><?php echo xlt('Find Available Appointments'); ?></title>
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
 
@@ -506,7 +506,7 @@ $(document).ready(function(){
 
 
 <?php if (!$ckavail) { ?>
-<?php if (acl_check('patients','appt','','write')) {
+<?php if (acl_check('calendar_edit')) {
 if($isProv): ?>
 if (confirm('<?php echo xls('Provider not available, use it anyway?'); ?>')) {
 <?php else: ?>

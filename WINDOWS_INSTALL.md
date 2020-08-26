@@ -82,12 +82,6 @@ error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE
 
 ### Additional Information
 
-#### Setting up Access Control
-
-phpGACL access controls are installed and configured automatically during Libre EHR setup. It can be administered within Libre EHR in the `admin` -> `acl` menu. This is a very powerful access control software.
-
-Learn more about phpGACL [here](http://phpgacl.sourceforge.net/). It is recommended to read the phpGACL manual in the `/lh-ehr/Documentation/README.phpgacl.md` file, the online documentation at [Libre](http://LibreEHR.org/), and the comments in the `/lh-ehr/library/acl.inc` file.
-
 #### Patient Documents Capability
 
 In order to take full advantage of the patient documents capability you must make sure that the configuration settings in `php` file include `file_uploads = On` and that `upload_max_filesize` is appropriate for your use and that `upload_tmp_dir` is set to the correct value that will work on your system.

@@ -50,13 +50,6 @@
 
     $billingLogDirectory = $LIBRE_SITE_DIR."/logs";
     $lettersDirectory = $LIBRE_SITE_DIR."/letter_templates";
-    $gaclWritableDirectory = dirname(__FILE__)."/../../../gacl/admin/templates_c";
-
-
-    // Record name of php-gacl installation files
-    $gaclSetupScript1 = dirname(__FILE__) . "/../../../gacl/setup.php";
-    $gaclSetupScript2 = dirname(__FILE__) . "/../../../acl_setup.php";
-
 
 
 ?>

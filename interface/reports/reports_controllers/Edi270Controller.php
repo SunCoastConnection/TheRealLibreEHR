@@ -112,7 +112,6 @@
                                    d.lname as provider_lname,
                                    d.fname as provider_fname,
                                    d.npi as provider_npi,
-                                   d.upin as provider_pin,
                                    f.federal_ein as federal_ein,
                                    f.facility_npi as facility_npi,
                                    f.name as facility_name,

@@ -37,7 +37,6 @@ $result = sqlStatement($log_query);
 <html>
 <head>
 <?php
-  html_header_show();
   call_required_libraries(array("jquery-min-3-1-1","bootstrap"));
 ?>
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">

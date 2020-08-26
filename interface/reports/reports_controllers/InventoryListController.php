@@ -26,13 +26,13 @@ $fake_register_globals=false;
 //
 
  require_once("../globals.php");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("$srcdir/headers.inc.php");
  require_once("$srcdir/options.inc.php");
  require_once("$include_root/drugs/drugs.inc.php");
 
  // Check authorization.
- $thisauth = acl_check('admin', 'drugs');
+ $thisauth = acl_check('edit_drugs');
  if (!$thisauth) die(xl('Not authorized'));
 
 function addWarning($msg) {

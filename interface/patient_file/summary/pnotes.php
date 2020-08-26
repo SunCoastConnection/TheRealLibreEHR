@@ -28,7 +28,7 @@ $fake_register_globals=false;
 
  require_once("../../globals.php");
  require_once("$srcdir/pnotes.inc");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("$srcdir/patient.inc");
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/classes/Document.class.php");
@@ -52,7 +52,7 @@ $fake_register_globals=false;
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery.js"></script>
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
@@ -61,12 +61,7 @@ $fake_register_globals=false;
 <body class="body_bottom">
 
 <?php
- $thisauth = acl_check('patients', 'notes');
- if ($thisauth) {
-  $tmp = getPatientData($patient_id, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-   $thisauth = 0;
- }
+ $thisauth = acl_check('orders_procedures');
  if (!$thisauth) {
   echo "<p>(" . htmlspecialchars( xl('Notes not authorized'), ENT_NOQUOTES) . ")</p>\n";
   echo "</body>\n</html>\n";
@@ -76,7 +71,7 @@ $fake_register_globals=false;
 
 <div id='pnotes'>
 
-<?php if ( acl_check('patients', 'notes','',array('write','addonly') )): ?>
+<?php if ( acl_check('orders_procedures')): ?>
 
 <a href="pnotes_full.php?<?php echo $urlparms; ?>" onclick="top.restoreSession()">
 
@@ -195,7 +190,7 @@ $(document).ready(function(){
 });
 
 var EditNote = function(note) {
-<?php if ( acl_check('patients', 'notes','',array('write','addonly') )): ?>
+<?php if ( acl_check('orders_procedures')): ?>
     top.restoreSession();
     location.href = "pnotes_full.php?<?php echo $urlparms; ?>&noteid=" + note.id + "&active=1";
 <?php else: ?>

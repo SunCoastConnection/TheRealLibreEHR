@@ -1481,14 +1481,14 @@ function resolve_rules_sql($type='',$patient_id='0',$configurableOnly=FALSE,$pla
       $access_control = explode(':',$rule['access_control']);
       if ( !empty($access_control[0]) && !empty($access_control[1]) ) {
         // Section and ACO filters are not empty, so do the test for access.
-        if (!acl_check($access_control[0],$access_control[1],$user)) {
+        if (!acl_check('super')) {
           // User does not have access to this rule, so skip the rule.
           continue;
         }
       }
       else {
         // Section or ACO filters are empty, so use default patients:med aco
-        if (!acl_check('patients','med',$user)) {
+        if (!acl_check('orders_procedures')) {
           // User does not have access to this rule, so skip the rule.
           continue;
         }

@@ -36,7 +36,7 @@ $fake_register_globals=false;
 require_once("../../globals.php");
 require_once("$srcdir/pnotes.inc");
 require_once("$srcdir/patient.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/log.inc");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/formdata.inc.php");
@@ -51,7 +51,7 @@ call_required_libraries(array("jquery-min-3-1-1","bootstrap","font-awesome", "jq
 <head>
     <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
 
-    <?php html_header_show();?>
+    
 </head>
 
 <body class="body_top">
@@ -95,7 +95,7 @@ else {
 //collect the task setting
 $task= isset($_REQUEST['task']) ? $_REQUEST['task'] : "";
 
-if (acl_check('admin', 'super'    )) {
+if (acl_check('super')) {
     if ($show_all=='yes') {
         $showall = "yes";
         $lnkvar="<a class='more' href='messages.php?show_all=no&$activity_string_html' name='Just Mine' onclick=\"top.restoreSession()\"> (".htmlspecialchars( xl('Just Mine'), ENT_NOQUOTES).")</a>";

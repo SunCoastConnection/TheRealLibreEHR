@@ -36,7 +36,7 @@ require_once($GLOBALS['srcdir'].'/calendar.inc');
 require_once($GLOBALS['srcdir'].'/options.inc.php');
 require_once($GLOBALS['srcdir'].'/headers.inc.php');
 require_once($GLOBALS['srcdir'].'/encounter_events.inc.php');
-require_once($GLOBALS['srcdir'].'/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 require_once($GLOBALS['srcdir'].'/patient_tracker.inc.php');
 require_once($GLOBALS['srcdir']."/formatting.inc.php");
 require_once("$srcdir/formsoptions.inc.php");
@@ -45,7 +45,7 @@ $library_array = array('iziModalToast');
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
  //Check access control
-if (!acl_check('patients', 'appt', '', array('write' , 'wsome'))) {
+if (!acl_check('calendar_add')) {
    die(xl('Access not allowed'));
 }
 
@@ -1115,7 +1115,7 @@ $ures = sqlStatement(
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <title><?php echo $eid ? xlt('Edit') : xlt('Add New') ?> <?php echo xlt('Event');?></title>
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
 <link rel="stylesheet" href="../../library/css/jquery.datetimepicker.css">

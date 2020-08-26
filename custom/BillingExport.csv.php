@@ -133,7 +133,7 @@ class BillingExport {
     // Encounter information:
 
     $query = "SELECT e.date, e.facility, " .
-      "u.id, u.lname, u.fname, u.mname, u.upin, " .
+      "u.id, u.lname, u.fname, u.mname, " .
       "f.street, f.city, f.state, f.postal_code, f.pos_code, " .
       "f.domain_identifier AS clia_code " .
       "FROM form_encounter AS e " .
@@ -150,7 +150,6 @@ class BillingExport {
       ',"' . $this->fixString($erow['lname'])       . '"' .
       ',"' . $this->fixString($erow['fname'])       . '"' .
       ',"' . $this->fixMI($erow['mname'])           . '"' .
-      ',"' . $this->fixString($erow['upin'])        . '"' .
     "\n");
 
     // TBD: Referring Provider line when we have such a thing.

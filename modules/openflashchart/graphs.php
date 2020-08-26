@@ -34,7 +34,7 @@ $is_lbf = substr($table, 0, 3) === 'LBF';
 // acl checks here
 //  For now, only allow access for med aco.
 //  This can be expanded depending on which table is accessed.
-if (!acl_check('patients', 'med')) {
+if (!acl_check('orders_procedures')) {
       exit;
 }
 

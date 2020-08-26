@@ -17,7 +17,7 @@
  *
  */
 
-if (acl_check('patients', 'med')) {
+if (acl_check('orders_procedures')) {
     $content_immu = '<span style="font-size:25px;font-family: Arial, sans-serif;">' . xlt("Patient Immunizations") . ':<br></span>';
     $sql = "select i1.immunization_id, i1.administered_date, substring(i1.note,1,20) as immunization_note, c.code_text_short ".
        " from immunizations i1 ".

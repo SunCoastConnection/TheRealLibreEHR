@@ -1,6 +1,6 @@
 <?php
 include_once("../globals.php");
-include_once("../../library/acl.inc");
+include_once("../../modules/ACL/acl.inc.php");
 ?>
 <html>
 <head>
@@ -16,7 +16,7 @@ include_once("../../library/acl.inc");
 <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
 <tr>
 
-<?php if (acl_check('admin', 'users')) { ?>
+<?php if (acl_check('super')) { ?>
 <td valign="middle" nowrap>
 &nbsp;&nbsp;<a class=menu target=Main href="facilities.php"
  onclick="top.restoreSession()"
@@ -24,7 +24,7 @@ include_once("../../library/acl.inc");
 </td>
 <?php } ?>
 
-<?php if (acl_check('admin', 'users')) { ?>
+<?php if (acl_check('super')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="usergroup_admin.php"
  onclick="top.restoreSession()"
@@ -32,7 +32,7 @@ include_once("../../library/acl.inc");
 </td>
 <?php } ?>
 
-<?php if (acl_check('admin', 'forms')) { ?>
+<?php if (acl_check('super')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="../forms_admin/forms_admin.php"
  onclick="top.restoreSession()"
@@ -40,23 +40,15 @@ include_once("../../library/acl.inc");
 </td>
 <?php } ?>
 
-<?php if (acl_check('admin', 'practice')) { ?>
+<?php if (acl_check('super')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="<?php echo $GLOBALS['webroot']?>/controller.php?practice_settings"
  onclick="top.restoreSession()"
  title="Practice Settings"><?php xl('Practice','e');?></a>&nbsp;
 </td>
 <?php } ?>
-
-<?php if (acl_check('admin', 'acl') && isset($phpgacl_location)) { ?>
-<td valign="middle" nowrap>
-&nbsp;<a class=menu target=Main href="adminacl.php"
- onclick="top.restoreSession()"
- title="Access Control List Administration"><?php xl('ACL','e');?></a>&nbsp;
-</td>
-<?php } ?>
     
-<?php if (acl_check('admin', 'calendar')) { ?>
+<?php if (acl_check('super')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="../../modules/calendar/admin.php"
  onclick="top.restoreSession()"
@@ -64,7 +56,7 @@ include_once("../../library/acl.inc");
 </td>
 <?php } ?>
 
-<?php if ( (!$GLOBALS['disable_phpmyadmin_link']) && (acl_check('admin', 'database')) ) { ?>
+<?php if ( (!$GLOBALS['disable_phpmyadmin_link']) && (acl_check('super')) ) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="../../phpmyadmin/index.php"
  onclick="top.restoreSession()"
@@ -72,7 +64,7 @@ include_once("../../library/acl.inc");
 </td>
 <?php } ?>
 
-<?php if (acl_check('admin', 'batchcom')) { ?>
+<?php if (acl_check('batchcom')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="../batchcom/batchcom.php"
  onclick="top.restoreSession()"
@@ -80,7 +72,7 @@ include_once("../../library/acl.inc");
      </td>
 <?php } ?>
 
-<?php if ($GLOBALS['inhouse_pharmacy'] && acl_check('admin', 'drugs')) { ?>
+<?php if ($GLOBALS['inhouse_pharmacy'] && acl_check('edit_drugs')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="../drugs/drug_inventory.php"
  onclick="top.restoreSession()"
@@ -88,7 +80,7 @@ include_once("../../library/acl.inc");
 </td>
 <?php } ?>
 
-<?php if (acl_check('admin', 'language')) { ?>
+<?php if (acl_check('language')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="../language/language.php"
  onclick="top.restoreSession()"
@@ -96,7 +88,7 @@ include_once("../../library/acl.inc");
 </td>
 <?php } ?>
 
-<?php if (acl_check('admin', 'super')) { ?>
+<?php if (acl_check('super')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class="menu" target=Main href="../super/edit_globals.php"
  onclick="top.restoreSession()"
@@ -124,7 +116,7 @@ include_once("../../library/acl.inc");
 </td>
 <?php } ?>
 
-<?php if (acl_check('admin', 'users')) { ?>
+<?php if (acl_check('super')) { ?>
 <td valign="middle" nowrap>
 &nbsp;<a class=menu target=Main href="<?php echo $rootdir?>/logview/logview.php"
  onclick="top.restoreSession()"

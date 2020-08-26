@@ -45,7 +45,6 @@ class UserReporter extends Reporter
     public $Lname;
     public $Federaltaxid;
     public $Federaldrugid;
-    public $Upin;
     public $Facility;
     public $FacilityId;
     public $SeeAuth;
@@ -85,7 +84,6 @@ class UserReporter extends Reporter
     public $PwdHistory1;
     public $PwdHistory2;
     public $DefaultWarehouse;
-    public $Irnpool;
     public $StateLicenseNumber;
     public $NewcropUserRole;
     public $Cpoe;
@@ -114,7 +112,6 @@ class UserReporter extends Reporter
             ,`users`.`lname` as Lname
             ,`users`.`federaltaxid` as Federaltaxid
             ,`users`.`federaldrugid` as Federaldrugid
-            ,`users`.`upin` as Upin
             ,`users`.`facility` as Facility
             ,`users`.`facility_id` as FacilityId
             ,`users`.`see_auth` as SeeAuth
@@ -153,7 +150,6 @@ class UserReporter extends Reporter
             ,`users`.`pwd_history1` as PwdHistory1
             ,`users`.`pwd_history2` as PwdHistory2
             ,`users`.`default_warehouse` as DefaultWarehouse
-            ,`users`.`irnpool` as Irnpool
             ,`users`.`state_license_number` as StateLicenseNumber
             ,`users`.`newcrop_user_role` as NewcropUserRole
             ,`users`.`cpoe` as Cpoe

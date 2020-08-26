@@ -25,7 +25,7 @@
 
 require_once("../globals.php");
 require_once("../../library/patient.inc");
-require_once("../../library/acl.inc");
+require_once("../../modules/ACL/acl.inc.php");
 require_once("../../custom/code_types.inc.php");
 require_once "$srcdir/options.inc.php";
 require_once "$srcdir/headers.inc.php";
@@ -36,7 +36,7 @@ $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
 // Might want something different here.
 //
-if (! acl_check('acct', 'rep')) die("Unauthorized access.");
+if (! acl_check('orders_procedures')) die("Unauthorized access.");
 
 $from_date     = fixDate($_POST['form_from_date']);
 $to_date       = fixDate($_POST['form_to_date'], date('Y-m-d'));
@@ -256,7 +256,7 @@ function process_result_code($row) {
 <html>
 <head>
     <link rel="stylesheet" href='<?php  echo $css_header ?>' type='text/css'>
-<?php html_header_show(); ?>
+
 <title><?php echo $report_title; ?></title>
 <style type="text/css">
  body       { font-family:sans-serif; font-size:10pt; font-weight:normal }

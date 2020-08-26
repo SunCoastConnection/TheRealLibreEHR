@@ -26,7 +26,7 @@
  */
 
 require_once("../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/formatting.inc.php");
@@ -41,11 +41,11 @@ $form_batch = empty($_GET['batch']) ? 0 : 1;
 $form_review = empty($_GET['review']) ? 0 : 1;
 
 // Check authorization.
-$thisauth = acl_check('patients', 'med');
+$thisauth = acl_check('orders_procedures');
 if (!$thisauth) die(xl('Not authorized'));
 
 // Check authorization for pending review.
-$reviewauth = acl_check('patients', 'sign');
+$reviewauth = acl_check('sign_orders');
 if ($form_review and !$reviewauth and !$thisauth) die(xl('Not authorized'));
 
 // Set pid for pending review.
@@ -153,7 +153,7 @@ if ($_POST['form_submit'] && !empty($_POST['form_line'])) {
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <link rel="stylesheet" href='<?php  echo $css_header ?>' type='text/css'>
 <title><?php  xl('Procedure Results','e'); ?></title>

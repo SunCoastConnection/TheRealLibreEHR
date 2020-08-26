@@ -26,17 +26,12 @@ $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
 include_once("../../globals.php");
-include_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 include_once("$srcdir/lists.inc");
 
 // Check permission to create encounters.
-$tmp = getPatientData($pid, "squad");
-if (($tmp['squad'] && ! acl_check('squads', $tmp['squad'])) ||
-     ! (acl_check('encounters', 'notes_a' ) ||
-        acl_check('encounters', 'notes'   ) ||
-        acl_check('encounters', 'coding_a') ||
-        acl_check('encounters', 'coding'  ) ||
-        acl_check('encounters', 'relaxed' )))
+$tmp = getPatientData($pid);
+if (acl_check('create_encounters') ==FALSE)
 {
   echo "<body>\n<html>\n";
   echo "<p>(" . xlt('New encounters not authorized'). ")</p>\n";

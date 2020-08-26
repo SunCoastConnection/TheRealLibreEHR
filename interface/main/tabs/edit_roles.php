@@ -46,11 +46,11 @@
  /* Include our required headers */
 
 require_once('../../globals.php');
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/headers.inc.php");
 require_once("$srcdir/role.php");
 
-if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
+if (!acl_check('super')) die(xl('Not authorized','','','!'));
 
 $role = new Role();
 $role_list = $role->getRoleList();

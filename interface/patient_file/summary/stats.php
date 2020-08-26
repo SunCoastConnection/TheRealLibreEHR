@@ -35,7 +35,7 @@ $fake_register_globals=false;
 
 include_once("../../globals.php");
 include_once("$srcdir/lists.inc");
-include_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 include_once("$srcdir/options.inc.php");
 include_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/formatting.inc.php");
@@ -44,12 +44,8 @@ require_once("$srcdir/formatting.inc.php");
 <div id="patient_stats_summary">
 
 <?php
-$thisauth = acl_check('patients', 'med');
-if ($thisauth) {
-    $tmp = getPatientData($pid, "squad");
-    if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-        $thisauth = 0;
-}
+$thisauth = acl_check('orders_procedures');
+
 if (!$thisauth) {
     echo "<p>(".htmlspecialchars(xl('Issues not authorized'),ENT_NOQUOTES).")</p>\n";
     echo "</body>\n</html>\n";

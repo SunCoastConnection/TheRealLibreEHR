@@ -28,7 +28,7 @@ $sanitize_all_escapes = true;
 $fake_register_globals = false;
 
 require_once('../globals.php');
-require_once($GLOBALS['srcdir'] . '/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 require_once($GLOBALS['srcdir'] . '/htmlspecialchars.inc.php');
 require_once($GLOBALS['srcdir'] . '/formdata.inc.php');
 require_once($GLOBALS['srcdir'] . '/formatting.inc.php');
@@ -280,7 +280,6 @@ function doSubs($s) {
   return $s;
 }
 
-// if (!acl_check('admin', 'super')) die(htmlspecialchars(xl('Not authorized')));
 
 // Get patient demographic info.
 $ptrow = sqlQuery("SELECT pd.*, " .

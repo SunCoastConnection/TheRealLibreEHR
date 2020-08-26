@@ -17,50 +17,46 @@ targets['Patients']='lst';
 var acl_reqs={};
 var global_reqs={};
 
-//Billing Menu Restrictions
-acl_reqs['EDI History']=['acct','eob'];
-global_reqs['EDI History']='enable_edihistory_in_left_menu'
-
 // Administration Menu restrictions
-acl_reqs['Globals']=['admin','super'];
-acl_reqs['Facilities']=['admin','users'];
-acl_reqs['Users']=['admin','users'];
-acl_reqs['Addr Book']=['admin','practice'];
-acl_reqs['Practice']=['admin','practice'];
-acl_reqs['Codes']=['admin','superbill'];
-acl_reqs['Layouts']=['admin','super'];
-acl_reqs['Lists']=['admin','super'];
-acl_reqs['ACL']=['admin','acl'];
-acl_reqs['Files']=['admin','super'];
-acl_reqs['Backup']=['admin','super'];
+acl_reqs['Globals']=['super'];
+acl_reqs['Facilities']=['super'];
+acl_reqs['Users']=['super'];
+acl_reqs['Addr Book']=['super'];
+acl_reqs['Practice']=['super'];
+acl_reqs['Codes']=['super'];
+acl_reqs['Layouts']=['super'];
+acl_reqs['Lists']=[['super'];
+acl_reqs['ACL']=['super'];
+acl_reqs['Files']=['super'];
+acl_reqs['Backup']=['super'];
 
 
-acl_reqs['Rules']=['admin','super'];
+acl_reqs['Rules']=['super'];
 global_reqs['Rules']='enable_cdr'
 
-acl_reqs['Alerts']=['admin','super'];
+acl_reqs['Alerts']=['super'];
 global_reqs['Alerts']='enable_cdr'
 
-acl_reqs['Patient Reminders']=['admin','super'];
+acl_reqs['Patient Reminders']=['super'];
 global_reqs['Patient Reminders']='enable_cdr'
 
 
-acl_reqs['Language']=['admin','language'];
-acl_reqs['Forms']=['admin','forms'];
+acl_reqs['Language']=['super'];
+acl_reqs['Forms']=['super'];
 
-acl_reqs['Calendar']=['admin','calendar','../modules/calendar/admin.php']
+acl_reqs['Calendar']=['super']
 
-acl_reqs['Logs']=['admin','users'];
+acl_reqs['Logs']=['super'];
 
 
-acl_reqs['Database']=['admin','database'];
+acl_reqs['Database']=['super'];
 global_reqs['Database']="!disable_phpmyadmin_link";
 
-acl_reqs['Certificates']=['admin','users'];
+acl_reqs['Certificates']=['super'];
 
-acl_reqs['Native Data Loads']=['admin','super'];
-acl_reqs['External Data Loads']=['admin','super'];
-acl_reqs['Merge Patient']=['admin','super'];
+acl_reqs['Native Data Loads']=['super'];
+acl_reqs['External Data Loads']=['super'];
+acl_reqs['Merge Patient']=['super'];
 
 global_reqs['Fax/Scan']=['enable_hylafax','enable_scanner'];
 

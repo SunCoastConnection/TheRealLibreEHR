@@ -34,7 +34,7 @@ $sanitize_all_escapes=true;
 
 
 require_once("../globals.php");
-require_once("../../library/acl.inc");
+require_once("../../modules/ACL/acl.inc.php");
 require_once("$srcdir/sql.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/calendar.inc");
@@ -43,7 +43,7 @@ require_once("$srcdir/erx_javascript.inc.php");
 require_once("$srcdir/headers.inc.php");
 require_once("$srcdir/role.php");
 
-if (!$_GET["id"] || !acl_check('admin', 'users'))
+if (!$_GET["id"] || !acl_check('super'))
   exit();
 
 if ($_GET["mode"] == "update") {
@@ -60,10 +60,6 @@ if ($_GET["mode"] == "update") {
   if ($_GET["drugid"]) {
     $tqvar = formData('drugid','G');
     sqlStatement("update users set federaldrugid='$tqvar' where id = ?", array($_GET["id"]));
-  }
-  if ($_GET["upin"]) {
-    $tqvar = formData('upin','G');
-    sqlStatement("update users set upin='$tqvar' where id = ?", array($_GET["id"]));
   }
   if ($_GET["npi"]) {
     $tqvar = formData('npi','G');
@@ -156,12 +152,6 @@ if ($_GET["mode"] == "update") {
     sqlStatement("update users set info = '$tqvar' where id = ?", array($_GET["id"]));
   }
 
-  if (isset($phpgacl_location) && acl_check('admin', 'acl')) {
-    // Set the access control group of user
-    $user_data = sqlFetchArray(sqlStatement("select username from users where id = ?", array($_GET["id"])));
-    set_user_aro($_GET['access_group'], $user_data["username"],
-      formData('fname','G'), formData('mname','G'), formData('lname','G'));
-  }
 
 
   /*Dont move usergroup_admin (1).php just close window
@@ -369,8 +359,9 @@ if($password_exp != "0000-00-00")
 ?>
 <input type=hidden name="current_date" value="<?php echo strtotime($current_date); ?>" >
 <input type=hidden name="grace_time" value="<?php echo strtotime($grace_time1); ?>" >
-<!--  Get the list ACL for the user -->
+
 <?php
+/*
 $acl_name=acl_get_group_titles($iter["username"]);
 $bg_name='';
 $bg_count=count($acl_name);
@@ -380,7 +371,7 @@ $bg_count=count($acl_name);
       }
 ?>
 <input type=hidden name="user_type" value="<?php echo $bg_name; ?>" >
-
+*/?>
 <table border=0 cellpadding=0 cellspacing=0>
 <tr>
   <?php
@@ -566,24 +557,8 @@ echo generate_select_list('irnpool', 'irnpool', $iter['irnpool'],
 
 <?php
  // Collect the access control group of user
- if (isset($phpgacl_location) && acl_check('admin', 'acl')) {
-?>
-  <tr>
-  <td class='text'><?php echo xlt('Access Control'); ?>:</td>
-  <td><select id="access_group_id" name="access_group[]" multiple style="width:150px;" >
-  <?php
-   $list_acl_groups = acl_get_group_title_list();
-   $username_acl_groups = acl_get_group_titles($iter["username"]);
-   foreach ($list_acl_groups as $value) {
-    if (($username_acl_groups) && in_array($value,$username_acl_groups)) {
-     // Modified 6-2009 by BM - Translate group name if applicable
-     echo " <option value='$value' selected>" . xl_gacl_group($value) . "</option>\n";
-    }
-    else {
-     // Modified 6-2009 by BM - Translate group name if applicable
-     echo " <option value='$value'>" . xl_gacl_group($value) . "</option>\n";
-    }
-   }
+ if (acl_check('super')) {
+
   ?>
   </select></td>
   <td><span class=text><?php echo xlt('Additional Info'); ?>:</span></td>

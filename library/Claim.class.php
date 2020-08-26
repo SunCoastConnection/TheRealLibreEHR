@@ -1325,12 +1325,6 @@ class Claim {
       return $this->NPIValid($this->providerNPI($prockey));
   }
 
-  function providerUPIN($prockey=-1) {
-    $tmp = ($prockey < 0 || empty($this->procs[$prockey]['provider_id'])) ?
-      $this->provider : $this->procs[$prockey]['provider'];
-    return x12clean(trim($tmp['upin']));
-  }
-
   function providerSSN($prockey=-1) {
     $tmp = ($prockey < 0 || empty($this->procs[$prockey]['provider_id'])) ?
       $this->provider : $this->procs[$prockey]['provider'];
@@ -1360,10 +1354,6 @@ class Claim {
     return x12clean(trim($this->referrer['npi']));
   }
 
-  function referrerUPIN() {
-    return x12clean(trim($this->referrer['upin']));
-  }
-
   function referrerSSN() {
     return x12clean(trim(str_replace('-', '', $this->referrer['federaltaxid'])));
   }
@@ -1387,10 +1377,6 @@ class Claim {
 
   function supervisorNPI() {
     return x12clean(trim($this->supervisor['npi']));
-  }
-
-  function supervisorUPIN() {
-    return x12clean(trim($this->supervisor['upin']));
   }
 
   function supervisorSSN() {
@@ -1426,10 +1412,6 @@ class Claim {
     return x12clean(trim($this->billing_prov_id['npi']));
   }
 
-  function billingProviderUPIN() {
-    return x12clean(trim($this->billing_prov_id['upin']));
-  }
-
   function billingProviderSSN() {
     return x12clean(trim(str_replace('-', '', $this->billing_prov_id['federaltaxid'])));
   }
@@ -1455,10 +1437,6 @@ class Claim {
     return x12clean(trim($this->ordering['npi']));
   }
 
-  function orderingUPIN() {
-    return x12clean(trim($this->ordering['upin']));
-  }
-
   function orderingSSN() {
     return x12clean(trim(str_replace('-', '', $this->ordering['federaltaxid'])));
   }
@@ -1482,10 +1460,6 @@ class Claim {
 
   function referringNPI() {
     return x12clean(trim($this->referring['npi']));
-  }
-
-  function referringUPIN() {
-    return x12clean(trim($this->referring['upin']));
   }
 
   function referringSSN() {

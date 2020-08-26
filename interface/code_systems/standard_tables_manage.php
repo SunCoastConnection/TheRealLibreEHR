@@ -34,7 +34,7 @@ $fake_register_globals=false;
 //
 
 require_once("../../interface/globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/standard_tables_capture.inc");
 
 // Ensure script doesn't time out and has enough memory
@@ -42,7 +42,7 @@ set_time_limit(0);
 ini_set('memory_limit', '150M');
 
 // Control access
-if (!acl_check('admin', 'super')) {
+if (!acl_check('super')) {
     echo xlt('Not Authorized');
     exit;
 }

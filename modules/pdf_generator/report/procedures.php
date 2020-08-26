@@ -17,7 +17,7 @@
  *
  */
 
-$auth_med = acl_check('patients'  , 'med');
+$auth_med = acl_check('orders_procedures');
 
 if ($auth_med) {
   foreach($_POST as $name => $value){

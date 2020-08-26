@@ -21,7 +21,7 @@
  */
 
 require_once("../globals.php");
-require_once("../../library/acl.inc");
+require_once("../../modules/ACL/acl.inc.php");
 require_once("$srcdir/sql.inc");
 require_once("$srcdir/auth.inc");
 require_once("$srcdir/formdata.inc.php");
@@ -36,6 +36,7 @@ $show_message=0;
 
 
 /* Sending a mail to the admin when the breakglass user is activated only if $GLOBALS['Emergency_Login_email'] is set to 1 */
+/* /Commented out for GACL refactor
 $bg_count = sizeof($access_group);
 $mail_id = explode(".",$SMTP_HOST);
 for($i=0;$i<$bg_count;$i++){
@@ -57,6 +58,7 @@ if(($_GET['access_group'][$i] == "Emergency Login") && ($_GET['active'] == 'on')
 }
 }
 }
+*/
 /* To refresh and save variables in mail frame */
 if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
     if ($_POST["mode"] == "update") {
@@ -79,10 +81,6 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
       if ($_POST["drugid"]) {
         $tqvar = formData('drugid','P');
         sqlStatement("update users set federaldrugid='$tqvar' where id= ? ", array($_POST["id"]));
-      }
-      if ($_POST["upin"]) {
-        $tqvar = formData('upin','P');
-        sqlStatement("update users set upin='$tqvar' where id= ? ", array($_POST["id"]));
       }
       if ($_POST["npi"]) {
         $tqvar = formData('npi','P');
@@ -150,7 +148,7 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
               $tqvar = formData('suffix','P');
               sqlStatement("update users set suffix='$tqvar' where id= ? ", array($_POST["id"]));
       }
-      if ($_FILES["profile_picture"]) {
+      if (isset($_FILES["profile_picture"])) {
         $res = sqlStatement("SELECT username, picture_url FROM users where id= ? ", $_POST["id"]);
         $row = sqlFetchArray($res);
         if ($_POST["username"]) {
@@ -167,8 +165,9 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         $bool = 0;
         $target_file =  basename($_FILES["profile_picture"]["name"]);
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
         $verify_image = getimagesize($_FILES["profile_picture"]["tmp_name"]);
-        if($verify_image) {
+        if(isset($verify_image)) {
           $mime = $verify_image["mime"];
           $mime_types = array('image/png',
                                   'image/jpeg',
@@ -198,7 +197,7 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         $picture_url = "";
         //begin file uploading
         $destination_directory = $GLOBALS['OE_SITES_BASE']."/".$_SESSION['site_id']."/profile_pictures/";
-        if ($bool) {
+        if ($bool==1) {
           if (file_exists($destination_directory.$row['picture_url'])){
             unlink($destination_directory.$row['picture_url']);
           }
@@ -264,7 +263,8 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
       sqlStatement("UPDATE users SET authorized = $tqvar, active = $actvar, " .
         "calendar = $calvar, locked = $lockvar, see_auth = ? WHERE " .
         "id = ? ", array($_POST['see_auth'], $_POST["id"]));
-      //Display message when Emergency Login user was activated
+      /* REmoved section for GACL refactor
+      /Display message when Emergency Login user was activated
       $bg_count=count($_POST['access_group']);
       for($i=0;$i<$bg_count;$i++){
         if(($_POST['access_group'][$i] == "Emergency Login") && ($_POST['pre_active'] == 0) && ($actvar == 1)){
@@ -278,6 +278,7 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         }
       }
     }
+    */
       if ($_POST["comments"]) {
         $tqvar = formData('comments','P');
         sqlStatement("update users set info = '$tqvar' where id = ? ", array($_POST["id"]));
@@ -290,12 +291,6 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         sqlStatement("update users set physician_type = '$physician_type' where id = ? ", array($_POST["id"]));
       }
 
-      if (isset($phpgacl_location) && acl_check('admin', 'acl')) {
-        // Set the access control group of user
-        $user_data = sqlFetchArray(sqlStatement("select username from users where id= ?", array($_POST["id"])));
-        set_user_aro($_POST['access_group'], $user_data["username"],
-          formData('fname','P'), formData('mname','P'), formData('lname','P'));
-      }
 
         refreshCalendar(); //after "Edit User" process is complete
 
@@ -413,7 +408,6 @@ if (isset($_FILES)) {
             "', authorized = '"    . trim(formData('authorized'   )) .
             "', info = '"          . trim(formData('info'         )) .
             "', federaldrugid = '" . trim(formData('federaldrugid')) .
-            "', upin = '"          . trim(formData('upin'         )) .
             "', npi  = '"          . trim(formData('npi'          )) .
             "', taxonomy = '"      . trim(formData('taxonomy'     )) .
             "', facility_id = '"   . trim(formData('facility_id'  )) .
@@ -447,11 +441,6 @@ if (isset($_FILES)) {
       sqlStatement("insert into groups set name = '" . trim(formData('groupname')) .
         "', user = '" . trim(formData('rumple')) . "'");
 
-      if (isset($phpgacl_location) && acl_check('admin', 'acl') && trim(formData('rumple'))) {
-        // Set the access control group of user
-        set_user_aro($_POST['access_group'], trim(formData('rumple')),
-          trim(formData('fname')), trim(formData('mname')), trim(formData('lname')));
-      }
 
     }
 
@@ -633,8 +622,6 @@ function authorized_clicked() {
       <tr >
         <td><b><?php echo xlt('User / Groups'); ?></b>&nbsp;&nbsp;</td>
                 <td><a href="#" class="css_button cp-positive addUser"><span><?php echo xlt('Add User'); ?></span></a>
-        </td>
-        <td><a href="facility_user.php" class="css_button cp-misc"><span><?php echo xlt('View Facility Specific User Information'); ?></span></a>
         </td>
       </tr>
     </table>

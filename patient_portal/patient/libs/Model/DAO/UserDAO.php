@@ -67,9 +67,6 @@ class UserDAO extends Phreezable
     public $Federaldrugid;
 
     /** @var string */
-    public $Upin;
-
-    /** @var string */
     public $Facility;
 
     /** @var int */
@@ -185,9 +182,6 @@ class UserDAO extends Phreezable
 
     /** @var string */
     public $DefaultWarehouse;
-
-    /** @var string */
-    public $Irnpool;
 
     /** @var string */
     public $StateLicenseNumber;

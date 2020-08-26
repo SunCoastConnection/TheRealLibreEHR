@@ -7,20 +7,19 @@
   // of the License, or (at your option) any later version.
 
   require_once("../globals.php");
-  require_once("$srcdir/acl.inc");
+  require_once($modules_dir.'ACL/acl.inc');
   require_once("$srcdir/options.inc.php");
   require_once("$srcdir/patient.inc");
   require_once("$srcdir/erx_javascript.inc.php");
   require_once("$srcdir/headers.inc.php");
 
   // Check authorization.
-  if (!acl_check('patients','demo','',array('write','addonly') ))
+  if (!acl_check('patients_edit_dems') )
     die("Adding demographics is not authorized.");
 
   $CPR = 4; // cells per row
   $DateFormat = DateFormatRead();
   $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
-
   $searchcolor = empty($GLOBALS['layout_search_color']) ?
     '#ffff55' : $GLOBALS['layout_search_color'];
 
@@ -46,7 +45,6 @@
       case 10: // local provider list
       case 11: // provider list
       case 12: // pharmacy list
-      case 13: // squads
       case 14: // address book list
       case 26: // single-selection list with add
       case 35: // facilities
@@ -66,7 +64,6 @@
   ?>
 <html>
   <head>
-    <?php html_header_show();
       //  Include Bootstrap, Fancybox, date-time-picker
   call_required_libraries(array("font-awesome","iziModalToast","jquery-min-3-1-1","bootstrap","datepicker","fancybox-addpatient"));
 ?>

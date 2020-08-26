@@ -10,7 +10,7 @@ $sanitize_all_escapes  = true;
 $fake_register_globals = false;
 
  require_once("../globals.php");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("drugs.inc.php");
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/formdata.inc.php");
@@ -21,7 +21,7 @@ $fake_register_globals = false;
  $info_msg = "";
  $tmpl_line_no = 0;
 
- if (!acl_check('admin', 'drugs')) die(xlt('Not authorized'));
+ if (!acl_check('edit_drugs')) die(xlt('Not authorized'));
 
 // Format dollars for display.
 //
@@ -88,7 +88,7 @@ function numericff($name) {
 ?>
 <html>
 <head>
-<?php html_header_show(); ?>
+
 <title><?php echo $drug_id ? xlt("Edit") : xlt("Add New"); echo ' ' . xlt('Drug'); ?></title>
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
 
@@ -182,7 +182,7 @@ if (($_POST['form_save'] || $_POST['form_delete']) && !$alertmsg) {
     sqlStatement("DELETE FROM drug_templates WHERE drug_id = ?", array($drug_id));
    }
    else { // deleting
-    if (acl_check('admin', 'super')) {
+    if (acl_check('super')) {
      sqlStatement("DELETE FROM drug_inventory WHERE drug_id = ?", array($drug_id));
      sqlStatement("DELETE FROM drug_templates WHERE drug_id = ?", array($drug_id));
      sqlStatement("DELETE FROM drugs WHERE drug_id = ?", array($drug_id));
@@ -536,7 +536,7 @@ else {
 <p>
 <input type='submit' name='form_save' value='<?php echo xla('Save'); ?>' />
 
-<?php if (acl_check('admin', 'super')) { ?>
+<?php if (acl_check('super')) { ?>
 &nbsp;
 <input type='submit' name='form_delete' value='<?php echo xla('Delete'); ?>' style='color:red' />
 <?php } ?>

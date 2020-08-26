@@ -35,7 +35,7 @@
    *
    */
   require_once("../../globals.php");
-  require_once("$srcdir/acl.inc");
+  require_once($modules_dir.'ACL/acl.inc');
   require_once("$srcdir/options.inc.php");
   require_once("$srcdir/formatting.inc.php");
   require_once("$srcdir/erx_javascript.inc.php");
@@ -64,10 +64,10 @@
              demographics_check_auth($args = array( 'username' => $_SESSION['authUser'], 'pid' => $pid ) );
         }
 ///////////////////endfacacl//////
-    if (!acl_check('patients', 'demo', '', 'write'))
+    if (!acl_check('patients_edit_dems'))
      die(xl('Updating demographics is not authorized.'));
    } else {
-    if (!acl_check('patients', 'demo', '', array('write','addonly') ))
+    if (!acl_check('patients_edit_dems'))
      die(xl('Adding demographics is not authorized.'));
    }
   
@@ -89,7 +89,7 @@
   ?>
 <html>
   <head>
-    <?php html_header_show();?>
+    
     <link rel="stylesheet" href="<?php echo $css_header; ?>" type="text/css">
     <link rel="stylesheet" href="../../../library/css/jquery.datetimepicker.css">
     <script type="text/javascript" src="../../../library/dialog.js"></script>

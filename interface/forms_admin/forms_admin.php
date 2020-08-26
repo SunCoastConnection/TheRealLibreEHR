@@ -32,7 +32,7 @@ $bigdata = getRegistered("%") or $bigdata = false;
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <?php call_required_libraries(array('bootstrap')) ?>
 </head>

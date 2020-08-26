@@ -28,7 +28,7 @@ $fake_register_globals=false;
 require_once('../../globals.php');
 require_once($GLOBALS['srcdir'].'/pnotes.inc');
 require_once($GLOBALS['srcdir'].'/patient.inc');
-require_once($GLOBALS['srcdir'].'/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 require_once($GLOBALS['srcdir'].'/log.inc');
 require_once($GLOBALS['srcdir'].'/options.inc.php');
 require_once($GLOBALS['srcdir'].'/classes/Document.class.php');
@@ -57,11 +57,8 @@ else if ($orderid) {
 }
 
 // Check authorization.
-if (!acl_check('patients','notes','',array('write','addonly') ))
+if (!acl_check('orders_procedures'))
     die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES));
-$tmp = getPatientData($patient_id, "squad");
-if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-    die(htmlspecialchars( xl('Not authorized for this squad.'), ENT_NOQUOTES));
 
 //the number of records to display per screen
 $N = 15;
@@ -178,7 +175,7 @@ $result_sent = getSentPnotesByDate("", $active, 'id,date,body,user,activity,titl
 
 <html>
 <head>
-<?php html_header_show();?>
+
 
 <link rel='stylesheet' href="<?php echo $css_header;?>" type="text/css">
 
@@ -417,7 +414,7 @@ if ($result != "") {
 
     // display, or not, a button to delete the note
     // if the user is an admin or if they are the author of the note, they can delete it
-    if (($iter['user'] == $_SESSION['authUser']) || (acl_check('admin','super','','write'))) {
+    if (($iter['user'] == $_SESSION['authUser']) || (acl_check('super'))) {
       echo " <a href='#' class='deletenote css_button_small' id='del" . htmlspecialchars( $row_note_id, ENT_QUOTES) .
         "' title='" . htmlspecialchars( xl('Delete this note'), ENT_QUOTES) . "' onclick='top.restoreSession()'><span>" .
         htmlspecialchars( xl('Delete'), ENT_NOQUOTES) . "</span>\n";

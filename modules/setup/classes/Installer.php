@@ -43,9 +43,6 @@ class Installer
         $this->additional_users = dirname(__FILE__) . "/../../sql/official_additional_users.sql";
         $this->menu_def = dirname(__FILE__) . "/../../sql/menu_definitions.sql";  //REVIEW
 
-        // Record name of php-gacl installation files
-        $this->gaclSetupScript1 = dirname(__FILE__) . "/../../gacl/setup.php";
-        $this->gaclSetupScript2 = dirname(__FILE__) . "/../../acl_setup.php";
 
         // Prepare the dumpfile list
 

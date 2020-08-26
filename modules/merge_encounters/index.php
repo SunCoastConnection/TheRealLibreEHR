@@ -21,9 +21,9 @@ $sanitize_all_escapes  = true;
 $fake_register_globals = false;
 
 require_once('../../interface/globals.php');
-require_once($srcdir.'/acl.inc');
+require_once($modules_dir.'ACL/acl.inc');
 
-if(!acl_check('admin', 'super')) {
+if(!acl_check('super')) {
 	die(xlt('Not authorized'));
 } else {
 	define('MERGE_ENCOUNTERS', true);

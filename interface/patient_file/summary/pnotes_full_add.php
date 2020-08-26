@@ -15,7 +15,7 @@ $fake_register_globals=false;
 require_once("../../globals.php");
 require_once("$srcdir/pnotes.inc");
 require_once("$srcdir/patient.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/log.inc");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/classes/Document.class.php");
@@ -45,9 +45,6 @@ else if ($orderid) {
 // Check authorization.
 if (!acl_check('patients','notes','',array('write','addonly') ))
     die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES));
-$tmp = getPatientData($patient_id, "squad");
-if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-    die(htmlspecialchars( xl('Not authorized for this squad.'), ENT_NOQUOTES));
 
 //the number of records to display per screen
 $N = 25;
@@ -147,7 +144,7 @@ $result = getPnotesByDate("", $active, 'id,date,body,user,activity,title,assigne
 
 <html>
 <head>
-<?php html_header_show();?>
+
 
 <link rel='stylesheet' href="<?php echo $css_header;?>" type="text/css">
 

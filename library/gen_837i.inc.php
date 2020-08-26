@@ -1145,13 +1145,6 @@ if ($claim->ub04_options['value_code_1a']) {
     //    "~\n";
    // }
 
-    if ($claim->ub04_options['attending_qualifier'] == '1G') {
-      ++$edicount;
-      $out .= "REF" .   // Attending Physician Secondary Identification
-        "*" . $claim->ub04_options['attending_qualifier'] .
-        "*" . $claim->ub04_options['attending_upin'] .
-        "~\n";
-    }
   }
 
  
@@ -1188,13 +1181,7 @@ if ($claim->ub04_options['value_code_1a']) {
     //    "~\n";
    // }
 
-    if ($claim->ub04_options[operating_qualifier] == '1G') {
-      ++$edicount;
-      $out .= "REF" .   // operating Physician Secondary Identification
-        "*" . $claim->ub04_options['operating_qualifier'] .
-        "*" . $claim->ub04_options['operating_upin'] .
-        "~\n";
-    }
+
   }
   
   
@@ -1231,13 +1218,6 @@ if ($claim->ub04_options['value_code_1a']) {
     //    "~\n";
    // }
 
-    if ($claim->ub04_options['other_2_qualifier'] == '1G') {
-      ++$edicount;
-      $out .= "REF" .   // other operating Physician Secondary Identification
-        "*" . $claim->ub04_options['other_2_qualifier'] .
-        "*" . $claim->ub04_options['other_2_upin'] .
-        "~\n";
-    }
   }
 
   
@@ -1363,7 +1343,7 @@ if ($claim->ub04_options['value_code_1a']) {
   // Loop 2310F Referring Provider 
   
     if ($claim->referrerLastName()) {
-    // Medicare requires referring provider's name and UPIN.
+    // Medicare requires referring provider's name.
     ++$edicount;
 	
 
@@ -1394,13 +1374,6 @@ if ($claim->ub04_options['value_code_1a']) {
         "~\n";
     }
 
-    if (!CMS_5010 && $claim->referrerUPIN()) {
-      ++$edicount;
-      $out .= "REF" .   // Referring Provider Secondary Identification
-        "*1G" .
-        "*" . $claim->referrerUPIN() .
-        "~\n";
-    }
   }
   
   // Loop 2310E, Supervising Provider

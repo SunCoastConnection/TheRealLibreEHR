@@ -57,7 +57,7 @@ $max_age = $_POST['max_age'];
 
 ?>
 <head>
-<?php html_header_show();?>
+
 <title><?php xl('Clinical Reports: Demographics vs Diagnosis','e'); ?></title>
     <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
     <?php call_required_libraries($library_array) ?>

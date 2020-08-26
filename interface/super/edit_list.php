@@ -26,7 +26,7 @@
 
 require_once ('../globals.php');
 require_once $GLOBALS['srcdir'].'/headers.inc.php';
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/lists.inc");
 require_once("../../custom/code_types.inc.php");
@@ -35,7 +35,7 @@ require_once("$srcdir/options.inc.php");
 $list_id = empty($_REQUEST['list_id']) ? ' ' : $_REQUEST['list_id'];
 
 // Check authorization.
-$thisauth = acl_check('admin', 'super');
+$thisauth = acl_check('super');
 if (!$thisauth) die(xl('Not authorized'));
 
 // If we are saving, then save.
@@ -379,15 +379,6 @@ function writeOptionLine($option_id, $title, $seq, $default, $value, $mapping=''
     echo "</td>\n";
   }
 
-  // IPPF includes the ability to map each list item to a "master" identifier.
-  // Sports teams use this for some extra info for fitness levels.
-  //
-  if ($GLOBALS['ippf_specific'] || $list_id == 'fitness') {
-    echo "  <td align='center' class='optcell'>";
-    echo "<input type='text' name='opt[$opt_line_no][mapping]' value='" .
-        htmlspecialchars($mapping, ENT_QUOTES) . "' size='12' maxlength='15' class='optin' />";
-    echo "</td>\n";
-  }
   else if($list_id == 'apptstat') {
     list($apptstat_color, $apptstat_timealert) = explode("|", $notes);
     echo "  <td align='center' class='optcell'>";
@@ -622,7 +613,7 @@ function writeITLine($it_array) {
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <!-- supporting javascript code -->
 
@@ -961,19 +952,12 @@ while ($row = sqlFetchArray($res)) {
   <td><b><?php echo xlt('Rate'   ); ?></b></td>
 <?php } else if ($list_id == 'postal_codes') { ?>
   <td><b><?php echo xlt('State'  ); ?></b></td>
-<?php } else if ($list_id == 'contrameth') { ?>
-  <td><b><?php echo xlt('Effectiveness'); ?></b></td>
 <?php } else if ($list_id == 'lbfnames' || $list_id == 'transactions') { ?>
   <td title='<?php echo xlt('Number of past history columns'); ?>'><b><?php echo xlt('Repeats'); ?></b></td>
-<?php } else if ($list_id == 'fitness') { ?>
-  <td><b><?php echo xlt('Color:Abbr'); ?></b></td>
 <?php } else if ($list_id == 'adjreason' || $list_id == 'abook_type') { ?>
   <td><b><?php echo xlt('Type'); ?></b></td>
 <?php } else if ($list_id == 'immunizations') { ?>
   <td><b>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo xlt('CVX Code Mapping'); ?></b></td>
-<?php } if ($GLOBALS['ippf_specific']) { ?>
-  <td><b><?php echo xlt('Global ID'); ?></b></td>
-<?php } ?>
   <td><b><?php
           if ($list_id == 'language') {
             xl('ISO 639-2 Code','e');

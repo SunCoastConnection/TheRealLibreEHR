@@ -50,10 +50,10 @@
  /* Include our required headers */
 
 require_once('../../globals.php');
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once $GLOBALS['srcdir'].'/headers.inc.php';
 
-if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
+if (!acl_check('super')) die(xl('Not authorized','','','!'));
 
 // Load Disk file
 require_once "menu/menu_data.php";

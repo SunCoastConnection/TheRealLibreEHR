@@ -8,7 +8,7 @@ $returnurl = 'encounter_top.php';
 ?>
 <html>
 	<head>
-		<?php html_header_show();?>
+		
 		<link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 		<!-- Get Bootstrap and jQuery (required for bootstrap) -->
 		<?php call_required_libraries(array('bootstrap', 'jquery-min-1-9-1', 'font-awesome')); ?>

@@ -10,7 +10,7 @@
  $fake_register_globals = false;
 
  require_once("../globals.php");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("drugs.inc.php");
  require_once("$srcdir/options.inc.php");
  require_once($GLOBALS['fileroot'] . "/library/classes/class.phpmailer.php");
@@ -43,7 +43,7 @@
  $fee             = $_REQUEST['fee'];
  $user            = $_SESSION['authUser'];
 
- if (!acl_check('admin', 'drugs')) die(xl('Not authorized'));
+ if (!acl_check('edit_drugs')) die(xl('Not authorized'));
 
  if (!$drug_id        ) $drug_id = 0;
  if (!$prescription_id) $prescription_id = 0;
@@ -199,7 +199,7 @@
 <html>
 <script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
 <head>
-<?php html_header_show();?>
+
 <style type="text/css">
  body {
   font-family: sans-serif;

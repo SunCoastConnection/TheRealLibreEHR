@@ -9,7 +9,7 @@ require_once("../../globals.php");
 require_once("$srcdir/forms.inc");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/calendar.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/amc.php");
@@ -18,10 +18,11 @@ require_once("$srcdir/../controllers/C_Document.class.php");
 require_once("forms_review_header.php");
 require_once("$srcdir/headers.inc.php");
 ?>
+<!DOCTYPE html>
 <html>
 
 <head>
-<?php html_header_show();
+<?php
 //  Include Bootstrap and datepicker Library
   call_required_libraries(array("jquery-min-3-1-1","bootstrap","datepicker","fancybox"));
 resolveFancyboxCompatibility();
@@ -325,24 +326,17 @@ $providerNameRes = getProviderName($providerIDres);
 <div>
 <span class="title"><?php echo oeFormatShortDate($encounter_date) . " " . xl("Encounter"); ?> </span>
 <?php
-$auth_notes_a  = acl_check('encounters', 'notes_a');
-$auth_notes    = acl_check('encounters', 'notes');
-$auth_relaxed  = acl_check('encounters', 'relaxed');
+$auth_notes_a  = acl_check('anyones_encounter');
+$auth_notes    = acl_check('encounter_notes');
+$auth_relaxed  = acl_check('encounter_notes');
 
-if (is_numeric($pid)) {
-    // Check for no access to the patient's squad.
-    $result = getPatientData($pid, "fname,lname,squad");
-    echo htmlspecialchars( xl('for','',' ',' ') . $result['fname'] . " " . $result['lname'] );
-    if ($result['squad'] && ! acl_check('squads', $result['squad'])) {
-        $auth_notes_a = $auth_notes = $auth_relaxed = 0;
-    }
+
     // Check for no access to the encounter's sensitivity level.
     $result = sqlQuery("SELECT sensitivity FROM form_encounter WHERE " .
                         "pid = '$pid' AND encounter = '$encounter' LIMIT 1");
-    if ($result['sensitivity'] && !acl_check('sensitivities', $result['sensitivity'])) {
+    if ($result['sensitivity'] && !acl_check('sensitive')) {
         $auth_notes_a = $auth_notes = $auth_relaxed = 0;
     }
-}
 ?>
 </div>
 <div style='margin-top:8px;'>
@@ -353,7 +347,7 @@ if ( $esign->isButtonViewable() ) {
     echo $esign->buttonHtml();
 }
 ?>
-<?php if (acl_check('admin', 'super')) { ?>
+<?php if (acl_check('super')) { ?>
     <a href='toggledivs(this.id,this.id);' class='css_button cp-negative' onclick='return deleteme()'><span><?php echo xl('Delete') ?></span></a>
 <?php } ?>
 &nbsp;&nbsp;&nbsp;<a href="#" onClick='expandcollapse("expand");' style="font-size:80%;"><?php echo xlt('Expand All'); ?></a>
@@ -460,7 +454,7 @@ if ( $esign->isButtonViewable() ) {
 <!-- Get the documents tagged to this encounter and display the links and notes as the tooltip -->
 <?php
     $docs_list = getDocumentsByEncounter($pid,$_SESSION['encounter']);
-    if(count($docs_list) > 0 ) {
+    if(!empty($docs_list)) {
 ?>
 <div class='enc_docs'>
 <span class="bold"><?php echo xlt("Document(s)"); ?>:</span>
@@ -501,7 +495,7 @@ if ( $esign->isButtonViewable() ) {
         // Skip forms that we are not authorized to see.
         if (($auth_notes_a) ||
             ($auth_notes && $iter['user'] == $_SESSION['authUser']) ||
-            ($auth_relaxed && ($formdir == 'sports_fitness' || $formdir == 'podiatry'))) ;
+            ($auth_relaxed && ($formdir == 'podiatry'))) ;
         else continue;
 
             echo '<tr title="' . xl('Edit form') . '" '.
@@ -533,7 +527,7 @@ if ( $esign->isButtonViewable() ) {
             echo $esign->buttonHtml();
         }
 
-        if (acl_check('admin', 'super') ) {
+        if (acl_check('super') ) {
             if ( $formdir != 'patient_encounter') {
                 // a link to delete the form from the encounter
                 echo "<a target='_parent'" .

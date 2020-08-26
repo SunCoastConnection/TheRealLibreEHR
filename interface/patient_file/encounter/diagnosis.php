@@ -7,7 +7,7 @@
 require_once("../../globals.php");
 require_once("$srcdir/billing.inc");
 require_once("$srcdir/sql.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/formdata.inc.php");
 
@@ -110,7 +110,7 @@ if (isset($mode)) {
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 
 <script language="JavaScript">
@@ -165,18 +165,14 @@ function validate(f) {
 <body class="body_bottom">
 
 <?php
- $thisauth = acl_check('encounters', 'coding_a');
+ $thisauth = acl_check('fee_sheet_any');
  if (!$thisauth) {
   $erow = sqlQuery("SELECT user FROM forms WHERE " .
    "encounter = '$encounter' AND formdir = 'patient_encounter' LIMIT 1");
   if ($erow['user'] == $_SESSION['authUser'])
-   $thisauth = acl_check('encounters', 'coding');
+   $thisauth = acl_check('fee_sheet');
  }
- if ($thisauth) {
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-   $thisauth = 0;
- }
+
  if (!$thisauth) {
   echo "<p>(".xl('Coding not authorized').")</p>\n";
   echo "</body>\n</html>\n";

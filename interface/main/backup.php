@@ -29,7 +29,7 @@
 // tested a restore!
 set_time_limit(0);
 require_once("../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/log.inc");
 require_once("$srcdir/headers.inc.php");
 
@@ -46,7 +46,7 @@ if (!function_exists('gzopen') && function_exists('gzopen64'))
     }
     
     
-if (!acl_check('admin', 'super')) die(xl('Not authorized','','','!'));
+if (!acl_check('super')) die(xl('Not authorized','','','!'));
 
 include_once("Archive/Tar.php");
 

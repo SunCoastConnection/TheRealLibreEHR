@@ -5,7 +5,7 @@
 // of the License, or (at your option) any later version.
 
 require_once("{$GLOBALS['srcdir']}/sql.inc");
-require_once("{$GLOBALS['srcdir']}/acl.inc");
+require_once("{$GLOBALS['modules_dir']}ACL/acl.inc.php");
 require_once("{$GLOBALS['srcdir']}/formatting.inc.php");
 require_once("{$GLOBALS['srcdir']}/formdata.inc.php");
 require_once($GLOBALS["srcdir"] . "/options.inc.php");
@@ -366,7 +366,7 @@ function printPatientForms($pid, $cols) {
         }
         echo "(" . oeFormatSDFT(strtotime($result["date"])) . ") ";
 
-        if (acl_check('acct', 'rep') || acl_check('acct', 'eob') || acl_check('acct', 'bill')) {
+        if (acl_check('billing_reports') || acl_check('eob') || acl_check('bill')) {
             if ($result{"form_name"} == "Patient Encounter") {
                 // display billing info
                 echo "<br/>";

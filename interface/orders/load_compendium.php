@@ -28,7 +28,7 @@ $sanitize_all_escapes  = true;
 $fake_register_globals = false;
 
 require_once("../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/headers.inc.php");
 // This array is an important reference for the supported labs and their NPI
 // numbers as known to this program.  The clinic must define at least one
@@ -55,7 +55,7 @@ function getLabID($npi) {
   return intval($lrow['ppid']);
 }
 
-if (!acl_check('admin', 'super')) die(xlt('Not authorized','','','!'));
+if (!acl_check('super')) die(xlt('Not authorized','','','!'));
 
 $form_step   = isset($_POST['form_step']) ? trim($_POST['form_step']) : '0';
 $form_status = isset($_POST['form_status' ]) ? trim($_POST['form_status' ]) : '';

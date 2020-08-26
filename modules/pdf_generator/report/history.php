@@ -17,7 +17,7 @@
  *
  */
 
-if (acl_check('patients', 'med')){
+if (acl_check('orders_procedures')){
     $content_his = '<span style="font-size:25px;font-family: Arial, sans-serif;">' . xlt("History Data") . ':<br></span>';
     $history_query = sqlStatement("SELECT * FROM history_data WHERE pid='$pid' ORDER BY id DESC");
     while($history_data = sqlFetchArray($history_query)){

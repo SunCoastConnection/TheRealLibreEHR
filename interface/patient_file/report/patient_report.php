@@ -27,7 +27,7 @@
 
   require_once("../../globals.php");
   require_once("$srcdir/lists.inc");
-  require_once("$srcdir/acl.inc");
+  require_once($modules_dir.'ACL/acl.inc');
   require_once("$srcdir/forms.inc");
   require_once("$srcdir/patient.inc");
   require_once("$srcdir/formatting.inc.php");
@@ -37,19 +37,19 @@
   $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
   // get various authorization levels
-  $auth_notes_a  = acl_check('encounters', 'notes_a');
-  $auth_notes    = acl_check('encounters', 'notes');
-  $auth_coding_a = acl_check('encounters', 'coding_a');
-  $auth_coding   = acl_check('encounters', 'coding');
-  $auth_relaxed  = acl_check('encounters', 'relaxed');
-  $auth_med      = acl_check('patients'  , 'med');
-  $auth_demo     = acl_check('patients'  , 'demo');
+$auth_notes_a  = acl_check('anyones_encounter');
+$auth_notes    = acl_check('encounter_notes');
+$auth_coding_a = acl_check('fee_sheet_any');
+$auth_coding   = acl_check('fee_sheet');
+$auth_relaxed  = acl_check('encounter_notes');
+$auth_med      = acl_check('orders_procedures');
+$auth_demo     = acl_check('patients_edit_dems');
+
 
   ?>
 <html>
   <head>
     <?php
-      html_header_show();
       call_required_libraries(array('jquery-min-3-1-1', 'datepicker','jquery-ui'));
     ?>
 
@@ -209,7 +209,7 @@
           <tr>
             <td class='text'>
               <input type='checkbox' name='include_demographics' id='include_demographics' value="demographics" checked><?php xl('Demographics','e'); ?><br>
-              <?php if (acl_check('patients', 'med')): ?>
+              <?php if (acl_check('orders_procedures')): ?>
               <input type='checkbox' name='include_history' id='include_history' value="history"><?php xl('History','e'); ?><br>
               <?php endif; ?>
               <!--
@@ -252,7 +252,7 @@
                 <span class='bold'><?php xl('Issues','e'); ?>:</span>
                 <br>
                 <br>
-                <?php if (! acl_check('patients', 'med')): ?>
+                <?php if (! acl_check('orders_procedures')): ?>
                 <br>(Issues not authorized)
                 <?php else: ?>
                 <table>

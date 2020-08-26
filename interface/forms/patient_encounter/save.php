@@ -32,7 +32,7 @@ require_once("../../globals.php");
 require_once("$srcdir/forms.inc");
 require_once("$srcdir/sql.inc");
 require_once("$srcdir/encounter.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/formdata.inc.php");
 
@@ -77,12 +77,12 @@ else if ($mode == 'update')
 {
   $id = $_POST["id"];
   $result = sqlQuery("SELECT encounter, sensitivity FROM form_encounter WHERE id = ?", array($id));
-  if ($result['sensitivity'] && !acl_check('sensitivities', $result['sensitivity'])) {
+  if ($result['sensitivity'] && !acl_check('sensitive')) {
    die(xlt("You are not authorized to see this encounter."));
   }
   $encounter = $result['encounter'];
   // See view.php to allow or disallow updates of the encounter date.
-  $datepart = acl_check('encounters', 'date_a') ? "date = '" . add_escape_custom($date) . "', " : "";
+  $datepart = acl_check('encounter_date_edit') ? "date = '" . add_escape_custom($date) . "', " : "";
   sqlStatement("UPDATE form_encounter SET " .
     $datepart .
     "onset_date = '" . add_escape_custom($onset_date) . "', " .

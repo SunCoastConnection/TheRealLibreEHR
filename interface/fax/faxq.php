@@ -7,7 +7,7 @@
  // of the License, or (at your option) any later version.
 
  require_once("../globals.php");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
 
  $faxstats = array(
   'B' => xl('Blocked'),
@@ -75,7 +75,7 @@
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
 <title><?php xl('Received Faxes','e'); ?></title>

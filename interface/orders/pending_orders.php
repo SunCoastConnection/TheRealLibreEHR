@@ -27,7 +27,7 @@
 
 require_once("../globals.php");
 require_once("$srcdir/patient.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formatting.inc.php");
 require_once "$srcdir/options.inc.php";
 require_once "$srcdir/headers.inc.php";
@@ -69,7 +69,7 @@ function thisLineItem($row) {
   } // End not csv export
 }
 
-if (! acl_check('acct', 'rep')) die(xl("Unauthorized access."));
+if (! acl_check('orders_procedures')) die(xl("Unauthorized access."));
 
 $form_from_date = fixDate($_POST['form_from_date'], date('Y-m-d'));
 $form_to_date   = fixDate($_POST['form_to_date']  , date('Y-m-d'));
@@ -98,7 +98,7 @@ else { // not export
 <head>
     <link rel="stylesheet" href='<?php  echo $css_header ?>' type='text/css'>
 
-<?php html_header_show();?>
+
 <title><?php xl('Pending Orders','e') ?></title>
 
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery-1.9.1.min.js"></script>

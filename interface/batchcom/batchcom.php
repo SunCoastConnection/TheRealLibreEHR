@@ -30,15 +30,14 @@ include_once("../globals.php");
 include_once("$srcdir/registry.inc");
 include_once("$srcdir/sql.inc");
 require_once("$srcdir/formatting.inc.php");
-include_once("../../library/acl.inc");
+include_once("../../modules/ACL/acl.inc.php");
 include_once("batchcom.inc.php");
 require_once("$srcdir/headers.inc.php");
 /** Current format date */
 $DateFormat = DateFormatRead();
 $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
 
-// gacl control
-$thisauth = acl_check('admin', 'batchcom');
+$thisauth = acl_check('batchcom');
 
 if (!$thisauth) {
   echo "<html>\n<body>\n";
@@ -142,7 +141,7 @@ if ($_POST['form_action']=='Process') {
         <html>
     <head>
     <title><?php echo xlt('BatchCom'); ?></title>
-    <?php html_header_show();?>
+   
     <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
     <link rel="stylesheet" href="batchcom.css" type="text/css">
     <script type="text/javascript" src="../../library/overlib_mini.js"></script>
@@ -183,7 +182,7 @@ if ($_POST['form_action']=='Process') {
 <html>
 <head>
 <title><?php echo xlt('BatchCom'); ?></title>
-<?php html_header_show();?>
+
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <link rel="stylesheet" href="batchcom.css" type="text/css">
 <script type="text/javascript" src="../../library/overlib_mini.js"></script>

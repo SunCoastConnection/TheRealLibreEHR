@@ -56,7 +56,7 @@ require_once "reports_controllers/SalesByItemController.php";
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <style type="text/css">
 /* specifically include & exclude from printing */
 @media print {
@@ -130,7 +130,7 @@ require_once "reports_controllers/SalesByItemController.php";
           </td>
           <td>
             <?php
-                if (acl_check('acct', 'rep_a')) {
+                if (acl_check('report_select_any_provider')) {
                     // Build a drop-down list of providers.
                     dropDownProviders();
                     } else {

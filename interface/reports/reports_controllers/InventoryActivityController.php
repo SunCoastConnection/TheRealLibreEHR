@@ -37,7 +37,7 @@ $fake_register_globals=false;
 
 require_once("../globals.php");
 require_once("$srcdir/patient.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/headers.inc.php");
 require_once("$srcdir/formatting.inc.php");
 require_once("../../library/report_functions.php");
@@ -309,7 +309,7 @@ function thisLineItem($product_id, $warehouse_id, $patient_id, $encounter_id,
   	}
 } // end function
 
-if (! acl_check('acct', 'rep')) die(htmlspecialchars(xl("Unauthorized access.")));
+if (! acl_check('billing_reports')) die(htmlspecialchars(xl("Unauthorized access.")));
 
 // this is "" or "submit" or "export".
 $form_action = $_POST['form_action'];

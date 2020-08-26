@@ -21,7 +21,7 @@ $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
 require_once("../../interface/globals.php");
-require_once("../../library/acl.inc");
+require_once("../../modules/ACL/acl.inc.php");
 require_once("../../custom/code_types.inc.php");
 require_once("$srcdir/patient.inc");
 include_once("$srcdir/../interface/reports/report.inc.php");//Criteria Section common php page
@@ -118,7 +118,7 @@ $oauthorized = $my_authorized;
 
 <html>
 <head>
-<?php if (function_exists('html_header_show')) html_header_show(); ?>
+
 <link rel="stylesheet" href="<?php echo $css_header; ?>" type="text/css">
 <script type="text/javascript">
   const billing_report_bus = new Vue()

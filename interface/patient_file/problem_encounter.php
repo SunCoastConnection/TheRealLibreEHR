@@ -29,18 +29,15 @@
 
  include_once("../globals.php");
  include_once("$srcdir/patient.inc");
- include_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  include_once("$srcdir/lists.inc");
  require_once("$srcdir/headers.inc.php");
 
- $patdata = getPatientData($pid, "fname,lname,squad");
+ $patdata = getPatientData($pid, "fname,lname");
 
- $thisauth = ((acl_check('encounters','notes','','write') ||
-               acl_check('encounters','notes_a','','write')) &&
-              acl_check('patients','med','','write'));
-
- if ($patdata['squad'] && ! acl_check('squads', $patdata['squad']))
-  $thisauth = 0;
+ $thisauth = ((acl_check('encounter_notes') ||
+              acl_check('anyones_encounter')) &&
+             acl_check('orders_procedures'));
 
  if (!$thisauth) {
   echo "<html>\n<body>\n";
@@ -97,7 +94,7 @@
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <script type="text/javascript" src="<?php echo $webroot ?>/interface/main/tabs/js/include_opener.js"></script>
 <link rel=stylesheet href="<?php echo $css_header; ?>" type="text/css">
 

@@ -240,9 +240,6 @@ require_once (dirname(__FILE__) . "/../library/sanitize.inc.php");
 include_once (dirname(__FILE__) . "/../library/date_functions.php");
 
 // Defaults for specific applications.
-$GLOBALS['weight_loss_clinic'] = false;
-$GLOBALS['ippf_specific'] = false;
-$GLOBALS['cene_specific'] = false;
 $GLOBALS['facility_acl'] = false;
 
 // Defaults for drugs and products.
@@ -380,7 +377,6 @@ else {
   $GLOBALS['language_default'] = "English (Standard)";
   $GLOBALS['translate_layout'] = true;
   $GLOBALS['translate_lists'] = true;
-  $GLOBALS['translate_gacl_groups'] = true;
   $GLOBALS['translate_form_titles'] = true;
   $GLOBALS['translate_document_categories'] = true;
   $GLOBALS['translate_appt_categories'] = true;
@@ -546,7 +542,7 @@ if (!empty($GLOBALS['calendar_timezone'])) {
 /*include expanded query include functions if Facility based access control is on.
  This should probably be implemented elsewhere as part of the above include. */
  if ($GLOBALS['facility_acl'] === true){
- include_once "$srcdir/fac_acl.inc.php";}
+ include_once $modules_dir."ACL/fac_acl.inc.php";}
 
 require_once 'idiorm.php';
 

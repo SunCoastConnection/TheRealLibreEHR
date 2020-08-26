@@ -34,16 +34,16 @@
 
 include_once("../../globals.php");
 include_once("$srcdir/patient.inc");
-include_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 include_once("$srcdir/options.inc.php");
 include_once("$srcdir/formdata.inc.php");
 
 // Check authorization.
 if ($pid) {
-  if ( !acl_check('patients','demo','','write') )
+  if ( !acl_check('patients_edit_dems') )
     die(xl('Updating demographics is not authorized.'));
 } else {
-  if (!acl_check('patients','demo','',array('write','addonly') ))
+  if (!acl_check('patients_edit_dems') ))
     die(xl('Adding demographics is not authorized.'));
 }
 

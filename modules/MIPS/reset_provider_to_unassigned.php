@@ -18,7 +18,7 @@
  */
 require_once '../../interface/globals.php';
 include_once("$srcdir/api.inc");
-include_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 $form_doctor = "";
 
 ?>	
@@ -28,7 +28,7 @@ $form_doctor = "";
 
 </head>
 <body class="body_top">
-<?php if (acl_check('admin', 'practice' )) { ?>
+<?php if (acl_check('super')) { ?>
 
 
     <span class='title'><?php echo htmlspecialchars( xl('Reset Providers'), ENT_NOQUOTES); ?></span>

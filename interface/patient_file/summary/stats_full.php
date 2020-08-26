@@ -35,19 +35,14 @@ $fake_register_globals=false;
 
 require_once('../../globals.php');
 require_once($GLOBALS['srcdir'].'/lists.inc');
-require_once($GLOBALS['srcdir'].'/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 require_once($GLOBALS['fileroot'].'/custom/code_types.inc.php');
 require_once($GLOBALS['srcdir'].'/options.inc.php');
 require_once($GLOBALS['srcdir'].'/headers.inc.php');
 
 
  // Check authorization.
- if (acl_check('patients','med')) {
-  $tmp = getPatientData($pid, "squad");
-  if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-   die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES) );
- }
- else {
+ if (! acl_check('orders_procedures')) {
   die(htmlspecialchars( xl('Not authorized'), ENT_NOQUOTES) );
  }
 
@@ -61,7 +56,7 @@ $language = $tmp['language'];
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <link rel="stylesheet" href='<?php echo $css_header ?>' type='text/css'>
 
@@ -88,7 +83,7 @@ function refreshIssue(issue, title) {
 
     //takes 3 parameters, the id of issue to be edited, the category(allergy, mediacal etc) and type(whether new or edit)
     function dopclick(id, category , type) {
-    <?php if (acl_check('patients','med','','write')): ?>
+    <?php if (acl_check('Dx_edit')): ?>
     if (category == 0) category = '';
         iziTitle = "<?php echo xlt('Add New Issue'); ?>";
         iziSubTitle = "<?php echo xlt('Add Relevant Patient Issues'); ?>";

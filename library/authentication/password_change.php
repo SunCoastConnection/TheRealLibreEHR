@@ -108,7 +108,7 @@ function update_password($activeUser,$targetUser,&$currentPwd,&$newPwd,&$errMsg,
             $errMsg=xl("Incorrect password!");
             return false;
         }
-        if(!acl_check('admin', 'users'))
+        if(!acl_check('super'))
         {
             
             $errMsg=xl("Not authorized to manage users!");

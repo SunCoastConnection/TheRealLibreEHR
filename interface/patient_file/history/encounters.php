@@ -34,7 +34,7 @@ require_once("$srcdir/forms.inc");
 require_once("$srcdir/billing.inc");
 require_once("$srcdir/patient.inc");
 require_once("$srcdir/lists.inc");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/invoice_summary.inc.php");
 require_once("$srcdir/formatting.inc.php");
 require_once("../../../custom/code_types.inc.php");
@@ -54,13 +54,13 @@ $issue = empty($_GET['issue']) ? 0 : 0 + $_GET['issue'];
  $default_encounter = $GLOBALS['default_encounter_view']; //'0'=clinical, '1' = billing
 
  // Get relevant ACL info.
- $auth_notes_a  = acl_check('encounters', 'notes_a');
- $auth_notes    = acl_check('encounters', 'notes');
- $auth_coding_a = acl_check('encounters', 'coding_a');
- $auth_coding   = acl_check('encounters', 'coding');
- $auth_relaxed  = acl_check('encounters', 'relaxed');
- $auth_med      = acl_check('patients'  , 'med');
- $auth_demo     = acl_check('patients'  , 'demo');
+ $auth_notes_a  = acl_check('anyones_encounter');
+ $auth_notes    = acl_check('encounter_notes');
+ $auth_coding_a = acl_check('fee_sheet_any');
+ $auth_coding   = acl_check('fee_sheet');
+ $auth_relaxed  = acl_check('encounter_notes');
+ $auth_med      = acl_check('orders_procedures');
+ $auth_demo     = acl_check('patients_edit_dems');
  
  
  
@@ -70,10 +70,6 @@ if ( $GLOBALS['facility_acl']==1 ) {
      demographics_check_auth($args = array( 'username' => $_SESSION['authUser'], 'pid' => $pid ) );
 } 
 ///////////////////endfacacl//////
-
- $tmp = getPatientData($pid, "squad");
- if ($tmp['squad'] && ! acl_check('squads', $tmp['squad']))
-  $auth_notes_a = $auth_notes = $auth_coding_a = $auth_coding = $auth_med = $auth_demo = $auth_relaxed = 0;
 
  if (!($auth_notes_a || $auth_notes || $auth_coding_a || $auth_coding || $auth_med || $auth_relaxed)) {
   echo "<body>\n<html>\n";
@@ -180,7 +176,6 @@ function generatePageElement($start,$pagesize,$billing,$issue,$text)
 <html>
 <head>
 <?php 
-    html_header_show();
     // Include Bootstrap
   call_required_libraries(array("jquery-min-3-1-1","bootstrap"));
 ?>
@@ -457,7 +452,7 @@ while ($result4 = sqlFetchArray($res4)) {
         //   $reason_string = "(No access)";
 
         if ($result4['sensitivity']) {
-            $auth_sensitivity = acl_check('sensitivities', $result4['sensitivity']);
+            $auth_sensitivity = acl_check('sensitive');
             if (!$auth_sensitivity) {
                 $reason_string = "(".htmlspecialchars( xl("No access"), ENT_NOQUOTES).")";
             }
@@ -551,7 +546,7 @@ while ($result4 = sqlFetchArray($res4)) {
                 $formdir = $enc['formdir'];
                 if (($auth_notes_a) ||
                     ($auth_notes && $enc['user'] == $_SESSION['authUser']) ||
-                    ($auth_relaxed && ($formdir == 'sports_fitness' || $formdir == 'podiatry'))) ;
+                    ($auth_relaxed && ($formdir == 'podiatry'))) ;
                 else continue;
 
                 // Show the form name.  In addition, for the specific-issue case show

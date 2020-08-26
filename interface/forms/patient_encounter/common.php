@@ -38,7 +38,7 @@ if ($viewmode) {
   $id = (isset($_REQUEST['id'])) ? $_REQUEST['id'] : '';
   $result = sqlQuery("SELECT * FROM form_encounter WHERE id = ?", array($id));
   $encounter = $result['encounter'];
-  if ($result['sensitivity'] && !acl_check('sensitivities', $result['sensitivity'])) {
+  if ($result['sensitivity'] && !acl_check('sensitive')) {
     echo "<body>\n<html>\n";
     echo "<p>" . xlt('You are not authorized to see this encounter.') . "</p>\n";
     echo "</body>\n</html>\n";
@@ -60,7 +60,6 @@ $ires = sqlStatement("SELECT id, type, title, begdate FROM lists WHERE " .
 <html>
 <head>
 <?php
-  html_header_show();
   call_required_libraries(array("jquery-min-3-1-1","bootstrap","datepicker","fancybox"));
 ?>
 <title><?php echo xlt('Patient Encounter'); ?></title>
@@ -234,36 +233,9 @@ function cancelClicked() {
         </td>
      </tr>
     <tr>
-<?php
- $sensitivities = acl_get_sensitivities();
- if ($sensitivities && count($sensitivities)) {
-  usort($sensitivities, "sensitivity_compare");
-?>
-     <td class='bold'><?php echo xlt('Sensitivity:'); ?></td>
-     <td class='text'>
-      <select style="width:150px" name='form_sensitivity'>
-<?php
-  foreach ($sensitivities as $value) {
-   // Omit sensitivities to which this user does not have access.
-   if (acl_check('sensitivities', $value[1])) {
-    echo "       <option value='" . attr($value[1]) . "'";
-    if ($viewmode && $result['sensitivity'] == $value[1]) echo " selected";
-    echo ">" . xlt($value[3]) . "</option>\n";
-   }
-  }
-  echo "       <option value=''";
-  if ($viewmode && !$result['sensitivity']) echo " selected";
-  echo ">" . xlt('None'). "</option>\n";
-?>
-      </select>
-     </td>
-<?php
- } else {
-?>
+
      <td colspan='2'><!-- sensitivities not used --></td>
-<?php
- }
-?>
+
     </tr>
 
     <tr<?php if (!$GLOBALS['gbl_visit_referral_source']) echo " style='visibility:hidden;'"; ?>>

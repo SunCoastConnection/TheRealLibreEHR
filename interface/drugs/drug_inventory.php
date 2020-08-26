@@ -10,14 +10,14 @@
  $fake_register_globals = false;
 
  require_once("../globals.php");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("drugs.inc.php");
  require_once("$srcdir/options.inc.php");
  require_once("$srcdir/formatting.inc.php");
  require_once("$srcdir/htmlspecialchars.inc.php");
 
  // Check authorization.
- $thisauth = acl_check('admin', 'drugs');
+ $thisauth = acl_check('edit_drugs');
  if (!$thisauth) die(xlt('Not authorized'));
 
 // For each sorting option, specify the ORDER BY argument.
@@ -52,7 +52,7 @@ $orderby = $ORDERHASH[$form_orderby];
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <link rel="stylesheet" href='<?php  echo $css_header ?>' type='text/css'>
 <title><?php echo xlt('Drug Inventory'); ?></title>

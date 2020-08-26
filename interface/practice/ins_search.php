@@ -18,7 +18,7 @@
  // function.
 
  include_once("../globals.php");
- include_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
 
  // Putting a message here will cause a popup window to display it.
  $info_msg = "";

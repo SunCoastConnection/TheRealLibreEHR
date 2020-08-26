@@ -237,7 +237,6 @@ if ($fend > $count) $fend = $count;
     <link rel='stylesheet' href='<?php echo $css_header ?>' type='text/css'>
 <title><?php echo xlt("Codes"); ?></title>
 <?php 
-      html_header_show();
   call_required_libraries(array("jquery-min-3-1-1","bootstrap"));
 ?>
 <script language="JavaScript">

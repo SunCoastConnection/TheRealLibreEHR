@@ -31,7 +31,7 @@ $sanitize_all_escapes = true;
 /* include required globals */
 require_once('../../globals.php');
 /* for acl_check() */
-require_once($GLOBALS['srcdir'] . '/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 /* for text() */
 require_once($GLOBALS['srcdir'] . '/htmlspecialchars.inc.php');
 /* for getPnotesByUser(). */
@@ -48,7 +48,7 @@ require_once($GLOBALS['srcdir'] . '/dated_reminder_functions.php');
     $notices = 0;
     if ($GLOBALS['floating_message_alerts']) {
         // if this user has permission to patient notes..
-        if (acl_check('patients', 'notes')) {
+        if (acl_check('messages')) {
             // generate notice if the user has pending (unread) messages or reminders.
             $total = getPnotesByUser(true, false, $_SESSION['authUser'], true);
             $total += GetAllReminderCount();
@@ -66,7 +66,7 @@ require_once($GLOBALS['srcdir'] . '/dated_reminder_functions.php');
     }
     if ($GLOBALS['floating_message_alerts_allergies']) {
         // Check for Allergies with Reaction/severity
-        if (acl_check('patients', 'med')) {
+        if (acl_check('patient_alerts')) {
            $sql = "SELECT * FROM lists WHERE pid = ? AND type = 'allergy' ORDER BY begdate";
            $res = sqlStatement($sql, array($pid));
            while ($row = sqlFetchArray($res)) {
@@ -84,7 +84,7 @@ require_once($GLOBALS['srcdir'] . '/dated_reminder_functions.php');
     }
     if ($GLOBALS['floating_message_alerts']) {
         #Check for Patient alerts
-        if (acl_check('patients', 'med')) {
+        if (acl_check('patient_alerts')) {
             $sql = "SELECT * FROM lists WHERE pid = ? AND type = 'patient_alert' ORDER BY begdate";
             $res = sqlStatement($sql, array($pid));
             while ($row = sqlFetchArray($res)) {

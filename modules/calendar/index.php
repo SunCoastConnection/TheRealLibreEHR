@@ -41,7 +41,7 @@ require('includes/session.php');
   <script src="<?php echo $GLOBALS['standard_js_path']; ?>jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
   <script src="../../library/dialog.js"></script>
   <script src='fullcalendar-rightclick-1.9/fullcalendar-rightclick.js'></script>
-  <link rel="stylesheet" href="../../assets/fonts/font-awesome-5-8-1/css/fontawesome.min.css" type="text/css">
+  <link rel="stylesheet" href="../../assets/fonts/font-awesome-5-8-1/Font-Awesome-master/css/fontawesome.min.css" type="text/css">
   <style type="text/css">
   /* style to provide horizontal scroll in Calendar's agenda views
      by making table overflow its container */
@@ -102,15 +102,10 @@ require('includes/session.php');
         array($_SESSION['language_choice'])
     );
 
-      // lemonsoftware
-      if ($_SESSION['authorizeduser'] == 1) {
-        $facilities = getFacilities();
-      } else {
         $facilities = getUserFacilities($_SESSION['authId']); // from users_facility
         if (count($facilities) == 1) {
           $_SESSION['pc_facility'] = key($facilities);
-      }
-    }
+         }
 
       if (count($facilities) > 1) {
         echo "   <select name='pc_facility' id='pc_facility' >\n";
@@ -449,7 +444,9 @@ require('includes/session.php');
         },
         eventMouseover: function(calEvent, element, view) {
           if (calEvent.picture_url) {
-            var picture = '<td><img src="../../profile_pictures/'+ calEvent.picture_url +'" height="64px" width="64px"></td>';
+            //No longer shows broken link after adding in the site directory, but does not display.
+            //Patient profile pictures should be located in the sites/documents directory under the designated patient picture category.
+            var picture = '<td><img src="<?php echo $GLOBALS['OE_SITE_DIR'].'/profile_pictures/'?>'+ calEvent.picture_url +'" height="64px" width="64px"></td>';
           } else {
             picture = " ";
           }

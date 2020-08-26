@@ -19,7 +19,7 @@
 
  require_once("../globals.php");
  require_once("$srcdir/patient.inc");
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("$srcdir/headers.inc.php");
  require_once("$srcdir/formatting.inc.php");
  require_once("$srcdir/options.inc.php");
@@ -160,7 +160,7 @@
    return 0;
  }
 
- if (! acl_check('acct', 'rep')) die(xl("Unauthorized access."));
+ if (! acl_check('billing_reports')) die(xl("Unauthorized access."));
 
 
  $from_date = fixDate($_POST['form_from_date'], date(DateFormatRead(true)));

@@ -1,14 +1,14 @@
 <?php
  include_once("../globals.php");
- include_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
 
- $ie_auth = ((acl_check('encounters','notes','','write') ||
-              acl_check('encounters','notes_a','','write')) &&
-             acl_check('patients','med','','write'));
+ $ie_auth = ((acl_check('encounter_notes') ||
+              acl_check('anyones_encounter')) &&
+             acl_check('orders_procedures'));
 ?>
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php xl('Navigation','e'); ?></title>
 <link rel="stylesheet" href="<?php echo $css_header;?>" type="text/css">
 <script type="text/javascript" src="../../library/dialog.js"></script>

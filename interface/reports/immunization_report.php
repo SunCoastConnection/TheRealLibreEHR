@@ -31,7 +31,7 @@ require_once "reports_controllers/ImmunizationController.php";
 
 <html>
 <head>
-<?php html_header_show();?>
+
 <title><?php xl('Immunization Registry','e'); ?></title>
 <style type="text/css">@import url(../../library/dynarch_calendar.css);</style>
 <script type="text/javascript" src="../../library/dialog.js"></script>

@@ -23,7 +23,7 @@ $sanitize_all_escapes = true;
 $fake_register_globals = false;
 
 require_once("../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("$srcdir/headers.inc.php");
@@ -102,7 +102,7 @@ function doedclick_edit(ppid) {
   ++$encount;
   $bgclass = (($encount & 1) ? "evenrow" : "oddrow");
 
-  if (acl_check('admin', 'practice' )) {
+  if (acl_check('practice_admin')) {
    $trTitle = xl('Edit') . ' ' . $row['name'];
    echo " <tr class='detail $bgclass' style='cursor:pointer' " .
         "onclick='doedclick_edit(" . $row['ppid'] . ")' title='" . attr($trTitle) . "'>\n"; 
