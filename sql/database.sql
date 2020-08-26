@@ -5557,7 +5557,7 @@ CREATE TABLE `sequences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `sequences` (`id`) VALUES
-(4);
+(1);
 
 CREATE TABLE `shared_attributes` (
   `pid` bigint(20) NOT NULL,
