@@ -19,7 +19,7 @@
 * @author    Rod Roark <rod@sunsetsystems.com>
 */
 
-require_once($GLOBALS["srcdir"] . "/acl.inc");
+require_once($GLOBALS["modules_dir"] . "ACL/acl.inc.php");
 require_once($GLOBALS["srcdir"] . "/formdata.inc.php");
 require_once($GLOBALS["srcdir"] . "/options.inc.php");
 require_once($GLOBALS["srcdir"] . "/formatting.inc.php");

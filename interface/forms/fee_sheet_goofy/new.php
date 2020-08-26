@@ -51,7 +51,7 @@ class spinnerDataList {
 }
 
 require_once("../../globals.php");
-require_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 require_once("$srcdir/api.inc");
 //require_once("codes.php");
 require_once("../../../custom/code_types.inc.php");

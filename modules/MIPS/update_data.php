@@ -17,7 +17,7 @@
  */
 require_once '../../interface/globals.php';
 include_once("$srcdir/api.inc");
-include_once("$srcdir/acl.inc");
+require_once($modules_dir.'ACL/acl.inc');
 ?>	
 <html>
 

@@ -20,7 +20,7 @@
 include_once("../globals.php");
 require_once("$srcdir/headers.inc.php");
 include_once("../../library/patient.inc");
-include_once("../../library/acl.inc");
+include_once("../../modules/ACL/acl.inc.php");
 require_once("../../library/formatting.inc.php");
 require_once("../../library/report_functions.php");
 

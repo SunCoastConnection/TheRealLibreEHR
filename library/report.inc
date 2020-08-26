@@ -5,7 +5,7 @@
 // of the License, or (at your option) any later version.
 
 require_once("{$GLOBALS['srcdir']}/sql.inc");
-require_once("{$GLOBALS['srcdir']}/acl.inc");
+require_once("{$GLOBALS['modules_dir']}ACL/acl.inc.php");
 require_once("{$GLOBALS['srcdir']}/formatting.inc.php");
 require_once("{$GLOBALS['srcdir']}/formdata.inc.php");
 require_once($GLOBALS["srcdir"] . "/options.inc.php");

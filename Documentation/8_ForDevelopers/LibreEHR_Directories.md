@@ -245,7 +245,6 @@ Directory contains files related to vendor needs.
 
 Files contained in the root directory of Library are listed here
 
-acl.inc
 acl_upgrade_fx.php
 amc.php
 api.inc

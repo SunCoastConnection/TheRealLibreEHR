@@ -1,6 +1,6 @@
 <?php
 /**
- * library/acl.inc 
+ * modules/ACL/acl.inc.php 
  * @author  Art Eaton <art@suncoastconnection.com>
  */
 

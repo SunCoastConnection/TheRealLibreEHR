@@ -19,7 +19,7 @@
  * @link    http://LibreEHR.org
  */
 
-require_once(dirname(__FILE__)."/../../../../../../library/acl.inc"); 
+require_once(dirname(__FILE__)."/../../../../../../modules/ACL/acl.inc.php"); 
 
 require_once(dirname(__FILE__)."/../../../../../globals.php");
 require_once($GLOBALS['srcdir']."/headers.inc.php");

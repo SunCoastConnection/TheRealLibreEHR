@@ -30,7 +30,7 @@
 
 require_once('../globals.php');
 require_once($GLOBALS['srcdir'].'/log.inc');
-require_once($GLOBALS['srcdir'].'/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 require_once($GLOBALS['srcdir'].'/sl_eob.inc.php');
 
  $patient     = $_REQUEST['patient'];

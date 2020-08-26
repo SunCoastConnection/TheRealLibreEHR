@@ -31,7 +31,7 @@ $sanitize_all_escapes = true;
 /* include required globals */
 require_once('../../globals.php');
 /* for acl_check() */
-require_once($GLOBALS['srcdir'] . '/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 /* for text() */
 require_once($GLOBALS['srcdir'] . '/htmlspecialchars.inc.php');
 /* for getPnotesByUser(). */

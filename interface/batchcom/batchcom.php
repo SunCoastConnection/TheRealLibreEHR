@@ -30,7 +30,7 @@ include_once("../globals.php");
 include_once("$srcdir/registry.inc");
 include_once("$srcdir/sql.inc");
 require_once("$srcdir/formatting.inc.php");
-include_once("../../library/acl.inc");
+include_once("../../modules/ACL/acl.inc.php");
 include_once("batchcom.inc.php");
 require_once("$srcdir/headers.inc.php");
 /** Current format date */

@@ -306,7 +306,7 @@ class C_Document extends Controller {
  
         global $ISSUE_TYPES;
 
-        require_once(dirname(__FILE__) . "/../library/acl.inc");
+        require_once(dirname(__FILE__) . "/../modules/ACL/acl.inc.php");
         require_once(dirname(__FILE__) . "/../library/lists.inc");
 
         $d = new Document($doc_id);

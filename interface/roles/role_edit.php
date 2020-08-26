@@ -46,7 +46,7 @@
 
  /* Include our required headers */
  require_once('../globals.php');
- require_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  require_once("$srcdir/headers.inc.php");
  require_once("$srcdir/role.php");
 

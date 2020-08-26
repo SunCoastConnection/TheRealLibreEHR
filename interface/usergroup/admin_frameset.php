@@ -2,7 +2,7 @@
 // Cloned from usergroup.php for new layout.
 
 include_once("../globals.php");
-include_once("../../library/acl.inc");
+include_once("../../modules/ACL/acl.inc.php");
 ?>
 <HTML>
 <HEAD>

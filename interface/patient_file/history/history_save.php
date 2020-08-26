@@ -11,7 +11,7 @@ $fake_register_globals=false;
  include_once("../../globals.php");
  include_once("$srcdir/patient.inc");
  include_once("history.inc.php");
- include_once("$srcdir/acl.inc");
+ require_once($modules_dir.'ACL/acl.inc');
  include_once("$srcdir/options.inc.php");
 
  // Check authorization.

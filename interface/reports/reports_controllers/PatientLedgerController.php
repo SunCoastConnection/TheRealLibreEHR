@@ -22,7 +22,7 @@ $fake_register_globals=false;
 require_once('../globals.php');
 require_once("../../library/report_functions.php");
 require_once($GLOBALS['srcdir'].'/patient.inc');
-require_once($GLOBALS['srcdir'].'/acl.inc');
+require_once($GLOBALS['modules_dir'].'ACL/acl.inc.php');
 require_once("$srcdir/headers.inc.php");
 require_once($GLOBALS['srcdir'].'/formatting.inc.php');
 require_once($GLOBALS['srcdir'].'/options.inc.php');

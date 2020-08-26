@@ -1,6 +1,6 @@
 <?php
 include_once("../globals.php");
-include_once("../../library/acl.inc");
+include_once("../../modules/ACL/acl.inc.php");
 
 $_SESSION["encounter"] = "";
 

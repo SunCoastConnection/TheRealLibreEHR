@@ -12,7 +12,7 @@ $fake_register_globals=false;
 include_once("../globals.php");
 include_once("$srcdir/registry.inc");
 include_once("$srcdir/sql.inc");
-include_once("../../library/acl.inc");
+include_once("../../modules/ACL/acl.inc.php");
 require_once("language.inc.php");
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/headers.inc.php");
