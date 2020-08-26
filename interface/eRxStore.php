@@ -58,10 +58,10 @@ class eRxStore {
     /**
      * Return user information using user Id
      * @param  integer $id Id of user to return
-     * @return array       Specified user information: index [id, username, lname, fname, mname, title, license, federaldrugid, upin, state_license_number, npi, newcrop_user_role]
+     * @return array       Specified user information: index [id, username, lname, fname, mname, title, license, federaldrugid, state_license_number, npi, newcrop_user_role]
      */
     public function getUserById($id) {
-        return sqlQuery('SELECT id, username, lname, fname, mname, title, federaldrugid, upin, state_license_number, npi, newcrop_user_role
+        return sqlQuery('SELECT id, username, lname, fname, mname, title, federaldrugid, state_license_number, npi, newcrop_user_role
             FROM users
             WHERE id = ?;',
             array($id)

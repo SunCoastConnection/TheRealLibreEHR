@@ -228,7 +228,7 @@ function addNewLabFacility($facility)
     $query = "INSERT INTO users ( " .
     "username, password, authorized, info, source, " .
     "title, fname, lname, mname,  " .
-    "federaltaxid, federaldrugid, upin, facility, see_auth, active, npi, taxonomy, " .
+    "federaltaxid, federaldrugid, facility, see_auth, active, npi, taxonomy, " .
     "specialty, organization, valedictory, assistant, billname, email, url, " .
     "street, streetb, city, state, zip, " .
     "street2, streetb2, city2, state2, zip2," .

@@ -401,13 +401,6 @@ function LicensedPrescriber($doc,$r)
         $doc->createTextNode( $user_details['federaldrugid'] )
     );
     $b->appendChild( $dea );
-    if($user_details['upin']){
-    $upin = $doc->createElement( "upin" );
-    $upin->appendChild(
-        $doc->createTextNode( $user_details['upin'] )
-    );
-    $b->appendChild( $upin );
-    }
     $licenseNumber = $doc->createElement( "licenseNumber" );
     $licenseNumber->appendChild(
         $doc->createTextNode( $user_details['state_license_number'] )
@@ -490,13 +483,6 @@ function SupervisingDoctor($doc,$r)
         $doc->createTextNode( $user_details['federaldrugid'] )
     );
     $b->appendChild( $dea );
-    if($user_details['upin']){
-    $upin = $doc->createElement( "upin" );
-    $upin->appendChild(
-        $doc->createTextNode( $user_details['upin'] )
-    );
-    $b->appendChild( $upin );
-    }
     $licenseNumber = $doc->createElement( "licenseNumber" );
     $licenseNumber->appendChild(
         $doc->createTextNode( $user_details['state_license_number'] )
@@ -553,13 +539,6 @@ function MidlevelPrescriber($doc,$r)
         $doc->createTextNode( $user_details['federaldrugid'] )
     );
     $b->appendChild( $dea );
-    if($user_details['upin']){
-    $upin = $doc->createElement( "upin" );
-    $upin->appendChild(
-        $doc->createTextNode( $user_details['upin'] )
-    );
-    $b->appendChild( $upin );
-    }
     $licenseNumber = $doc->createElement( "licenseNumber" );
     $licenseNumber->appendChild(
         $doc->createTextNode( $user_details['state_license_number'] )

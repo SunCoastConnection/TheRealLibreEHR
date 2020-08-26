@@ -395,7 +395,6 @@ class eRxXMLBuilder {
         $element->setAttribute('ID', $userDetails['npi']);
         $element->appendChild($this->getLicensedPrescriberName($userDetails, xl('LicensedPrescriber')));
         $element->appendChild($this->createElementTextFieldEmpty('dea', $userDetails['federaldrugid'], 'Licensed Prescriber DEA'));
-        if($userDetails['upin']) $element->appendChild($this->createElementText('upin', $userDetails['upin']));
         $element->appendChild($this->createElementText('licenseNumber', $userDetails['state_license_number']));
         $element->appendChild($this->createElementTextFieldEmpty('npi', $userDetails['npi'], xl('Licensed Prescriber NPI')));
 
@@ -441,7 +440,6 @@ class eRxXMLBuilder {
         $element->setAttribute('ID', $userDetails['npi']);
         $element->appendChild($this->getLicensedPrescriberName($userDetails, xl('Supervising Doctor')));
         $element->appendChild($this->createElementTextFieldEmpty('dea', $userDetails['federaldrugid'], xl('Supervising Doctor DEA')));
-        if($userDetails['upin']) $element->appendChild($this->createElementText('upin', $userDetails['upin']));
         $element->appendChild($this->createElementText('licenseNumber', $userDetails['state_license_number']));
         $element->appendChild($this->createElementTextFieldEmpty('npi', $userDetails['npi'], xl('Supervising Doctor NPI')));
 
@@ -456,7 +454,6 @@ class eRxXMLBuilder {
         $element->setAttribute('ID', $userDetails['npi']);
         $element->appendChild($this->getLicensedPrescriberName($userDetails, xl('Midlevel Prescriber'), true));
         $element->appendChild($this->createElementTextFieldEmpty('dea', $userDetails['federaldrugid'], xl('Midlevel Prescriber DEA')));
-        if($userDetails['upin']) $element->appendChild($this->createElementText('upin', $userDetails['upin']));
         $element->appendChild($this->createElementText('licenseNumber', $userDetails['state_license_number']));
         $element->appendChild($this->createElementTextFieldEmpty('npi', $userDetails['npi'], xl('Midlevel Prescriber NPI')));
 

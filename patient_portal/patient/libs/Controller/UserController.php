@@ -146,7 +146,6 @@ class UserController extends AppBaseController
             $user->Lname = $this->SafeGetVal($json, 'lname');
             $user->Federaltaxid = $this->SafeGetVal($json, 'federaltaxid');
             $user->Federaldrugid = $this->SafeGetVal($json, 'federaldrugid');
-            $user->Upin = $this->SafeGetVal($json, 'upin');
             $user->Facility = $this->SafeGetVal($json, 'facility');
             $user->FacilityId = $this->SafeGetVal($json, 'facilityId');
             $user->SeeAuth = $this->SafeGetVal($json, 'seeAuth');
@@ -186,7 +185,6 @@ class UserController extends AppBaseController
             $user->PwdHistory1 = $this->SafeGetVal($json, 'pwdHistory1');
             $user->PwdHistory2 = $this->SafeGetVal($json, 'pwdHistory2');
             $user->DefaultWarehouse = $this->SafeGetVal($json, 'defaultWarehouse');
-            $user->Irnpool = $this->SafeGetVal($json, 'irnpool');
             $user->StateLicenseNumber = $this->SafeGetVal($json, 'stateLicenseNumber');
             $user->NewcropUserRole = $this->SafeGetVal($json, 'newcropUserRole');
             $user->Cpoe = $this->SafeGetVal($json, 'cpoe');
@@ -243,7 +241,6 @@ class UserController extends AppBaseController
             $user->Lname = $this->SafeGetVal($json, 'lname', $user->Lname);
             $user->Federaltaxid = $this->SafeGetVal($json, 'federaltaxid', $user->Federaltaxid);
             $user->Federaldrugid = $this->SafeGetVal($json, 'federaldrugid', $user->Federaldrugid);
-            $user->Upin = $this->SafeGetVal($json, 'upin', $user->Upin);
             $user->Facility = $this->SafeGetVal($json, 'facility', $user->Facility);
             $user->FacilityId = $this->SafeGetVal($json, 'facilityId', $user->FacilityId);
             $user->SeeAuth = $this->SafeGetVal($json, 'seeAuth', $user->SeeAuth);
@@ -283,7 +280,6 @@ class UserController extends AppBaseController
             $user->PwdHistory1 = $this->SafeGetVal($json, 'pwdHistory1', $user->PwdHistory1);
             $user->PwdHistory2 = $this->SafeGetVal($json, 'pwdHistory2', $user->PwdHistory2);
             $user->DefaultWarehouse = $this->SafeGetVal($json, 'defaultWarehouse', $user->DefaultWarehouse);
-            $user->Irnpool = $this->SafeGetVal($json, 'irnpool', $user->Irnpool);
             $user->StateLicenseNumber = $this->SafeGetVal($json, 'stateLicenseNumber', $user->StateLicenseNumber);
             $user->NewcropUserRole = $this->SafeGetVal($json, 'newcropUserRole', $user->NewcropUserRole);
             $user->Cpoe = $this->SafeGetVal($json, 'cpoe', $user->Cpoe);

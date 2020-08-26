@@ -61,10 +61,6 @@ if ($_GET["mode"] == "update") {
     $tqvar = formData('drugid','G');
     sqlStatement("update users set federaldrugid='$tqvar' where id = ?", array($_GET["id"]));
   }
-  if ($_GET["upin"]) {
-    $tqvar = formData('upin','G');
-    sqlStatement("update users set upin='$tqvar' where id = ?", array($_GET["id"]));
-  }
   if ($_GET["npi"]) {
     $tqvar = formData('npi','G');
     sqlStatement("update users set npi='$tqvar' where id = ?", array($_GET["id"]));

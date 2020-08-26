@@ -706,7 +706,7 @@ $CMS_5010 = true;
      "~\n";
     } else if ( $claim->referringLastName()) {
      # Use the Referrer information
-    // Medicare requires referring provider's name and UPIN.
+    // Medicare requires referring provider's name.
     ++$edicount;
     $out .= "NM1" .     // Loop 2310A Referring Provider
       "*DN" .
@@ -726,7 +726,7 @@ $CMS_5010 = true;
     $out .= "~\n";
     } else if ($claim->referrerLastName()) {
      # Use the Referrer information
-    // Medicare requires referring provider's name and UPIN.
+    // Medicare requires referring provider's name.
     ++$edicount;
     $out .= "NM1" .     // Loop 2310A Referring Provider
       "*DN" .

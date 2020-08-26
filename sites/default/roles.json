@@ -280,17 +280,6 @@
                         "mainParent": null,
                         "parent": "feeimg",
                         "global_req": null
-                    },
-                    {
-                        "label": "EDI History",
-                        "menu_id": "edi0",
-                        "target": "pat",
-                        "url": "/interface/billing/edih_view.php",
-                        "children": [],
-                        "requirement": 0,
-                        "mainParent": null,
-                        "parent": "feeimg",
-                        "global_req": "enable_edihistory_in_menu"
                     }
                 ],
                 "requirement": 0,

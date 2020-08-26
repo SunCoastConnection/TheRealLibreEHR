@@ -82,10 +82,6 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         $tqvar = formData('drugid','P');
         sqlStatement("update users set federaldrugid='$tqvar' where id= ? ", array($_POST["id"]));
       }
-      if ($_POST["upin"]) {
-        $tqvar = formData('upin','P');
-        sqlStatement("update users set upin='$tqvar' where id= ? ", array($_POST["id"]));
-      }
       if ($_POST["npi"]) {
         $tqvar = formData('npi','P');
         sqlStatement("update users set npi='$tqvar' where id= ? ", array($_POST["id"]));
@@ -412,7 +408,6 @@ if (isset($_FILES)) {
             "', authorized = '"    . trim(formData('authorized'   )) .
             "', info = '"          . trim(formData('info'         )) .
             "', federaldrugid = '" . trim(formData('federaldrugid')) .
-            "', upin = '"          . trim(formData('upin'         )) .
             "', npi  = '"          . trim(formData('npi'          )) .
             "', taxonomy = '"      . trim(formData('taxonomy'     )) .
             "', facility_id = '"   . trim(formData('facility_id'  )) .
@@ -627,8 +622,6 @@ function authorized_clicked() {
       <tr >
         <td><b><?php echo xlt('User / Groups'); ?></b>&nbsp;&nbsp;</td>
                 <td><a href="#" class="css_button cp-positive addUser"><span><?php echo xlt('Add User'); ?></span></a>
-        </td>
-        <td><a href="facility_user.php" class="css_button cp-misc"><span><?php echo xlt('View Facility Specific User Information'); ?></span></a>
         </td>
       </tr>
     </table>

@@ -74,7 +74,6 @@ class UserMap implements IDaoMap, IDaoMap2
             self::$FM["Lname"] = new FieldMap("Lname","users","lname",false,FM_TYPE_VARCHAR,255,null,false);
             self::$FM["Federaltaxid"] = new FieldMap("Federaltaxid","users","federaltaxid",false,FM_TYPE_VARCHAR,255,null,false);
             self::$FM["Federaldrugid"] = new FieldMap("Federaldrugid","users","federaldrugid",false,FM_TYPE_VARCHAR,255,null,false);
-            self::$FM["Upin"] = new FieldMap("Upin","users","upin",false,FM_TYPE_VARCHAR,255,null,false);
             self::$FM["Facility"] = new FieldMap("Facility","users","facility",false,FM_TYPE_VARCHAR,255,null,false);
             self::$FM["FacilityId"] = new FieldMap("FacilityId","users","facility_id",false,FM_TYPE_INT,11,null,false);
             self::$FM["SeeAuth"] = new FieldMap("SeeAuth","users","see_auth",false,FM_TYPE_INT,11,"1",false);
@@ -114,7 +113,6 @@ class UserMap implements IDaoMap, IDaoMap2
             self::$FM["PwdHistory1"] = new FieldMap("PwdHistory1","users","pwd_history1",false,FM_TYPE_LONGTEXT,null,null,false);
             self::$FM["PwdHistory2"] = new FieldMap("PwdHistory2","users","pwd_history2",false,FM_TYPE_LONGTEXT,null,null,false);
             self::$FM["DefaultWarehouse"] = new FieldMap("DefaultWarehouse","users","default_warehouse",false,FM_TYPE_VARCHAR,31,null,false);
-            self::$FM["Irnpool"] = new FieldMap("Irnpool","users","irnpool",false,FM_TYPE_VARCHAR,31,null,false);
             self::$FM["StateLicenseNumber"] = new FieldMap("StateLicenseNumber","users","state_license_number",false,FM_TYPE_VARCHAR,25,null,false);
             self::$FM["NewcropUserRole"] = new FieldMap("NewcropUserRole","users","newcrop_user_role",false,FM_TYPE_VARCHAR,30,null,false);
             self::$FM["Cpoe"] = new FieldMap("Cpoe","users","cpoe",false,FM_TYPE_TINYINT,1,null,false);
