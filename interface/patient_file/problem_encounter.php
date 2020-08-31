@@ -29,7 +29,7 @@
 
  include_once("../globals.php");
  include_once("$srcdir/patient.inc");
- require_once($modules_dir.'ACL/acl.inc');
+ require_once($modules_dir.'ACL/acl.inc.php');
  include_once("$srcdir/lists.inc");
  require_once("$srcdir/headers.inc.php");
 

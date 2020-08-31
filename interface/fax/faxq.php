@@ -7,7 +7,7 @@
  // of the License, or (at your option) any later version.
 
  require_once("../globals.php");
- require_once($modules_dir.'ACL/acl.inc');
+ require_once($modules_dir.'ACL/acl.inc.php');
 
  $faxstats = array(
   'B' => xl('Blocked'),

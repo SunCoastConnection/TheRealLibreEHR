@@ -37,7 +37,7 @@ $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
 require_once("../../globals.php");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 require_once("$srcdir/api.inc");
 require_once("codes.php");
 require_once("../../../custom/code_types.inc.php");

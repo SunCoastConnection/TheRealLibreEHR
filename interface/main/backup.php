@@ -29,7 +29,7 @@
 // tested a restore!
 set_time_limit(0);
 require_once("../globals.php");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 require_once("$srcdir/log.inc");
 require_once("$srcdir/headers.inc.php");
 

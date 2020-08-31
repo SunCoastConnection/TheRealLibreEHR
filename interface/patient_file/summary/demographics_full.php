@@ -35,7 +35,7 @@
    *
    */
   require_once("../../globals.php");
-  require_once($modules_dir.'ACL/acl.inc');
+  require_once($modules_dir.'ACL/acl.inc.php');
   require_once("$srcdir/options.inc.php");
   require_once("$srcdir/formatting.inc.php");
   require_once("$srcdir/erx_javascript.inc.php");

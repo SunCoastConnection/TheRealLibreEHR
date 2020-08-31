@@ -32,7 +32,7 @@ require_once("../../globals.php");
 require_once("$srcdir/forms.inc");
 require_once("$srcdir/sql.inc");
 require_once("$srcdir/encounter.inc");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/formdata.inc.php");
 

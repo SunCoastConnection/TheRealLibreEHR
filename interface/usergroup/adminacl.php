@@ -12,7 +12,7 @@
 // from adminacl_ajax.php
 //
 include_once("../globals.php");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 include_once("$srcdir/headers.inc.php");
 
 //ensure user has proper access

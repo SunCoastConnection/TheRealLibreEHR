@@ -7,7 +7,7 @@
  // of the License, or (at your option) any later version.
 
  include_once("../../globals.php");
- require_once($modules_dir.'ACL/acl.inc');
+ require_once($modules_dir.'ACL/acl.inc.php');
 
  $line_id = $_REQUEST['lineid'];
  $info_msg = "";

@@ -34,7 +34,7 @@
 
 include_once("../../globals.php");
 include_once("$srcdir/patient.inc");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 include_once("$srcdir/options.inc.php");
 include_once("$srcdir/formdata.inc.php");
 

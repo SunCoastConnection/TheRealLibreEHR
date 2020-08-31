@@ -26,7 +26,7 @@ $fake_register_globals=false;
 $sanitize_all_escapes=true;
 
 include_once("../../globals.php");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 include_once("$srcdir/lists.inc");
 
 // Check permission to create encounters.

@@ -9,7 +9,7 @@
  */
 
 require_once("../globals.php");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 require_once("$srcdir/formdata.inc.php");
 require_once("$srcdir/headers.inc.php");
 // This script can be run either inside the LibreEHR frameset for order catalog

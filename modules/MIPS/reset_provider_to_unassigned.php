@@ -18,7 +18,7 @@
  */
 require_once '../../interface/globals.php';
 include_once("$srcdir/api.inc");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 $form_doctor = "";
 
 ?>	

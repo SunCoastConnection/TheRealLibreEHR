@@ -26,7 +26,7 @@ $sanitize_all_escapes  = true;
 $fake_register_globals = false;
 
 require_once("../globals.php");
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 require_once("$srcdir/log.inc");
 require_once("$srcdir/classes/Document.class.php");
 require_once("$srcdir/headers.inc.php");

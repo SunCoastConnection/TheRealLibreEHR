@@ -10,7 +10,7 @@
  $fake_register_globals = false;
 
  require_once("../globals.php");
- require_once($modules_dir.'ACL/acl.inc');
+ require_once($modules_dir.'ACL/acl.inc.php');
  require_once("drugs.inc.php");
  require_once("$srcdir/options.inc.php");
  require_once($GLOBALS['fileroot'] . "/library/classes/class.phpmailer.php");

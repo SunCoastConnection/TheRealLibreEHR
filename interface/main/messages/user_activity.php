@@ -1,6 +1,6 @@
 <?php
   require_once("../../globals.php");
-  require_once($modules_dir.'ACL/acl.inc');
+  require_once($modules_dir.'ACL/acl.inc.php');
   require_once("$srcdir/formdata.inc.php");
   require_once("$srcdir/options.inc.php");
   require_once("$srcdir/htmlspecialchars.inc.php");

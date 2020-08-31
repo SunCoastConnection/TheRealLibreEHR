@@ -31,7 +31,7 @@ $fake_register_globals=false;
 
  include_once("../../globals.php");
  include_once("$srcdir/log.inc");
- require_once($modules_dir.'ACL/acl.inc');
+ require_once($modules_dir.'ACL/acl.inc.php');
 
  $feid = $_GET['feid'] + 0; // id from form_encounter table
 

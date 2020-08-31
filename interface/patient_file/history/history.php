@@ -12,7 +12,7 @@ $fake_register_globals=false;
  require_once("$srcdir/patient.inc");
  require_once("history.inc.php");
  require_once("$srcdir/options.inc.php");
- require_once($modules_dir.'ACL/acl.inc');
+ require_once($modules_dir.'ACL/acl.inc.php');
  require_once("$srcdir/options.js.php");
 
 ?>

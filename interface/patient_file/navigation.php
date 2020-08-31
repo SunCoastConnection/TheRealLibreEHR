@@ -1,6 +1,6 @@
 <?php
  include_once("../globals.php");
- require_once($modules_dir.'ACL/acl.inc');
+ require_once($modules_dir.'ACL/acl.inc.php');
 
  $ie_auth = ((acl_check('encounter_notes') ||
               acl_check('anyones_encounter')) &&

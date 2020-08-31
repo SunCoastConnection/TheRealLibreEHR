@@ -45,7 +45,7 @@
 
    require_once("../../globals.php");
    require_once("$srcdir/patient.inc");
-   require_once($modules_dir.'ACL/acl.inc');
+   require_once($modules_dir.'ACL/acl.inc.php');
    require_once("$srcdir/classes/Address.class.php");
    require_once("$srcdir/classes/InsuranceCompany.class.php");
    require_once("$srcdir/classes/Document.class.php");

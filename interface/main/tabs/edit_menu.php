@@ -50,7 +50,7 @@
  /* Include our required headers */
 
 require_once('../../globals.php');
-require_once($modules_dir.'ACL/acl.inc');
+require_once($modules_dir.'ACL/acl.inc.php');
 require_once $GLOBALS['srcdir'].'/headers.inc.php';
 
 if (!acl_check('super')) die(xl('Not authorized','','','!'));
