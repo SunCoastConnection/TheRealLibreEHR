@@ -296,3 +296,10 @@ ALTER TABLE `ar_activity` ADD `inactive` BOOLEAN NOT NULL DEFAULT FALSE AFTER `d
 #IfMissingColumn patient_data transaction_billing_note
   ALTER TABLE `patient_data` ADD COLUMN `transaction_billing_note` TEXT  COMMENT 'Transaction Screen Notes' AFTER `billing_note`;
 #EndIf
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-10-01 load_filename 2021-ICD-10-CM-Codes.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-10-01', '2021-ICD-10-CM-Codes.zip', 'f22e7201fa662689d85b926a32359701');
+#EndIf
+
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-10-01 load_filename 2021-ICD-10-PCS-Order.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-10-01', '2021-ICD-10-PCS-Order.zip', '6a61cee7a8f774e23412ca1330980bbb');
+#Endif
