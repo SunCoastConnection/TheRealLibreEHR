@@ -1,2 +1,5 @@
 Directory to place ICD10 Database files.
 In Libre EHR, go to Administration -> Other -> 'External Data Loads' for instructions.
+
+2021 codes sourced from:
+https://www.cms.gov/medicare/icd-10/2021-icd-10-cm
