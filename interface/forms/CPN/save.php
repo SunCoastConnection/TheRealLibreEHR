@@ -13,8 +13,7 @@ echo "$var\n";
 if ($encounter == "")
 $encounter = date("Ymd");
 if ($_GET["mode"] == "new"){
-$newid = formSubmit("form_cpn", $_POST, $_GET["id"], $userauthorized);
-
+$newid = formSubmit("form_cpn", $_POST, $_GET["id"], $userauthorized);  
 addForm($encounter, "Counseling Progress Note", $newid, "cpn", $pid, $userauthorized);
 }elseif ($_GET["mode"] == "update") {
 sqlInsert("update form_cpn set pid = {$_SESSION["pid"]},groupname='".$_SESSION["authProvider"]."',user='".$_SESSION["authUser"]."',authorized=$userauthorized,activity=1, date = NOW(),
@@ -60,6 +59,16 @@ data34 ='".$_POST["data34"]."',
 data35 ='".$_POST["data35"]."',
 data36 ='".$_POST["data36"]."',
 data37 ='".$_POST["data37"]."',
+data38 ='".$_POST["data38"]."',
+data39 ='".$_POST["data39"]."',
+data40 ='".$_POST["data40"]."',
+data41 ='".$_POST["data41"]."',
+data42 ='".$_POST["data42"]."',
+data43 ='".$_POST["data43"]."',
+data44 ='".$_POST["data44"]."',
+data45 ='".$_POST["data45"]."',
+data46 ='".$_POST["data46"]."',
+data47 ='".$_POST["data47"]."',
 finalize ='".$_POST["finalize"]."' where id=$id");
 }
 /*

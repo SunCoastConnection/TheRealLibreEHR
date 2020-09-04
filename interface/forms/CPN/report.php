@@ -65,10 +65,11 @@ if ($obj{"data13"} == "on") {echo "<b>Anxious/Fearful</b>&nbsp;&nbsp;&nbsp;&nbsp
 if ($obj{"data14"} == "on") {echo "<b>Happy</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";}
  if ($obj{"data15"} == "on") {echo "<b>Sad</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";}
  if ($obj{"data16"} == "on") {echo "<b>Angry</b>";}
- if ($obj{"data16"} == "on") {echo "<BR>Assessment Notes:&nbsp;&nbsp;".stripslashes($obj{"assessment_notes"});}
  ?>
 <br>
-<br>
+<b>Assessment Notes:&nbsp;&nbsp;&nbsp;&nbsp;</b><?php echo stripslashes($obj{"assessment_notes"});?>
+<br><br>
+
 
 <b><u>Progress Toward Treatment Goals:</u></b><br>
 <?php echo stripslashes($obj{"data17"});?>
@@ -79,22 +80,36 @@ if ($obj{"data14"} == "on") {echo "<b>Happy</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";}
 
 
 <b>Risk Factors:</b>
-<?php if ($obj{"data19"} == "on") {echo "Hx of Tx Non-Compliance&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data20"} == "on") {echo "Hx/Px of Elopement&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data21"} == "on") {echo "Hx of Multiple Dx&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data22"} == "on") {echo "Prior Inpatient Treatment&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data23"} == "on") {echo "Prior Homicide or Suicide Attempt&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data24"} == "on") {echo "Self Injurious&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data25"} == "on") {echo "Current Suicide Ideation&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data26"} == "on") {echo "Imminent Risk of Harm to Self&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data27"} == "on") {echo "Threats to Harm Others&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data28"} == "on") {echo "Aggression&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data29"} == "on") {echo "Current Homicidal Ideation&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data30"} == "on") {echo "Imminent Risk of Harm to Others&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data31"} == "on") {echo "Sexual Acting Out&nbsp;&nbsp;&nbsp;&nbsp;";}
- if ($obj{"data32"} == "on") {echo "Other Risks Noted&nbsp;&nbsp;&nbsp;&nbsp;";}?>
- 
-
+<?php 
+ if ($obj{"data19"} == "on") {echo "*Hx of Tx Non-Compliance&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data20"} == "on") {echo "*Hx/Px of Elopement&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data21"} == "on") {echo "*Hx of Multiple Dx&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data22"} == "on") {echo "*Prior Inpatient Treatment&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data23"} == "on") {echo "*Prior Homicide or Suicide Attempt&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data24"} == "on") {echo "*Self Injurious&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data25"} == "on") {echo "*Current Suicide Ideation&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data26"} == "on") {echo "*Imminent Risk of Harm to Self&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data27"} == "on") {echo "*Threats to Harm Others&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data28"} == "on") {echo "*Aggression&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data29"} == "on") {echo "*Current Homicidal Ideation&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data30"} == "on") {echo "*Imminent Risk of Harm to Others&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data31"} == "on") {echo "*Sexual Acting Out&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data32"} == "on") {echo "*Other Risks Noted&nbsp;&nbsp;&nbsp;&nbsp;";}
+ ?>
+ <BR>
+ <b>Substance Abuse Related Factors:</b>
+<?php 
+ if ($obj{"data38"} == "on") {echo "*Hx of Significant Substance Abuse&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data39"} == "on") {echo "*Ongoing Substance Abuse&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data40"} == "on") {echo "*Hx of Domestic Violence&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data41"} == "on") {echo "*Suspicion of Ongoing Domestic Violence&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data42"} == "on") {echo "*Hx of Child Abuse&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data43"} == "on") {echo "*Hx of Child Neglect&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data44"} == "on") {echo "*Hx of Hazardous Conditions&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data45"} == "on") {echo "*Ongoing Hazardous Conditions&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data46"} == "on") {echo "*Hx of Inadequate Supervision&nbsp;&nbsp;&nbsp;&nbsp;";}
+ if ($obj{"data47"} == "on") {echo "*Parental Mental Health Issues&nbsp;&nbsp;&nbsp;&nbsp;";}
+?>
 <br><br>
 
 <b><u>Risk Management</u></b><br>

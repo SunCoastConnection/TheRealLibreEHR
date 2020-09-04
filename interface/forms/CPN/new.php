@@ -312,13 +312,89 @@ $result = SqlFetchArray($res); ?>
 		</span>
 		</TD>
 		</tr>
+		
+			<TR class="alt">
+	<TD>
+	<B>Substance Abuse Related Factors:</b>
+	</TD>
+	</tr>
+	<tr>
+	<TD>
+ 		<span class="checkbox-button">
+			<input id="data38" name="data38" type="checkbox" value="on" >
+			<label for="data38" > Hx of Significant Substance Abuse </label>
+		</span> 
+		<span class="checkbox-button">
+			<input id="data39" name="data39" type="checkbox" value="on" >
+			<label for="data39" > Ongoing Substance Abuse </label>
+		</span>
+
+		<span class="checkbox-button">
+			<input id="data40" name="data40" type="checkbox" value="on" >
+			<label for="data40"> Hx of Domestic Violence </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data41" name="data41" type="checkbox" value="on" >
+			<label for="data41"> Suspicion of Ongoing Domestic Violence </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data42" name="data42" type="checkbox" value="on" >
+			<label for="data42"> Hx of Child Abuse </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data43" name="data43" type="checkbox" value="on" >
+			<label for="data43"> Hx of Child Neglect </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data44" name="data44" type="checkbox" value="on" >
+			<label for="data44">Hx of Hazardous Conditions </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data45" name="data45" type="checkbox" value="on" >
+			<label for="data45"> Ongoing Hazardous Conditions </label>
+		</span>
+
+		<span class="checkbox-button">
+			<input id="data46" name="data46" type="checkbox" value="on" >
+			<label for="data46"> Hx of Inadequate Supervision </label>
+		</span>
+		
+		<span class="checkbox-button">
+		    <input id="data47" name="data47" type="checkbox" value="on" >
+			<label for="data47"> Parental Mental Health Issues </label>
+		</span>
+		
+
+		</TD>
+		</tr>
+		
+		
+		
 		<TR>
 		<TD>
 		<BR>
 		Risk Management: <BR>
-					<TEXTAREA NAME="data33" ROWS=7 COLS=125 WRAP=SOFT STYLE="width: 6in; height: .75in">The current risk is rated as low based on the factors above and it is my clinical judgment that the recommended level of counseling indicated below is sufficient to manage this risk.</TEXTAREA></FONT>
+					<TEXTAREA ID="data33" NAME="data33" ROWS=7 COLS=125 WRAP=SOFT STYLE="width: 6in; height: .75in">The current risk is rated as low based on the factors above and it is my clinical judgment that the recommended level of counseling indicated below is sufficient to manage this risk.</TEXTAREA></FONT>
 					</TD>
 	</TR>	
+	<TR>
+	<TD>
+	<button type="button" onclick="riskNotes()">Use CFP Standard Moderate Risk Statement</button>
+
+<script>
+function riskNotes() {
+  document.getElementById("data33").value = "The current risk is rated as moderate based on the factors above and it is my clinical judgment that the recommended level of therapeutic intervention and safety monitoring provided by CFP as described in the safety plan completed by case management is sufficient to manage this risk.";
+}
+</script>
+
+	</TD>
+	</TR>	
+	
 </table>
 
 

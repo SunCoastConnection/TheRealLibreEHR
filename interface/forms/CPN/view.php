@@ -313,6 +313,65 @@ $result = SqlFetchArray($res); ?>
 		</TD>
 		</tr>
 		<TR>
+					<TR class="alt">
+	<TD>
+	<B>Substance Abuse Related Factors:</b>
+	</TD>
+	</tr>
+	<tr>
+	<TD>
+ 		<span class="checkbox-button">
+			<input id="data38" name="data38" type="checkbox" value="on" <?php if ($obj{"data38"} == "on") {echo "checked";};?>>
+			<label for="data38" > Hx of Significant Substance Abuse </label>
+		</span> 
+		<span class="checkbox-button">
+			<input id="data39" name="data39" type="checkbox" value="on" <?php if ($obj{"data39"} == "on") {echo "checked";};?>>
+			<label for="data39" > Ongoing Substance Abuse </label>
+		</span>
+
+		<span class="checkbox-button">
+			<input id="data40" name="data40" type="checkbox" value="on" <?php if ($obj{"data40"} == "on") {echo "checked";};?>>
+			<label for="data40"> Hx of Domestic Violence </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data41" name="data41" type="checkbox" value="on" <?php if ($obj{"data41"} == "on") {echo "checked";};?>>
+			<label for="data41"> Suspicion of Ongoing Domestic Violence </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data42" name="data42" type="checkbox" value="on" <?php if ($obj{"data42"} == "on") {echo "checked";};?>>
+			<label for="data42"> Hx of Child Abuse </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data43" name="data43" type="checkbox" value="on" <?php if ($obj{"data43"} == "on") {echo "checked";};?>>
+			<label for="data43"> Hx of Child Neglect </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data44" name="data44" type="checkbox" value="on" <?php if ($obj{"data44"} == "on") {echo "checked";};?>>
+			<label for="data44">Hx of Hazardous Conditions </label>
+		</span>
+		
+		<span class="checkbox-button">
+			<input id="data45" name="data45" type="checkbox" value="on" <?php if ($obj{"data45"} == "on") {echo "checked";};?>>
+			<label for="data45"> Ongoing Hazardous Conditions </label>
+		</span>
+
+		<span class="checkbox-button">
+			<input id="data46" name="data46" type="checkbox" value="on" <?php if ($obj{"data46"} == "on") {echo "checked";};?>>
+			<label for="data46"> Hx of Inadequate Supervision </label>
+		</span>
+		
+		<span class="checkbox-button">
+		    <input id="data47" name="data47" type="checkbox" value="on" <?php if ($obj{"data47"} == "on") {echo "checked";};?>>
+			<label for="data47"> Parental Mental Health Issues </label>
+		</span>
+		
+
+		</TD>
+		</tr>
 		<TD>
 		<BR>
 		Risk Management: <BR>
