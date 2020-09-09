@@ -217,7 +217,7 @@
             </div>
           </div>
           <div>
-            <select id="encounter_id"  name="encounter_id"  ><?php echo $enc_list;?></select>&nbsp;
+            <select id="encounter_id"  name="encounter_id"  ><?php echo $this->enc_list;?></select>&nbsp;
             <input type="checkbox" name="encounter_check" id="encounter_check"  onclick='set_checkbox(this)'/> 
             <label for="encounter_check"><b><?php echo xlt("Create Encounter");?></b></label>&nbsp;&nbsp;
             <?php echo xlt("Visit Category");?>: &nbsp;<select id="visit_category_id"  name="visit_category_id"  disabled>
