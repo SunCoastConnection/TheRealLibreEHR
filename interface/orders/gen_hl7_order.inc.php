@@ -152,10 +152,10 @@ function gen_hl7_order($orderid, &$out) {
   $porow = sqlQuery("SELECT " .
     "po.date_collected, po.date_ordered, po.order_priority, " .
     "pp.*, " .
-    "pd.pid, pd.pubpid, pd.fname, pd.lname, pd.mname, pd.DOB,pd.facility AS pfac, pd.ss, " .
+    "pd.pid, pd.pubpid, pd.fname, pd.lname, pd.mname, pd.DOB,pd.facility AS pfacid,pf.alias AS pfac pd.ss, " .
     "pd.phone_home, pd.phone_biz, pd.sex, pd.street, pd.city, pd.state, pd.postal_code, " .
     "f.encounter, u.fname AS docfname, u.lname AS doclname, u.npi AS docnpi " .
-    "FROM procedure_order AS po, procedure_providers AS pp, " .
+    "FROM procedure_order AS po, procedure_providers AS pp, facility AS pf, " .
     "forms AS f, patient_data AS pd, users AS u " .
     "WHERE " .
     "po.procedure_order_id = ? AND " .
@@ -163,6 +163,7 @@ function gen_hl7_order($orderid, &$out) {
     "f.formdir = 'procedure_order' AND " .
     "f.form_id = po.procedure_order_id AND " .
     "pd.pid = f.pid AND " .
+    "pf.id = pd.facility AND ".
     "u.id = po.provider_id",
     array($orderid));
   if (empty($porow)) return "Procedure order, ordering provider or lab is missing for order ID '$orderid'";
@@ -175,8 +176,7 @@ function gen_hl7_order($orderid, &$out) {
     "pc.do_not_send = 0 " .
     "ORDER BY pc.procedure_order_seq",
     array($orderid));
-    $facquery = "SELECT alias FROM facility WHERE id = ".$porow['pfac'];
-   $plocation = sqlStatement($facquery);
+
 
   // Message Header
   $out .= "MSH" .
@@ -227,7 +227,7 @@ function gen_hl7_order($orderid, &$out) {
   $out .= "PV1" .
     $d1 . "1" .                           // Set ID (always just 1 of these)
     $d1 .                                 // Patient Class (if required, O for Outpatient)
-    $d1 .  hl7Text($plocation) .          // Patient Location (for inpatient location data.  Currently set to the patient_data facility)
+    $d1 .  hl7Text($porow['pfac']) .          // Patient Location (for inpatient location data.  Currently set to the patient_data facility)
     $d1 . $d1 . $d1 .
     $d1 . hl7Text($porow['docnpi']) .     // Attending Doctor ID
       $d2 . hl7Text($porow['doclname']) . // Last Name
