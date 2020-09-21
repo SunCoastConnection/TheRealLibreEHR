@@ -152,7 +152,7 @@ function gen_hl7_order($orderid, &$out) {
   $porow = sqlQuery("SELECT " .
     "po.date_collected, po.date_ordered, po.order_priority, " .
     "pp.*, " .
-    "pd.pid, pd.pubpid, pd.fname, pd.lname, pd.mname, pd.DOB,pd.facility AS pfacid,pf.alias AS pfac pd.ss, " .
+    "pd.pid, pd.pubpid, pd.fname, pd.lname, pd.mname, pd.DOB, pd.facility AS pfacid, pf.alias AS pfac, pd.ss, " .
     "pd.phone_home, pd.phone_biz, pd.sex, pd.street, pd.city, pd.state, pd.postal_code, " .
     "f.encounter, u.fname AS docfname, u.lname AS doclname, u.npi AS docnpi " .
     "FROM procedure_order AS po, procedure_providers AS pp, facility AS pf, " .
