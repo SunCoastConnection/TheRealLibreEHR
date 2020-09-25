@@ -5708,6 +5708,44 @@ CREATE TABLE `users` (
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `users_acl` (
+  `user` int(11) NOT NULL,
+  `feature` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `users_acl` (`user`, `feature`) VALUES
+(1,'deletedocuments'                  ),
+(1,'batchcom'                         ),
+(1,'eob'                              ),
+(1,'bill'                             ),
+(1,'billing_reports'                  ),
+(1,'report_select_any_provider'       ),
+(1,'super'                            ),
+(1,'edit_drugs'                       ),
+(1,'prices'                           ),
+(1,'sensitive'                        ),
+(1,'create_encounters'                ),
+(1,'encounter_notes'                  ),
+(1,'anyones_encounter'                ),
+(1,'link_issue_encounter'             ),
+(1,'encounter_date_edit'              ),
+(1,'Dx_edit'                          ),
+(1,'fee_sheet'                        ),
+(1,'fee_sheet_any'                    ),
+(1,'language'                         ),
+(1,'patients_add'                     ),
+(1,'patient_dems'                     ),
+(1,'patients_edit_dems'               ),
+(1,'messages'                         ),
+(1,'patient_alerts'                   ),
+(1,'orders_procedures'                ),
+(1,'chart_amendments'                 ),
+(1,'sign_orders'                      ),
+(1,'practice_admin'                   ),
+(1,'calendar_add'                     ),
+(1,'calendar_edit'                    ),
+(1,'calendar_super'                   );
+
 CREATE TABLE `users_facility` (
   `tablename` varchar(64) NOT NULL,
   `table_id` int(11) NOT NULL,
@@ -6269,6 +6307,9 @@ ALTER TABLE `transactions_log`
 
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+  
+ALTER TABLE `users_acl`
+  ADD PRIMARY KEY (`user`,`feature`);
 
 ALTER TABLE `users_facility`
   ADD PRIMARY KEY (`tablename`,`table_id`,`facility_id`);
