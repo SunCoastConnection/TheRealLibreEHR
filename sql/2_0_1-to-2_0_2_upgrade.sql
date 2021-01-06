@@ -303,3 +303,11 @@ INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_re
 #IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-10-01 load_filename 2021-ICD-10-PCS-Order.zip
 INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-10-01', '2021-ICD-10-PCS-Order.zip', '6a61cee7a8f774e23412ca1330980bbb');
 #Endif
+
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-12-01 load_filename 2021-ICD-10-CM-Codes-12-01.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-12-01', '2021-ICD-10-CM-Codes-12-01.zip', '29c9fced91667f9d8d8d85c2c86374ba');
+#EndIf
+
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-12-01 load_filename 2021-ICD-10-PCS-Order-12-01.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-12-01', '2021-ICD-10-PCS-Order-12-01.zip', '7de51527f44928ea5627a89038747302');
+#Endif
