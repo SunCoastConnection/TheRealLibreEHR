@@ -5709,42 +5709,50 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `users_acl` (
+  `id` int(11) NOT NULL,
   `user` int(11) NOT NULL,
-  `feature` varchar(255) DEFAULT NULL
+  `deletedocuments`                  tinyint(1) DEFAULT 0,
+  `batchcom`                         tinyint(1) DEFAULT 0,
+  `eob`                              tinyint(1) DEFAULT 0,
+  `bill`                             tinyint(1) DEFAULT 0,
+  `billing_reports`                  tinyint(1) DEFAULT 0,
+  `report_select_any_provider`       tinyint(1) DEFAULT 0,
+  `super`                            tinyint(1) DEFAULT 0,
+  `edit_drugs`                       tinyint(1) DEFAULT 0,
+  `prices`                           tinyint(1) DEFAULT 0,
+  `sensitive`                        tinyint(1) DEFAULT 0,
+  `create_encounters`                tinyint(1) DEFAULT 0,
+  `encounter_notes`                  tinyint(1) DEFAULT 0,
+  `anyones_encounter`                tinyint(1) DEFAULT 0,
+  `link_issue_encounter`             tinyint(1) DEFAULT 0,
+  `encounter_date_edit`              tinyint(1) DEFAULT 0,
+  `Dx_edit`                          tinyint(1) DEFAULT 0,
+  `fee_sheet`                        tinyint(1) DEFAULT 0,
+  `fee_sheet_any`                    tinyint(1) DEFAULT 0,
+  `language`                         tinyint(1) DEFAULT 0,
+  `patients_add`                     tinyint(1) DEFAULT 0,
+  `patient_dems`                     tinyint(1) DEFAULT 0,
+  `patients_edit_dems`               tinyint(1) DEFAULT 0,
+  `messages`                         tinyint(1) DEFAULT 0,
+  `patient_alerts`                   tinyint(1) DEFAULT 0,
+  `orders_procedures`                tinyint(1) DEFAULT 0,
+  `chart_amendments`                 tinyint(1) DEFAULT 0,
+  `sign_orders`                      tinyint(1) DEFAULT 0,
+  `practice_admin`                   tinyint(1) DEFAULT 0,
+  `calendar_add`                     tinyint(1) DEFAULT 0,
+  `calendar_edit`                    tinyint(1) DEFAULT 0,
+  `calendar_super`                   tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `users_acl` (`user`, `feature`) VALUES
-(1,'deletedocuments'                  ),
-(1,'batchcom'                         ),
-(1,'eob'                              ),
-(1,'bill'                             ),
-(1,'billing_reports'                  ),
-(1,'report_select_any_provider'       ),
-(1,'super'                            ),
-(1,'edit_drugs'                       ),
-(1,'prices'                           ),
-(1,'sensitive'                        ),
-(1,'create_encounters'                ),
-(1,'encounter_notes'                  ),
-(1,'anyones_encounter'                ),
-(1,'link_issue_encounter'             ),
-(1,'encounter_date_edit'              ),
-(1,'Dx_edit'                          ),
-(1,'fee_sheet'                        ),
-(1,'fee_sheet_any'                    ),
-(1,'language'                         ),
-(1,'patients_add'                     ),
-(1,'patient_dems'                     ),
-(1,'patients_edit_dems'               ),
-(1,'messages'                         ),
-(1,'patient_alerts'                   ),
-(1,'orders_procedures'                ),
-(1,'chart_amendments'                 ),
-(1,'sign_orders'                      ),
-(1,'practice_admin'                   ),
-(1,'calendar_add'                     ),
-(1,'calendar_edit'                    ),
-(1,'calendar_super'                   );
+INSERT INTO `users_acl` (`id`,`user`, `deletedocuments`, `batchcom`, `eob`,
+ `bill`, `billing_reports`, `report_select_any_provider`, `super`, `edit_drugs`,
+  `prices`, `sensitive`, `create_encounters`, `encounter_notes`, `anyones_encounter`,
+   `link_issue_encounter`, `encounter_date_edit`, `Dx_edit`, `fee_sheet`, `fee_sheet_any`,
+    `language`, `patients_add`, `patient_dems`, `patients_edit_dems`, `messages`,
+     `patient_alerts`, `orders_procedures`, `chart_amendments`, `sign_orders`,
+      `practice_admin`, `calendar_add`, `calendar_edit`, `calendar_super`) VALUES
+(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1);
+
 
 CREATE TABLE `users_facility` (
   `tablename` varchar(64) NOT NULL,
@@ -6309,7 +6317,9 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
   
 ALTER TABLE `users_acl`
-  ADD PRIMARY KEY (`user`,`feature`);
+  ADD PRIMARY KEY (`id`,`user`);
+ALTER TABLE `users_acl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 ALTER TABLE `users_facility`
   ADD PRIMARY KEY (`tablename`,`table_id`,`facility_id`);
@@ -6594,7 +6604,6 @@ ALTER TABLE `transactions_log`
 
 ALTER TABLE `users`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 
 ALTER TABLE `cases_to_documents`
   ADD CONSTRAINT `cases_to_documents_ibfk_1` FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
