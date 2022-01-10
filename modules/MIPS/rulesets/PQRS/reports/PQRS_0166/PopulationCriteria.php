@@ -44,9 +44,9 @@ class PQRS_0166_PopulationCriteria implements PQRSPopulationCriteriaFactory
         return new PQRS_0166_Exclusion();
     }
     
-    public function createNotMet()
+    public function createHardFail()
     {
-        return new PQRS_0166_NotMet();
+        return new PQRS_0166_HardFail();
     }
 }
 ?>

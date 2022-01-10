@@ -45,9 +45,9 @@ class PQRS_0005_PopulationCriteria2 implements PQRSPopulationCriteriaFactory
         return new PQRS_0005_Exclusion2();
         // Both varients use same Exclusion
     }
-    public function createNotMet()
+    public function createHardFail()
     {
-        return new PQRS_0005_NotMet2();
+        return new PQRS_0005_HardFail2();
     }
 }
 

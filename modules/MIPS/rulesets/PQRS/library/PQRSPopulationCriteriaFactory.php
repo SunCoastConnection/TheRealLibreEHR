@@ -23,5 +23,5 @@ interface PQRSPopulationCriteriaFactory extends RsFilterIF
     public function createDenominator();
     public function createNumerators();
     public function createExclusion();
-    public function createNotMet();
+    public function createHardFail();
 }

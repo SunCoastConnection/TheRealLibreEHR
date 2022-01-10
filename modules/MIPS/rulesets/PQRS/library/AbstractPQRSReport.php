@@ -33,7 +33,7 @@ abstract class AbstractPQRSReport implements RsReportIF
 
     protected $numerator_false = array();  // save patient_id => Numerator class return value
     protected $exclusion_false = array();   // save patient_id => Exclusion class return value
-    protected $notmet_false = array();   // save patient_id => NotMet class return value
+    protected $HardFail_false = array();   // save patient_id => HardFail class return value
 
     public function __construct( array $rowRule, array $patientIdArray, $dateTarget, $options )
     {
@@ -120,12 +120,12 @@ abstract class AbstractPQRSReport implements RsReportIF
                     $numerator->setReportOptions($this->_reportOptions);
                 }
 
-                $notmet = $populationCriteria->createNotMet();
-                if ( !is_array( $notmet ) ) {
-                    $notmet = array( $notmet );
+                $HardFail = $populationCriteria->createHardFail();
+                if ( !is_array( $HardFail ) ) {
+                    $HardFail = array( $HardFail );
                 }
-                foreach ( $notmet as $notmets ) {
-                    $notmets->setReportOptions($this->_reportOptions);
+                foreach ( $HardFail as $HardFails ) {
+                    $HardFails->setReportOptions($this->_reportOptions);
                 }
 
                 $exclusion = $populationCriteria->createExclusion();
@@ -148,7 +148,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                 $patExclArr = array();
                 $patExceptArr = array();
                 $numeratorPatientPopulations = $this->initNumeratorPopulations( $numerators );
-                $notmetPatientPopulations = $this->initNotMetPopulations( $notmet );
+                $HardFailPatientPopulations = $this->initHardFailPopulations( $HardFail );
                 $unreported = 0;
 
                 foreach ( $this->_pqrsPopulation as $patient )
@@ -196,10 +196,10 @@ abstract class AbstractPQRSReport implements RsReportIF
                             $this->numerator_false = array_merge($this->numerator_false, array('"'.$patient->id.'"' => 0));
                         }
                     }
-                    foreach ( $notmet as $notmets ) {
-                        $test_notmet = $this->testNotMet( $patient, $notmets, $notmetPatientPopulations );
-                        if ($test_notmet == FALSE) {
-                            $this->notmet_false = array_merge($this->notmet_false, array('"'.$patient->id.'"' => 0));
+                    foreach ( $HardFail as $HardFails ) {
+                        $test_HardFail = $this->testHardFail( $patient, $HardFails, $HardFailPatientPopulations );
+                        if ($test_HardFail == FALSE) {
+                            $this->HardFail_false = array_merge($this->HardFail_false, array('"'.$patient->id.'"' => 0));
                         }
                     }
                 }
@@ -207,7 +207,7 @@ abstract class AbstractPQRSReport implements RsReportIF
                 // tally results, run exclusion on each numerator
                 $pass_filt = $denominatorPatientPopulation;
                 $exclude_filt = $exclusionsPatientPopulation;
-                $pass_not = $notmetPatientPopulations;
+                $pass_hard = $HardFailPatientPopulations;
                 foreach ( $numeratorPatientPopulations as $title => $pass_targ ) {
 
                     if(count($patExclArr) > 0){
@@ -226,17 +226,18 @@ abstract class AbstractPQRSReport implements RsReportIF
                             }
                         }
                     }
-/////May redo NotMet like Exclusion/Exception above with a value of 5
+/////May redo HardFail like Exclusion/Exception above with a value of 5
                     $percentage = calculate_percentage( $pass_filt, $exclude_filt, $pass_targ );
 
-                    $pass_notmet = $pass_not["NotMet"];
+                    $pass_HardFail = $pass_hard["HardFail"];
 
-                    //error_log("NUMERATOR: " . print_r($this->numerator_false, true) . " EXCLUSION: " . print_r($this->exclusion_false, true) . " NOTMET: " . print_r($this->notmet_false, true));
+                    error_log("NUMERATOR: " . print_r($this->numerator_false, true) . " EXCLUSION: " . print_r($this->exclusion_false, true) . " HardFail: " . print_r($this->HardFail_false, true));
 
-                    $unreported = $this->countUnreported($this->numerator_false, $this->exclusion_false, $this->notmet_false);
+
+                    $unreported = $this->countUnreported($this->numerator_false, $this->exclusion_false, $this->HardFail_false);
 
                     $this->_resultsArray[]= new PQRSResult( $this->_rowRule, $title, $populationCriteria->getTitle(),
-                        $totalPatients, $pass_filt, $exclude_filt, $pass_targ, $pass_notmet, $unreported, $percentage );
+                        $totalPatients, $pass_filt, $exclude_filt, $pass_targ, $pass_HardFail, $unreported, $percentage );
                 }
             }
         }
@@ -253,13 +254,13 @@ abstract class AbstractPQRSReport implements RsReportIF
         return $numeratorPatientPopulations;
     }
 
-    private function initNotMetPopulations( array $notmets )
+    private function initHardFailPopulations( array $HardFails )
     {
-        $notmetPatientPopulations = array();
-        foreach ( $notmets as $notmet ) {
-            $notmetPatientPopulations[$notmet->getTitle()] = 0;
+        $HardFailPatientPopulations = array();
+        foreach ( $HardFails as $HardFail ) {
+            $HardFailPatientPopulations[$HardFail->getTitle()] = 0;
         }
-        return $notmetPatientPopulations;
+        return $HardFailPatientPopulations;
     }
 
     private function testNumerator( $patient, $numerator, &$numeratorPatientPopulations )
@@ -291,25 +292,25 @@ abstract class AbstractPQRSReport implements RsReportIF
         }
     }
 
-    private function testNotMet( $patient, $notmets, &$notmetPatientPopulations )
+    private function testHardFail( $patient, $HardFails, &$HardFailPatientPopulations )
     {
-        if ( $notmets instanceof PQRSFilterIF  )
+        if ( $HardFails instanceof PQRSFilterIF  )
         {
-            if ( $notmets->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) ) {
+            if ( $HardFails->test( $patient, $this->_beginMeasurement, $this->_endMeasurement ) ) {
 
-                $notmetPatientPopulations[$notmets->getTitle()]++;
+                $HardFailPatientPopulations[$HardFails->getTitle()]++;
 
                 // If itemization is turned on, then record the "passed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
-                    updateNumeratorPass($patient->id, 5); //Save 5 as Numberator value when NotMet.php class returns true
-                    insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $notmets->getTitle());
+                    updateNumeratorPass($patient->id, 5); //Save 5 as Numberator value when HardFail.php class returns true
+                    insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 1, $patient->id, $HardFails->getTitle());
                     return true;
                 }
             }
             else {
                 // If itemization is turned on, then record the "failed" item
                 if ($GLOBALS['report_itemizing_temp_flag_and_id']) {
-                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $notmets->getTitle());
+                   insertItemReportTracker($GLOBALS['report_itemizing_temp_flag_and_id'], $GLOBALS['report_itemized_test_id_iterator'], 0, $patient->id, $HardFails->getTitle());
                    return false;
                 }
 
@@ -317,21 +318,22 @@ abstract class AbstractPQRSReport implements RsReportIF
         }
         else
         {
-            throw new Exception( "NotMet must be an instance of PQRSFilterIF" );
+            throw new Exception( "HardFail must be an instance of PQRSFilterIF" );
         }
     }
 
     // If there's a zero in all 3 arrays with same patient_id as key, then it's unreported
-    private function countUnreported($numerator_false, $exclusion_false, $notmet_false)
+    private function countUnreported($numerator_false, $exclusion_false, $HardFail_false)
     {
         $unreported_items = 0;
-        foreach ($notmet_false as $key => $value) {
+        foreach ($HardFail_false as $key => $value) {
             if ($numerator_false[$key] == 0 && $exclusion_false[$key] == 0 && $value == 0) {
                 $unreported_items++;
             }
-            //    error_log("NUMERATOR: " . $key . " => " . $numerator_false[$key]);
-            //    error_log("EXCLUSION: " . $key . " => " . $exclusion_false[$key]);
-            //    error_log("NOTMET: " . $key . " => " . $notmet_false[$key]);
+            error_log("NUMERATOR: " . $key . " => " . $numerator_false[$key]);
+            error_log("EXCLUSION: " . $key . " => " . $exclusion_false[$key]);
+            error_log("HardFail: " . $key . " => " . $HardFail_false[$key]);
+
         }
         return $unreported_items;
     }

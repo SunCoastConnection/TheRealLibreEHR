@@ -44,9 +44,9 @@ class HCC_0023_PopulationCriteria implements PQRSPopulationCriteriaFactory
         return new HCC_0023_Exclusion();
     }
         
-        public function createNotMet()
+        public function createHardFail()
     {
-        return new HCC_0023_NotMet();
+        return new HCC_0023_HardFail();
     }
 }
 
