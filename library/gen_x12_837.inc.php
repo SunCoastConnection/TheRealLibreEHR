@@ -151,12 +151,13 @@ $CMS_5010 = true;
     "*" .
     "*46";
   }
-
+  if ($claim->payerName() == 'FLORIDA BLUE'){
+	  $out  .=  "*HC279";}else{
   if (trim($claim->x12gsreceiverid()) == '470819582') { // if ECLAIMS EDI
     $out  .=  "*" . $claim->clearingHouseETIN();
   } else {
     $out  .=  "*" . $claim->billingFacilityETIN();
-  }
+	  }}
     $out .= "~\n";
 
   ++$edicount;
@@ -192,13 +193,19 @@ $CMS_5010 = true;
 
   $HLBillingPayToProvider = $HLcount++;
 
-  // Situational PRV segment for provider taxonomy code for Medicaid.
- #   if ($claim->claimType() == 'MC') {
- #       ++$edicount;
- #       $out .= "PRV*BI*ZZ" .
- #       "*" . $claim->providerTaxonomy() .
- #       "~\n";
- #   }
+  // Situational PRV segment (for provider taxonomy code) situational inclusion for Beacon.
+  if ($claim->payerID()=='43324' || $claim->payerID()=='87357') {
+ ++$edicount;
+    $out .= "PRV*BI*PXC*251S00000X~\n";
+    }else{
+  //Need Facility Taxonomy in UI.  Facility taxonomy should belong to business, not the provider.
+  //Situational PRV segment for provider taxonomy code for Medicaid.
+    if ($claim->claimType() == 'MC') {
+        ++$edicount;
+        $out .= "PRV*BI*ZZ" .
+        "*" . $claim->providerTaxonomy() .
+        "~\n";
+    }}
 
   // Situational CUR segment (foreign currency information) omitted here.
 
@@ -761,8 +768,8 @@ $CMS_5010 = true;
         ++$edicount;
         $out .= "PRV" .
         "*PE" . // Performing provider
- //       "*" .($claim->claimType() != 'MC' ? "PXC" : "ZZ") .
-        "*PXC" .
+        //The next line needs an insurance level tweak.  Company may require PXC or ZZ due to inconsistency.
+        "*" .($claim->claimType() != 'MC' ? "PXC" : "ZZ") .
         "*" . $claim->providerTaxonomy() .
         "~\n";
     }

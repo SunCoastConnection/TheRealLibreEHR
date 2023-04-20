@@ -312,7 +312,7 @@ require('includes/session.php');
         var calendarFrameWidth = $("#sidebar").width() + $("#calendar-container").width() + 16 + 7;
         // setting height of the view area of the calendar so that horizontal scrollbar is visible
         if (calendarFrameWidth > 580) {
-          $('#calendar').fullCalendar('option', 'contentHeight', 400);
+          $('#calendar').fullCalendar('option', 'contentHeight', '100%');
         } else if (calendarFrameWidth > 430) {
           $('#calendar').fullCalendar('option', 'contentHeight', 370);
         } else if (calendarFrameWidth > 390) {

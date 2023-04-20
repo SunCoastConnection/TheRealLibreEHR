@@ -36,7 +36,7 @@ $show_message=0;
 
 
 /* Sending a mail to the admin when the breakglass user is activated only if $GLOBALS['Emergency_Login_email'] is set to 1 */
-$bg_count=count($access_group);
+$bg_count = sizeof($access_group);
 $mail_id = explode(".",$SMTP_HOST);
 for($i=0;$i<$bg_count;$i++){
 if(($_GET['access_group'][$i] == "Emergency Login") && ($_GET['active'] == 'on') && ($_GET['pre_active'] == 0)){
@@ -296,8 +296,6 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] =="user_admin") {
         set_user_aro($_POST['access_group'], $user_data["username"],
           formData('fname','P'), formData('mname','P'), formData('lname','P'));
       }
-
-        do_action( 'usergroup_admin_save', $_POST );
 
         refreshCalendar(); //after "Edit User" process is complete
 
@@ -600,7 +598,6 @@ $(document).ready(function(){
                 width:900,
                 focusInput: true,
                 padding:5,
-                iframeHeight: 700,
                 iframeURL: "usergroup_admin_add.php",
                 onClosed:function () {
                     location.reload();
@@ -608,6 +605,9 @@ $(document).ready(function(){
             });
 
         });
+    $("#cancel").click(function() {
+        parent.$('#addUser-iframe').iziModal('close');
+    });
 
 </script>
 <script language="JavaScript">

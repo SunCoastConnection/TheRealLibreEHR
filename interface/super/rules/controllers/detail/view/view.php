@@ -36,8 +36,6 @@ $rule = $viewBean->rule ?>
         <p><b><?php echo out( xl( $rule->title ) ); ?></b>
         (<?php echo implode_funcs( ", ", $rule->getRuleTypeLabels(), array( 'xl', 'out' ) ); ?>)
         </p>
-        <p><?php echo out( xl( 'Developer' ) ); ?><b>:</b>&nbsp;<?php echo out( $rule->developer ); ?></p>
-        <p><?php echo out( xl( 'Funding Source' ) ); ?><b>:</b>&nbsp;<?php echo out( $rule->funding_source ); ?></p>
         <p><?php echo out( xl( 'Release' ) ); ?><b>:</b>&nbsp;<?php echo out( $rule->release ); ?></p>
         <p><?php echo out( xl( 'Web Reference' ) ); ?><b>:</b>&nbsp;<?php echo out( $rule->web_ref ); ?></p>
     </div>
@@ -97,7 +95,7 @@ $rule = $viewBean->rule ?>
                                class="action_link" onclick="top.restoreSession()">
                                 (<?php echo out( xl( 'edit' ) ); ?>)
                             </a>
-                            <a href="index.php?action=edit!delete_filter&id=<?php echo out( $rule->id ); ?>&guid=<?php echo out( $criteria->guid ); ?>" 
+                            <a href="index.php?action=edit!delete_filter&id=<?php echo out( $rule->id ); ?>&guid=<?php echo out( $criteria->guid ); ?>"
                                class="action_link" onclick="top.restoreSession()">
                                 (<?php echo out( xl( 'delete' ) ); ?>)
                             </a>
@@ -113,12 +111,12 @@ $rule = $viewBean->rule ?>
         </p>
     </div>
     <?php } ?>
-    
+
     <!--                      -->
     <!-- rule groups          -->
     <!--                      -->
-    
-    
+
+
     <div class="section text">
 	<p class="header"><?php echo out( xl( 'Target/Action Groups' ) ); ?></p>
 	<?php $groupId = 0; foreach ( $rule->groups as $group ) { $groupId = $group->groupId; ?>
@@ -126,24 +124,24 @@ $rule = $viewBean->rule ?>
         <!--                      -->
         <!-- rule target criteria -->
         <!--                      -->
-        
+
         <?php $targets = $group->ruleTargets; if ( $targets ) { ?>
         <div class="section text">
-            <p class="header"><?php echo out( xl( 'Clinical targets' ) ); ?> 
+            <p class="header"><?php echo out( xl( 'Clinical targets' ) ); ?>
             	<a href="index.php?action=edit!add_criteria&id=<?php echo out( $rule->id ); ?>&group_id=<?php echo out( $group->groupId ); ?>&criteriaType=target" class="action_link" onclick="top.restoreSession()">
             		(<?php echo out( xl( 'add' ) ); ?>)
             	</a>
             </p>
             <p>
                 <?php if ( $targets->criteria ) { ?>
-    
+
                     <div>
                         <span class="left_col">&nbsp;</span>
                         <span class="mid_col"><u><?php echo out( xl( 'Criteria' ) ); ?></u></span>
                         <span class="mid_col"><u><?php echo out( xl( 'Characteristics' ) ); ?></u></span>
                         <span class="end_col"><u><?php echo out( xl( 'Requirements' ) ); ?></u></span>
                     </div>
-    
+
                     <?php foreach($targets->criteria as $criteria) { ?>
                         <div class="row">
                             <span class="left_col">
@@ -168,11 +166,11 @@ $rule = $viewBean->rule ?>
                 <?php } else { ?>
                     <p><?php echo out( xl( 'None defined' ) ); ?></p>
                 <?php } ?>
-    
+
             </p>
         </div>
         <?php } ?>
-    
+
         <!--              -->
         <!-- rule actions -->
         <!--              -->
@@ -189,7 +187,7 @@ $rule = $viewBean->rule ?>
                         <span class="left_col">&nbsp;</span>
                         <span class="end_col"><u><?php echo out( xl( 'Category/Title' ) ); ?></u></span>
                     </div>
-    
+
                     <div>
                     <?php foreach($actions->actions as $action) { ?>
                         <span class="left_col">
@@ -214,7 +212,7 @@ $rule = $viewBean->rule ?>
     	<div class="group">
     		<?php $nextGroupId = $groupId + 1; ?>
     		<div class="section text">
-        		<p class="header"><?php echo out( xl( 'Clinical targets' ) ); ?> 
+        		<p class="header"><?php echo out( xl( 'Clinical targets' ) ); ?>
         			<a href="index.php?action=edit!add_criteria&id=<?php echo out( $rule->id ); ?>&group_id=<?php echo $nextGroupId; ?>&criteriaType=target" class="action_link" onclick="top.restoreSession()">
         				(<?php echo out( xl( 'add' ) ); ?>)
         			</a>
@@ -228,7 +226,7 @@ $rule = $viewBean->rule ?>
                 </p>
             </div>
     	</div>
-    
+
     </div>
 
 </div>

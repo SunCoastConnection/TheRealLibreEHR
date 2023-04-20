@@ -68,25 +68,26 @@
          $to_date = $_POST['form_to_date'];
  }
 
-     //echo "<pre>";print_r($_POST);
-     $patient_id = trim($_POST["patient_id"]);
-     $age_from = $_POST["age_from"];
-     $age_to = $_POST["age_to"];
-     $sql_gender = $_POST["gender"];
-     $sql_ethnicity = $_POST["cpms_ethnicity"];
-     $sql_race=$_POST["race"];
-     $form_drug_name = trim($_POST["form_drug_name"]);
-     $form_diagnosis = trim($_POST["form_diagnosis"]);
-     $form_lab_results = trim($_POST["form_lab_results"]);
-     $form_service_codes = trim($_POST["form_service_codes"]);
-     $form_immunization = trim($_POST["form_immunization"]);
-     $communication = trim($_POST["communication"]);
-
 /* This function prepares the results to be displayed
  * @parameters: void
  * @return: void
  * */
 function prepareAndShowResults() {
+
+    //echo "<pre>";print_r($_POST);
+    $patient_id = trim($_POST["patient_id"]);
+    $age_from = $_POST["age_from"];
+    $age_to = $_POST["age_to"];
+    $sql_gender = $_POST["gender"];
+    $sql_ethnicity = $_POST["cpms_ethnicity"];
+    $sql_race=$_POST["race"];
+    $form_drug_name = trim($_POST["form_drug_name"]);
+    $form_diagnosis = trim($_POST["form_diagnosis"]);
+    $form_lab_results = trim($_POST["form_lab_results"]);
+    $form_service_codes = trim($_POST["form_service_codes"]);
+    $form_immunization = trim($_POST["form_immunization"]);
+    $communication = trim($_POST["communication"]);
+
   $from_date = prepareDateBeforeSave($from_date);
   $to_date   = prepareDateBeforeSave($to_date);
 

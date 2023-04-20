@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://opensource.org/licenses/gpl-license.php>;.
  *
- * @package Libre EHR
+ * @package LibreHealth EHR
  * @author  Kevin Yeh <kevin.y@integralemr.com>
- * @link    http://LibreEHR.org
+ * @link    http://librehealth.io
  */
 ?>
 <script type="text/html" id="justify-display">

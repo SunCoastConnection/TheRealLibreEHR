@@ -163,8 +163,11 @@ if (!empty($_POST['form_submit'])) {
   $tres = sqlStatement("SHOW TABLES");
   while ($trow = sqlFetchArray($tres)) {
     $tblname = array_shift($trow);
-    if ($tblname == 'patient_data' || $tblname == 'history_data' || $tblname == 'insurance_data') {
+    if ($tblname == 'patient_data' || $tblname == 'history_data' || $tblname == 'insurance_data' || $tblname == 'lists_touch') {
       deleteRows($tblname, 'pid', $source_pid);
+    }
+    else if ($tblname == 'erx_ttl_touch') {
+      deleteRows($tlbname, 'patient_id', $source_pid)
     }
     else if ($tblname == 'chart_tracker') {
       updateRows($tblname, 'ct_pid', $source_pid, $target_pid);

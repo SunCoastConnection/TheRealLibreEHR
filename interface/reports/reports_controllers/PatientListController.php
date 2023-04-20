@@ -24,23 +24,6 @@ require_once("$srcdir/formatting.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once("../../library/report_functions.php");
 
-$DateFormat = DateFormatRead();
-$DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
-
-// Prepare a string for CSV export.
-function qescape($str) {
-    $str = str_replace('\\', '\\\\', $str);
-    return str_replace('"', '\\"', $str);
-}
-
-// $from_date = fixDate($_POST['form_from_date'], date('Y-01-01'));
-// $to_date   = fixDate($_POST['form_to_date'], date('Y-12-31'));
-$from_date = fixDate($_POST['form_from_date'], '');
-$to_date   = fixDate($_POST['form_to_date'], '');
-if (empty($to_date) && !empty($from_date)) $to_date = date('Y-12-31');
-if (empty($from_date) && !empty($to_date)) $from_date = date('Y-01-01');
-
-$form_provider = empty($_POST['form_provider']) ? 0 : intval($_POST['form_provider']);
 
 /* This prepares and displays results for Patient List report
  * @params: None
@@ -48,6 +31,26 @@ $form_provider = empty($_POST['form_provider']) ? 0 : intval($_POST['form_provid
  * @author: Tigpezeghe Rodrige K. <tigrodrige@gmail.com>
  * */
 function prepareAndShowResults($from_date,$to_date) {
+
+    $DateFormat = DateFormatRead();
+    $DateLocale = getLocaleCodeForDisplayLanguage($GLOBALS['language_default']);
+
+// Prepare a string for CSV e7xport.
+    function qescape($str) {
+        $str = str_replace('\\', '\\\\', $str);
+        return str_replace('"', '\\"', $str);
+    }
+
+// $from_date = fixDate($_POST['form_from_date'], date('Y-01-01'));
+// $to_date   = fixDate($_POST['form_to_date'], date('Y-12-31'));
+    $from_date = fixDate($_POST['form_from_date'], '');
+    $to_date   = fixDate($_POST['form_to_date'], '');
+    if (empty($to_date) && !empty($from_date)) $to_date = date('Y-12-31');
+    if (empty($from_date) && !empty($to_date)) $from_date = date('Y-01-01');
+
+    $form_provider = empty($_POST['form_provider']) ? 0 : intval($_POST['form_provider']);
+
+
     $totalpts = 0;
     $query = "SELECT " .
        "p.fname, p.mname, p.lname, p.street, p.city, p.state, " .

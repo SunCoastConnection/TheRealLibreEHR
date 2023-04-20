@@ -108,7 +108,7 @@ $USER_SPECIFIC_TABS = array('Appearance',
                             'Locale',
                             'Report',
                             'Encounter',
-                            'Claim',
+                            'Claims',
                             'Demographic',
                             'Calendar',
                             'Connectors',
@@ -140,6 +140,7 @@ $USER_SPECIFIC_GLOBALS = array('default_tab_1',
                                'ptkr_show_room',
                                'ptkr_show_facility',
                                'ptkr_date_range',
+                               'ptkr_begin_date',
                                'ptkr_end_date',
                                'ptkr_show_visit_type',
                                'ptkr_show_encounter',
@@ -203,7 +204,7 @@ $GLOBALS_METADATA = array(
     'css_header' => array(
       xl('Theme'),
        'css',
-       'style_light.css',
+       'style_prism.css',
       xl('Pick a CSS theme.')
     ),
     'primary_color'=>array(xl('Primary color'),  'color', '#ffffff'),
@@ -613,19 +614,13 @@ $GLOBALS_METADATA = array(
     ),
 
     'restrict_user_facility' => array(
-      xl('Restrict Users to Facilities'),
+      xl('Restrict Users Schedule and Encounter Facilities'),
        'bool',                          // data type
        '0',                             // default
       xl('Restrict non-authorized users to the Schedule Facilities set in User admin.')
     ),
-        'tags_filters_enabled' => array(
-      xl('Enable Tags/Filters Feature'),
-       'bool',                          // data type
-       '0',                             // default
-      xl('Enables configurable tags and filters for demographics and various purposes.')
-    ),
         'facility_acl' => array(
-      xl('Restrict User access by Facility'),
+      xl('Restrict Users by Patient Facility (requires above)'),
        'bool',                          // data type
        '0',                             // default
       xl('Restrict User access to patients by assigned patient facility.')
@@ -1061,6 +1056,13 @@ $GLOBALS_METADATA = array(
       xl('Allow User to Specify Coding Done in Fee Sheet.')
     ),
 
+    'display_onset_date_entry' => array(
+      xl('Display Onset Date on Encounter Screen'),
+      'bool',                           // data type
+      '0',                              // default = false
+      xl('Display Onset Date on Encounter Screen.')
+    ),
+
   ),
 
   // Billing Tab
@@ -1126,7 +1128,15 @@ $GLOBALS_METADATA = array(
       '0',                              // default
       xl('Require the Entry of the Primary Insurance in the New Patient Screen')
 
-  ),
+   ),
+
+   'account_in_collections' => array(
+      xl('Indicate that an Account is In Collections on the Patient Finder'),
+      'bool',
+      '0',                              // default
+      xl('Indicate that an Account is In Collections on the Patient Finder, Patient Name Displayed in Red')
+
+    ),
 
   ),
 
@@ -1864,6 +1874,24 @@ $GLOBALS_METADATA = array(
        '0',                             // default = false
       xl('This Allows a Date Range to be Selected in Patient Flow Board.')
     ),
+    'ptkr_begin_date' => array(
+      xl('Patient Flow Board: Beginning Date'),
+      array(
+        'M1' => xl('One Month Behind'),
+        'W3' => xl('Three Weeks Behind'),
+        'W2' => xl('Two Weeks Behind'),
+        'W1' => xl('One Week Behind'),
+        'D6' => xl('Six Days Behind'),
+        'D5' => xl('Five Days Behind'),
+        'D4' => xl('Four Days Behind'),
+        'D3' => xl('Three Days Behind'),
+        'D2' => xl('Two Days Behind'),
+        'D1' => xl('One Day Behind'),
+        'D0' => xl('Today'),
+      ),
+      'D1',                     // default = One Day Behind
+      xl('This is the Beginning date for the Patient Flow Board Date Range. (only applicable if Allow Date Range in option above is Enabled)')
+    ),
     'ptkr_end_date' => array(
       xl('Patient Flow Board: Ending Date'),
       array(
@@ -1884,14 +1912,19 @@ $GLOBALS_METADATA = array(
       xl('Patient Flow Board: Timer Interval'),
       array(
        '0' => xl('No automatic refresh'),
-       '0:10' => '10',
-       '0:20' => '20',
-       '0:30' => '30',
-       '0:40' => '40',
-       '0:50' => '50',
-       '0:59' => '60',
+       '10' => '10 Seconds',
+       '20' => '20 Seconds',
+       '30' => '30 Seconds',
+       '40' => '40 Seconds',
+       '50' => '50 Seconds',
+       '60' => '60 Seconds',
+       '90' => '90 Seconds',
+       '120' => '2 Minutes',
+       '180' => '3 Minutes',
+       '240' => '4 Minutes',
+       '300' => '5 Minutes',
       ),
-       '0:20',                          // default
+       '20',                          // default
       xl('The screen refresh time in Seconds for the Patient Flow Board Screen.')
     ),
 
@@ -3388,12 +3421,5 @@ $GLOBALS_METADATA = array(
   ),
 
 );
-
-if ( function_exists( 'do_action' ) ) {
-    do_action( 'globals_init', $args = [
-        'global_metadata' => $GLOBALS_METADATA,
-        'user_specific_globals' => $USER_SPECIFIC_GLOBALS,
-        'user_specific_tabs' => $USER_SPECIFIC_TABS ] );
-}
 
 ?>

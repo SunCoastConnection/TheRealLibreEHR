@@ -35,7 +35,7 @@
  *	$array[$key] = $xmltoarray->fix_html_entities($value); //returns proper html values
  * }
  */
-class xmltoarray_parser_htmlfix{
+class xmltoarray_parser_htmlfix_class{
 	var $values; 
 	var $index; 
 	var $thearray; 
@@ -44,7 +44,7 @@ class xmltoarray_parser_htmlfix{
 	/**
 	 * Default constructor for xmltoarray_parser_htmlfix.
 	 */
-	function xmltoarray_parser_htmlfix(){
+	function __construct(){
 		$this->values = array(); 
 		$this->index  = array(); 
 		$this->thearray  = array(); 

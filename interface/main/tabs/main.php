@@ -240,15 +240,15 @@ var webroot_url="<?php echo $web_root; ?>";
     $("#patientData").on("click", function() {
         $('.handle').drags();
     });
-  
-  
+
+
 </script>
 <?php
 
    $userAuthorized = $_SESSION['userauthorized'];
    $authUserId = $_SESSION['authUserID'];
    $sql = sqlQuery("SELECT gl_value FROM globals WHERE gl_name = ?", array("updater_icon_visibility") );
-    $updater_icon_visibility = $sql['gl_value']; 
+    $updater_icon_visibility = $sql['gl_value'];
     if ($updater_icon_visibility == 1) {
         $show_icon = true;
     }
@@ -265,8 +265,8 @@ var webroot_url="<?php echo $web_root; ?>";
                 <div id='updater-settings-iframe'></div>
                 <div id='developer-mode-iframe'></div>";
     }
+
 ?>
-<?php do_action( 'after_main_box' ); ?>
 <style type="text/css">
     #updater-icon, #updater-options, #developer-mode {
     border: none; /* Remove borders */
@@ -288,11 +288,11 @@ var webroot_url="<?php echo $web_root; ?>";
         right: 0;
         bottom: 0;
     }
-    #updater-options, #developer-mode { 
+    #updater-options, #developer-mode {
         position: fixed; /* Fixed/sticky position */
         border: 2px solid #000;
         background-color: #F69600;
-        padding: 5px; 
+        padding: 5px;
         border-radius: 40%;
         bottom: 90px; /* Place the button at the bottom of the page */
         right: 30px; /* Place the button 30px from the right */
@@ -306,6 +306,16 @@ var webroot_url="<?php echo $web_root; ?>";
     }
 </style>
 <script>
+var global_timeout = "<?php echo $GLOBALS['timeout']; ?>";
+global_timeout = global_timeout * 1000;
+window.onload = function() {
+    var time = setTimeout(logout, global_timeout);
+    $('*').bind('mousemove click mouseup mousedown keydown keypress keyup submit change mouseenter scroll resize dblclick', function () {
+        clearTimeout(time);
+        time = setTimeout(logout, global_timeout);
+    });
+};
+
 $("#updater-settings-iframe").iziModal({
            title: '<i class="fa fa-refresh"></i> <?php echo xlt("Settings for Updater"); ?>',
            subtitle: '<?php echo xlt("Configuration settings for updater"); ?>',
@@ -319,7 +329,6 @@ $("#updater-settings-iframe").iziModal({
            width:900,
            focusInput: true,
            padding:5,
-           iframeHeight: 600,
            iframeURL: "<?php echo $GLOBALS['webroot']; ?>/updater/index.php"
 });
 
@@ -336,7 +345,6 @@ $("#developer-mode-iframe").iziModal({
            width:900,
            focusInput: true,
            padding:5,
-           iframeHeight: 600,
            onOpening: function () {
                 var imageURL = "../../../updater/updater_loading.gif";
                 $('.iziModal-content').css("background-image", "url("+imageURL+")");
@@ -356,7 +364,6 @@ $("#updater-iframe").iziModal({
            width:900,
            focusInput: true,
            padding:5,
-           iframeHeight: 600,
            iframeURL: "<?php echo $GLOBALS['webroot']; ?>/updater/updater.php",
            onOpening: function () {
                 var imageURL = "../../../updater/updater_loading.gif";
@@ -433,4 +440,3 @@ function showUpdaterNotifications(type, title, message) {
     }
 }
 </script>
-

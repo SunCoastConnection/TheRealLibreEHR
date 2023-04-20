@@ -55,5 +55,3 @@ var fullscreen_page = true;
     </iframe>
     
 </div>
-
-<?php do_action( 'after_main_box' ); ?>

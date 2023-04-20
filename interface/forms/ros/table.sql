@@ -56,7 +56,7 @@ CREATE TABLE `form_ros` (
 	`edema` varchar(3) NOT NULL default 'N/A',
 	`legpain_cramping` varchar(3) NOT NULL default 'N/A',
 	`history_murmur` varchar(3) NOT NULL default 'N/A',
-	`arrythmia` varchar(3) NOT NULL default 'N/A',
+	`arrhythmia` varchar(3) NOT NULL default 'N/A',
 	`heart_problem` varchar(3) NOT NULL default 'N/A',
 	`dysphagia` varchar(3) NOT NULL default 'N/A',
 	`heartburn` varchar(3) NOT NULL default 'N/A',

@@ -817,7 +817,7 @@ return false;
                         $ResultSearch = sqlStatement("SELECT billing.id,last_level_closed,billing.encounter,form_encounter.`date`,$sql_select_part_codetype billing.code,billing.modifier,fee
                          FROM billing ,form_encounter
                          where billing.encounter=form_encounter.encounter and billing.pid=form_encounter.pid and 
-                         code_type!='ICD9' and  code_type!='COPAY' and billing.activity!=0 and 
+						 code_type!='ICD9' and code_type!='ICD10' and  code_type!='COPAY' and billing.activity!=0 and 
                          form_encounter.pid ='$PId' and billing.pid ='$PId' and billing.encounter ='$EncounterMaster'
                                                   $sql_where_part_codetype
                           and billing.code ='$CodeMaster'
@@ -874,7 +874,7 @@ return false;
                     
                                 //Always associating the copay to a particular charge.
                                 $BillingId=$RowSearch['id'];
-                                $resId = sqlStatement("SELECT id  FROM billing where code_type!='ICD9' and  code_type!='COPAY'  and
+								$resId = sqlStatement("SELECT id  FROM billing where code_type!='ICD9' and code_type!='ICD10' and  code_type!='COPAY'  and
                                 pid ='$PId' and  encounter  ='$Encounter' and billing.activity!=0 order by id");
                                 $rowId = sqlFetchArray($resId);
                                 $Id=$rowId['id'];

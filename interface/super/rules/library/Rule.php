@@ -22,8 +22,6 @@ class Rule {
     var $ruleTypes;
     var $id;
     var $title;
-    var $developer;
-    var $funding_source;
     var $release;
     var $web_ref;
     /**
@@ -35,7 +33,7 @@ class Rule {
      * @var RuleFilters
      */
     var $filters;
-    
+
     /**
      * @var RuleTargetActionGroups
      */
@@ -49,14 +47,6 @@ class Rule {
 
     function getTitle() {
         return $this->title;
-    }
-
-    function setDeveloper($s) {
-        $this->developer = $s;
-    }
-    
-    function setFunding($s) {
-        $this->funding_source = $s;
     }
 
     function setRelease($s) {
@@ -98,14 +88,6 @@ class Rule {
         return $this->hasRuleType( RuleType::from(RuleType::PassiveAlert) );
     }
 
-    function isCqm() {
-        return $this->hasRuleType( RuleType::from(RuleType::CQM) );
-    }
-
-    function isAmc() {
-        return $this->hasRuleType( RuleType::from(RuleType::AMC) );
-    }
-
     function isReminder() {
         return $this->hasRuleType( RuleType::from(RuleType::PatientReminder) );
     }
@@ -119,12 +101,12 @@ class Rule {
 
     /**
      *
-     * @param RuleFilters $ruleFilters 
+     * @param RuleFilters $ruleFilters
      */
     function setRuleFilters( $ruleFilters ) {
         $this->filters = $ruleFilters;
     }
-    
+
     function setGroups( array $groups ) {
         $this->groups = $groups;
     }
@@ -155,6 +137,6 @@ class Rule {
         }
         return $labels;
     }
-    
+
 }
 ?>

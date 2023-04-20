@@ -48,6 +48,7 @@ include_once("$srcdir/transactions.inc");
 </head>
 
 <body class="body_top">
+    <a href="../summary/demographics.php" class="css_button" onclick="top.restoreSession()"><?php echo htmlspecialchars(xl('Back To Patient'),ENT_NOQUOTES);?></a>
     <table>
     <tr>
         <td>

@@ -16,6 +16,7 @@
     transition: margin-top 0.3s ease, height 0.3s ease;
     transform: translateZ(0);
     box-sizing: border-box;
+    height: 90% !important;
 }
 .iziModal *{
     box-sizing: border-box;
@@ -244,6 +245,8 @@
     margin: 0 0 -6px 0;
     width: 100%;
     transition: height 0.3s ease;
+    height: 90% !important;
+    max-height: 90%;
 }
 .iziModal-overlay{
     display: block;

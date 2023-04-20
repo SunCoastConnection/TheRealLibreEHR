@@ -393,7 +393,7 @@ class eRxXMLBuilder {
 
         $element = $this->getDocument()->createElement('LicensedPrescriber');
         $element->setAttribute('ID', $userDetails['npi']);
-        $element->appendChild($this->getLicensedPrescriberName($userDetails));
+        $element->appendChild($this->getLicensedPrescriberName($userDetails, xl('LicensedPrescriber')));
         $element->appendChild($this->createElementTextFieldEmpty('dea', $userDetails['federaldrugid'], 'Licensed Prescriber DEA'));
         if($userDetails['upin']) $element->appendChild($this->createElementText('upin', $userDetails['upin']));
         $element->appendChild($this->createElementText('licenseNumber', $userDetails['state_license_number']));
@@ -458,6 +458,7 @@ class eRxXMLBuilder {
         $element->appendChild($this->createElementTextFieldEmpty('dea', $userDetails['federaldrugid'], xl('Midlevel Prescriber DEA')));
         if($userDetails['upin']) $element->appendChild($this->createElementText('upin', $userDetails['upin']));
         $element->appendChild($this->createElementText('licenseNumber', $userDetails['state_license_number']));
+        $element->appendChild($this->createElementTextFieldEmpty('npi', $userDetails['npi'], xl('Midlevel Prescriber NPI')));
 
         return $element;
     }
@@ -550,7 +551,7 @@ class eRxXMLBuilder {
 
         while($healthplan = sqlFetchArray($healthplans)) {
             $element = $this->getDocument()->createElement('PatientFreeformHealthplans');
-            $element->appendChild($this->createElementText('healthplanName', $this->trimData($this->stripSpecialCharacter($healthplan['name'], 35))));
+            $element->appendChild($this->createElementText('healthplanName', $this->trimData($this->stripSpecialCharacter($healthplan['name']),'35')));
 
             $elements[] = $element;
         }

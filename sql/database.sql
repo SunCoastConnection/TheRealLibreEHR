@@ -1066,6 +1066,8 @@ CREATE TABLE `form_encounter` (
   `document_image` varchar(80) DEFAULT NULL,
   `seq_number` varchar(80) DEFAULT NULL,
   `coding_complete` TINYINT(1) NOT NULL DEFAULT '0',
+  `case_number` INT(20) DEFAULT NULL,
+  `case_body_part` INT(20) DEFAULT NULL,
   PRIMARY KEY  (`id`),
   KEY `pid_encounter` (`pid`, `encounter`),
   KEY `encounter_date` (`date`)
@@ -1474,6 +1476,7 @@ CREATE TABLE `forms` (
   `id` bigint(20) NOT NULL auto_increment,
   `date` datetime default NULL,
   `encounter` bigint(20) default NULL,
+  `case_number` int(20) NULL DEFAULT NULL,
   `form_name` longtext,
   `form_id` bigint(20) default NULL,
   `pid` bigint(20) default NULL,
@@ -4721,6 +4724,9 @@ CREATE TABLE `patient_data` (
   `vfc` varchar(255) NOT NULL DEFAULT '',
   `mothersname` varchar(255) NOT NULL DEFAULT '',
   `guardiansname` TEXT,
+  `guardian_fname` TEXT,
+  `guardian_mname` TEXT,
+  `guardian_lname` TEXT,
   `guardian_relationship` TEXT,
   `guardian_sex` varchar(255) NOT NULL default '',
   `guardian_address` varchar(255) NOT NULL default '',
@@ -4748,6 +4754,7 @@ CREATE TABLE `patient_data` (
   `work_status` varchar(25) NOT NULL default '',
   `pcpID` int(11) default NULL,
   `picture_url` varchar(2000) NOT NULL default '',
+  `transaction_billing_note` TEXT  COMMENT 'Transaction Screen Notes',
   UNIQUE KEY `pid` (`pid`),
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 ;
@@ -6111,8 +6118,10 @@ CREATE TABLE `ar_activity` (
   `unapplied`      TINYINT(1) NOT NULL DEFAULT '0',
   `date_closed`    date COMMENT 'Date closed',
   `ready_to_bill` TINYINT(1) NOT NULL DEFAULT '0',
+  `inactive` BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (sequence_no, pid, encounter),
-  KEY session_id (session_id)
+  KEY session_id (session_id),
+  KEY payment (pid,pay_amount,adj_amount)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `users_facility`;

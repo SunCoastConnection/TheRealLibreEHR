@@ -1,0 +1,43 @@
+<!-- INSURANCE ROW TEMPLATE -->
+<!-- VARIABLES SUPPLIED TO THIS TEMPLATE SHOULD BE PLACED IN THE UPPER ROW FOR
+        BETTER READABILITY, IF YOU ADD A NEW VARIABLE TO TEMPLATE BE SURE TO ADD IT BELOW -->
+
+<!-- PAYMENT_TYPE -->
+<!-- INSURANCE_TYPE -->
+<!-- ROW_COUNT -->
+<!-- COL_SPAN -->
+<!-- BILL_COUNT -->
+<!-- BACKGROUND_COLOR -->
+<!-- PAYMENT_DATE -->
+<!-- PAYMENT_AMOUNT -->
+<!-- FORMATTED_PAYMENT_AMOUNT -->
+<!-- FORMATTED_INSURANCE_PAYMENT_AMOUNT -->
+<!-- FORMATTED_ADJUSTMENT_AMOUNT -->
+<!-- ADJUSTMENT_REASON -->
+
+<tr class="table-detail-data collapse {PAYMENT_TYPE}  x-rows-{ROW_COUNT} {ROW_COUNT}"  style="background-color:{BACKGROUND_COLOR}">
+    <td></td>
+    <td class="date-detail payment-date-{PAYMENT_TYPE}" id="payment-date-row-{PAYMENT_DATE}-{ROW_COUNT}-{BILL_COUNT}">
+
+        <input type="date" value="{UNFORMATTED_PAYMENT_DATE}" class="ar_activity_date_editable"
+        data-type="ar_activity_row" data-pid="{PID}" data-encounter="{ENCOUNTER}" data-sequence_no="{SEQUENCE_NO}" {SHOULD_DISABLE_INSURANCE_PAYMENT_DATE_FIELD}>
+
+    </td>
+    <td colspan="7" class="description {PAYMENT_TYPE} payment-type" id="payment-type- {PAYMENT_TYPE}-{ROW_COUNT}-{BILL_COUNT}" onclick="showServiceDetails({ROW_COUNT})">
+        {PAYMENT_TYPE}
+    </td>
+    <td class="{PAYMENT_TYPE_WITHOUT_SPACES}-paid-detail-{ROW_COUNT} Ins-Paid" id="payment-amount-{PAYMENT_TYPE_WITHOUT_SPACES}- {ROW_COUNT}-{BILL_COUNT}" data-payment-paid="{PAYMENT_AMOUNT}">
+        ${FORMATTED_PAYMENT_AMOUNT}
+    </td>
+    <td class="insurance_payment_amount Adjusted">${FORMATTED_ADJUSTMENT_AMOUNT}</td>
+    <td class="insurance_adjustment_reason balance">{ADJUSTMENT_REASON}</td>
+    <td></td>
+    <td style="display: none;" class="td-data-storage-row-{ROW_COUNT}"
+        data-billing-id="{BILLING_ID}"
+        data-date="{PAYMENT_DATE}" data-description="{PAYMENT_TYPE}"
+        data-code="" data-modifiers="" data-units="" data-facility=""
+        data-amount="" data-pat-paid="" data-ins-paid="{PAYMENT_AMOUNT}"
+        data-adjust="{ADJUSTMENT_AMOUNT}" data-reason="{ADJUSTMENT_REASON}"
+        data-balance="" data-row-type="1">
+    </td>
+</tr>

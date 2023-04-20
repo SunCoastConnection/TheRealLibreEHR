@@ -719,7 +719,6 @@ if ($_POST['form_action'] == "save") {
           }
     }
 
-                do_action( 'before_update_event',  $data = [ 'pc_eid' => $eid, ] );
 
                 // mod the SINGLE event or ALL EVENTS in a repeating series
                 // simple provider case
@@ -753,11 +752,6 @@ if ($_POST['form_action'] == "save") {
                     "pc_billing_location = '" . add_escape_custom((int)$_POST['billing_facility']) ."' "  .
                     "WHERE pc_eid = '" . add_escape_custom($eid) . "'");
 
-                do_action( 'after_update_event',
-                    $data = [ 'pc_eid' => $eid, 'pc_pid' => $_POST['form_pid'],
-                        'pc_aid' => $_POST['form_provider'], 'pc_eventDate' => $event_date, 'pc_startTime' => $starttime,
-                        'pc_catid' => $_POST['form_category'], 'pc_apptstatus' => $_POST['form_apptstatus'], 'pc_title' => $_POST['form_title'],
-                        ] );
             }
         }
 
@@ -1064,12 +1058,13 @@ if (isset($_SESSION['pid']) && $_SESSION['pid'] > 0) {
  // If we have a patient ID, get the name and phone numbers to display.
  if ($patientid) {
     $prow = sqlQuery(
-        "SELECT lname, fname, phone_home, phone_biz, DOB
+        "SELECT lname, fname, phone_home, phone_biz, billing_note, DOB
         FROM patient_data WHERE pid = ?",
         array($patientid)
     );
 
   $patientname = $prow['lname'] . ", " . $prow['fname'];
+  $patientbillingnote = $prow['billing_note'];
 
     if ($prow['phone_home']) {
         $patienttitle .= " H=" . $prow['phone_home'];
@@ -1630,7 +1625,7 @@ $classpati='';
         $ufid[] = $uf['id'];
       }
 
-      $qsql = sqlStatement("SELECT id, name FROM facility WHERE service_location != 0");
+      $qsql = sqlStatement("SELECT id, name FROM facility WHERE service_location != 0 ORDER BY name");
       /**************************************************************/
       while ($facrow = sqlFetchArray($qsql)) {
         /*************************************************************
@@ -1676,8 +1671,12 @@ $classpati='';
    <?php echo xlt('Patient'); ?>:
   </td>
         <td nowrap>
-   <input type='text' size='10' name='form_patient' style='width:100%;cursor:pointer;cursor:hand' value='<?php echo attr($patientname); ?>' onclick='sel_patient()' title='<?php echo xla('Click to select patient'); ?>' readonly id="choose_patient" />
+   <?php
+ $in_collections = stristr($patientbillingnote, 'IN COLLECTIONS') !== false;
+ ?>
+   <input type='text' size='10' name='form_patient' style='width:96%;cursor:pointer;cursor:hand' value='<?php echo attr($patientname); ?>' onclick='sel_patient()' title='<?php echo xla('Click to select patient'); ?>' readonly id="choose_patient" />
    <input type='hidden' name='form_pid' value='<?php echo attr($patientid) ?>' id="form_pid"/>
+   <?php if ($in_collections) echo "<strong><font color='red'>In Collections</font></strong>";?>
         </td>
   <td colspan='2' nowrap style='font-size:8pt'>
    &nbsp;
@@ -1857,7 +1856,7 @@ if  ($GLOBALS['select_multi_providers']) {
             $defaultProvider = $userid;
         }
     }
-    echo "<select name='form_provider' style='width:100%' />";
+    echo "<select name='form_provider' style='width:96%' />";
     while ($urow = sqlFetchArray($ures)) {
       echo "    <option value='" . attr($urow['id']) . "'";
         if ($urow['id'] == $defaultProvider) {

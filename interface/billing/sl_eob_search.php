@@ -855,7 +855,7 @@ if ($_POST['form_search'] || $_POST['form_print']) {
   </td>
   <td class="detail">
    &nbsp;<a href="sl_eob_invoice.php?id=<?php echo $row['id'] ?>"
-    target="_blank"><?php echo $row['pid'] . '.' . $row['encounter']; ?></a>
+    target="_blank" rel="opener"><?php echo $row['pid'] . '.' . $row['encounter']; ?></a>
   </td>
   <td class="detail">
    &nbsp;<?php echo oeFormatShortDate($svcdate) ?>

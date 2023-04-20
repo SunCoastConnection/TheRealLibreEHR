@@ -1,6 +1,6 @@
 <?php
-  include_once("../../../../globals.php");
-  include_once("$srcdir/api.inc");
+  include_once("../../globals.php");
+  include_once($GLOBALS['srcdir']."/api.inc");
   formHeader("Review of Systems");
 ?>
 <html>
@@ -10,7 +10,7 @@
       // Resizes the panels to be the height of the largest panel
       function resizePanel() {
         var h = $("#largest-panel").height();
-        // Hack to ensure panels do not 
+        // Hack to ensure panels do not
         $(".panel").height(h);
       }
 
@@ -32,6 +32,10 @@
       action="<?php echo $this->form_action;?>/interface/forms/ros/save.php"
       onsubmit="return top.restoreSession()"
     >
+    <input type="hidden" name="id" id='id' value="<?php echo $this->form->get_id(); ?>" />
+    <input type="hidden" name="activity" id='activity' value="<?php echo $this->form->get_activity(); ?>">
+    <input type="hidden" name="pid" id='pid' value="<?php echo $this->form->get_pid(); ?>">
+    <input type="hidden" name="process" id='process' value="true">
       <a href="javascript:history.back()"><h4><i class="fa fa-chevron-left" id="backbutton" aria-hidden="true"></i> Back</h4></a>
       <div class="col-xs-12">
       <h4 class="title"><strong><?php echo xlt('Review of Systems'); ?></strong></h4>
@@ -288,7 +292,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="pain" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?> 
+              }?>
             </div>
             <div>
               <?php echo xlt("Vertigo");?>:
@@ -350,7 +354,7 @@
                 <?php }
               }?>
             </div>
-            <div>      
+            <div>
               <?php echo xlt("Nosebleed");?>:
               <?php foreach ($this->form->get_options() as $value) {
                 if($value==$this->form->get_nosebleed() ){?>
@@ -506,7 +510,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="copd" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>          
+              }?>
             </div>
           </div>
         </div>
@@ -525,7 +529,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="chest_pain" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?> 
+              }?>
             </div>
             <div>
               <?php echo xlt("Palpitation");?>:
@@ -535,7 +539,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="palpitation" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>           
+              }?>
             </div>
             <div>
               <?php echo xlt("Syncope");?>:
@@ -545,7 +549,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="syncope" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>           
+              }?>
             </div>
             <div>
               <?php echo xlt("PND");?>:
@@ -555,7 +559,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="pnd" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>           
+              }?>
             </div>
             <div>
               <?php echo xlt("DOE");?>:
@@ -565,7 +569,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="doe" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>           
+              }?>
             </div>
             <div>
               <?php echo xlt("Orthopnea");?>:
@@ -575,7 +579,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="orthopnea" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?>           
+              }?>
             </div>
             <!-- The get_peripheal function is mispelled -->
             <div>
@@ -586,7 +590,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="peripheal" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?> 
+              }?>
             </div>
             <div>
               <?php echo xlt("Edema");?>:
@@ -596,7 +600,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="edema" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?> 
+              }?>
             </div>
             <div>
               <?php echo xlt("Leg Pain/Cramping");?>:
@@ -606,7 +610,7 @@
                 <?php } else {?>
                   <label><input type="radio" name="legpain_cramping" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?> 
+              }?>
             </div>
             <div>
               <?php echo xlt("History of Heart Murmur");?>:
@@ -616,17 +620,17 @@
                 <?php } else {?>
                   <label><input type="radio" name="history_murmur" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?> 
+              }?>
             </div>
             <div>
-              <?php echo xlt("Arryhthmia");?>:
+              <?php echo xlt("Arrhythmia");?>:
               <?php foreach ($this->form->get_options() as $value) {
-                if($value==$this->form->get_arryhthmia() ){?>
-                  <label><input type="radio" name="arryhthmia" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
+                if($value==$this->form->get_arrhythmia() ){?>
+                  <label><input type="radio" name="arrhythmia" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
                 <?php } else {?>
-                  <label><input type="radio" name="arryhthmia" value="<?php echo $value;?>"/><?php echo $value;?></label>
+                  <label><input type="radio" name="arrhythmia" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
-              }?> 
+              }?>
             </div>
             <div>
               <?php echo xlt("Heart Problem");?>:
@@ -1059,9 +1063,9 @@
               <?php echo xlt("Frequency");?>:
               <?php foreach ($this->form->get_options() as $value) {
                 if($value==$this->form->get_f_frequency() ){?>
-                  <label><input type="radio" name="frequency" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
+                  <label><input type="radio" name="f_frequency" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
                 <?php } else {?>
-                  <label><input type="radio" name="frequency" value="<?php echo $value;?>"/><?php echo $value;?></label>
+                  <label><input type="radio" name="f_frequency" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
               }?>
             </div>
@@ -1555,7 +1559,7 @@
                 if($value==$this->form->get_hai_status() ){?>
                   <label><input type="radio" name="hai_status" value="<?php echo $value;?>" checked="checked" /><?php echo $value;?></label>
                 <?php } else {?>
-                  <label><input type="radio" name="hai" value="<?php echo $value;?>"/><?php echo $value;?></label>
+                  <label><input type="radio" name="hai_status" value="<?php echo $value;?>"/><?php echo $value;?></label>
                 <?php }
               }?>
             </div>
@@ -1564,7 +1568,7 @@
       </div>
       <div>
         <!-- Save/Cancel buttons -->
-        <input type="button" id="save" class='btn btn-success' value="<?php echo xlt('Save'); ?>"> &nbsp;
+        <input type="submit" id="save" class='btn btn-success' value="<?php echo xlt('Save'); ?>"> &nbsp;
         <input type="button" id="dontsave" class="deleter btn btn-danger" value="<?php echo xlt('Cancel'); ?>"> &nbsp;
       </div>
   </body>

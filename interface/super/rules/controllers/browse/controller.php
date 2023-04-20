@@ -11,9 +11,14 @@ require_once( src_dir() . "/clinical_rules.php");
 class Controller_browse extends BaseController {
 
     function _action_list() {
+        // Instantiating object if does not exist to avoid
+        //    "creating default object from empty value" warning.
+        if (!isset($this->viewBean)) {
+            $this->viewBean = new stdClass();
+        }
         $this->set_view( "list.php" );
     }
-    
+
     function _action_plans_config() {
     	$this->set_view( "plans_config.php" );
     }

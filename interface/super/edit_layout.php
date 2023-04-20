@@ -20,9 +20,6 @@
  */
 
 require_once("../globals.php");
-if ($GLOBALS['mod_nn'] == true){
-        require_once(dirname(dirname(__FILE__)) . "/modules/nation_notes/nn_super_edit_layout.inc");}
-else{
 require_once("$srcdir/acl.inc");
 require_once("$srcdir/log.inc");
 require_once("$srcdir/formdata.inc.php");
@@ -417,7 +414,8 @@ function writeFieldLine($linedata) {
             "name='".$linedata['group_name']."~".$linedata['field_id']."' ".
             "id='".$linedata['group_name']."~".$linedata['field_id']."' ".
             "title='".htmlspecialchars(xl('Select field', ENT_QUOTES))."'>";
-
+    echo "</td>";
+    echo "  <td align='left' class='optcell' style='width:5%'>";
     echo "<input type='text' name='fld[$fld_line_no][seq]' id='fld[$fld_line_no][seq]' value='" .
       htmlspecialchars($linedata['seq'], ENT_QUOTES) . "' size='2' maxlength='3' " .
       "class='optin' style='width:36pt' />";
@@ -726,7 +724,7 @@ function writeFieldLine($linedata) {
 <html>
 
 <head>
-<?php html_header_show();?>
+
 
 <!-- supporting javascript code -->
 <script type="text/javascript" src="<?php echo $GLOBALS['webroot'] ?>/library/js/jquery.js"></script>
@@ -1029,6 +1027,7 @@ while ($row = sqlFetchArray($res)) {
 <table>
 <thead>
  <tr class='head'>
+ <th><?php xl('Select','e'); ?></th>
   <th><?php xl('Order','e'); ?></th>
   <th<?php echo " $lbfonly"; ?>><?php xl('Source','e'); ?></th>
   <th><?php xl('ID','e'); ?>&nbsp;<span class="help" title=<?php xl('A unique value to identify this field, not visible to the user','e','\'','\''); ?> >(?)</span></th>
@@ -1692,5 +1691,5 @@ function IsN(num) { return !/\D/.test(num); }
 
 </html>
 <?php
-}
+
 ?>

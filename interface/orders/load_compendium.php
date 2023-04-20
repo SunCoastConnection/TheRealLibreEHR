@@ -35,9 +35,9 @@ require_once("$srcdir/headers.inc.php");
 // procedure provider entry for a lab that has a supported NPI number.
 //
 $lab_npi = array(
-  '1235138868' => 'Diagnostic Pathology Medical Group',
-  '1235186800' => 'Pathgroup Labs LLC',
-  '1598760985' => 'Yosemite Pathology Medical Group',
+  '1235138868' => 'Diagnostic Pathology Medical Group',  //Labcorp
+  '1235186800' => 'Pathgroup Labs LLC',  //Pathgroup
+  '1598760985' => 'Yosemite Pathology Medical Group', //Quest
 );
 call_required_libraries(array("bootstrap"));
 

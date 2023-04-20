@@ -200,9 +200,6 @@ $GLOBALS['current_version_js_path'] = "$web_root/assets/js/current_version";
 //module configurations
 $GLOBALS['modules_dir']  = "$webserver_root/modules/";  //CURRENT modules directory.
 $modules_dir = $GLOBALS['modules_dir'];                //Make path available as a variable.
-$GLOBALS['baseModDir']  = "interface/modules/";        //base directory for the ZEND mods.  Not currently used.
-$GLOBALS['customModDir']= "custom_modules";            //OLD non zend modules, not used.
-$GLOBALS['zendModDir']  = "zend_modules";              //zend module sub-directory, not used.
 $GLOBALS['mod_nn'] = 0;                                //Nation Notes Module value off by default.
 //module config TODO:  module and global registry for same.
 
@@ -535,9 +532,8 @@ if ($fake_register_globals) {
   extract($_POST,EXTR_SKIP);
 }
 
-include_once __DIR__ . '/../library/pluginsystem/bootstrap.php';
 
-if ($GLOBALS['calendar_timezone'] !== '') {
+if (!empty($GLOBALS['calendar_timezone'])) {
   // getting selected option (in globals)
   $timezone = $GLOBALS['calendar_timezone'];
   if (strpos($timezone, '!') !== false) {
@@ -551,4 +547,30 @@ if ($GLOBALS['calendar_timezone'] !== '') {
  This should probably be implemented elsewhere as part of the above include. */
  if ($GLOBALS['facility_acl'] === true){
  include_once "$srcdir/fac_acl.inc.php";}
+
+require_once 'idiorm.php';
+
+$host = $sqlconf["host"];
+$login = $sqlconf["login"];
+$port = $sqlconf["port"];
+$pass = $sqlconf["pass"];
+$dbase = $sqlconf["dbase"];
+
+ORM::configure("mysql:host=$host;port=$port;dbname=$dbase");
+ORM::configure('username', $login);
+ORM::configure('password', $pass);
+// configure primary keys for table, once configured
+// no need to reconfigure again in all the scripts
+ORM::configure('id_column_overrides', array(
+    'ar_activity' => 'sequence_no',
+    'pt_evaluations' => 'pt_eval_id',
+    'form_encounter'=>'encounter',
+    'globals'=>'gl_name',
+    'pt_evaluation_form_subjective'=>'evaluation_id',
+    'pt_evaluation_form_objective'=>'evaluation_id',
+    'pt_evaluation_form_assessment'=>'evaluation_id',
+    'pt_evaluation_form_plan'=>'evaluation_id',
+));
+
+
 ?>

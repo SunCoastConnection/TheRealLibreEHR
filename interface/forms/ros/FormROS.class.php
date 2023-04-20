@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . "/../../../library/classes/ORDataObject.class.p
 
 
 /**
- * class 
+ * class
  *
  */
 class FormROS extends ORDataObject {
@@ -26,6 +26,7 @@ class FormROS extends ORDataObject {
 	 */
 
 	var $id;
+	var $activity;
 	var $date;
 	var $pid;
 	var $weight_change = "N/A";
@@ -81,7 +82,7 @@ class FormROS extends ORDataObject {
     var $edema = "N/A";
     var $legpain_cramping = "N/A";
     var $history_murmur = "N/A";
-    var $arryhthmia = "N/A";
+    var $arrhythmia = "N/A";
     var $heart_problem = "N/A";
     var $dysphagia = "N/A";
 	var $heartburn = "N/A";
@@ -166,7 +167,7 @@ class FormROS extends ORDataObject {
 	var $frequent_illness = "N/A";
 	var $hiv = "N/A";
 	var $hai_status = "N/A";
-	
+
 	/**
 	 * Constructor sets all Form attributes to their default value
 	 */
@@ -176,15 +177,17 @@ class FormROS extends ORDataObject {
 			$this->id = $id;
 		}
 		else {
-			$id = "";	
+			$id = "";
 		}
 		$this->date = date("Y-m-d H:i:s");
 		$this->date_of_onset = date("Y-m-d");
 		$this->_table = "form_ros";
-		
+		$this->activity = 1;
+		$this->pid = $GLOBALS['pid'];
+
 		$this->pid = $GLOBALS['pid'];
 		if ($id != "") {
-		
+
 			$this->populate();
 		}
 	}
@@ -200,6 +203,14 @@ class FormROS extends ORDataObject {
 	function get_id() {
 		return $this->id;
 	}
+	function set_activity($activity) {
+		if (!empty($activity) && is_numeric($activity)) {
+			$this->activity = $activity;
+		}
+	}
+	function get_activity() {
+		return $this->activity;
+	}
 	function set_pid($pid) {
 		if (!empty($pid) && is_numeric($pid)) {
 			$this->pid = $pid;
@@ -212,13 +223,13 @@ class FormROS extends ORDataObject {
 	function get_date() {
 		return $this->date;
 	}
-	
+
 	function set_date($date) {
 		if(!empty($date)){
 			$this->date = $date;
-		}	
+		}
 	}
-	
+
 	function get_weight_change(){
 		return $this->weight_change;
 	}
@@ -227,7 +238,7 @@ class FormROS extends ORDataObject {
 			$this->weight_change = $data;
 		}
 	}
-	
+
 	function get_weakness(){
 		return $this->weakness;
 	}
@@ -236,7 +247,7 @@ class FormROS extends ORDataObject {
 			$this->weakness = $data;
 		}
 	}
-	
+
 	function get_fatigue(){
 		return $this->fatigue;
 	}
@@ -245,7 +256,7 @@ class FormROS extends ORDataObject {
 			$this->fatigue = $data;
 		}
 	}
-	
+
 	function get_anorexia(){
 		return $this->anorexia;
 	}
@@ -254,7 +265,7 @@ class FormROS extends ORDataObject {
 			$this->anorexia = $data;
 		}
 	}
-	
+
 	function get_fever(){
 		return $this->fever;
 	}
@@ -263,7 +274,7 @@ class FormROS extends ORDataObject {
 			$this->fever = $data;
 		}
 	}
-	
+
 	function get_chills(){
 		return $this->chills;
 	}
@@ -272,7 +283,7 @@ class FormROS extends ORDataObject {
 			$this->chills = $data;
 		}
 	}
-	
+
 	function get_night_sweats(){
 		return $this->night_sweats;
 	}
@@ -281,7 +292,7 @@ class FormROS extends ORDataObject {
 			$this->night_sweats = $data;
 		}
 	}
-	
+
 	function get_insomnia(){
 		return $this->insomnia;
 	}
@@ -290,7 +301,7 @@ class FormROS extends ORDataObject {
 			$this->insomnia = $data;
 		}
 	}
-	
+
 	function get_irritability(){
 		return $this->irritability;
 	}
@@ -299,7 +310,7 @@ class FormROS extends ORDataObject {
 			$this->irritability = $data;
 		}
 	}
-	
+
 	function get_heat_or_cold(){
 		return $this->heat_or_cold;
 	}
@@ -308,7 +319,7 @@ class FormROS extends ORDataObject {
 			$this->heat_or_cold = $data;
 		}
 	}
-	
+
 	function get_intolerance(){
 		return $this->intolerance;
 	}
@@ -317,7 +328,7 @@ class FormROS extends ORDataObject {
 			$this->intolerance = $data;
 		}
 	}
-	
+
 	function get_change_in_vision(){
 		return $this->change_in_vision;
 	}
@@ -390,7 +401,7 @@ class FormROS extends ORDataObject {
 			$this->photophobia = $data;
 		}
 	}
-	
+
 	function get_hearing_loss(){
 		return $this->hearing_loss;
 	}
@@ -575,7 +586,7 @@ class FormROS extends ORDataObject {
 			$this->copd = $data;
 		}
 	}
-		  
+
     function get_chest_pain(){
 		return $this->chest_pain;
 	}
@@ -656,12 +667,12 @@ class FormROS extends ORDataObject {
 			$this->history_murmur = $data;
 		}
 	}
-	function get_arryhthmia(){
-		return $this->arryhthmia;
+	function get_arrhythmia(){
+		return $this->arrhythmia;
 	}
-	function set_arryhthmia($data){
+	function set_arrhythmia($data){
 		if(!empty($data)){
-			$this->arryhthmia = $data;
+			$this->arrhythmia = $data;
 		}
 	}
 	function get_heart_problem(){
@@ -672,7 +683,7 @@ class FormROS extends ORDataObject {
 			$this->heart_problem = $data;
 		}
 	}
-	
+
 	function get_polyuria(){
 		return $this->polyuria;
 	}
@@ -745,7 +756,7 @@ class FormROS extends ORDataObject {
 			$this->utis = $data;
 		}
 	}
-	
+
 	function get_hesitancy(){
 		return $this->hesitancy;
 	}
@@ -794,7 +805,7 @@ class FormROS extends ORDataObject {
 			$this->ejaculations = $data;
 		}
 	}
-		
+
 	function get_g(){
 		return $this->g;
 	}
@@ -891,7 +902,7 @@ class FormROS extends ORDataObject {
 			$this->f_hirsutism = $data;
 		}
 	}
-	
+
 	function get_joint_pain(){
 		return $this->joint_pain;
 	}
@@ -964,7 +975,7 @@ class FormROS extends ORDataObject {
 			$this->arthritis = $data;
 		}
 	}
-	
+
 	function get_loc(){
 		return $this->loc;
 	}
@@ -1053,7 +1064,7 @@ class FormROS extends ORDataObject {
 			$this->n_headache = $data;
 		}
 	}
-	
+
 	function get_s_cancer(){
 		return $this->s_cancer;
 	}
@@ -1094,7 +1105,7 @@ class FormROS extends ORDataObject {
 			$this->s_disease = $data;
 		}
 	}
-	
+
 	function get_p_diagnosis(){
 		return $this->p_diagnosis;
 	}
@@ -1135,7 +1146,7 @@ class FormROS extends ORDataObject {
 			$this->social_difficulties = $data;
 		}
 	}
-	
+
 	function get_thyroid_problems(){
 		return $this->thyroid_problems;
 	}
@@ -1160,7 +1171,7 @@ class FormROS extends ORDataObject {
 			$this->abnormal_blood = $data;
 		}
 	}
-	
+
 	function get_anemia(){
 		return $this->anemia;
 	}
@@ -1217,12 +1228,12 @@ class FormROS extends ORDataObject {
 			$this->hai_status = $data;
 		}
 	}
-	
+
 	function get_options(){
 		$ret = array("N/A" => xl('N/A'),"YES" => xl('YES'),"NO" => xl('NO'));
 		return $ret;
 	}
-		
+
 	function get_dysphagia(){
 		return $this->dysphagia;
 	}
@@ -1365,8 +1376,8 @@ class FormROS extends ORDataObject {
 	function persist() {
 		parent::persist();
 	}
-	
-	
+
+
 }	// end of Form
 
 ?>

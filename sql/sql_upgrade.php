@@ -81,7 +81,7 @@ if (!empty($_POST['form_submit'])) {
   }
 
   echo "<font color='green'>Updating Access Controls...</font><br />\n";
-  require("acl_upgrade.php");
+  require("../acl_upgrade.php");
   echo "<br />\n";
 
   echo "<font color='green'>Updating version indicators...</font><br />\n";

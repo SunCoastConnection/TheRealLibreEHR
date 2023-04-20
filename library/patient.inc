@@ -33,7 +33,9 @@
 
 require_once("{$GLOBALS['srcdir']}/sql.inc");
 require_once("{$GLOBALS['srcdir']}/formdata.inc.php");
-
+if ( $GLOBALS['facility_acl']==1 ) {
+    require_once("{$GLOBALS['modules_dir']}ACL/facacl.inc.php");
+    }
 // Hard-coding this array because its values and meanings are fixed by the 837p
 // standard and we don't want people messing with them.
 $policy_types = array(
@@ -569,10 +571,14 @@ function getPatientLnames($term = "%", $given = "pid, id, lname, fname, mname, p
                 }
         }
 
-    $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
     }
+}
+///////////////////////////        
 
     $sql="SELECT $given FROM patient_data WHERE $where ORDER BY $orderby";
     if ($limit != "all") $sql .= " LIMIT $start, $limit";
@@ -633,10 +639,14 @@ function getPatientId($pid = "%", $given = "pid, id, lname, fname, mname, provid
 
     $sqlBindArray = array();
     $where = "pid LIKE ? ";
-    $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
     }
+}
+///////////////////////////
     array_push($sqlBindArray, $pid."%");
         if (!empty($GLOBALS['pt_restrict_field']) && $GLOBALS['pt_restrict_by_id'] ) {
                 if ( $_SESSION{"authUser"} != 'admin' || $GLOBALS['pt_restrict_admin'] ) {
@@ -672,10 +682,14 @@ function getByPatientDemographics($searchTerm = "%", $given = "pid, id, lname, f
   }
   $where .= " ) ";
 
-  $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
-  if ( $patient_filter ) {
-    $where .= " AND ".$patient_filter;
-  }
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
+    if ( $patient_filter ) {
+        $where .= " AND ".$patient_filter;
+    }
+}
+///////////////////////////
 
   $sql = "SELECT $given FROM patient_data WHERE $where ORDER BY $orderby";
   if ($limit != "all") $sql .= " limit $start, $limit";
@@ -710,10 +724,14 @@ function getByPatientDemographicsFilter($searchFields, $searchTerm = "%",
         $i++;
     }
 
-    $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
     }
+}
+///////////////////////////
 
   // If no search terms, ensure valid syntax.
   if ($i == 0) $where = "1 = 1";
@@ -766,10 +784,14 @@ function getPatientPID($args)
     if (strstr($pid,"%")) $command = "like";
 
     $filter = "";
-    $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
-        $filter = " AND ".$patient_filter;
+        $where .= " AND ".$patient_filter;
     }
+}
+///////////////////////////
 
     $sql="select $given from patient_data where pid $command '$pid' $filter order by $orderby";
     if ($limit != "all") $sql .= " limit $start, $limit";
@@ -806,10 +828,14 @@ function getPatientDOB($DOB = "%", $given = "pid, id, lname, fname, mname", $ord
                 }
         }
 
-    $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
     }
+}
+///////////////////////////
 
     $sql="SELECT $given FROM patient_data WHERE $where ORDER BY $orderby";
 
@@ -828,10 +854,14 @@ function getPatientSSN($ss = "%", $given = "pid, id, lname, fname, mname, provid
 {
     $sqlBindArray = array();
     $where = "ss LIKE ?";
-    $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
     }
+}
+///////////////////////////
     array_push($sqlBindArray, $ss."%");
     $sql="SELECT $given FROM patient_data WHERE $where ORDER BY $orderby";
     if ($limit != "all") $sql .= " LIMIT $start, $limit";
@@ -850,10 +880,14 @@ function getPatientPhone($phone = "%", $given = "pid, id, lname, fname, mname, p
     $phone = preg_replace( "/[[:punct:]]/","", $phone );
     $sqlBindArray = array();
     $where = "REPLACE(REPLACE(phone_home, '-', ''), ' ', '') REGEXP ?";
-    $patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
     if ( $patient_filter ) {
         $where .= " AND ".$patient_filter;
     }
+}
+///////////////////////////
     array_push($sqlBindArray, $phone);
     $sql="SELECT $given FROM patient_data WHERE $where ORDER BY $orderby";
     if ($limit != "all") $sql .= " LIMIT $start, $limit";
@@ -1162,7 +1196,6 @@ function updatePatientData($pid, $new, $create=false)
     return sqlInsert($sql);
   *******************************************************************/
 
-    do_action( 'update_patient_data_before_save', $new );
 
   // The above was broken, though seems intent to insert a new patient_data
   // row for each update.  A good idea, but nothing is doing that yet so
@@ -1196,7 +1229,6 @@ function updatePatientData($pid, $new, $create=false)
     sqlStatement($sql);
   }
 
-  do_action( 'update_patient_data_after_save', $new );
 
   return $db_id;
 }

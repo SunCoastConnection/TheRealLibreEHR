@@ -57,10 +57,15 @@ if (isset($_GET['iSortCol_0'])) {
 // Global filtering.
 //
 $where = "";
-$patient_filter = do_action( 'filter_patient_select', $_SESSION['authUser'] );
-if ( $patient_filter ) {
-    $where .= " WHERE " . $patient_filter;
+//////////////////facacl////
+if ( $GLOBALS['facility_acl']==1 ) {
+    require_once("../../../modules/ACL/facacl.inc.php");
+    $patient_filter = filter_patient_select($_SESSION['authUser'] );
+    if ( $patient_filter ) {
+        $where .= " WHERE " . $patient_filter;
+    }
 }
+///////////////////////////
 $allowedCols = sqlStatement(
   'SELECT COLUMN_NAME
       FROM information_schema.COLUMNS
@@ -155,9 +160,13 @@ $out = array(
   "iTotalDisplayRecords" => $iFilteredTotal,
   "aaData"               => array()
 );
+// Add Billing note to query, use it always for querying because we are using it for feature.
+$sellist = $sellist.', `billing_note`';
 $query = "SELECT $sellist FROM patient_data $where $orderby $limit";
 $res = sqlStatement($query);
 while ($row = sqlFetchArray($res)) {
+  $billing_note = $row['billing_note'];
+
   // Each <tr> will have an ID identifying the patient.
   $arow = array('DT_RowId' => 'pid_' . $row['pid']);
   foreach ($aColumns as $colname) {
@@ -175,6 +184,15 @@ while ($row = sqlFetchArray($res)) {
       $arow[] = $row[$colname];
     }
   }
+  // wrap this in to a global.
+ if (!empty($GLOBALS['account_in_collections'])) {
+  if ( stristr($billing_note, 'IN COLLECTIONS') !== false ) {
+    $arow['is_billing_note_in_collection'] = true;
+  }
+  else {
+    $arow['is_billing_note_in_collection'] = false;
+  }
+}
   $out['aaData'][] = $arow;
 }
 

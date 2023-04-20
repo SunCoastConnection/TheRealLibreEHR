@@ -101,7 +101,9 @@ CREATE TABLE IF NOT EXISTS `cases_to_documents` (
 #IfMissingColumn ar_activity billing_id
   ALTER TABLE `ar_activity` ADD COLUMN `billing_id` INT(11) NOT NULL AFTER `sequence_no`;
 #EndIf
-
+#IfNotIndex ar_activity payment
+  ALTER TABLE `ar_activity` ADD INDEX `payment` (pid,pay_amount,adj_amount);
+#EndIf
 #IfMissingColumn insurance_data family_deductible
   ALTER TABLE `insurance_data` ADD COLUMN `family_deductible` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 0 AFTER `inactive_time`;
 #EndIf
@@ -155,6 +157,14 @@ INSERT INTO list_options (list_id,option_id,title,seq,is_default,option_value,ma
 
 #IfMissingColumn  form_encounter  coding_complete
    ALTER TABLE `form_encounter`  ADD COLUMN `coding_complete` TINYINT(1) NOT NULL DEFAULT '0';
+#Endif
+
+#IfMissingColumn  form_encounter  case_number
+   ALTER TABLE `form_encounter`  ADD COLUMN `case_number` INT(20) NOT NULL AFTER `coding_complete`;
+#Endif
+
+#IfMissingColumn  form_encounter  case_body_part
+   ALTER TABLE `form_encounter`  ADD COLUMN `case_body_part` VARCHAR(25) NOT NULL AFTER `case_number`;
 #Endif
 
 #IfMissingColumn ar_activity date_closed
@@ -211,8 +221,20 @@ CREATE TABLE IF NOT EXISTS `transactions_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 #EndIf
 
+#IfMissingColumn patient_data guardian_fname
+  ALTER TABLE `patient_data` ADD `guardian_fname` TEXT  AFTER `guardiansname`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_mname
+  ALTER TABLE `patient_data` ADD `guardian_mname` TEXT  AFTER `guardian_fname`;
+#EndIf
+
+#IfMissingColumn patient_data guardian_lname
+  ALTER TABLE `patient_data` ADD `guardian_lname` TEXT  AFTER `guardian_mname`;
+#EndIf
+
 #IfMissingColumn patient_data guardian_relationship
-  ALTER TABLE `patient_data` ADD `guardian_relationship` TEXT  AFTER `guardiansname`;
+  ALTER TABLE `patient_data` ADD `guardian_relationship` TEXT  AFTER `guardian_lname`;
 #EndIf
 
 #IfMissingColumn patient_data guardian_sex
@@ -258,3 +280,34 @@ CREATE TABLE IF NOT EXISTS `transactions_log` (
 #IfMissingColumn patient_data guardian_pid
   ALTER TABLE `patient_data` ADD `guardian_pid` int(11) default null  AFTER `guardian_email`;
 #EndIf
+
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2019-10-01 load_filename 2020-ICD-10-CM-Codes.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2019-10-01', '2020-ICD-10-CM-Codes.zip', '745546b3c94af3401e84003e1b143b9b');
+#EndIf
+
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2019-10-01 load_filename 2020-ICD-10-PCS-Order.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2019-10-01', '2020-ICD-10-PCS-Order.zip', '8dc136d780ec60916e9e1fc999837bc8');
+#Endif
+
+#IfMissingColumn ar_activity inactive
+ALTER TABLE `ar_activity` ADD `inactive` BOOLEAN NOT NULL DEFAULT FALSE AFTER `date_closed`;
+#EndIf
+
+#IfMissingColumn patient_data transaction_billing_note
+  ALTER TABLE `patient_data` ADD COLUMN `transaction_billing_note` TEXT  COMMENT 'Transaction Screen Notes' AFTER `billing_note`;
+#EndIf
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-10-01 load_filename 2021-ICD-10-CM-Codes.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-10-01', '2021-ICD-10-CM-Codes.zip', 'f22e7201fa662689d85b926a32359701');
+#EndIf
+
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-10-01 load_filename 2021-ICD-10-PCS-Order.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-10-01', '2021-ICD-10-PCS-Order.zip', '6a61cee7a8f774e23412ca1330980bbb');
+#Endif
+
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-12-01 load_filename 2021-ICD-10-CM-Codes-12-01.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-12-01', '2021-ICD-10-CM-Codes-12-01.zip', '29c9fced91667f9d8d8d85c2c86374ba');
+#EndIf
+
+#IfNotRow4D supported_external_dataloads load_type ICD10 load_source CMS load_release_date 2020-12-01 load_filename 2021-ICD-10-PCS-Order-12-01.zip
+INSERT INTO `supported_external_dataloads` (`load_type`, `load_source`, `load_release_date`, `load_filename`, `load_checksum`) VALUES ('ICD10', 'CMS', '2020-12-01', '2021-ICD-10-PCS-Order-12-01.zip', '7de51527f44928ea5627a89038747302');
+#Endif
